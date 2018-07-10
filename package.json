@@ -11,16 +11,27 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "*"
     ],
     "main": "./out/extension",
     "contributes": {
-        "commands": [
-            {
-                "command": "extension.sayHello",
-                "title": "Hello World"
-            }
-        ]
+        "commands": [{
+            "command": "extension.sayHello",
+            "title": "Hello World"
+        }],
+        "viewsContainers": {
+            "activitybar": [{
+                "id": "object-explorer",
+                "title": "Casssandra",
+                "icon": "icons/activity.svg"
+            }]
+        },
+        "views": {
+            "object-explorer": [{
+                "id": "objectExplorerActivity",
+                "name": "Explorer"
+            }]
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
@@ -30,10 +41,16 @@
         "test": "npm run compile && node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.6",
-        "tslint": "^5.8.0",
-        "@types/node": "^7.0.43",
-        "@types/mocha": "^2.2.42"
+        "@types/cassandra-driver": "^3.4.0",
+        "@types/mocha": "^2.2.42",
+        "@types/node": "^10.5.2",
+        "tslint": "^5.10.0",
+        "typescript": "^2.9.2",
+        "vscode": "^1.1.6"
+    },
+    "dependencies": {
+        "cassandra-driver": "^3.5.0",
+        "lodash-es": "^4.17.10",
+        "rxjs": "^6.2.1"
     }
 }
