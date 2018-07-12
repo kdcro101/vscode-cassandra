@@ -1,0 +1,21 @@
+/*
+[{
+    "name": "cluster1",
+    "contactPoints": ["10.0.0.200"],
+    "authProvider": {
+        "class": "PlainTextAuthProvider",
+        "username": "yourUsername",
+        "password": "yourPassword"
+    }
+}]
+*/
+
+[{
+    "name": "cluster1",
+    "contactPoints": ["10.42.0.254"],
+    "authProvider": {
+        "class": "PlainTextAuthProvider",
+        "username": "yourUsername",
+        "password": "yourPassword"
+    }
+}]

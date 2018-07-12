@@ -1,0 +1,13 @@
+{
+    "indent_inner_html": true,
+    "indent_size": 4,
+    "css": {
+        "indent_size": 4,
+        "newline_between_rules": true
+    },
+    "html": {
+        "wrap_attributes": "auto",
+        "wrap_line_length": 120
+
+    }
+}

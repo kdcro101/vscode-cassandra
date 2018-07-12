@@ -11,26 +11,33 @@
         "Other"
     ],
     "activationEvents": [
-        "*"
+        "workspaceContains:.cassandraWorkbench.jsonc",
+        "onCommand:generate-configuration"
     ],
     "main": "./out/extension",
     "contributes": {
-        "commands": [{
-            "command": "extension.sayHello",
-            "title": "Hello World"
-        }],
+        "commands": [
+            {
+                "command": "generate-configuration",
+                "title": "CASSANDRA WORKBENCH: Generate configuration template"
+            }
+        ],
         "viewsContainers": {
-            "activitybar": [{
-                "id": "object-explorer",
-                "title": "Casssandra",
-                "icon": "icons/activity.svg"
-            }]
+            "activitybar": [
+                {
+                    "id": "object-explorer",
+                    "title": "Casssandra workbench",
+                    "icon": "icons/activity.svg"
+                }
+            ]
         },
         "views": {
-            "object-explorer": [{
-                "id": "objectExplorerActivity",
-                "name": "Explorer"
-            }]
+            "object-explorer": [
+                {
+                    "id": "objectExplorerActivity",
+                    "name": "Explorer"
+                }
+            ]
         }
     },
     "scripts": {
@@ -42,6 +49,8 @@
     },
     "devDependencies": {
         "@types/cassandra-driver": "^3.4.0",
+        "@types/fs-extra": "^5.0.4",
+        "@types/lodash": "^4.14.111",
         "@types/mocha": "^2.2.42",
         "@types/node": "^10.5.2",
         "tslint": "^5.10.0",
@@ -50,7 +59,9 @@
     },
     "dependencies": {
         "cassandra-driver": "^3.5.0",
-        "lodash-es": "^4.17.10",
+        "fs-extra": "^6.0.1",
+        "jsmin": "^1.0.1",
+        "lodash": "^4.17.10",
         "rxjs": "^6.2.1"
     }
 }
