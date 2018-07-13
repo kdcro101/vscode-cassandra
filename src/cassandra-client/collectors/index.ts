@@ -81,7 +81,7 @@ export function collectTables(client: cassandra.Client, keyspace: string): Promi
 export function collectIndexes(client: cassandra.Client, keyspace: string, table: string): Promise<CassandraIndex[]> {
     return new Promise((resolve, reject) => {
         // system_schema.columns
-        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.columns \
+        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.indexes \
          where keyspace_name=? AND table_name=?", [keyspace, table])).pipe(
             map((data) => {
                 const rows = data.rows as RowIndex[];
@@ -114,7 +114,7 @@ export function collectColumns(client: cassandra.Client, keyspace: string, table
                 return rows.map((row, i) => {
 
                     const out: CassandraColumn = {
-                        name: row.table_name,
+                        name: row.column_name,
                         all: row,
                         clustering_order: row.clustering_order,
                         kind: row.kind as CassandraColumnType,

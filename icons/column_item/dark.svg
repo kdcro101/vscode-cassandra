@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <g transform="translate(0 -273)">
+    <flowRoot fill="#000" fill-opacity="1" stroke="none" stroke-linecap="butt" stroke-linejoin="miter" stroke-opacity="1" stroke-width="1" font-family="Sans" font-size="40" font-style="normal" font-weight="400" letter-spacing="0" word-spacing="0" xml:space="preserve" style="line-height:125%">
+      <flowRegion>
+        <path d="M60.357143-60.362766h65v208.21428h-65z"/>
+      </flowRegion>
+      <flowPara/>
+    </flowRoot>
+    <path fill="#607d8b" d="M7 292h10v-15H7z"/>
+    <path fill="#455a64" d="M2 290h4v-11H2z"/>
+    <path fill="#455a64" d="M18 279v11h4v-11z"/>
+    <path fill="none" d="M0 273h24v24H0z"/>
+  </g>
+</svg>

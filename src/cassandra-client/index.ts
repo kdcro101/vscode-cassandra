@@ -12,14 +12,20 @@ export class CassandraClient extends EventEmitter {
 
     private client: cassandra.Client;
     private structure: CassandraKeyspace[];
+    private isInvalid: boolean = false;
 
     constructor(private config: ValidatedConfigClusterItem) {
         super();
+
+        if (config.valid === false) {
+            this.isInvalid = true;
+        }
+
         const options: cassandra.ClientOptions = {
             contactPoints: config.contactPoints,
-            protocolOptions: {
-                port: config.port,
-            },
+            // protocolOptions: {
+            //     port: config.port,
+            // },
         };
 
         if (config.authProvider && config.authProvider.class === "PlainTextAuthProvider") {
@@ -56,7 +62,12 @@ export class CassandraClient extends EventEmitter {
     public emit<T extends keyof CassandraClientEvents>(event: T, data: CassandraClientEvents[T]) {
         return super.emit(event, data);
     }
-    private getStructure(): Promise<CassandraKeyspace[]> {
+    public getStructure(): Promise<CassandraKeyspace[]> {
+
+        if (this.isInvalid) {
+            return Promise.resolve([]);
+        }
+
         return new Promise((resolve, reject) => {
 
             from(this.connect()).pipe(

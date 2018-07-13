@@ -1,3 +1,4 @@
+import { from } from "rxjs";
 import * as vscode from "vscode";
 import { CassandraClient } from "../cassandra-client";
 import { ValidatedConfigClusterItem } from "../types";
@@ -12,10 +13,12 @@ export class CassandraWorkbench {
         private workspace: Workspace,
         private config: ValidatedConfigClusterItem[],
     ) {
-        this.clients = config.filter((i) => i.valid === true).map((i) => new CassandraClient(i));
-        const treeProvider = new TreeviewProvider(config);
+        from(Promise.all(config.map((i) => (new CassandraClient(i)).getStructure()))).pipe(
 
-        context.subscriptions.push(vscode.window.registerTreeDataProvider("cassandraWorkbenchView", treeProvider));
+        ).subscribe((data) => {
+            const treeProvider = new TreeviewProvider(config, data);
+            context.subscriptions.push(vscode.window.registerTreeDataProvider("cassandraWorkbenchView", treeProvider));
+        });
 
     }
     public start() {
