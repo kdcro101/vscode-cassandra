@@ -1,9 +1,12 @@
 import * as vscode from "vscode";
-import { Icons } from "../../icons/index";
 import { ValidatedConfigClusterItem } from "../../types";
 import { TreeItemBase } from "./tree-item-base";
 import { TreeItemCluster } from "./tree-item-cluster";
+import { TreeItemClusteringKey } from "./tree-item-clustering-key";
+import { TreeItemColumns } from "./tree-item-columns";
+import { TreeItemIndexes } from "./tree-item-indexes";
 import { TreeItemKeyspace } from "./tree-item-keyspace";
+import { TreeItemPartitioningKey } from "./tree-item-partitioning-key";
 import { TreeItemPrimaryKey } from "./tree-item-primarykey";
 import { TreeItemTable } from "./tree-item-table";
 
@@ -56,6 +59,18 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
         if (element.type === "table") {
             return Promise.resolve([
                 new TreeItemPrimaryKey("Primary key",
+                    vscode.TreeItemCollapsibleState.Collapsed, "", "", "", null, null, null, "Tultip"),
+                new TreeItemIndexes("Indexes",
+                    vscode.TreeItemCollapsibleState.Collapsed, "", "", "", null, null, null, "Tultip"),
+                new TreeItemColumns("Columns",
+                    vscode.TreeItemCollapsibleState.Collapsed, "", "", "", null, null, null, "Tultip"),
+            ]);
+        }
+        if (element.type === "primarykey") {
+            return Promise.resolve([
+                new TreeItemPartitioningKey("Partition",
+                    vscode.TreeItemCollapsibleState.Collapsed, "", "", "", null, null, null, "Tultip"),
+                new TreeItemClusteringKey("Clustering",
                     vscode.TreeItemCollapsibleState.Collapsed, "", "", "", null, null, null, "Tultip"),
             ]);
         }

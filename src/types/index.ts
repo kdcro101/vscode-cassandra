@@ -1,7 +1,10 @@
 import * as cassandra from "cassandra-driver";
 import * as vscode from "vscode";
 
-export type TreeItemType = "cluster" | "keyspace" | "table" | "column" | "index" | "primarykey";
+export type TreeItemType = "cluster" | "keyspace" | "table" |
+    "columns" | "column_item"
+    | "indexes" | "index_item" |
+    "primarykey" | "partitioning_key" | "clustering_key";
 
 export type CassandraConsistency = "ANY" | "ONE" | "TWO" | "THREE" |
     "QUORUM" | "ALL" | "LOCAL_QUORUM" | "EACH_QUORUM" | "SERIAL" | "LOCAL_SERIAL" | "LOCAL_ONE";
