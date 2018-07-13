@@ -1,11 +1,10 @@
 import * as cassandra from "cassandra-driver";
-import { CassandraKeyspace } from "../types";
-import { collectColumns, collectKeyspaces, collectTables } from "./collectors/index";
-
 import { EventEmitter } from "events";
 import { BehaviorSubject, from } from "rxjs";
-import { filter } from "rxjs/operators";
+import { concatMap, filter } from "rxjs/operators";
+import { CassandraKeyspace, ValidatedConfigClusterItem } from "../types";
 import { CassandraClientEvents } from "../types/index";
+import { collectKeyspaces } from "./collectors/index";
 
 export class CassandraClient extends EventEmitter {
 
@@ -14,16 +13,24 @@ export class CassandraClient extends EventEmitter {
     private client: cassandra.Client;
     private structure: CassandraKeyspace[];
 
-    constructor() {
+    constructor(private config: ValidatedConfigClusterItem) {
         super();
-        this.client = new cassandra.Client({
-            contactPoints: ["10.42.0.254"],
-            authProvider: new cassandra.auth.PlainTextAuthProvider("cassandra", "__1234567890__"),
-        });
+        const options: cassandra.ClientOptions = {
+            contactPoints: config.contactPoints,
+            protocolOptions: {
+                port: config.port,
+            },
+        };
 
-        this.stateConnected.pipe(
-            filter((d) => d === true),
-        ).subscribe(() => this.initializeClient());
+        if (config.authProvider && config.authProvider.class === "PlainTextAuthProvider") {
+            options.authProvider = new cassandra.auth.PlainTextAuthProvider(config.authProvider.username, config.authProvider.password);
+        }
+
+        this.client = new cassandra.Client(options);
+
+        // this.stateConnected.pipe(
+        //     filter((d) => d === true),
+        // ).subscribe(() => this.initializeClient());
 
     }
     public connect(): Promise<void> {
@@ -49,12 +56,19 @@ export class CassandraClient extends EventEmitter {
     public emit<T extends keyof CassandraClientEvents>(event: T, data: CassandraClientEvents[T]) {
         return super.emit(event, data);
     }
-    private initializeClient() {
-        from(collectKeyspaces(this.client)).subscribe((data) => {
-            this.structure = data;
-        }, (e) => {
-            console.log(e);
+    private getStructure(): Promise<CassandraKeyspace[]> {
+        return new Promise((resolve, reject) => {
+
+            from(this.connect()).pipe(
+                concatMap(() => collectKeyspaces(this.client)),
+            ).subscribe((data) => {
+                resolve(data);
+            }, (e) => {
+                console.log(e);
+            });
+
         });
+
     }
 
 }

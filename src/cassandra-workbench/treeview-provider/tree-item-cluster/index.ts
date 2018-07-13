@@ -1,7 +1,10 @@
 import * as vscode from "vscode";
+import { Icons } from "../../../icons/index";
+import { TreeItemType } from "../../../types/index";
+import { TreeItemBase } from "../tree-item-base";
 
-export class ViewItem extends vscode.TreeItem {
-
+export class TreeItemCluster  extends TreeItemBase {
+    public type: TreeItemType = "cluster";
     constructor(
         public label: string,
         public collapsibleState: vscode.TreeItemCollapsibleState,
@@ -9,7 +12,7 @@ export class ViewItem extends vscode.TreeItem {
         public contextValue: string,
         public resourceName: string,
         // public resourceType: ResourceType,
-        public icon?: string | vscode.Uri | { light: string | vscode.Uri; dark: string | vscode.Uri },
+        // public icon?: string | vscode.Uri | { light: string | vscode.Uri; dark: string | vscode.Uri },
         public command?: vscode.Command,
         public id?: string,
         public parentId?: string,
@@ -19,7 +22,7 @@ export class ViewItem extends vscode.TreeItem {
 
         this.resourceUri = vscode.Uri.file(value);
         this.tooltip = value;
-        this.iconPath = icon;
+        this.iconPath = Icons.get(this.type);
         this.tooltip = tooltipText;
     }
 

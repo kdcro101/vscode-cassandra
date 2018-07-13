@@ -1,8 +1,21 @@
 import * as vscode from "vscode";
-import { ViewItem } from "./view-item";
-export class TreeviewProvider implements vscode.TreeDataProvider<ViewItem> {
-    public onDidChangeTreeDataEmmiter = new vscode.EventEmitter<ViewItem | undefined>();
-    public readonly onDidChangeTreeData: vscode.Event<ViewItem | undefined> = this.onDidChangeTreeDataEmmiter.event;
+import { Icons } from "../../icons/index";
+import { ValidatedConfigClusterItem } from "../../types";
+import { TreeItemBase } from "./tree-item-base";
+import { TreeItemCluster } from "./tree-item-cluster";
+import { TreeItemKeyspace } from "./tree-item-keyspace";
+import { TreeItemPrimaryKey } from "./tree-item-primarykey";
+import { TreeItemTable } from "./tree-item-table";
+
+export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
+    public onDidChangeTreeDataEmmiter = new vscode.EventEmitter<TreeItemBase | undefined>();
+    public readonly onDidChangeTreeData: vscode.Event<TreeItemBase | undefined> = this.onDidChangeTreeDataEmmiter.event;
+
+    constructor(
+        private config: ValidatedConfigClusterItem[],
+    ) {
+
+    }
 
     /**
      * Get [TreeItem](#TreeItem) representation of the `element`
@@ -13,7 +26,7 @@ export class TreeviewProvider implements vscode.TreeDataProvider<ViewItem> {
     public refresh(): void {
         this.onDidChangeTreeDataEmmiter.fire();
     }
-    public getTreeItem(item: ViewItem): vscode.TreeItem {
+    public getTreeItem(item: TreeItemBase): vscode.TreeItem {
         return item;
     }
 
@@ -23,10 +36,32 @@ export class TreeviewProvider implements vscode.TreeDataProvider<ViewItem> {
      * @param element The element from which the provider gets children. Can be `undefined`.
      * @return Children of `element` or root if no element is passed.
      */
-    getChildren(element?: ViewItem): Thenable<ViewItem[]> {
-        return new Promise((resolve, reject) => {
+    getChildren(element?: TreeItemBase): Thenable<TreeItemBase[]> {
 
-        });
+        if (element == null) {
+            return this.getRoot();
+        }
+        if (element.type === "cluster") {
+            return Promise.resolve([
+                new TreeItemKeyspace("keyspace",
+                    vscode.TreeItemCollapsibleState.Collapsed, "", "", "", null, null, null, "Tultip"),
+            ]);
+        }
+        if (element.type === "keyspace") {
+            return Promise.resolve([
+                new TreeItemTable("table",
+                    vscode.TreeItemCollapsibleState.Collapsed, "", "", "", null, null, null, "Tultip"),
+            ]);
+        }
+        if (element.type === "table") {
+            return Promise.resolve([
+                new TreeItemPrimaryKey("Primary key",
+                    vscode.TreeItemCollapsibleState.Collapsed, "", "", "", null, null, null, "Tultip"),
+            ]);
+        }
+
+        // });
+        return Promise.resolve(null);
     }
 
     /**
@@ -38,9 +73,19 @@ export class TreeviewProvider implements vscode.TreeDataProvider<ViewItem> {
      * @param element The element for which the parent has to be returned.
      * @return Parent of `element`.
      */
-    getParent?(element: ViewItem): Thenable<ViewItem> {
+    getParent?(element: TreeItemBase): Thenable<TreeItemBase> {
         return new Promise((resolve, reject) => {
 
+        });
+    }
+    private getRoot(): Promise<TreeItemCluster[]> {
+        return new Promise((resolve, reject) => {
+            const items = this.config.map((i) => {
+                return new TreeItemCluster(i.name,
+                    vscode.TreeItemCollapsibleState.Collapsed, "", "", "", null, null, null, "Tultip");
+            });
+
+            resolve(items);
         });
     }
 }

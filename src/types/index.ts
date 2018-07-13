@@ -1,4 +1,7 @@
 import * as cassandra from "cassandra-driver";
+import * as vscode from "vscode";
+
+export type TreeItemType = "cluster" | "keyspace" | "table" | "column" | "index" | "primarykey";
 
 export type CassandraConsistency = "ANY" | "ONE" | "TWO" | "THREE" |
     "QUORUM" | "ALL" | "LOCAL_QUORUM" | "EACH_QUORUM" | "SERIAL" | "LOCAL_SERIAL" | "LOCAL_ONE";
@@ -36,8 +39,17 @@ export interface CassandraColumn {
     type: string;
     all: RowColumn;
 }
+
+export interface CassandraIndex {
+    index_name: string;
+    kind: string;
+    options: { [key: string]: string };
+    all: RowIndex;
+}
+
 export interface CassandraTable {
     columns: CassandraColumn[];
+    indexes: CassandraIndex[];
     name: string;
     all: RowTable;
 }
@@ -86,4 +98,15 @@ export interface RowColumn extends cassandra.types.Row {
     kind: string;
     position: number;
     type: string;
+}
+export interface RowIndex extends cassandra.types.Row {
+    keyspace_name: string;
+    table_name: string;
+    index_name: string;
+    kind: string;
+    options: { [key: string]: string };
+}
+export interface TreeViewIcon {
+    light: string | vscode.Uri;
+    dark: string | vscode.Uri;
 }

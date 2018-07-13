@@ -7,5 +7,9 @@
         "out": true // set this to false to include "out" folder in search results
     },
     "favorites.sortDirection": "ASC",
-    "favorites.groupsFirst": true
+    "favorites.groupsFirst": true,
+    "redis-console.host": "localhost",
+    "redis-console.port": 6379,
+    "redis-console.password": "",
+    "redis-console.hostIpFamily": 4
 }

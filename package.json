@@ -34,7 +34,7 @@
         "views": {
             "object-explorer": [
                 {
-                    "id": "objectExplorerActivity",
+                    "id": "cassandraWorkbenchView",
                     "name": "Explorer"
                 }
             ]

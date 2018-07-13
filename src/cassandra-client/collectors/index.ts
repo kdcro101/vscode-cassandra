@@ -1,7 +1,11 @@
 import * as cassandra from "cassandra-driver";
 import { from } from "rxjs";
 import { concatMap, map } from "rxjs/operators";
-import { CassandraColumn, CassandraColumnType, CassandraKeyspace, CassandraTable, RowColumn, RowKeyspace, RowTable } from "../../types";
+import {
+    CassandraColumn, CassandraColumnType,
+    CassandraKeyspace, CassandraTable, RowColumn, RowIndex, RowKeyspace, RowTable,
+} from "../../types";
+import { CassandraIndex } from "../../types/index";
 
 export function collectKeyspaces(client: cassandra.Client): Promise<CassandraKeyspace[]> {
     return new Promise((resolve, reject) => {
@@ -46,17 +50,21 @@ export function collectTables(client: cassandra.Client, keyspace: string): Promi
                 return Promise.all([
                     rows,
                     Promise.all(rows.map((i) => collectColumns(client, i.keyspace_name, i.table_name))),
+                    Promise.all(rows.map((i) => collectIndexes(client, i.keyspace_name, i.table_name))),
                 ]);
             }),
             map((data) => {
                 const rows = data[0];
                 const allColumns = data[1];
+                const allIndexes = data[2];
 
                 return rows.map((row, i) => {
                     const columns = allColumns[i];
+                    const indexes = allIndexes[i];
                     const out: CassandraTable = {
                         name: row.table_name,
                         columns,
+                        indexes,
                         all: row,
 
                     };
@@ -67,6 +75,31 @@ export function collectTables(client: cassandra.Client, keyspace: string): Promi
             resolve(data);
         }, (e) => reject(e));
 
+    });
+
+}
+export function collectIndexes(client: cassandra.Client, keyspace: string, table: string): Promise<CassandraIndex[]> {
+    return new Promise((resolve, reject) => {
+        // system_schema.columns
+        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.columns \
+         where keyspace_name=? AND table_name=?", [keyspace, table])).pipe(
+            map((data) => {
+                const rows = data.rows as RowIndex[];
+
+                return rows.map((row, i) => {
+
+                    const out: CassandraIndex = {
+                        index_name: row.index_name,
+                        kind: row.kind,
+                        options: row.options,
+                        all: row,
+                    };
+                    return out;
+                });
+            }),
+        ).subscribe((data) => {
+            resolve(data);
+        }, (e) => reject(e));
     });
 
 }

@@ -5,6 +5,7 @@ import * as vscode from "vscode";
 import { CassandraWorkbench } from "./cassandra-workbench";
 import { VsCommands } from "./commands";
 import { ConfigurationManager } from "./configuration-manager";
+import { Icons } from "./icons";
 import { Workspace } from "./workspace";
 
 export function activate(context: vscode.ExtensionContext) {
@@ -12,6 +13,9 @@ export function activate(context: vscode.ExtensionContext) {
     const config = new ConfigurationManager(context, workspace);
     const commands = new VsCommands(config);
     commands.attach(context);
+
+    Icons.context = context;
+
     let workbench: CassandraWorkbench = null;
 
     from(config.loadConfig()).pipe(
@@ -19,6 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
     ).subscribe((clusterItems) => {
         console.log(clusterItems);
         workbench = new CassandraWorkbench(context, workspace, clusterItems);
+        // workbench.
     });
 
     // context.subscriptions.push(disposable);
