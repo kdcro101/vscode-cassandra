@@ -1,0 +1,16 @@
+ @import '~@angular/material/theming';
+ @import "./colors";
+ @include mat-core();
+ $dark-primary: mat-palette($mat-indigo, 400);
+ $dark-accent: mat-palette($mat-pink);
+ $dark-warn: mat-palette($mat-red);
+ $mat-font-family: Roboto,
+ 'Helvetica Neue',
+ sans-serif;
+ $typography: mat-typography-config();
+ $default-theme: mat-light-theme($primary, $accent, $warn);
+ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+ @include angular-material-theme($default-theme);
+ .dark-theme {
+     @include angular-material-theme($dark-theme);
+ }

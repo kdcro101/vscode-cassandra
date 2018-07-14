@@ -18,13 +18,12 @@ export const generateHtml = (basePath: string) => {
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link rel="stylesheet" href="${path.join("vscode-resource:", basePath, "ng", "styles.css")}">
             <script>
-            const vscode = acquireVsCodeApi();
-            var codeFontFamily = "${fontFamily}";
-            var redisConfig = JSON.parse('');
+                const vscode = acquireVsCodeApi();
+                var codeFontFamily = "${fontFamily}";
             </script>
         </head>
-        <body>
-            <app-root></app-root>
+        <body ondragstart="return false;" ondrop="return false;" class="app-icon">
+            <ui-view id="appview5332" class="app-root mat-app-background"></ui-view>
             <script type="text/javascript" src="${path.join("vscode-resource:", basePath, "ng", "runtime.js")}"></script>
             <script type="text/javascript" src="${path.join("vscode-resource:", basePath, "ng", "polyfills.js")}"></script>
             <script type="text/javascript" src="${path.join("vscode-resource:", basePath, "ng", "main.js")}"></script>

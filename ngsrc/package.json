@@ -26,7 +26,8 @@
         "core-js": "^2.5.4",
         "lodash-es": "^4.17.10",
         "rxjs": "^6.0.0",
-        "zone.js": "^0.8.26"
+        "zone.js": "^0.8.26",
+        "hoek": "^4.2.1"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "~0.6.8",
