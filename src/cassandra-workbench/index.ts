@@ -2,10 +2,12 @@ import { from } from "rxjs";
 import * as vscode from "vscode";
 import { CassandraClient } from "../cassandra-client";
 import { ValidatedConfigClusterItem } from "../types";
+import { WorkbenchPanel } from "../workbench-panel";
 import { Workspace } from "../workspace";
 import { TreeviewProvider } from "./treeview-provider";
 export class CassandraWorkbench {
 
+    public panel: WorkbenchPanel;
     private clients: CassandraClient[] = [];
 
     constructor(
@@ -13,15 +15,11 @@ export class CassandraWorkbench {
         private workspace: Workspace,
         private config: ValidatedConfigClusterItem[],
     ) {
-        from(Promise.all(config.map((i) => (new CassandraClient(i)).getStructure()))).pipe(
-
-        ).subscribe((data) => {
-            const treeProvider = new TreeviewProvider(config, data);
+            const treeProvider = new TreeviewProvider(config);
             context.subscriptions.push(vscode.window.registerTreeDataProvider("cassandraWorkbenchView", treeProvider));
-        });
-
+            this.panel = new WorkbenchPanel(context, workspace);
     }
     public start() {
-
+            this.panel.reveal();
     }
 }

@@ -1,5 +1,6 @@
 import * as cassandra from "cassandra-driver";
 import * as vscode from "vscode";
+export * from "./messages";
 
 export type TreeItemType = "cluster" | "keyspace" | "table" |
     "columns" | "column_item"
@@ -32,7 +33,7 @@ export interface CassandraClientEvents {
     error: string;
 }
 
-export type CassandraColumnType = "regular" | "primary_key" | "clustering";
+export type CassandraColumnType = "regular" | "partition_key" | "clustering";
 
 export interface CassandraColumn {
     name: string;

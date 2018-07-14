@@ -1,11 +1,16 @@
+import { sortBy } from "lodash";
+import { from, ReplaySubject } from "rxjs";
+import { filter, take } from "rxjs/operators";
 import * as vscode from "vscode";
+import { CassandraClient } from "../../cassandra-client";
 import { CassandraKeyspace, ValidatedConfigClusterItem } from "../../types";
+import { CassandraColumn } from "../../types";
 import { TreeItemBase } from "./tree-item-base";
 import { TreeItemCluster } from "./tree-item-cluster";
 import { TreeItemClusteringKey } from "./tree-item-clustering-key";
 import { TreeItemColumnItem } from "./tree-item-column-item";
-
 import { TreeItemColumns } from "./tree-item-columns";
+import { TreeItemIndexItem } from "./tree-item-index-item";
 import { TreeItemIndexes } from "./tree-item-indexes";
 import { TreeItemKeyspace } from "./tree-item-keyspace";
 import { TreeItemPartitioningKey } from "./tree-item-partitioning-key";
@@ -15,15 +20,19 @@ import { TreeItemTable } from "./tree-item-table";
 export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
     public onDidChangeTreeDataEmmiter = new vscode.EventEmitter<TreeItemBase | undefined>();
     public readonly onDidChangeTreeData: vscode.Event<TreeItemBase | undefined> = this.onDidChangeTreeDataEmmiter.event;
-
+    public structures: CassandraKeyspace[][] = null;
+    public stateStructuresReady = new ReplaySubject<boolean>(1);
     constructor(
         private config: ValidatedConfigClusterItem[],
-        private structures: CassandraKeyspace[][],
+        // private structures: CassandraKeyspace[][],
     ) {
-        console.log("config:");
-        console.log(config);
-        console.log("structures");
-        console.log(structures);
+
+        from(Promise.all(config.map((i) => (new CassandraClient(i)).getStructure()))).pipe()
+            .subscribe((data) => {
+                this.structures = data;
+                this.stateStructuresReady.next(true);
+            });
+
     }
 
     /**
@@ -46,60 +55,68 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
      * @return Children of `element` or root if no element is passed.
      */
     getChildren(element?: TreeItemBase): Thenable<TreeItemBase[]> {
+        return new Promise((resolve, reject) => {
 
-        if (element == null) {
-            return this.getRoot();
-        }
-        if (element.type === "cluster") {
-            const e = element as TreeItemCluster;
-            return this.getKeyspaces(e.clusterIndex);
-        }
-        if (element.type === "keyspace") {
-            const e = element as TreeItemKeyspace;
-            return this.getTables(e.clusterIndex, e.label);
-        }
-        if (element.type === "table") {
-            const e = element as TreeItemTable;
+            this.stateStructuresReady.pipe(
+                filter((d) => d === true),
+                take(1),
+            ).subscribe(() => {
 
-            const items: TreeItemBase[] = [];
+                if (element == null) {
+                    resolve(this.getRoot());
+                    return;
+                }
+                if (element.type === "cluster") {
+                    const e = element as TreeItemCluster;
+                    resolve(this.getKeyspaces(e.clusterIndex));
+                }
+                if (element.type === "keyspace") {
+                    const e = element as TreeItemKeyspace;
+                    resolve(this.getTables(e.clusterIndex, e.label));
+                }
+                if (element.type === "table") {
+                    const e = element as TreeItemTable;
 
-            const ksAll = this.structures[e.clusterIndex];
-            const ks = ksAll.find((i) => i.name === e.keyspace);
-            const t = ks.tables.find((i) => i.name === e.label);
+                    const items: TreeItemBase[] = [];
 
-            items.push(
-                new TreeItemPrimaryKey("Primary key",
-                    vscode.TreeItemCollapsibleState.Collapsed, e.clusterIndex, e.keyspace, e.label, "primarykey"),
-            );
-            items.push(
-                new TreeItemColumns("Columns",
-                    vscode.TreeItemCollapsibleState.Collapsed, e.clusterIndex, e.keyspace, e.label, "columns"),
-            );
+                    const ksAll = this.structures[e.clusterIndex];
+                    const ks = ksAll.find((i) => i.name === e.keyspace);
+                    const t = ks.tables.find((i) => i.name === e.label);
 
-            if (t.indexes.length > 0) {
-                items.push(
-                    new TreeItemIndexes("Indexes",
-                        vscode.TreeItemCollapsibleState.Collapsed, e.clusterIndex, e.keyspace, e.label, "indexes"),
-                );
+                    items.push(
+                        new TreeItemPrimaryKey("Primary key",
+                            vscode.TreeItemCollapsibleState.Collapsed, e.clusterIndex, e.keyspace, e.label, "primarykey"),
+                    );
+                    items.push(
+                        new TreeItemColumns("Columns",
+                            vscode.TreeItemCollapsibleState.Collapsed, e.clusterIndex, e.keyspace, e.label, "columns"),
+                    );
 
-            }
-            return Promise.resolve(items);
-        }
-        if (element.type === "primarykey") {
-            return Promise.resolve([
-                new TreeItemPartitioningKey("Partition",
-                    vscode.TreeItemCollapsibleState.None, "", "", "", null, null, null, "Tultip"),
-                new TreeItemClusteringKey("Clustering",
-                    vscode.TreeItemCollapsibleState.None, "", "", "", null, null, null, "Tultip"),
-            ]);
-        }
-        if (element.type === "columns") {
-            const e = element as TreeItemColumns;
-            return this.getColumns(e.clusterIndex, e.keyspace, e.table);
-        }
+                    if (t.indexes.length > 0) {
+                        items.push(
+                            new TreeItemIndexes("Indexes",
+                                vscode.TreeItemCollapsibleState.Collapsed, e.clusterIndex, e.keyspace, e.label, "indexes"),
+                        );
 
-        // });
-        return Promise.resolve([]);
+                    }
+                    resolve(items);
+                }
+                if (element.type === "primarykey") {
+                    const e = element as TreeItemPrimaryKey;
+                    resolve(this.getPrimaryKeys(e.clusterIndex, e.keyspace, e.table));
+                }
+                if (element.type === "columns") {
+                    const e = element as TreeItemColumns;
+                    resolve(this.getColumns(e.clusterIndex, e.keyspace, e.table));
+                }
+                if (element.type === "indexes") {
+                    const e = element as TreeItemIndexes;
+                    resolve(this.getIndexes(e.clusterIndex, e.keyspace, e.table));
+                }
+
+                resolve(null);
+            });
+        });
     }
 
     /**
@@ -172,6 +189,27 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
         });
 
     }
+    private getIndexes(clusterIndex: number, keyspace: string, table: string): Promise<TreeItemColumnItem[]> {
+        return new Promise((resolve, reject) => {
+
+            const all = this.structures[clusterIndex];
+            const ks = all.find((i) => i.name === keyspace);
+
+            if (ks == null) {
+                resolve(null);
+                return;
+            }
+            const t = ks.tables.find((i) => i.name === table);
+
+            const items = t.columns.map((c) => {
+                return new TreeItemIndexItem(c.name, vscode.TreeItemCollapsibleState.None,
+                    clusterIndex, keyspace, table, "index_item");
+            });
+
+            resolve(items);
+
+        });
+    }
     private getColumns(clusterIndex: number, keyspace: string, table: string): Promise<TreeItemColumnItem[]> {
         return new Promise((resolve, reject) => {
 
@@ -191,6 +229,43 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
 
             resolve(items);
 
+        });
+    }
+    private getPrimaryKeys(clusterIndex: number, keyspace: string, table: string): Promise<TreeItemBase[]> {
+        return new Promise((resolve, reject) => {
+
+            const all = this.structures[clusterIndex];
+            const ks = all.find((i) => i.name === keyspace);
+
+            const items: TreeItemBase[] = [];
+
+            if (ks == null) {
+                resolve(null);
+                return;
+            }
+            const t = ks.tables.find((i) => i.name === table);
+
+            const pks = sortBy<CassandraColumn>(t.columns.filter((c) => c.kind === "partition_key"), (i) => {
+                return i.position;
+            });
+            const cks = sortBy<CassandraColumn>(t.columns.filter((c) => c.kind === "clustering"), (i) => {
+                return i.position;
+            });
+
+            pks.forEach((p, i) => {
+                items.push(
+                    new TreeItemPartitioningKey(p.name, vscode.TreeItemCollapsibleState.None,
+                        clusterIndex, keyspace, table, "partitioning_key"),
+                );
+            });
+            cks.forEach((p, i) => {
+                items.push(
+                    new TreeItemClusteringKey(p.name, vscode.TreeItemCollapsibleState.None,
+                        clusterIndex, keyspace, table, "clustering_key"),
+                );
+            });
+
+            resolve(items);
         });
     }
 }

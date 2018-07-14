@@ -12,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
     const workspace = new Workspace();
     const config = new ConfigurationManager(context, workspace);
     const commands = new VsCommands(config);
-    commands.attach(context);
+    commands.attachContext(context);
 
     Icons.context = context;
 
@@ -23,6 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
     ).subscribe((clusterItems) => {
         console.log(clusterItems);
         workbench = new CassandraWorkbench(context, workspace, clusterItems);
+        workbench.start();
         // workbench.
     });
 

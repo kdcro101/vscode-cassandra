@@ -3,8 +3,8 @@ import { Icons } from "../../../icons";
 import { TreeItemType } from "../../../types";
 import { TreeItemBase } from "../tree-item-base";
 
-export class TreeItemPartitioningKey extends TreeItemBase {
-    public type: TreeItemType = "partitioning_key";
+export class TreeItemIndexItem extends TreeItemBase {
+    public type: TreeItemType = "index_item";
     constructor(
         public label: string,
         public collapsibleState: vscode.TreeItemCollapsibleState,
