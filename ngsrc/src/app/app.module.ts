@@ -3,8 +3,12 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatIconModule } from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { UIRouterModule, UIView } from "@uirouter/angular";
+import { MessagesService } from "./services/messages/messages.service";
+import { ThemeService } from "./services/theme/theme.service";
 
 import { UiContentHorizontalModule } from "./components/ui-content-horizontal";
+
+import { UiQueryModule } from "./components/ui-query";
 import { QueryBuilderComponent } from "./query-builder/query-builder.component";
 import { routerConfig } from "./router";
 
@@ -23,10 +27,12 @@ export const rootRoutes = [
         FlexLayoutModule,
         MatIconModule,
         UiContentHorizontalModule,
+        UiQueryModule,
         UIRouterModule.forRoot({ states: rootRoutes, useHash: true, otherwise: { state: "query-builder" }, config: routerConfig }),
     ],
     declarations: [
-        QueryBuilderComponent
+        QueryBuilderComponent,
+
     ],
     providers: [
         { provide: NgModuleFactoryLoader, useClass: SystemJsNgModuleLoader },
@@ -35,13 +41,8 @@ export const rootRoutes = [
 })
 export class AppModule {
 
-    constructor() {
-        const isDark =
-            document.body.classList.contains("vscode-dark") || document.body.classList.contains("vscode-high-contrast") ? true : false;
+    constructor(private theme: ThemeService, private messages: MessagesService) {
 
-        if (isDark) {
-            document.body.classList.add("dark-theme");
-        }
     }
 
 }

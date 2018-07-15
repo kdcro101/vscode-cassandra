@@ -15,7 +15,24 @@
                     "changeDetection": "OnPush",
                     "prefix": "",
                     "styleext": "scss"
+                },
+                "@schematics/angular:directive": {
+                    "flat": false,
+                    "spec": false,
+                    "prefix": ""
+                },
+                "@schematics/angular:module": {
+                    "flat": false,
+                    "spec": false,
+                    "prefix": ""
+
+                },
+                "@schematics/angular:service": {
+                    "flat": false,
+                    "spec": false,
+                    "prefix": ""
                 }
+
             },
             "architect": {
                 "build": {
