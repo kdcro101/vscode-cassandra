@@ -1,12 +1,16 @@
 import { NgModule, NgModuleFactoryLoader, SystemJsNgModuleLoader } from "@angular/core";
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { MatIconModule } from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { UIRouterModule, UIView } from "@uirouter/angular";
 
+import { UiContentHorizontalModule } from "./components/ui-content-horizontal";
+import { QueryBuilderComponent } from "./query-builder/query-builder.component";
 import { routerConfig } from "./router";
 
 export const rootRoutes = [
 
-    // { name: "public.**", url: "/out", loadChildren: "./public/public.module#PublicModule" },
+    { name: "query-builder", url: "/query-builder", component: QueryBuilderComponent },
     // { name: "bootstate.**", url: "/bs", loadChildren: "./bootstate/bootstate.module#BootstateModule" },
     // { name: "logout.**", url: "/logout", loadChildren: "./logout/logout.module#LogoutModule" },
     // { name: "system.**", url: "/system", loadChildren: "./system/system.module#SystemModule" },
@@ -14,10 +18,15 @@ export const rootRoutes = [
 ];
 
 @NgModule({
-    declarations: [],
     imports: [
         BrowserAnimationsModule,
-        UIRouterModule.forRoot({ states: rootRoutes, useHash: true, otherwise: { state: "private.user.home" }, config: routerConfig }),
+        FlexLayoutModule,
+        MatIconModule,
+        UiContentHorizontalModule,
+        UIRouterModule.forRoot({ states: rootRoutes, useHash: true, otherwise: { state: "query-builder" }, config: routerConfig }),
+    ],
+    declarations: [
+        QueryBuilderComponent
     ],
     providers: [
         { provide: NgModuleFactoryLoader, useClass: SystemJsNgModuleLoader },

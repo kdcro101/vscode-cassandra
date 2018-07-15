@@ -31,9 +31,13 @@
                             "src/assets"
                         ],
                         "styles": [
+                            "src/scss/fonts/material-icons.css",
+                            "src/scss/fonts/roboto.css",
                             "src/styles.scss"
                         ],
-                        "scripts": []
+                        "scripts": [
+                            "src/lib/iscroll/iscroll-probe.js"
+                        ]
                     },
                     "configurations": {
                         "production": {

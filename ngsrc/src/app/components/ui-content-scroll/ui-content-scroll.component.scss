@@ -1,0 +1,28 @@
+ :host {
+     overflow-y: hidden;
+     overflow-x: hidden; // position: relative; //  transform: translate3d(0,0,0);
+     position: relative;
+     .wrapper {
+         // background:darkslateblue;
+         // height: 100%;
+         // width: 100%;
+         position: absolute;
+         top: 0;
+         left: 0;
+         right: 0;
+         bottom: 0;
+         &.native {
+             overflow-y: auto;
+             overflow-x: auto; // transform: translate3d(0, 0, 0);
+             will-change: transform;
+         }
+     }
+     .scroller {
+         user-select: none; // position: absolute;
+         /* Prevent elements to be highlighted on tap */
+         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+         /* Put the scroller into the HW Compositing layer right from the start */
+         transform: translate3d(0, 0, 0);
+         will-change: transform;
+     }
+ }

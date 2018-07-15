@@ -1,11 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
-@import "./scss/theme";
+ @import "./scss/theme";
+ mat-icon.icon-18 {
+     height: 18px;
+     width: 18px;
+     line-height: 18px;
+     font-size: 18px;
+ }
 
-body>.app-root {
-    // background-color: red;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
+ body {
+     overflow: hidden;
+ }
+
+ body>.app-root {
+     // background-color: red;
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+ }

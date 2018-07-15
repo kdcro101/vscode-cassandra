@@ -1,0 +1,38 @@
+@import "../../scss/colors";
+:host {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    &>.root {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        .tabs {
+            height: 56px;
+            .wrap {
+                padding: 8px 0px 8px 8px;
+            }
+            .item {
+                padding: 0px 8px;
+                border: 1px solid fuchsia;
+                border-radius: 2px;
+                margin-right: 16px;
+                height: 38px;
+                box-sizing: border-box;
+                cursor: pointer;
+                min-width: 100px;
+
+                .close{
+                    margin-left: 16px;
+                }
+            }
+        }
+        .client {
+            background-color: coral;
+        }
+    }
+}

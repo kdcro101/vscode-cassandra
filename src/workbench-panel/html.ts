@@ -26,6 +26,7 @@ export const generateHtml = (basePath: string) => {
             <ui-view id="appview5332" class="app-root mat-app-background"></ui-view>
             <script type="text/javascript" src="${path.join("vscode-resource:", basePath, "ng", "runtime.js")}"></script>
             <script type="text/javascript" src="${path.join("vscode-resource:", basePath, "ng", "polyfills.js")}"></script>
+            <script type="text/javascript" src="${path.join("vscode-resource:", basePath, "ng", "scripts.js")}"></script>
             <script type="text/javascript" src="${path.join("vscode-resource:", basePath, "ng", "main.js")}"></script>
         </body>
     </html>`;
