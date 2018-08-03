@@ -7,7 +7,7 @@ export const generateHtml = (basePath: string) => {
     //   const iconsPath = "vscode-resource:" + this.context.extensionPath + "/svg/symbol-sprite.svg";
     const ws = vscode.workspace.getConfiguration(null, null);
     const fontFamily = ws.editor.fontFamily;
-    // const configString = JSON.stringify(config);
+    const lineHeight = ws.editor.lineHeight;
 
     return `
     <!doctype html>
@@ -20,6 +20,7 @@ export const generateHtml = (basePath: string) => {
             <script>
                 const vscode = acquireVsCodeApi();
                 var codeFontFamily = "${fontFamily}";
+                var codeLineHeight = "${lineHeight}";
             </script>
         </head>
         <body ondragstart="return false;" ondrop="return false;" class="app-icon">
