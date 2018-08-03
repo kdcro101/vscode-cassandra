@@ -9,6 +9,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } fro
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UiQueryComponent implements OnInit {
+
     @ViewChild("top") public top: ElementRef<HTMLDivElement>;
     @ViewChild("bottom") public bottom: ElementRef<HTMLDivElement>;
     @ViewChild("topLeft") public topLeft: ElementRef<HTMLDivElement>;

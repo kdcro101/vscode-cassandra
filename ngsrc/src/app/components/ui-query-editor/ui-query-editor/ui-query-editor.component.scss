@@ -1,0 +1,18 @@
+:host {
+    position: relative;
+    .wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 16px;
+        overflow: scroll;
+        .contenteditable {
+            display: inline-block;
+            position: relative;
+            white-space: pre;
+            outline: none;
+        }
+    }
+}

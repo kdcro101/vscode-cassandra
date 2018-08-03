@@ -5,6 +5,9 @@
         "ng": "ng",
         "start": "ng serve",
         "build": "ng build --prod --aot --output-hashing none",
+        "build-watch": "ng build --prod --aot --output-hashing none --watch",
+        "build-dev": "ng build --output-hashing none",
+        "build-dev-watch": "ng build --output-hashing none --watch",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e"

@@ -1,6 +1,6 @@
 import { sortBy } from "lodash";
 import { from, ReplaySubject } from "rxjs";
-import { filter, take } from "rxjs/operators";
+import { filter, take, timeout } from "rxjs/operators";
 import * as vscode from "vscode";
 import { CassandraClient } from "../../cassandra-client";
 import { CassandraKeyspace, ValidatedConfigClusterItem } from "../../types";
@@ -27,11 +27,24 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
         // private structures: CassandraKeyspace[][],
     ) {
 
-        from(Promise.all(config.map((i) => (new CassandraClient(i)).getStructure()))).pipe()
-            .subscribe((data) => {
-                this.structures = data;
-                this.stateStructuresReady.next(true);
+        this.structures = config.map((i) => []);
+
+        for (let i = 0; i < config.length; i++) {
+            const c = config[i];
+            (new CassandraClient(c)).getStructure()
+            .then((result) => {
+                this.structures[i] = result;
+                this.refresh();
+            }).catch((e) => {
+                vscode.window.showWarningMessage(e);
             });
+        }
+
+        // from(Promise.all(config.map((i) => (new CassandraClient(i)).getStructure()))).pipe()
+        //     .subscribe((data) => {
+        //         this.structures = data;
+        //         this.stateStructuresReady.next(true);
+        //     });
 
     }
 
@@ -57,10 +70,11 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
     getChildren(element?: TreeItemBase): Thenable<TreeItemBase[]> {
         return new Promise((resolve, reject) => {
 
-            this.stateStructuresReady.pipe(
-                filter((d) => d === true),
-                take(1),
-            ).subscribe(() => {
+            // this.stateStructuresReady.pipe(
+            //     timeout(1000),
+            //     filter((d) => d === true),
+            //     take(1),
+            // ).subscribe(() => {
 
                 if (element == null) {
                     resolve(this.getRoot());
@@ -115,7 +129,11 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
                 }
 
                 resolve(null);
-            });
+            // }, (e) => {
+            //     vscode.window.showErrorMessage("Timeout connecting to clusters");
+            //     console.log("timeout happened");
+            //     resolve([]);
+            // });
         });
     }
 

@@ -16,28 +16,22 @@
     ],
     "main": "./out/extension",
     "contributes": {
-        "commands": [
-            {
-                "command": "generate-configuration",
-                "title": "CASSANDRA WORKBENCH: Generate configuration template"
-            }
-        ],
+        "commands": [{
+            "command": "generate-configuration",
+            "title": "CASSANDRA WORKBENCH: Generate configuration template"
+        }],
         "viewsContainers": {
-            "activitybar": [
-                {
-                    "id": "object-explorer",
-                    "title": "Casssandra workbench",
-                    "icon": "icons/activity.svg"
-                }
-            ]
+            "activitybar": [{
+                "id": "object-explorer",
+                "title": "Casssandra workbench",
+                "icon": "icons/activity.svg"
+            }]
         },
         "views": {
-            "object-explorer": [
-                {
-                    "id": "cassandraWorkbenchView",
-                    "name": "Explorer"
-                }
-            ]
+            "object-explorer": [{
+                "id": "cassandraWorkbenchView",
+                "name": "Explorer"
+            }]
         }
     },
     "scripts": {
@@ -45,7 +39,8 @@
         "compile": "tsc -p ./",
         "watch": "tsc -watch -p ./",
         "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+        "test": "npm run compile && node ./node_modules/vscode/bin/test",
+        "generate": "./script/generate-parser.sh"
     },
     "devDependencies": {
         "@types/cassandra-driver": "^3.4.0",
@@ -55,9 +50,26 @@
         "@types/node": "^10.5.2",
         "tslint": "^5.10.0",
         "typescript": "^2.9.2",
-        "vscode": "^1.1.6"
+        "vscode": "^1.1.6",
+        "@types/jasmine": "^2.8.8",
+        "babel-core": "^6.26.3",
+        "babel-preset-env": "^1.7.0",
+        "babelify": "^8.0.0",
+        "derequire": "^2.0.6",
+        "gulp": "^3.9.1",
+        "gulp-clean": "^0.4.0",
+        "gulp-exec": "^3.0.1",
+        "gulp-jasmine": "^4.0.0",
+        "gulp-typescript": "^5.0.0-alpha.1",
+        "jasmine": "^3.1.0",
+        "jasmine-ts": "^0.2.1",
+        "merge2": "^1.2.2",
+        "rimraf": "^2.6.2",
+        "run-sequence": "^2.2.1"
     },
     "dependencies": {
+        "antlr4ts": "^0.4.1-alpha.0",
+        "antlr4ts-cli": "^0.4.0-alpha.4",
         "cassandra-driver": "^3.5.0",
         "fs-extra": "^6.0.1",
         "jsmin": "^1.0.1",

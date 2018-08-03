@@ -1,7 +1,11 @@
 <div class="root ">
     <div #top class="top">
-        <div #topLeft class="top-left"></div>
-        <div #topRight class="top-right"></div>
+        <div #topLeft class="top-left" fxLayout="column">
+            <div>Top</div>
+            <ui-query-editor fxFlex></ui-query-editor>
+        <div>Bottom</div>
     </div>
-    <div #bottom class="bottom"></div>
+    <div #topRight class="top-right"></div>
+</div>
+<div #bottom class="bottom"></div>
 </div>

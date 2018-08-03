@@ -8,8 +8,10 @@
         ],
         "sourceMap": true,
         "rootDir": "src",
+        "experimentalDecorators": true,
+        // "emitDecoratorMetadata": true,
         /* Strict Type-Checking Option */
-        "strict": true,   /* enable all strict type-checking options */
+        "strict": false,   /* enable all strict type-checking options */
         /* Additional Checks */
         "noUnusedLocals": false, /* Report errors on unused locals. */
         // "noImplicitReturns": true, /* Report error when not all code paths in function return a value. */
@@ -24,6 +26,7 @@
         "node_modules",
         ".vscode-test",
         "ngsrc",
-        "ng"
+        "ng",
+        "antlr4"
     ]
 }

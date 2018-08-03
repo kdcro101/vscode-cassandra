@@ -4,6 +4,7 @@ import { mergeMap } from "rxjs/operators";
 import * as vscode from "vscode";
 import { CassandraWorkbench } from "./cassandra-workbench";
 import { VsCommands } from "./commands";
+import { Completition } from "./completition";
 import { ConfigurationManager } from "./configuration-manager";
 import { Icons } from "./icons";
 import { Workspace } from "./workspace";
@@ -36,6 +37,13 @@ export function activate(context: vscode.ExtensionContext) {
     //     }).catch((e) => {
     //         console.error(e);
     //     });
+
+    // const code = `select a,b,c from a.e where sadasd = 212 and`;
+    // const comp = new Completition();
+    // const results = comp.execute(code);
+
+    // console.log(results);
+
 }
 
 // this method is called when your extension is deactivated
