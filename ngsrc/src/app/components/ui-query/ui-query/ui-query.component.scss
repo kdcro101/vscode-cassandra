@@ -1,5 +1,4 @@
 @import "../../../../scss/colors";
-
 :host {
     position: relative;
     .root {
@@ -15,10 +14,6 @@
                 background: green;
                 height: 100%;
                 float: left;
-
-                .contenteditable{
-                    padding:16px;
-                }
             }
             .top-right {
                 background: yellow;
@@ -30,7 +25,7 @@
             background: blue;
         }
         ::ng-deep .gutter {
-            background-color: mat-color($background,500);
+            background-color: mat-color($background, 500);
             &.gutter-vertical {
                 background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiPiAgPGRlZnM+ICAgIDxwYXRoIGlkPSJhIiBkPSJNMCAwaDI0djI0SDBWMHoiLz4gIDwvZGVmcz4gIDxjbGlwUGF0aCBpZD0iYiI+ICAgIDx1c2Ugb3ZlcmZsb3c9InZpc2libGUiIHhsaW5rOmhyZWY9IiNhIi8+ICA8L2NsaXBQYXRoPiAgPHBhdGggZD0iTTIwIDlINHYyaDE2Vjl6TTQgMTVoMTZ2LTJINHYyeiIgY2xpcC1wYXRoPSJ1cmwoI2IpIi8+PC9zdmc+);
                 background-repeat: no-repeat;

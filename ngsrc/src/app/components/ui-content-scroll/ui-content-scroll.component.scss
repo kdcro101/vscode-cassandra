@@ -1,28 +1,56 @@
- :host {
-     overflow-y: hidden;
-     overflow-x: hidden; // position: relative; //  transform: translate3d(0,0,0);
-     position: relative;
-     .wrapper {
-         // background:darkslateblue;
-         // height: 100%;
-         // width: 100%;
-         position: absolute;
-         top: 0;
-         left: 0;
-         right: 0;
-         bottom: 0;
-         &.native {
-             overflow-y: auto;
-             overflow-x: auto; // transform: translate3d(0, 0, 0);
-             will-change: transform;
-         }
-     }
-     .scroller {
-         user-select: none; // position: absolute;
-         /* Prevent elements to be highlighted on tap */
-         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-         /* Put the scroller into the HW Compositing layer right from the start */
-         transform: translate3d(0, 0, 0);
-         will-change: transform;
-     }
- }
+:host {
+    overflow-y: hidden;
+    overflow-x: hidden; // position: relative; //  transform: translate3d(0,0,0);
+    position: relative;
+    .trap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        outline: none;
+    }
+    .wrapper {
+        // background:darkslateblue;
+        // height: 100%;
+        // width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        &.native {
+            overflow-y: auto;
+            overflow-x: hidden; // will-change: scroll-position;
+            will-change: transform;
+        }
+        &.isc {
+            overflow: hidden; // position: relative;
+            ::ng-deep .iScrollVerticalScrollbar {
+                position: absolute;
+                z-index: 9999;
+                width: 6px;
+                bottom: 2px;
+                top: 2px;
+                right: 1px;
+                overflow: hidden;
+                .iScrollIndicator {
+                    position: absolute;
+                    background: rgba(0, 0, 0, 0.2);
+                    border-width: 0px;
+                    border-style: solid;
+                    border-radius: 3px;
+                    width: 100%;
+                }
+            }
+        }
+    }
+    .scroller {
+        user-select: none; // position: absolute;
+        /* Prevent elements to be highlighted on tap */
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        /* Put the scroller into the HW Compositing layer right from the start */
+        transform: translate3d(0, 0, 0);
+        will-change: transform;
+    }
+}

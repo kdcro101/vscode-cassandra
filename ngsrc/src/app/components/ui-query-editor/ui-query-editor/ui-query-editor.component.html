@@ -1,9 +1,10 @@
-<div class="root" fxLayout="row">
-    <div #lines class="lines mat-app-background">
+<div class="root mat-app-background">
+    <div #lines class="lines">
         <div *ngFor="let i of lineNumbers">{{i}}</div>
     </div>
-    <div #contentEditableWrapper class="wrapper" fxFlex>
-        <div contenteditable="true" #contentEditable class="mat-body-1 mat-app-background contenteditable">
+    <div #contentEditableWrapper class="wrapper">
+        <div #cursorTrap class="cursor-trap"></div>
+        <div contenteditable="true" #contentEditable class="contenteditable">
             abc
         </div>
     </div>

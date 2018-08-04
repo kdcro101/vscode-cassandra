@@ -12,5 +12,6 @@
     "redis-console.port": 6379,
     "redis-console.password": "",
     "redis-console.hostIpFamily": 4,
-    "eslint.enable": false
+    "eslint.enable": false,
+    "typescript.navigator.active": false
 }

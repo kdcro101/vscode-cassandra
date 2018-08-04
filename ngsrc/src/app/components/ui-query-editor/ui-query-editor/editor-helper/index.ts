@@ -3,13 +3,34 @@ import { ThemeService } from "../../../../services/theme/theme.service";
 
 export class EditorHelper {
 
-    constructor(private contentEditable: HTMLDivElement, private lineHeight: number) {
+    constructor(private contentEditable: HTMLDivElement, private lineHeight: number, private scroll: HTMLDivElement) {
         fromEvent(contentEditable, "keydown").pipe()
             .subscribe((e: KeyboardEvent) => {
                 if (e.keyCode === 9) {
                     e.preventDefault();
                     // add tab
                     document.execCommand("insertHTML", false, "&#009");
+                    // const sel = window.getSelection();
+                    // const range = sel.getRangeAt(0);
+
+                    // // const tabNode = document.createTextNode("\u00a0\u00a0\u00a0\u00a0");
+                    // const tabNode = document.createTextNode("\u0009");
+                    // range.insertNode(tabNode);
+                    // range.setStartAfter(tabNode);
+                    // range.setEndAfter(tabNode);
+
+                    // sel.removeAllRanges();
+                    // sel.addRange(range);
+
+                    const r = this.getSelectionCoords();
+                    console.log(JSON.stringify(r));
+                    // this.scroll.scrollLeft = r.x;
+                    this.scrollToCaret();
+
+                }
+                if (e.ctrlKey === true && (e.keyCode === 65 || e.keyCode === 97)) {
+                    console.log("selectAll");
+                    this.selectAll();
                 }
                 // if (e.keyCode === 13) {
                 //     e.preventDefault();
@@ -18,6 +39,16 @@ export class EditorHelper {
                 //     // prevent the default behaviour of return key pressed
 
                 // }
+            });
+
+        fromEvent(this.contentEditable, "paste").pipe()
+            .subscribe((e: ClipboardEvent) => {
+                e.preventDefault();
+                // get text representation of clipboard
+                const text = e.clipboardData.getData("text/plain");
+                // insert text manually
+                document.execCommand("insertHTML", false, text);
+                this.scrollToCaret();
             });
 
     }
@@ -72,26 +103,61 @@ export class EditorHelper {
         const l = Math.round(h / this.lineHeight);
         return l;
 
-        // const exp = Array.from(this.contentEditable.childNodes);
-        // const p = exp.reduce((acc, current, i) => {
-        //     return acc + current.textContent;
-        // }, "");
+    }
+    public getSelectionCoords() {
+        const win = window;
+        const doc = document;
 
-        // const content = this.contentEditable.textContent || "";
-        // const text = content.replace(/\n\n$/i, "\n");
-        // const endsWithSingleNl = (content.search(/\n\n$/) === -1 && content.search(/\n$/) > -1) ? true : false;
+        let x = 0, y = 0;
 
-        // const splits = text.split("\n");
+        const sel = win.getSelection();
+        let range: Range = null;
+        let rects: ClientRectList = null;
+        let rect: ClientRect = null;
 
-        // console.log(`split: <${JSON.stringify(splits)}>`);
-        // console.log(`replaced: [${JSON.stringify(text)}]`);
-        // console.log(`original: [${JSON.stringify(content)}]`);
-        // console.log(`exp: [${JSON.stringify(p)}]`);
-        // console.log(`endsWithSingleNl: ${endsWithSingleNl}`);
+        if (sel.rangeCount) {
+            range = sel.getRangeAt(0).cloneRange();
+            if (range.getClientRects) {
+                range.collapse(true);
+                rects = range.getClientRects();
+                if (rects.length > 0) {
+                    rect = rects[0];
+                }
+                x = rect.left;
+                y = rect.top;
+            }
+            // Fall back to inserting a temporary element
+            if (x === 0 && y === 0) {
+                const span = doc.createElement("span");
+                if (span.getClientRects) {
+                    // Ensure span has dimensions and position by
+                    // adding a zero-width space character
+                    span.appendChild(doc.createTextNode("\u200b"));
+                    range.insertNode(span);
+                    rect = span.getClientRects()[0];
+                    x = rect.left;
+                    y = rect.top;
+                    const spanParent = span.parentNode;
+                    spanParent.removeChild(span);
 
-        // // console.log(window.getComputedStyle(this.contentEditable));
+                    // Glue any broken text nodes back together
+                    spanParent.normalize();
+                }
+            }
+        }
 
-        // const lines = endsWithSingleNl ? splits.length - 1 : splits.length;
-        // return lines;
+        return { x: x, y: y };
+    }
+    public selectAll() {
+        const sel = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(this.contentEditable);
+        sel.removeAllRanges();
+        sel.addRange(range);
+    }
+    public scrollToCaret() {
+        const pos = this.getSelectionCoords();
+        this.scroll.scrollTop = pos.y;
+        this.scroll.scrollLeft = pos.x;
     }
 }

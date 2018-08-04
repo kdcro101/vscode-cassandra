@@ -6,21 +6,57 @@
         left: 0;
         right: 0;
         bottom: 0;
-        overflow: auto;
-        .lines{
+        overflow-x: hidden;
+        overflow-y: hidden;
+        .lines {
+            z-index: 2;
+            position: absolute;
             padding-left: 4px;
             padding-right: 4px;
             text-align: right;
+            min-width: 3em;
+            top: 0;
+            left: 0;
+            bottom: 0; // background: aqua;
+            overflow: hidden;
+        }
+        .wrapper {
+            // pointer-events: none;
+            position: absolute;
+            background-color: transparent; // cursor: text;
+            top: 0;
+            left: 75px;
+            bottom: 0;
+            right: 0;
+            overflow-x: auto;
+            overflow-y: auto;
+            .cursor-trap {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                // background-color: yellow;
+                cursor: text;
+                z-index: 1;
+                will-change: transform;
+            }
+            .contenteditable {
+                z-index: 2;
+                position: relative; // pointer-events:all;
+                // background-color: firebrick;
+                padding-left: 8px;
+                padding-right: 8px;
+                display: inline-block;
+                white-space: pre;
+                outline: none; // min-width: 8px;
+            }
         }
     }
-    .wrapper {
-        padding-left: 8px;
-        .contenteditable {
-            display: inline-block;
-            position: relative;
-            white-space: pre;
-            outline: none;
-            min-width: 8px;
-        }
+    ::-webkit-scrollbar-corner {
+        background-color: transparent;
+    }
+    ::-webkit-scrollbar {
+        cursor: pointer;
     }
 }
