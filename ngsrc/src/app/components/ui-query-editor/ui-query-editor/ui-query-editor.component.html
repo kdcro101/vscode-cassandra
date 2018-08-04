@@ -1,9 +1,10 @@
-<div class="wrapper">
-    <div contenteditable="true" #contentEditable class="mat-body-1 mat-app-background contenteditable">
-        abc
+<div class="root" fxLayout="row">
+    <div #lines class="lines mat-app-background">
+        <div *ngFor="let i of lineNumbers">{{i}}</div>
+    </div>
+    <div #contentEditableWrapper class="wrapper" fxFlex>
+        <div contenteditable="true" #contentEditable class="mat-body-1 mat-app-background contenteditable">
+            abc
+        </div>
     </div>
 </div>
- <!-- adasd <span style="color:green">asdasda</span>adasdasdadasdasddsa
-        <br>
-        asdadasdadas <span style="color:green">asdasd</span> asdasdasd
-        <span style="color:fuchsia">asdasd</span> asdasdasd <span style="color:lime">asdasd</span> asdasdasd -->

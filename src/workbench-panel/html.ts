@@ -8,6 +8,7 @@ export const generateHtml = (basePath: string) => {
     const ws = vscode.workspace.getConfiguration(null, null);
     const fontFamily = ws.editor.fontFamily;
     const lineHeight = ws.editor.lineHeight;
+    const fontSize = ws.editor.fontSize;
 
     return `
     <!doctype html>
@@ -20,6 +21,7 @@ export const generateHtml = (basePath: string) => {
             <script>
                 const vscode = acquireVsCodeApi();
                 var codeFontFamily = "${fontFamily}";
+                var codeFontSize = "${fontSize}";
                 var codeLineHeight = "${lineHeight}";
             </script>
         </head>

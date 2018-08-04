@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
+import { range } from "lodash-es";
 import { fromEvent, merge } from "rxjs";
 import { EditorHelper } from "./editor-helper";
-declare var codeFontFamily: string;
 
 declare var document: Document;
 declare var window: Window;
@@ -14,14 +14,27 @@ declare var window: Window;
 })
 export class UiQueryEditorComponent implements OnInit {
     @ViewChild("contentEditable") public contentEditable: ElementRef<HTMLDivElement>;
-    private helper: EditorHelper;
-    constructor() { }
+    @ViewChild("lines") public lines: ElementRef<HTMLDivElement>;
+    @Input() private textFontFamily: string = "Inconsolata";
+    @Input() private textFontSize: number = 15;
+    @Input() private textLineHeight: number = 21;
+
+    public helper: EditorHelper;
+    public lineNumbers: number [] = [];
+    constructor(public change: ChangeDetectorRef) {
+
+    }
 
     ngOnInit() {
-        this.helper = new EditorHelper(this.contentEditable.nativeElement);
+        this.helper = new EditorHelper(this.contentEditable.nativeElement, this.textLineHeight);
 
-        this.contentEditable.nativeElement.style.fontFamily = codeFontFamily;
-        this.contentEditable.nativeElement.style.lineHeight = "20px";
+        this.contentEditable.nativeElement.style.fontFamily = this.textFontFamily;
+        this.contentEditable.nativeElement.style.fontSize = `${this.textFontSize}px`;
+        this.contentEditable.nativeElement.style.lineHeight = `${this.textLineHeight}px`;
+
+        this.lines.nativeElement.style.fontFamily = this.textFontFamily;
+        this.lines.nativeElement.style.fontSize = `${this.textFontSize}px`;
+        this.lines.nativeElement.style.lineHeight = `${this.textLineHeight}px`;
 
         merge(
             fromEvent(this.contentEditable.nativeElement, "input"),
@@ -35,6 +48,10 @@ export class UiQueryEditorComponent implements OnInit {
                 console.log("###########################");
                 console.log(`lines: ${this.helper.lineCount}`);
                 console.log("###########################");
+
+                this.lineNumbers = range(1, this.helper.lineCount + 1);
+                console.log(this.lineNumbers);
+                this.change.detectChanges();
             });
 
     }

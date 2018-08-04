@@ -2,6 +2,10 @@ import { Injectable } from "@angular/core";
 
 declare var document: Document;
 
+declare var codeFontFamily: string;
+declare var codeFontSize: number;
+declare var codeLineHeight: number;
+
 @Injectable({
     providedIn: "root"
 })
@@ -16,5 +20,18 @@ export class ThemeService {
             document.body.classList.add("dark-theme");
         }
     }
-
+    public getEditorFontFamily(): string {
+        const f = (codeFontFamily && codeFontFamily.trim() !== "") ? codeFontFamily : "Inconsolata";
+        return f;
+    }
+    public getEditorFontSize(): number {
+        const s = (codeFontSize && codeFontSize > 0) ? codeFontSize : 15;
+        return s;
+    }
+    public getEditorLineHeight(): number {
+        const fs = this.getEditorFontSize();
+        const lh = fs + 2 + 4;
+        const s = (codeLineHeight && codeLineHeight > 0) ? codeLineHeight : 20;
+        return s;
+    }
 }

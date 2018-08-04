@@ -2,7 +2,9 @@
     <div #top class="top">
         <div #topLeft class="top-left" fxLayout="column">
             <div>Top</div>
-            <ui-query-editor fxFlex></ui-query-editor>
+            <ui-query-editor [textFontFamily]="theme.getEditorFontFamily()" [textFontSize]="theme.getEditorFontSize()"
+            [textLineHeight]="theme.getEditorLineHeight()"
+            fxFlex></ui-query-editor>
         <div>Bottom</div>
     </div>
     <div #topRight class="top-right"></div>

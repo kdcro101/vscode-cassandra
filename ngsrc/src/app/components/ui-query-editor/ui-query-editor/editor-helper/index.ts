@@ -1,8 +1,9 @@
 import { fromEvent } from "rxjs";
+import { ThemeService } from "../../../../services/theme/theme.service";
 
 export class EditorHelper {
 
-    constructor(private contentEditable: HTMLDivElement) {
+    constructor(private contentEditable: HTMLDivElement, private lineHeight: number) {
         fromEvent(contentEditable, "keydown").pipe()
             .subscribe((e: KeyboardEvent) => {
                 if (e.keyCode === 9) {
@@ -66,15 +67,31 @@ export class EditorHelper {
         };
     }
     public get lineCount(): number {
-        const text = this.contentEditable.innerText;
-        const splits = text.split("\n");
 
-        console.log(JSON.stringify(splits));
-        console.log(JSON.stringify(text));
+        const h = this.contentEditable.offsetHeight;
+        const l = Math.round(h / this.lineHeight);
+        return l;
 
-        console.log(window.getComputedStyle(this.contentEditable));
+        // const exp = Array.from(this.contentEditable.childNodes);
+        // const p = exp.reduce((acc, current, i) => {
+        //     return acc + current.textContent;
+        // }, "");
 
-        const lines = splits.length;
-        return lines;
+        // const content = this.contentEditable.textContent || "";
+        // const text = content.replace(/\n\n$/i, "\n");
+        // const endsWithSingleNl = (content.search(/\n\n$/) === -1 && content.search(/\n$/) > -1) ? true : false;
+
+        // const splits = text.split("\n");
+
+        // console.log(`split: <${JSON.stringify(splits)}>`);
+        // console.log(`replaced: [${JSON.stringify(text)}]`);
+        // console.log(`original: [${JSON.stringify(content)}]`);
+        // console.log(`exp: [${JSON.stringify(p)}]`);
+        // console.log(`endsWithSingleNl: ${endsWithSingleNl}`);
+
+        // // console.log(window.getComputedStyle(this.contentEditable));
+
+        // const lines = endsWithSingleNl ? splits.length - 1 : splits.length;
+        // return lines;
     }
 }

@@ -50,6 +50,7 @@
                         "styles": [
                             "src/scss/fonts/material-icons.css",
                             "src/scss/fonts/roboto.css",
+                            "src/scss/fonts/inconsolata.css",
                             "src/styles.scss"
                         ],
                         "scripts": [

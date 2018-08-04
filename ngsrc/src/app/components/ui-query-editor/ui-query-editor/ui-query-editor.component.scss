@@ -1,13 +1,20 @@
 :host {
     position: relative;
-    .wrapper {
+    .root {
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        padding: 16px;
-        overflow: scroll;
+        overflow: auto;
+        .lines{
+            padding-left: 4px;
+            padding-right: 4px;
+            text-align: right;
+        }
+    }
+    .wrapper {
+        padding-left: 8px;
         .contenteditable {
             display: inline-block;
             position: relative;

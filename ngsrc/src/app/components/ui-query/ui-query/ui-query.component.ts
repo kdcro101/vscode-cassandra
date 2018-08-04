@@ -1,6 +1,7 @@
 import * as Split from "split.js";
 
 import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { ThemeService } from "../../../services/theme/theme.service";
 
 @Component({
     selector: "ui-query",
@@ -14,7 +15,9 @@ export class UiQueryComponent implements OnInit {
     @ViewChild("bottom") public bottom: ElementRef<HTMLDivElement>;
     @ViewChild("topLeft") public topLeft: ElementRef<HTMLDivElement>;
     @ViewChild("topRight") public topRight: ElementRef<HTMLDivElement>;
-    constructor() { }
+    constructor(public theme: ThemeService) {
+
+    }
 
     ngOnInit() {
 
