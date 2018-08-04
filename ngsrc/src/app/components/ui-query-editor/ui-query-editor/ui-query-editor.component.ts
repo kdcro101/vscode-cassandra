@@ -67,23 +67,22 @@ export class UiQueryEditorComponent implements OnInit {
             });
 
         merge(
-            fromEvent(this.cursorTrap.nativeElement, "focusin"),
+            // fromEvent(this.cursorTrap.nativeElement, "focusin"),
             fromEvent(this.cursorTrap.nativeElement, "mousedown", {
-                capture: false,
+            capture: false,
             })
         ).pipe()
             .subscribe((e) => {
                 console.log("sending focus");
-
                 this.contentEditable.nativeElement.focus();
-
-                e.preventDefault();
+                // e.preventDefault();
             });
         fromEvent(this.contentEditableWrapper.nativeElement, "scroll").pipe()
             .subscribe(() => {
                 const st = this.contentEditableWrapper.nativeElement.scrollTop;
                 this.lines.nativeElement.scrollTop = st;
-                this.cursorTrap.nativeElement.style.transform = `translate3d(0,${st}px,0)`;
+                // this.cursorTrap.nativeElement.style.transform = `translate3d(0,${st}px,0)`;
+                // this.cursorTrap.nativeElement.style.top = `${st}px`;
             });
 
     }

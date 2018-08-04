@@ -3,7 +3,8 @@
         <div *ngFor="let i of lineNumbers">{{i}}</div>
     </div>
     <div #contentEditableWrapper class="wrapper">
-        <div #cursorTrap class="cursor-trap"></div>
-        <div contenteditable="true" #contentEditable class="contenteditable">{{ text }}</div>
+        <div #cursorTrap class="cursor-trap">
+            <div contenteditable="true" #contentEditable class="contenteditable"><div #contentWrap class="content-wrap" [innerHTML]="text"></div></div>
+        </div>
     </div>
 </div>

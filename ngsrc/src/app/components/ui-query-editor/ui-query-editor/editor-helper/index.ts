@@ -6,33 +6,30 @@ export class EditorHelper {
     private rangeSaved: Range = null;
 
     constructor(private contentEditable: HTMLDivElement, private lineHeight: number, private scroll: HTMLDivElement) {
-        fromEvent(contentEditable, "keydown").pipe()
-            .subscribe((e: KeyboardEvent) => {
-                if (e.keyCode === 9) {
-                    e.preventDefault();
-                    // add tab
-                    document.execCommand("insertHTML", false, "&#009");
-
-                    const r = this.getSelectionCoords();
-                    console.log(JSON.stringify(r));
-                    this.scrollToCaret();
-                }
-                if (e.ctrlKey === true && (e.keyCode === 65 || e.keyCode === 97)) {
-                    console.log("selectAll");
-                    this.selectAll();
-                }
-            });
-
-        fromEvent(this.contentEditable, "paste").pipe()
-            .subscribe((e: ClipboardEvent) => {
+        fromEvent(contentEditable, "keydown").pipe().subscribe((e: KeyboardEvent) => {
+            if (e.keyCode === 9) {
                 e.preventDefault();
-                const text = e.clipboardData.getData("text/plain");
-                document.execCommand("insertHTML", false, text);
+                // add tab
+                document.execCommand("insertHTML", false, "&#009");
+
+                const r = this.getSelectionCoords();
+                console.log(JSON.stringify(r));
                 this.scrollToCaret();
-            });
+            }
+            if (e.ctrlKey === true && (e.keyCode === 65 || e.keyCode === 97)) {
+                console.log("selectAll");
+                this.selectAll();
+            }
+        });
+
+        fromEvent(this.contentEditable, "paste").pipe().subscribe((e: ClipboardEvent) => {
+            e.preventDefault();
+            const text = e.clipboardData.getData("text/plain");
+            document.execCommand("insertHTML", false, text);
+            this.scrollToCaret();
+        });
 
         fromEvent(this.contentEditable, "blur").pipe().subscribe(() => {
-            console.log("bluring");
             this.saveSelection();
         });
         fromEvent(this.contentEditable, "focusin").pipe().subscribe(() => {
