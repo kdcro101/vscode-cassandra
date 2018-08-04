@@ -15,6 +15,11 @@ export class UiQueryComponent implements OnInit {
     @ViewChild("bottom") public bottom: ElementRef<HTMLDivElement>;
     @ViewChild("topLeft") public topLeft: ElementRef<HTMLDivElement>;
     @ViewChild("topRight") public topRight: ElementRef<HTMLDivElement>;
+
+    public code: string = `select * \n from tablica; tekst!!! <span contenteditable='false' style="color:fuchsia;">TEXT123</span> asx
+    <span contenteditable='false' style="color:lime;"><span class="indicator"></span><span>&nbsp;ABC</span></span>
+    \n\n`;
+
     constructor(public theme: ThemeService) {
 
     }

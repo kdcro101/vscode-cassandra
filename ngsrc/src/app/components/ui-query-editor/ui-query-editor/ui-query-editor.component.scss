@@ -32,10 +32,9 @@
             .cursor-trap {
                 position: relative;
                 top: 0;
-                left: 0;
-                // right: 0;
+                left: 0; // right: 0;
                 // bottom: 0;
-                background-color: navy;
+                // background-color: navy;
                 min-height: 100%;
                 min-width: 100%;
                 cursor: text;
@@ -51,8 +50,21 @@
                 white-space: pre;
                 outline: none;
                 min-width: 100%;
-                box-sizing: border-box;
-                background: darkslateblue;
+                box-sizing: border-box; // background: darkslateblue;
+                caret-color: yellow;
+
+
+                ::ng-deep span {
+                    display: inline-block;
+                    vertical-align: middle;
+                    .indicator{
+                        height: 18px;
+                        width:18px;
+                        padding: 1px;
+                        border-radius: 50%;
+                        background-color: mediumseagreen;
+                    }
+                }
             }
         }
     }

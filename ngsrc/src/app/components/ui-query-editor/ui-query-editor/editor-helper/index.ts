@@ -20,6 +20,15 @@ export class EditorHelper {
                 console.log("selectAll");
                 this.selectAll();
             }
+            // if (e.keyCode === 13) { // enter && shift
+
+            //     e.preventDefault(); // Prevent default browser behavior
+            //     // document.execCommand("insertHTML", false, "<span class=\"newline\">\n</span>");
+            //     document.execCommand("insertHTML", false, "<br>");
+            //     this.scrollToCaret();
+
+            // }
+
         });
 
         fromEvent(this.contentEditable, "paste").pipe().subscribe((e: ClipboardEvent) => {
@@ -145,6 +154,7 @@ export class EditorHelper {
         this.scroll.scrollTop = pos.y;
         this.scroll.scrollLeft = pos.x;
     }
+
     public saveSelection() {
 
         const sel = window.getSelection();

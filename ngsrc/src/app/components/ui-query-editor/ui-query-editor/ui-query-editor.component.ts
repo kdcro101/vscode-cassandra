@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { range } from "lodash-es";
 import { fromEvent, merge } from "rxjs";
 import { UiContentScrollComponent } from "../../ui-content-scroll/ui-content-scroll.component";
@@ -24,9 +25,14 @@ export class UiQueryEditorComponent implements OnInit {
     @Input() private textFontSize: number = 15;
     @Input() private textLineHeight: number = 21;
 
+    public safeInput: SafeHtml = null;
+
     public helper: EditorHelper;
     public lineNumbers: number[] = [];
-    constructor(public change: ChangeDetectorRef) {
+    constructor(
+        public change: ChangeDetectorRef,
+        private sanitized: DomSanitizer
+    ) {
 
     }
 
@@ -69,7 +75,7 @@ export class UiQueryEditorComponent implements OnInit {
         merge(
             // fromEvent(this.cursorTrap.nativeElement, "focusin"),
             fromEvent(this.cursorTrap.nativeElement, "mousedown", {
-            capture: false,
+                capture: true,
             })
         ).pipe()
             .subscribe((e) => {
@@ -85,6 +91,12 @@ export class UiQueryEditorComponent implements OnInit {
                 // this.cursorTrap.nativeElement.style.top = `${st}px`;
             });
 
+            this.safeInput = this.safeHtml(this.text);
+
+    }
+
+    public safeHtml(value) {
+        return this.sanitized.bypassSecurityTrustHtml(value);
     }
 
 }

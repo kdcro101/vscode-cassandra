@@ -4,7 +4,7 @@
     </div>
     <div #contentEditableWrapper class="wrapper">
         <div #cursorTrap class="cursor-trap">
-            <div contenteditable="true" #contentEditable class="contenteditable"><div #contentWrap class="content-wrap" [innerHTML]="text"></div></div>
+            <div contenteditable="true" #contentEditable class="contenteditable"[innerHTML]="safeInput"></div>
         </div>
     </div>
 </div>
