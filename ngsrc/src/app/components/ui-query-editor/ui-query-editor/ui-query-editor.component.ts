@@ -19,6 +19,7 @@ export class UiQueryEditorComponent implements OnInit {
     @ViewChild("lines") public lines: ElementRef<HTMLDivElement>;
     @ViewChild("cursorTrap") public cursorTrap: ElementRef<HTMLDivElement>;
 
+    @Input() public text: string = "";
     @Input() private textFontFamily: string = "Inconsolata";
     @Input() private textFontSize: number = 15;
     @Input() private textLineHeight: number = 21;
@@ -66,11 +67,14 @@ export class UiQueryEditorComponent implements OnInit {
             });
 
         merge(
-            fromEvent(this.contentEditableWrapper.nativeElement, "focusin"),
-            fromEvent(this.contentEditableWrapper.nativeElement, "mousedown")
+            fromEvent(this.cursorTrap.nativeElement, "focusin"),
+            fromEvent(this.cursorTrap.nativeElement, "mousedown", {
+                capture: false,
+            })
         ).pipe()
             .subscribe((e) => {
                 console.log("sending focus");
+
                 this.contentEditable.nativeElement.focus();
 
                 e.preventDefault();

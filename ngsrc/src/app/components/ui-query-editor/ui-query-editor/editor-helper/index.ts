@@ -3,6 +3,8 @@ import { ThemeService } from "../../../../services/theme/theme.service";
 
 export class EditorHelper {
 
+    private rangeSaved: Range = null;
+
     constructor(private contentEditable: HTMLDivElement, private lineHeight: number, private scroll: HTMLDivElement) {
         fromEvent(contentEditable, "keydown").pipe()
             .subscribe((e: KeyboardEvent) => {
@@ -10,35 +12,19 @@ export class EditorHelper {
                     e.preventDefault();
                     // add tab
                     document.execCommand("insertHTML", false, "&#009");
-                    // const sel = window.getSelection();
-                    // const range = sel.getRangeAt(0);
-
-                    // // const tabNode = document.createTextNode("\u00a0\u00a0\u00a0\u00a0");
-                    // const tabNode = document.createTextNode("\u0009");
-                    // range.insertNode(tabNode);
-                    // range.setStartAfter(tabNode);
-                    // range.setEndAfter(tabNode);
-
-                    // sel.removeAllRanges();
-                    // sel.addRange(range);
 
                     const r = this.getSelectionCoords();
                     console.log(JSON.stringify(r));
                     // this.scroll.scrollLeft = r.x;
                     this.scrollToCaret();
-
                 }
                 if (e.ctrlKey === true && (e.keyCode === 65 || e.keyCode === 97)) {
                     console.log("selectAll");
                     this.selectAll();
                 }
-                // if (e.keyCode === 13) {
-                //     e.preventDefault();
-                //     // insert 2 br tags (if only one br tag is inserted the cursor won't go to the next line)
-                //     document.execCommand("insertHTML", false, "\n");
-                //     // prevent the default behaviour of return key pressed
 
-                // }
+                // this.saveSelection();
+
             });
 
         fromEvent(this.contentEditable, "paste").pipe()
@@ -49,7 +35,16 @@ export class EditorHelper {
                 // insert text manually
                 document.execCommand("insertHTML", false, text);
                 this.scrollToCaret();
+                // this.saveSelection();
             });
+
+        fromEvent(this.contentEditable, "blur").pipe().subscribe(() => {
+            console.log("bluring");
+            this.saveSelection();
+        });
+        fromEvent(this.contentEditable, "focusin").pipe().subscribe(() => {
+            this.restoreSelection();
+        });
 
     }
     public getCaretPosition(): number {
@@ -159,5 +154,23 @@ export class EditorHelper {
         const pos = this.getSelectionCoords();
         this.scroll.scrollTop = pos.y;
         this.scroll.scrollLeft = pos.x;
+    }
+    public saveSelection() {
+
+        const sel = window.getSelection();
+        if (sel.getRangeAt && sel.rangeCount) {
+            // console.log("%c saveSelection ", "background: #f00; color: #fff");
+            this.rangeSaved = sel.getRangeAt(0);
+        }
+
+        return null;
+    }
+    public restoreSelection() {
+        if (this.rangeSaved) {
+            // console.log("%c restoreSelection ", "background: #0f0; color: #fff");
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(this.rangeSaved);
+        }
     }
 }
