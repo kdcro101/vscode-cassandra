@@ -15,27 +15,20 @@ export class EditorHelper {
 
                     const r = this.getSelectionCoords();
                     console.log(JSON.stringify(r));
-                    // this.scroll.scrollLeft = r.x;
                     this.scrollToCaret();
                 }
                 if (e.ctrlKey === true && (e.keyCode === 65 || e.keyCode === 97)) {
                     console.log("selectAll");
                     this.selectAll();
                 }
-
-                // this.saveSelection();
-
             });
 
         fromEvent(this.contentEditable, "paste").pipe()
             .subscribe((e: ClipboardEvent) => {
                 e.preventDefault();
-                // get text representation of clipboard
                 const text = e.clipboardData.getData("text/plain");
-                // insert text manually
                 document.execCommand("insertHTML", false, text);
                 this.scrollToCaret();
-                // this.saveSelection();
             });
 
         fromEvent(this.contentEditable, "blur").pipe().subscribe(() => {
