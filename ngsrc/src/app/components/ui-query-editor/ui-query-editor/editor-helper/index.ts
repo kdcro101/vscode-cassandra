@@ -12,7 +12,7 @@ export class EditorHelper {
                 // add tab
                 document.execCommand("insertHTML", false, "&#009");
 
-                const r = this.getSelectionCoords();
+                const r = this.getCaretScrollClientPos();
                 console.log(JSON.stringify(r));
                 this.scrollToCaret();
             }
@@ -98,7 +98,26 @@ export class EditorHelper {
         return l;
 
     }
-    public getSelectionCoords() {
+    public getCaretScrollClientPos(): {
+        x: number;
+        y: number;
+    } {
+        const caretViewportPos = this.getSelectionViewportCoords();
+        const editorViewportRect: ClientRect = this.scroll.getBoundingClientRect();
+        const editorScrollTop = this.scroll.scrollTop;
+        const editorScrollLeft = this.scroll.scrollLeft;
+        const editorHeight = this.scroll.offsetHeight;
+        const editorWidth = this.scroll.offsetWidth;
+
+        const caretClientX = caretViewportPos.x - editorViewportRect.left + editorScrollLeft;
+        const caretClientY = caretViewportPos.y - editorViewportRect.top + editorScrollTop;
+        return {
+            x: caretClientX,
+            y: caretClientY,
+
+        };
+    }
+    public getSelectionViewportCoords() {
         const win = window;
         const doc = document;
 
@@ -150,7 +169,7 @@ export class EditorHelper {
         sel.addRange(range);
     }
     public scrollToCaret() {
-        const pos = this.getSelectionCoords();
+        const pos = this.getCaretScrollClientPos();
         this.scroll.scrollTop = pos.y;
         this.scroll.scrollLeft = pos.x;
     }
