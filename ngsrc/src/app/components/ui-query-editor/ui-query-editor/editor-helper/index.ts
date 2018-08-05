@@ -106,8 +106,6 @@ export class EditorHelper {
         const editorViewportRect: ClientRect = this.scroll.getBoundingClientRect();
         const editorScrollTop = this.scroll.scrollTop;
         const editorScrollLeft = this.scroll.scrollLeft;
-        const editorHeight = this.scroll.offsetHeight;
-        const editorWidth = this.scroll.offsetWidth;
 
         const caretClientX = caretViewportPos.x - editorViewportRect.left + editorScrollLeft;
         const caretClientY = caretViewportPos.y - editorViewportRect.top + editorScrollTop;
@@ -170,8 +168,45 @@ export class EditorHelper {
     }
     public scrollToCaret() {
         const pos = this.getCaretScrollClientPos();
-        this.scroll.scrollTop = pos.y;
-        this.scroll.scrollLeft = pos.x;
+
+        const editorHeight = this.scroll.offsetHeight;
+        const editorWidth = this.scroll.offsetWidth;
+        const editorScrollTop = this.scroll.scrollTop;
+        const editorScrollLeft = this.scroll.scrollLeft;
+        const editorScrollRight = this.scroll.scrollLeft + editorWidth;
+        const editorScrollBottom = this.scroll.scrollTop + editorHeight;
+        const editorScrollTopMax = this.scroll.scrollHeight - editorHeight;
+        const editorScrollLeftMax = this.scroll.scrollWidth - editorWidth;
+
+        let newLeft: number = null;
+        let newTop: number = null;
+
+        if (pos.y > editorScrollBottom) {
+            newTop = pos.y - editorHeight + (this.lineHeight * 2);
+        }
+        if (pos.y < editorScrollBottom) {
+            newTop = editorScrollTop - (editorScrollTop - pos.y) - (this.lineHeight * 2);
+        }
+
+        if (pos.x > editorScrollRight) {
+            newLeft = pos.x - editorWidth + (this.lineHeight * 2);
+        }
+        if (pos.x < editorScrollLeft) {
+            newLeft = editorScrollLeft - (editorScrollLeft - pos.x) - (this.lineHeight * 2);
+        }
+
+        if (newTop) {
+            newTop = newTop < 0 ? 0 : newTop;
+            newTop = newTop > editorScrollTopMax ? editorScrollTopMax : newTop;
+            this.scroll.scrollTop = newTop;
+        }
+        if (newLeft) {
+            newLeft = newLeft < 0 ? 0 : newLeft;
+            newLeft = newLeft > editorScrollLeftMax ? editorScrollLeftMax : newLeft;
+            this.scroll.scrollLeft = newLeft;
+        }
+        console.log(`pos.x ${pos.x} pos.y ${pos.y}`);
+        console.log(`newLeft ${newLeft} newTop ${newLeft}`);
     }
 
     public saveSelection() {
