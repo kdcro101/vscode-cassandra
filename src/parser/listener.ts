@@ -2,13 +2,23 @@ import { CommonTokenStream, ParserRuleContext, TokenStreamRewriter } from "antlr
 import { KwSelectContext, KwWhereContext, RootContext } from "../antlr/CqlParser";
 import { CqlParserListener } from "../antlr/CqlParserListener";
 
-export type RuleClassType = "keyword" | "syntax" | "special" | "data-type" | "plain";
+export type RuleClassType = "keyword" |
+    "syntax" |
+    "special" |
+    "data-type" |
+    "plain" |
+    "column" |
+    "table" |
+    "keyspace";
 
 const ruleKeywords: { [prefix: string]: RuleClassType } = {
     kw: "keyword",
     syntax: "syntax",
     special: "special",
     dataType: "data-type",
+    column: "column",
+    table: "table",
+    keyspace: "keyspace",
 };
 
 export class AntlrListener implements CqlParserListener {
