@@ -1,0 +1,11 @@
+@import "../colors";
+body.dark-theme .editor {
+    .keyword {
+        color: mat-color($accent, 300);
+    }
+    .syntax {
+        &.syntaxComma {
+             color: limegreen;
+        }
+    }
+}

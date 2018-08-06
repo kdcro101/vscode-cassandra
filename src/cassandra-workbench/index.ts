@@ -1,4 +1,4 @@
-import { from } from "rxjs";
+import { from, Subject } from "rxjs";
 import * as vscode from "vscode";
 import { CassandraClient } from "../cassandra-client";
 import { ValidatedConfigClusterItem } from "../types";
@@ -15,11 +15,12 @@ export class CassandraWorkbench {
         private workspace: Workspace,
         private config: ValidatedConfigClusterItem[],
     ) {
-            const treeProvider = new TreeviewProvider(config);
-            context.subscriptions.push(vscode.window.registerTreeDataProvider("cassandraWorkbenchView", treeProvider));
-            this.panel = new WorkbenchPanel(context, workspace);
+        const treeProvider = new TreeviewProvider(config);
+        context.subscriptions.push(vscode.window.registerTreeDataProvider("cassandraWorkbenchView", treeProvider));
+        this.panel = new WorkbenchPanel(context, workspace);
+
     }
     public start() {
-            this.panel.reveal();
+        this.panel.reveal();
     }
 }

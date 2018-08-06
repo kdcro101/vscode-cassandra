@@ -1,6 +1,6 @@
 export type RuleType =
     "syntax" |
-    "syntaxBraces" |
+    "syntaxBracket" |
     "syntaxOperator" |
     "special" |
     "keyword" |
@@ -29,14 +29,14 @@ export const preferredRules: PreferredRules = {
     "table": { text: "", type: "inputTable" },
     "constant": { text: "", type: "inputConstant" },
 
-    "syntaxBracketLr": { text: "(", type: "syntaxBraces" },
-    "syntaxBracketRr": { text: ")", type: "syntaxBraces" },
-    "syntaxBracketLc": { text: "{", type: "syntaxBraces" },
-    "syntaxBracketRc": { text: "}", type: "syntaxBraces" },
-    "syntaxBracketLa": { text: "<", type: "syntaxBraces" },
-    "syntaxBracketRa": { text: ">", type: "syntaxBraces" },
-    "syntaxBracketLs": { text: "[", type: "syntaxBraces" },
-    "syntaxBracketRs": { text: "]", type: "syntaxBraces" },
+    "syntaxBracketLr": { text: "(", type: "syntaxBracket" },
+    "syntaxBracketRr": { text: ")", type: "syntaxBracket" },
+    "syntaxBracketLc": { text: "{", type: "syntaxBracket" },
+    "syntaxBracketRc": { text: "}", type: "syntaxBracket" },
+    "syntaxBracketLa": { text: "<", type: "syntaxBracket" },
+    "syntaxBracketRa": { text: ">", type: "syntaxBracket" },
+    "syntaxBracketLs": { text: "[", type: "syntaxBracket" },
+    "syntaxBracketRs": { text: "]", type: "syntaxBracket" },
 
     "syntaxComma": { text: ",", type: "syntax" },
     "syntaxSquote": { text: "'", type: "syntax" },

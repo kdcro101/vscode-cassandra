@@ -1,3 +1,4 @@
+@import "../../../../scss/colors";
 :host {
     position: relative;
     .root {
@@ -11,14 +12,21 @@
         .lines {
             z-index: 2;
             position: absolute;
-            padding-left: 8px;
-            padding-right: 8px;
             text-align: right;
             min-width: 3em;
             top: 0;
             left: 0;
             bottom: 0;
             overflow: hidden;
+            user-select: none;
+            .line {
+                user-select: none;
+                padding-left: 8px;
+                padding-right: 8px;
+                &.selected {
+                    background-color: mat-color($primary, 500);
+                }
+            }
         }
         .wrapper {
             position: absolute;
@@ -52,19 +60,6 @@
                 min-width: 100%;
                 box-sizing: border-box; // background: darkslateblue;
                 caret-color: yellow;
-
-
-                ::ng-deep span {
-                    display: inline-block;
-                    vertical-align: middle;
-                    .indicator{
-                        height: 18px;
-                        width:18px;
-                        padding: 1px;
-                        border-radius: 50%;
-                        background-color: mediumseagreen;
-                    }
-                }
             }
         }
     }

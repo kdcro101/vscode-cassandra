@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inpu
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { range } from "lodash-es";
 import { fromEvent, merge } from "rxjs";
+import { ParserService } from "../../../services/parser/parser.service";
 import { UiContentScrollComponent } from "../../ui-content-scroll/ui-content-scroll.component";
 import { EditorHelper } from "./editor-helper";
 
@@ -29,9 +30,12 @@ export class UiQueryEditorComponent implements OnInit {
 
     public helper: EditorHelper;
     public lineNumbers: number[] = [];
+    public lineSelected = new Set<number>();
+
     constructor(
         public change: ChangeDetectorRef,
-        private sanitized: DomSanitizer
+        private sanitized: DomSanitizer,
+        private parser: ParserService,
     ) {
 
     }
@@ -65,24 +69,29 @@ export class UiQueryEditorComponent implements OnInit {
                 console.log("###########################");
                 console.log(`lines: ${this.helper.lineCount}`);
                 console.log("###########################");
+                console.log(`getText: [${JSON.stringify(this.helper.getText())}]`);
 
                 this.lineNumbers = range(1, this.helper.lineCount + 1);
-                console.log(this.lineNumbers);
+                // console.log(this.lineNumbers);
                 this.change.detectChanges();
 
             });
-
+        fromEvent(this.contentEditable.nativeElement, "mousedown", { capture: false }).pipe()
+            .subscribe((e) => {
+                e.stopPropagation();
+                // e.stopImmediatePropagation();
+            });
         merge(
             // fromEvent(this.cursorTrap.nativeElement, "focusin"),
             fromEvent(this.cursorTrap.nativeElement, "mousedown", {
-                capture: true,
+                capture: false,
             })
         ).pipe()
             .subscribe((e) => {
                 console.log("sending focus");
-                this.contentEditable.nativeElement.focus();
-                // e.preventDefault();
+                this.helper.moveToEnd();
             });
+
         fromEvent(this.contentEditableWrapper.nativeElement, "scroll").pipe()
             .subscribe(() => {
                 const st = this.contentEditableWrapper.nativeElement.scrollTop;
@@ -91,7 +100,37 @@ export class UiQueryEditorComponent implements OnInit {
                 // this.cursorTrap.nativeElement.style.top = `${st}px`;
             });
 
-            this.safeInput = this.safeHtml(this.text);
+        this.safeInput = this.safeHtml(this.text);
+        this.change.detectChanges();
+        this.lineNumbers = range(1, this.helper.lineCount + 1);
+        this.change.detectChanges();
+
+        this.helper.eventSelection.pipe()
+            .subscribe((e) => {
+                console.log("eventSelection.subscribe");
+                this.lineSelected = e.lines;
+                this.change.detectChanges();
+            });
+
+        fromEvent(this.contentEditable.nativeElement, "input").pipe()
+            .subscribe((ev) => {
+
+                const text = this.helper.getText();
+                const pos = this.helper.getCaretPosition();
+                console.log("---------------");
+                console.log(`parse pos: ${pos}`);
+                console.log("---------------");
+
+                this.parser.parse(text).pipe()
+                    .subscribe((data) => {
+                        console.log("got parsed data");
+                        this.safeInput = this.safeHtml(data);
+                        this.change.detectChanges();
+                        this.helper.setCaretPosition(pos);
+                    }, (e) => {
+                            console.log(e);
+                    });
+            });
 
     }
 

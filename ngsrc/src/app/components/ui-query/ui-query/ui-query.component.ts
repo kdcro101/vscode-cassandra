@@ -16,9 +16,11 @@ export class UiQueryComponent implements OnInit {
     @ViewChild("topLeft") public topLeft: ElementRef<HTMLDivElement>;
     @ViewChild("topRight") public topRight: ElementRef<HTMLDivElement>;
 
-    public code: string = `select * \n from tablica; tekst!!! <span contenteditable='false' style="color:fuchsia;">TEXT123</span> asx
-    <span contenteditable='false' style="color:lime;"><span class="indicator"></span><span>&nbsp;ABC</span></span>
-    \n\n`;
+    // tslint:disable-next-line:max-line-length
+    // public code: string = "select * \n from tablica; tekst!!! <span contenteditable=\"false\" style=\"color:fuchsia;\">TEXT123</span> <span contenteditable=\"false\" style=\"color:lime;\"><span class=\"indicator\"></span><span>#ABC</span></span>\n\n";
+    // tslint:disable-next-line:max-line-length
+    // public code: string = "select * \n from tablica; tekst!!! <span style=\"color:fuchsia;\">TEXT123</span> <span style=\"color:lime;\"><span class=\"indicator\"></span><span>#ABC</span></span>\n\n";
+    public code: string = "select aaaa,bbbb,cccc \n from tableName where ddd='21' and ccc=22;\n";
 
     constructor(public theme: ThemeService) {
 

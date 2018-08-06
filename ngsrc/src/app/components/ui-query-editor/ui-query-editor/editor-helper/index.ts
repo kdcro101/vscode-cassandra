@@ -1,9 +1,15 @@
-import { fromEvent } from "rxjs";
+import { fromEvent, Subject } from "rxjs";
+import { filter, take } from "rxjs/operators";
 import { ThemeService } from "../../../../services/theme/theme.service";
-
+export interface SelectionEvent {
+    lines: Set<number>;
+    text: string;
+}
 export class EditorHelper {
 
     private rangeSaved: Range = null;
+    private isFocused: boolean = false;
+    public eventSelection = new Subject<SelectionEvent>();
 
     constructor(private contentEditable: HTMLDivElement, private lineHeight: number, private scroll: HTMLDivElement) {
         fromEvent(contentEditable, "keydown").pipe().subscribe((e: KeyboardEvent) => {
@@ -12,7 +18,7 @@ export class EditorHelper {
                 // add tab
                 document.execCommand("insertHTML", false, "&#009");
 
-                const r = this.getCaretScrollClientPos();
+                const r = this.getCaretViewportPos();
                 console.log(JSON.stringify(r));
                 this.scrollToCaret();
             }
@@ -39,12 +45,63 @@ export class EditorHelper {
         });
 
         fromEvent(this.contentEditable, "blur").pipe().subscribe(() => {
-            this.saveSelection();
+            this.isFocused = false;
+            // this.saveSelection();
         });
         fromEvent(this.contentEditable, "focusin").pipe().subscribe(() => {
-            this.restoreSelection();
+            this.isFocused = true;
+            // this.restoreSelection();
+        });
+        fromEvent(document, "selectionchange").pipe(
+            filter(() => this.isFocused),
+        ).subscribe((e) => {
+            this.processSelection(e);
         });
 
+    }
+    public processSelection(e: Event) {
+        console.log("procesing selection!");
+        const sel = window.getSelection();
+
+        if (sel.rangeCount === 0) {
+            console.log("selection range is empty");
+            return;
+        }
+
+        const range = sel.getRangeAt(0).cloneRange();
+        const rangeText = range.toString();
+        // get client rects as array!
+        let rects = Array.from(range.getClientRects());
+
+        if (rangeText.length === 0) {
+            console.log("colapsing range len=0");
+            range.collapse(false);
+            rects = rects.length > 0 ? [rects[rects.length - 1]] : [];
+        }
+
+        // const rect = range.getBoundingClientRect();
+        // console.log(JSON.stringify(rect));
+        // console.log(`L:${rect.left} T:${rect.top} W:${rect.width} H:${rect.height}`);
+
+        // Array.from(rects).forEach((r, i) => console.log(`[${i}]  L:${r.left} T:${r.top} W:${r.width} H:${r.height}`));
+        const selectedLines = new Set<number>();
+        Array.from(rects).forEach((r, i) => {
+            const cp = this.getViewportToScrollClientPos(r.left, r.top);
+            // console.log(`x:${cp.x} y:${cp.y}`);
+            console.log(`[${i}] y: ${cp.y} (x: ${cp.x}) width: ${r.width} height: ${r.height}`);
+            const line = Math.floor(cp.y / this.lineHeight) + 1;
+            selectedLines.add(line);
+
+        });
+        console.log(`range text: [${JSON.stringify(range.toString())}]`);
+        console.log(`lines: ${JSON.stringify(Array.from(selectedLines.values()))}`);
+        console.log(`ranges count: ${sel.rangeCount}`);
+
+        const ev: SelectionEvent = {
+            lines: selectedLines,
+            text: rangeText,
+        };
+        this.eventSelection.next(ev);
     }
     public getCaretPosition(): number {
         let caretOffset = 0;
@@ -63,6 +120,38 @@ export class EditorHelper {
 
         return caretOffset;
     }
+    public setCaretPosition(pos: number, element?: Node) {
+
+        if (element == null) {
+            element = this.contentEditable;
+        }
+
+        // Loop through all child nodes
+        for (const node of Array.from(element.childNodes)) {
+            // console.log(`NODE: [${JSON.stringify(node.nodeValue)}]`);
+            if (node.nodeType === 3) { // we have a text node
+                if (node.nodeValue.length >= pos) {
+                    // finally add our range
+                    const range = document.createRange(),
+                        sel = window.getSelection();
+                    range.setStart(node, pos);
+                    range.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                    return -1; // we are done
+                } else {
+                    pos -= node.nodeValue.length;
+                }
+            } else {
+                pos = this.setCaretPosition(pos, node);
+                if (pos === -1) {
+                    return -1; // no need to finish the for loop
+                }
+            }
+        }
+        return pos; // needed because of recursion stuff
+    }
+
     public getTextFromHeadToCaret() {
         const pos = this.getCaretPosition();
         const divStr = this.contentEditable.textContent;
@@ -98,24 +187,24 @@ export class EditorHelper {
         return l;
 
     }
-    public getCaretScrollClientPos(): {
+    public getViewportToScrollClientPos(x: number, y: number): {
         x: number;
         y: number;
     } {
-        const caretViewportPos = this.getSelectionViewportCoords();
+        // const caretViewportPos = this.getCaretViewportCoords();
         const editorViewportRect: ClientRect = this.scroll.getBoundingClientRect();
         const editorScrollTop = this.scroll.scrollTop;
         const editorScrollLeft = this.scroll.scrollLeft;
 
-        const caretClientX = caretViewportPos.x - editorViewportRect.left + editorScrollLeft;
-        const caretClientY = caretViewportPos.y - editorViewportRect.top + editorScrollTop;
+        const clientX = x - editorViewportRect.left + editorScrollLeft;
+        const clientY = y - editorViewportRect.top + editorScrollTop;
         return {
-            x: caretClientX,
-            y: caretClientY,
+            x: clientX,
+            y: clientY,
 
         };
     }
-    public getSelectionViewportCoords() {
+    public getCaretViewportPos() {
         const win = window;
         const doc = document;
 
@@ -166,8 +255,24 @@ export class EditorHelper {
         sel.removeAllRanges();
         sel.addRange(range);
     }
+    public moveToEnd() {
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+
+        fromEvent(this.contentEditable, "focusin").pipe(
+            take(1),
+        ).subscribe(() => {
+            const range = document.createRange();
+            range.selectNodeContents(this.contentEditable);
+            range.collapse(false);
+            sel.addRange(range);
+        });
+
+        this.contentEditable.focus();
+    }
     public scrollToCaret() {
-        const pos = this.getCaretScrollClientPos();
+        const vpos = this.getCaretViewportPos();
+        const pos = this.getViewportToScrollClientPos(vpos.x, vpos.y);
 
         const editorHeight = this.scroll.offsetHeight;
         const editorWidth = this.scroll.offsetWidth;
@@ -226,5 +331,18 @@ export class EditorHelper {
             sel.removeAllRanges();
             sel.addRange(this.rangeSaved);
         }
+    }
+    public getText(ignoreClasses: string[] = []) {
+        const elems = this.contentEditable.childNodes;
+        let ret = "";
+
+        for (let i = 0; elems[i]; i++) {
+            const elem = elems[i];
+
+            ret = ret + elem.textContent;
+        }
+
+        return ret;
+
     }
 }

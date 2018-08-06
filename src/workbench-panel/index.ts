@@ -2,6 +2,8 @@ import * as path from "path";
 import { from as observableFrom, fromEventPattern, ReplaySubject, Subject } from "rxjs";
 import { concatMap, filter, take, takeUntil, tap } from "rxjs/operators";
 import * as vscode from "vscode";
+import { InputParser } from "../parser";
+import { ProcMessage, ProcMessageStrict } from "../types";
 import { Workspace } from "../workspace";
 import { generateHtml } from "./html";
 
@@ -11,16 +13,15 @@ export class WorkbenchPanel {
 
     private stateWebviewReady = new ReplaySubject<void>(1);
     private eventDestroy = new Subject<void>();
-    // private eventMessage = new Subject<ProcMessage>();
+    private eventMessage = new Subject<ProcMessage>();
+
+    private parser = new InputParser();
 
     constructor(
         private context: vscode.ExtensionContext,
         private workspace: Workspace,
-        // private config: RedisConsoleConfig,
-        // private log: RedisLog,
-    ) {
 
-        // this.configManager.save(this.config);
+    ) {
 
         this.panel = vscode.window.createWebviewPanel("cassandra-console", "Cassandra console", vscode.ViewColumn.Active, {
             enableScripts: true,
@@ -35,6 +36,18 @@ export class WorkbenchPanel {
         }, null, context.subscriptions);
 
         this.panel.webview.html = generateHtml(this.context.extensionPath);
+
+        fromEventPattern<ProcMessage>((f: (e: any) => any) => {
+            return this.panel.webview.onDidReceiveMessage(f, null, context.subscriptions);
+        }, (f: any, d: vscode.Disposable) => {
+            d.dispose();
+        }).pipe(
+            takeUntil(this.eventDestroy),
+        ).subscribe((m) => {
+            this.eventMessage.next(m);
+            this.onMessage(m);
+
+        });
 
     }
     public start() {
@@ -54,6 +67,23 @@ export class WorkbenchPanel {
     }
     public end() {
         this.panel.dispose();
+    }
+    private onMessage(e: ProcMessage) {
+        console.log(e);
+        switch (e.name) {
+            case "w2e_parseInput":
+                this.respondParseInput(e as ProcMessageStrict<"w2e_parseInput">);
+                break;
+        }
+    }
+
+    private respondParseInput(e: ProcMessageStrict<"w2e_parseInput">) {
+        const o = this.parser.parse(e.data);
+        const message: ProcMessageStrict<"e2w_parseOutput"> = {
+            name: "e2w_parseOutput",
+            data: o,
+        };
+        this.panel.webview.postMessage(message);
     }
 
 }
