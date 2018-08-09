@@ -1,23 +1,23 @@
 /*
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 by Domagoj Kovačević
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge, publish, distribute,
  * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all copies or
  * substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
  * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- * 
+ *
  * Project : cql-parser; an ANTLR4 grammar for Apache Cassandra CQL  https://github.com/kdcro101cql-parser
  */
 
@@ -75,7 +75,7 @@ cql
     | listPermissions
     | listRoles
     | revoke
-    | select 
+    | select
     | truncate
     | update
     | use
@@ -125,30 +125,30 @@ resource
     ;
 
 createUser
-    : kwCreate kwUser ifNotExist? user kwWith kwPassword stringLiteral (kwSuperuser|kwNosuperuser)?
+    : kwCreate kwUser ifNotExist? user kwWith kwPassword literalString (kwSuperuser|kwNosuperuser)?
     ;
 
 createRole
     : kwCreate kwRole ifNotExist? role roleWith?
     ;
- 
+
 createType
-    : kwCreate kwType ifNotExist? (keyspace DOT)? type 
+    : kwCreate kwType ifNotExist? (keyspace DOT)? type
       syntaxBracketLr typeMemberColumnList syntaxBracketRr
     ;
 typeMemberColumnList
     : column dataType (syntaxComma column dataType)*
     ;
- 
+
 createTrigger
     : kwCreate kwTrigger ifNotExist? (keyspace DOT)? trigger kwUsing triggerClass
     ;
-     
+
 createMaterializedView
     : kwCreate kwMaterialized kwView ifNotExist? (keyspace DOT)? materializedView
-      kwAs 
+      kwAs
       kwSelect columnList kwFrom (keyspace DOT)? table
-      materializedViewWhere 
+      materializedViewWhere
       kwPrimary kwKey syntaxBracketLr columnList syntaxBracketRr
       (kwWith materializedViewOptions)?
 
@@ -172,22 +172,22 @@ materializedViewOptions
 // CREATE MATERIALIZED VIEW [IF NOT EXISTS] [keyspace_name.] view_name
 // AS SELECT column_list
 // FROM [keyspace_name.] base_table_name
-// WHERE column_name IS NOT NULL [AND column_name IS NOT NULL ...] 
-//       [AND relation...] 
+// WHERE column_name IS NOT NULL [AND column_name IS NOT NULL ...]
+//       [AND relation...]
 // PRIMARY KEY ( column_list )
 // [WITH [table_properties]
 //       [AND CLUSTERING ORDER BY (cluster_column_name order_option )]]
 
- 
+
 
 createKeyspace
-    : kwCreate kwKeyspace ifNotExist? keyspace 
+    : kwCreate kwKeyspace ifNotExist? keyspace
       kwWith kwReplication OPERATOR_EQ syntaxBracketLc replicationList syntaxBracketRc
       (kwAnd durableWrites)?
     ;
 
 createFunction
-    : kwCreate orReplace? kwFunction  ifNotExist? 
+    : kwCreate orReplace? kwFunction  ifNotExist?
       (keyspace DOT)? function syntaxBracketLr paramList? syntaxBracketRr
       returnMode
       kwReturns dataType
@@ -206,16 +206,16 @@ returnMode
     : (kwCalled | kwReturns kwNull) kwOn kwNull kwInput
     ;
 createAggregate
-    : kwCreate orReplace? kwAggregate ifNotExist? 
+    : kwCreate orReplace? kwAggregate ifNotExist?
       (keyspace DOT)? aggregate syntaxBracketLr dataType syntaxBracketRr
-      kwSfunc function 
+      kwSfunc function
       kwStype dataType
-      kwFinalfunc function 
-      kwInitcond initCondDefinition 
+      kwFinalfunc function
+      kwInitcond initCondDefinition
     ;
 
 // paramList
-    // : 
+    // :
 
 
 initCondDefinition
@@ -240,18 +240,18 @@ initCondList
 
 orReplace
     : kwOr kwReplace
-    ;  
+    ;
 
 alterUser
     : kwAlter kwUser user kwWith userPassword userSuperUser?
     ;
 
 userPassword
-    : kwPassword stringLiteral
+    : kwPassword literalString
     ;
 
 userSuperUser
-    : kwSuperuser 
+    : kwSuperuser
     | kwNosuperuser
     ;
 
@@ -299,7 +299,7 @@ alterTableWith
     ;
 
 alterTableRename
-    :kwRename column kwTo column 
+    :kwRename column kwTo column
     ;
 alterTableDropCompactStorage
     : kwDrop kwCompact kwStorage
@@ -327,9 +327,9 @@ roleWith
     : kwWith (roleWithOptions (kwAnd roleWithOptions)*)
     ;
 roleWithOptions
-    : kwPassword OPERATOR_EQ stringLiteral
-    | kwLogin OPERATOR_EQ booleanLiteral
-    | kwSuperuser OPERATOR_EQ booleanLiteral
+    : kwPassword OPERATOR_EQ literalString
+    | kwLogin OPERATOR_EQ literalBoolean
+    | kwSuperuser OPERATOR_EQ literalBoolean
     | kwOptions OPERATOR_EQ optionHash
     ;
 
@@ -359,7 +359,7 @@ dropTrigger
     : kwDrop kwTrigger ifExist? trigger kwOn (keyspace DOT)? table
     ;
 dropRole
-    : kwDrop kwRole ifExist? role 
+    : kwDrop kwRole ifExist? role
     ;
 
 dropTable
@@ -372,7 +372,7 @@ dropIndex
     : kwDrop kwIndex ifExist? (keyspace DOT)? indexName
     ;
 createTable
-    : kwCreate kwTable ifNotExist? (keyspace DOT)? table  
+    : kwCreate kwTable ifNotExist? (keyspace DOT)? table
       syntaxBracketLr columnDefinitionList syntaxBracketRr
       withElement?
     ;
@@ -395,8 +395,8 @@ tableOptionName
     ;
 
 tableOptionValue
-    : stringLiteral
-    | floatLiteral
+    : literalString
+    | literalFloat
     ;
 optionHash
     : syntaxBracketLc optionHashItem (syntaxComma optionHashItem)*  syntaxBracketRc
@@ -405,23 +405,23 @@ optionHashItem
     : optionHashKey COLON optionHashValue
     ;
 optionHashKey
-    : stringLiteral
-    ;    
+    : literalString
+    ;
 optionHashValue
-    : stringLiteral
-    | floatLiteral
-    ;    
+    : literalString
+    | literalFloat
+    ;
 
 columnDefinitionList
     :( columnDefinition ) (syntaxComma columnDefinition)* (syntaxComma primaryKeyElement)?
     ;
-//  
+//
 columnDefinition
     : column dataType primaryKeyColumn
     | column dataType kwStatic
     | column dataType
     ;
-// 
+//
 primaryKeyColumn
     : kwPrimary kwKey
     ;
@@ -468,7 +468,7 @@ beginBatch
     : kwBegin batchType? kwBatch usingTimestampSpec?
     ;
 batchType
-    : kwLogged 
+    : kwLogged
     | kwUnlogged
     ;
 
@@ -487,7 +487,7 @@ replicationListItem
     | STRING_LITERAL COLON DECIMAL_LITERAL
     ;
 durableWrites
-    : kwDurableWrites OPERATOR_EQ booleanLiteral
+    : kwDurableWrites OPERATOR_EQ literalBoolean
     ;
 
 use
@@ -504,7 +504,7 @@ createIndex
     ;
 indexName
     : OBJECT_NAME
-    | stringLiteral
+    | literalString
     ;
 indexColumnSpec
     : column
@@ -532,12 +532,12 @@ deleteColumnList
 
 deleteColumnItem
     : OBJECT_NAME
-    | OBJECT_NAME LS_BRACKET (stringLiteral|decimalLiteral)  RS_BRACKET
+    | OBJECT_NAME LS_BRACKET (literalString|literalDecimal)  RS_BRACKET
     ;
 
 
 update
-    : beginBatch? kwUpdate (keyspace DOT)? table  usingTtlTimestamp? kwSet assignments 
+    : beginBatch? kwUpdate (keyspace DOT)? table  usingTtlTimestamp? kwSet assignments
       whereSpec (ifExist | ifSpec)?
     ;
 
@@ -557,14 +557,14 @@ assignments
 
 assignmentElement
     : OBJECT_NAME OPERATOR_EQ (constant | assignmentMap | assignmentSet | assignmentList)
-    | OBJECT_NAME OPERATOR_EQ OBJECT_NAME (PLUS | MINUS) decimalLiteral
+    | OBJECT_NAME OPERATOR_EQ OBJECT_NAME (PLUS | MINUS) literalDecimal
     | OBJECT_NAME OPERATOR_EQ OBJECT_NAME (PLUS | MINUS) assignmentSet
-    | OBJECT_NAME OPERATOR_EQ assignmentSet (PLUS | MINUS) OBJECT_NAME  
+    | OBJECT_NAME OPERATOR_EQ assignmentSet (PLUS | MINUS) OBJECT_NAME
     | OBJECT_NAME OPERATOR_EQ OBJECT_NAME (PLUS | MINUS) assignmentMap
     | OBJECT_NAME OPERATOR_EQ assignmentMap (PLUS | MINUS) OBJECT_NAME
     | OBJECT_NAME OPERATOR_EQ OBJECT_NAME (PLUS | MINUS) assignmentList
     | OBJECT_NAME OPERATOR_EQ assignmentList (PLUS | MINUS) OBJECT_NAME
-    | OBJECT_NAME syntaxBracketLs decimalLiteral syntaxBracketRs OPERATOR_EQ constant
+    | OBJECT_NAME syntaxBracketLs literalDecimal syntaxBracketRs OPERATOR_EQ constant
     ;
 
 assignmentSet
@@ -581,7 +581,7 @@ assignmentList
 
 
 insert
-    : (beginBatch|) kwInsert kwInto (keyspace DOT|) table insertColumnSpec insertValuesSpec 
+    : (beginBatch|) kwInsert kwInto (keyspace DOT|) table insertColumnSpec insertValuesSpec
       (ifNotExist|) usingTtlTimestamp?
     ;
 usingTtlTimestamp
@@ -592,11 +592,11 @@ usingTtlTimestamp
     ;
 
 timestamp
-    : kwTimestamp decimalLiteral
+    : kwTimestamp literalDecimal
     ;
 
 ttl
-    : kwTtl decimalLiteral
+    : kwTtl literalDecimal
     ;
 
 usingTimestampSpec
@@ -626,12 +626,12 @@ expressionList
     ;
 
 select
-    : kwSelect kwDistinct? selectElements 
+    : kwSelect kwDistinct? selectElements
       fromSpec whereSpec? orderSpec? limitSpec? kwAllowFiltering?
     ;
 
 limitSpec
-    : kwLimit decimalLiteral
+    : kwLimit literalDecimal
     ;
 
 fromSpec
@@ -668,13 +668,13 @@ relationElements
     ;
 
 relationElement
-    : column (syntaxOperatorEq | syntaxOperatorLt | syntaxOperatorGt | syntaxOperatorLte | syntaxOperatorGte) constant                                    
+    : column (syntaxOperatorEq | syntaxOperatorLt | syntaxOperatorGt | syntaxOperatorLte | syntaxOperatorGte) constant
     | functionCall (syntaxOperatorEq | syntaxOperatorLt | syntaxOperatorGt | syntaxOperatorLte | syntaxOperatorGte) constant
     | functionCall (syntaxOperatorEq | syntaxOperatorLt | syntaxOperatorGt | syntaxOperatorLte | syntaxOperatorGte) functionCall
     | column kwIn syntaxBracketLr functionArgs? syntaxBracketRr
     | relalationContainsKey
     | relalationContains
-    ; 
+    ;
 
 relalationContains
     : column kwContains constant
@@ -682,7 +682,7 @@ relalationContains
 relalationContainsKey
     : column (kwContainsKey) constant
     ;
- 
+
 functionCall
     : OBJECT_NAME '(' STAR ')'
     | OBJECT_NAME '(' functionArgs? ')'
@@ -698,31 +698,34 @@ functionArgs
 
 
 constant
-    : UUID
-    | stringLiteral 
-    | decimalLiteral
-    | hexadecimalLiteral 
-    | booleanLiteral
+    : literalUuid
+    | literalString
+    | literalDecimal
+    | literalHexadecimal
+    | literalBoolean
     | kwNull
     ;
 
-decimalLiteral
-    : DECIMAL_LITERAL 
+literalUuid
+    : UUID
+    ;
+literalDecimal
+    : DECIMAL_LITERAL
     // | ZERO_DECIMAL | ONE_DECIMAL | TWO_DECIMAL
     ;
-floatLiteral
+literalFloat
     : DECIMAL_LITERAL
-    | FLOAT_LITERAL 
+    | FLOAT_LITERAL
     ;
 
-stringLiteral
+literalString
     : STRING_LITERAL
     ;
 
-booleanLiteral
+literalBoolean
     : K_TRUE | K_FALSE;
 
-hexadecimalLiteral
+literalHexadecimal
     : HEXADECIMAL_LITERAL
     ;
 
@@ -774,7 +777,7 @@ orderDirection
     : kwAsc
     | kwDesc
     ;
-    
+
 role
     : OBJECT_NAME
     ;
@@ -783,7 +786,7 @@ trigger
     : OBJECT_NAME
     ;
 triggerClass
-    : stringLiteral
+    : literalString
     ;
 
 materializedView
@@ -805,7 +808,7 @@ user
     : OBJECT_NAME
     ;
 password
-    : stringLiteral
+    : literalString
     ;
 hashKey: OBJECT_NAME;
 

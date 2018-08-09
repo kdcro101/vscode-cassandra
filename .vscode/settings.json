@@ -13,5 +13,6 @@
     "redis-console.password": "",
     "redis-console.hostIpFamily": 4,
     "eslint.enable": false,
-    "typescript.navigator.active": false
+    "typescript.navigator.active": false,
+    "favorites.root": []
 }

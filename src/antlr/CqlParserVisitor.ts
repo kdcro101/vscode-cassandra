@@ -147,11 +147,12 @@ import { RelalationContainsKeyContext } from './CqlParser';
 import { FunctionCallContext } from './CqlParser';
 import { FunctionArgsContext } from './CqlParser';
 import { ConstantContext } from './CqlParser';
-import { DecimalLiteralContext } from './CqlParser';
-import { FloatLiteralContext } from './CqlParser';
-import { StringLiteralContext } from './CqlParser';
-import { BooleanLiteralContext } from './CqlParser';
-import { HexadecimalLiteralContext } from './CqlParser';
+import { LiteralUuidContext } from './CqlParser';
+import { LiteralDecimalContext } from './CqlParser';
+import { LiteralFloatContext } from './CqlParser';
+import { LiteralStringContext } from './CqlParser';
+import { LiteralBooleanContext } from './CqlParser';
+import { LiteralHexadecimalContext } from './CqlParser';
 import { KeyspaceContext } from './CqlParser';
 import { TableContext } from './CqlParser';
 import { ColumnContext } from './CqlParser';
@@ -1339,39 +1340,46 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitConstant?: (ctx: ConstantContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.decimalLiteral`.
+	 * Visit a parse tree produced by `CqlParser.literalUuid`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitDecimalLiteral?: (ctx: DecimalLiteralContext) => Result;
+	visitLiteralUuid?: (ctx: LiteralUuidContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.floatLiteral`.
+	 * Visit a parse tree produced by `CqlParser.literalDecimal`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitFloatLiteral?: (ctx: FloatLiteralContext) => Result;
+	visitLiteralDecimal?: (ctx: LiteralDecimalContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.stringLiteral`.
+	 * Visit a parse tree produced by `CqlParser.literalFloat`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitStringLiteral?: (ctx: StringLiteralContext) => Result;
+	visitLiteralFloat?: (ctx: LiteralFloatContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.booleanLiteral`.
+	 * Visit a parse tree produced by `CqlParser.literalString`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitBooleanLiteral?: (ctx: BooleanLiteralContext) => Result;
+	visitLiteralString?: (ctx: LiteralStringContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.hexadecimalLiteral`.
+	 * Visit a parse tree produced by `CqlParser.literalBoolean`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitHexadecimalLiteral?: (ctx: HexadecimalLiteralContext) => Result;
+	visitLiteralBoolean?: (ctx: LiteralBooleanContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.literalHexadecimal`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitLiteralHexadecimal?: (ctx: LiteralHexadecimalContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.keyspace`.

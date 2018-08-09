@@ -1,31 +1,48 @@
 @import "../colors";
 body.dark-theme .editor {
     .keyword {
-        color:	fuchsia;
-        // padding-left: 20px;
+        color: fuchsia; // padding-left: 20px;
         // &::before{
-            // content: 'KW';
-            // position: absolute;
-            // left:-30px;
-            // color:red;
+        // content: 'KW';
+        // position: absolute;
+        // left:-30px;
+        // color:red;
         // }
     }
     .syntax {
         &.syntaxComma {
-             color: limegreen;
+            color: limegreen;
         }
         &.syntaxBracketLr,
-        &.syntaxBracketRr{
+        &.syntaxBracketRr {
             color: goldenrod;
         }
+        &.syntaxOperatorEq,
+        &.syntaxOperatorLt,
+        &.syntaxOperatorGt,
+        &.syntaxOperatorLte,
+        &.syntaxOperatorGte {
+
+            color:yellowgreen;
+        }
     }
-    .column{
-        color:cyan;
+    .column {
+        color: cyan;
     }
-    .table{
-        color:#bd93f9
+    .table {
+        color: #bd93f9
     }
-    .keyspace{
-        color:#ff79c6
+    .keyspace {
+        color: #ff79c6
+    }
+    .literal {
+        &.literalString {
+            text-decoration: underline;
+            text-decoration-color: lime;
+            color: lime;
+        }
+        &.literalDecimal {
+            color: cyan;
+        }
     }
 }

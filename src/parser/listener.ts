@@ -9,7 +9,8 @@ export type RuleClassType = "keyword" |
     "plain" |
     "column" |
     "table" |
-    "keyspace";
+    "keyspace" |
+    "literal";
 
 const ruleKeywords: { [prefix: string]: RuleClassType } = {
     kw: "keyword",
@@ -19,6 +20,7 @@ const ruleKeywords: { [prefix: string]: RuleClassType } = {
     column: "column",
     table: "table",
     keyspace: "keyspace",
+    literal: "literal",
 };
 
 export class AntlrListener implements CqlParserListener {
@@ -34,7 +36,6 @@ export class AntlrListener implements CqlParserListener {
     public exitEveryRule = (ctx: ParserRuleContext): void => {
         const rule = this.ruleNames[ctx.ruleIndex];
         const ruleClass = this.identify(rule);
-        // console.log(`ENTER: ${rule} <${ruleClass}> [${ctx.text}]`);
 
         if (ruleClass !== "plain") {
             const tokenStart = this.tokens.get(ctx.start.tokenIndex);
@@ -43,29 +44,7 @@ export class AntlrListener implements CqlParserListener {
             this.rewriter.insertAfter(tokenStop, "</span>");
         }
     }
-    // public enterKwSelect = (ctx: KwSelectContext): void => {
-    //     // ctx.K_SELECT.
 
-    //     const t = this.tokens.get(ctx.start.tokenIndex);
-    //     this.rewriter.insertBefore(t, `<span class="keyword">`);
-    // }
-    // public exitKwSelect = (ctx: KwSelectContext): void => {
-    //     console.log(ctx);
-    //     const t = this.tokens.get(ctx.start.tokenIndex);
-    //     this.rewriter.insertAfter(t, "</span>");
-    //     // ctx.
-    //     // ctx.text = "1231231";
-    //     // this.res. = "";
-
-    // }
-    // public enterKwWhere = (ctx: KwWhereContext): void => {
-    //     console.log(ctx);
-
-    // }
-    // public exitKwWhere = (ctx: KwWhereContext): void => {
-    //     console.log(ctx);
-
-    // }
     private identify(ruleName: string): RuleClassType {
         const pl = Object.keys(ruleKeywords);
 
