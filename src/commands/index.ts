@@ -1,3 +1,4 @@
+import * as path from "path";
 import { ReplaySubject } from "rxjs";
 import { take } from "rxjs/operators";
 import * as vscode from "vscode";
@@ -6,24 +7,20 @@ import { CassandraWorkbench } from "../cassandra-workbench";
 import { ConfigurationManager } from "../configuration-manager";
 
 export class VsCommands {
-    private context: vscode.ExtensionContext = null;
-    private workbench: CassandraWorkbench = null;
-    private stateContext = new ReplaySubject<void>(1);
-    private stateWorkbench = new ReplaySubject<void>(1);
 
-    constructor(private configuration: ConfigurationManager) {
+    constructor(
+        private configuration: ConfigurationManager,
+        private context: vscode.ExtensionContext,
+        private workbench: CassandraWorkbench) {
 
+        context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.generateConfiguration", this.onConfigurationGenerate));
+        context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.refresh", this.onRefresh));
+        context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.editConfiguration", this.onEditConfig));
     }
-    public attachContext(context: vscode.ExtensionContext) {
-        this.context = context;
-        this.stateContext.next();
-        context.subscriptions.push(vscode.commands.registerCommand("generate-configuration", this.onConfigurationGenerate));
-        context.subscriptions.push(vscode.commands.registerCommand("cassandra-workbench.refresh", this.onRefresh));
-    }
-    public attachWorkbench(workbench: CassandraWorkbench) {
-        this.workbench = workbench;
-        this.stateWorkbench.next();
-    }
+
     private onConfigurationGenerate = () => {
         this.configuration.loadConfig()
             .then((result) => {
@@ -33,7 +30,16 @@ export class VsCommands {
             });
     }
     private onRefresh = () => {
-
+        this.workbench.refreshTree();
+        vscode.window.showInformationMessage("Refreshing...");
+    }
+    private onEditConfig = () => {
+        const fp = this.configuration.confPath;
+        const uri = vscode.Uri.file(fp);
+        vscode.window.showTextDocument(uri, {
+            viewColumn: vscode.ViewColumn.Active,
+         });
+        // vscode.window.showWarningMessage(fp);
     }
 
 }

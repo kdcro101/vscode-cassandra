@@ -18,23 +18,40 @@
     "contributes": {
         "menus": {
             "view/title": [{
-                "when": "view == cassandraWorkbenchView",
-                "command": "cassandra-workbench.refresh",
-                "group": "navigation"
+                    "when": "view == cassandraWorkbenchView",
+                    "command": "cassandraWorkbench.refresh",
+                    "group": "navigation"
 
-            }]
+                },
+                {
+                    "when": "view == cassandraWorkbenchView",
+                    "command": "cassandraWorkbench.editConfiguration",
+                    "group": "navigation"
+
+                }
+            ]
         },
         "commands": [{
-            "command": "generate-configuration",
-            "title": "CASSANDRA WORKBENCH: Generate configuration template"
-        }, {
-            "command": "cassandra-workbench.refresh",
-            "title": "Refresh",
-            "icon": {
-                "light": "./icons/refresh/light.svg",
-                "dark": "./icons/refresh/dark.svg"
+                "command": "cassandraWorkbench.generateConfiguration",
+                "title": "CASSANDRA WORKBENCH: Generate configuration template"
+            },
+            {
+                "command": "cassandraWorkbench.refresh",
+                "title": "Refresh",
+                "icon": {
+                    "light": "./icons/refresh/light.svg",
+                    "dark": "./icons/refresh/dark.svg"
+                }
+            },
+            {
+                "command": "cassandraWorkbench.editConfiguration",
+                "title": "Edit configuration",
+                "icon": {
+                    "light": "./icons/settings/light.svg",
+                    "dark": "./icons/settings/dark.svg"
+                }
             }
-        }],
+        ],
         "viewsContainers": {
             "activitybar": [{
                 "id": "object-explorer",

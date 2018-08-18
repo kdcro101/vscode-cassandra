@@ -39,13 +39,9 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
         this.collectClusterData(config);
     }
 
-    /**
-     * Get [TreeItem](#TreeItem) representation of the `element`
-     *
-     * @param element The element for which [TreeItem](#TreeItem) representation is asked for.
-     * @return [TreeItem](#TreeItem) representation of the element
-     */
     public refresh(): void {
+        this.stateStructuresReady = new ReplaySubject<boolean>(1);
+        this.collectClusterData(this.config);
         this.onDidChangeTreeDataEmmiter.fire();
     }
     public getTreeItem(item: TreeItemBase): vscode.TreeItem {

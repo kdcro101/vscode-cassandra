@@ -12,8 +12,8 @@ import { Workspace } from "./workspace";
 export function activate(context: vscode.ExtensionContext) {
     const workspace = new Workspace();
     const config = new ConfigurationManager(context, workspace);
-    const commands = new VsCommands(config);
-    commands.attachContext(context);
+
+    let commands: VsCommands = null;
 
     Icons.context = context;
 
@@ -25,24 +25,9 @@ export function activate(context: vscode.ExtensionContext) {
         console.log(clusterItems);
         workbench = new CassandraWorkbench(context, workspace, clusterItems);
         workbench.start();
-        // workbench.
+        commands = new VsCommands(config, context, workbench);
+
     });
-
-    // context.subscriptions.push(disposable);
-    // const c = new CassandraClient();
-    // (global as any).c = c;
-    // c.connect()
-    //     .then((result) => {
-    //         console.log("OK");
-    //     }).catch((e) => {
-    //         console.error(e);
-    //     });
-
-    // const code = `select a,b,c from a.e where sadasd = 212 and`;
-    // const comp = new Completition();
-    // const results = comp.execute(code);
-
-    // console.log(results);
 
 }
 

@@ -28,6 +28,8 @@
             "id": "FC8dyVhcULAPRG3I",
             "workspacePath": "ngsrc/src/app"
         }
-    ]
+    ],
+    "typescript.navigator.showDataTypes": true,
+    "typescript.navigator.showVisibilityLabels": false
     // "typescript.referencesCodeLens.enabled": true
 }

@@ -8,6 +8,8 @@ import { TreeviewProvider } from "./treeview-provider";
 export class CassandraWorkbench {
 
     public panel: WorkbenchPanel;
+    public treeProvider: TreeviewProvider = null;
+
     private clients: CassandraClient[] = [];
 
     constructor(
@@ -15,12 +17,19 @@ export class CassandraWorkbench {
         private workspace: Workspace,
         private config: ValidatedConfigClusterItem[],
     ) {
-        const treeProvider = new TreeviewProvider(config);
-        context.subscriptions.push(vscode.window.registerTreeDataProvider("cassandraWorkbenchView", treeProvider));
+        this.treeProvider = new TreeviewProvider(config);
+
+        context.subscriptions.push(vscode.window.registerTreeDataProvider("cassandraWorkbenchView", this.treeProvider));
         this.panel = new WorkbenchPanel(context, workspace);
 
     }
     public start() {
         this.panel.reveal();
+    }
+    public refreshTree() {
+        if (this.treeProvider == null) {
+            return;
+        }
+        this.treeProvider.refresh();
     }
 }

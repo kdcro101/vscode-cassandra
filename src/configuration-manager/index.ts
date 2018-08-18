@@ -1,21 +1,19 @@
 
 import * as fs from "fs-extra";
 import * as jsminModule from "jsmin";
+import { cloneDeep } from "lodash";
 import * as path from "path";
 import { from, ReplaySubject } from "rxjs";
 import { concatMap, map } from "rxjs/operators";
-import { isArray } from "util";
 import * as vscode from "vscode";
 import { PersistedConfigClusterItem, ValidatedConfigClusterItem } from "../types";
 import { Workspace } from "../workspace";
-
-import { cloneDeep } from "lodash";
 
 const jsmin = jsminModule.jsmin;
 
 export class ConfigurationManager {
     public stateConfiguration = new ReplaySubject<ValidatedConfigClusterItem[]>(1);
-    private confPath: string;
+    public confPath: string;
     private confDefaultPath: string;
     constructor(private context: vscode.ExtensionContext, private workspace: Workspace) {
         const root = this.workspace.getRootPath();
