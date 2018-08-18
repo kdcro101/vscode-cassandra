@@ -2,7 +2,7 @@ import * as cassandra from "cassandra-driver";
 import { EventEmitter } from "events";
 import { BehaviorSubject, from } from "rxjs";
 import { concatMap, filter } from "rxjs/operators";
-import { CassandraKeyspace, ValidatedConfigClusterItem } from "../types";
+import { CassandraCluster, CassandraKeyspace, ValidatedConfigClusterItem } from "../types";
 import { CassandraClientEvents } from "../types/index";
 import { collectKeyspaces } from "./collectors/index";
 
@@ -34,26 +34,23 @@ export class CassandraClient extends EventEmitter {
 
         this.client = new cassandra.Client(options);
 
-        // this.stateConnected.pipe(
-        //     filter((d) => d === true),
-        // ).subscribe(() => this.initializeClient());
-
     }
     public connect(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.client.connect((err: any) => {
-                if (err) {
+
+            this.client.connect()
+                .then((result) => {
+                    console.log("Connected to cluster with %d host(s): %j", this.client.hosts.length, this.client.hosts.keys());
+                    this.stateConnected.next(true);
+                    this.emit("connected", null);
+                    resolve();
+
+                }).catch((e) => {
+                    reject(e);
+                    this.emit("error", e);
                     this.stateConnected.next(false);
-                    this.emit("error", err);
-                    reject(err);
-                    return;
-                }
-                console.log(this.client);
-                console.log("Connected to cluster with %d host(s): %j", this.client.hosts.length, this.client.hosts.keys());
-                this.stateConnected.next(true);
-                this.emit("connected", null);
-                resolve();
-            });
+                });
+
         });
     }
     public on<T extends keyof CassandraClientEvents>(event: T, callback: (data: CassandraClientEvents[T]) => void) {
@@ -62,20 +59,39 @@ export class CassandraClient extends EventEmitter {
     public emit<T extends keyof CassandraClientEvents>(event: T, data: CassandraClientEvents[T]) {
         return super.emit(event, data);
     }
-    public getStructure(): Promise<CassandraKeyspace[]> {
-
-        if (this.isInvalid) {
-            return Promise.resolve([]);
-        }
-
+    public getStructure(): Promise<CassandraCluster> {
         return new Promise((resolve, reject) => {
+
+            const resolveError = (e: any) => {
+                const o: CassandraCluster = {
+                    keyspaces: [],
+                    connected: false,
+                    error: e,
+                };
+                resolve(o);
+            };
+
+            if (this.isInvalid) {
+                resolveError("invalid");
+                return;
+
+            }
 
             from(this.connect()).pipe(
                 concatMap(() => collectKeyspaces(this.client)),
             ).subscribe((data) => {
-                resolve(data);
+
+                const o: CassandraCluster = {
+                    keyspaces: data,
+                    connected: true,
+                };
+                resolve(o);
+
             }, (e) => {
+                // resolve error
                 console.log(e);
+                resolveError(e);
+
             });
 
         });

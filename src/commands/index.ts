@@ -18,6 +18,7 @@ export class VsCommands {
         this.context = context;
         this.stateContext.next();
         context.subscriptions.push(vscode.commands.registerCommand("generate-configuration", this.onConfigurationGenerate));
+        context.subscriptions.push(vscode.commands.registerCommand("cassandra-workbench.refresh", this.onRefresh));
     }
     public attachWorkbench(workbench: CassandraWorkbench) {
         this.workbench = workbench;
@@ -31,4 +32,8 @@ export class VsCommands {
                 console.log("onConfigurationGenerate FAIL");
             });
     }
+    private onRefresh = () => {
+
+    }
+
 }

@@ -13,6 +13,21 @@
     "redis-console.password": "",
     "redis-console.hostIpFamily": 4,
     "eslint.enable": false,
-    "typescript.navigator.active": false,
-    "favorites.root": []
+    "favorites.root": [
+        {
+            "type": "Directory",
+            "name": "/exec/vscode-cassandra/src",
+            "parent_id": null,
+            "id": "7qVzKs4hJFfCpAOk",
+            "workspacePath": "src"
+        },
+        {
+            "type": "Directory",
+            "name": "/exec/vscode-cassandra/ngsrc/src/app",
+            "parent_id": null,
+            "id": "FC8dyVhcULAPRG3I",
+            "workspacePath": "ngsrc/src/app"
+        }
+    ]
+    // "typescript.referencesCodeLens.enabled": true
 }

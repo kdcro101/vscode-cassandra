@@ -16,9 +16,24 @@
     ],
     "main": "./out/extension",
     "contributes": {
+        "menus": {
+            "view/title": [{
+                "when": "view == cassandraWorkbenchView",
+                "command": "cassandra-workbench.refresh",
+                "group": "navigation"
+
+            }]
+        },
         "commands": [{
             "command": "generate-configuration",
             "title": "CASSANDRA WORKBENCH: Generate configuration template"
+        }, {
+            "command": "cassandra-workbench.refresh",
+            "title": "Refresh",
+            "icon": {
+                "light": "./icons/refresh/light.svg",
+                "dark": "./icons/refresh/dark.svg"
+            }
         }],
         "viewsContainers": {
             "activitybar": [{

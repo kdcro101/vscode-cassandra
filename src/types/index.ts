@@ -2,7 +2,7 @@ import * as cassandra from "cassandra-driver";
 import * as vscode from "vscode";
 export * from "./messages";
 
-export type TreeItemType = "cluster" | "keyspace" | "table" |
+export type TreeItemType = "cluster" | "cluster-error" | "keyspace" | "table" |
     "columns" | "column_item"
     | "indexes" | "index_item" |
     "primarykey" | "partitioning_key" | "clustering_key";
@@ -63,6 +63,12 @@ export interface CassandraKeyspace {
     durable_writes: number;
     replication: { [key: string]: string };
     all: RowKeyspace;
+}
+
+export interface CassandraCluster {
+    keyspaces: CassandraKeyspace[];
+    connected: boolean;
+    error?: any;
 }
 
 export interface RowKeyspace extends cassandra.types.Row {
