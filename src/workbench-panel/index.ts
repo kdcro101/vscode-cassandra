@@ -1,6 +1,6 @@
 import * as path from "path";
-import { from as observableFrom, fromEventPattern, ReplaySubject, Subject } from "rxjs";
-import { concatMap, filter, take, takeUntil, tap } from "rxjs/operators";
+import { fromEventPattern, ReplaySubject, Subject } from "rxjs";
+import { take, takeUntil } from "rxjs/operators";
 import * as vscode from "vscode";
 import { InputParser } from "../parser";
 import { ProcMessage, ProcMessageStrict } from "../types";
@@ -30,6 +30,9 @@ export class WorkbenchPanel {
             ],
             retainContextWhenHidden: true,
         });
+
+        this.panel.iconPath = vscode.Uri.file(path.join(this.context.extensionPath, "icons", "panel.png"));
+
         this.panel.onDidDispose(() => {
             WorkbenchPanel.opened = false;
             this.eventDestroy.next();

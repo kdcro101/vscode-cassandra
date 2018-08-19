@@ -1,8 +1,4 @@
-import * as path from "path";
-import { ReplaySubject } from "rxjs";
-import { take } from "rxjs/operators";
 import * as vscode from "vscode";
-
 import { CassandraWorkbench } from "../cassandra-workbench";
 import { ConfigurationManager } from "../configuration-manager";
 
@@ -38,8 +34,7 @@ export class VsCommands {
         const uri = vscode.Uri.file(fp);
         vscode.window.showTextDocument(uri, {
             viewColumn: vscode.ViewColumn.Active,
-         });
-        // vscode.window.showWarningMessage(fp);
+        });
     }
 
 }
