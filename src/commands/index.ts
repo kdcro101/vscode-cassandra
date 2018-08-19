@@ -1,22 +1,29 @@
 import * as vscode from "vscode";
 import { CassandraWorkbench } from "../cassandra-workbench";
 import { ConfigurationManager } from "../configuration-manager";
+import { ExtensionContextBundle } from "../types";
+
+declare var extensionContextBundle: ExtensionContextBundle;
 
 export class VsCommands {
+    private context: vscode.ExtensionContext = extensionContextBundle.context;
 
     constructor(
         private configuration: ConfigurationManager,
-        private context: vscode.ExtensionContext,
         private workbench: CassandraWorkbench) {
 
-        context.subscriptions
-            .push(vscode.commands.registerCommand("cassandraWorkbench.generateConfiguration", this.onConfigurationGenerate));
-        context.subscriptions
-            .push(vscode.commands.registerCommand("cassandraWorkbench.refresh", this.onRefresh));
-        context.subscriptions
-            .push(vscode.commands.registerCommand("cassandraWorkbench.editConfiguration", this.onEditConfig));
     }
+    public register() {
 
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.generateConfiguration", this.onConfigurationGenerate));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.refresh", this.onRefresh));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.editConfiguration", this.onEditConfig));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.revealPanel", this.onRevealCqlPanel));
+    }
     private onConfigurationGenerate = () => {
         this.configuration.loadConfig()
             .then((result) => {
@@ -26,7 +33,7 @@ export class VsCommands {
             });
     }
     private onRefresh = () => {
-        this.workbench.refreshTree();
+        this.workbench.refreshClusterTree();
         vscode.window.showInformationMessage("Refreshing...");
     }
     private onEditConfig = () => {
@@ -37,4 +44,9 @@ export class VsCommands {
         });
     }
 
+    private onRevealCqlPanel = () => {
+
+        this.workbench.revealCqlPanel();
+
+    }
 }

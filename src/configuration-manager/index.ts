@@ -41,7 +41,7 @@ export class ConfigurationManager {
 
         });
     }
-    public loadConfig(): Promise<void> {
+    public loadConfig(): Promise<ValidatedConfigClusterItem[]> {
         return new Promise((resolve, reject) => {
 
             from(fs.pathExists(this.confPath)).pipe(
@@ -58,7 +58,7 @@ export class ConfigurationManager {
                 map((data) => this.validConfig(data)),
             ).subscribe((data) => {
                 this.stateConfiguration.next(data);
-                resolve();
+                resolve(data);
             }, (e) => {
                 reject(e);
             });

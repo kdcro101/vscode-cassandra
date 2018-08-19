@@ -1,6 +1,16 @@
 import * as cassandra from "cassandra-driver";
+import { Subject } from "rxjs";
 import * as vscode from "vscode";
 export * from "./messages";
+
+export interface VscodeCassandraGlobal extends NodeJS.Global {
+    extensionContextBundle: ExtensionContextBundle;
+}
+
+export interface ExtensionContextBundle {
+    context: vscode.ExtensionContext;
+    eventDestroy: Subject<void>;
+}
 
 export type TreeItemType = "cluster" | "cluster-error" | "keyspace" | "table" |
     "columns" | "column_item"

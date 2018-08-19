@@ -89,7 +89,7 @@ export class CassandraClient extends EventEmitter {
 
             }, (e) => {
                 // resolve error
-                console.log(e);
+                console.log(`Error connecting to cluster '${ this.config.name }'`);
                 resolveError(e);
 
             });

@@ -1,15 +1,24 @@
 
-import { from } from "rxjs";
+import { from, Subject } from "rxjs";
 import { mergeMap } from "rxjs/operators";
 import * as vscode from "vscode";
 import { CassandraWorkbench } from "./cassandra-workbench";
 import { VsCommands } from "./commands";
-import { Completition } from "./completition";
 import { ConfigurationManager } from "./configuration-manager";
 import { Icons } from "./icons";
+import { ExtensionContextBundle, VscodeCassandraGlobal } from "./types";
 import { Workspace } from "./workspace";
 
+declare var extensionContextBundle: ExtensionContextBundle;
+
 export function activate(context: vscode.ExtensionContext) {
+    // initialize context
+    (global as VscodeCassandraGlobal).extensionContextBundle = {
+        context,
+        eventDestroy: new Subject<void>(),
+    };
+    // ---------------------------------------------------------
+
     const workspace = new Workspace();
     const config = new ConfigurationManager(context, workspace);
 
@@ -19,19 +28,21 @@ export function activate(context: vscode.ExtensionContext) {
 
     let workbench: CassandraWorkbench = null;
 
-    from(config.loadConfig()).pipe(
-        mergeMap(() => config.stateConfiguration),
-    ).subscribe((clusterItems) => {
-        console.log(clusterItems);
-        workbench = new CassandraWorkbench(context, workspace, clusterItems);
-        workbench.start();
-        commands = new VsCommands(config, context, workbench);
+    from(config.loadConfig()).pipe()
+        .subscribe((clusterItems) => {
 
-    });
+            workbench = new CassandraWorkbench(workspace, clusterItems);
+            workbench.start();
+            commands = new VsCommands(config, workbench);
+            commands.register();
+
+        });
 
 }
 
 // this method is called when your extension is deactivated
 export function deactivate() {
+    extensionContextBundle.eventDestroy.next();
+    console.log("vscode-cassandra deactivated");
 
 }

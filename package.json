@@ -27,6 +27,11 @@
                     "when": "view == cassandraWorkbenchView",
                     "command": "cassandraWorkbench.editConfiguration",
                     "group": "navigation"
+                },
+                {
+                    "when": "view == cassandraWorkbenchView",
+                    "command": "cassandraWorkbench.revealPanel",
+                    "group": "navigation"
                 }
             ]
         },
@@ -49,6 +54,14 @@
                 "icon": {
                     "light": "./icons/settings/light.svg",
                     "dark": "./icons/settings/dark.svg"
+                }
+            },
+            {
+                "command": "cassandraWorkbench.revealPanel",
+                "title": "Show CQL editor",
+                "icon": {
+                    "light": "./icons/cql/light.svg",
+                    "dark": "./icons/cql/dark.svg"
                 }
             }
         ],
