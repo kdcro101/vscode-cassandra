@@ -68,6 +68,11 @@
             "rxjs/add/operator/switchMap",
             "rxjs/observable/interval",
             "rxjs/observable/forkJoin"
-        ]
+        ],
+        "trailing-comma": [true, {
+            "multiline": "always",
+            "singleline": "never"
+        }]
+
     }
 }

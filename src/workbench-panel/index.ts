@@ -3,7 +3,7 @@ import { fromEventPattern, ReplaySubject, Subject } from "rxjs";
 import { take, takeUntil } from "rxjs/operators";
 import * as vscode from "vscode";
 import { InputParser } from "../parser";
-import { ExtensionContextBundle, ProcMessage, ProcMessageStrict } from "../types";
+import { ExtensionContextBundle, ProcMessage, ProcMessageList, ProcMessageStrict } from "../types";
 import { Workspace } from "../workspace";
 import { generateHtml } from "./html";
 
@@ -63,18 +63,29 @@ export class WorkbenchPanel {
 
     }
     public start() {
-
         this.panel.reveal();
-
         WorkbenchPanel.opened = true;
-
     }
-
+    public emitMessage(message: ProcMessage) {
+        this.stateWebviewReady.pipe(
+            take(1),
+            takeUntil(this.eventDestroy),
+        ).subscribe(() => {
+            this.panel.webview.postMessage(message);
+        });
+    }
     private onMessage(e: ProcMessage) {
-        console.log(e);
-        switch (e.name) {
+        const name: keyof ProcMessageList = e.name;
+        switch (name) {
             case "w2e_parseInput":
                 this.respondParseInput(e as ProcMessageStrict<"w2e_parseInput">);
+                break;
+            case "w2e_parseInput":
+                this.respondParseInput(e as ProcMessageStrict<"w2e_parseInput">);
+                break;
+            case "w2e_onReady":
+                console.log("webview panel ready");
+                this.stateWebviewReady.next();
                 break;
         }
     }
