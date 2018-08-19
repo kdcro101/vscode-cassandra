@@ -37,7 +37,9 @@ export function collectKeyspaces(client: cassandra.Client): Promise<CassandraKey
             }),
         ).subscribe((data) => {
             resolve(data);
-        }, (e) => reject(e));
+        }, (e) => {
+            reject(e);
+        });
 
     });
 }
@@ -97,9 +99,9 @@ export function collectIndexes(client: cassandra.Client, keyspace: string, table
                     return out;
                 });
             }),
-        ).subscribe((data) => {
-            resolve(data);
-        }, (e) => reject(e));
+            ).subscribe((data) => {
+                resolve(data);
+            }, (e) => reject(e));
     });
 
 }
@@ -124,9 +126,9 @@ export function collectColumns(client: cassandra.Client, keyspace: string, table
                     return out;
                 });
             }),
-        ).subscribe((data) => {
-            resolve(data);
-        }, (e) => reject(e));
+            ).subscribe((data) => {
+                resolve(data);
+            }, (e) => reject(e));
     });
 
 }

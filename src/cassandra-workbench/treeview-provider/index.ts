@@ -284,6 +284,7 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
 
         for (let i = 0; i < config.length; i++) {
             const c = config[i];
+
             const struct = await (new CassandraClient(c)).getStructure();
             this.clusters[i] = struct;
 

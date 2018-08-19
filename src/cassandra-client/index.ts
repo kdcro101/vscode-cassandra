@@ -41,14 +41,14 @@ export class CassandraClient extends EventEmitter {
             this.client.connect()
                 .then((result) => {
                     console.log("Connected to cluster with %d host(s): %j", this.client.hosts.length, this.client.hosts.keys());
-                    this.stateConnected.next(true);
-                    this.emit("connected", null);
+                    // this.stateConnected.next(true);
+                    // this.emit("connected", null);
                     resolve();
 
                 }).catch((e) => {
                     reject(e);
-                    this.emit("error", e);
-                    this.stateConnected.next(false);
+                    // this.emit("error", e);
+                    // this.stateConnected.next(false);
                 });
 
         });
