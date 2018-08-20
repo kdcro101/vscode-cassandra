@@ -1,11 +1,11 @@
-import { CqlEditor } from "./editor";
+import { WorkbenchCqlStatement } from "./editor";
 
 export interface ProcMessageList {
     e2w_goState: WebviewStateParams;
     w2e_onReady: boolean;
     w2e_parseInput: string;
     e2w_parseOutput: string;
-    e2w_editorCreate: CqlEditor;
+    e2w_editorCreate: EditorCreateParams;
 }
 export type ProcMessageType = keyof ProcMessageList;
 export interface ProcMessage {
@@ -19,4 +19,8 @@ export interface ProcMessageStrict<T extends keyof ProcMessageList> {
 export interface WebviewStateParams {
     name: string;
     params: { [key: string]: any };
+}
+export interface EditorCreateParams {
+    statement: WorkbenchCqlStatement;
+    execute: boolean;
 }

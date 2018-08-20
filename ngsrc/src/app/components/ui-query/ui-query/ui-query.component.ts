@@ -1,13 +1,14 @@
 import * as Split from "split.js";
 
 import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { WorkbenchEditor } from "../../../../../../src/types/editor";
 import { ThemeService } from "../../../services/theme/theme.service";
 
 @Component({
     selector: "ui-query",
     templateUrl: "./ui-query.component.html",
     styleUrls: ["./ui-query.component.scss"],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UiQueryComponent implements OnInit {
 
@@ -37,6 +38,9 @@ export class UiQueryComponent implements OnInit {
             sizes: [75, 25],
             gutterSize: 12,
         });
+
+    }
+    public updateEditor(editor: WorkbenchEditor) {
 
     }
 

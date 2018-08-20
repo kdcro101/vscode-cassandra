@@ -8,21 +8,21 @@
         right: 0;
         bottom: 0;
         .top {
-            background: red;
+            background: transparent;
             position: relative;
             .top-left {
-                background: green;
+                background: transparent;
                 height: 100%;
                 float: left;
             }
             .top-right {
-                background: yellow;
+                background: transparent;
                 height: 100%;
                 float: left;
             }
         }
         .bottom {
-            background: blue;
+            background: transparent;
         }
         ::ng-deep .gutter {
             background-color: mat-color($background, 500);

@@ -33,18 +33,37 @@ export class CassandraWorkbench {
         this.treeProvider.refresh();
     }
     public revealCqlPanel() {
+        return new Promise((resolve, reject) => {
+            if (this.panel != null) {
+                resolve();
+                return;
+            }
 
-        if (this.panel != null ) {
-            return;
-        }
+            this.panel = new WorkbenchPanel(this.workspace);
+            this.panel.eventDestroy.pipe(
+                takeUntil(merge(extensionContextBundle.eventDestroy, this.eventPanelReset)),
+            ).subscribe(() => {
+                this.resetPanel();
+            });
 
-        this.panel = new WorkbenchPanel(this.workspace);
-        this.panel.eventDestroy.pipe(
-            takeUntil(merge(extensionContextBundle.eventDestroy, this.eventPanelReset)),
-        ).subscribe(() => {
-            this.resetPanel();
+            this.panel.start()
+                .then((result) => {
+                    resolve();
+                }).catch((e) => {
+                    reject(e);
+                });
+
         });
-        this.panel.start();
+    }
+    public editorCreate(statementBody?: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+
+            from(this.revealCqlPanel()).pipe()
+            .subscribe(() => {
+
+            });
+
+        });
     }
     private resetPanel() {
         this.panel = null;

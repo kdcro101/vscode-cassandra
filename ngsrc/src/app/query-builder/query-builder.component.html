@@ -1,7 +1,7 @@
 <div class="root mat-app-background" fxLayout="column">
     <ui-content-horizontal class="tabs">
         <div fxLayout="row" fxLayoutAlign="start center" class="tabs-wrap">
-            <div *ngFor="let i of range;index as ix" class="item mat-body-1" [class.active]="ix===tabActive" (mousedown)="tabSelect($event,ix)"
+            <div *ngFor="let i of range;index as ix" class="item" [class.active]="ix===tabActive" (mousedown)="tabSelect($event,ix)"
                 fxLayout="row" fxLayoutAlign="start center">
                 <div fxFlex class="title">
                     CqlScript_{{ix}}
@@ -13,6 +13,6 @@
         </div>
     </ui-content-horizontal>
     <div fxFlex class="client" fxLayout="column">
-        <ui-query fxFlex></ui-query>
+        <ui-query #queryEditor fxFlex></ui-query>
     </div>
 </div>

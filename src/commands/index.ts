@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { CassandraWorkbench } from "../cassandra-workbench";
+import { TreeItemTable } from "../cassandra-workbench/treeview-provider/tree-item-table/index";
 import { ConfigurationManager } from "../configuration-manager";
 import { ExtensionContextBundle } from "../types";
 
@@ -23,6 +24,8 @@ export class VsCommands {
             .push(vscode.commands.registerCommand("cassandraWorkbench.editConfiguration", this.onEditConfig));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.revealPanel", this.onRevealCqlPanel));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.tableSelectStatement", this.onTableSelectStatement));
     }
     private onConfigurationGenerate = () => {
         this.configuration.loadConfig()
@@ -46,7 +49,19 @@ export class VsCommands {
 
     private onRevealCqlPanel = () => {
 
-        this.workbench.revealCqlPanel();
+        this.workbench.revealCqlPanel()
+        .then((result) => {
+          console.log("Cassandra workbench panel revealed");
+        }).catch((e) => {
+          vscode.window.showErrorMessage("Error starting panel!");
+        });
+
+    }
+    private onTableSelectStatement = (item: TreeItemTable) => {
+        const keyspace = item.keyspace;
+        const table = item.label;
+
+        console.log(item);
 
     }
 }

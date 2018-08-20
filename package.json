@@ -17,8 +17,7 @@
     "main": "./out/extension",
     "contributes": {
         "menus": {
-            "view/title": [
-                {
+            "view/title": [{
                     "when": "view == cassandraWorkbenchView",
                     "command": "cassandraWorkbench.refresh",
                     "group": "navigation"
@@ -33,12 +32,20 @@
                     "command": "cassandraWorkbench.revealPanel",
                     "group": "navigation"
                 }
-            ]
+            ],
+            "view/item/context": [{
+                "command": "cassandraWorkbench.tableSelectStatement",
+                "when": "view == cassandraWorkbenchView && viewItem == table",
+                "group": "navigation@1"
+            }]
         },
-        "commands": [
-            {
+        "commands": [{
                 "command": "cassandraWorkbench.generateConfiguration",
                 "title": "CASSANDRA WORKBENCH: Generate configuration template"
+            },
+            {
+                "command": "cassandraWorkbench.tableSelectStatement",
+                "title": "SELECT query"
             },
             {
                 "command": "cassandraWorkbench.refresh",
@@ -66,21 +73,17 @@
             }
         ],
         "viewsContainers": {
-            "activitybar": [
-                {
-                    "id": "object-explorer",
-                    "title": "Casssandra workbench",
-                    "icon": "icons/activity.svg"
-                }
-            ]
+            "activitybar": [{
+                "id": "object-explorer",
+                "title": "Casssandra workbench",
+                "icon": "icons/activity.svg"
+            }]
         },
         "views": {
-            "object-explorer": [
-                {
-                    "id": "cassandraWorkbenchView",
-                    "name": "Explorer"
-                }
-            ]
+            "object-explorer": [{
+                "id": "cassandraWorkbenchView",
+                "name": "Explorer"
+            }]
         }
     },
     "scripts": {

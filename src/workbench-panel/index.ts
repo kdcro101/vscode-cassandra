@@ -15,9 +15,9 @@ export class WorkbenchPanel {
     public panel: vscode.WebviewPanel = null;
     public eventDestroy = new Subject<void>();
     public eventMessage = new Subject<ProcMessage>();
+    public stateWebviewReady = new ReplaySubject<void>(1);
 
     private context: vscode.ExtensionContext = extensionContextBundle.context;
-    private stateWebviewReady = new ReplaySubject<void>(1);
 
     private parser = new InputParser();
 
@@ -44,6 +44,7 @@ export class WorkbenchPanel {
             takeUntil(this.eventDestroy),
         ).subscribe(() => {
             WorkbenchPanel.opened = false;
+            this.stateWebviewReady = new ReplaySubject<void>(1);
             this.eventDestroy.next();
         });
 
@@ -62,9 +63,21 @@ export class WorkbenchPanel {
         });
 
     }
-    public start() {
-        this.panel.reveal();
-        WorkbenchPanel.opened = true;
+    public start(): Promise<void> {
+        return new Promise((resolve, reject) => {
+
+            this.panel.reveal();
+            this.stateWebviewReady
+                .pipe(
+                    take(1),
+                ).subscribe(() => {
+                    WorkbenchPanel.opened = true;
+                    resolve();
+                }, (e) => {
+                    reject(e);
+                });
+
+        });
     }
     public emitMessage(message: ProcMessage) {
         this.stateWebviewReady.pipe(

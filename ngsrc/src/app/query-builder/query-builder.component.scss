@@ -12,18 +12,26 @@
         bottom: 0;
         position: absolute;
         .tabs {
-            height: 56px;
+            height: 43px;
             .tabs-wrap {
                 padding: 8px 0px 0px 0px;
                 background-color: var(--vscode-editorGroupHeader-tabsBackground);
             }
             .item {
-
                 &.active {
                     background-color: var(--vscode-tab-activeBackground);
                     color: var(--vscode-tab-activeForeground);
                     border-bottom: 1px solid var(--vscode-tab-activeBorder);
+                    .vsui-close {
+                        opacity: 1;
+                    }
                 }
+                &:hover {
+                    .vsui-close {
+                        opacity: 1;
+                    }
+                }
+                user-select: none;
                 height: 35px;
                 background-color: var(--vscode-tab-inactiveBackground);
                 color: var(--vscode-tab-inactiveForeground);
@@ -39,6 +47,7 @@
                 }
                 .vsui-close {
                     margin-right: 0.5em;
+                    opacity: 0;
                 }
             }
         }
