@@ -2,6 +2,7 @@ import * as cassandra from "cassandra-driver";
 import { Subject } from "rxjs";
 import * as vscode from "vscode";
 export * from "./messages";
+export * from "./editor";
 
 export interface VscodeCassandraGlobal extends NodeJS.Global {
     extensionContextBundle: ExtensionContextBundle;

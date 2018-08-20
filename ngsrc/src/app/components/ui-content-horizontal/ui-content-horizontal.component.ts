@@ -81,7 +81,7 @@ export class UiContentHorizontalComponent extends ViewDestroyable implements OnI
             // scrollbars: true,
             scrollX: true,
             scrollY: false,
-            // preventDefault: true,
+            preventDefault: false,
             mouseWheel: true,
             scrollbars: "custom",
             momentum: false,
@@ -110,7 +110,7 @@ export class UiContentHorizontalComponent extends ViewDestroyable implements OnI
                 });
 
             observableFromEvent(this.wrapperRef.nativeElement, "wheel", {
-                capture: false
+                capture: false,
             }).pipe(
                 takeUntil(this.eventViewDestroyed),
             ).subscribe((e) => {

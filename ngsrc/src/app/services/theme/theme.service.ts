@@ -7,7 +7,7 @@ declare var codeFontSize: number;
 declare var codeLineHeight: number;
 
 @Injectable({
-    providedIn: "root"
+    providedIn: "root",
 })
 export class ThemeService {
     public isDark: boolean = false;

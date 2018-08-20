@@ -12,10 +12,11 @@ import { MessagesService } from "../services/messages/messages.service";
 })
 export class QueryBuilderComponent extends ViewDestroyable implements OnInit, OnDestroy {
     public range = range(100);
+    public tabActive: number = -1;
     constructor(
         public change: ChangeDetectorRef,
         public messages: MessagesService,
-        ) {
+    ) {
         super(change);
     }
 
@@ -24,6 +25,11 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
     }
     ngOnDestroy() {
         super.ngOnDestroy();
+    }
+    public tabSelect = (e: Event, index: number) => {
+        console.log("mousedown");
+        this.tabActive = index;
+        this.detectChanges();
     }
 
 }

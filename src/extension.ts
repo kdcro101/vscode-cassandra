@@ -9,6 +9,9 @@ import { Icons } from "./icons";
 import { ExtensionContextBundle, VscodeCassandraGlobal } from "./types";
 import { Workspace } from "./workspace";
 
+import * as fs from "fs-extra";
+import * as path from "path";
+
 declare var extensionContextBundle: ExtensionContextBundle;
 
 export function activate(context: vscode.ExtensionContext) {
@@ -18,9 +21,11 @@ export function activate(context: vscode.ExtensionContext) {
         eventDestroy: new Subject<void>(),
     };
     // ---------------------------------------------------------
-
     const workspace = new Workspace();
     const config = new ConfigurationManager(context, workspace);
+
+    fs.mkdirpSync(path.join(workspace.getRootPath(), ".cqlWorkbench", "saved"));
+    fs.mkdirpSync(path.join(workspace.getRootPath(), ".cqlWorkbench", "editors"));
 
     let commands: VsCommands = null;
 

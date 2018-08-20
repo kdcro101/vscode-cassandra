@@ -1,15 +1,13 @@
 <div class="root mat-app-background" fxLayout="column">
     <ui-content-horizontal class="tabs">
-        <div fxLayout="row" fxLayoutAlign="start center" class="wrap">
-            <div *ngFor="let i of range;" class="item" fxLayout="row" fxLayoutAlign="start center">
-                <div fxLayout="column" fxFlex>
-                    <div fxFlex></div>
-                    <div class="mat-caption">SELECT</div>
-                    <div class="mat-body-1">{{ i }}</div>
-                    <div fxFlex></div>
+        <div fxLayout="row" fxLayoutAlign="start center" class="tabs-wrap">
+            <div *ngFor="let i of range;index as ix" class="item mat-body-1" [class.active]="ix===tabActive" (mousedown)="tabSelect($event,ix)"
+                fxLayout="row" fxLayoutAlign="start center">
+                <div fxFlex class="title">
+                    CqlScript_{{ix}}
                 </div>
-                <div class="close">
-                    <mat-icon class="icon-18">close</mat-icon>
+                <div class="vsui-close">
+
                 </div>
             </div>
         </div>

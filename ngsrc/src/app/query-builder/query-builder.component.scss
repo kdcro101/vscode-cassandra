@@ -13,26 +13,34 @@
         position: absolute;
         .tabs {
             height: 56px;
-            .wrap {
-                padding: 8px 0px 8px 8px;
+            .tabs-wrap {
+                padding: 8px 0px 0px 0px;
+                background-color: var(--vscode-editorGroupHeader-tabsBackground);
             }
             .item {
-                padding: 0px 8px;
-                border: 1px solid fuchsia;
-                border-radius: 2px;
-                margin-right: 16px;
-                height: 38px;
+
+                &.active {
+                    background-color: var(--vscode-tab-activeBackground);
+                    color: var(--vscode-tab-activeForeground);
+                    border-bottom: 1px solid var(--vscode-tab-activeBorder);
+                }
+                height: 35px;
+                background-color: var(--vscode-tab-inactiveBackground);
+                color: var(--vscode-tab-inactiveForeground);
+                border-bottom: 1px solid transparent;
+                padding-left: 8px;
+                border: 1px solid transparent;
+                margin-right: 1px;
                 box-sizing: border-box;
                 cursor: pointer;
                 min-width: 100px;
-
-                .close{
-                    margin-left: 16px;
+                .title {
+                    padding-right: 8px;
+                }
+                .vsui-close {
+                    margin-right: 0.5em;
                 }
             }
-        }
-        .client {
-            // background-color: coral;
         }
     }
 }
