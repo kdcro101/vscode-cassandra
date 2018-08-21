@@ -1,11 +1,14 @@
 import { CassandraClient } from "../cassandra-client/index";
 import { CassandraCluster, ValidatedConfigClusterItem } from "../types";
-
+export interface CassandraClientCache {
+    client: CassandraClient;
+    error: boolean;
+}
 export class Clusters {
     private clusters: CassandraCluster[] = null;
-    private clients: CassandraClient[] = [];
+    private clientsCache: CassandraClientCache[] = [];
     constructor(private configItems: ValidatedConfigClusterItem[]) {
-        this.clients = configItems.map(() => null); // null array
+        this.clientsCache = configItems.map(() => null); // null array
     }
     // private async collectClusterData(config: ValidatedConfigClusterItem[]) {
 
@@ -24,8 +27,9 @@ export class Clusters {
     // }
     private getClient(index: number): Promise<CassandraClient> {
         return new Promise((resolve, reject) => {
-            if (this.clients[index] != null) {
-                return this.clients[index];
+            const cache = this.clientsCache[index];
+            if (cache != null && cache.error === false) {
+                return cache.client;
             }
 
             const c = this.configItems[index];
