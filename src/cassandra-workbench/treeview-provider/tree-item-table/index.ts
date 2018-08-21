@@ -9,6 +9,7 @@ export class TreeItemTable extends TreeItemBase {
         public label: string,
         public collapsibleState: vscode.TreeItemCollapsibleState,
         public clusterIndex: number,
+        public clusterName: string,
         public keyspace: string,
         public contextValue: string,
         public tooltipText?: string,

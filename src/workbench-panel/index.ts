@@ -71,6 +71,7 @@ export class WorkbenchPanel {
                 .pipe(
                     take(1),
                 ).subscribe(() => {
+
                     WorkbenchPanel.opened = true;
                     resolve();
                 }, (e) => {

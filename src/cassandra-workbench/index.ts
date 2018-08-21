@@ -55,7 +55,7 @@ export class CassandraWorkbench {
 
         });
     }
-    public editorCreate(statementBody?: string): Promise<void> {
+    public editorCreate(clusterIndex: number, keyspace: string, statementBody?: string): Promise<void> {
         return new Promise((resolve, reject) => {
 
             from(this.revealCqlPanel()).pipe()

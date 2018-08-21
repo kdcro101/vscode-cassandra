@@ -65,6 +65,7 @@ export class CassandraClient extends EventEmitter {
             const resolveError = (e: any) => {
                 const o: CassandraCluster = {
                     keyspaces: [],
+                    name: this.config.name,
                     connected: false,
                     error: e,
                 };
@@ -82,6 +83,7 @@ export class CassandraClient extends EventEmitter {
             ).subscribe((data) => {
 
                 const o: CassandraCluster = {
+                    name: this.config.name,
                     keyspaces: data,
                     connected: true,
                 };

@@ -5,7 +5,7 @@ export interface WorkbenchCqlStatement {
     resultset: any[];
     filename: string;
     keyspace?: string;
-    cluster?: string;
+    clusterName?: string;
     table?: string;
 }
 export interface WorkbenchEditor {

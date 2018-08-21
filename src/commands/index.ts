@@ -58,10 +58,12 @@ export class VsCommands {
 
     }
     private onTableSelectStatement = (item: TreeItemTable) => {
+        const clusterName  = item.clusterName;
+        const clusterIndex = item.clusterIndex;
         const keyspace = item.keyspace;
         const table = item.label;
 
-        console.log(item);
+        this.workbench.editorCreate(clusterIndex, keyspace, "");
 
     }
 }

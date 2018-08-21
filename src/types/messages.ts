@@ -6,6 +6,8 @@ export interface ProcMessageList {
     w2e_parseInput: string;
     e2w_parseOutput: string;
     e2w_editorCreate: EditorCreateParams;
+    w2e_getClustersRequest: boolean;
+    e2w_getClustersResponse: boolean;
 }
 export type ProcMessageType = keyof ProcMessageList;
 export interface ProcMessage {

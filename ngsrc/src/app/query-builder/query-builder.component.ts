@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-
 import { range } from "lodash-es";
 import { ViewDestroyable } from "../base/view-destroyable";
 import { UiQueryComponent } from "../components/ui-query/ui-query/ui-query.component";
-import { MessagesService } from "../services/messages/messages.service";
+import { SystemService } from "../services/system/system.service";
 
 @Component({
     selector: "query-builder",
@@ -18,13 +17,13 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
     public tabActive: number = -1;
     constructor(
         public change: ChangeDetectorRef,
-        public messages: MessagesService,
+        public system: SystemService,
     ) {
         super(change);
     }
 
     ngOnInit() {
-        this.messages.emitStateReady();
+        this.system.runReady();
     }
     ngOnDestroy() {
         super.ngOnDestroy();

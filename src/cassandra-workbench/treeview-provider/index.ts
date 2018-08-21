@@ -191,7 +191,7 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
             const items = ks.tables.map((t) => {
                 const tooltip = `${c.name}/${keyspace}/${t.name}`;
                 return new TreeItemTable(t.name, vscode.TreeItemCollapsibleState.Collapsed,
-                    clusterIndex, keyspace, "table", tooltip);
+                    clusterIndex, c.name, keyspace, "table", tooltip);
             });
 
             resolve(items);

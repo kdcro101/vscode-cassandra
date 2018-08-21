@@ -78,6 +78,7 @@ export interface CassandraKeyspace {
 
 export interface CassandraCluster {
     keyspaces: CassandraKeyspace[];
+    name: string;
     connected: boolean;
     error?: any;
 }
