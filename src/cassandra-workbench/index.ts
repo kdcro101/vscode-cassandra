@@ -2,6 +2,7 @@ import { from, merge, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import * as vscode from "vscode";
 import { CassandraClient } from "../cassandra-client";
+import { Clusters } from "../clusters";
 import { ExtensionContextBundle, ValidatedConfigClusterItem } from "../types";
 import { WorkbenchPanel } from "../workbench-panel";
 import { Workspace } from "../workspace";
@@ -16,14 +17,15 @@ export class CassandraWorkbench {
     private context: vscode.ExtensionContext = extensionContextBundle.context;
     private clients: CassandraClient[] = [];
     private eventPanelReset = new Subject<void>();
-
+    private clusters: Clusters = null;
     constructor(
-
         private workspace: Workspace,
         private config: ValidatedConfigClusterItem[],
-    ) { }
+    ) {
+        this.clusters = new Clusters(config);
+     }
     public start() {
-        this.treeProvider = new TreeviewProvider(this.config);
+        this.treeProvider = new TreeviewProvider(this.config, this.clusters);
         this.context.subscriptions.push(vscode.window.registerTreeDataProvider("cassandraWorkbenchView", this.treeProvider));
     }
     public refreshClusterTree() {

@@ -1,8 +1,16 @@
+import { from } from "rxjs";
+import { concatMap } from "rxjs/operators";
 import { CassandraClient } from "../cassandra-client/index";
-import { CassandraCluster, ValidatedConfigClusterItem } from "../types";
+import { CassandraClusterData, ValidatedConfigClusterItem } from "../types";
 export interface CassandraClientCache {
     client: CassandraClient;
     error: boolean;
+    structure?: CassandraClusterData;
+    name: string;
+}
+export interface CassandraCluster {
+    name: string;
+    index: number;
 }
 export class Clusters {
     private clusters: CassandraCluster[] = null;
@@ -10,26 +18,17 @@ export class Clusters {
     constructor(private configItems: ValidatedConfigClusterItem[]) {
         this.clientsCache = configItems.map(() => null); // null array
     }
-    // private async collectClusterData(config: ValidatedConfigClusterItem[]) {
-
-    //     this.clusters = config.map((i) => null);
-
-    //     for (let i = 0; i < config.length; i++) {
-    //         const c = config[i];
-
-    //         const struct = await (new CassandraClient(c)).getStructure();
-    //         this.clusters[i] = struct;
-
-    //     }
-
-    //     this.stateStructuresReady.next(true);
-
-    // }
-    private getClient(index: number): Promise<CassandraClient> {
+    public getClient(index: number, force: boolean = false): Promise<CassandraClient> {
         return new Promise((resolve, reject) => {
+
+            if (index < 0 || index > (this.configItems.length - 1)) {
+                reject("out_of_bounds");
+            }
+
             const cache = this.clientsCache[index];
-            if (cache != null && cache.error === false) {
-                return cache.client;
+            if (cache != null && cache.error === false && force === false) {
+                resolve(cache.client);
+                return;
             }
 
             const c = this.configItems[index];
@@ -37,11 +36,66 @@ export class Clusters {
 
             client.connect()
                 .then(() => {
-                    return client;
+
+                    this.clientsCache[index] = {
+                        error: false,
+                        client,
+                        name: c.name,
+                    };
+
+                    resolve(client);
                 }).catch((e) => {
                     reject(e);
                 });
         });
 
     }
+    public getStructure(index: number, force: boolean = false): Promise<CassandraClusterData> {
+        return new Promise((resolve, reject) => {
+            if (index < 0 || index > (this.configItems.length - 1)) {
+                reject("out_of_bounds");
+            }
+
+            const cache = this.clientsCache[index];
+            if (cache != null && cache.structure && cache.error === false && force === false) {
+                resolve(cache.structure);
+                return;
+            }
+
+            from(this.getClient(index)).pipe(
+                concatMap((client) => client.getStructure()),
+            ).subscribe((structure) => {
+
+                // store to cache
+                this.clientsCache[index].structure = structure;
+
+                resolve(structure);
+            }, (e) => {
+                console.error(e);
+                reject(e);
+            });
+
+        });
+    }
+    public getClusters(): CassandraCluster[] {
+
+        if (this.configItems.length === 0) {
+            return [];
+        }
+
+        return this.configItems.map((item, i) => {
+            return {
+                name: item.name,
+                index: i,
+            };
+        });
+
+    }
+    public getClusterName(index: number): string {
+        if (index < 0 || index > (this.configItems.length - 1)) {
+            return null;
+        }
+        return this.configItems[index].name;
+    }
+
 }

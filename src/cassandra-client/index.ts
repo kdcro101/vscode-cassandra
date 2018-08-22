@@ -2,8 +2,8 @@ import * as cassandra from "cassandra-driver";
 import { EventEmitter } from "events";
 import { BehaviorSubject, from } from "rxjs";
 import { concatMap, filter } from "rxjs/operators";
-import { CassandraCluster, CassandraKeyspace, ValidatedConfigClusterItem } from "../types";
-import { CassandraClientEvents } from "../types/index";
+import { CassandraKeyspace, ValidatedConfigClusterItem } from "../types";
+import { CassandraClientEvents, CassandraClusterData } from "../types/index";
 import { collectKeyspaces } from "./collectors/index";
 
 export class CassandraClient extends EventEmitter {
@@ -59,11 +59,11 @@ export class CassandraClient extends EventEmitter {
     public emit<T extends keyof CassandraClientEvents>(event: T, data: CassandraClientEvents[T]) {
         return super.emit(event, data);
     }
-    public getStructure(): Promise<CassandraCluster> {
+    public getStructure(): Promise<CassandraClusterData> {
         return new Promise((resolve, reject) => {
 
             const resolveError = (e: any) => {
-                const o: CassandraCluster = {
+                const o: CassandraClusterData = {
                     keyspaces: [],
                     name: this.config.name,
                     connected: false,
@@ -78,23 +78,22 @@ export class CassandraClient extends EventEmitter {
 
             }
 
-            from(this.connect()).pipe(
-                concatMap(() => collectKeyspaces(this.client)),
-            ).subscribe((data) => {
+            from(collectKeyspaces(this.client))
+                .pipe().subscribe((data) => {
 
-                const o: CassandraCluster = {
-                    name: this.config.name,
-                    keyspaces: data,
-                    connected: true,
-                };
-                resolve(o);
+                    const o: CassandraClusterData = {
+                        name: this.config.name,
+                        keyspaces: data,
+                        connected: true,
+                    };
+                    resolve(o);
 
-            }, (e) => {
-                // resolve error
-                console.log(`Error connecting to cluster '${ this.config.name }'`);
-                resolveError(e);
+                }, (e) => {
+                    // resolve error
+                    console.log(`Error connecting to cluster '${this.config.name}'`);
+                    resolveError(e);
 
-            });
+                });
 
         });
 
