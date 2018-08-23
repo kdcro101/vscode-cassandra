@@ -68,8 +68,38 @@ export interface CassandraTable {
     name: string;
     all: RowTable;
 }
+export interface CassandraType {
+    name: string;
+    field_names: string[];
+    field_types: string[];
+    all: RowType;
+}
+export interface CassandraAggregate {
+    name: string;
+    argument_types: string[];
+    final_func: string;
+    initcond: string;
+    return_type: string;
+    state_func: string;
+    state_type: string;
+    all: RowAggregate;
+}
+
+export interface CassandraFunction {
+    name: string;
+    argument_types: string[];
+    argument_names: string[];
+    body: string;
+    called_on_null_input: boolean;
+    language: string;
+    return_type: string;
+    all: RowFunction;
+}
 export interface CassandraKeyspace {
     tables: CassandraTable[];
+    functions: CassandraFunction[];
+    types: CassandraType[];
+    aggregates: CassandraAggregate[];
     name: string;
     durable_writes: number;
     replication: { [key: string]: string };
@@ -88,6 +118,34 @@ export interface RowKeyspace extends cassandra.types.Row {
     durable_writes: number;
     replication: { [key: string]: string };
 }
+
+export interface RowFunction extends cassandra.types.Row {
+    keyspace_name: string;
+    function_name: string;
+    argument_types: string[];
+    argument_names: string[];
+    body: string;
+    called_on_null_input: boolean;
+    language: string;
+    return_type: string;
+}
+export interface RowAggregate extends cassandra.types.Row {
+    keyspace_name: string;
+    aggregate_name: string;
+    argument_types: string[];
+    final_func: string;
+    initcond: string;
+    return_type: string;
+    state_func: string;
+    state_type: string;
+}
+export interface RowType extends cassandra.types.Row {
+    keyspace_name: string;
+    type_name: string;
+    field_names: string[];
+    field_types: string[];
+}
+
 export interface RowTable extends cassandra.types.Row {
     keyspace_name: string;
     table_name: string;

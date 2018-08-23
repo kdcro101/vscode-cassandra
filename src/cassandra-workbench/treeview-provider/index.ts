@@ -145,6 +145,11 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
         });
 
     }
+    private getKeyspaceElements(): Promise<TreeItemBase[]> {
+        return new Promise((resolve, reject) => {
+
+        });
+    }
     private getTables(clusterIndex: number, keyspace: string): Promise<TreeItemTable[]> {
         return new Promise((resolve, reject) => {
 
