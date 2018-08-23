@@ -23,9 +23,9 @@ export class CassandraWorkbench {
         private config: ValidatedConfigClusterItem[],
     ) {
         this.clusters = new Clusters(config);
-     }
+    }
     public start() {
-        this.treeProvider = new TreeviewProvider(this.config, this.clusters);
+        this.treeProvider = new TreeviewProvider(this.clusters);
         this.context.subscriptions.push(vscode.window.registerTreeDataProvider("cassandraWorkbenchView", this.treeProvider));
     }
     public refreshClusterTree() {
@@ -61,9 +61,9 @@ export class CassandraWorkbench {
         return new Promise((resolve, reject) => {
 
             from(this.revealCqlPanel()).pipe()
-            .subscribe(() => {
+                .subscribe(() => {
 
-            });
+                });
 
         });
     }

@@ -14,8 +14,11 @@ export interface ExtensionContextBundle {
 }
 
 export type TreeItemType = "cluster" | "cluster-error" | "keyspace" | "table" |
-    "columns" | "column_item"
-    | "indexes" | "index_item" |
+    "columns" | "column_item" |
+    "indexes" | "index_item" |
+    "types" | "type_item" |
+    "functions" | "function_item" |
+    "aggregates" | "aggregate_item" |
     "primarykey" | "partitioning_key" | "clustering_key";
 
 export type CassandraConsistency = "ANY" | "ONE" | "TWO" | "THREE" |
