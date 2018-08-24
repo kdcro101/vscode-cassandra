@@ -14,9 +14,9 @@ export class MessageService {
     public eventMessage = new Subject<ProcMessage>();
     constructor() {
 
-        fromEvent<ProcMessage>(window, "message").pipe()
-        .subscribe((data) => {
-            this.eventMessage.next(data);
+        fromEvent<MessageEvent>(window, "message").pipe()
+        .subscribe((message) => {
+            this.eventMessage.next(message.data);
         });
 
      }

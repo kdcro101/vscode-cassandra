@@ -4,6 +4,7 @@ import * as vscode from "vscode";
 import { CassandraClient } from "../cassandra-client";
 import { Clusters } from "../clusters";
 import { ExtensionContextBundle, ValidatedConfigClusterItem } from "../types";
+import { ProcMessage, ProcMessageStrict } from "../types/messages";
 import { WorkbenchPanel } from "../workbench-panel";
 import { Workspace } from "../workspace";
 import { TreeviewProvider } from "./treeview-provider";
@@ -47,6 +48,11 @@ export class CassandraWorkbench {
             ).subscribe(() => {
                 this.resetPanel();
             });
+            this.panel.eventMessage.pipe(
+                takeUntil(merge(extensionContextBundle.eventDestroy, this.eventPanelReset)),
+            ).subscribe((m) => {
+                this.onPanelMessage(m);
+            });
 
             this.panel.start()
                 .then((result) => {
@@ -70,5 +76,18 @@ export class CassandraWorkbench {
     private resetPanel() {
         this.panel = null;
         this.eventPanelReset.next();
+    }
+    private onPanelMessage = (m: ProcMessage) => {
+        const name = m.name;
+        switch (name) {
+            case "w2e_getClustersRequest":
+                const l = this.clusters.getClusters();
+                const mGetClustersResponse: ProcMessageStrict<"e2w_getClustersResponse"> = {
+                    name: "e2w_getClustersResponse",
+                    data: l,
+                };
+                this.panel.emitMessage(mGetClustersResponse);
+                break;
+        }
     }
 }

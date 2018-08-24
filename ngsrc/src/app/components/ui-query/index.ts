@@ -1,26 +1,28 @@
-import { NgModule, NgModuleFactoryLoader, SystemJsNgModuleLoader } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { MatIconModule } from "@angular/material";
-import { UIView } from "@uirouter/angular";
+import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatOptionModule, MatSelectModule } from "@angular/material";
 import { UiQueryEditorModule } from "../ui-query-editor";
 import { UiQueryComponent } from "./ui-query/ui-query.component";
 
 @NgModule({
     imports: [
+        CommonModule,
         FlexLayoutModule,
         MatIconModule,
-        UiQueryEditorModule
+        MatSelectModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatOptionModule,
+        MatButtonModule,
+        UiQueryEditorModule,
     ],
     declarations: [
-        UiQueryComponent
+        UiQueryComponent,
     ],
     exports: [
         UiQueryComponent,
     ],
-    providers: [
-        { provide: NgModuleFactoryLoader, useClass: SystemJsNgModuleLoader },
-    ],
-    bootstrap: [UIView],
 })
 export class UiQueryModule {
 

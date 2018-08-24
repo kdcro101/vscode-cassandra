@@ -1,17 +1,14 @@
 import { from } from "rxjs";
 import { concatMap } from "rxjs/operators";
 import { CassandraClient } from "../cassandra-client/index";
-import { CassandraClusterData, ValidatedConfigClusterItem } from "../types";
+import { CassandraCluster, CassandraClusterData, ValidatedConfigClusterItem } from "../types";
 export interface CassandraClientCache {
     client: CassandraClient;
     error: boolean;
     structure?: CassandraClusterData;
     name: string;
 }
-export interface CassandraCluster {
-    name: string;
-    index: number;
-}
+
 export class Clusters {
     private clusters: CassandraCluster[] = null;
     private clientsCache: CassandraClientCache[] = [];

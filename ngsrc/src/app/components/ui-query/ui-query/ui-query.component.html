@@ -1,14 +1,20 @@
-<div class="root ">
-    <div #top class="top">
-        <div #topLeft class="top-left" fxLayout="column">
-            <div>Top</div>
-            <ui-query-editor [textFontFamily]="theme.getEditorFontFamily()" [textFontSize]="theme.getEditorFontSize()"
-            [textLineHeight]="theme.getEditorLineHeight()"
-            [text]="code"
-            fxFlex></ui-query-editor>
+<div class="root mat-body-1">
+    <div #top class="top" fxLayout="column">
+        <div fxLayout="row" fxLayoutAlign="start center" class="cluster-actions">
+            <mat-icon>device_hub</mat-icon>
+            <mat-form-field color="accent" floatLabel="never" class="no-underline">
+                <mat-select placeholder="Select cluster">
+                    <mat-option *ngFor="let i of clusterList" [value]="i.name">
+                        {{i.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div fxFlex></div>
+            <button color="accent" mat-button>EXECUTE</button>
+        </div>
+        <ui-query-editor [textFontFamily]="theme.getEditorFontFamily()" [textFontSize]="theme.getEditorFontSize()" [textLineHeight]="theme.getEditorLineHeight()"
+            [text]="code" fxFlex></ui-query-editor>
         <div>Bottom</div>
     </div>
-    <div #topRight class="top-right"></div>
-</div>
-<div #bottom class="bottom"></div>
+    <div #bottom class="bottom"></div>
 </div>

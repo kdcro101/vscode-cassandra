@@ -13,7 +13,7 @@ declare var window: Window;
     selector: "ui-query-editor",
     templateUrl: "./ui-query-editor.component.html",
     styleUrls: ["./ui-query-editor.component.scss"],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UiQueryEditorComponent implements OnInit {
     @ViewChild("contentEditable") public contentEditable: ElementRef<HTMLDivElement>;
@@ -59,7 +59,7 @@ export class UiQueryEditorComponent implements OnInit {
 
         merge(
             fromEvent(this.contentEditable.nativeElement, "input"),
-            fromEvent(this.contentEditable.nativeElement, "keyup")
+            fromEvent(this.contentEditable.nativeElement, "keyup"),
         ).pipe()
             .subscribe((event) => {
                 const pos = this.helper.getCaretPosition();
@@ -85,7 +85,7 @@ export class UiQueryEditorComponent implements OnInit {
             // fromEvent(this.cursorTrap.nativeElement, "focusin"),
             fromEvent(this.cursorTrap.nativeElement, "mousedown", {
                 capture: false,
-            })
+            }),
         ).pipe()
             .subscribe((e) => {
                 console.log("sending focus");

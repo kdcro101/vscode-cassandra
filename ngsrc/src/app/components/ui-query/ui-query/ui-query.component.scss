@@ -10,6 +10,15 @@
         .top {
             background: transparent;
             position: relative;
+            .cluster-actions {
+                border-bottom: 1px solid mat-color($background, 500);
+                padding-left: 16px;
+                padding-right: 16px;
+                mat-icon {
+                    margin-right: 8px;
+                    margin-bottom: 4px;
+                }
+            }
             .top-left {
                 background: transparent;
                 height: 100%;

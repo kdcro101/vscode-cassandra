@@ -6,7 +6,7 @@
     "search.exclude": {
         "out": true // set this to false to include "out" folder in search results
     },
-    "favorites.sortDirection": "ASC",
+    "favorites.sortDirection": "DESC",
     "favorites.groupsFirst": true,
     "redis-console.host": "localhost",
     "redis-console.port": 6379,
@@ -19,14 +19,16 @@
             "name": "/exec/vscode-cassandra/src",
             "parent_id": null,
             "id": "7qVzKs4hJFfCpAOk",
-            "workspacePath": "src"
+            "workspacePath": "src",
+            "label": "extension"
         },
         {
             "type": "Directory",
-            "name": "/exec/vscode-cassandra/ngsrc/src/app",
+            "name": "/exec/vscode-cassandra/ngsrc/src",
             "parent_id": null,
-            "id": "FC8dyVhcULAPRG3I",
-            "workspacePath": "ngsrc/src/app"
+            "workspacePath": "ngsrc/src",
+            "id": "lSw9uKcXriqvBRIx",
+            "label": "angular"
         }
     ],
     "typescript.navigator.showDataTypes": true,

@@ -11,6 +11,7 @@ import { UiContentHorizontalModule } from "./components/ui-content-horizontal";
 import { UiQueryModule } from "./components/ui-query";
 import { QueryBuilderComponent } from "./query-builder/query-builder.component";
 import { routerConfig } from "./router";
+import { ClusterService } from "./services/cluster/cluster.service";
 
 export const rootRoutes = [
 
@@ -41,7 +42,7 @@ export const rootRoutes = [
 })
 export class AppModule {
 
-    constructor(private theme: ThemeService, private messages: MessageService) {
+    constructor(private theme: ThemeService, private messages: MessageService, cluster: ClusterService) {
 
     }
 

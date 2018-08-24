@@ -41,6 +41,11 @@ export interface ValidatedConfigClusterItem extends PersistedConfigClusterItem {
     errors?: string[];
 }
 
+export interface CassandraCluster {
+    name: string;
+    index: number;
+}
+
 export interface CassandraClientEvents {
     connected: void;
     log: string;

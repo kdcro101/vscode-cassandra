@@ -1,4 +1,5 @@
 import { WorkbenchCqlStatement } from "./editor";
+import { CassandraCluster } from "./index";
 
 export interface ProcMessageList {
     e2w_goState: WebviewStateParams;
@@ -7,7 +8,7 @@ export interface ProcMessageList {
     e2w_parseOutput: string;
     e2w_editorCreate: EditorCreateParams;
     w2e_getClustersRequest: boolean;
-    e2w_getClustersResponse: boolean;
+    e2w_getClustersResponse: CassandraCluster[];
 }
 export type ProcMessageType = keyof ProcMessageList;
 export interface ProcMessage {
