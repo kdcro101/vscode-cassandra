@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { CassandraWorkbench } from "../cassandra-workbench";
 import { TreeItemTable } from "../cassandra-workbench/treeview-provider/tree-item-table/index";
 import { ConfigurationManager } from "../configuration-manager";
+import { StatementGenerator } from "../statement-generator";
 import { ExtensionContextBundle } from "../types";
 
 declare var extensionContextBundle: ExtensionContextBundle;
@@ -11,7 +12,9 @@ export class VsCommands {
 
     constructor(
         private configuration: ConfigurationManager,
-        private workbench: CassandraWorkbench) {
+        private workbench: CassandraWorkbench,
+        private generator: StatementGenerator,
+    ) {
 
     }
     public register() {
@@ -50,20 +53,20 @@ export class VsCommands {
     private onRevealCqlPanel = () => {
 
         this.workbench.revealCqlPanel()
-        .then((result) => {
-          console.log("Cassandra workbench panel revealed");
-        }).catch((e) => {
-          vscode.window.showErrorMessage("Error starting panel!");
-        });
+            .then((result) => {
+                console.log("Cassandra workbench panel revealed");
+            }).catch((e) => {
+                vscode.window.showErrorMessage("Error starting panel!");
+            });
 
     }
     private onTableSelectStatement = (item: TreeItemTable) => {
-        const clusterName  = item.clusterName;
+        const clusterName = item.clusterName;
         const clusterIndex = item.clusterIndex;
         const keyspace = item.keyspace;
         const table = item.label;
-
-        this.workbench.editorCreate(clusterIndex, keyspace, "");
+        const body = this.generator.generateSelectBasic(keyspace, table);
+        this.workbench.editorCreate(clusterIndex, keyspace, body);
 
     }
 }

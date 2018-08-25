@@ -3,7 +3,8 @@ import { takeUntil } from "rxjs/operators";
 import * as vscode from "vscode";
 import { CassandraClient } from "../cassandra-client";
 import { Clusters } from "../clusters";
-import { ExtensionContextBundle, ValidatedConfigClusterItem } from "../types";
+import { generateId } from "../const/id";
+import { ExtensionContextBundle, ValidatedConfigClusterItem, WorkbenchCqlStatement } from "../types";
 import { ProcMessage, ProcMessageStrict } from "../types/messages";
 import { WorkbenchPanel } from "../workbench-panel";
 import { Workspace } from "../workspace";
@@ -66,9 +67,34 @@ export class CassandraWorkbench {
     public editorCreate(clusterIndex: number, keyspace: string, statementBody?: string): Promise<void> {
         return new Promise((resolve, reject) => {
 
+            const clusters = this.clusters.getClusters();
+            const c = clusters[clusterIndex];
+
+            if (c == null) {
+                reject("no_cluster");
+                return;
+            }
+
             from(this.revealCqlPanel()).pipe()
                 .subscribe(() => {
 
+                    const s: WorkbenchCqlStatement = {
+                        id: generateId(),
+                        body: statementBody,
+                        filename: null,
+                        keyspace,
+                        clusterName: c.name,
+                    };
+
+                    const m: ProcMessageStrict<"e2w_editorCreate"> = {
+                        name: "e2w_editorCreate",
+                        data: {
+                            execute: false,
+                            statement: s,
+                        },
+                    };
+
+                    this.panel.emitMessage(m);
                 });
 
         });

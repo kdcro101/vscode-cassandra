@@ -1,9 +1,7 @@
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { ReplaySubject } from "rxjs";
+import { take } from "rxjs/operators";
 import * as Split from "split.js";
-
-import {
-    ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy,
-    OnInit, ViewChild,
-} from "@angular/core";
 import { WorkbenchEditor } from "../../../../../../src/types/editor";
 import { CassandraCluster } from "../../../../../../src/types/index";
 import { ViewDestroyable } from "../../../base/view-destroyable/index";
@@ -17,28 +15,42 @@ import { ThemeService } from "../../../services/theme/theme.service";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestroy {
-
     @ViewChild("top") public top: ElementRef<HTMLDivElement>;
     @ViewChild("bottom") public bottom: ElementRef<HTMLDivElement>;
 
     public clusterList: CassandraCluster[] = [];
-    // tslint:disable-next-line:max-line-length
-    // public code: string = "select * \n from tablica; tekst!!! <span contenteditable=\"false\" style=\"color:fuchsia;\">TEXT123</span> <span contenteditable=\"false\" style=\"color:lime;\"><span class=\"indicator\"></span><span>#ABC</span></span>\n\n";
-    // tslint:disable-next-line:max-line-length
-    // public code: string = "select * \n from tablica; tekst!!! <span style=\"color:fuchsia;\">TEXT123</span> <span style=\"color:lime;\"><span class=\"indicator\"></span><span>#ABC</span></span>\n\n";
+    public editorCurrent: WorkbenchEditor = null;
+
     public code: string = "select aaaa,bbbb,cccc \n from tableName where ddd='21' and ccc=22;\n";
+    public fontSize: number = 15;
+    public lineHeight: number = 23;
+
+    private stateReady = new ReplaySubject<void>();
 
     constructor(
         public change: ChangeDetectorRef,
         public cluster: ClusterService,
+
         public theme: ThemeService,
     ) {
         super(change);
 
         this.clusterList = this.cluster.list;
+        this.fontSize = Math.round(theme.getEditorFontSize() * 1.2);
+        this.lineHeight = Math.round(this.fontSize * 1.5);
 
     }
+    @Input() public set editor(e: WorkbenchEditor) {
+        this.stateReady.pipe(
+            take(1),
+        ).subscribe(() => {
 
+            console.log("set EDITOR");
+            console.log(JSON.stringify(e));
+            this.editorCurrent = e;
+            this.detectChanges();
+        });
+    }
     ngOnInit() {
 
         Split([this.top.nativeElement, this.bottom.nativeElement], {
@@ -46,16 +58,13 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
             gutterSize: 12,
         });
 
-        // Split([this.topLeft.nativeElement, this.topRight.nativeElement], {
-        //     sizes: [75, 25],
-        //     gutterSize: 12,
-        // });
-
         this.cluster.eventChange.pipe()
             .subscribe(() => {
                 this.clusterList = this.cluster.list;
                 this.detectChanges();
             });
+
+        this.stateReady.next();
     }
     ngOnDestroy() {
         super.ngOnDestroy();

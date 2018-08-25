@@ -12,8 +12,8 @@
             <div fxFlex></div>
             <button color="accent" mat-button>EXECUTE</button>
         </div>
-        <ui-query-editor [textFontFamily]="theme.getEditorFontFamily()" [textFontSize]="theme.getEditorFontSize()" [textLineHeight]="theme.getEditorLineHeight()"
-            [text]="code" fxFlex></ui-query-editor>
+        <ui-query-editor [textFontFamily]="theme.getEditorFontFamily()" [textFontSize]="fontSize" [textLineHeight]="lineHeight" [text]="editorCurrent.statement.body"
+            fxFlex></ui-query-editor>
         <div>Bottom</div>
     </div>
     <div #bottom class="bottom"></div>

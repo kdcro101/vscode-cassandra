@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-import { range } from "lodash-es";
-import { fromEvent, merge } from "rxjs";
+import { fromEvent, merge, ReplaySubject } from "rxjs";
+import { take } from "rxjs/operators";
 import { ParserService } from "../../../services/parser/parser.service";
-import { UiContentScrollComponent } from "../../ui-content-scroll/ui-content-scroll.component";
 import { EditorHelper } from "./editor-helper";
+
+import { range } from "lodash";
 
 declare var document: Document;
 declare var window: Window;
@@ -21,7 +22,6 @@ export class UiQueryEditorComponent implements OnInit {
     @ViewChild("lines") public lines: ElementRef<HTMLDivElement>;
     @ViewChild("cursorTrap") public cursorTrap: ElementRef<HTMLDivElement>;
 
-    @Input() public text: string = "";
     @Input() private textFontFamily: string = "Inconsolata";
     @Input() private textFontSize: number = 15;
     @Input() private textLineHeight: number = 21;
@@ -32,12 +32,28 @@ export class UiQueryEditorComponent implements OnInit {
     public lineNumbers: number[] = [];
     public lineSelected = new Set<number>();
 
+    public textCurrent: string = "";
+    public stateReady = new ReplaySubject<void>();
+
     constructor(
         public change: ChangeDetectorRef,
         private sanitized: DomSanitizer,
         private parser: ParserService,
     ) {
 
+    }
+
+    @Input() public set text(val: string) {
+        this.textCurrent = val;
+        this.stateReady.pipe(
+            take(1),
+        ).subscribe(() => {
+            console.log("-------------------");
+            console.log("set text queryEditor");
+            console.log(val);
+            console.log("-------------------");
+            this.textLoad();
+        });
     }
 
     ngOnInit() {
@@ -100,10 +116,7 @@ export class UiQueryEditorComponent implements OnInit {
                 // this.cursorTrap.nativeElement.style.top = `${st}px`;
             });
 
-        this.safeInput = this.safeHtml(this.text);
-        this.change.detectChanges();
-        this.lineNumbers = range(1, this.helper.lineCount + 1);
-        this.change.detectChanges();
+        this.stateReady.next();
 
         this.helper.eventSelection.pipe()
             .subscribe((e) => {
@@ -128,7 +141,7 @@ export class UiQueryEditorComponent implements OnInit {
                         this.change.detectChanges();
                         this.helper.setCaretPosition(pos);
                     }, (e) => {
-                            console.log(e);
+                        console.log(e);
                     });
             });
 
@@ -137,5 +150,11 @@ export class UiQueryEditorComponent implements OnInit {
     public safeHtml(value) {
         return this.sanitized.bypassSecurityTrustHtml(value);
     }
+    private textLoad() {
+        this.safeInput = this.safeHtml(this.textCurrent);
+        this.change.detectChanges();
+        this.lineNumbers = range(1, this.helper.lineCount + 1);
+        this.change.detectChanges();
 
+    }
 }
