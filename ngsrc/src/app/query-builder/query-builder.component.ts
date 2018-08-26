@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { WorkbenchEditor } from "../../../../src/types/editor";
 import { ViewDestroyable } from "../base/view-destroyable";
 import { UiContentHorizontalComponent } from "../components/ui-content-horizontal/ui-content-horizontal.component";
 import { UiQueryComponent } from "../components/ui-query/ui-query/ui-query.component";
 import { EditorQueService } from "../services/editor-que/editor-que.service";
 import { SystemService } from "../services/system/system.service";
+import { TabDraggable } from "./tab-draggable/index";
 
 @Component({
     selector: "query-builder",
@@ -15,10 +16,15 @@ import { SystemService } from "../services/system/system.service";
 export class QueryBuilderComponent extends ViewDestroyable implements OnInit, OnDestroy {
     @ViewChild("queryEditor") public queryEditor: UiQueryComponent;
     @ViewChild("tabScroll") public tabScroll: UiContentHorizontalComponent;
+    @ViewChild("tabList") public tabList: ElementRef<HTMLDivElement>;
 
     // public range = range(100);
     public tabActive: number = -1;
     public editorActive: WorkbenchEditor = null;
+    private sortable: Sortable = null;
+
+    private drag: TabDraggable;
+
     constructor(
         public change: ChangeDetectorRef,
         public system: SystemService,
@@ -38,13 +44,16 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
                 }
                 this.detectChanges();
                 this.tabScroll.update();
+
             });
+
+        this.drag = new TabDraggable(this.tabList.nativeElement);
     }
     ngOnDestroy() {
         super.ngOnDestroy();
     }
-    public tabSelect = (e: Event, index: number) => {
-        console.log("mousedown");
+    public tabSelect = (index: number) => {
+        console.log("tabSelect");
         this.tabActive = index;
         this.detectChanges();
         this.queryEditor.updateEditor(null);
@@ -57,5 +66,9 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
         this.tabActive = index;
         this.editorActive = e;
 
+    }
+    public onTabMousedown = (e: MouseEvent, index: number) => {
+        this.tabSelect(index);
+        this.drag.dragStart(e.target as HTMLDivElement, e);
     }
 }

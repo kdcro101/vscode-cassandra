@@ -44,9 +44,9 @@ export class UiContentHorizontalComponent extends ViewDestroyable implements OnI
     ngOnInit() {
         // logger.log("ngOnInit");
         // if (this.caps.isTouchDevice) {
-            // this.initNative();
+        // this.initNative();
         // } else {
-            this.initIsc();
+        this.initIsc();
         // }
     }
     ngOnDestroy() {
@@ -91,8 +91,8 @@ export class UiContentHorizontalComponent extends ViewDestroyable implements OnI
             probeType: 3,
             disableTouch: true,
             bounce: false,
-            // disablePointer: false,
-            // keyBindings: true,
+            disableMouse: true,
+            disablePointer: true,
             hScrollbar: true,
             vScrollbar: false,
             // eventPassthrough: false,

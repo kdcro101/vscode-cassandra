@@ -54,7 +54,8 @@
                             "src/styles.scss"
                         ],
                         "scripts": [
-                            "src/lib/iscroll/iscroll-probe.js"
+                            "src/lib/iscroll/iscroll-probe.js",
+                            "src/lib/sortablejs/index.js"
                         ]
                     },
                     "configurations": {

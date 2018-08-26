@@ -31,6 +31,7 @@ export const rootRoutes = [
         UiContentHorizontalModule,
         UiQueryModule,
         UIRouterModule.forRoot({ states: rootRoutes, useHash: true, otherwise: { state: "query-builder" }, config: routerConfig }),
+
     ],
     declarations: [
         QueryBuilderComponent,
