@@ -1,15 +1,21 @@
 <div class="root mat-app-background" fxLayout="column">
-    <ui-content-horizontal class="tabs">
-        <div fxLayout="row" fxLayoutAlign="start center" class="tabs-wrap">
-            <div *ngFor="let i of editorQue.que;index as ix" class="item" [class.active]="ix===tabActive" (mousedown)="tabSelect($event,ix)"
-                fxLayout="row" fxLayoutAlign="start center">
-                <div fxFlex class="title">
-                    {{ i.statement.filename }}
-                </div>
-                <div class="vsui-close"></div>
-            </div>
+    <div fxLayout="row" fxLayoutAlign="start center" class="header">
+        <div class="actions">
+            <button mat-icon-button class="size-18"><mat-icon>add</mat-icon></button>
+            <button mat-icon-button class="size-18"><mat-icon>folder_open</mat-icon></button>
         </div>
-    </ui-content-horizontal>
+        <ui-content-horizontal #tabScroll class="tabs" fxFlex>
+            <div fxLayout="row" fxLayoutAlign="start center" class="tabs-wrap">
+                <div *ngFor="let i of editorQue.que;index as ix" class="item" [class.active]="ix===tabActive" (mousedown)="tabSelect($event,ix)"
+                    fxLayout="row" fxLayoutAlign="start center">
+                    <div fxFlex class="title">
+                        {{ i.statement.filename }}
+                    </div>
+                    <div class="vsui-close"></div>
+                </div>
+            </div>
+        </ui-content-horizontal>
+    </div>
     <div fxFlex class="client" fxLayout="column">
         <ui-query *ngIf="editorActive" #queryEditor [editor]="editorActive" fxFlex></ui-query>
     </div>

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { WorkbenchEditor } from "../../../../src/types/editor";
 import { ViewDestroyable } from "../base/view-destroyable";
+import { UiContentHorizontalComponent } from "../components/ui-content-horizontal/ui-content-horizontal.component";
 import { UiQueryComponent } from "../components/ui-query/ui-query/ui-query.component";
 import { EditorQueService } from "../services/editor-que/editor-que.service";
 import { SystemService } from "../services/system/system.service";
@@ -13,6 +14,7 @@ import { SystemService } from "../services/system/system.service";
 })
 export class QueryBuilderComponent extends ViewDestroyable implements OnInit, OnDestroy {
     @ViewChild("queryEditor") public queryEditor: UiQueryComponent;
+    @ViewChild("tabScroll") public tabScroll: UiContentHorizontalComponent;
 
     // public range = range(100);
     public tabActive: number = -1;
@@ -35,6 +37,7 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
                     this.tabActivate(val);
                 }
                 this.detectChanges();
+                this.tabScroll.update();
             });
     }
     ngOnDestroy() {

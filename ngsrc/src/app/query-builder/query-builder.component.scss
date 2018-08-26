@@ -11,43 +11,51 @@
         right: 0;
         bottom: 0;
         position: absolute;
-        .tabs {
-            height: 43px;
-            .tabs-wrap {
-                padding: 8px 0px 0px 0px;
-                background-color: var(--vscode-editorGroupHeader-tabsBackground);
-            }
-            .item {
-                &.active {
-                    background-color: var(--vscode-tab-activeBackground);
-                    color: var(--vscode-tab-activeForeground);
-                    border-bottom: 1px solid var(--vscode-tab-activeBorder);
-                    .vsui-close {
-                        opacity: 1;
-                    }
-                }
-                &:hover {
-                    .vsui-close {
-                        opacity: 1;
-                    }
-                }
-                user-select: none;
-                height: 35px;
-                background-color: var(--vscode-tab-inactiveBackground);
-                color: var(--vscode-tab-inactiveForeground);
-                border-bottom: 1px solid transparent;
+        .header {
+            background-color: var(--vscode-editorGroupHeader-tabsBackground);
+            .actions {
                 padding-left: 8px;
-                border: 1px solid transparent;
-                margin-right: 1px;
-                box-sizing: border-box;
-                cursor: pointer;
-                min-width: 100px;
-                .title {
-                    padding-right: 8px;
+                button {
+                    margin-right: 8px;
                 }
-                .vsui-close {
-                    margin-right: 0.5em;
-                    opacity: 0;
+            }
+            .tabs {
+                height: 43px;
+                .tabs-wrap {
+                    padding: 8px 0px 0px 0px;
+                }
+                .item {
+                    &.active {
+                        background-color: var(--vscode-tab-activeBackground);
+                        color: var(--vscode-tab-activeForeground);
+                        border-bottom: 1px solid var(--vscode-tab-activeBorder);
+                        .vsui-close {
+                            opacity: 1;
+                        }
+                    }
+                    &:hover {
+                        .vsui-close {
+                            opacity: 1;
+                        }
+                    }
+                    user-select: none;
+                    height: 35px;
+                    background-color: var(--vscode-tab-inactiveBackground);
+                    color: var(--vscode-tab-inactiveForeground);
+                    border-bottom: 1px solid transparent;
+                    padding-left: 8px;
+                    border: 1px solid transparent;
+                    margin-right: 1px;
+                    box-sizing: border-box;
+                    cursor: pointer;
+                    min-width: 100px;
+                    .title {
+                        padding-right: 8px;
+                    }
+                    .vsui-close {
+                        margin-right: 0.5em;
+                        opacity: 0;
+                    }
                 }
             }
         }

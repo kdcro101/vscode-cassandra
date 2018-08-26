@@ -1,6 +1,6 @@
 import { NgModule, NgModuleFactoryLoader, SystemJsNgModuleLoader } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { MatIconModule } from "@angular/material";
+import { MatButtonModule, MatIconModule } from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { UIRouterModule, UIView } from "@uirouter/angular";
 import { MessageService } from "./services/message/message.service";
@@ -27,6 +27,7 @@ export const rootRoutes = [
         BrowserAnimationsModule,
         FlexLayoutModule,
         MatIconModule,
+        MatButtonModule,
         UiContentHorizontalModule,
         UiQueryModule,
         UIRouterModule.forRoot({ states: rootRoutes, useHash: true, otherwise: { state: "query-builder" }, config: routerConfig }),
