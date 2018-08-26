@@ -13,6 +13,7 @@ export class TabDraggable {
     private yOffset: number;
 
     private element: HTMLDivElement;
+    private elementRect: ClientRect;
     private active = false;
 
     constructor(private container: HTMLDivElement) {
@@ -20,7 +21,7 @@ export class TabDraggable {
             capture: true,
         });
 
-        fromEvent<MouseEvent>(this.container, "mousemove").pipe(
+        fromEvent<MouseEvent>(document, "mousemove", { capture: true }).pipe(
             filter(() => this.active),
         ).subscribe((e) => {
             this.onMove(e);
@@ -31,13 +32,17 @@ export class TabDraggable {
         this.element = element;
         this.active = true;
 
-        this.initialX = e.clientX - this.xOffset;
-        this.initialY = e.clientY - this.yOffset;
+        this.initialX = e.offsetX;
+        this.initialY = e.offsetY;
 
+        this.elementRect = this.element.getBoundingClientRect();
     }
     public dragEnd() {
         console.log("dragEnd");
         this.active = false;
+
+        this.element.style.transform = "translate3d(0,0,0)";
+
         this.element = null;
     }
     private onDocumentMouseUp = (e: MouseEvent) => {
@@ -46,21 +51,57 @@ export class TabDraggable {
             this.dragEnd();
         }
     }
-    private setTranslate(xPos, yPos) {
+    private setTransform(xPos, yPos) {
         this.element.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
     }
     private onMove(e: MouseEvent) {
         console.log("onMove");
+        // const pos = this.offsetRelativeToDocument(this.element);
+        const rect = this.container.getBoundingClientRect();
+
+        const mx = e.clientX - this.elementRect.left;
+        const my = e.clientY - this.elementRect.top;
+
+        if (mx < 0) {
+            return;
+        }
 
         if (this.active) {
 
-            const currentX = e.clientX - this.initialX;
-            const currentY = e.clientY - this.initialY;
+            const currentX = mx - this.initialX;
+            const currentY = my - this.initialY;
 
-            this.xOffset = currentX;
-            this.yOffset = currentY;
+            // tslint:disable-next-line:max-line-length
+            console.log(`clientX=${e.clientX} this.elementRect.left=${this.elementRect.left} mouseX: ${mx}  currentX=${currentX} initialX=${this.initialX}`);
+            // console.log(`clientX=${e.clientX}   mouseX: ${mx}`);
 
-            this.setTranslate(currentX, 0);
+            this.setTransform(currentX, 0);
         }
     }
+
+    // private getTransform(): [number, number, number] {
+    //     const t = this.element.style.transform;
+
+    //     if (t == null || t === "none") {
+    //         return [0, 0, 0];
+    //     }
+
+    //     const s = t.search("translate3d");
+
+    //     if (s < 0) {
+    //         return [0, 0, 0];
+    //     }
+
+    //     const m = t.match(/\(.*\)/);
+
+    //     if (m == null || m.length === 0) {
+    //         return [0, 0, 0];
+    //     }
+
+    //     const p = m[0];
+    //     const n = p.match(/\d+/g);
+    //     const i = n.map((e) => parseInt(e, 10));
+    //     return [i[0], i[1], i[2]];
+
+    // }
 }
