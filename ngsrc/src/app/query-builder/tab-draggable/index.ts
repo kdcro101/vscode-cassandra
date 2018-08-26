@@ -9,6 +9,9 @@ export class TabDraggable {
     private initialX: number;
     private initialY: number;
 
+    private xOffset: number;
+    private yOffset: number;
+
     private element: HTMLDivElement;
     private active = false;
 
@@ -28,8 +31,8 @@ export class TabDraggable {
         this.element = element;
         this.active = true;
 
-        this.initialX = e.clientX;
-        this.initialY = e.clientY;
+        this.initialX = e.clientX - this.xOffset;
+        this.initialY = e.clientY - this.yOffset;
 
     }
     public dragEnd() {
@@ -53,6 +56,9 @@ export class TabDraggable {
 
             const currentX = e.clientX - this.initialX;
             const currentY = e.clientY - this.initialY;
+
+            this.xOffset = currentX;
+            this.yOffset = currentY;
 
             this.setTranslate(currentX, 0);
         }

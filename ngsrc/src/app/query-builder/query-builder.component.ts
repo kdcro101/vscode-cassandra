@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import {
+    ChangeDetectionStrategy, ChangeDetectorRef, Component,
+    ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren,
+} from "@angular/core";
 import { WorkbenchEditor } from "../../../../src/types/editor";
 import { ViewDestroyable } from "../base/view-destroyable";
 import { UiContentHorizontalComponent } from "../components/ui-content-horizontal/ui-content-horizontal.component";
@@ -17,6 +20,7 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
     @ViewChild("queryEditor") public queryEditor: UiQueryComponent;
     @ViewChild("tabScroll") public tabScroll: UiContentHorizontalComponent;
     @ViewChild("tabList") public tabList: ElementRef<HTMLDivElement>;
+    @ViewChildren("tabItems") public tabItems: QueryList<ElementRef<HTMLDivElement>>;
 
     // public range = range(100);
     public tabActive: number = -1;
@@ -69,6 +73,8 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
     }
     public onTabMousedown = (e: MouseEvent, index: number) => {
         this.tabSelect(index);
-        this.drag.dragStart(e.target as HTMLDivElement, e);
+        console.log(`Clicked index=${index}`);
+        const elem = this.tabItems.toArray()[index].nativeElement;
+        this.drag.dragStart(elem, e);
     }
 }

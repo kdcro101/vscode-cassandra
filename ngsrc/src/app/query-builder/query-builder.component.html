@@ -6,7 +6,7 @@
         </div>
         <ui-content-horizontal #tabScroll class="tabs" fxFlex>
             <div class="tabs-wrap" #tabList fxLayout="row" fxLayoutAlign="start center">
-                <div *ngFor="let i of editorQue.que;index as ix" class="item" [class.active]="ix===tabActive" (mousedown)="onTabMousedown($event,ix)"
+                <div #tabItems *ngFor="let i of editorQue.que;index as ix" class="item" [class.active]="ix===tabActive" (mousedown)="onTabMousedown($event,ix)"
                     fxLayout="row" fxLayoutAlign="start center">
                     <div fxFlex class="title dhandle">
                         {{ i.statement.filename }}
