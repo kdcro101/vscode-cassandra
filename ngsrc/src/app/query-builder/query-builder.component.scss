@@ -33,6 +33,13 @@
                             opacity: 1;
                         }
                     }
+                    &.dragged {
+                        z-index: 100;
+                    }
+                    &.covered {
+                        // opacity: 0.8;
+                        background-color: var(--vscode-tab-unfocusedHoverBackground);
+                    }
                     &:hover {
                         .vsui-close {
                             opacity: 1;

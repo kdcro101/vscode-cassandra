@@ -25,7 +25,6 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
     // public range = range(100);
     public tabActive: number = -1;
     public editorActive: WorkbenchEditor = null;
-    private sortable: Sortable = null;
 
     private drag: TabDraggable;
 
@@ -48,10 +47,10 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
                 }
                 this.detectChanges();
                 this.tabScroll.update();
+                this.drag = new TabDraggable(this.tabList.nativeElement, this.tabItems);
 
             });
 
-        this.drag = new TabDraggable(this.tabList.nativeElement);
     }
     ngOnDestroy() {
         super.ngOnDestroy();
@@ -75,6 +74,6 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
         this.tabSelect(index);
         console.log(`Clicked index=${index}`);
         const elem = this.tabItems.toArray()[index].nativeElement;
-        this.drag.dragStart(elem, e);
+        this.drag.dragStart(index, e);
     }
 }
