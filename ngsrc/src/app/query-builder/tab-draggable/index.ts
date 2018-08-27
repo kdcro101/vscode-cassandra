@@ -120,7 +120,8 @@ export class TabDraggable {
             const w = e.offsetWidth;
             const h = e.offsetHeight;
 
-            if (x >= l && x <= (l + w) && y >= t && y <= (t + h)) {
+            if (x >= l && x <= (l + w) ) {
+                // && y >= t && y <= (t + h)
                 if (!e.classList.contains("covered")) {
                     e.classList.add("covered");
                 }

@@ -35,10 +35,11 @@
                     }
                     &.dragged {
                         z-index: 100;
+                        opacity: 0.8;
                     }
                     &.covered {
                         // opacity: 0.8;
-                        background-color: var(--vscode-tab-unfocusedHoverBackground);
+                        background-color: mat-color($accent,300);
                     }
                     &:hover {
                         .vsui-close {
