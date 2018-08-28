@@ -65,6 +65,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
             });
 
         this.stateReady.next();
+
     }
     ngOnDestroy() {
         super.ngOnDestroy();

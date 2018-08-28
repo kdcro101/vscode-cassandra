@@ -11,13 +11,15 @@
         "experimentalDecorators": true,
         "target": "es2015",
         "typeRoots": [
-            // "node_modules/@types",
+            "node_modules/@types",
             "src/app/types",
             "../src/types"
         ],
         "lib": [
             "es2017",
             "dom"
-        ]
+        ],
+
     }
+
 }

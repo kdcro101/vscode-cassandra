@@ -94,4 +94,13 @@ export class EditorQueService {
         const fn = `${this.filenamePrefix}${next}.${this.filenameExt}`;
         return fn;
     }
+
+    public swap(source: number, dest: number) {
+
+        const b = this.que[dest];
+        this.que[dest] = this.que[source];
+        this.que[source] = b;
+
+        this.eventChange.next(dest);
+    }
 }

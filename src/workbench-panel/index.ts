@@ -30,6 +30,7 @@ export class WorkbenchPanel {
             enableScripts: true,
             localResourceRoots: [
                 vscode.Uri.file(path.join(this.context.extensionPath, "ng")),
+                vscode.Uri.file(path.join(this.context.extensionPath, "node_modules")),
             ],
             retainContextWhenHidden: true,
         });

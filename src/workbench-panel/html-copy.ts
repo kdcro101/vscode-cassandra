@@ -28,6 +28,10 @@ export const generateHtml = (basePath: string) => {
         <body ondragstart="return false;" ondrop="return false;" class="app-icon">
             <script>var require = { paths: { 'vs': '${path.join("vscode-resource:", basePath,
             "node_modules/monaco-editor/min/vs")}' } };</script>
+            <script src="${path.join("vscode-resource:", basePath, "node_modules/monaco-editor/min/vs/loader.js")}"></script>
+            <script src="${path.join("vscode-resource:", basePath,
+            "node_modules/monaco-editor/min/vs/editor/editor.main.nls.js")}"></script>
+            <script src="${path.join("vscode-resource:", basePath, "node_modules/monaco-editor/min/vs/editor/editor.main.js")}"> </script>
             <ui-view id="appview5332" class="app-root mat-app-background"></ui-view>
             <script type="text/javascript" src="${path.join("vscode-resource:", basePath, "ng", "runtime.js")}"></script>
             <script type="text/javascript" src="${path.join("vscode-resource:", basePath, "ng", "polyfills.js")}"></script>

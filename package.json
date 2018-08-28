@@ -17,7 +17,8 @@
     "main": "./out/extension",
     "contributes": {
         "menus": {
-            "view/title": [{
+            "view/title": [
+                {
                     "when": "view == cassandraWorkbenchView",
                     "command": "cassandraWorkbench.refresh",
                     "group": "navigation"
@@ -33,13 +34,16 @@
                     "group": "navigation"
                 }
             ],
-            "view/item/context": [{
-                "command": "cassandraWorkbench.tableSelectStatement",
-                "when": "view == cassandraWorkbenchView && viewItem == table",
-                "group": "navigation@1"
-            }]
+            "view/item/context": [
+                {
+                    "command": "cassandraWorkbench.tableSelectStatement",
+                    "when": "view == cassandraWorkbenchView && viewItem == table",
+                    "group": "navigation@1"
+                }
+            ]
         },
-        "commands": [{
+        "commands": [
+            {
                 "command": "cassandraWorkbench.generateConfiguration",
                 "title": "CASSANDRA WORKBENCH: Generate configuration template"
             },
@@ -73,17 +77,21 @@
             }
         ],
         "viewsContainers": {
-            "activitybar": [{
-                "id": "object-explorer",
-                "title": "Casssandra workbench",
-                "icon": "icons/activity.svg"
-            }]
+            "activitybar": [
+                {
+                    "id": "object-explorer",
+                    "title": "Casssandra workbench",
+                    "icon": "icons/activity.svg"
+                }
+            ]
         },
         "views": {
-            "object-explorer": [{
-                "id": "cassandraWorkbenchView",
-                "name": "Explorer"
-            }]
+            "object-explorer": [
+                {
+                    "id": "cassandraWorkbenchView",
+                    "name": "Explorer"
+                }
+            ]
         }
     },
     "scripts": {
@@ -126,6 +134,7 @@
         "fs-extra": "^6.0.1",
         "jsmin": "^1.0.1",
         "lodash": "^4.17.10",
+        "monaco-editor": "^0.14.3",
         "rxjs": "^6.2.1",
         "url-parse": "^1.4.3"
     }

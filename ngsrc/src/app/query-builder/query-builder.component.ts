@@ -38,6 +38,9 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
 
     ngOnInit() {
         this.system.runReady();
+
+        this.drag = new TabDraggable(this.tabList.nativeElement);
+
         this.editorQue.eventChange.pipe()
             .subscribe((val) => {
                 console.log(`eventChange val=${val}`);
@@ -47,10 +50,15 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
                 }
                 this.detectChanges();
                 this.tabScroll.update();
-                this.drag = new TabDraggable(this.tabList.nativeElement, this.tabItems);
+
+                this.drag.updateTabItems(this.tabItems);
 
             });
 
+        this.drag.eventReplace.pipe()
+            .subscribe((data: [number, number]) => {
+                this.replaceTabs(data[0], data[1]);
+            });
     }
     ngOnDestroy() {
         super.ngOnDestroy();
@@ -71,9 +79,15 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
 
     }
     public onTabMousedown = (e: MouseEvent, index: number) => {
-        this.tabSelect(index);
+        this.tabActivate(index);
         console.log(`Clicked index=${index}`);
         const elem = this.tabItems.toArray()[index].nativeElement;
         this.drag.dragStart(index, e);
+    }
+    private replaceTabs(source: number, dest: number) {
+        console.log(`replacing ${source} with ${dest}`);
+
+        this.editorQue.swap(source, dest);
+
     }
 }

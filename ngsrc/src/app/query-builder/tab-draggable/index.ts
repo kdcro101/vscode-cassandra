@@ -1,5 +1,6 @@
 import { ElementRef, QueryList } from "@angular/core";
 import { fromEvent } from "rxjs";
+import { Subject } from "rxjs";
 import { filter, map } from "rxjs/operators";
 
 declare var window: Window;
@@ -19,8 +20,12 @@ export class TabDraggable {
     private active = false;
 
     private containerRect: ClientRect;
+    private hoveredIndex: number;
 
-    constructor(private container: HTMLDivElement, private tabItems: QueryList<ElementRef<HTMLDivElement>>) {
+    public eventReplace = new Subject<[number, number]>();
+    private tabItems: QueryList<ElementRef<HTMLDivElement>>;
+
+    constructor(private container: HTMLDivElement) {
         document.addEventListener("mouseup", this.onDocumentMouseUp, {
             capture: true,
         });
@@ -57,7 +62,7 @@ export class TabDraggable {
         this.elementIndex = index;
         this.elementRect = this.element.getBoundingClientRect();
         this.containerRect = this.container.getBoundingClientRect();
-
+        this.hoveredIndex = -1;
         this.element.classList.add("dragged");
 
         this.initialX = e.offsetX;
@@ -81,6 +86,10 @@ export class TabDraggable {
         });
 
         this.element = null;
+
+        if (this.hoveredIndex > -1) {
+            this.eventReplace.next([this.elementIndex, this.hoveredIndex]);
+        }
 
     }
     private onDocumentMouseUp = (e: MouseEvent) => {
@@ -107,6 +116,7 @@ export class TabDraggable {
         console.log(`container move (${x},${y})`);
 
         const tabs = this.tabItems.toArray();
+        let hovered: number = -1;
 
         for (let i = 0; i < tabs.length; i++) {
             if (i === this.elementIndex) {
@@ -120,17 +130,23 @@ export class TabDraggable {
             const w = e.offsetWidth;
             const h = e.offsetHeight;
 
-            if (x >= l && x <= (l + w) ) {
+            if (x >= l && x <= (l + w)) {
                 // && y >= t && y <= (t + h)
                 if (!e.classList.contains("covered")) {
                     e.classList.add("covered");
                 }
+                hovered = i;
             } else {
                 e.classList.remove("covered");
             }
 
         }
 
+        this.hoveredIndex = hovered;
+
+    }
+    public updateTabItems(tabItems: QueryList<ElementRef<HTMLDivElement>>) {
+        this.tabItems = tabItems;
     }
 
 }

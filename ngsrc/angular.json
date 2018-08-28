@@ -22,7 +22,7 @@
                     "prefix": ""
                 },
                 "@schematics/angular:module": {
-                    "flat": false,
+                    "flat": true,
                     "spec": false,
                     "prefix": ""
 
@@ -43,7 +43,11 @@
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "src/tsconfig.app.json",
-                        "assets": [
+                        "assets": [{
+                                "glob": "**/*",
+                                "input": "node_modules/ngx-monaco-editor/assets/monaco",
+                                "output": "./assets/monaco/"
+                            },
                             "src/favicon.ico",
                             "src/assets"
                         ],
@@ -55,7 +59,10 @@
                         ],
                         "scripts": [
                             "src/lib/iscroll/iscroll-probe.js",
-                            "src/lib/sortablejs/index.js"
+                            "node_modules/monaco-editor/min/vs/loader.js",
+                            "node_modules/monaco-editor/min/vs/editor/editor.main.nls.js",
+                            "node_modules/monaco-editor/min/vs/editor/editor.main.js"
+
                         ]
                     },
                     "configurations": {
