@@ -40,6 +40,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 enabled: false,
             },
             automaticLayout: true,
+            contextmenu: false,
 
         });
 
@@ -73,4 +74,5 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         });
 
     }
+
 }

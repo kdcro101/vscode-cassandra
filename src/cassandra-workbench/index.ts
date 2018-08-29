@@ -4,6 +4,7 @@ import * as vscode from "vscode";
 import { CassandraClient } from "../cassandra-client";
 import { Clusters } from "../clusters";
 import { generateId } from "../const/id";
+import { Persistence } from "../persistence";
 import { ExtensionContextBundle, ValidatedConfigClusterItem, WorkbenchCqlStatement } from "../types";
 import { ProcMessage, ProcMessageStrict } from "../types/messages";
 import { WorkbenchPanel } from "../workbench-panel";
@@ -20,11 +21,13 @@ export class CassandraWorkbench {
     private clients: CassandraClient[] = [];
     private eventPanelReset = new Subject<void>();
     private clusters: Clusters = null;
+    private persistence: Persistence;
     constructor(
         private workspace: Workspace,
         private config: ValidatedConfigClusterItem[],
     ) {
         this.clusters = new Clusters(config);
+        this.persistence = new Persistence(workspace);
     }
     public start() {
         this.treeProvider = new TreeviewProvider(this.clusters);
@@ -113,6 +116,10 @@ export class CassandraWorkbench {
                     data: l,
                 };
                 this.panel.emitMessage(mGetClustersResponse);
+                break;
+            case "w2e_persistEditors":
+                const pm = m as ProcMessageStrict<"w2e_persistEditors">;
+                this.persistence.saveEditors(pm.data);
                 break;
         }
     }

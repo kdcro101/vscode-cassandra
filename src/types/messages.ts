@@ -2,12 +2,13 @@ import { WorkbenchCqlStatement } from "./editor";
 import { CassandraCluster } from "./index";
 
 export interface ProcMessageList {
-    e2w_goState: WebviewStateParams;
+    w2e_getClustersRequest: boolean;
     w2e_onReady: boolean;
     w2e_parseInput: string;
+    w2e_persistEditors: WorkbenchCqlStatement[];
+    e2w_goState: WebviewStateParams;
     e2w_parseOutput: string;
     e2w_editorCreate: EditorCreateParams;
-    w2e_getClustersRequest: boolean;
     e2w_getClustersResponse: CassandraCluster[];
 }
 export type ProcMessageType = keyof ProcMessageList;

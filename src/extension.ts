@@ -24,9 +24,6 @@ export function activate(context: vscode.ExtensionContext) {
     const config = new ConfigurationManager(context, workspace);
     const generator = new StatementGenerator();
 
-    fs.mkdirpSync(path.join(workspace.getRootPath(), ".cqlWorkbench", "saved"));
-    fs.mkdirpSync(path.join(workspace.getRootPath(), ".cqlWorkbench", "editors"));
-
     let commands: VsCommands = null;
 
     Icons.context = context;

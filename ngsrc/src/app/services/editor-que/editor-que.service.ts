@@ -15,7 +15,7 @@ export class EditorQueService {
     private filenamePrefix = "script_";
     private filenameExt = "cql";
 
-    public eventChange = new Subject<number>();
+    public eventChangeQue = new Subject<number>();
     private queCurrent: WorkbenchEditor[] = [];
     constructor(private messages: MessageService) {
 
@@ -68,7 +68,7 @@ export class EditorQueService {
             return;
         }
         this.queCurrent = [e].concat(this.queCurrent);
-        this.eventChange.next(0);
+        this.eventChangeQue.next(0);
     }
     private generateFilename(): string {
         const rx = new RegExp(`${this.filenamePrefix}\\d+\\.${this.filenameExt}`);
@@ -101,6 +101,24 @@ export class EditorQueService {
         this.que[dest] = this.que[source];
         this.que[source] = b;
 
-        this.eventChange.next(dest);
+        this.eventChangeQue.next(dest);
+    }
+    public updateStatement(index: number, body: string) {
+        if (index < 0 || index >= this.que.length) {
+            return;
+        }
+
+        this.que[index].statement.body = body;
+        this.persistEditors();
+    }
+    public persistEditors() {
+        const statements = this.que.map((e) => e.statement);
+
+        const m: ProcMessageStrict<"w2e_persistEditors"> = {
+            name: "w2e_persistEditors",
+            data: statements,
+        };
+
+        this.messages.emit(m);
     }
 }

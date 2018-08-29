@@ -22,7 +22,6 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
     @ViewChild("tabList") public tabList: ElementRef<HTMLDivElement>;
     @ViewChildren("tabItems") public tabItems: QueryList<ElementRef<HTMLDivElement>>;
 
-    // public range = range(100);
     public tabActive: number = -1;
     public editorActive: WorkbenchEditor = null;
 
@@ -41,7 +40,7 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
 
         this.drag = new TabDraggable(this.tabList.nativeElement);
 
-        this.editorQue.eventChange.pipe()
+        this.editorQue.eventChangeQue.pipe()
             .subscribe((val) => {
                 console.log(`eventChange val=${val}`);
                 if (val != null) {
@@ -90,7 +89,15 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
         this.editorQue.swap(source, dest);
 
     }
-    private onActiveTabCodeChange = (code: string) => {
+    public onActiveTabCodeChange = (code: string) => {
+        // console.log(`------------------------------`);
+        // console.log(`CODE CHANGE for [${this.tabActive}]`);
+        // console.log(`------------------------------`);
+        // console.log(`[${code}]`);
+        // console.log(`------------------------------`);
+
+        this.editorQue.updateStatement(this.tabActive, code);
 
     }
+
 }

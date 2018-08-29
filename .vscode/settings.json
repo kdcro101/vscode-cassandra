@@ -32,6 +32,7 @@
         }
     ],
     "typescript.navigator.showDataTypes": true,
-    "typescript.navigator.showVisibilityLabels": false
+    "typescript.navigator.showVisibilityLabels": false,
+    "typescript.tsdk": "node_modules/typescript/lib"
     // "typescript.referencesCodeLens.enabled": true
 }
