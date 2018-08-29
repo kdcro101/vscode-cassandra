@@ -17,6 +17,6 @@
         </ui-content-horizontal>
     </div>
     <div fxFlex class="client" fxLayout="column">
-        <ui-query *ngIf="editorActive" #queryEditor [editor]="editorActive" fxFlex></ui-query>
+        <ui-query (onCodeChange)="onActiveTabCodeChange($event)" *ngIf="editorActive" #queryEditor [editor]="editorActive" fxFlex></ui-query>
     </div>
 </div>

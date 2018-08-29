@@ -12,7 +12,7 @@
             <div fxFlex></div>
             <button color="accent" mat-button>EXECUTE</button>
         </div>
-        <ui-monaco-editor fxFlex></ui-monaco-editor>
+        <ui-monaco-editor (onCodeChange)="onCodeChange.emit($event)"  #monacoEditor fxFlex></ui-monaco-editor>
         <div>Bottom</div>
     </div>
     <div #bottom class="bottom"></div>

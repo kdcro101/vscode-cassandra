@@ -1,9 +1,9 @@
 import {
     ChangeDetectionStrategy, ChangeDetectorRef, Component,
-    ElementRef, OnDestroy, OnInit, ViewChild,
+    ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild,
 } from "@angular/core";
-import ResizeObserver from "resize-observer-polyfill";
-import { VsCommands } from "../../../../../../src/commands/index";
+import { fromEventPattern, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { cqlCompletitionProvider } from "./lang/completition";
 import { language } from "./lang/tokens";
@@ -15,9 +15,12 @@ import { language } from "./lang/tokens";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, OnDestroy {
-
+    @Output("onCodeChange") public onCodeChange = new EventEmitter<string>();
     @ViewChild("root") public root: ElementRef<HTMLDivElement>;
-    private rootResizeObs: ResizeObserver;
+
+    public editor: monaco.editor.IStandaloneCodeEditor;
+    private eventCodeSet = new Subject<void>();
+
     constructor(public change: ChangeDetectorRef) {
         super(change);
     }
@@ -30,12 +33,8 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
         monaco.editor.setTheme("vs-dark");
 
-        const editor = monaco.editor.create(this.root.nativeElement, {
-            value: [
-                "select  * ",
-                "\t from tablename",
-                "where id=21313 and label='adsasd';",
-            ].join("\n"),
+        this.editor = monaco.editor.create(this.root.nativeElement, {
+            value: null,
             language: "cql",
             minimap: {
                 enabled: false,
@@ -44,19 +43,34 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
         });
 
-        // this.rootResizeObs = new ResizeObserver(entries => {
-        //     console.log("resizing editor");
-        //     requestAnimationFrame(() => {
-        //         editor.layout();
-        //     });
-        // });
-        // this.rootResizeObs.observe(this.root.nativeElement);
     }
     ngOnDestroy() {
         super.ngOnDestroy();
-        if (this.rootResizeObs) {
-            this.rootResizeObs.disconnect();
-        }
-    }
 
+    }
+    public setCode(code: string) {
+        if (this.editor == null) {
+            return;
+        }
+        this.eventCodeSet.next();
+        this.editor.setValue(code);
+
+        fromEventPattern<monaco.editor.IModelContentChangedEvent>((f: (e: any) => any) => {
+            return this.editor.onDidChangeModelContent(f);
+        }, (f: any, d: monaco.IDisposable) => {
+            d.dispose();
+        }).pipe(
+            takeUntil(this.eventCodeSet),
+        ).subscribe(() => {
+
+            const v = this.editor.getValue();
+            console.log(`--> onDidChangeModelContent`);
+            console.log(`[${v}]`);
+
+            setTimeout(() => {
+                this.onCodeChange.emit(v);
+            });
+        });
+
+    }
 }

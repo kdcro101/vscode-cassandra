@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import {
+    ChangeDetectionStrategy, ChangeDetectorRef, Component,
+    ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild,
+} from "@angular/core";
 import { ReplaySubject } from "rxjs";
 import { take } from "rxjs/operators";
 import * as Split from "split.js";
@@ -7,6 +10,7 @@ import { CassandraCluster } from "../../../../../../src/types/index";
 import { ViewDestroyable } from "../../../base/view-destroyable/index";
 import { ClusterService } from "../../../services/cluster/cluster.service";
 import { ThemeService } from "../../../services/theme/theme.service";
+import { UiMonacoEditorComponent } from "../../ui-monaco-editor/ui-monaco-editor/ui-monaco-editor.component";
 
 @Component({
     selector: "ui-query",
@@ -17,6 +21,9 @@ import { ThemeService } from "../../../services/theme/theme.service";
 export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestroy {
     @ViewChild("top") public top: ElementRef<HTMLDivElement>;
     @ViewChild("bottom") public bottom: ElementRef<HTMLDivElement>;
+    @ViewChild("monacoEditor") public monacoEditor: UiMonacoEditorComponent;
+
+    @Output("onCodeChange") public onCodeChange = new EventEmitter<string>();
 
     public clusterList: CassandraCluster[] = [];
     public editorCurrent: WorkbenchEditor = null;
@@ -49,6 +56,9 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
             console.log(JSON.stringify(e));
             this.editorCurrent = e;
             this.detectChanges();
+
+            this.monacoEditor.setCode(this.editorCurrent.statement.body);
+
         });
     }
     ngOnInit() {

@@ -3,7 +3,6 @@ import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatOptionModule, MatSelectModule } from "@angular/material";
 import { UiMonacoEditorModule } from "../ui-monaco-editor";
-import { UiQueryEditorModule } from "../ui-query-editor";
 import { UiQueryComponent } from "./ui-query/ui-query.component";
 
 @NgModule({
@@ -16,7 +15,6 @@ import { UiQueryComponent } from "./ui-query/ui-query.component";
         MatFormFieldModule,
         MatOptionModule,
         MatButtonModule,
-        UiQueryEditorModule,
         UiMonacoEditorModule,
     ],
     declarations: [

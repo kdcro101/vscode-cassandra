@@ -90,4 +90,7 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
         this.editorQue.swap(source, dest);
 
     }
+    private onActiveTabCodeChange = (code: string) => {
+
+    }
 }
