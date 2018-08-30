@@ -1,9 +1,10 @@
 
 import * as path from "path";
 import * as vscode from "vscode";
+import { WorkbenchCqlStatement } from "../types";
 // import { RedisConsoleConfig } from "../types";
 
-export const generateHtml = (basePath: string) => {
+export const generateHtml = (basePath: string, persistedStatements: WorkbenchCqlStatement[]) => {
     //   const iconsPath = "vscode-resource:" + this.context.extensionPath + "/svg/symbol-sprite.svg";
     const ws = vscode.workspace.getConfiguration(null, null);
     const fontFamily = ws.editor.fontFamily;
@@ -23,6 +24,7 @@ export const generateHtml = (basePath: string) => {
                 var codeFontFamily = "${fontFamily}";
                 var codeFontSize = "${fontSize}";
                 var codeLineHeight = "${lineHeight}";
+                var persistedStatements = JSON.parse('${ JSON.stringify(persistedStatements)}');
             </script>
         </head>
         <body ondragstart="return false;" ondrop="return false;" class="app-icon">

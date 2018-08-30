@@ -2,11 +2,9 @@ import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 import { WorkbenchCqlStatement, WorkbenchEditor } from "../../../../../src/types/editor";
 import { ProcMessage, ProcMessageStrict } from "../../../../../src/types/messages";
-import { VscodeWebviewInterface } from "../../types/index";
 import { MessageService } from "../message/message.service";
 
-declare var vscode: VscodeWebviewInterface;
-declare var window: Window;
+declare var persistedStatements: WorkbenchCqlStatement[];
 
 @Injectable({
     providedIn: "root",
@@ -15,14 +13,26 @@ export class EditorQueService {
     private filenamePrefix = "script_";
     private filenameExt = "cql";
 
-    public eventChangeQue = new Subject<number>();
+    public eventChangeQue = new Subject<void>();
+    public eventChangeActive = new Subject<[number, WorkbenchEditor]>();
     private queCurrent: WorkbenchEditor[] = [];
+
+    public itemActive: number = -1;
+
     constructor(private messages: MessageService) {
 
         this.messages.eventMessage.pipe()
             .subscribe((d) => {
                 this.processMessage(d);
             });
+
+        if (Array.isArray(persistedStatements)) {
+            this.queCurrent = persistedStatements.map((s) => this.statement2Editor(s));
+        }
+
+        if (this.que.length > 0) {
+            this.itemActive = 0;
+        }
 
     }
     public get que() {
@@ -38,12 +48,32 @@ export class EditorQueService {
         }
 
     }
+    public activate(index: number) {
+        if (index < 0 || index >= this.que.length) {
+            return;
+        }
+
+        this.itemActive = index;
+        const e = this.que[index];
+
+        this.eventChangeActive.next([this.itemActive, e]);
+    }
     private statementCreate(s: ProcMessageStrict<"e2w_editorCreate">) {
         console.log("statementPrepend");
         console.log(JSON.stringify(s.data));
 
         this.editorCreate(s.data.statement);
 
+    }
+    private statement2Editor(statement: WorkbenchCqlStatement): WorkbenchEditor {
+        const e: WorkbenchEditor = {
+            statement,
+            resultset: null,
+            executed: false,
+            response: null,
+        };
+
+        return e;
     }
     private editorCreate(statement: WorkbenchCqlStatement) {
 
@@ -56,11 +86,7 @@ export class EditorQueService {
             response: null,
         };
 
-        console.log("---------------------------------------------");
-        console.log(JSON.stringify(e));
         this.editorPrepend(e);
-        console.log(`editor que len=${this.que.length}`);
-        console.log(this.que);
 
     }
     private editorPrepend(e: WorkbenchEditor) {
@@ -68,7 +94,8 @@ export class EditorQueService {
             return;
         }
         this.queCurrent = [e].concat(this.queCurrent);
-        this.eventChangeQue.next(0);
+        this.eventChangeQue.next();
+        this.activate(0);
     }
     private generateFilename(): string {
         const rx = new RegExp(`${this.filenamePrefix}\\d+\\.${this.filenameExt}`);
@@ -101,7 +128,7 @@ export class EditorQueService {
         this.que[dest] = this.que[source];
         this.que[source] = b;
 
-        this.eventChangeQue.next(dest);
+        this.activate(dest);
     }
     public updateStatement(index: number, body: string) {
         if (index < 0 || index >= this.que.length) {

@@ -4,6 +4,7 @@ import { take, takeUntil } from "rxjs/operators";
 import * as vscode from "vscode";
 import { InputParser } from "../parser";
 import { ExtensionContextBundle, ProcMessage, ProcMessageList, ProcMessageStrict } from "../types";
+import { WorkbenchCqlStatement } from "../types/editor";
 import { Workspace } from "../workspace";
 import { generateHtml } from "./html";
 
@@ -23,6 +24,7 @@ export class WorkbenchPanel {
 
     constructor(
         private workspace: Workspace,
+        private persistedEditors: WorkbenchCqlStatement[],
 
     ) {
 
@@ -49,7 +51,7 @@ export class WorkbenchPanel {
             this.eventDestroy.next();
         });
 
-        this.panel.webview.html = generateHtml(this.context.extensionPath);
+        this.panel.webview.html = generateHtml(this.context.extensionPath, persistedEditors);
 
         fromEventPattern<ProcMessage>((f: (e: any) => any) => {
             return this.panel.webview.onDidReceiveMessage(f, null, this.context.subscriptions);

@@ -2,6 +2,7 @@ import {
     ChangeDetectionStrategy, ChangeDetectorRef, Component,
     ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren,
 } from "@angular/core";
+import { takeUntil } from "rxjs/operators";
 import { WorkbenchEditor } from "../../../../src/types/editor";
 import { ViewDestroyable } from "../base/view-destroyable";
 import { UiContentHorizontalComponent } from "../components/ui-content-horizontal/ui-content-horizontal.component";
@@ -22,7 +23,6 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
     @ViewChild("tabList") public tabList: ElementRef<HTMLDivElement>;
     @ViewChildren("tabItems") public tabItems: QueryList<ElementRef<HTMLDivElement>>;
 
-    public tabActive: number = -1;
     public editorActive: WorkbenchEditor = null;
 
     private drag: TabDraggable;
@@ -40,42 +40,34 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
 
         this.drag = new TabDraggable(this.tabList.nativeElement);
 
-        this.editorQue.eventChangeQue.pipe()
-            .subscribe((val) => {
-                console.log(`eventChange val=${val}`);
-                if (val != null) {
-                    console.log(`eventChange activating val=${val}`);
-                    this.tabActivate(val);
-                }
-                this.detectChanges();
-                this.tabScroll.update();
+        this.editorQue.eventChangeQue.pipe(
+            takeUntil(this.eventViewDestroyed),
+        ).subscribe((val) => {
+            this.detectChanges();
+            this.tabScroll.update();
+            this.drag.updateTabItems(this.tabItems);
+        });
 
-                this.drag.updateTabItems(this.tabItems);
+        this.editorQue.eventChangeActive.pipe(
+            takeUntil(this.eventViewDestroyed),
+        ).subscribe((data) => {
+            this.editorActive = data[1];
+            this.detectChanges();
+            this.tabScroll.update();
+        });
 
-            });
+        this.drag.eventReplace.pipe(
+            takeUntil(this.eventViewDestroyed),
+        ).subscribe((data: [number, number]) => {
+            this.replaceTabs(data[0], data[1]);
+        });
 
-        this.drag.eventReplace.pipe()
-            .subscribe((data: [number, number]) => {
-                this.replaceTabs(data[0], data[1]);
-            });
     }
     ngOnDestroy() {
         super.ngOnDestroy();
     }
-    public tabSelect = (index: number) => {
-        console.log("tabSelect");
-        this.tabActive = index;
-        this.detectChanges();
-        this.queryEditor.updateEditor(null);
-    }
     public tabActivate(index: number) {
-        const e = this.editorQue.que[index];
-        if (e == null) {
-            return;
-        }
-        this.tabActive = index;
-        this.editorActive = e;
-
+        this.editorQue.activate(index);
     }
     public onTabMousedown = (e: MouseEvent, index: number) => {
         this.tabActivate(index);
@@ -90,14 +82,7 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
 
     }
     public onActiveTabCodeChange = (code: string) => {
-        // console.log(`------------------------------`);
-        // console.log(`CODE CHANGE for [${this.tabActive}]`);
-        // console.log(`------------------------------`);
-        // console.log(`[${code}]`);
-        // console.log(`------------------------------`);
-
-        this.editorQue.updateStatement(this.tabActive, code);
-
+        this.editorQue.updateStatement(this.editorQue.itemActive, code);
     }
 
 }

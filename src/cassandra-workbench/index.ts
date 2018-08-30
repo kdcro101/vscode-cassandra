@@ -46,25 +46,29 @@ export class CassandraWorkbench {
                 return;
             }
 
-            this.panel = new WorkbenchPanel(this.workspace);
-            this.panel.eventDestroy.pipe(
-                takeUntil(merge(extensionContextBundle.eventDestroy, this.eventPanelReset)),
-            ).subscribe(() => {
-                this.resetPanel();
-            });
-            this.panel.eventMessage.pipe(
-                takeUntil(merge(extensionContextBundle.eventDestroy, this.eventPanelReset)),
-            ).subscribe((m) => {
-                this.onPanelMessage(m);
-            });
+            from(this.persistence.loadStatements()).pipe()
+                .subscribe((list) => {
 
-            this.panel.start()
-                .then((result) => {
-                    resolve();
-                }).catch((e) => {
-                    reject(e);
+                    this.panel = new WorkbenchPanel(this.workspace, list);
+                    this.panel.eventDestroy.pipe(
+                        takeUntil(merge(extensionContextBundle.eventDestroy, this.eventPanelReset)),
+                    ).subscribe(() => {
+                        this.resetPanel();
+                    });
+                    this.panel.eventMessage.pipe(
+                        takeUntil(merge(extensionContextBundle.eventDestroy, this.eventPanelReset)),
+                    ).subscribe((m) => {
+                        this.onPanelMessage(m);
+                    });
+
+                    this.panel.start()
+                        .then((result) => {
+                            resolve();
+                        }).catch((e) => {
+                            reject(e);
+                        });
+
                 });
-
         });
     }
     public editorCreate(clusterIndex: number, keyspace: string, statementBody?: string): Promise<void> {
@@ -119,7 +123,7 @@ export class CassandraWorkbench {
                 break;
             case "w2e_persistEditors":
                 const pm = m as ProcMessageStrict<"w2e_persistEditors">;
-                this.persistence.saveEditors(pm.data);
+                this.persistence.saveStatements(pm.data);
                 break;
         }
     }

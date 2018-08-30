@@ -1,20 +1,27 @@
 import * as fs from "fs-extra";
 import * as path from "path";
-import { of } from "rxjs";
-import { concatMap, tap } from "rxjs/operators";
+import { from, of, Subject } from "rxjs";
+import { concatMap, map, tap } from "rxjs/operators";
 import * as vscode from "vscode";
 import { generateId } from "../const/id";
 import { WorkbenchCqlStatement } from "../types";
+
 import { Workspace } from "../workspace";
 
 export class Persistence {
+
+    private editorExt = ".json";
+    private editorFileNameRx = new RegExp(`\\d+${this.editorExt}`);
 
     private persistenceRoot: string;
     private persistencePathEditors: string;
     private persistencePathSaved: string;
     private persistencePathTemp: string;
 
+    private eventSaveEditors = new Subject<WorkbenchCqlStatement[]>();
+
     constructor(private workspace: Workspace) {
+
         this.persistenceRoot = path.join(workspace.getRootPath(), ".cassandraWorkbench");
         this.persistencePathEditors = path.join(this.persistenceRoot, "editors");
         this.persistencePathSaved = path.join(this.persistenceRoot, "saved");
@@ -24,13 +31,41 @@ export class Persistence {
         fs.mkdirpSync(this.persistencePathTemp);
         fs.mkdirpSync(this.persistencePathSaved);
 
+        this.eventSaveEditors.pipe(
+            concatMap((l) => this.execSaveEditors(l)),
+        ).subscribe(() => {
+            console.log("Editors saved...");
+        });
+
     }
-    public loadEditors(): Promise<WorkbenchCqlStatement[]> {
+    public loadStatements(): Promise<WorkbenchCqlStatement[]> {
         return new Promise((resolve, reject) => {
+
+            from(fs.readdir(this.persistencePathEditors)).pipe(
+                map((list) => list.filter((i) => i.search(this.editorFileNameRx) === 0)),
+                map<string[], WorkbenchCqlStatement[]>((list) => {
+                    const res: WorkbenchCqlStatement[] = list.map((i) => {
+                        const p = path.join(this.persistencePathEditors, i);
+                        return fs.readJsonSync(p);
+                    });
+
+                    return res;
+                }),
+            ).subscribe((list) => {
+
+                    console.log(list);
+
+                    resolve(list);
+            });
 
         });
     }
-    public saveEditors(list: WorkbenchCqlStatement[]) {
+    public saveStatements(list: WorkbenchCqlStatement[]) {
+
+        this.eventSaveEditors.next(list);
+    }
+
+    public execSaveEditors(list: WorkbenchCqlStatement[]): Promise<void> {
         return new Promise((resolve, reject) => {
             const id = generateId();
             const pt = this.persistencePathTemp;
@@ -44,7 +79,7 @@ export class Persistence {
 
                             const files: string[] = [];
                             const ps = list.map((e, i) => {
-                                const ep = path.join(pt, `${i}.json`);
+                                const ep = path.join(pt, `${i}${this.editorExt}`);
                                 files.push(ep);
                                 return fs.writeJson(ep, e);
                             });
