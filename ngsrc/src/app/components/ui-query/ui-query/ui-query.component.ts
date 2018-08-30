@@ -53,7 +53,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         ).subscribe(() => {
 
             console.log("set EDITOR");
-            console.log(JSON.stringify(e));
+
             this.editorCurrent = e;
             this.detectChanges();
 

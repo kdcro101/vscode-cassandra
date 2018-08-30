@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
+import { ReplaySubject } from "rxjs";
 import { WorkbenchCqlStatement, WorkbenchEditor } from "../../../../../src/types/editor";
 import { ProcMessage, ProcMessageStrict } from "../../../../../src/types/messages";
 import { MessageService } from "../message/message.service";
@@ -14,7 +15,7 @@ export class EditorQueService {
     private filenameExt = "cql";
 
     public eventChangeQue = new Subject<void>();
-    public eventChangeActive = new Subject<[number, WorkbenchEditor]>();
+    public stateActive = new ReplaySubject<[number, WorkbenchEditor]>(1);
     private queCurrent: WorkbenchEditor[] = [];
 
     public itemActive: number = -1;
@@ -31,7 +32,7 @@ export class EditorQueService {
         }
 
         if (this.que.length > 0) {
-            this.itemActive = 0;
+            this.activate(0);
         }
 
     }
@@ -56,7 +57,7 @@ export class EditorQueService {
         this.itemActive = index;
         const e = this.que[index];
 
-        this.eventChangeActive.next([this.itemActive, e]);
+        this.stateActive.next([this.itemActive, e]);
     }
     private statementCreate(s: ProcMessageStrict<"e2w_editorCreate">) {
         console.log("statementPrepend");

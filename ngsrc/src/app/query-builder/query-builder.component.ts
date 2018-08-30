@@ -1,6 +1,6 @@
 import {
-    ChangeDetectionStrategy, ChangeDetectorRef, Component,
-    ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren,
+    AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef,
+    Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren,
 } from "@angular/core";
 import { takeUntil } from "rxjs/operators";
 import { WorkbenchEditor } from "../../../../src/types/editor";
@@ -17,7 +17,7 @@ import { TabDraggable } from "./tab-draggable/index";
     styleUrls: ["./query-builder.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class QueryBuilderComponent extends ViewDestroyable implements OnInit, OnDestroy {
+export class QueryBuilderComponent extends ViewDestroyable implements OnInit, OnDestroy, AfterViewInit {
     @ViewChild("queryEditor") public queryEditor: UiQueryComponent;
     @ViewChild("tabScroll") public tabScroll: UiContentHorizontalComponent;
     @ViewChild("tabList") public tabList: ElementRef<HTMLDivElement>;
@@ -48,7 +48,7 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
             this.drag.updateTabItems(this.tabItems);
         });
 
-        this.editorQue.eventChangeActive.pipe(
+        this.editorQue.stateActive.pipe(
             takeUntil(this.eventViewDestroyed),
         ).subscribe((data) => {
             this.editorActive = data[1];
@@ -62,6 +62,9 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
             this.replaceTabs(data[0], data[1]);
         });
 
+    }
+    ngAfterViewInit() {
+        this.drag.updateTabItems(this.tabItems);
     }
     ngOnDestroy() {
         super.ngOnDestroy();
