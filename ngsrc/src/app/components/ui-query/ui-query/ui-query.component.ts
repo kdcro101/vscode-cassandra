@@ -5,7 +5,7 @@ import {
 import { ReplaySubject } from "rxjs";
 import { take } from "rxjs/operators";
 import * as Split from "split.js";
-import { WorkbenchEditor } from "../../../../../../src/types/editor";
+import { WorkbenchCqlStatement, WorkbenchEditor } from "../../../../../../src/types/editor";
 import { CassandraCluster } from "../../../../../../src/types/index";
 import { ViewDestroyable } from "../../../base/view-destroyable/index";
 import { ClusterService } from "../../../services/cluster/cluster.service";
@@ -23,12 +23,11 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     @ViewChild("bottom") public bottom: ElementRef<HTMLDivElement>;
     @ViewChild("monacoEditor") public monacoEditor: UiMonacoEditorComponent;
 
-    @Output("onCodeChange") public onCodeChange = new EventEmitter<string>();
+    @Output("onStatementChange") public onStatementChange = new EventEmitter<WorkbenchCqlStatement>();
 
     public clusterList: CassandraCluster[] = [];
     public editorCurrent: WorkbenchEditor = null;
 
-    public code: string = "select aaaa,bbbb,cccc \n from tableName where ddd='21' and ccc=22;\n";
     public fontSize: number = 15;
     public lineHeight: number = 23;
 
@@ -82,6 +81,14 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     }
     public updateEditor(editor: WorkbenchEditor) {
 
+    }
+
+    public onCodeChange = (code: string) => {
+
+        const s = this.editorCurrent.statement;
+        s.body = code;
+
+        this.onStatementChange.emit(s);
     }
 
 }

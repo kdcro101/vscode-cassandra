@@ -3,7 +3,7 @@ import {
     Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren,
 } from "@angular/core";
 import { takeUntil } from "rxjs/operators";
-import { WorkbenchEditor } from "../../../../src/types/editor";
+import { WorkbenchCqlStatement, WorkbenchEditor } from "../../../../src/types/editor";
 import { ViewDestroyable } from "../base/view-destroyable";
 import { UiContentHorizontalComponent } from "../components/ui-content-horizontal/ui-content-horizontal.component";
 import { UiQueryComponent } from "../components/ui-query/ui-query/ui-query.component";
@@ -72,11 +72,17 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
     public tabActivate(index: number) {
         this.editorQue.activate(index);
     }
+
     public onTabMousedown = (e: MouseEvent, index: number) => {
         this.tabActivate(index);
         console.log(`Clicked index=${index}`);
-        const elem = this.tabItems.toArray()[index].nativeElement;
         this.drag.dragStart(index, e);
+    }
+    public onTabClose = (e: MouseEvent, index: number) => {
+        e.stopPropagation();
+        e.preventDefault();
+        this.editorQue.remove(index);
+
     }
     private replaceTabs(source: number, dest: number) {
         console.log(`replacing ${source} with ${dest}`);
@@ -84,8 +90,8 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
         this.editorQue.swap(source, dest);
 
     }
-    public onActiveTabCodeChange = (code: string) => {
-        this.editorQue.updateStatement(this.editorQue.itemActive, code);
+    public onActiveStatementChange = (statement: WorkbenchCqlStatement) => {
+        this.editorQue.updateStatement(this.editorQue.itemActive, statement);
     }
 
 }

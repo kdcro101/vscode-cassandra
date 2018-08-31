@@ -7,7 +7,7 @@ import { VscodeWebviewInterface } from "../../types/index";
 declare var vscode: VscodeWebviewInterface;
 
 @Injectable({
-    providedIn: "root"
+    providedIn: "root",
 })
 export class ParserService {
     private isVscode: boolean = vscode == null ? false : true;
@@ -27,7 +27,7 @@ export class ParserService {
             filter((e) => e.name === "e2w_parseOutput"),
             take(1),
             map((e) => e as ProcMessageStrict<"e2w_parseOutput">),
-            timeout(5000)
+            timeout(5000),
         ).subscribe((e) => {
             out.next(e.data);
         }, (e) => {

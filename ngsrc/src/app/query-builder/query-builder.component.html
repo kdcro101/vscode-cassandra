@@ -15,13 +15,13 @@
                     <div fxFlex class="title dhandle">
                         {{ i.statement.filename }}
                     </div>
-                    <div class="vsui-close"></div>
+                    <div class="vsui-close" (mousedown)="$event.stopPropagation();$event.preventDefault()" (click)="onTabClose($event,ix)"></div>
                 </div>
             </div>
         </ui-content-horizontal>
     </div>
     <div fxFlex class="client" fxLayout="column">
-        <ui-query (onCodeChange)="onActiveTabCodeChange($event)" *ngIf="editorActive" #queryEditor [editor]="editorActive"
+        <ui-query (onStatementChange)="onActiveStatementChange($event)" *ngIf="editorActive" #queryEditor [editor]="editorActive"
             fxFlex></ui-query>
     </div>
 </div>

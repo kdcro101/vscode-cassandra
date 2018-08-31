@@ -38,7 +38,7 @@ export class ClusterService {
         });
 
     }
-    public clusterListRequest() {
+    private clusterListRequest() {
         console.log("Requesting cluster list");
         const m: ProcMessageStrict<"w2e_getClustersRequest"> = {
             name: "w2e_getClustersRequest",

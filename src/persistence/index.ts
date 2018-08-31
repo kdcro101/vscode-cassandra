@@ -104,7 +104,7 @@ export class Persistence {
                     tap(() => this.emptyTempDir()),
                 ).subscribe(() => {
 
-                    vscode.commands.executeCommand("workbench.files.action.showActiveFileInExplorer");
+                    // vscode.commands.executeCommand("workbench.files.action.showActiveFileInExplorer");
 
                     resolve();
                 }, (e) => {

@@ -1,51 +1,70 @@
 @import "../../scss/colors";
+
 :host {
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     position: absolute;
+
     &>.root {
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
         position: absolute;
+
         .header {
             background-color: var(--vscode-editorGroupHeader-tabsBackground);
+
             .actions {
                 padding-left: 8px;
+
                 button {
                     margin-right: 8px;
                 }
             }
+
             .tabs {
                 height: 43px;
+
                 .tabs-wrap {
                     padding: 8px 0px 0px 0px;
                 }
+
                 .item {
                     &.active {
                         background-color: var(--vscode-tab-activeBackground);
                         color: var(--vscode-tab-activeForeground);
                         border-bottom: 1px solid var(--vscode-tab-activeBorder);
+
                         .vsui-close {
                             opacity: 1;
                         }
                     }
+
                     &.dragged {
                         z-index: 100;
                         opacity: 0.8;
                     }
+
                     &.covered {
                         // opacity: 0.8;
-                        background-color: mat-color($accent,300);
+                        background-color: mat-color($accent, 300);
                     }
+
                     &:hover {
                         .vsui-close {
                             opacity: 1;
                         }
                     }
+
+                    &:active {
+                        .vsui-close {
+                            transform: scale3d(1.5,1.5,1);
+                        }
+                    }
+
                     user-select: none;
                     height: 35px;
                     background-color: var(--vscode-tab-inactiveBackground);
@@ -57,12 +76,15 @@
                     box-sizing: border-box;
                     cursor: pointer;
                     min-width: 100px;
+
                     .title {
                         padding-right: 8px;
                     }
+
                     .vsui-close {
                         margin-right: 0.5em;
                         opacity: 0;
+                        transition: transform 100ms linear;
                     }
                 }
             }

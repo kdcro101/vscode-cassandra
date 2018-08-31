@@ -51,13 +51,15 @@ export class EditorQueService {
     }
     public activate(index: number) {
         if (index < 0 || index >= this.que.length) {
+            this.itemActive = -1;
+            this.stateActive.next([this.itemActive, null]);
             return;
         }
 
         this.itemActive = index;
         const e = this.que[index];
-
         this.stateActive.next([this.itemActive, e]);
+
     }
     private statementCreate(s: ProcMessageStrict<"e2w_editorCreate">) {
         console.log("statementPrepend");
@@ -131,12 +133,12 @@ export class EditorQueService {
 
         this.activate(dest);
     }
-    public updateStatement(index: number, body: string) {
+    public updateStatement(index: number, statement: WorkbenchCqlStatement) {
         if (index < 0 || index >= this.que.length) {
             return;
         }
 
-        this.que[index].statement.body = body;
+        this.que[index].statement = statement;
         this.persistEditors();
     }
     public persistEditors() {
@@ -148,5 +150,23 @@ export class EditorQueService {
         };
 
         this.messages.emit(m);
+    }
+    public remove(index: number) {
+        if (index < 0 || index >= this.que.length) {
+            return;
+        }
+
+        this.queCurrent.splice(index, 1);
+
+        let nextActive: number = -1;
+
+        if (this.queCurrent.length > 0 && index <= this.itemActive) {
+            const minusOne = this.itemActive - 1;
+            nextActive = minusOne >= 0 ? minusOne : 0;
+        }
+
+        this.activate(nextActive);
+
+        this.eventChangeQue.next();
     }
 }

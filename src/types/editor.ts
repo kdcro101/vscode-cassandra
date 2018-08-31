@@ -4,7 +4,7 @@ export interface WorkbenchCqlStatement {
     body: string; // cql statements
     filename: string;
     keyspace?: string;
-    clusterName?: string;
+    clusterName: string;
 
 }
 export interface WorkbenchEditor {
