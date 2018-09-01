@@ -53,9 +53,9 @@ export class Persistence {
                 }),
             ).subscribe((list) => {
 
-                    console.log(list);
+                console.log(list);
 
-                    resolve(list);
+                resolve(list);
             });
 
         });
@@ -81,7 +81,7 @@ export class Persistence {
                             const ps = list.map((e, i) => {
                                 const ep = path.join(pt, `${i}${this.editorExt}`);
                                 files.push(ep);
-                                return fs.writeJson(ep, e);
+                                return fs.writeFile(ep, JSON.stringify(e));
                             });
                             Promise.all(ps)
                                 .then((result) => {
@@ -113,7 +113,15 @@ export class Persistence {
 
         });
     }
+    public stringify(object: any): string {
+        const s = JSON.stringify(object);
+        const r = s.replace(/\\n/g, "\\n")
+            .replace(/\\r/g, "\\r")
+            .replace(/\\t/g, "\\t")
+            .replace(/\\f/g, "\\f");
 
+        return r;
+    }
     private emptyEditorsDir() {
         try {
             fs.removeSync(this.persistencePathEditors);
@@ -133,5 +141,4 @@ export class Persistence {
         } catch (e) { console.log(e); }
         fs.mkdirpSync(this.persistencePathTemp);
     }
-
 }

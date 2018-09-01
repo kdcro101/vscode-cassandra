@@ -7,7 +7,7 @@ import { take, takeUntil } from "rxjs/operators";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { MonacoService } from "../../../services/monaco/monaco.service";
 import { cqlCompletitionProvider } from "./lang/completition";
-import { language } from "./lang/tokens";
+import { cqlLanguageConfig, cqlTokenProvider } from "./lang/tokens";
 
 @Component({
     selector: "ui-monaco-editor",
@@ -36,7 +36,8 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             take(1),
         ).subscribe(() => {
             monaco.languages.register({ id: "cql" });
-            monaco.languages.setMonarchTokensProvider("cql", language);
+            monaco.languages.setMonarchTokensProvider("cql", cqlTokenProvider);
+            monaco.languages.setLanguageConfiguration("cql", cqlLanguageConfig);
             monaco.languages.registerCompletionItemProvider("cql", cqlCompletitionProvider);
 
             monaco.editor.setTheme("vs-dark");
