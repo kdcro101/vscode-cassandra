@@ -83,7 +83,7 @@ export class Completition {
 
             filtered = candidates.filter((i) => !this.isEqual(i.text, prevText));
         }
-        if (prevText.length > 0) {
+        if (prevText && prevText.length > 0) {
             filtered = filtered.filter((i) => this.isBeginningWith(i.text, partial));
         }
 

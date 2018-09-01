@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
-import { filter, take, timeout } from "rxjs/operators";
+import { filter, take, tap, timeout } from "rxjs/operators";
 import { CompletitionOutput } from "../../../../../src/completition";
 import { AutocompleteItem, ProcMessageStrict } from "../../../../../src/types";
 import { generateId } from "../../const/id";
@@ -30,6 +30,7 @@ export class AutocompleteService {
         };
 
         this.messages.eventMessage.pipe(
+            tap((mi) => console.log(mi)),
             take(1),
             timeout(10000),
             filter((mi) => mi.name === "e2w_autocompleteResponse"),

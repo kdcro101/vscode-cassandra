@@ -21,6 +21,8 @@ export class MessageService {
 
      }
     public emit(message: ProcMessage) {
+        console.log("EMITTING");
+        console.log(message);
         vscode.postMessage(message);
     }
 

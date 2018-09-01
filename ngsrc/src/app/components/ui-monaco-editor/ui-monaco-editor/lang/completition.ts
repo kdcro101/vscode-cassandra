@@ -44,32 +44,6 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                         reject(e);
                     });
 
-                // return [
-                //     {
-                //         label: "simpleText",
-                //         kind: monaco.languages.CompletionItemKind.Text,
-                //     }, {
-                //         label: "testing",
-                //         kind: monaco.languages.CompletionItemKind.Keyword,
-                //         insertText: {
-                //             value: "testing(${1:condition})",
-                //         },
-                //     },
-                //     {
-                //         label: "ifelse",
-                //         kind: monaco.languages.CompletionItemKind.Snippet,
-                //         insertText: {
-                //             value: [
-                //                 "if (${1:condition}) {",
-                //                 "\t$0",
-                //                 "} else {",
-                //                 "\t",
-                //                 "}",
-                //             ].join("\n"),
-                //         },
-                //         documentation: "If-Else Statement",
-                //     },
-                // ];
             });
         },
     };
