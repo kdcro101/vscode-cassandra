@@ -5,6 +5,7 @@ import {
 import { fromEventPattern, ReplaySubject, Subject } from "rxjs";
 import { take, takeUntil } from "rxjs/operators";
 import { ViewDestroyable } from "../../../base/view-destroyable";
+import { AutocompleteService } from "../../../services/autocomplete/autocomplete.service";
 import { MonacoService } from "../../../services/monaco/monaco.service";
 import { cqlCompletitionProvider } from "./lang/completition";
 import { cqlLanguageConfig, cqlTokenProvider } from "./lang/tokens";
@@ -26,6 +27,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
     constructor(
         public change: ChangeDetectorRef,
         private monacoService: MonacoService,
+        private autocomplete: AutocompleteService,
     ) {
         super(change);
 
@@ -38,7 +40,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             monaco.languages.register({ id: "cql" });
             monaco.languages.setMonarchTokensProvider("cql", cqlTokenProvider);
             monaco.languages.setLanguageConfiguration("cql", cqlLanguageConfig);
-            monaco.languages.registerCompletionItemProvider("cql", cqlCompletitionProvider);
+            monaco.languages.registerCompletionItemProvider("cql", cqlCompletitionProvider(this.autocomplete));
 
             monaco.editor.setTheme("vs-dark");
 

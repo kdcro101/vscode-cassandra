@@ -3,6 +3,7 @@ import { takeUntil } from "rxjs/operators";
 import * as vscode from "vscode";
 import { CassandraClient } from "../cassandra-client";
 import { Clusters } from "../clusters";
+import { Completition } from "../completition";
 import { generateId } from "../const/id";
 import { Persistence } from "../persistence";
 import { ExtensionContextBundle, ValidatedConfigClusterItem, WorkbenchCqlStatement } from "../types";
@@ -22,6 +23,8 @@ export class CassandraWorkbench {
     private eventPanelReset = new Subject<void>();
     private clusters: Clusters = null;
     private persistence: Persistence;
+
+    private completition = new Completition();
     constructor(
         private workspace: Workspace,
         private config: ValidatedConfigClusterItem[],
@@ -125,6 +128,25 @@ export class CassandraWorkbench {
                 const pm = m as ProcMessageStrict<"w2e_persistEditors">;
                 this.persistence.saveStatements(pm.data);
                 break;
+            case "w2e_autocompleteRequest":
+                this.autocompleteRespond(m as ProcMessageStrict<"w2e_autocompleteRequest">);
+                break;
         }
+    }
+    private autocompleteRespond(request: ProcMessageStrict<"w2e_autocompleteRequest">) {
+        const req = request.data;
+        const res = this.completition.execute(req.partial);
+
+        const id = req.id;
+        const mo: ProcMessageStrict<"e2w_autocompleteResponse"> = {
+            name: "e2w_autocompleteResponse",
+            data: {
+                id,
+                result: res,
+            },
+        };
+
+        this.panel.emitMessage(mo);
+
     }
 }
