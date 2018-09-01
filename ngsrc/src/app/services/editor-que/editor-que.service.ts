@@ -90,6 +90,7 @@ export class EditorQueService {
         };
 
         this.editorPrepend(e);
+        this.persistEditors();
 
     }
     private editorPrepend(e: WorkbenchEditor) {
@@ -132,6 +133,7 @@ export class EditorQueService {
         this.que[source] = b;
 
         this.activate(dest);
+        this.persistEditors();
     }
     public updateStatement(index: number, statement: WorkbenchCqlStatement) {
         if (index < 0 || index >= this.que.length) {
@@ -164,9 +166,11 @@ export class EditorQueService {
             const minusOne = this.itemActive - 1;
             nextActive = minusOne >= 0 ? minusOne : 0;
         }
-
+        // activate tab
         this.activate(nextActive);
-
+        // emit que change
         this.eventChangeQue.next();
+        // persist state
+        this.persistEditors();
     }
 }
