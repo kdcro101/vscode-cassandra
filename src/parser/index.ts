@@ -28,7 +28,7 @@ export class InputParser {
                 offendingSymbol: any | undefined,
                 line: number, charPositionInLine: number, msg: string, e?: RecognitionException) => {
 
-                console.log(arguments);
+                console.log(msg);
             },
         };
         cqlParser.addErrorListener(errorHandler);

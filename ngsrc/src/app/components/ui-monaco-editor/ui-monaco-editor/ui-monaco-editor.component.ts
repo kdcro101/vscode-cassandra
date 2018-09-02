@@ -3,10 +3,11 @@ import {
     ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild,
 } from "@angular/core";
 import { fromEventPattern, ReplaySubject, Subject } from "rxjs";
-import { take, takeUntil } from "rxjs/operators";
+import { debounceTime, take, takeUntil } from "rxjs/operators";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { AutocompleteService } from "../../../services/autocomplete/autocomplete.service";
 import { MonacoService } from "../../../services/monaco/monaco.service";
+import { ParserService } from "../../../services/parser/parser.service";
 import { cqlCompletitionProvider } from "./lang/completition";
 import { cqlLanguageConfig, cqlTokenProvider } from "./lang/tokens";
 
@@ -22,12 +23,14 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
     public editor: monaco.editor.IStandaloneCodeEditor;
     private eventCodeSet = new Subject<void>();
+    private eventCodeChange = new Subject<string>();
     private stateReady = new ReplaySubject<void>(1);
 
     constructor(
         public change: ChangeDetectorRef,
         private monacoService: MonacoService,
         private autocomplete: AutocompleteService,
+        private parser: ParserService,
     ) {
         super(change);
 
@@ -56,6 +59,19 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             });
 
             this.stateReady.next();
+        });
+
+        this.eventCodeChange.pipe(
+            takeUntil(this.eventViewDestroyed),
+        ).subscribe((code) => {
+            this.onCodeChange.emit(code);
+        });
+
+        this.eventCodeChange.pipe(
+            takeUntil(this.eventViewDestroyed),
+            debounceTime(1000),
+        ).subscribe((code) => {
+            this.parseCode(code);
         });
 
     }
@@ -90,11 +106,18 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                     console.log(`[${v}]`);
 
                     setTimeout(() => {
-                        this.onCodeChange.emit(v);
+                        this.eventCodeChange.next(v);
+
                     });
                 });
 
             });
     }
-
+    private parseCode(code: string) {
+        this.parser.parse(code).pipe(take(1))
+            .subscribe((res) => {
+                console.log(`Parse done for [${code}]`);
+                console.log(res);
+            });
+    }
 }

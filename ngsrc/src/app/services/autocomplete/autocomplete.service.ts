@@ -30,11 +30,10 @@ export class AutocompleteService {
         };
 
         this.messages.eventMessage.pipe(
-            tap((mi) => console.log(mi)),
-            take(1),
             timeout(10000),
             filter((mi) => mi.name === "e2w_autocompleteResponse"),
             filter((mi: ProcMessageStrict<"e2w_autocompleteResponse">) => mi.data.id === id),
+            take(1),
         ).subscribe((message) => {
             const result = message.data.result;
             o.next(result);

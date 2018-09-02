@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { fromEvent, Subject } from "rxjs";
 import { filter, map, take, timeout } from "rxjs/operators";
-import { ProcMessage, ProcMessageStrict } from "../../../../../src/types/messages";
+import { ParseInputResponse, ProcMessage, ProcMessageStrict } from "../../../../../src/types/messages";
+import { generateId } from "../../const/id";
 import { VscodeWebviewInterface } from "../../types/index";
 
 declare var vscode: VscodeWebviewInterface;
@@ -15,19 +16,24 @@ export class ParserService {
     constructor() {
         console.log(`starting ParserService isVscode=${this.isVscode}`);
     }
-    public parse(input: string): Subject<string> {
-        const out = new Subject<string>();
+    public parse(input: string): Subject<ParseInputResponse> {
+        const out = new Subject<ParseInputResponse>();
+        const id = generateId();
 
-        const message: ProcMessageStrict<"w2e_parseInput"> = {
-            name: "w2e_parseInput",
-            data: input,
+        const message: ProcMessageStrict<"w2e_parseInputRequest"> = {
+            name: "w2e_parseInputRequest",
+            data: {
+                id,
+                input,
+            },
         };
         vscode.postMessage(message);
         this.eventMessage.pipe(
-            filter((e) => e.name === "e2w_parseOutput"),
-            take(1),
-            map((e) => e as ProcMessageStrict<"e2w_parseOutput">),
             timeout(5000),
+            filter((e) => e.name === "e2w_parseInputResponse"),
+            filter((mi: ProcMessageStrict<"e2w_parseInputResponse">) => mi.data.id === id),
+            take(1),
+            map((e) => e as ProcMessageStrict<"e2w_parseInputResponse">),
         ).subscribe((e) => {
             out.next(e.data);
         }, (e) => {

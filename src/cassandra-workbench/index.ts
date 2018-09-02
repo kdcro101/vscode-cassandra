@@ -1,10 +1,10 @@
 import { from, merge, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import * as vscode from "vscode";
-import { CassandraClient } from "../cassandra-client";
 import { Clusters } from "../clusters";
 import { Completition } from "../completition";
 import { generateId } from "../const/id";
+import { InputParser } from "../parser";
 import { Persistence } from "../persistence";
 import { ExtensionContextBundle, ValidatedConfigClusterItem, WorkbenchCqlStatement } from "../types";
 import { ProcMessage, ProcMessageStrict } from "../types/messages";
@@ -23,6 +23,7 @@ export class CassandraWorkbench {
     private eventPanelReset = new Subject<void>();
     private clusters: Clusters = null;
     private persistence: Persistence;
+    private parser = new InputParser();
 
     private completition = new Completition();
     constructor(
@@ -132,7 +133,7 @@ export class CassandraWorkbench {
                 this.autocompleteRespond(m as ProcMessageStrict<"w2e_autocompleteRequest">);
                 break;
             case "w2e_parseInputRequest":
-
+                this.parseInputRespond(m as ProcMessageStrict<"w2e_parseInputRequest">);
                 break;
 
         }
@@ -157,6 +158,8 @@ export class CassandraWorkbench {
         const req = request.data;
         const id = req.id;
         const input = req.input;
+
+        const rootContext = this.parser.parse(input);
 
         const mo: ProcMessageStrict<"e2w_parseInputResponse"> = {
             name: "e2w_parseInputResponse",
