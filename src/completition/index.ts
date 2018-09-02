@@ -51,11 +51,7 @@ export class Completition {
         ]);
 
         const tree = parser.root();
-        // core.showDebugOutput = true;
-        // core.showRuleStack = true;
-        // const vocabulary = parser.vocabulary;
         const candidates = core.collectCandidates(anal.caretTokenIndex);
-        // const candidates = core.collectCandidates(9);
         const candidateRules: RuleData[] = [];
 
         candidates.rules.forEach((v, k) => {

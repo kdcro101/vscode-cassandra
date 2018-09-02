@@ -2,8 +2,7 @@ import * as path from "path";
 import { fromEventPattern, ReplaySubject, Subject } from "rxjs";
 import { take, takeUntil } from "rxjs/operators";
 import * as vscode from "vscode";
-import { InputParser } from "../parser";
-import { ExtensionContextBundle, ProcMessage, ProcMessageList, ProcMessageStrict } from "../types";
+import { ExtensionContextBundle, ProcMessage, ProcMessageList } from "../types";
 import { WorkbenchCqlStatement } from "../types/editor";
 import { Workspace } from "../workspace";
 import { generateHtml } from "./html";
@@ -19,8 +18,6 @@ export class WorkbenchPanel {
     public stateWebviewReady = new ReplaySubject<void>(1);
 
     private context: vscode.ExtensionContext = extensionContextBundle.context;
-
-    private parser = new InputParser();
 
     constructor(
         private workspace: Workspace,
@@ -94,12 +91,12 @@ export class WorkbenchPanel {
     private onMessage(e: ProcMessage) {
         const name: keyof ProcMessageList = e.name;
         switch (name) {
-            case "w2e_parseInput":
-                this.respondParseInput(e as ProcMessageStrict<"w2e_parseInput">);
-                break;
-            case "w2e_parseInput":
-                this.respondParseInput(e as ProcMessageStrict<"w2e_parseInput">);
-                break;
+            // case "w2e_parseInput":
+            //     this.respondParseInput(e as ProcMessageStrict<"w2e_parseInput">);
+            //     break;
+            // case "w2e_parseInput":
+            //     this.respondParseInput(e as ProcMessageStrict<"w2e_parseInput">);
+            //     break;
             case "w2e_onReady":
                 console.log("webview panel ready");
                 this.stateWebviewReady.next();
@@ -107,13 +104,13 @@ export class WorkbenchPanel {
         }
     }
 
-    private respondParseInput(e: ProcMessageStrict<"w2e_parseInput">) {
-        const o = this.parser.parse(e.data);
-        const message: ProcMessageStrict<"e2w_parseOutput"> = {
-            name: "e2w_parseOutput",
-            data: o,
-        };
-        this.panel.webview.postMessage(message);
-    }
+    // private respondParseInput(e: ProcMessageStrict<"w2e_parseInput">) {
+    //     const o = this.parser.parse(e.data);
+    //     const message: ProcMessageStrict<"e2w_parseOutput"> = {
+    //         name: "e2w_parseOutput",
+    //         data: o,
+    //     };
+    //     this.panel.webview.postMessage(message);
+    // }
 
 }

@@ -131,6 +131,10 @@ export class CassandraWorkbench {
             case "w2e_autocompleteRequest":
                 this.autocompleteRespond(m as ProcMessageStrict<"w2e_autocompleteRequest">);
                 break;
+            case "w2e_parseInputRequest":
+
+                break;
+
         }
     }
     private autocompleteRespond(request: ProcMessageStrict<"w2e_autocompleteRequest">) {
@@ -149,4 +153,22 @@ export class CassandraWorkbench {
         this.panel.emitMessage(mo);
 
     }
+    private parseInputRespond(request: ProcMessageStrict<"w2e_parseInputRequest">) {
+        const req = request.data;
+        const id = req.id;
+        const input = req.input;
+
+        const mo: ProcMessageStrict<"e2w_parseInputResponse"> = {
+            name: "e2w_parseInputResponse",
+            data: {
+                id,
+                result: null,
+                errors: [],
+            },
+        };
+
+        this.panel.emitMessage(mo);
+
+    }
+
 }

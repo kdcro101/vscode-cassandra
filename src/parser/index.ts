@@ -1,11 +1,13 @@
 import {
-    ANTLRErrorListener, ANTLRInputStream,
-    CommonTokenStream, ConsoleErrorListener, RecognitionException, Recognizer, Token,
+    ANTLRErrorListener, ANTLRInputStream, CommonTokenStream,
+    ConsoleErrorListener, RecognitionException, Recognizer, Token,
 } from "antlr4ts";
-
 import { CqlLexer } from "../antlr/CqlLexer";
 import { CqlParser } from "../antlr/CqlParser";
-import { AntlrListener } from "./listener";
+
+export interface CqlParseError {
+    name: string;
+}
 
 export class InputParser {
 
@@ -26,20 +28,17 @@ export class InputParser {
                 offendingSymbol: any | undefined,
                 line: number, charPositionInLine: number, msg: string, e?: RecognitionException) => {
 
-                // const tokenSuggester = new TokenSuggester(cqlLexer);
-                // const suggestions = tokenSuggester.suggest(transitionLabels, "");
-
                 console.log(arguments);
             },
         };
         cqlParser.addErrorListener(errorHandler);
 
-        const listener = new AntlrListener(tokenStream, cqlParser.ruleNames);
-        cqlParser.addParseListener(listener);
+        // const listener = new AntlrListener(tokenStream, cqlParser.ruleNames);
+        // cqlParser.addParseListener(listener);
         const root = cqlParser.root();
 
-        const out = listener.rewriter.getText();
-        return out;
+        // const out = listener.rewriter.getText();
+        return root;
     }
 
 }
