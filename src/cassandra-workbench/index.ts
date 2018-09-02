@@ -19,7 +19,7 @@ export class CassandraWorkbench {
     public panel: WorkbenchPanel;
     public treeProvider: TreeviewProvider = null;
     private context: vscode.ExtensionContext = extensionContextBundle.context;
-    private clients: CassandraClient[] = [];
+    // private clients: CassandraClient[] = [];
     private eventPanelReset = new Subject<void>();
     private clusters: Clusters = null;
     private persistence: Persistence;

@@ -73,6 +73,10 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 this.eventCodeSet.next();
                 this.editor.setValue(code);
 
+                const decorations = this.editor.deltaDecorations([], [
+                    { range: new monaco.Range(1, 1, 1, 10), options: { inlineClassName: "cqlError" } },
+                ]);
+
                 fromEventPattern<monaco.editor.IModelContentChangedEvent>((f: (e: any) => any) => {
                     return this.editor.onDidChangeModelContent(f);
                 }, (f: any, d: monaco.IDisposable) => {

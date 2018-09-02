@@ -3,7 +3,8 @@ import {
     ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild,
 } from "@angular/core";
 import { ReplaySubject } from "rxjs";
-import { take } from "rxjs/operators";
+import { Subject } from "rxjs";
+import { debounceTime, take, takeUntil } from "rxjs/operators";
 import * as Split from "split.js";
 import { WorkbenchCqlStatement, WorkbenchEditor } from "../../../../../../src/types/editor";
 import { CassandraCluster } from "../../../../../../src/types/index";
@@ -32,6 +33,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     public lineHeight: number = 23;
 
     private stateReady = new ReplaySubject<void>();
+    private eventCodeChange = new Subject<WorkbenchCqlStatement>();
 
     constructor(
         public change: ChangeDetectorRef,
@@ -75,6 +77,13 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
 
         this.stateReady.next();
 
+        this.eventCodeChange.pipe(
+            takeUntil(this.eventViewDestroyed),
+            debounceTime(1000),
+        ).subscribe((d) => {
+            this.onStatementChange.emit(d);
+        });
+
     }
     ngOnDestroy() {
         super.ngOnDestroy();
@@ -88,7 +97,11 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         const s = this.editorCurrent.statement;
         s.body = code;
 
-        this.onStatementChange.emit(s);
+        this.eventCodeChange.next(s);
+    }
+    public onClusterChange = (clusterName: string) => {
+        console.log(`onClusterChange ${clusterName}`);
+        this.onStatementChange.emit(this.editorCurrent.statement);
     }
 
 }
