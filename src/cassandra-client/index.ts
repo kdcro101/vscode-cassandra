@@ -1,10 +1,21 @@
 import * as cassandra from "cassandra-driver";
 import { EventEmitter } from "events";
 import { BehaviorSubject, from } from "rxjs";
-import { concatMap, filter } from "rxjs/operators";
 import { CassandraKeyspace, ValidatedConfigClusterItem } from "../types";
 import { CassandraClientEvents, CassandraClusterData } from "../types/index";
 import { collectKeyspaces } from "./collectors/index";
+
+export interface QueryExecuteResult {
+    info: {
+        speculativeExecutions: number,
+        achievedConsistency: cassandra.types.consistencies,
+        warnings: string[],
+        customPayload: any,
+    };
+    rows: any[];
+    columns: Array<{ [key: string]: string; }>;
+    error: any;
+}
 
 export class CassandraClient extends EventEmitter {
 
@@ -34,6 +45,11 @@ export class CassandraClient extends EventEmitter {
 
         this.client = new cassandra.Client(options);
 
+    }
+    public execute(cql: string): Promise<cassandra.types.ResultSet> {
+        return new Promise((resolve, reject) => {
+            // this.client.execute();
+        });
     }
     public connect(): Promise<void> {
         return new Promise((resolve, reject) => {

@@ -1,3 +1,4 @@
+import { QueryExecuteResult } from "../cassandra-client/index";
 import { CompletitionOutput } from "../completition";
 import { CqlParserError } from "../parser";
 import { WorkbenchCqlStatement } from "./editor";
@@ -9,12 +10,14 @@ export interface ProcMessageList {
     w2e_checkInputRequest: CheckInputRequest;
     w2e_persistEditors: WorkbenchCqlStatement[];
     w2e_autocompleteRequest: AutocompleteRequest;
+    w2e_executeQueryRequest: ExecuteQueryRequest;
 
     e2w_goState: WebviewStateParams;
     e2w_editorCreate: EditorCreateParams;
     e2w_getClustersResponse: CassandraCluster[];
     e2w_autocompleteResponse: AutocompleteResponse;
     e2w_checkInputResponse: CheckInputResponse;
+    e2w_executeQueryResponse: ExecuteQueryResponse;
 }
 export type ProcMessageType = keyof ProcMessageList;
 export interface ProcMessage {
@@ -53,4 +56,13 @@ export interface CheckInputRequest {
 export interface CheckInputResponse {
     id: string;
     result: CqlParserError[];
+}
+export interface ExecuteQueryRequest {
+    id: string;
+    cql: string;
+}
+export interface ExecuteQueryResponse {
+    id: string;
+    result: QueryExecuteResult;
+
 }

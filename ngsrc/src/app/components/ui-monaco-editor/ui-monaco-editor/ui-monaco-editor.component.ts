@@ -89,6 +89,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 console.log("------------------------------------");
                 this.eventCodeSet.next();
                 this.editor.setValue(code);
+                this.parseCode(code);
 
                 fromEventPattern<monaco.editor.IModelContentChangedEvent>((f: (e: any) => any) => {
                     return this.editor.onDidChangeModelContent(f);
@@ -114,6 +115,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         this.parser.collectErrors(code).pipe(take(1))
             .subscribe((res) => {
                 console.log(`Parse done for [${code}]`);
+                console.log(res);
                 this.addErrorDecorations(res);
             });
     }
