@@ -3,15 +3,32 @@ import {
     ConsoleErrorListener, RecognitionException, Recognizer, Token,
 } from "antlr4ts";
 import { CqlLexer } from "../antlr/CqlLexer";
-import { CqlParser } from "../antlr/CqlParser";
+import { CqlParser, RootContext } from "../antlr/CqlParser";
 
-export interface CqlParseError {
+export interface CqlParserError {
     name: string;
+    token: TokenData;
+    line: number;
+    linePos: number;
+}
+// export interface ParserResult {
+//     root: RootContext;
+//     errors: CqlParserError[];
+// }
+export interface TokenData {
+    text: string;
+    type: number;
+    line: number;
+    charPositionInLine: number;
+    channel: number;
+    tokenIndex: number;
+    startIndex: number;
+    stopIndex: number;
 }
 
 export class InputParser {
 
-    public parse(input: string) {
+    public collectErrors(input: string): CqlParserError[] {
         const inputStream = new ANTLRInputStream(input);
         const cqlLexer = new CqlLexer(inputStream);
         const tokenStream = new CommonTokenStream(cqlLexer);
@@ -21,14 +38,21 @@ export class InputParser {
         // cqlParser.addErrorListener(errorParser);
 
         cqlParser.removeErrorListener(ConsoleErrorListener.INSTANCE);
+        const errors: CqlParserError[] = [];
 
         const errorHandler: ANTLRErrorListener<Token> = {
             syntaxError: (
                 recognizer: Recognizer<any, any>,
                 offendingSymbol: any | undefined,
                 line: number, charPositionInLine: number, msg: string, e?: RecognitionException) => {
+                const error: CqlParserError = {
+                    name: msg,
+                    token: this.extractTokentData(offendingSymbol),
+                    line,
+                    linePos: charPositionInLine,
 
-                console.log(msg);
+                };
+                errors.push(error);
             },
         };
         cqlParser.addErrorListener(errorHandler);
@@ -38,7 +62,24 @@ export class InputParser {
         const root = cqlParser.root();
 
         // const out = listener.rewriter.getText();
-        return root;
+        return errors;
     }
+    private extractTokentData(token: Token): TokenData {
+        if (token == null) {
+            return null;
+        }
+        const o: TokenData = {
+            text: token.text,
+            type: token.type,
+            line: token.line,
+            charPositionInLine: token.charPositionInLine,
+            channel: token.channel,
+            tokenIndex: token.tokenIndex,
+            startIndex: token.startIndex,
+            stopIndex: token.stopIndex,
 
+        };
+
+        return o;
+    }
 }

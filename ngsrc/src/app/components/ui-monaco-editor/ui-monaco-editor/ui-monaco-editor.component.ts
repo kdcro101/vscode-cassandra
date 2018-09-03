@@ -4,6 +4,7 @@ import {
 } from "@angular/core";
 import { fromEventPattern, ReplaySubject, Subject } from "rxjs";
 import { debounceTime, take, takeUntil } from "rxjs/operators";
+import { CqlParserError } from "../../../../../../src/parser/index";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { AutocompleteService } from "../../../services/autocomplete/autocomplete.service";
 import { MonacoService } from "../../../services/monaco/monaco.service";
@@ -89,10 +90,6 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 this.eventCodeSet.next();
                 this.editor.setValue(code);
 
-                const decorations = this.editor.deltaDecorations([], [
-                    { range: new monaco.Range(1, 1, 1, 10), options: { inlineClassName: "cqlError" } },
-                ]);
-
                 fromEventPattern<monaco.editor.IModelContentChangedEvent>((f: (e: any) => any) => {
                     return this.editor.onDidChangeModelContent(f);
                 }, (f: any, d: monaco.IDisposable) => {
@@ -114,10 +111,41 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             });
     }
     private parseCode(code: string) {
-        this.parser.parse(code).pipe(take(1))
+        this.parser.collectErrors(code).pipe(take(1))
             .subscribe((res) => {
                 console.log(`Parse done for [${code}]`);
-                console.log(res);
+                this.addErrorDecorations(res);
             });
+    }
+    private addErrorDecorations(errors: CqlParserError[]) {
+        monaco.editor.setModelMarkers(this.editor.getModel(), "markersOwnerId", []);
+        // const errorDecs: monaco.editor.IModelDeltaDecoration[] = errors.map((e) => {
+        //     const o: monaco.editor.IModelDeltaDecoration = {
+        //         range: new monaco.Range(e.line, e.linePos, e.line, (e.linePos + e.token.text.length + 1)),
+        //         options: {
+        //             inlineClassName: "cqlError",
+        //             hoverMessage: {
+        //                 value: e.name,
+        //             },
+
+        //         },
+        //     };
+        //     return o;
+        // });
+        const errorDecs: monaco.editor.IMarkerData[] = errors.map((e) => {
+            const o: monaco.editor.IMarkerData = {
+                severity: monaco.MarkerSeverity.Error,
+                message: e.name,
+                startLineNumber: e.line,
+                startColumn: e.linePos,
+                endLineNumber: e.line,
+                endColumn: (e.linePos + e.token.text.length + 1),
+            };
+            return o;
+        });
+        // const d = this.editor.deltaDecorations([], errorDecs);
+
+        monaco.editor.setModelMarkers(this.editor.getModel(), "markersOwnerId", errorDecs);
+
     }
 }

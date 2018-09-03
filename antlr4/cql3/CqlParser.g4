@@ -636,12 +636,12 @@ limitSpec
 
 fromSpec
     : kwFrom fromSpecElement
-    | { this.notifyErrorListeners("select.fromSpec"); }
+    | { this.notifyErrorListeners("rule.select.fromSpec"); }
     ;
 fromSpecElement
     : table
     | keyspace specialDot table
-    | { this.notifyErrorListeners("select.fromSpecElement"); }
+    | { this.notifyErrorListeners("rule.select.fromSpecElement"); }
     ;
 orderSpec
     : kwOrderBy orderSpecElement
@@ -658,7 +658,7 @@ whereSpec
 selectElements
     : specialStar
     | selectElement (syntaxComma selectElement)*
-    | { this.notifyErrorListeners("select.selectElements"); }
+    | { this.notifyErrorListeners("rule.select.selectElements"); }
     ;
 selectElement
     : column

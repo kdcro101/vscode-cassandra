@@ -9123,7 +9123,7 @@ public class CqlParser extends Parser {
 			case K_WHERE:
 				enterOuterAlt(_localctx, 2);
 				{
-				 this.notifyErrorListeners("select.fromSpec"); 
+				 this.notifyErrorListeners("rule.select.fromSpec"); 
 				}
 				break;
 			default:
@@ -9185,7 +9185,7 @@ public class CqlParser extends Parser {
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				 this.notifyErrorListeners("select.fromSpecElement"); 
+				 this.notifyErrorListeners("rule.select.fromSpecElement"); 
 				}
 				break;
 			}
@@ -9405,7 +9405,7 @@ public class CqlParser extends Parser {
 			case K_WHERE:
 				enterOuterAlt(_localctx, 3);
 				{
-				 this.notifyErrorListeners("select.selectElements"); 
+				 this.notifyErrorListeners("rule.select.selectElements"); 
 				}
 				break;
 			default:

@@ -3,6 +3,7 @@ import { takeUntil } from "rxjs/operators";
 import * as vscode from "vscode";
 import { Clusters } from "../clusters";
 import { Completition } from "../completition";
+import { circularReferencesFix } from "../const/circular-references-fix";
 import { generateId } from "../const/id";
 import { InputParser } from "../parser";
 import { Persistence } from "../persistence";
@@ -132,8 +133,8 @@ export class CassandraWorkbench {
             case "w2e_autocompleteRequest":
                 this.autocompleteRespond(m as ProcMessageStrict<"w2e_autocompleteRequest">);
                 break;
-            case "w2e_parseInputRequest":
-                this.parseInputRespond(m as ProcMessageStrict<"w2e_parseInputRequest">);
+            case "w2e_checkInputRequest":
+                this.parseInputRespond(m as ProcMessageStrict<"w2e_checkInputRequest">);
                 break;
 
         }
@@ -154,19 +155,18 @@ export class CassandraWorkbench {
         this.panel.emitMessage(mo);
 
     }
-    private parseInputRespond(request: ProcMessageStrict<"w2e_parseInputRequest">) {
+    private parseInputRespond(request: ProcMessageStrict<"w2e_checkInputRequest">) {
         const req = request.data;
         const id = req.id;
         const input = req.input;
 
-        const rootContext = this.parser.parse(input);
+        const result = this.parser.collectErrors(input);
 
-        const mo: ProcMessageStrict<"e2w_parseInputResponse"> = {
-            name: "e2w_parseInputResponse",
+        const mo: ProcMessageStrict<"e2w_checkInputResponse"> = {
+            name: "e2w_checkInputResponse",
             data: {
                 id,
-                result: null,
-                errors: [],
+                result,
             },
         };
 

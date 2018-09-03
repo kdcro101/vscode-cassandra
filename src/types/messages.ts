@@ -1,13 +1,12 @@
-import { RootContext } from "../antlr/CqlParser";
 import { CompletitionOutput } from "../completition";
-import { CqlParseError } from "../parser";
+import { CqlParserError } from "../parser";
 import { WorkbenchCqlStatement } from "./editor";
 import { CassandraCluster } from "./index";
 
 export interface ProcMessageList {
     w2e_getClustersRequest: boolean;
     w2e_onReady: boolean;
-    w2e_parseInputRequest: ParseInputRequest;
+    w2e_checkInputRequest: CheckInputRequest;
     w2e_persistEditors: WorkbenchCqlStatement[];
     w2e_autocompleteRequest: AutocompleteRequest;
 
@@ -15,7 +14,7 @@ export interface ProcMessageList {
     e2w_editorCreate: EditorCreateParams;
     e2w_getClustersResponse: CassandraCluster[];
     e2w_autocompleteResponse: AutocompleteResponse;
-    e2w_parseInputResponse: ParseInputResponse;
+    e2w_checkInputResponse: CheckInputResponse;
 }
 export type ProcMessageType = keyof ProcMessageList;
 export interface ProcMessage {
@@ -47,12 +46,11 @@ export interface AutocompleteItem {
     type?: string;
     label: string;
 }
-export interface ParseInputRequest {
+export interface CheckInputRequest {
     id: string;
     input: string;
 }
-export interface ParseInputResponse {
+export interface CheckInputResponse {
     id: string;
-    result: RootContext;
-    errors: CqlParseError[];
+    result: CqlParserError[];
 }
