@@ -2,15 +2,22 @@ import {
     ChangeDetectionStrategy, ChangeDetectorRef, Component,
     ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild,
 } from "@angular/core";
+import { MatMenuTrigger } from "@angular/material";
+
+import { fromEvent } from "rxjs";
 import { fromEventPattern, ReplaySubject, Subject } from "rxjs";
-import { debounceTime, take, takeUntil } from "rxjs/operators";
+import { debounceTime, filter, take, takeUntil } from "rxjs/operators";
+import { concatMap } from "rxjs/operators";
 import { CqlParserError } from "../../../../../../src/parser/index";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { AutocompleteService } from "../../../services/autocomplete/autocomplete.service";
 import { MonacoService } from "../../../services/monaco/monaco.service";
 import { ParserService } from "../../../services/parser/parser.service";
+
 import { cqlCompletitionProvider } from "./lang/completition";
 import { cqlLanguageConfig, cqlTokenProvider } from "./lang/tokens";
+
+// declare var window: Window;
 
 @Component({
     selector: "ui-monaco-editor",
@@ -22,12 +29,19 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
     @Output("onCodeChange") public onCodeChange = new EventEmitter<string>();
     @ViewChild("root") public root: ElementRef<HTMLDivElement>;
 
+    @ViewChild(MatMenuTrigger) contextMenu: MatMenuTrigger;
+
     public editor: monaco.editor.IStandaloneCodeEditor;
     private eventCodeSet = new Subject<void>();
     private eventCodeChange = new Subject<string>();
     private stateReady = new ReplaySubject<void>(1);
 
+    public contextMenuX: number = 0;
+    public contextMenuY: number = 0;
+    public contextOpened: boolean = false;
+
     constructor(
+        public host: ElementRef<HTMLDivElement>,
         public change: ChangeDetectorRef,
         private monacoService: MonacoService,
         private autocomplete: AutocompleteService,
@@ -41,6 +55,31 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         this.monacoService.stateReady.pipe(
             take(1),
         ).subscribe(() => {
+
+            this.contextMenu.menuClosed.pipe(
+                takeUntil(this.eventViewDestroyed),
+            ).subscribe(() => {
+                this.contextOpened = false;
+                this.contextMenuX = 0;
+                this.contextMenuY = 0;
+                this.detectChanges();
+            });
+            this.contextMenu.menuOpened.pipe(
+                takeUntil(this.eventViewDestroyed),
+            ).subscribe(() => {
+                this.contextOpened = true;
+
+                // setTimeout(() => {
+                //     fromEvent(window, "click", { capture: false }).pipe(
+                //         filter(() => this.contextOpened),
+                //         takeUntil(this.contextMenu.menuClosed),
+                //     ).subscribe(() => {
+                //         console.log("Closiung on window event");
+                //         this.contextMenu.closeMenu();
+                //     });
+                // }, 50);
+            });
+
             monaco.languages.register({ id: "cql" });
             monaco.languages.setMonarchTokensProvider("cql", cqlTokenProvider);
             monaco.languages.setLanguageConfiguration("cql", cqlLanguageConfig);
@@ -56,6 +95,36 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 },
                 automaticLayout: true,
                 contextmenu: false,
+
+            });
+
+            fromEventPattern<monaco.editor.IEditorMouseEvent>((f: (e: any) => any) => {
+                return this.editor.onMouseDown(f);
+                // return this.editor.onContextMenu(f);
+            }, (f: any, d: monaco.IDisposable) => {
+                d.dispose();
+            }).pipe(
+                takeUntil(this.eventViewDestroyed),
+                filter((e) => e.event.rightButton),
+            ).subscribe((eme) => {
+
+                const rect = this.host.nativeElement.getBoundingClientRect();
+
+                this.contextMenuX = eme.event.posx - rect.left;
+                this.contextMenuY = eme.event.posy - rect.top;
+                this.detectChanges();
+                console.log(`Menu @ [${this.contextMenuX},${this.contextMenuY}]`);
+
+                this.contextMenu.openMenu();
+                this.contextOpened = true;
+
+                fromEvent<KeyboardEvent>(window, "keyup", { capture: true }).pipe(
+                    takeUntil(this.contextMenu.menuClosed),
+                    filter((e) => e.keyCode === 27),
+                ).subscribe(() => {
+                    console.log("Closiung on window event");
+                    this.contextMenu.closeMenu();
+                });
 
             });
 
@@ -157,6 +226,18 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         // const d = this.editor.deltaDecorations([], errorDecs);
 
         monaco.editor.setModelMarkers(this.editor.getModel(), "markersOwnerId", errorDecs);
+
+    }
+
+    public doCopy = () => {
+
+        this.editor.focus();
+        document.execCommand("copy");
+
+    }
+    public doPaste = () => {
+        this.editor.focus();
+        document.execCommand("paste");
 
     }
 }

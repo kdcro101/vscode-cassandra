@@ -13,4 +13,13 @@
         overflow-y: visible;
         background-color: transparent;
     }
+
+    .menu-trigger {
+        width:2px;
+        height: 2px;
+        background-color: red;
+        position: absolute;
+        top:0;
+        left:0;
+    }
 }

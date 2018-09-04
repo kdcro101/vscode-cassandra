@@ -93,8 +93,8 @@ export class TabDraggable {
 
     }
     private onDocumentMouseUp = (e: MouseEvent) => {
-        console.log("onDocumentMouseUp");
         if (this.active === true) {
+            console.log("onDocumentMouseUp");
             this.dragEnd();
         }
     }
