@@ -84,6 +84,8 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
         "FROM",
         "FROZEN",
         "FULL",
+        "FUNCTION",
+        "FUNCTIONS",
         "GRANT",
         "IF",
         "IN",

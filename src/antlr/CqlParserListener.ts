@@ -174,6 +174,7 @@ import { ParamNameContext } from './CqlParser';
 import { KwAddContext } from './CqlParser';
 import { KwAggregateContext } from './CqlParser';
 import { KwAllContext } from './CqlParser';
+import { KwAllFunctionsContext } from './CqlParser';
 import { KwAllKeyspacesContext } from './CqlParser';
 import { KwAllRolesContext } from './CqlParser';
 import { KwAllPermissionsContext } from './CqlParser';
@@ -208,7 +209,6 @@ import { KwFinalfuncContext } from './CqlParser';
 import { KwFromContext } from './CqlParser';
 import { KwFullContext } from './CqlParser';
 import { KwFunctionContext } from './CqlParser';
-import { KwFunctionsContext } from './CqlParser';
 import { KwGrantContext } from './CqlParser';
 import { KwIfContext } from './CqlParser';
 import { KwInContext } from './CqlParser';
@@ -2211,6 +2211,17 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitKwAll?: (ctx: KwAllContext) => void;
 
 	/**
+	 * Enter a parse tree produced by `CqlParser.kwAllFunctions`.
+	 * @param ctx the parse tree
+	 */
+	enterKwAllFunctions?: (ctx: KwAllFunctionsContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.kwAllFunctions`.
+	 * @param ctx the parse tree
+	 */
+	exitKwAllFunctions?: (ctx: KwAllFunctionsContext) => void;
+
+	/**
 	 * Enter a parse tree produced by `CqlParser.kwAllKeyspaces`.
 	 * @param ctx the parse tree
 	 */
@@ -2583,17 +2594,6 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitKwFunction?: (ctx: KwFunctionContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `CqlParser.kwFunctions`.
-	 * @param ctx the parse tree
-	 */
-	enterKwFunctions?: (ctx: KwFunctionsContext) => void;
-	/**
-	 * Exit a parse tree produced by `CqlParser.kwFunctions`.
-	 * @param ctx the parse tree
-	 */
-	exitKwFunctions?: (ctx: KwFunctionsContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.kwGrant`.

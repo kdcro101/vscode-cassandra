@@ -1,3 +1,5 @@
+import { ReplaySubject } from "rxjs";
+import { take } from "rxjs/operators";
 import * as vscode from "vscode";
 import { CassandraWorkbench } from "../cassandra-workbench";
 import { TreeItemTable } from "../cassandra-workbench/treeview-provider/tree-item-table/index";
@@ -9,13 +11,19 @@ declare var extensionContextBundle: ExtensionContextBundle;
 
 export class VsCommands {
     private context: vscode.ExtensionContext = extensionContextBundle.context;
+    private workbench: CassandraWorkbench;
+
+    private stateWorkbench = new ReplaySubject<void>(1);
 
     constructor(
         private configuration: ConfigurationManager,
-        private workbench: CassandraWorkbench,
         private generator: StatementGenerator,
     ) {
 
+    }
+    public setWorkbench(workbench: CassandraWorkbench) {
+        this.workbench = workbench;
+        this.stateWorkbench.next();
     }
     public register() {
 
@@ -30,6 +38,7 @@ export class VsCommands {
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.tableSelectStatement", this.onTableSelectStatement));
     }
+
     private onConfigurationGenerate = () => {
         this.configuration.loadConfig()
             .then((result) => {
@@ -39,8 +48,12 @@ export class VsCommands {
             });
     }
     private onRefresh = () => {
-        this.workbench.refreshClusterTree();
-        vscode.window.showInformationMessage("Refreshing...");
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+            this.workbench.refreshClusterTree();
+            vscode.window.showInformationMessage("Refreshing...");
+        });
     }
     private onEditConfig = () => {
         const fp = this.configuration.confPath;
@@ -51,22 +64,28 @@ export class VsCommands {
     }
 
     private onRevealCqlPanel = () => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+            this.workbench.revealCqlPanel()
+                .then((result) => {
+                    console.log("Cassandra workbench panel revealed");
+                }).catch((e) => {
+                    vscode.window.showErrorMessage("Error starting panel!");
+                });
 
-        this.workbench.revealCqlPanel()
-            .then((result) => {
-                console.log("Cassandra workbench panel revealed");
-            }).catch((e) => {
-                vscode.window.showErrorMessage("Error starting panel!");
-            });
-
+        });
     }
     private onTableSelectStatement = (item: TreeItemTable) => {
-        const clusterName = item.clusterName;
-        const clusterIndex = item.clusterIndex;
-        const keyspace = item.keyspace;
-        const table = item.label;
-        const body = this.generator.generateSelectBasic(keyspace, table);
-        this.workbench.editorCreate(clusterIndex, keyspace, body);
-
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+            const clusterName = item.clusterName;
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+            const table = item.label;
+            const body = this.generator.generateSelectBasic(keyspace, table);
+            this.workbench.editorCreate(clusterIndex, keyspace, body);
+        });
     }
 }

@@ -174,6 +174,7 @@ import { ParamNameContext } from './CqlParser';
 import { KwAddContext } from './CqlParser';
 import { KwAggregateContext } from './CqlParser';
 import { KwAllContext } from './CqlParser';
+import { KwAllFunctionsContext } from './CqlParser';
 import { KwAllKeyspacesContext } from './CqlParser';
 import { KwAllRolesContext } from './CqlParser';
 import { KwAllPermissionsContext } from './CqlParser';
@@ -208,7 +209,6 @@ import { KwFinalfuncContext } from './CqlParser';
 import { KwFromContext } from './CqlParser';
 import { KwFullContext } from './CqlParser';
 import { KwFunctionContext } from './CqlParser';
-import { KwFunctionsContext } from './CqlParser';
 import { KwGrantContext } from './CqlParser';
 import { KwIfContext } from './CqlParser';
 import { KwInContext } from './CqlParser';
@@ -1530,6 +1530,13 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitKwAll?: (ctx: KwAllContext) => Result;
 
 	/**
+	 * Visit a parse tree produced by `CqlParser.kwAllFunctions`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitKwAllFunctions?: (ctx: KwAllFunctionsContext) => Result;
+
+	/**
 	 * Visit a parse tree produced by `CqlParser.kwAllKeyspaces`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -1766,13 +1773,6 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitKwFunction?: (ctx: KwFunctionContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `CqlParser.kwFunctions`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitKwFunctions?: (ctx: KwFunctionsContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.kwGrant`.

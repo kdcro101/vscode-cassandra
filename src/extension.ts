@@ -24,8 +24,8 @@ export function activate(context: vscode.ExtensionContext) {
     const config = new ConfigurationManager(context, workspace);
     const generator = new StatementGenerator();
 
-    let commands: VsCommands = null;
-
+    const commands = new VsCommands(config, generator);
+    commands.register();
     Icons.context = context;
 
     let workbench: CassandraWorkbench = null;
@@ -35,9 +35,7 @@ export function activate(context: vscode.ExtensionContext) {
 
             workbench = new CassandraWorkbench(workspace, clusterItems);
             workbench.start();
-            commands = new VsCommands(config, workbench, generator);
-            commands.register();
-
+            commands.setWorkbench(workbench);
         });
 
 }

@@ -35,24 +35,7 @@
             "type": "npm",
             "script": "generate",
             "problemMatcher": []
-        },
-        {
-            "type": "npm",
-            "script": "build-dev",
-            "path": "ngsrc/",
-            "problemMatcher": []
-        },
-        {
-            "type": "npm",
-            "script": "build-watch",
-            "path": "ngsrc/",
-            "problemMatcher": []
-        },
-        {
-            "type": "npm",
-            "script": "build-dev-watch",
-            "path": "ngsrc/",
-            "problemMatcher": []
         }
+
     ]
 }
