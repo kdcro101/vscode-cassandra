@@ -27,7 +27,42 @@ export interface TokenData {
 }
 
 export class InputParser {
+    public parse(input: string): RootContext {
+        const inputStream = new ANTLRInputStream(input);
+        const cqlLexer = new CqlLexer(inputStream);
+        const tokenStream = new CommonTokenStream(cqlLexer);
+        const cqlParser = new CqlParser(tokenStream);
 
+        // cqlLexer.addErrorListener(errorLexer);
+        // cqlParser.addErrorListener(errorParser);
+
+        cqlParser.removeErrorListener(ConsoleErrorListener.INSTANCE);
+        const errors: CqlParserError[] = [];
+
+        const errorHandler: ANTLRErrorListener<Token> = {
+            syntaxError: (
+                recognizer: Recognizer<any, any>,
+                offendingSymbol: any | undefined,
+                line: number, charPositionInLine: number, msg: string, e?: RecognitionException) => {
+                const error: CqlParserError = {
+                    name: msg,
+                    token: this.extractTokenData(offendingSymbol),
+                    line,
+                    linePos: charPositionInLine,
+
+                };
+                errors.push(error);
+            },
+        };
+        cqlParser.addErrorListener(errorHandler);
+
+        // const listener = new AntlrListener(tokenStream, cqlParser.ruleNames);
+        // cqlParser.addParseListener(listener);
+        const root = cqlParser.root();
+
+        // const out = listener.rewriter.getText();
+        return root;
+    }
     public collectErrors(input: string): CqlParserError[] {
         const inputStream = new ANTLRInputStream(input);
         const cqlLexer = new CqlLexer(inputStream);
@@ -47,7 +82,7 @@ export class InputParser {
                 line: number, charPositionInLine: number, msg: string, e?: RecognitionException) => {
                 const error: CqlParserError = {
                     name: msg,
-                    token: this.extractTokentData(offendingSymbol),
+                    token: this.extractTokenData(offendingSymbol),
                     line,
                     linePos: charPositionInLine,
 
@@ -64,7 +99,7 @@ export class InputParser {
         // const out = listener.rewriter.getText();
         return errors;
     }
-    private extractTokentData(token: Token): TokenData {
+    private extractTokenData(token: Token): TokenData {
         if (token == null) {
             return null;
         }

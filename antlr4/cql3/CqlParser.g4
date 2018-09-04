@@ -25,7 +25,6 @@ parser grammar CqlParser;
 
 options { tokenVocab=CqlLexer; }
 
-    // : cqls? MINUSMINUS? eof
 root
     : cqls? MINUSMINUS? eof
     ;

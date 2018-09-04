@@ -6,15 +6,17 @@ import { CassandraClientEvents, CassandraClusterData } from "../types/index";
 import { collectKeyspaces } from "./collectors/index";
 
 export interface QueryExecuteResult {
-    info: {
+    info?: {
         speculativeExecutions: number,
         achievedConsistency: cassandra.types.consistencies,
         warnings: string[],
         customPayload: any,
     };
-    rows: any[];
-    columns: Array<{ [key: string]: string; }>;
-    error: any;
+    rows?: any[];
+    columns?: string[];
+    error?: any;
+    hasColumns: boolean;
+
 }
 
 export class CassandraClient extends EventEmitter {
@@ -47,9 +49,9 @@ export class CassandraClient extends EventEmitter {
 
     }
     public execute(cql: string): Promise<cassandra.types.ResultSet> {
-        return new Promise((resolve, reject) => {
-            // this.client.execute();
-        });
+
+        return this.client.execute(cql);
+
     }
     public connect(): Promise<void> {
         return new Promise((resolve, reject) => {

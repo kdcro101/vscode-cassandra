@@ -6,10 +6,12 @@ import { ReplaySubject } from "rxjs";
 import { Subject } from "rxjs";
 import { debounceTime, take, takeUntil } from "rxjs/operators";
 import * as Split from "split.js";
+import { QueryExecuteResult } from "../../../../../../src/cassandra-client";
 import { WorkbenchCqlStatement, WorkbenchEditor } from "../../../../../../src/types/editor";
 import { CassandraCluster } from "../../../../../../src/types/index";
 import { ViewDestroyable } from "../../../base/view-destroyable/index";
 import { ClusterService } from "../../../services/cluster/cluster.service";
+import { CqlClientService } from "../../../services/cql-client/cql-client.service";
 import { ThemeService } from "../../../services/theme/theme.service";
 import { UiMonacoEditorComponent } from "../../ui-monaco-editor/ui-monaco-editor/ui-monaco-editor.component";
 
@@ -38,7 +40,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     constructor(
         public change: ChangeDetectorRef,
         public cluster: ClusterService,
-
+        private cqlClient: CqlClientService,
         public theme: ThemeService,
     ) {
         super(change);
@@ -94,14 +96,26 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
 
     public onCodeChange = (code: string) => {
 
-        const s = this.editorCurrent.statement;
-        s.body = code;
-
-        this.eventCodeChange.next(s);
+        this.editorCurrent.statement.body = code;
+        this.eventCodeChange.next(this.editorCurrent.statement);
     }
     public onClusterChange = (clusterName: string) => {
         console.log(`onClusterChange ${clusterName}`);
+        this.editorCurrent.statement.clusterName = clusterName;
         this.onStatementChange.emit(this.editorCurrent.statement);
+    }
+    public executeCql = () => {
+        const cql = this.editorCurrent.statement.body;
+        const clusterName = this.editorCurrent.statement.clusterName;
+
+        this.cqlClient.execute(clusterName, cql).pipe()
+            .subscribe((result: QueryExecuteResult) => {
+                console.log("[cqlClient.execute] Got result !!!");
+                console.log(result);
+            }, (e) => {
+                console.log(e);
+            });
+
     }
 
 }

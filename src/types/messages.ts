@@ -59,6 +59,7 @@ export interface CheckInputResponse {
 }
 export interface ExecuteQueryRequest {
     id: string;
+    clusterName: string;
     cql: string;
 }
 export interface ExecuteQueryResponse {

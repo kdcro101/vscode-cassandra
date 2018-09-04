@@ -1,5 +1,5 @@
 import { from, merge, Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { concatMap, takeUntil } from "rxjs/operators";
 import * as vscode from "vscode";
 import { Clusters } from "../clusters";
 import { Completition } from "../completition";
@@ -136,6 +136,9 @@ export class CassandraWorkbench {
             case "w2e_checkInputRequest":
                 this.parseInputRespond(m as ProcMessageStrict<"w2e_checkInputRequest">);
                 break;
+            case "w2e_executeQueryRequest":
+                this.executeQueryRespond(m as ProcMessageStrict<"w2e_executeQueryRequest">);
+                break;
 
         }
     }
@@ -171,6 +174,46 @@ export class CassandraWorkbench {
         };
 
         this.panel.emitMessage(mo);
+
+    }
+    private executeQueryRespond(m: ProcMessageStrict<"w2e_executeQueryRequest">) {
+
+        const id = m.data.id;
+        const clusterName = m.data.clusterName;
+        const cql = m.data.cql;
+
+        from(this.clusters.execute(clusterName, cql)).pipe(
+        ).subscribe((resultset) => {
+
+            const hasColumns = resultset.columns.length > 0 ? true : false;
+            const rows = hasColumns ? resultset.rows : null;
+            const columns = hasColumns ? resultset.columns.map((c) => c.name) : null;
+
+            const message: ProcMessageStrict<"e2w_executeQueryResponse"> = {
+                name: "e2w_executeQueryResponse",
+                data: {
+                    id,
+                    result: {
+                        hasColumns,
+                        rows,
+                        columns,
+                    },
+                },
+            };
+            this.panel.emitMessage(message);
+        }, (e) => {
+            const errorMessage: ProcMessageStrict<"e2w_executeQueryResponse"> = {
+                name: "e2w_executeQueryResponse",
+                data: {
+                    id,
+                    result: {
+                        error: e,
+                        hasColumns: false,
+                    },
+                },
+            };
+            this.panel.emitMessage(errorMessage);
+        });
 
     }
 

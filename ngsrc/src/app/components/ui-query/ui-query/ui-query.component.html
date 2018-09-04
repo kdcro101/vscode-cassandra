@@ -10,7 +10,7 @@
                 </mat-select>
             </mat-form-field>
             <div fxFlex></div>
-            <button color="accent" mat-button>EXECUTE</button>
+            <button color="accent" mat-button (click)="executeCql()">EXECUTE</button>
         </div>
         <ui-monaco-editor (onCodeChange)="onCodeChange($event)"  #monacoEditor fxFlex></ui-monaco-editor>
         <div>Bottom</div>
