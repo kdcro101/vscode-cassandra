@@ -121,6 +121,7 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
         "QUORUM",
         "RENAME",
         "REVOKE",
+        "ROLES",
         "SCHEMA",
         "SELECT",
         "SET",

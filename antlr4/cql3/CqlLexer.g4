@@ -1,5 +1,5 @@
 lexer grammar CqlLexer;
- 
+
 LR_BRACKET: '(';
 RR_BRACKET: ')';
 
@@ -23,7 +23,7 @@ LINE_COMMENT: (
 		('-- ' | '#' | '//') ~[\r\n]* ('\r'? '\n' | EOF)
 		| '--' ('\r'? '\n' | EOF)
 	) -> channel(HIDDEN);
- 
+
 DOT: '.';
 STAR: '*';
 DIVIDE: '/';
@@ -33,11 +33,14 @@ MINUSMINUS: '--';
 MINUS: '-';
 
 
- 
+
 // Keywords
 K_ADD: A D D | 'ADD';
 K_AGGREGATE: A G G R E G A T E | 'AGGREGATE';
 K_ALL: A L L | 'ALL';
+K_ALL_ROLES: A L L  R O L E S| 'ALL ROLES';
+K_ALL_KEYSPACES: A L L  K E Y S P A C E S | 'ALL KEYSPACES';
+K_ALL_FUNCTIONS: A L L  F U N C T I O N S| 'ALL FUNCTIONS';
 K_ALLOW: A L L O W  | 'ALLOW';
 K_ALTER: A L T E R | 'ALTER';
 K_AND: A N D  | 'AND';
@@ -73,7 +76,6 @@ K_FINALFUNC: F I N A L F U N C  | 'FINALFUNC';
 K_FROM: F R O M  | 'FROM';
 K_FULL: F U L L  | 'FULL';
 K_FUNCTION: F U N C T I O N  | 'FUNCTION';
-K_FUNCTIONS: F U N C T I O N S  | 'FUNCTIONS';
 K_GRANT: G R A N T  | 'GRANT';
 K_IF: I F  | 'IF';
 K_IN: I N  | 'IN';
@@ -87,7 +89,6 @@ K_IS: I S  | 'IS';
 K_KEY: K E Y  | 'KEY';
 K_KEYS: K E Y S  | 'KEYS';
 K_KEYSPACE: K E Y S P A C E  | 'KEYSPACE';
-K_KEYSPACES: K E Y S P A C E S  | 'KEYSPACES';
 K_LANGUAGE: L A N G U A G E  | 'LANGUAGE';
 K_LEVEL: L E V E L  | 'LEVEL';
 K_LIMIT: L I M I T  | 'LIMIT';
@@ -121,11 +122,10 @@ K_REPLICATION: R E P L I C A T I O N  | 'REPLICATION';
 K_RETURNS: R E T U R N S  | 'RETURNS';
 K_REVOKE: R E V O K E  | 'REVOKE';
 K_ROLE: R O L E  | 'ROLE';
-K_ROLES: R O L E S  | 'ROLES';
 K_SCHEMA: S C H E M A  | 'SCHEMA';
 K_SELECT: S E L E C T | 'SELECT';
 K_SET: S E T  | 'SET';
-K_SFUNC: S F U N C  | 'SFUNC'; 
+K_SFUNC: S F U N C  | 'SFUNC';
 K_STATIC: S T A T I C  | 'STATIC';
 K_STORAGE: S T O R A G E  | 'STORAGE';
 K_STYPE: S T Y P E  | 'STYPE';
@@ -146,7 +146,6 @@ K_UPDATE: U P D A T E  | 'UPDATE';
 K_USE: U S E  | 'USE';
 K_USER: U S E R  | 'USER';
 K_USING: U S I N G  | 'USING';
-K_UUID: U U I D  | 'UUID';
 K_VALUES: V A L U E S  | 'VALUES';
 K_VIEW: V I E W  | 'VIEW';
 K_WHERE: W H E R E  | 'WHERE';
@@ -166,6 +165,7 @@ K_FROZEN: F R O Z E N | 'FROZEN';
 K_INET: I N E T | 'INET';
 K_INT: I N T | 'INT';
 K_LIST: L I S T | 'LIST';
+K_LIST_ROLES: L I S T   R O L E S| 'LIST ROLES';
 K_MAP: M A P | 'MAP';
 K_SMALLINT: S M A L L I N T | 'SMALLINT';
 K_TEXT: T E X T | 'TEXT';
@@ -173,11 +173,11 @@ K_TIMEUUID: T I M E U U I D | 'TIMEUUID';
 K_TIME: T I M E | 'TIME';
 K_TINYINT: T I N Y I N T | 'TINYINT';
 K_TUPLE: T U P L E | 'TUPLE';
-// K_UUID: U U I D;
+K_UUID: U U I D  | 'UUID';
 K_VARCHAR: V A R C H A R | 'VARCHAR';
 K_VARINT: V A R I N T | 'VARINT';
 
-K_USERS: U S E R S  | 'USERS'; 
+K_USERS: U S E R S  | 'USERS';
 
 fragment A : [aA]; // match either an 'a' or 'A'
 fragment B : [bB];

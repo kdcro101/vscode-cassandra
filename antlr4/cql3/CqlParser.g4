@@ -90,7 +90,7 @@ listUsers
     ;
 
 listRoles
-    : kwList kwRoles (kwOf role)? kwNorecursive?
+    : kwListRoles (kwOf role)? kwNorecursive?
     ;
 
 listPermissions
@@ -114,13 +114,13 @@ priviledge
     ;
 
 resource
-    : kwAll kwFunctions
-    | kwAll kwFunctions kwIn kwKeyspace keyspace
+    : kwAllFunctions
+    | kwAllFunctions kwIn kwKeyspace keyspace
     | kwFunction (keyspace DOT)? function
-    | kwAll kwKeyspaces
+    | kwAllKeyspaces
     | kwKeyspace keyspace
     | (kwTable)? (keyspace DOT)? table
-    | kwAll kwRoles
+    | kwAllRoles
     | kwRole role
     ;
 
@@ -825,6 +825,9 @@ paramName
 kwAdd: K_ADD;
 kwAggregate: K_AGGREGATE;
 kwAll: K_ALL;
+kwAllFunctions: K_ALL_FUNCTIONS;
+kwAllKeyspaces: K_ALL_KEYSPACES;
+kwAllRoles: K_ALL_ROLES;
 kwAllPermissions: K_ALL K_PERMISSIONS;
 kwAllow: K_ALLOW;
 kwAllowFiltering: K_ALLOW K_FILTERING;
@@ -857,7 +860,6 @@ kwFinalfunc: K_FINALFUNC;
 kwFrom: K_FROM;
 kwFull: K_FULL;
 kwFunction: K_FUNCTION;
-kwFunctions: K_FUNCTIONS;
 kwGrant: K_GRANT;
 kwIf: K_IF;
 kwIn: K_IN;
@@ -870,10 +872,10 @@ kwIs: K_IS;
 kwKey: K_KEY;
 kwKeys: K_KEYS;
 kwKeyspace: K_KEYSPACE;
-kwKeyspaces: K_KEYSPACES;
 kwLanguage: K_LANGUAGE;
 kwLimit: K_LIMIT;
 kwList: K_LIST;
+kwListRoles: K_LIST_ROLES;
 kwLogged: K_LOGGED;
 kwLogin: K_LOGIN;
 kwMaterialized: K_MATERIALIZED;
@@ -895,7 +897,6 @@ kwReplace: K_REPLACE;
 kwReplication: K_REPLICATION;
 kwReturns: K_RETURNS;
 kwRole: K_ROLE;
-kwRoles: K_ROLES;
 kwSelect: K_SELECT;
 kwSet: K_SET;
 kwSfunc: K_SFUNC;

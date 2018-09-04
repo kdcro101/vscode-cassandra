@@ -135,6 +135,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         //     return o;
         // });
         const errorDecs: monaco.editor.IMarkerData[] = errors.map((e) => {
+            console.log(`Message is : <${e.name}>`);
             const o: monaco.editor.IMarkerData = {
                 severity: monaco.MarkerSeverity.Error,
                 message: e.name,
@@ -142,6 +143,14 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 startColumn: e.linePos,
                 endLineNumber: e.line,
                 endColumn: (e.linePos + e.token.text.length + 1),
+                // relatedInformation: [{
+                //     resource: null,
+                //     message: "mesđ",
+                //     startLineNumber: e.line,
+                //     startColumn: e.linePos,
+                //     endLineNumber: e.line,
+                //     endColumn: (e.linePos + e.token.text.length + 1),
+                // }],
             };
             return o;
         });

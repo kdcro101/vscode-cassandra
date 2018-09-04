@@ -174,6 +174,8 @@ import { ParamNameContext } from './CqlParser';
 import { KwAddContext } from './CqlParser';
 import { KwAggregateContext } from './CqlParser';
 import { KwAllContext } from './CqlParser';
+import { KwAllKeyspacesContext } from './CqlParser';
+import { KwAllRolesContext } from './CqlParser';
 import { KwAllPermissionsContext } from './CqlParser';
 import { KwAllowContext } from './CqlParser';
 import { KwAllowFilteringContext } from './CqlParser';
@@ -219,10 +221,10 @@ import { KwIsContext } from './CqlParser';
 import { KwKeyContext } from './CqlParser';
 import { KwKeysContext } from './CqlParser';
 import { KwKeyspaceContext } from './CqlParser';
-import { KwKeyspacesContext } from './CqlParser';
 import { KwLanguageContext } from './CqlParser';
 import { KwLimitContext } from './CqlParser';
 import { KwListContext } from './CqlParser';
+import { KwListRolesContext } from './CqlParser';
 import { KwLoggedContext } from './CqlParser';
 import { KwLoginContext } from './CqlParser';
 import { KwMaterializedContext } from './CqlParser';
@@ -244,7 +246,6 @@ import { KwReplaceContext } from './CqlParser';
 import { KwReplicationContext } from './CqlParser';
 import { KwReturnsContext } from './CqlParser';
 import { KwRoleContext } from './CqlParser';
-import { KwRolesContext } from './CqlParser';
 import { KwSelectContext } from './CqlParser';
 import { KwSetContext } from './CqlParser';
 import { KwSfuncContext } from './CqlParser';
@@ -2210,6 +2211,28 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitKwAll?: (ctx: KwAllContext) => void;
 
 	/**
+	 * Enter a parse tree produced by `CqlParser.kwAllKeyspaces`.
+	 * @param ctx the parse tree
+	 */
+	enterKwAllKeyspaces?: (ctx: KwAllKeyspacesContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.kwAllKeyspaces`.
+	 * @param ctx the parse tree
+	 */
+	exitKwAllKeyspaces?: (ctx: KwAllKeyspacesContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.kwAllRoles`.
+	 * @param ctx the parse tree
+	 */
+	enterKwAllRoles?: (ctx: KwAllRolesContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.kwAllRoles`.
+	 * @param ctx the parse tree
+	 */
+	exitKwAllRoles?: (ctx: KwAllRolesContext) => void;
+
+	/**
 	 * Enter a parse tree produced by `CqlParser.kwAllPermissions`.
 	 * @param ctx the parse tree
 	 */
@@ -2705,17 +2728,6 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitKwKeyspace?: (ctx: KwKeyspaceContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.kwKeyspaces`.
-	 * @param ctx the parse tree
-	 */
-	enterKwKeyspaces?: (ctx: KwKeyspacesContext) => void;
-	/**
-	 * Exit a parse tree produced by `CqlParser.kwKeyspaces`.
-	 * @param ctx the parse tree
-	 */
-	exitKwKeyspaces?: (ctx: KwKeyspacesContext) => void;
-
-	/**
 	 * Enter a parse tree produced by `CqlParser.kwLanguage`.
 	 * @param ctx the parse tree
 	 */
@@ -2747,6 +2759,17 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitKwList?: (ctx: KwListContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.kwListRoles`.
+	 * @param ctx the parse tree
+	 */
+	enterKwListRoles?: (ctx: KwListRolesContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.kwListRoles`.
+	 * @param ctx the parse tree
+	 */
+	exitKwListRoles?: (ctx: KwListRolesContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.kwLogged`.
@@ -2978,17 +3001,6 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitKwRole?: (ctx: KwRoleContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `CqlParser.kwRoles`.
-	 * @param ctx the parse tree
-	 */
-	enterKwRoles?: (ctx: KwRolesContext) => void;
-	/**
-	 * Exit a parse tree produced by `CqlParser.kwRoles`.
-	 * @param ctx the parse tree
-	 */
-	exitKwRoles?: (ctx: KwRolesContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.kwSelect`.

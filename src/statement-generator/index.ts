@@ -5,7 +5,7 @@ export class StatementGenerator {
     }
 
     public generateSelectBasic(keyspace: string, table: string) {
-        const q = `SELECT * FROM ${keyspace}.${table} LIMIT ${this.limit}`;
+        const q = `SELECT * FROM ${keyspace}.${table} LIMIT ${this.limit};\n`;
         return q;
     }
 

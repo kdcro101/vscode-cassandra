@@ -174,6 +174,8 @@ import { ParamNameContext } from './CqlParser';
 import { KwAddContext } from './CqlParser';
 import { KwAggregateContext } from './CqlParser';
 import { KwAllContext } from './CqlParser';
+import { KwAllKeyspacesContext } from './CqlParser';
+import { KwAllRolesContext } from './CqlParser';
 import { KwAllPermissionsContext } from './CqlParser';
 import { KwAllowContext } from './CqlParser';
 import { KwAllowFilteringContext } from './CqlParser';
@@ -219,10 +221,10 @@ import { KwIsContext } from './CqlParser';
 import { KwKeyContext } from './CqlParser';
 import { KwKeysContext } from './CqlParser';
 import { KwKeyspaceContext } from './CqlParser';
-import { KwKeyspacesContext } from './CqlParser';
 import { KwLanguageContext } from './CqlParser';
 import { KwLimitContext } from './CqlParser';
 import { KwListContext } from './CqlParser';
+import { KwListRolesContext } from './CqlParser';
 import { KwLoggedContext } from './CqlParser';
 import { KwLoginContext } from './CqlParser';
 import { KwMaterializedContext } from './CqlParser';
@@ -244,7 +246,6 @@ import { KwReplaceContext } from './CqlParser';
 import { KwReplicationContext } from './CqlParser';
 import { KwReturnsContext } from './CqlParser';
 import { KwRoleContext } from './CqlParser';
-import { KwRolesContext } from './CqlParser';
 import { KwSelectContext } from './CqlParser';
 import { KwSetContext } from './CqlParser';
 import { KwSfuncContext } from './CqlParser';
@@ -1529,6 +1530,20 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitKwAll?: (ctx: KwAllContext) => Result;
 
 	/**
+	 * Visit a parse tree produced by `CqlParser.kwAllKeyspaces`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitKwAllKeyspaces?: (ctx: KwAllKeyspacesContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.kwAllRoles`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitKwAllRoles?: (ctx: KwAllRolesContext) => Result;
+
+	/**
 	 * Visit a parse tree produced by `CqlParser.kwAllPermissions`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -1844,13 +1859,6 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitKwKeyspace?: (ctx: KwKeyspaceContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.kwKeyspaces`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitKwKeyspaces?: (ctx: KwKeyspacesContext) => Result;
-
-	/**
 	 * Visit a parse tree produced by `CqlParser.kwLanguage`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -1870,6 +1878,13 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitKwList?: (ctx: KwListContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.kwListRoles`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitKwListRoles?: (ctx: KwListRolesContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.kwLogged`.
@@ -2017,13 +2032,6 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitKwRole?: (ctx: KwRoleContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `CqlParser.kwRoles`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitKwRoles?: (ctx: KwRolesContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.kwSelect`.
