@@ -4,6 +4,8 @@ import { take, tap } from "rxjs/operators";
 import { QueryExecuteResult } from "../../../../../../src/cassandra-client/index";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 
+import ResizeObserver from "resize-observer-polyfill";
+
 @Component({
     selector: "ui-data-grid",
     templateUrl: "./ui-data-grid.component.html",
@@ -14,9 +16,17 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     @ViewChild("root") public root: ElementRef<HTMLDivElement>;
     // QueryExecuteResult
     private gridInstance: Handsontable = null;
+    private gridSettings: Handsontable.GridSettings = null;
     private stateReady = new ReplaySubject<void>(1);
+
+    private hostResizeObs: ResizeObserver;
+
     constructor(public host: ElementRef<HTMLDivElement>, public change: ChangeDetectorRef) {
         super(change);
+        this.hostResizeObs = new ResizeObserver(() => {
+            setTimeout(() => this.onHostResize());
+        });
+        this.hostResizeObs.observe(this.host.nativeElement);
     }
     @Input("queryResult") set setData(data: QueryExecuteResult) {
         this.createGridInstance(data);
@@ -80,7 +90,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 };
             });
 
-            const options: Handsontable.GridSettings = {
+            this.gridSettings = {
                 data: dataRows,
                 minSpareCols: 0,
                 minSpareRows: 1,
@@ -89,10 +99,20 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 manualColumnResize: true,
                 colHeaders: names,
                 columns: columnDef,
+                allowRemoveColumn: false,
+                allowRemoveRow: false,
             };
 
-            this.gridInstance = new Handsontable(this.root.nativeElement, options);
+            this.gridInstance = new Handsontable(this.root.nativeElement, this.gridSettings);
         });
 
+    }
+
+    private onHostResize() {
+        if (this.gridInstance == null) {
+            return;
+        }
+        console.log("onHostResize");
+        this.gridInstance.updateSettings(this.gridSettings, false);
     }
 }
