@@ -2,8 +2,9 @@
     <div #top class="top" fxLayout="column">
         <div fxLayout="row" fxLayoutAlign="start center" class="cluster-actions">
             <mat-icon>device_hub</mat-icon>
-            <mat-form-field color="accent" floatLabel="never" class="no-underline" >
-                <mat-select placeholder="Select cluster" [ngModel]="editorCurrent.statement.clusterName" (ngModelChange)="onClusterChange($event)">
+            <mat-form-field color="accent" floatLabel="never" class="no-underline">
+                <mat-select placeholder="Select cluster" [ngModel]="editorCurrent.statement.clusterName"
+                    (ngModelChange)="onClusterChange($event)">
                     <mat-option *ngFor="let i of clusterList" [value]="i.name">
                         {{i.name}}
                     </mat-option>
@@ -12,8 +13,10 @@
             <div fxFlex></div>
             <button color="accent" mat-button (click)="executeCql()">EXECUTE</button>
         </div>
-        <ui-monaco-editor (onCodeChange)="onCodeChange($event)"  #monacoEditor fxFlex></ui-monaco-editor>
+        <ui-monaco-editor (onCodeChange)="onCodeChange($event)" #monacoEditor fxFlex></ui-monaco-editor>
         <div>Bottom</div>
     </div>
-    <div #bottom class="bottom"></div>
+    <div #bottom class="bottom" fxLayout="column">
+        <ui-data-grid fxFlex></ui-data-grid>
+    </div>
 </div>

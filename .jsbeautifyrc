@@ -3,7 +3,7 @@
     "indent_size": 4,
     "css": {
         "indent_size": 4,
-        "newline_between_rules": true
+        "newline_between_rules": false
     },
     "html": {
         "wrap_attributes": "auto",

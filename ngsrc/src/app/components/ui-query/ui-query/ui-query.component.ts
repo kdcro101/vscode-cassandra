@@ -1,6 +1,6 @@
 import {
     ChangeDetectionStrategy, ChangeDetectorRef, Component,
-    ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild,
+    ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChild, ViewChildren,
 } from "@angular/core";
 import { ReplaySubject } from "rxjs";
 import { Subject } from "rxjs";
@@ -10,6 +10,7 @@ import { QueryExecuteResult } from "../../../../../../src/cassandra-client";
 import { WorkbenchCqlStatement, WorkbenchEditor } from "../../../../../../src/types/editor";
 import { CassandraCluster } from "../../../../../../src/types/index";
 import { ViewDestroyable } from "../../../base/view-destroyable/index";
+import { TableColumnResize } from "../../../const/table-column-resize";
 import { ClusterService } from "../../../services/cluster/cluster.service";
 import { CqlClientService } from "../../../services/cql-client/cql-client.service";
 import { ThemeService } from "../../../services/theme/theme.service";
@@ -26,6 +27,10 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     @ViewChild("bottom") public bottom: ElementRef<HTMLDivElement>;
     @ViewChild("monacoEditor") public monacoEditor: UiMonacoEditorComponent;
 
+    @ViewChild("grid") public grid: ElementRef<HTMLTableElement>;
+
+    // @ViewChildren("thItem") public thItem: QueryList<ElementRef<HTMLTableHeaderCellElement>>;
+
     @Output("onStatementChange") public onStatementChange = new EventEmitter<WorkbenchCqlStatement>();
 
     public clusterList: CassandraCluster[] = [];
@@ -36,6 +41,11 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
 
     private stateReady = new ReplaySubject<void>();
     private eventCodeChange = new Subject<WorkbenchCqlStatement>();
+
+    private tableColumnResize: TableColumnResize;
+
+    public columnDefs: any[];
+    public rowData: any[];
 
     constructor(
         public change: ChangeDetectorRef,
@@ -48,6 +58,18 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         this.clusterList = this.cluster.list;
         this.fontSize = Math.round(theme.getEditorFontSize() * 1.2);
         this.lineHeight = Math.round(this.fontSize * 1.5);
+
+        this.columnDefs = [
+            { headerName: "Make", field: "make" },
+            { headerName: "Model", field: "model" },
+            { headerName: "Price", field: "price" },
+        ];
+
+        this.rowData = [
+            { make: "Toyota", model: "Celica", price: 35000 },
+            { make: "Ford", model: "Mondeo", price: 32000 },
+            { make: "Porsche", model: "Boxter", price: 72000 },
+        ];
 
     }
     @Input() public set editor(e: WorkbenchEditor) {

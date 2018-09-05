@@ -1,4 +1,5 @@
 @import "../../../../scss/colors";
+
 :host {
     position: relative;
     .root {
@@ -25,6 +26,16 @@
         }
         .bottom {
             background: transparent;
+            position: relative;
+            .grid-wrap{
+                position: absolute;
+                top:0;
+                left: 0;
+                right:0;
+                bottom: 0;
+                background: purple;
+                overflow: hidden;
+            }
         }
         ::ng-deep .gutter {
             background-color: mat-color($background, 500);
