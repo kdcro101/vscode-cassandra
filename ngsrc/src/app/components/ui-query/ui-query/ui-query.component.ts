@@ -2,8 +2,8 @@ import {
     ChangeDetectionStrategy, ChangeDetectorRef, Component,
     ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChild, ViewChildren,
 } from "@angular/core";
-import { ReplaySubject } from "rxjs";
 import { Subject } from "rxjs";
+import { ReplaySubject } from "rxjs";
 import { debounceTime, take, takeUntil } from "rxjs/operators";
 import * as Split from "split.js";
 import { QueryExecuteResult } from "../../../../../../src/cassandra-client";
@@ -134,6 +134,9 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
             .subscribe((result: QueryExecuteResult) => {
                 console.log("[cqlClient.execute] Got result !!!");
                 console.log(result);
+
+                this.editorCurrent.resultset = result;
+                this.detectChanges();
             }, (e) => {
                 console.log(e);
             });

@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { ReplaySubject } from "rxjs";
+import { take, tap } from "rxjs/operators";
+import { QueryExecuteResult } from "../../../../../../src/cassandra-client/index";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 
 @Component({
@@ -9,13 +12,17 @@ import { ViewDestroyable } from "../../../base/view-destroyable";
 })
 export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDestroy {
     @ViewChild("root") public root: ElementRef<HTMLDivElement>;
-
+    // QueryExecuteResult
+    private gridInstance: Handsontable = null;
+    private stateReady = new ReplaySubject<void>(1);
     constructor(public host: ElementRef<HTMLDivElement>, public change: ChangeDetectorRef) {
         super(change);
     }
-
+    @Input("queryResult") set setData(data: QueryExecuteResult) {
+        this.createGridInstance(data);
+    }
     ngOnInit() {
-
+        this.stateReady.next();
         const data = [
             {
                 name: "Abc",
@@ -42,36 +49,50 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         // const data = function () {
         //     return Handsontable.helper.createSpreadsheetData(200, 200);
         // };
-        const options: Handsontable.GridSettings = {
-            data: data,
-            minSpareCols: 0,
-            minSpareRows: 1,
-            rowHeaders: true,
-            contextMenu: true,
-            manualColumnResize: true,
-            columns: [
-                {
-                    data: "name",
-                    type: "text",
-                },
-                {
-                    data: "value",
-                    type: "text",
-                },
 
-            ],
-            colHeaders: [
-                "NAme",
-                "VAlue",
-            ],
-        };
-        const hot = new Handsontable(this.root.nativeElement, options);
-        console.log("Starting grid");
-        console.log(hot);
-        console.log(Handsontable);
     }
     ngOnDestroy() {
         super.ngOnDestroy();
     }
+    private createGridInstance(data: QueryExecuteResult) {
 
+        this.stateReady.pipe(
+            take(1),
+            tap(() => {
+                if (this.gridInstance) {
+                    try {
+                        this.gridInstance.destroy();
+                        this.gridInstance = null;
+                    } catch (e) {
+                        console.log(e);
+                    }
+                }
+            }),
+        ).subscribe(() => {
+            console.log("createGridInstance");
+            console.log(data);
+            const names = data.columns;
+            const dataRows = data.rows;
+            const columnDef = data.columns.map((c) => {
+                return {
+                    data: c,
+                    type: "text",
+                };
+            });
+
+            const options: Handsontable.GridSettings = {
+                data: dataRows,
+                minSpareCols: 0,
+                minSpareRows: 1,
+                rowHeaders: true,
+                contextMenu: true,
+                manualColumnResize: true,
+                colHeaders: names,
+                columns: columnDef,
+            };
+
+            this.gridInstance = new Handsontable(this.root.nativeElement, options);
+        });
+
+    }
 }

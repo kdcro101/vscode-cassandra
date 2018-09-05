@@ -1,3 +1,4 @@
+import { QueryExecuteResult } from "../cassandra-client/index";
 
 export interface WorkbenchCqlStatement {
     id: string;
@@ -9,7 +10,7 @@ export interface WorkbenchCqlStatement {
 }
 export interface WorkbenchEditor {
     statement: WorkbenchCqlStatement;
-    resultset: any[];
+    resultset: QueryExecuteResult;
     errors?: any[];
     executed: boolean;
     response: any;

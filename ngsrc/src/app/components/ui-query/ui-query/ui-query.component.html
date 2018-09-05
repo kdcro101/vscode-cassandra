@@ -17,6 +17,6 @@
         <div>Bottom</div>
     </div>
     <div #bottom class="bottom" fxLayout="column">
-        <ui-data-grid fxFlex></ui-data-grid>
+        <ui-data-grid fxFlex [queryResult]="editorCurrent.resultset" *ngIf="editorCurrent.resultset" ></ui-data-grid>
     </div>
 </div>
