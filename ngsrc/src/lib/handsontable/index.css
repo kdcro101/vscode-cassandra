@@ -1039,7 +1039,7 @@ thead .htCollapseButton:after {
   animation-fill-mode: forwards;
   -webkit-animation-fill-mode: forwards;
 }
-@charset "UTF-8";
+
 
 /*!
  * Pikaday
@@ -1321,6 +1321,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   border: 1px solid #ccc;
   border-bottom-width: 2px;
   border-right-width: 2px;
+  color: #333333;
 }
 
 .htContextMenu .wtBorder {

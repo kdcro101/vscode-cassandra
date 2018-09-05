@@ -101,6 +101,15 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 columns: columnDef,
                 allowRemoveColumn: false,
                 allowRemoveRow: false,
+                allowInsertColumn: false,
+                allowInsertRow: false,
+                manualRowResize: true,
+                columnSorting: true,
+                sortIndicator: true,
+                autoColumnSize: {
+                    samplingRatio: 23,
+                },
+
             };
 
             this.gridInstance = new Handsontable(this.root.nativeElement, this.gridSettings);

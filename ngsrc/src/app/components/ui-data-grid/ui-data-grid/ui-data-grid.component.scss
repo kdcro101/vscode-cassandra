@@ -1,5 +1,4 @@
 @import "../../../../scss/colors";
-@import "./scss/default";
 
 :host {
     position: relative;
@@ -10,7 +9,7 @@
         top: 0;
         right: 0;
         bottom: 0;
-        background:transparent;
+        background: transparent;
         color: #333333;
     }
 }
