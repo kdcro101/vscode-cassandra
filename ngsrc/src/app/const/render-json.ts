@@ -10,14 +10,7 @@ export interface RenderJsonOptions {
     hide?: string;
 }
 
-const themetext = (...args: string[]) => {
-    const spans: Array<Text | HTMLElement> = [];
-    while (args.length) {
-        spans.push(append(span(args.shift()), text(args.shift())));
-    }
-    return spans;
-};
-const append = function (...args: Array<HTMLElement | Text | any[]>) {
+const append = (...args: Array<HTMLElement | Text | any[]>) => {
     // const el = Array.prototype.shift.call(arguments);
     const el: HTMLElement = args.shift() as HTMLElement;
 
@@ -25,40 +18,56 @@ const append = function (...args: Array<HTMLElement | Text | any[]>) {
         if (args[a].constructor === Array) {
             append.apply(this, [el].concat(args[a] as any));
         } else {
-            el.appendChild(arguments[a]);
+            el.appendChild(args[a] as any);
         }
     }
     return el;
 };
-const prepend = function (el, child) {
-    el.insertBefore(child, el.firstChild);
-    return el;
-};
-const isempty = function (obj, pl) {
-    const keys = pl || Object.keys(obj);
-    for (const i in keys) { if (Object.hasOwnProperty.call(obj, keys[i])) { return false; } }
-    return true;
-};
-const text = (txt: string) => document.createTextNode(txt);
-// const div = function () { return document.createElement("div"); };
-const span = (classname?: string) => {
-    const s = document.createElement("span");
-    if (classname) { s.className = classname; }
-    return s;
-};
-const A = (txt: string, classname: string, callback: () => void) => {
-    const a = document.createElement("a");
-    if (classname) { a.className = classname; }
-    a.appendChild(text(txt));
-    a.href = "#";
-    a.onclick = function (e) { callback(); if (e) { e.stopPropagation(); } return false; };
-    return a;
-};
 
-function _renderjson(json, indent, dont_indent, show_level, options) {
+function _renderjson(json, indent, dont_indent, show_level, options, onChange: () => void) {
     const my_indent = dont_indent ? "" : indent;
+    const themetext = (...args: string[]) => {
+        const spans: Array<Text | HTMLElement> = [];
+        while (args.length) {
+            spans.push(append(span(args.shift()), text(args.shift())));
+        }
+        return spans;
+    };
 
-    const disclosure = function (open: string, placeholder: string, close: string, type: string, builder) {
+    const prepend = (el, child) => {
+        el.insertBefore(child, el.firstChild);
+        return el;
+    };
+    const isempty = (obj: any, pl: string[]) => {
+        const keys = pl || Object.keys(obj);
+        for (const i in keys) { if (Object.hasOwnProperty.call(obj, keys[i])) { return false; } }
+        return true;
+    };
+    const text = (txt: string) => document.createTextNode(txt);
+    // const div = function () { return document.createElement("div"); };
+    const span = (classname?: string) => {
+        const s = document.createElement("span");
+        if (classname) { s.className = classname; }
+        return s;
+    };
+    const A = (txt: string, classname: string, callback: () => void) => {
+        const a = document.createElement("a");
+        if (classname) { a.className = classname; }
+        a.appendChild(text(txt));
+        a.href = "#";
+        a.onclick = (e) => {
+            callback();
+            if (e) {
+                e.stopPropagation();
+            }
+            if (onChange) {
+                setTimeout(() => onChange());
+            }
+            return false;
+        };
+        return a;
+    };
+    const disclosure = (open: string, placeholder: string, close: string, type: string, builder) => {
         let content;
         const empty = span(type);
         const show = function () {
@@ -107,7 +116,7 @@ function _renderjson(json, indent, dont_indent, show_level, options) {
             const as = append(span("array"), themetext("array syntax", "[", null, "\n"));
             for (let i = 0; i < json.length; i++) {
                 append(as,
-                    _renderjson(options.replacer.call(json, i, json[i]), indent + "    ", false, show_level - 1, options),
+                    _renderjson(options.replacer.call(json, i, json[i]), indent + "    ", false, show_level - 1, options, onChange),
                     i !== json.length - 1 ? themetext("syntax", ",") : [],
                     text("\n"));
             }
@@ -137,7 +146,7 @@ function _renderjson(json, indent, dont_indent, show_level, options) {
             const k = keys[i];
             if (!(k in json)) { continue; }
             append(os, themetext(null, indent + "    ", "key", "\"" + k + "\"", "object syntax", ": "),
-                _renderjson(options.replacer.call(json, k, json[k]), indent + "    ", true, show_level - 1, options),
+                _renderjson(options.replacer.call(json, k, json[k]), indent + "    ", true, show_level - 1, options, onChange),
                 k !== last ? themetext("syntax", ",") : [],
                 text("\n"));
         }
@@ -150,10 +159,10 @@ export class RenderJson {
 
     public static options: RenderJsonOptions = {};
 
-    public static render(json: any) {
+    public static render(json: any, onChange?: () => void) {
         const options = new Object(RenderJson.options) as any;
         options.replacer = typeof (options.replacer) === "function" ? options.replacer : function (k, v) { return v; };
-        const pre = append(document.createElement("pre"), _renderjson(json, "", false, options.show_to_level, options));
+        const pre = append(document.createElement("pre"), _renderjson(json, "", false, options.show_to_level, options, onChange));
         pre.className = "renderjson";
         return pre;
     }

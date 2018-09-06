@@ -5,6 +5,7 @@ import { QueryExecuteResult } from "../../../../../../src/cassandra-client/index
 import { ViewDestroyable } from "../../../base/view-destroyable";
 
 import ResizeObserver from "resize-observer-polyfill";
+import { RenderJson } from "../../../const/render-json";
 
 @Component({
     selector: "ui-data-grid",
@@ -18,6 +19,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     private gridInstance: Handsontable = null;
     private gridSettings: Handsontable.GridSettings = null;
     private stateReady = new ReplaySubject<void>(1);
+
+    private htmlCache: { [key: string]: HTMLElement } = {};
 
     private hostResizeObs: ResizeObserver;
 
@@ -33,32 +36,6 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     }
     ngOnInit() {
         this.stateReady.next();
-        const data = [
-            {
-                name: "Abc",
-                value: "123",
-            },
-            {
-                name: "Abc",
-                value: "123",
-            },
-            {
-                name: "Abc",
-                value: "123",
-            },
-            {
-                name: "Abc",
-                value: "123",
-            },
-            {
-                name: "Abc",
-                value: "123",
-            },
-        ];
-
-        // const data = function () {
-        //     return Handsontable.helper.createSpreadsheetData(200, 200);
-        // };
 
     }
     ngOnDestroy() {
@@ -81,19 +58,28 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         ).subscribe(() => {
             console.log("createGridInstance");
             console.log(data);
-            const names = data.columns;
+            const names = data.columns.map((c) => c.name);
             const dataRows = data.rows;
             const columnDef = data.columns.map((c) => {
-                return {
-                    data: c,
-                    type: "text",
-                };
+                if (c.type === "set" || c.type === "map") {
+                    return {
+                        data: c.name,
+                        renderer: this.cellRendererJson,
+                    };
+
+                } else {
+                    return {
+                        data: c.name,
+                        type: "text",
+                    };
+                }
+
             });
 
             this.gridSettings = {
                 data: dataRows,
                 minSpareCols: 0,
-                minSpareRows: 1,
+                minSpareRows: 0,
                 rowHeaders: true,
                 contextMenu: true,
                 manualColumnResize: true,
@@ -123,5 +109,32 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         }
         console.log("onHostResize");
         this.gridInstance.updateSettings(this.gridSettings, false);
+    }
+    private cellRendererJson = (instance: _Handsontable.Core,
+        td: HTMLElement, row: number, col: number, prop: string | number, value: any,
+        cellProperties: Handsontable.GridSettings): void => {
+
+        RenderJson.set_icons("+", "-");
+        Handsontable.dom.empty(td);
+
+        const key = `R${row}C${col}`;
+        const cache = this.htmlCache[key];
+        let element: HTMLElement = null;
+
+        if (cache == null) {
+            element = RenderJson.render(value, () => {
+                console.log("#############################");
+                console.log("RenderJson callback");
+                console.log("#############################");
+                instance.deselectCell();
+                instance.selectCell(row, col);
+            });
+            this.htmlCache[key] = element;
+        } else {
+            element = cache;
+        }
+
+        td.appendChild(element);
+
     }
 }

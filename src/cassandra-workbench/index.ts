@@ -1,9 +1,10 @@
+import * as cassandra from "cassandra-driver";
 import { from, merge, Subject } from "rxjs";
-import { concatMap, takeUntil } from "rxjs/operators";
+import { takeUntil } from "rxjs/operators";
 import * as vscode from "vscode";
+import { ColumnInfo, ColumnType } from "../cassandra-client";
 import { Clusters } from "../clusters";
 import { Completition } from "../completition";
-import { circularReferencesFix } from "../const/circular-references-fix";
 import { generateId } from "../const/id";
 import { InputParser } from "../parser";
 import { Persistence } from "../persistence";
@@ -187,7 +188,14 @@ export class CassandraWorkbench {
 
             const hasColumns = resultset.columns.length > 0 ? true : false;
             const rows = hasColumns ? resultset.rows : null;
-            const columns = hasColumns ? resultset.columns.map((c) => c.name) : null;
+            const columns = hasColumns ? resultset.columns.map((c) => {
+                const out: ColumnInfo = {
+                    name: c.name,
+                    type: this.getTypes((c as any).type.code),
+                };
+                return out;
+            }) : null;
+            // const types = hasColumns ? resultset.columns.map((c: any) => this.getTypes(c.type.code)) : null;
 
             const message: ProcMessageStrict<"e2w_executeQueryResponse"> = {
                 name: "e2w_executeQueryResponse",
@@ -215,6 +223,93 @@ export class CassandraWorkbench {
             this.panel.emitMessage(errorMessage);
         });
 
+    }
+
+    private getTypes(code: number): ColumnType {
+
+        let out: ColumnType = null;
+
+        switch (code) {
+            case cassandra.types.dataTypes.custom:
+                out = "custom";
+                break;
+            case cassandra.types.dataTypes.ascii:
+                out = "ascii";
+                break;
+            case cassandra.types.dataTypes.bigint:
+                out = "bigint";
+                break;
+            case cassandra.types.dataTypes.blob:
+                out = "blob";
+                break;
+            case cassandra.types.dataTypes.boolean:
+                out = "boolean";
+                break;
+            case cassandra.types.dataTypes.counter:
+                out = "counter";
+                break;
+            case cassandra.types.dataTypes.decimal:
+                out = "decimal";
+                break;
+            case cassandra.types.dataTypes.double:
+                out = "double";
+                break;
+            case cassandra.types.dataTypes.float:
+                out = "float";
+                break;
+            case cassandra.types.dataTypes.int:
+                out = "int";
+                break;
+            case cassandra.types.dataTypes.text:
+                out = "text";
+                break;
+            case cassandra.types.dataTypes.timestamp:
+                out = "timestamp";
+                break;
+            case cassandra.types.dataTypes.uuid:
+                out = "uuid";
+                break;
+            case cassandra.types.dataTypes.varchar:
+                out = "varchar";
+                break;
+            case cassandra.types.dataTypes.varint:
+                out = "varint";
+                break;
+            case cassandra.types.dataTypes.timeuuid:
+                out = "timeuuid";
+                break;
+            case cassandra.types.dataTypes.inet:
+                out = "inet";
+                break;
+            case cassandra.types.dataTypes.date:
+                out = "date";
+                break;
+            case cassandra.types.dataTypes.time:
+                out = "time";
+                break;
+            case cassandra.types.dataTypes.smallint:
+                out = "smallint";
+                break;
+            case cassandra.types.dataTypes.tinyint:
+                out = "tinyint";
+                break;
+            case cassandra.types.dataTypes.list:
+                out = "list";
+                break;
+            case cassandra.types.dataTypes.map:
+                out = "map";
+                break;
+            case cassandra.types.dataTypes.set:
+                out = "set";
+                break;
+            case cassandra.types.dataTypes.udt:
+                out = "udt";
+                break;
+            case cassandra.types.dataTypes.tuple:
+                out = "tuple";
+                break;
+        }
+        return out;
     }
 
 }

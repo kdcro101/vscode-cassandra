@@ -70,10 +70,9 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
     }
     ngAfterViewInit() {
         this.drag.updateTabItems(this.tabItems);
-
-        const ch = RenderJson.render({ hello: [1, 2, 3, 4], there: { a: 1, b: 2, c: ["hello", null] } });
-        console.log("renderjson");
-        console.log(ch);
+        // RenderJson.set_icons("+", "-");
+        // const ch = RenderJson.render({ hello: [1, 2, 3, 4], there: { a: 1, b: 2, c: ["hello", null] } });
+        // this.container.nativeElement.appendChild(ch);
     }
     ngOnDestroy() {
         super.ngOnDestroy();

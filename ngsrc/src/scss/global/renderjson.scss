@@ -1,0 +1,55 @@
+ body.vscode-dark {
+     .renderjson {
+         a {
+             text-decoration: none;
+         }
+         //  .disclosure {
+         //   color: crimson;
+         //   font-size: 150%;
+         // }
+         .object {
+             line-height: 160%;
+         }
+         .object.syntax {
+             margin: 4px;
+         }
+         .disclosure {
+             margin: 4px;
+             padding: 1px 5px 0;
+             line-height: 100%;
+             margin-right: 8px;
+             text-decoration: none;
+             outline: none;
+             border-radius: 2px;
+             background: var(--vscode-editor-inactiveSelectionBackground);
+             &:hover {
+                 text-decoration: none;
+                 background: var(--vscode-editor-selectionBackground);
+             }
+         }
+         .syntax {
+             color: grey;
+         }
+         .string {
+             color: #50fa7b;
+         }
+         .number {
+             color: #8be9fd;
+         }
+         .boolean {
+             color: #ff79c6;
+         }
+         .key {
+             color: #bd93f9;
+         }
+         .keyword {
+             color: #ff5555;
+         }
+         .object.syntax {
+             color: lightseagreen;
+         }
+         .array.syntax {
+             color: lightsalmon;
+         }
+     }
+ }

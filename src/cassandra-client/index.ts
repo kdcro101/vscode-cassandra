@@ -4,6 +4,37 @@ import { BehaviorSubject, from } from "rxjs";
 import { CassandraKeyspace, ValidatedConfigClusterItem } from "../types";
 import { CassandraClientEvents, CassandraClusterData } from "../types/index";
 import { collectKeyspaces } from "./collectors/index";
+export type ColumnType = "custom" |
+    "ascii" |
+    "bigint" |
+    "blob" |
+    "boolean" |
+    "counter" |
+    "decimal" |
+    "double" |
+    "float" |
+    "int" |
+    "text" |
+    "timestamp" |
+    "uuid" |
+    "varchar" |
+    "varint" |
+    "timeuuid" |
+    "inet" |
+    "date" |
+    "time" |
+    "smallint" |
+    "tinyint" |
+    "list" |
+    "map" |
+    "set" |
+    "udt" |
+    "tuple";
+
+export interface ColumnInfo {
+    name: string;
+    type: string;
+}
 
 export interface QueryExecuteResult {
     info?: {
@@ -13,7 +44,7 @@ export interface QueryExecuteResult {
         customPayload: any,
     };
     rows?: any[];
-    columns?: string[];
+    columns?: ColumnInfo[];
     error?: any;
     hasColumns: boolean;
 
