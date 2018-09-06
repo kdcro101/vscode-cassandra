@@ -123,9 +123,6 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
         if (cache == null) {
             element = RenderJson.render(value, () => {
-                console.log("#############################");
-                console.log("RenderJson callback");
-                console.log("#############################");
                 instance.deselectCell();
                 instance.selectCell(row, col);
             });
