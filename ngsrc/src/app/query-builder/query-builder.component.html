@@ -21,7 +21,9 @@
         </ui-content-horizontal>
     </div>
     <div fxFlex class="client" fxLayout="column">
-        <ui-query (onStatementChange)="onActiveStatementChange($event)" *ngIf="editorActive" #queryEditor [editor]="editorActive"
-            fxFlex></ui-query>
+        <ui-query (onStatementChange)="onActiveStatementChange($event)" *ngIf="editorActive" #queryEditor [editor]="editorActive" fxFlex></ui-query>
+        <div *ngIf="!editorActive" #container>
+            <h1>Not active</h1>
+        </div>
     </div>
 </div>
