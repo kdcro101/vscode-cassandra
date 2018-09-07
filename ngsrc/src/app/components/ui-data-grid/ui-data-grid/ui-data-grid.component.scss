@@ -11,5 +11,7 @@
         bottom: 0;
         background: transparent;
         color: #333333;
+        transform: translate3d(0,0,0);
+        will-change: scroll-position;
     }
 }

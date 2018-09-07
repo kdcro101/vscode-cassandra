@@ -160,7 +160,7 @@ export class EditorQueService {
 
         this.queCurrent.splice(index, 1);
 
-        let nextActive: number = -1;
+        let nextActive: number = this.itemActive;
 
         if (this.queCurrent.length > 0 && index <= this.itemActive) {
             const minusOne = this.itemActive - 1;

@@ -2,10 +2,11 @@ import { QueryExecuteResult } from "../cassandra-client/index";
 import { CompletitionOutput } from "../completition";
 import { CqlParserError } from "../parser";
 import { WorkbenchCqlStatement } from "./editor";
-import { CassandraCluster } from "./index";
+import { CassandraCluster, CassandraClusterData } from "./index";
 
 export interface ProcMessageList {
     w2e_getClustersRequest: boolean;
+    w2e_getClusterStructRequest: ClusterStructureRequest;
     w2e_onReady: boolean;
     w2e_checkInputRequest: CheckInputRequest;
     w2e_persistEditors: WorkbenchCqlStatement[];
@@ -13,6 +14,7 @@ export interface ProcMessageList {
     w2e_executeQueryRequest: ExecuteQueryRequest;
 
     e2w_goState: WebviewStateParams;
+    e2w_getClusterStructResponse: ClusterStructureResponse;
     e2w_editorCreate: EditorCreateParams;
     e2w_getClustersResponse: CassandraCluster[];
     e2w_autocompleteResponse: AutocompleteResponse;
@@ -28,6 +30,11 @@ export interface ProcMessageStrict<T extends keyof ProcMessageList> {
     name: T;
     data: ProcMessageList[T];
 }
+
+export interface MessageWithId {
+    id: string;
+}
+
 export interface WebviewStateParams {
     name: string;
     params: { [key: string]: any };
@@ -66,4 +73,10 @@ export interface ExecuteQueryResponse {
     id: string;
     result: QueryExecuteResult;
 
+}
+export interface ClusterStructureRequest extends MessageWithId {
+    clusterName: string;
+}
+export interface ClusterStructureResponse extends MessageWithId {
+    result: CassandraClusterData;
 }

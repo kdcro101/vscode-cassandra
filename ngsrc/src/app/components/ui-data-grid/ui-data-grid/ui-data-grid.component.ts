@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ReplaySubject } from "rxjs";
-import { take, tap } from "rxjs/operators";
+import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
 import { QueryExecuteResult } from "../../../../../../src/cassandra-client/index";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 
 import ResizeObserver from "resize-observer-polyfill";
+import { Subject } from "rxjs";
 import { RenderJson } from "../../../const/render-json";
 
 @Component({
@@ -23,11 +24,13 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     private htmlCache: { [key: string]: HTMLElement } = {};
 
     private hostResizeObs: ResizeObserver;
+    private eventHostResize = new Subject<void>();
 
     constructor(public host: ElementRef<HTMLDivElement>, public change: ChangeDetectorRef) {
         super(change);
         this.hostResizeObs = new ResizeObserver(() => {
-            setTimeout(() => this.onHostResize());
+            // setTimeout(() => this.onHostResize());
+            this.eventHostResize.next();
         });
         this.hostResizeObs.observe(this.host.nativeElement);
     }
@@ -36,6 +39,15 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     }
     ngOnInit() {
         this.stateReady.next();
+
+        this.eventHostResize.pipe(
+            takeUntil(this.eventViewDestroyed),
+            debounceTime(100),
+            filter(() => this.gridInstance != null),
+        ).subscribe(() => {
+            this.gridInstance.updateSettings(this.gridSettings, false);
+
+        });
 
     }
     ngOnDestroy() {
@@ -57,11 +69,28 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             }),
         ).subscribe(() => {
             console.log("createGridInstance");
-            console.log(data);
+            this.htmlCache = {};
+            const types = data.columns.reduce((acc, curr) => {
+                acc[curr.name] = curr.type;
+                return acc;
+            }, {});
+
+            console.log(types);
+
             const names = data.columns.map((c) => c.name);
-            const dataRows = data.rows;
+
+            // handle set/map/custom - stringify
+            const dataRows = data.rows.map((row) => {
+                Object.keys(row).forEach((k) => {
+                    if (types[k] === "set" || types[k] === "map" || types[k] === "custom") {
+                        row[k] = JSON.stringify(row[k]);
+                    }
+                });
+                return row;
+            });
+            // const dataRows = data.rows;
             const columnDef = data.columns.map((c) => {
-                if (c.type === "set" || c.type === "map") {
+                if (c.type === "set" || c.type === "map" || c.type === "custom") {
                     return {
                         data: c.name,
                         renderer: this.cellRendererJson,
@@ -92,9 +121,11 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 manualRowResize: true,
                 columnSorting: true,
                 sortIndicator: true,
+                renderAllRows: false,
                 autoColumnSize: {
                     samplingRatio: 23,
                 },
+                autoRowSize: { syncLimit: 10 },
 
             };
 
@@ -114,6 +145,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         td: HTMLElement, row: number, col: number, prop: string | number, value: any,
         cellProperties: Handsontable.GridSettings): void => {
 
+        const obj = JSON.parse(value);
+
         RenderJson.set_icons("+", "-");
         Handsontable.dom.empty(td);
 
@@ -122,9 +155,9 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         let element: HTMLElement = null;
 
         if (cache == null) {
-            element = RenderJson.render(value, () => {
-                instance.deselectCell();
-                instance.selectCell(row, col);
+            element = RenderJson.render(obj, () => {
+                this.gridInstance.deselectCell();
+                this.gridInstance.selectCell(row, col);
             });
             this.htmlCache[key] = element;
         } else {

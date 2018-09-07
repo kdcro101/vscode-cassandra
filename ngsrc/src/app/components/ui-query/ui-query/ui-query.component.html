@@ -13,7 +13,7 @@
             <div fxFlex></div>
             <button color="accent" mat-button (click)="executeCql()">EXECUTE</button>
         </div>
-        <ui-monaco-editor (onCodeChange)="onCodeChange($event)" #monacoEditor fxFlex></ui-monaco-editor>
+        <ui-monaco-editor (onCodeChange)="onCodeChange($event)" (onExecute)="executeCql()" #monacoEditor fxFlex></ui-monaco-editor>
         <div>Bottom</div>
     </div>
     <div #bottom class="bottom" fxLayout="column">

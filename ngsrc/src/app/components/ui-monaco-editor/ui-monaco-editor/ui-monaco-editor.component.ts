@@ -6,7 +6,7 @@ import { MatMenuTrigger } from "@angular/material";
 
 import { fromEvent } from "rxjs";
 import { fromEventPattern, ReplaySubject, Subject } from "rxjs";
-import { debounceTime, filter, take, takeUntil } from "rxjs/operators";
+import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
 import { concatMap } from "rxjs/operators";
 import { CqlParserError } from "../../../../../../src/parser/index";
 import { ViewDestroyable } from "../../../base/view-destroyable";
@@ -27,6 +27,7 @@ import { cqlLanguageConfig, cqlTokenProvider } from "./lang/tokens";
 })
 export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, OnDestroy {
     @Output("onCodeChange") public onCodeChange = new EventEmitter<string>();
+    @Output("onExecute") public onExecute = new EventEmitter<string>();
     @ViewChild("root") public root: ElementRef<HTMLDivElement>;
 
     @ViewChild(MatMenuTrigger) contextMenu: MatMenuTrigger;
@@ -126,6 +127,24 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                     this.contextMenu.closeMenu();
                 });
 
+            });
+
+            fromEventPattern<monaco.IKeyboardEvent>((f: (e: any) => any) => {
+                return this.editor.onKeyDown(f);
+            }, (f: any, d: monaco.IDisposable) => {
+                d.dispose();
+            }).pipe(
+                tap((e) => {
+                    console.log("STARTING onKeyDown");
+                    console.log(e);
+                }),
+                takeUntil(this.eventViewDestroyed),
+                filter((e) => e.browserEvent.ctrlKey && e.browserEvent.keyCode === 13),
+            ).subscribe((e) => {
+                console.log("KY EXECUTE");
+                e.preventDefault();
+                e.stopPropagation();
+                this.onExecute.next();
             });
 
             this.stateReady.next();
