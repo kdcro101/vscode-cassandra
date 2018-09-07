@@ -8,6 +8,18 @@ import ResizeObserver from "resize-observer-polyfill";
 import { Subject } from "rxjs";
 import { RenderJson } from "../../../const/render-json";
 
+const ARROW_DOWN = 40;
+const ARROW_UP = 38;
+const ARROW_LEFT = 37;
+const ARROW_RIGHT = 39;
+const PAGE_UP = 33;
+const PAGE_DOWN = 34;
+
+interface CellPosition {
+    col: number;
+    row: number;
+}
+
 @Component({
     selector: "ui-data-grid",
     templateUrl: "./ui-data-grid.component.html",
@@ -111,29 +123,121 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 minSpareRows: 0,
                 rowHeaders: true,
                 contextMenu: true,
-                manualColumnResize: true,
                 colHeaders: names,
                 columns: columnDef,
                 allowRemoveColumn: false,
                 allowRemoveRow: false,
                 allowInsertColumn: false,
                 allowInsertRow: false,
+                manualColumnResize: true,
                 manualRowResize: true,
-                columnSorting: true,
-                sortIndicator: true,
-                renderAllRows: false,
-                autoColumnSize: {
-                    samplingRatio: 23,
-                },
-                autoRowSize: { syncLimit: 10 },
+                beforeKeyDown: this.onBeforeKeydown,
+                selectionMode: "range",
+                // columnSorting: true,
+                // sortIndicator: true,
+                // autoColumnSize: {
+                //     samplingRatio: 23,
+                // },
+                // autoRowSize: { syncLimit: 10 },
 
             };
 
             this.gridInstance = new Handsontable(this.root.nativeElement, this.gridSettings);
+
         });
 
     }
+    private onBeforeKeydown = (e: KeyboardEvent) => {
+        const ranges = this.gridInstance.getSelected();
+        // [startRow, startCol, endRow, endCol];
 
+        if (ranges == null || ranges.length === 0) {
+            return;
+        }
+
+        const first = ranges[0];
+
+        const startRow = first[0];
+        const startCol = first[1];
+        const endRow = first[2];
+        const endCol = first[3];
+
+        const normalized = this.normalizeSelection(startRow, startCol, endRow, endCol);
+
+        const nStartRow = normalized[0].row;
+        const nStartCol = normalized[0].col;
+        const nEndRow = normalized[1].row;
+        const nEndCol = normalized[1].col;
+
+        const maxCol = this.gridInstance.countSourceCols() - 1;
+        const maxRow = this.gridInstance.countSourceRows() - 1;
+
+        const shift = e.shiftKey;
+        const keyCode = e.keyCode;
+
+        console.log(JSON.stringify(first));
+
+        const selectedAll = nStartRow === 0 && nStartCol === 0 && nEndRow === maxRow && nEndCol === maxCol;
+
+        const pageRowSize = this.gridInstance.countVisibleRows();
+        console.log("NORM: " + JSON.stringify(normalized));
+
+        console.log(`maxCol=${maxCol} maxRow=${maxRow} selectedAll=${selectedAll}`);
+
+        // if ((keyCode === ARROW_LEFT || keyCode === ARROW_UP || keyCode === PAGE_UP) && selectedAll && !shift) {
+        if ((keyCode === ARROW_LEFT || keyCode === ARROW_UP) && selectedAll && !shift) {
+            this.gridInstance.selectCell(0, 0, 0, 0, false);
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return;
+        }
+
+        // if ((keyCode === ARROW_RIGHT || keyCode === ARROW_DOWN || keyCode === PAGE_DOWN) && selectedAll && !shift) {
+        if ((keyCode === ARROW_RIGHT || keyCode === ARROW_DOWN) && selectedAll && !shift) {
+            this.gridInstance.selectCell(maxRow, maxCol, maxRow, maxCol, false);
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return;
+        }
+
+        if ((keyCode === ARROW_DOWN) && nEndRow === maxRow) {
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+        }
+        if ((keyCode === ARROW_UP) && nStartRow === 0) {
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+        }
+        if (keyCode === ARROW_LEFT && nStartCol === 0) {
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+        }
+        if (keyCode === ARROW_RIGHT && nEndCol === maxCol) {
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+        }
+
+        // PAGEUP/DOWN
+        const downRowDiff = maxRow - nEndRow;
+        if (!shift && keyCode === PAGE_DOWN && downRowDiff < pageRowSize) {
+            // got to maxRow
+            this.gridInstance.selectCell(maxRow, startCol, maxRow, endCol, false);
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return;
+        }
+        const upRowDiff = nStartRow - pageRowSize;
+        if (!shift && keyCode === PAGE_UP && upRowDiff < 0) {
+            // got to maxRow
+            this.gridInstance.selectCell(0, startCol, 0, endCol, false);
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return;
+        }
+
+        // console.log(keyCode);
+
+    }
     private onHostResize() {
         if (this.gridInstance == null) {
             return;
@@ -166,5 +270,22 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
         td.appendChild(element);
 
+    }
+    private normalizeSelection(startRow: number, startCol: number, endRow: number, endCol: number): CellPosition[] {
+        const p1: CellPosition = {
+            col: startCol,
+            row: startRow,
+        };
+        const p2: CellPosition = {
+            col: endCol,
+            row: endRow,
+        };
+        const list = [p1, p2];
+
+        const sorted = list.sort(function (a, b) {
+            if (a.col === b.col) { return a.row - b.row; }
+            return a.col - b.col;
+        });
+        return sorted;
     }
 }
