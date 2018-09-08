@@ -48,5 +48,11 @@
         position: absolute;
         right: -24px;
     }
+    .handsontable .columnSorting.descending::after {
+        content: '\25BC';
+        color: inherit;
+        position: absolute;
+        right: -24px;
+    }
 }
 .vscode-light {}

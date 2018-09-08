@@ -133,12 +133,13 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 manualRowResize: true,
                 beforeKeyDown: this.onBeforeKeydown,
                 selectionMode: "range",
-                // columnSorting: true,
-                // sortIndicator: true,
+                columnSorting: true,
+                sortIndicator: true,
+                // renderAllRows: true,
                 // autoColumnSize: {
                 //     samplingRatio: 23,
                 // },
-                // autoRowSize: { syncLimit: 10 },
+                autoRowSize: { syncLimit: 10 },
 
             };
 
@@ -175,14 +176,14 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         const shift = e.shiftKey;
         const keyCode = e.keyCode;
 
-        console.log(JSON.stringify(first));
+        // console.log(JSON.stringify(first));
 
         const selectedAll = nStartRow === 0 && nStartCol === 0 && nEndRow === maxRow && nEndCol === maxCol;
 
         const pageRowSize = this.gridInstance.countVisibleRows();
-        console.log("NORM: " + JSON.stringify(normalized));
+        // console.log("NORM: " + JSON.stringify(normalized));
 
-        console.log(`maxCol=${maxCol} maxRow=${maxRow} selectedAll=${selectedAll}`);
+        // console.log(`maxCol=${maxCol} maxRow=${maxRow} selectedAll=${selectedAll}`);
 
         // if ((keyCode === ARROW_LEFT || keyCode === ARROW_UP || keyCode === PAGE_UP) && selectedAll && !shift) {
         if ((keyCode === ARROW_LEFT || keyCode === ARROW_UP) && selectedAll && !shift) {
