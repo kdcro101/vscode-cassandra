@@ -58,6 +58,7 @@ export class InputParser {
 
         // const listener = new AntlrListener(tokenStream, cqlParser.ruleNames);
         // cqlParser.addParseListener(listener);
+
         const root = cqlParser.root();
 
         // const out = listener.rewriter.getText();

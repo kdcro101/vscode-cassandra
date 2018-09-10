@@ -19,7 +19,10 @@ interface CellPosition {
     col: number;
     row: number;
 }
-
+interface GridColumn {
+    data: string;
+    type?: string;
+}
 @Component({
     selector: "ui-data-grid",
     templateUrl: "./ui-data-grid.component.html",
@@ -140,6 +143,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 //     samplingRatio: 23,
                 // },
                 autoRowSize: { syncLimit: 10 },
+                afterChange: this.onAfterChange,
 
             };
 
@@ -147,6 +151,27 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
         });
 
+    }
+    private onAfterChange = (changes: [number, string | number, any, any][], source: string) => {
+        console.log(`onAfterChange ${source}`);
+        console.log(changes);
+
+        if (source === "edit") {
+            console.log("setting meta source===edit");
+            const row = changes[0][0];
+            const key = changes[0][1];
+
+            const col = ((this.gridSettings.columns as any[]) as GridColumn[]).findIndex((e) => e.data === key);
+
+            if (col < 0) {
+                return;
+            }
+            console.log(`row:${row} col:${col}`);
+
+            this.gridInstance.setCellMeta(row, col, "className", "changed");
+            this.gridInstance.render();
+
+        }
     }
     private onBeforeKeydown = (e: KeyboardEvent) => {
         const ranges = this.gridInstance.getSelected();

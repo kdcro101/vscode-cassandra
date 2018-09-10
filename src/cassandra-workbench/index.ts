@@ -2,6 +2,8 @@ import * as cassandra from "cassandra-driver";
 import { from, merge, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import * as vscode from "vscode";
+
+import { KwTableContext } from "../antlr/CqlParser";
 import { ColumnInfo, ColumnType } from "../cassandra-client";
 import { Clusters } from "../clusters";
 import { Completition } from "../completition";
@@ -185,6 +187,9 @@ export class CassandraWorkbench {
 
         from(this.clusters.execute(clusterName, cql)).pipe(
         ).subscribe((resultset) => {
+
+            const p = this.parser.parse(cql);
+            // const t: KwTableContext = this.parser.
 
             const hasColumns = resultset.columns.length > 0 ? true : false;
             const rows = hasColumns ? resultset.rows : null;
