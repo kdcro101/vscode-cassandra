@@ -1,9 +1,13 @@
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
+import { from, of, Subject } from "rxjs";
 import { ReplaySubject } from "rxjs";
-import { WorkbenchCqlStatement, WorkbenchEditor } from "../../../../../src/types/editor";
+import { take, tap } from "rxjs/operators";
+import { concatMap } from "rxjs/operators";
+import { WorkbenchCqlStatement } from "../../../../../src/types/editor";
 import { ProcMessage, ProcMessageStrict } from "../../../../../src/types/messages";
+import { WorkbenchEditor } from "../../types/index";
 import { MessageService } from "../message/message.service";
+import { MonacoService } from "../monaco/monaco.service";
 
 declare var persistedStatements: WorkbenchCqlStatement[];
 
@@ -20,7 +24,7 @@ export class EditorQueService {
 
     public itemActive: number = -1;
 
-    constructor(private messages: MessageService) {
+    constructor(private messages: MessageService, private monaco: MonacoService) {
 
         this.messages.eventMessage.pipe()
             .subscribe((d) => {
@@ -28,11 +32,16 @@ export class EditorQueService {
             });
 
         if (Array.isArray(persistedStatements)) {
-            this.queCurrent = persistedStatements.map((s) => this.statement2Editor(s));
-        }
 
-        if (this.que.length > 0) {
-            this.activate(0);
+            from(persistedStatements).pipe(
+                concatMap((s) => this.persistedStatement2Editor(s)),
+            ).subscribe((e) => {
+                this.queCurrent.push(e);
+            }, (e) => { }, () => {
+                if (this.que.length > 0) {
+                    this.activate(0);
+                }
+            });
         }
 
     }
@@ -68,30 +77,45 @@ export class EditorQueService {
         this.editorCreate(s.data.statement);
 
     }
-    private statement2Editor(statement: WorkbenchCqlStatement): WorkbenchEditor {
-        const e: WorkbenchEditor = {
-            statement,
-            resultset: null,
-            executed: false,
-            response: null,
-        };
+    private persistedStatement2Editor(statement: WorkbenchCqlStatement): Promise<WorkbenchEditor> {
+        return new Promise((resolve, reject) => {
 
-        return e;
+            this.monaco.stateReady.pipe(
+                take(1),
+            ).subscribe(() => {
+
+                const e: WorkbenchEditor = {
+                    statement,
+                    resultset: null,
+                    executed: false,
+                    response: null,
+                    model: monaco.editor.createModel(statement.body, "cql"),
+                };
+                resolve(e);
+            }, (e) => {
+                reject(e);
+            });
+        });
     }
     private editorCreate(statement: WorkbenchCqlStatement) {
+        this.monaco.stateReady.pipe(
+            take(1),
+        ).subscribe(() => {
 
-        statement.filename = this.generateFilename();
+            statement.filename = this.generateFilename();
 
-        const e: WorkbenchEditor = {
-            statement,
-            resultset: null,
-            executed: false,
-            response: null,
-        };
+            const e: WorkbenchEditor = {
+                statement,
+                resultset: null,
+                executed: false,
+                response: null,
+                model: monaco.editor.createModel(statement.body, "cql"),
+            };
 
-        this.editorPrepend(e);
-        this.persistEditors();
+            this.editorPrepend(e);
+            this.persistEditors();
 
+        });
     }
     private editorPrepend(e: WorkbenchEditor) {
         if (e == null) {

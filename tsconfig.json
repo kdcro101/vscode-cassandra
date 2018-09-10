@@ -19,7 +19,8 @@
         // "noUnusedParameters": true,  /* Report errors on unused parameters. */
         "strictNullChecks": false,
         "types": [
-            "node"
+            "node",
+            "ngsrc/src/app/types/monaco.d.ts"
         ]
     },
     "exclude": [

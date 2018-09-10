@@ -1,5 +1,4 @@
 @import "../../../../scss/colors";
-
 :host {
     position: relative;
 
@@ -13,13 +12,12 @@
         overflow-y: visible;
         background-color: transparent;
     }
-
     .menu-trigger {
-        width:0px;
+        width: 0px;
         height: 0px;
         background-color: transparent;
         position: absolute;
-        top:0;
-        left:0;
+        top: 0;
+        left: 0;
     }
 }

@@ -41,7 +41,6 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     constructor(public host: ElementRef<HTMLDivElement>, public change: ChangeDetectorRef) {
         super(change);
         this.hostResizeObs = new ResizeObserver(() => {
-            // setTimeout(() => this.onHostResize());
             this.eventHostResize.next();
         });
         this.hostResizeObs.observe(this.host.nativeElement);
@@ -132,8 +131,9 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 manualColumnResize: true,
                 manualRowResize: true,
                 beforeKeyDown: this.onBeforeKeydown,
-                selectionMode: "range",
+                selectionMode: "single",
                 columnSorting: true,
+                fillHandle: false,
                 sortIndicator: true,
                 // renderAllRows: true,
                 // autoColumnSize: {

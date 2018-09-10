@@ -26,10 +26,6 @@ export class ClusterService {
         });
 
         this.message.eventMessage.pipe(
-            tap((m) => {
-                console.log("message in clusterService");
-                console.log(JSON.stringify(m));
-            }),
             filter((m) => m.name === "e2w_getClustersResponse"),
             map((m) => m as ProcMessageStrict<"e2w_getClustersResponse">),
         ).subscribe((m) => {

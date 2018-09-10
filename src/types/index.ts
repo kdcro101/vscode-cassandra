@@ -73,6 +73,7 @@ export interface CassandraIndex {
 export interface CassandraTable {
     columns: CassandraColumn[];
     indexes: CassandraIndex[];
+    primaryKeys: CassandraColumn[];
     name: string;
     all: RowTable;
 }

@@ -81,7 +81,8 @@
                 {
                     "id": "object-explorer",
                     "title": "Casssandra workbench",
-                    "icon": "icons/activity.svg"
+                    "icon": "icons/activity.svg",
+                    "when": "dd==dom"
                 }
             ]
         },

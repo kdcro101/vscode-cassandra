@@ -15,14 +15,14 @@ export class MessageService {
     constructor() {
 
         fromEvent<MessageEvent>(window, "message").pipe()
-        .subscribe((message) => {
-            this.eventMessage.next(message.data);
-        });
+            .subscribe((message) => {
+                this.eventMessage.next(message.data);
+            });
 
-     }
+    }
     public emit(message: ProcMessage) {
         console.log("EMITTING");
-        console.log(message);
+
         vscode.postMessage(message);
     }
 

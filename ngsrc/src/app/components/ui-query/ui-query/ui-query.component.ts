@@ -2,18 +2,19 @@ import {
     ChangeDetectionStrategy, ChangeDetectorRef, Component,
     ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChild, ViewChildren,
 } from "@angular/core";
-import { Subject } from "rxjs";
 import { ReplaySubject } from "rxjs";
+import { Subject } from "rxjs";
 import { debounceTime, take, takeUntil } from "rxjs/operators";
 import * as Split from "split.js";
 import { QueryExecuteResult } from "../../../../../../src/cassandra-client";
-import { WorkbenchCqlStatement, WorkbenchEditor } from "../../../../../../src/types/editor";
+import { WorkbenchCqlStatement } from "../../../../../../src/types/editor";
 import { CassandraCluster } from "../../../../../../src/types/index";
 import { ViewDestroyable } from "../../../base/view-destroyable/index";
 import { TableColumnResize } from "../../../const/table-column-resize";
 import { ClusterService } from "../../../services/cluster/cluster.service";
 import { CqlClientService } from "../../../services/cql-client/cql-client.service";
 import { ThemeService } from "../../../services/theme/theme.service";
+import { WorkbenchEditor } from "../../../types/index";
 import { UiMonacoEditorComponent } from "../../ui-monaco-editor/ui-monaco-editor/ui-monaco-editor.component";
 
 @Component({
@@ -23,15 +24,12 @@ import { UiMonacoEditorComponent } from "../../ui-monaco-editor/ui-monaco-editor
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestroy {
+    @Output("onStatementChange") public onStatementChange = new EventEmitter<WorkbenchCqlStatement>();
+
     @ViewChild("top") public top: ElementRef<HTMLDivElement>;
     @ViewChild("bottom") public bottom: ElementRef<HTMLDivElement>;
     @ViewChild("monacoEditor") public monacoEditor: UiMonacoEditorComponent;
-
     @ViewChild("grid") public grid: ElementRef<HTMLTableElement>;
-
-    // @ViewChildren("thItem") public thItem: QueryList<ElementRef<HTMLTableHeaderCellElement>>;
-
-    @Output("onStatementChange") public onStatementChange = new EventEmitter<WorkbenchCqlStatement>();
 
     public clusterList: CassandraCluster[] = [];
     public editorCurrent: WorkbenchEditor = null;
@@ -82,7 +80,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
             this.editorCurrent = e;
             this.detectChanges();
 
-            this.monacoEditor.setCode(this.editorCurrent.statement.body);
+            // this.monacoEditor.setCode(this.editorCurrent.statement.body);
 
         });
     }

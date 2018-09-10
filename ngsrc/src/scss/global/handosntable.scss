@@ -54,5 +54,10 @@
         position: absolute;
         right: -24px;
     }
+    .handsontable .ht_master .wtHolder::-webkit-scrollbar-corner {
+        background: transparent;
+        will-change: scroll-position;
+        transform: translate3d(0, 0, 0);
+    }
 }
 .vscode-light {}

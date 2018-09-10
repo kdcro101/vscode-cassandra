@@ -1,7 +1,8 @@
 @import "../../../../scss/colors";
 :host {
     position: relative;
-    overflow: auto;
+    overflow: hidden;
+
     .root {
         position: absolute;
         left: 0;
@@ -10,6 +11,6 @@
         bottom: 0;
         background: transparent;
         color: #333333;
-        // will-change: scroll-position;
+        //
     }
 }

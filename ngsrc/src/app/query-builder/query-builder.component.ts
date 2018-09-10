@@ -3,13 +3,14 @@ import {
     Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren,
 } from "@angular/core";
 import { takeUntil } from "rxjs/operators";
-import { WorkbenchCqlStatement, WorkbenchEditor } from "../../../../src/types/editor";
+import { WorkbenchCqlStatement } from "../../../../src/types/editor";
 import { ViewDestroyable } from "../base/view-destroyable";
 import { UiContentHorizontalComponent } from "../components/ui-content-horizontal/ui-content-horizontal.component";
 import { UiQueryComponent } from "../components/ui-query/ui-query/ui-query.component";
 import { RenderJson } from "../const/render-json";
 import { EditorQueService } from "../services/editor-que/editor-que.service";
 import { SystemService } from "../services/system/system.service";
+import { WorkbenchEditor } from "../types/index";
 import { TabDraggable } from "./tab-draggable/index";
 
 @Component({
