@@ -4,6 +4,7 @@ import {
 } from "antlr4ts";
 import { CqlLexer } from "../antlr/CqlLexer";
 import { CqlParser, RootContext } from "../antlr/CqlParser";
+import { CqlAnalyzerListener } from "./listeners/cql-analyzer";
 
 export interface CqlParserError {
     name: string;
@@ -56,10 +57,11 @@ export class InputParser {
         };
         cqlParser.addErrorListener(errorHandler);
 
-        // const listener = new AntlrListener(tokenStream, cqlParser.ruleNames);
-        // cqlParser.addParseListener(listener);
+        const analyzerListener = new CqlAnalyzerListener(cqlParser.ruleNames);
+        cqlParser.addParseListener(analyzerListener);
 
         const root = cqlParser.root();
+        const analysis = analyzerListener.getResult();
 
         // const out = listener.rewriter.getText();
         return root;
