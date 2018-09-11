@@ -134,7 +134,6 @@ import { ExpressionListContext } from './CqlParser';
 import { SelectContext } from './CqlParser';
 import { LimitSpecContext } from './CqlParser';
 import { FromSpecContext } from './CqlParser';
-import { FromSpecElementContext } from './CqlParser';
 import { OrderSpecContext } from './CqlParser';
 import { OrderSpecElementContext } from './CqlParser';
 import { WhereSpecContext } from './CqlParser';
@@ -155,6 +154,7 @@ import { LiteralBooleanContext } from './CqlParser';
 import { LiteralHexadecimalContext } from './CqlParser';
 import { KeyspaceContext } from './CqlParser';
 import { TableContext } from './CqlParser';
+import { TableSpecContext } from './CqlParser';
 import { ColumnContext } from './CqlParser';
 import { DataTypeContext } from './CqlParser';
 import { OrderDirectionContext } from './CqlParser';
@@ -1250,13 +1250,6 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitFromSpec?: (ctx: FromSpecContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.fromSpecElement`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitFromSpecElement?: (ctx: FromSpecElementContext) => Result;
-
-	/**
 	 * Visit a parse tree produced by `CqlParser.orderSpec`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -1395,6 +1388,13 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitTable?: (ctx: TableContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.tableSpec`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitTableSpec?: (ctx: TableSpecContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.column`.

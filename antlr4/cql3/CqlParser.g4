@@ -118,7 +118,7 @@ resource
     | kwFunction (keyspace DOT)? function
     | kwAllKeyspaces
     | kwKeyspace keyspace
-    | (kwTable)? (keyspace DOT)? table
+    | (kwTable)? tableSpec
     | kwAllRoles
     | kwRole role
     ;
@@ -146,7 +146,7 @@ createTrigger
 createMaterializedView
     : kwCreate kwMaterialized kwView ifNotExist? (keyspace DOT)? materializedView
       kwAs
-      kwSelect columnList kwFrom (keyspace DOT)? table
+      kwSelect columnList kwFrom tableSpec
       materializedViewWhere
       kwPrimary kwKey syntaxBracketLr columnList syntaxBracketRr
       (kwWith materializedViewOptions)?
@@ -283,7 +283,7 @@ alterTypeAlterType
     ;
 
 alterTable
-    : kwAlter kwTable (keyspace DOT)? table alterTableOperation
+    : kwAlter kwTable tableSpec alterTableOperation
     ;
 alterTableOperation
     : alterTableAdd
@@ -355,14 +355,14 @@ dropFunction
     : kwDrop kwFunction ifExist? (keyspace DOT)? function
     ;
 dropTrigger
-    : kwDrop kwTrigger ifExist? trigger kwOn (keyspace DOT)? table
+    : kwDrop kwTrigger ifExist? trigger kwOn tableSpec
     ;
 dropRole
     : kwDrop kwRole ifExist? role
     ;
 
 dropTable
-    : kwDrop kwTable ifExist? (keyspace DOT)? table
+    : kwDrop kwTable ifExist? tableSpec
     ;
 dropKeyspace
     : kwDrop kwKeyspace ifExist? keyspace
@@ -371,7 +371,7 @@ dropIndex
     : kwDrop kwIndex ifExist? (keyspace DOT)? indexName
     ;
 createTable
-    : kwCreate kwTable ifNotExist? (keyspace DOT)? table
+    : kwCreate kwTable ifNotExist? tableSpec
       syntaxBracketLr columnDefinitionList syntaxBracketRr
       withElement?
     ;
@@ -495,11 +495,11 @@ use
 
 
 truncate
-    : kwTruncate (kwTable)? (keyspace DOT)? table
+    : kwTruncate (kwTable)? tableSpec
     ;
 
 createIndex
-    : kwCreate kwIndex ifNotExist? indexName? kwOn  (keyspace DOT)? table syntaxBracketLr indexColumnSpec syntaxBracketRr
+    : kwCreate kwIndex ifNotExist? indexName? kwOn  tableSpec syntaxBracketLr indexColumnSpec syntaxBracketRr
     ;
 indexName
     : OBJECT_NAME
@@ -536,7 +536,7 @@ deleteColumnItem
 
 
 update
-    : beginBatch? kwUpdate (keyspace DOT)? table  usingTtlTimestamp? kwSet assignments
+    : beginBatch? kwUpdate tableSpec  usingTtlTimestamp? kwSet assignments
       whereSpec (ifExist | ifSpec)?
     ;
 
@@ -580,7 +580,7 @@ assignmentList
 
 
 insert
-    : (beginBatch|) kwInsert kwInto (keyspace DOT|) table insertColumnSpec insertValuesSpec
+    : (beginBatch|) kwInsert kwInto tableSpec insertColumnSpec insertValuesSpec
       (ifNotExist|) usingTtlTimestamp?
     ;
 usingTtlTimestamp
@@ -634,14 +634,10 @@ limitSpec
     ;
 
 fromSpec
-    : kwFrom fromSpecElement
+    : kwFrom tableSpec
     | { this.notifyErrorListeners("rule.select.fromSpec"); }
     ;
-fromSpecElement
-    : table
-    | keyspace specialDot table
-    | { this.notifyErrorListeners("rule.select.fromSpecElement"); }
-    ;
+
 orderSpec
     : kwOrderBy orderSpecElement
     ;
@@ -739,6 +735,13 @@ keyspace
 table
     : OBJECT_NAME
     | DQUOTE OBJECT_NAME DQUOTE
+    ;
+
+
+tableSpec
+    : table
+    | keyspace specialDot table
+    | { this.notifyErrorListeners("rule.tableSpec"); }
     ;
 
 column

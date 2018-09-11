@@ -12,10 +12,7 @@ export interface CqlParserError {
     line: number;
     linePos: number;
 }
-// export interface ParserResult {
-//     root: RootContext;
-//     errors: CqlParserError[];
-// }
+
 export interface TokenData {
     text: string;
     type: number;
@@ -63,7 +60,6 @@ export class InputParser {
         const root = cqlParser.root();
         const analysis = analyzerListener.getResult();
 
-        // const out = listener.rewriter.getText();
         return root;
     }
     public collectErrors(input: string): CqlParserError[] {
