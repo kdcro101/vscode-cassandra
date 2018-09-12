@@ -1,15 +1,11 @@
- .vscode-dark,
- .vscode-high-contrast {
-     .cqlError {
-         text-decoration: underline wavy red;
-     }
-     .myInlineDecoration{
-         background-color: purple;
-     }
- }
+@import "../colors";
 
- .vscode-light {
-     .cqlError {
-         text-decoration: underline wavy red;
-     }
- }
+.vscode-dark,
+.vscode-high-contrast {
+
+    .highlight-error {
+        background-color: mat-color($warn, 500, 0.25);
+    }
+}
+
+// .vscode-light {}

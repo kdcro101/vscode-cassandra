@@ -1,18 +1,15 @@
 import {
-    ChangeDetectionStrategy, ChangeDetectorRef, Component,
-    ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChild, ViewChildren,
+    ChangeDetectionStrategy, ChangeDetectorRef,
+    Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild,
 } from "@angular/core";
 import { MatSnackBar } from "@angular/material";
-import { ReplaySubject } from "rxjs";
-import { Subject } from "rxjs";
+import { ReplaySubject, Subject } from "rxjs";
 import { debounceTime, take, takeUntil } from "rxjs/operators";
 import * as Split from "split.js";
-import { QueryExecuteResult } from "../../../../../../src/cassandra-client";
-import { ClusterExecuteResults } from "../../../../../../src/clusters";
+
 import { WorkbenchCqlStatement } from "../../../../../../src/types/editor";
 import { CassandraCluster, ExecuteQueryResponse } from "../../../../../../src/types/index";
 import { ViewDestroyable } from "../../../base/view-destroyable/index";
-import { TableColumnResize } from "../../../const/table-column-resize";
 import { ClusterService } from "../../../services/cluster/cluster.service";
 import { CqlClientService } from "../../../services/cql-client/cql-client.service";
 import { ThemeService } from "../../../services/theme/theme.service";
@@ -47,6 +44,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     public rowData: any[];
 
     private decorations: string[] = [];
+    private decorationsTimeout: any;
 
     constructor(
         public change: ChangeDetectorRef,
@@ -167,51 +165,39 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
             duration: 10000,
         });
     }
-    public onErrorClick = (e: Event, index: number) => {
+    public onErrorClick = (ev: Event, index: number) => {
         console.log(`onErrorClick ${index}`);
 
+        if (this.decorationsTimeout) {
+            clearTimeout(this.decorationsTimeout);
+            this.decorationsTimeout = null;
+        }
+
         const statement = this.editorCurrent.result.analysis.statements[index];
+        const error = this.editorCurrent.result.errors.find((e) => e.statementIndex === index);
         const editor = this.monacoEditor.monacoEditor;
         const model = editor.getModel();
 
         const ps = model.getPositionAt(statement.charStart);
         const pe = model.getPositionAt(statement.charStop + 1);
 
+        editor.revealPositionInCenter(ps, monaco.editor.ScrollType.Immediate);
+
         // model.getAllDecorations().forEach((e)=>e.)
         this.decorations = editor.deltaDecorations(this.decorations, [
             {
                 range: monaco.Range.fromPositions(ps, pe), options: {
-                    className: "myInlineDecoration",
-                    beforeContentClassName: "beforeContentClassName",
+                    className: "highlight-error",
                     hoverMessage: {
-                        value: "asdasdads",
+                        value: error ? error.error.message : null,
                     },
                 },
             },
         ]);
 
-        // const start = editor.document.positionAt(propStart);
-        // const end = editor.document.positionAt(propEnd + 1);
+        this.decorationsTimeout = setTimeout(() => {
+            this.decorations = editor.deltaDecorations(this.decorations, []);
+        }, 1000);
 
-        // const ps = editor.document.positionAt(propStart);
-        // const pe = editor.document.positionAt(propStart);
-
-        // editor.setDecorations(highlight, [new vscode.Range(start, end)]);
-        // setTimeout(() => editor.setDecorations(highlight, []), 1500);
-
-        // editor.revealRange(new vscode.Range(ps, pe), vscode.TextEditorRevealType.InCenter);
-
-        // this.monacoEditor.monacoEditor.pi
-
-        // const start = editor.document.positionAt(propStart);
-        // const end = editor.document.positionAt(propEnd + 1);
-
-        // const ps = editor.document.positionAt(propStart);
-        // const pe = editor.document.positionAt(propStart);
-
-        // editor.setDecorations(highlight, [new vscode.Range(start, end)]);
-        // setTimeout(() => editor.setDecorations(highlight, []), 1500);
-
-        // editor.revealRange(new vscode.Range(ps, pe), vscode.TextEditorRevealType.InCenter);
     }
 }
