@@ -4,7 +4,8 @@ import {
 } from "antlr4ts";
 import { CqlLexer } from "../antlr/CqlLexer";
 import { CqlParser, RootContext } from "../antlr/CqlParser";
-import { CqlAnalyzerListener } from "./listeners/cql-analyzer";
+import { CassandraClusterData } from "../types/index";
+import { CqlAnalysis, CqlAnalyzerListener } from "./listeners/cql-analyzer";
 
 export interface CqlParserError {
     name: string;
@@ -25,7 +26,7 @@ export interface TokenData {
 }
 
 export class InputParser {
-    public parse(input: string): RootContext {
+    public analyze(input: string, structure: CassandraClusterData): CqlAnalysis {
         const inputStream = new ANTLRInputStream(input);
         const cqlLexer = new CqlLexer(inputStream);
         const tokenStream = new CommonTokenStream(cqlLexer);
@@ -54,13 +55,13 @@ export class InputParser {
         };
         cqlParser.addErrorListener(errorHandler);
 
-        const analyzerListener = new CqlAnalyzerListener(cqlParser.ruleNames);
+        const analyzerListener = new CqlAnalyzerListener(cqlParser.ruleNames, input, structure);
         cqlParser.addParseListener(analyzerListener);
 
         const root = cqlParser.root();
         const analysis = analyzerListener.getResult();
 
-        return root;
+        return analysis;
     }
     public collectErrors(input: string): CqlParserError[] {
         const inputStream = new ANTLRInputStream(input);

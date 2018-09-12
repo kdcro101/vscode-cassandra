@@ -1,6 +1,7 @@
 import { ParserRuleContext } from "antlr4ts";
 import { CqlContext, KeyspaceContext, RootContext, TableSpecContext, UseContext } from "../../antlr/CqlParser";
 import { CqlParserListener } from "../../antlr/CqlParserListener";
+import { CassandraClusterData } from "../../types";
 
 export interface AnalyzedStatement {
     type: StatementType;
@@ -9,11 +10,14 @@ export interface AnalyzedStatement {
     limit?: number;
     keyspace?: string;
     table?: string;
+    text?: string;
+
 }
 export interface CqlAnalysis {
     statements: AnalyzedStatement[];
-    alterData?: boolean;
-    alterStructure?: boolean;
+    alterData: boolean;
+    alterStructure: boolean;
+    selectData: boolean;
 }
 
 export type StatementType = "empty" |
@@ -30,11 +34,16 @@ const STATEMENT_ROOT_RULE = "cql";
 
 export class CqlAnalyzerListener implements CqlParserListener {
     private statementCurrent: number = -1;
-    private result: CqlAnalysis = { statements: [] };
+    private result: CqlAnalysis = {
+        statements: [],
+        alterData: false,
+        alterStructure: false,
+        selectData: false,
+    };
     private rulePrevious: string;
     private keyspaceAmbiental: string;
 
-    constructor(private ruleNames: string[]) {
+    constructor(private ruleNames: string[], private cql: string, structure: CassandraClusterData) {
 
     }
     public getResult() {
@@ -78,8 +87,16 @@ export class CqlAnalyzerListener implements CqlParserListener {
             i.type === "grant",
         );
 
+        const selectData = this.result.statements.filter((i) => i.type === "select");
+
         this.result.alterData = modData.length > 0 ? true : false;
         this.result.alterStructure = modStruct.length > 0 ? true : false;
+        this.result.selectData = selectData.length > 0 ? true : false;
+
+        // collect statements
+        this.result.statements.forEach((s, i) => {
+            this.result.statements[i].text = this.cql.substring(s.charStart, s.charStop + 1);
+        });
     }
     enterEveryRule = (ctx: ParserRuleContext): void => {
         const rule: string = this.ruleNames[ctx.ruleIndex];
@@ -267,7 +284,7 @@ export class CqlAnalyzerListener implements CqlParserListener {
         this.result.statements[this.statementCurrent][k] = v;
     }
     private getResultValue<K extends keyof AnalyzedStatement>(k: K): AnalyzedStatement[K] {
-        return this.result[this.statementCurrent][k];
+        return this.result.statements[this.statementCurrent][k];
     }
 
 }

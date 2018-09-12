@@ -147,5 +147,90 @@ export class CassandraClient extends EventEmitter {
         });
 
     }
+    public getNativeTypes(code: number): ColumnType {
 
+        let out: ColumnType = null;
+
+        switch (code) {
+            case cassandra.types.dataTypes.custom:
+                out = "custom";
+                break;
+            case cassandra.types.dataTypes.ascii:
+                out = "ascii";
+                break;
+            case cassandra.types.dataTypes.bigint:
+                out = "bigint";
+                break;
+            case cassandra.types.dataTypes.blob:
+                out = "blob";
+                break;
+            case cassandra.types.dataTypes.boolean:
+                out = "boolean";
+                break;
+            case cassandra.types.dataTypes.counter:
+                out = "counter";
+                break;
+            case cassandra.types.dataTypes.decimal:
+                out = "decimal";
+                break;
+            case cassandra.types.dataTypes.double:
+                out = "double";
+                break;
+            case cassandra.types.dataTypes.float:
+                out = "float";
+                break;
+            case cassandra.types.dataTypes.int:
+                out = "int";
+                break;
+            case cassandra.types.dataTypes.text:
+                out = "text";
+                break;
+            case cassandra.types.dataTypes.timestamp:
+                out = "timestamp";
+                break;
+            case cassandra.types.dataTypes.uuid:
+                out = "uuid";
+                break;
+            case cassandra.types.dataTypes.varchar:
+                out = "varchar";
+                break;
+            case cassandra.types.dataTypes.varint:
+                out = "varint";
+                break;
+            case cassandra.types.dataTypes.timeuuid:
+                out = "timeuuid";
+                break;
+            case cassandra.types.dataTypes.inet:
+                out = "inet";
+                break;
+            case cassandra.types.dataTypes.date:
+                out = "date";
+                break;
+            case cassandra.types.dataTypes.time:
+                out = "time";
+                break;
+            case cassandra.types.dataTypes.smallint:
+                out = "smallint";
+                break;
+            case cassandra.types.dataTypes.tinyint:
+                out = "tinyint";
+                break;
+            case cassandra.types.dataTypes.list:
+                out = "list";
+                break;
+            case cassandra.types.dataTypes.map:
+                out = "map";
+                break;
+            case cassandra.types.dataTypes.set:
+                out = "set";
+                break;
+            case cassandra.types.dataTypes.udt:
+                out = "udt";
+                break;
+            case cassandra.types.dataTypes.tuple:
+                out = "tuple";
+                break;
+        }
+        return out;
+    }
 }

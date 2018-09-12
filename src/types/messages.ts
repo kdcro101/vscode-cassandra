@@ -1,4 +1,5 @@
 import { QueryExecuteResult } from "../cassandra-client/index";
+import { ClusterExecuteResults } from "../clusters";
 import { CompletitionOutput } from "../completition";
 import { CqlParserError } from "../parser";
 import { WorkbenchCqlStatement } from "./editor";
@@ -71,7 +72,8 @@ export interface ExecuteQueryRequest {
 }
 export interface ExecuteQueryResponse {
     id: string;
-    result: QueryExecuteResult;
+    result: ClusterExecuteResults;
+    error?: any;
 
 }
 export interface ClusterStructureRequest extends MessageWithId {
