@@ -26,10 +26,44 @@
         .bottom {
             background: transparent;
             position: relative;
-            .bottom-client{
+            .bottom-client {
 
                 position: relative;
                 overflow: hidden;
+
+                .result-panel {
+                    position: relative;
+                    overflow: auto;
+                    // .success {}
+                    .errors{
+                        padding-top: 2px;
+                        .item{
+                            margin-bottom: 2px;
+                            background-color: rgba(0,0,0,0.25);
+                            cursor: pointer;
+                            &:active{
+                                background-color: rgba(0,0,0,0.50);
+                            }
+                            .index{
+                                padding-top: 4px;
+                                padding-bottom: 4px;
+                                color: mat-color($warn, 300);
+                                padding-left: 8px;
+                                padding-right: 8px;
+
+                                min-width: 3em;
+                                text-align: right;
+                            }
+                            .desc{
+                                padding-top: 4px;
+                                padding-bottom: 4px;
+                                padding-left: 8px;
+                                padding-right: 8px;
+                                color: mat-color($warn, 500);
+                            }
+                        }
+                    }
+                }
             }
             .result-bar {
                 height: 40px;

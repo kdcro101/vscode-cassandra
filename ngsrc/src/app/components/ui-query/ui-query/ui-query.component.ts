@@ -35,7 +35,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
 
     public clusterList: CassandraCluster[] = [];
     public editorCurrent: WorkbenchEditor = null;
-    public showGrid: boolean = false;
+    public isResultSelect: boolean = false;
 
     public fontSize: number = 15;
     public lineHeight: number = 23;
@@ -43,10 +43,10 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     private stateReady = new ReplaySubject<void>();
     private eventCodeChange = new Subject<WorkbenchCqlStatement>();
 
-    private tableColumnResize: TableColumnResize;
-
     public columnDefs: any[];
     public rowData: any[];
+
+    private decorations: string[] = [];
 
     constructor(
         public change: ChangeDetectorRef,
@@ -142,7 +142,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
                 }
 
                 this.editorCurrent.result = response.result;
-                this.showGrid = (response.result.analysis.selectData &&
+                this.isResultSelect = (response.result.analysis.selectData &&
                     !response.result.analysis.alterData &&
                     !response.result.analysis.alterStructure) ? true : false;
 
@@ -156,16 +156,62 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     }
 
     public processExecuteError(response: ExecuteQueryResponse) {
-            let message: string = "";
-            switch (response.error) {
-                case "select_only":
+        let message: string = "";
+        switch (response.error) {
+            case "select_only":
                 message = "Unable to execute SELECT statement along with data or structure altering statements";
                 break;
-            }
+        }
 
         this.snackBar.open(message, "OK", {
             duration: 10000,
         });
     }
+    public onErrorClick = (e: Event, index: number) => {
+        console.log(`onErrorClick ${index}`);
 
+        const statement = this.editorCurrent.result.analysis.statements[index];
+        const editor = this.monacoEditor.monacoEditor;
+        const model = editor.getModel();
+
+        const ps = model.getPositionAt(statement.charStart);
+        const pe = model.getPositionAt(statement.charStop + 1);
+
+        // model.getAllDecorations().forEach((e)=>e.)
+        this.decorations = editor.deltaDecorations(this.decorations, [
+            {
+                range: monaco.Range.fromPositions(ps, pe), options: {
+                    className: "myInlineDecoration",
+                    beforeContentClassName: "beforeContentClassName",
+                    hoverMessage: {
+                        value: "asdasdads",
+                    },
+                },
+            },
+        ]);
+
+        // const start = editor.document.positionAt(propStart);
+        // const end = editor.document.positionAt(propEnd + 1);
+
+        // const ps = editor.document.positionAt(propStart);
+        // const pe = editor.document.positionAt(propStart);
+
+        // editor.setDecorations(highlight, [new vscode.Range(start, end)]);
+        // setTimeout(() => editor.setDecorations(highlight, []), 1500);
+
+        // editor.revealRange(new vscode.Range(ps, pe), vscode.TextEditorRevealType.InCenter);
+
+        // this.monacoEditor.monacoEditor.pi
+
+        // const start = editor.document.positionAt(propStart);
+        // const end = editor.document.positionAt(propEnd + 1);
+
+        // const ps = editor.document.positionAt(propStart);
+        // const pe = editor.document.positionAt(propStart);
+
+        // editor.setDecorations(highlight, [new vscode.Range(start, end)]);
+        // setTimeout(() => editor.setDecorations(highlight, []), 1500);
+
+        // editor.revealRange(new vscode.Range(ps, pe), vscode.TextEditorRevealType.InCenter);
+    }
 }

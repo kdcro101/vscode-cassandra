@@ -13,13 +13,25 @@
             <div fxFlex></div>
             <button color="accent" mat-button (click)="executeCql()">EXECUTE</button>
         </div>
-        <ui-monaco-editor [editor]="editorCurrent" (onCodeChange)="onCodeChange($event)" (onExecute)="executeCql()" #monacoEditor fxFlex></ui-monaco-editor>
+        <ui-monaco-editor [editor]="editorCurrent" (onCodeChange)="onCodeChange($event)" (onExecute)="executeCql()"
+            #monacoEditor fxFlex></ui-monaco-editor>
         <div>Bottom</div>
     </div>
     <div #bottom class="bottom" fxLayout="column">
         <div fxFlex class="bottom-client" fxLayout="column">
-            <ui-data-grid fxFlex [queryResult]="editorCurrent.result"
-            *ngIf="editorCurrent.result && showGrid"></ui-data-grid>
+            <ui-data-grid fxFlex [queryResult]="editorCurrent.result" *ngIf="editorCurrent.result && isResultSelect"></ui-data-grid>
+            <div class="result-panel" *ngIf="editorCurrent.result && !isResultSelect" fxFlex>
+                <div class="success"  *ngIf="editorCurrent.result.errors==null || editorCurrent.result.errors.length===0">
+                    Success
+                </div>
+                <div class="errors" *ngIf="editorCurrent.result.errors.length>0">
+                    <div *ngFor="let i of editorCurrent.result.errors;index as ix;" class="item mat-body-1"
+                    fxLayout="row" fxLayoutAlign="start start" (click)="onErrorClick($event,ix)">
+                        <div class="index">{{ i.statementIndex}}</div>
+                        <div class="desc">{{ i.error.message}}</div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="result-bar" fxLayout="row">
             <div>3 changes</div>
