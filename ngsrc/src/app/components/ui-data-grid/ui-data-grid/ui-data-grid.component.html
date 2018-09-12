@@ -1,3 +1,5 @@
-<div class="root" #root >
-
+<div class="root" #root>
+</div>
+<div *ngIf="currentError" class="error">
+    ERROR: {{ currentError.message  }}
 </div>

@@ -14,7 +14,7 @@ export interface CassandraClientCache {
 }
 export interface ClusterExecuteStatementError {
     statementIndex: number;
-    error: any;
+    error: Error;
     text?: string;
 }
 export interface ClusterExecuteStatementResult {
@@ -223,7 +223,7 @@ export class Clusters {
     }
     private executeCqlAnalysisStatement(
         client: CassandraClient,
-        statement: AnalyzedStatement): Promise<[cassandra.types.ResultSet, any, ColumnInfo[]]> {
+        statement: AnalyzedStatement): Promise<[cassandra.types.ResultSet, Error, ColumnInfo[]]> {
 
         return new Promise((resolve, reject) => {
             const cql = statement.text;

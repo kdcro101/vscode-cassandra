@@ -1,11 +1,7 @@
 import { Injectable } from "@angular/core";
-import { ReplaySubject, Subject } from "rxjs";
-
-import { map, timeout } from "rxjs/operators";
-import { filter } from "rxjs/operators";
-import { take } from "rxjs/operators";
-import { QueryExecuteResult } from "../../../../../src/cassandra-client";
-import { ProcMessageStrict } from "../../../../../src/types/messages";
+import { Subject } from "rxjs";
+import { filter, map, take, timeout } from "rxjs/operators";
+import { ExecuteQueryResponse, ProcMessageStrict } from "../../../../../src/types/messages";
 import { generateId } from "../../const/id";
 import { VscodeWebviewInterface } from "../../types/index";
 import { MessageService } from "../message/message.service";
@@ -20,8 +16,8 @@ export class CqlClientService {
     constructor(private message: MessageService) {
 
     }
-    public execute(clusterName: string, cql: string): Subject<QueryExecuteResult> {
-        const out = new Subject<QueryExecuteResult>();
+    public execute(clusterName: string, cql: string): Subject<ExecuteQueryResponse> {
+        const out = new Subject<ExecuteQueryResponse>();
         const id = generateId();
 
         const message: ProcMessageStrict<"w2e_executeQueryRequest"> = {
@@ -40,7 +36,7 @@ export class CqlClientService {
             take(1),
             map((e) => e as ProcMessageStrict<"e2w_executeQueryResponse">),
         ).subscribe((e) => {
-            out.next(e.data.result);
+            out.next(e.data);
         }, (e) => {
             out.error(e);
         });

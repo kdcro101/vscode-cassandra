@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ReplaySubject } from "rxjs";
 import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
-import { QueryExecuteResult } from "../../../../../../src/cassandra-client/index";
+import { ColumnInfo, QueryExecuteResult } from "../../../../../../src/cassandra-client/index";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 
 import ResizeObserver from "resize-observer-polyfill";
 import { Subject } from "rxjs";
+import { ClusterExecuteResults } from "../../../../../../src/clusters";
+import { AnalyzedStatement, CqlAnalysis } from "../../../../../../src/parser/listeners/cql-analyzer";
 import { RenderJson } from "../../../const/render-json";
 
 const ARROW_DOWN = 40;
@@ -23,6 +25,9 @@ interface GridColumn {
     data: string;
     type?: string;
 }
+
+declare var window: any;
+
 @Component({
     selector: "ui-data-grid",
     templateUrl: "./ui-data-grid.component.html",
@@ -41,14 +46,24 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     private hostResizeObs: ResizeObserver;
     private eventHostResize = new Subject<void>();
 
+    private currentAnalysis: CqlAnalysis = null;
+    private currentColumns: ColumnInfo[] = null;
+    private currentStatementIndex: number = -1;
+    private currentStatement: AnalyzedStatement = null;
+    public currentError: Error = null;
+
+    // public showError: boolean = false;
+
     constructor(public host: ElementRef<HTMLDivElement>, public change: ChangeDetectorRef) {
         super(change);
         this.hostResizeObs = new ResizeObserver(() => {
             this.eventHostResize.next();
         });
         this.hostResizeObs.observe(this.host.nativeElement);
+
+        window.UiDataGridComponent = this;
     }
-    @Input("queryResult") set setData(data: QueryExecuteResult) {
+    @Input("queryResult") set setData(data: ClusterExecuteResults) {
         this.createGridInstance(data);
     }
     ngOnInit() {
@@ -67,7 +82,14 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     ngOnDestroy() {
         super.ngOnDestroy();
     }
-    private createGridInstance(data: QueryExecuteResult) {
+    private createGridInstance(data: ClusterExecuteResults) {
+        this.currentError = null;
+        this.detectChanges();
+
+        console.log("createGridInstance: ClusterExecuteResults");
+        console.log("------------------------------------------");
+        console.log(data);
+        console.log("------------------------------------------");
 
         this.stateReady.pipe(
             take(1),
@@ -84,17 +106,42 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         ).subscribe(() => {
             console.log("createGridInstance");
             this.htmlCache = {};
-            const types = data.columns.reduce((acc, curr) => {
+
+            this.currentStatementIndex = data.analysis.statements.findIndex((s) => s.type === "select");
+
+            if (this.currentStatementIndex < 0) {
+                return;
+            }
+
+            const error = data.errors[this.currentStatementIndex];
+
+            if (error) {
+                console.log("Statement resulted in error");
+                console.log(error.error);
+                this.currentError = error.error;
+                this.detectChanges();
+                return;
+            }
+
+            const result = data.results[this.currentStatementIndex];
+            const analysis = data.analysis;
+            const columns = data.columns[this.currentStatementIndex].list;
+
+            this.currentColumns = columns;
+            this.currentAnalysis = analysis;
+            this.currentStatement = analysis.statements[this.currentStatementIndex];
+
+            const types = columns.reduce((acc, curr) => {
                 acc[curr.name] = curr.type;
                 return acc;
             }, {});
 
             console.log(types);
 
-            const names = data.columns.map((c) => c.name);
+            const names = columns.map((c) => c.name);
 
             // handle set/map/custom - stringify
-            const dataRows = data.rows.map((row) => {
+            const dataRows = result.result.rows.map((row) => {
                 Object.keys(row).forEach((k) => {
                     if (types[k] === "set" || types[k] === "map" || types[k] === "custom") {
                         row[k] = JSON.stringify(row[k]);
@@ -103,7 +150,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 return row;
             });
             // const dataRows = data.rows;
-            const columnDef = data.columns.map((c) => {
+            const columnDef = columns.map((c) => {
                 if (c.type === "set" || c.type === "map" || c.type === "custom") {
                     return {
                         data: c.name,

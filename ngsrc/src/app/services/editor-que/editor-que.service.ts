@@ -86,7 +86,7 @@ export class EditorQueService {
 
                 const e: WorkbenchEditor = {
                     statement,
-                    resultset: null,
+                    result: null,
                     executed: false,
                     response: null,
                     model: monaco.editor.createModel(statement.body, "cql"),
@@ -106,7 +106,7 @@ export class EditorQueService {
 
             const e: WorkbenchEditor = {
                 statement,
-                resultset: null,
+                result: null,
                 executed: false,
                 response: null,
                 model: monaco.editor.createModel(statement.body, "cql"),

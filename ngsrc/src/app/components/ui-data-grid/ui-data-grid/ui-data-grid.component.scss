@@ -12,5 +12,17 @@
         background: transparent;
         color: #333333;
         //
+
+    }
+    .error {
+        color: mat-color($warn, 500);
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: transparent;
+        overflow: auto;
+        padding: 16px;
     }
 }

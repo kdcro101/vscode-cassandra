@@ -2,13 +2,15 @@ import {
     ChangeDetectionStrategy, ChangeDetectorRef, Component,
     ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChild, ViewChildren,
 } from "@angular/core";
+import { MatSnackBar } from "@angular/material";
 import { ReplaySubject } from "rxjs";
 import { Subject } from "rxjs";
 import { debounceTime, take, takeUntil } from "rxjs/operators";
 import * as Split from "split.js";
 import { QueryExecuteResult } from "../../../../../../src/cassandra-client";
+import { ClusterExecuteResults } from "../../../../../../src/clusters";
 import { WorkbenchCqlStatement } from "../../../../../../src/types/editor";
-import { CassandraCluster } from "../../../../../../src/types/index";
+import { CassandraCluster, ExecuteQueryResponse } from "../../../../../../src/types/index";
 import { ViewDestroyable } from "../../../base/view-destroyable/index";
 import { TableColumnResize } from "../../../const/table-column-resize";
 import { ClusterService } from "../../../services/cluster/cluster.service";
@@ -33,6 +35,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
 
     public clusterList: CassandraCluster[] = [];
     public editorCurrent: WorkbenchEditor = null;
+    public showGrid: boolean = false;
 
     public fontSize: number = 15;
     public lineHeight: number = 23;
@@ -50,6 +53,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         public cluster: ClusterService,
         private cqlClient: CqlClientService,
         public theme: ThemeService,
+        public snackBar: MatSnackBar,
     ) {
         super(change);
 
@@ -129,16 +133,39 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         const clusterName = this.editorCurrent.statement.clusterName;
 
         this.cqlClient.execute(clusterName, cql).pipe()
-            .subscribe((result: QueryExecuteResult) => {
+            .subscribe((response: ExecuteQueryResponse) => {
                 console.log("[cqlClient.execute] Got result !!!");
-                console.log(result);
 
-                this.editorCurrent.resultset = result;
+                if (response.error) {
+                    this.processExecuteError(response);
+                    return;
+                }
+
+                this.editorCurrent.result = response.result;
+                this.showGrid = (response.result.analysis.selectData &&
+                    !response.result.analysis.alterData &&
+                    !response.result.analysis.alterStructure) ? true : false;
+
                 this.detectChanges();
             }, (e) => {
-                console.log(e);
+                this.snackBar.open(e, "OK", {
+                    duration: 1000,
+                });
             });
 
+    }
+
+    public processExecuteError(response: ExecuteQueryResponse) {
+            let message: string = "";
+            switch (response.error) {
+                case "select_only":
+                message = "Unable to execute SELECT statement along with data or structure altering statements";
+                break;
+            }
+
+        this.snackBar.open(message, "OK", {
+            duration: 10000,
+        });
     }
 
 }

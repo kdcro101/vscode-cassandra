@@ -18,7 +18,8 @@
     </div>
     <div #bottom class="bottom" fxLayout="column">
         <div fxFlex class="bottom-client" fxLayout="column">
-            <ui-data-grid fxFlex [queryResult]="editorCurrent.resultset" *ngIf="editorCurrent.resultset"></ui-data-grid>
+            <ui-data-grid fxFlex [queryResult]="editorCurrent.result"
+            *ngIf="editorCurrent.result && showGrid"></ui-data-grid>
         </div>
         <div class="result-bar" fxLayout="row">
             <div>3 changes</div>
