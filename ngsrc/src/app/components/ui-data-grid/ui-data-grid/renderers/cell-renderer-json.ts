@@ -1,28 +1,33 @@
 import { RenderJson } from "../../../../const/render-json";
 
- export const cellRendererJson = (instance: _Handsontable.Core,
+export const cellRendererJson = (htmlCache: { [key: string]: HTMLElement }): (instance: _Handsontable.Core,
     td: HTMLElement, row: number, col: number, prop: string | number, value: any,
-    cellProperties: Handsontable.GridSettings): void => {
+    cellProperties: Handsontable.GridSettings) => void => {
 
-    const obj = JSON.parse(value);
+    return (instance: _Handsontable.Core,
+        td: HTMLElement, row: number, col: number, prop: string | number, value: any,
+        cellProperties: Handsontable.GridSettings): void => {
 
-    RenderJson.set_icons("+", "-");
-    Handsontable.dom.empty(td);
+        const obj = JSON.parse(value);
 
-    const key = `R${row}C${col}`;
-    const cache = this.htmlCache[key];
-    let element: HTMLElement = null;
+        RenderJson.set_icons("+", "-");
+        Handsontable.dom.empty(td);
 
-    if (cache == null) {
-        element = RenderJson.render(obj, () => {
-            this.gridInstance.deselectCell();
-            this.gridInstance.selectCell(row, col);
-        });
-        this.htmlCache[key] = element;
-    } else {
-        element = cache;
-    }
+        const key = `R${row}C${col}`;
+        const cache = htmlCache[key];
+        let element: HTMLElement = null;
 
-    td.appendChild(element);
+        if (cache == null) {
+            element = RenderJson.render(obj, () => {
+                instance.deselectCell();
+                instance.selectCell(row, col);
+            });
+            htmlCache[key] = element;
+        } else {
+            element = cache;
+        }
+
+        td.appendChild(element);
+    };
 
 };

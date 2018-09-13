@@ -32,7 +32,6 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
 
     public clusterList: CassandraCluster[] = [];
     public editorCurrent: WorkbenchEditor = null;
-    public isResultSelect: boolean = false;
 
     public fontSize: number = 15;
     public lineHeight: number = 23;
@@ -142,9 +141,6 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
                 }
 
                 this.editorCurrent.result = response.result;
-                this.isResultSelect = (response.result.analysis.selectData &&
-                    !response.result.analysis.alterData &&
-                    !response.result.analysis.alterStructure) ? true : false;
 
                 this.detectChanges();
             }, (e) => {

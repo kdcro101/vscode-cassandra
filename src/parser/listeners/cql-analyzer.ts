@@ -2,6 +2,7 @@ import { ParserRuleContext } from "antlr4ts";
 import { CqlContext, KeyspaceContext, RootContext, TableSpecContext, UseContext } from "../../antlr/CqlParser";
 import { CqlParserListener } from "../../antlr/CqlParserListener";
 import { CassandraClusterData } from "../../types";
+import { CassandraTable } from "../../types/index";
 
 export interface AnalyzedStatement {
     type: StatementType;
@@ -11,6 +12,7 @@ export interface AnalyzedStatement {
     keyspace?: string;
     table?: string;
     text?: string;
+    tableStruct?: CassandraTable;
 
 }
 export interface CqlAnalysis {
@@ -43,7 +45,7 @@ export class CqlAnalyzerListener implements CqlParserListener {
     private rulePrevious: string;
     private keyspaceAmbiental: string;
 
-    constructor(private ruleNames: string[], private cql: string, structure: CassandraClusterData) {
+    constructor(private ruleNames: string[], private cql: string, private structure: CassandraClusterData) {
 
     }
     public getResult() {
@@ -96,6 +98,19 @@ export class CqlAnalyzerListener implements CqlParserListener {
         // collect statements
         this.result.statements.forEach((s, i) => {
             this.result.statements[i].text = this.cql.substring(s.charStart, s.charStop + 1);
+        });
+
+        this.result.statements.forEach((s, i) => {
+            if (s.type === "select" && s.keyspace && s.table) {
+                const ksi = this.structure.keyspaces.findIndex((k) => k.name === s.keyspace);
+                if (ksi > -1) {
+                    const ks = this.structure.keyspaces[ksi];
+                    const tbi = ks.tables.findIndex((t) => t.name === s.table);
+                    if (tbi > -1) {
+                        this.result.statements[i].tableStruct = ks.tables[tbi];
+                    }
+                }
+            }
         });
     }
     enterEveryRule = (ctx: ParserRuleContext): void => {

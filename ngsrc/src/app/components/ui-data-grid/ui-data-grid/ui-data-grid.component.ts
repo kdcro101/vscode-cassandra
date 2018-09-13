@@ -5,6 +5,7 @@ import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
 import { ColumnInfo } from "../../../../../../src/cassandra-client/index";
 import { ClusterExecuteResults } from "../../../../../../src/clusters";
 import { AnalyzedStatement, CqlAnalysis } from "../../../../../../src/parser/listeners/cql-analyzer";
+import { CassandraColumn, CassandraTable } from "../../../../../../src/types/index";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { cellRendererJson } from "./renderers/cell-renderer-json";
 
@@ -48,6 +49,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     private currentColumns: ColumnInfo[] = null;
     private currentStatementIndex: number = -1;
     private currentStatement: AnalyzedStatement = null;
+    private currentTableStruct: CassandraTable = null;
+
     public currentError: Error = null;
 
     // public showError: boolean = false;
@@ -62,6 +65,10 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         window.UiDataGridComponent = this;
     }
     @Input("queryResult") set setData(data: ClusterExecuteResults) {
+        if (data == null) {
+            console.log("UiDataGridComponent -> ̣No data");
+            return;
+        }
         this.createGridInstance(data);
     }
     ngOnInit() {
@@ -128,6 +135,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             this.currentColumns = columns;
             this.currentAnalysis = analysis;
             this.currentStatement = analysis.statements[this.currentStatementIndex];
+            this.currentTableStruct = this.currentStatement.tableStruct;
 
             const types = columns.reduce((acc, curr) => {
                 acc[curr.name] = curr.type;
@@ -152,7 +160,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 if (c.type === "set" || c.type === "map" || c.type === "custom") {
                     return {
                         data: c.name,
-                        renderer: cellRendererJson,
+                        renderer: cellRendererJson(this.htmlCache),
                     };
 
                 } else {
@@ -196,7 +204,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             this.gridInstance.updateSettings({
                 cells: this.cellsRenderer,
             }, false);
-            this.gridInstance.render();
+            // this.gridInstance.render();
         });
 
     }
@@ -362,20 +370,57 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         });
         return sorted;
     }
-    private cellsRenderer = (row?: number, col?: number, prop?: object): Handsontable.GridSettings => {
-        if (col === 0) {
-            const pk: Handsontable.GridSettings = {
-                className: "cell-key-partition",
-                readOnly: true,
-            };
+    private cellsRenderer = (row?: number, col?: number, prop?: object | number | string): Handsontable.GridSettings => {
 
-            return pk;
+        // console.log(`cellsRenderer row=${row} col=${col} prop=${JSON.stringify(prop)}`);
+
+        if (col >= 0 && row >= 0 && this.currentTableStruct) {
+            const name = prop as string;
+            const pkc = this.currentTableStruct.primaryKeys.find((k) => k.name === name);
+            if (pkc && pkc.kind === "partition_key") {
+                const pkcs: Handsontable.GridSettings = {
+                    className: "cell-key-partition",
+                    readOnly: true,
+                };
+
+                return pkcs;
+            }
+            if (pkc && pkc.kind === "clustering") {
+                const pkcs: Handsontable.GridSettings = {
+                    className: "cell-key-column-clustering",
+                    readOnly: true,
+                };
+                return pkcs;
+            }
+
+            // no primary key - everything is readonly
+            if (!this.primaryKeyAvailable()) {
+                return {
+                    readOnly: true,
+                };
+            }
         }
-        // if (col === 1) {
-        //     const cell = this.gridInstance.getCell(row, col) as HTMLElement;   // get the cell for the row and column
-        //     cell.style.backgroundColor = "yellow";  // set the background colo";
-        // }
 
         return {};
+    }
+    private primaryKeyAvailable(): boolean {
+        if (!this.currentTableStruct) {
+            return false;
+        }
+        const keys = this.currentTableStruct.primaryKeys;
+        const cols = this.currentColumns;
+        const collected: CassandraColumn[] = [];
+
+        keys.forEach((k, i) => {
+            const f = cols.find((c) => c.name === k.name);
+            if (f) {
+                collected.push(k);
+            }
+        });
+
+        if (collected.length === keys.length) {
+            return true;
+        }
+        return false;
     }
 }
