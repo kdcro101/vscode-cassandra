@@ -13,6 +13,7 @@ export interface ProcMessageList {
     w2e_persistEditors: WorkbenchCqlStatement[];
     w2e_autocompleteRequest: AutocompleteRequest;
     w2e_executeQueryRequest: ExecuteQueryRequest;
+    w2e_executeDataChangeRequest: ExecuteDataChangeRequest;
 
     e2w_goState: WebviewStateParams;
     e2w_getClusterStructResponse: ClusterStructureResponse;
@@ -21,6 +22,7 @@ export interface ProcMessageList {
     e2w_autocompleteResponse: AutocompleteResponse;
     e2w_checkInputResponse: CheckInputResponse;
     e2w_executeQueryResponse: ExecuteQueryResponse;
+    e2w_executeDataChangeResponse: ExecuteDataChangeResponse;
 }
 export type ProcMessageType = keyof ProcMessageList;
 export interface ProcMessage {
@@ -81,4 +83,23 @@ export interface ClusterStructureRequest extends MessageWithId {
 }
 export interface ClusterStructureResponse extends MessageWithId {
     result: CassandraClusterData;
+}
+
+export interface DataChangeItem {
+    clusterName: string;
+    keyspace: string;
+    primaryKey: { [name: string]: any };
+    row: number;
+    col: number;
+    column: string;
+    valueFrom: any;
+    valueTo: any;
+}
+export interface ExecuteDataChangeRequest {
+    id: string;
+    changes: DataChangeItem[];
+}
+export interface ExecuteDataChangeResponse {
+    id: string;
+    results: any[];
 }

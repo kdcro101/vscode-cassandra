@@ -1,4 +1,13 @@
 @import "../colors";
+
+// global
+
+
+.handsontable .wtHider{
+    transform: translate3d(0px, 0px, 0px);
+}
+
+
 .vscode-dark,
 .vscode-high-contrast {
     .handsontable td {
@@ -108,4 +117,3 @@
         color: white;
     }
 }
-// .vscode-light {}
