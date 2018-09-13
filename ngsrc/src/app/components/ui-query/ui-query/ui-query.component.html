@@ -1,9 +1,9 @@
 <div class="root mat-body-1">
     <div #top class="top" fxLayout="column">
         <div fxLayout="row" fxLayoutAlign="start center" class="cluster-actions">
-            <mat-icon>device_hub</mat-icon>
+            <mat-icon class="icon-18">device_hub</mat-icon>
             <mat-form-field color="accent" floatLabel="never" class="no-underline">
-                <mat-select placeholder="Select cluster" [ngModel]="editorCurrent.statement.clusterName"
+                <mat-select placeholder="Select cluster" [ngModel]="editorCurrent.statement.clusterName" [disabled]="(cqlClient.stateExecuting | async)"
                     (ngModelChange)="onClusterChange($event)">
                     <mat-option *ngFor="let i of clusterList" [value]="i.name">
                         {{i.name}}
@@ -11,22 +11,23 @@
                 </mat-select>
             </mat-form-field>
             <div fxFlex></div>
-            <button color="accent" mat-button (click)="executeCql()">EXECUTE</button>
+            <button [disabled]="(cqlClient.stateExecuting | async)" color="accent" mat-button (click)="executeCql()">EXECUTE</button>
+            <mat-progress-bar *ngIf="cqlClient.stateExecuting | async" class="progress" mode="indeterminate" color="accent"></mat-progress-bar>
         </div>
         <ui-monaco-editor [editor]="editorCurrent" (onCodeChange)="onCodeChange($event)" (onExecute)="executeCql()"
             #monacoEditor fxFlex></ui-monaco-editor>
-        <div>Bottom</div>
     </div>
     <div #bottom class="bottom" fxLayout="column">
         <div fxFlex class="bottom-client" fxLayout="column">
-            <ui-data-grid fxFlex [queryResult]="editorCurrent.result" *ngIf="editorCurrent.result && isResultSelect"></ui-data-grid>
-            <div class="result-panel" *ngIf="editorCurrent.result && !isResultSelect" fxFlex>
-                <div class="success"  *ngIf="editorCurrent.result.errors==null || editorCurrent.result.errors.length===0">
+            <ui-data-grid fxFlex [queryResult]="editorCurrent.result"
+            *ngIf="editorCurrent.result && editorCurrent.result.analysis.selectData"></ui-data-grid>
+            <div class="result-panel" *ngIf="editorCurrent.result && !editorCurrent.result.analysis.selectData" fxFlex>
+                <div class="success" *ngIf="editorCurrent.result.errors==null || editorCurrent.result.errors.length===0">
                     Success
                 </div>
                 <div class="errors" *ngIf="editorCurrent.result.errors.length>0">
-                    <div *ngFor="let i of editorCurrent.result.errors;index as ix;" class="item mat-body-1"
-                    fxLayout="row" fxLayoutAlign="start start" (click)="onErrorClick($event,ix)">
+                    <div *ngFor="let i of editorCurrent.result.errors;index as ix;" class="item mat-body-1" fxLayout="row"
+                        fxLayoutAlign="start start" (click)="onErrorClick($event,ix)">
                         <div class="index">{{ i.statementIndex}}</div>
                         <div class="desc">{{ i.error.message}}</div>
                     </div>

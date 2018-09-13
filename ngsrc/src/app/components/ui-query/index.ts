@@ -5,7 +5,7 @@ import { FormsModule } from "@angular/forms";
 import {
     MatButtonModule,
     MatFormFieldModule, MatIconModule, MatInputModule, MatOptionModule,
-    MatSelectModule, MatSnackBarModule,
+    MatProgressBarModule, MatSelectModule, MatSnackBarModule,
 } from "@angular/material";
 import { UiDataGridModule } from "../ui-data-grid";
 import { UiMonacoEditorModule } from "../ui-monaco-editor";
@@ -17,6 +17,7 @@ import { UiQueryComponent } from "./ui-query/ui-query.component";
         FormsModule,
         FlexLayoutModule,
         MatIconModule,
+        MatProgressBarModule,
         MatSelectModule,
         MatInputModule,
         MatFormFieldModule,

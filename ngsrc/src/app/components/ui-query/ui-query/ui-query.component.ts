@@ -49,7 +49,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     constructor(
         public change: ChangeDetectorRef,
         public cluster: ClusterService,
-        private cqlClient: CqlClientService,
+        public cqlClient: CqlClientService,
         public theme: ThemeService,
         public snackBar: MatSnackBar,
     ) {
@@ -82,8 +82,6 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
             this.editorCurrent = e;
             this.detectChanges();
 
-            // this.monacoEditor.setCode(this.editorCurrent.statement.body);
-
         });
     }
     ngOnInit() {
@@ -107,6 +105,10 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         ).subscribe((d) => {
             this.onStatementChange.emit(d);
         });
+
+        this.cqlClient.stateExecuting.pipe(
+            takeUntil(this.eventViewDestroyed),
+        ).subscribe(() => this.detectChanges());
 
     }
     ngOnDestroy() {

@@ -63,5 +63,13 @@
         background-color: mat-color($warn, 500);
         color: mat-color($background, 50);
     }
+    .handsontable .cell-key-partition {
+        background: red;
+        color: white;
+    }
+    .handsontable .cell-key-column-clustering {
+        background: orangered;
+        color: white;
+    }
 }
 // .vscode-light {}

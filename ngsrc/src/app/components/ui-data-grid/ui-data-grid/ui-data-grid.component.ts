@@ -1,14 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { ReplaySubject } from "rxjs";
-import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
-import { ColumnInfo, QueryExecuteResult } from "../../../../../../src/cassandra-client/index";
-import { ViewDestroyable } from "../../../base/view-destroyable";
-
 import ResizeObserver from "resize-observer-polyfill";
-import { Subject } from "rxjs";
+import { ReplaySubject, Subject } from "rxjs";
+import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
+import { ColumnInfo } from "../../../../../../src/cassandra-client/index";
 import { ClusterExecuteResults } from "../../../../../../src/clusters";
 import { AnalyzedStatement, CqlAnalysis } from "../../../../../../src/parser/listeners/cql-analyzer";
-import { RenderJson } from "../../../const/render-json";
+import { ViewDestroyable } from "../../../base/view-destroyable";
+import { cellRendererJson } from "./renderers/cell-renderer-json";
 
 const ARROW_DOWN = 40;
 const ARROW_UP = 38;
@@ -154,7 +152,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 if (c.type === "set" || c.type === "map" || c.type === "custom") {
                     return {
                         data: c.name,
-                        renderer: this.cellRendererJson,
+                        renderer: cellRendererJson,
                     };
 
                 } else {
@@ -195,7 +193,10 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             };
 
             this.gridInstance = new Handsontable(this.root.nativeElement, this.gridSettings);
-
+            this.gridInstance.updateSettings({
+                cells: this.cellsRenderer,
+            }, false);
+            this.gridInstance.render();
         });
 
     }
@@ -318,32 +319,32 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         console.log("onHostResize");
         this.gridInstance.updateSettings(this.gridSettings, false);
     }
-    private cellRendererJson = (instance: _Handsontable.Core,
-        td: HTMLElement, row: number, col: number, prop: string | number, value: any,
-        cellProperties: Handsontable.GridSettings): void => {
+    // private cellRendererJson = (instance: _Handsontable.Core,
+    //     td: HTMLElement, row: number, col: number, prop: string | number, value: any,
+    //     cellProperties: Handsontable.GridSettings): void => {
 
-        const obj = JSON.parse(value);
+    //     const obj = JSON.parse(value);
 
-        RenderJson.set_icons("+", "-");
-        Handsontable.dom.empty(td);
+    //     RenderJson.set_icons("+", "-");
+    //     Handsontable.dom.empty(td);
 
-        const key = `R${row}C${col}`;
-        const cache = this.htmlCache[key];
-        let element: HTMLElement = null;
+    //     const key = `R${row}C${col}`;
+    //     const cache = this.htmlCache[key];
+    //     let element: HTMLElement = null;
 
-        if (cache == null) {
-            element = RenderJson.render(obj, () => {
-                this.gridInstance.deselectCell();
-                this.gridInstance.selectCell(row, col);
-            });
-            this.htmlCache[key] = element;
-        } else {
-            element = cache;
-        }
+    //     if (cache == null) {
+    //         element = RenderJson.render(obj, () => {
+    //             this.gridInstance.deselectCell();
+    //             this.gridInstance.selectCell(row, col);
+    //         });
+    //         this.htmlCache[key] = element;
+    //     } else {
+    //         element = cache;
+    //     }
 
-        td.appendChild(element);
+    //     td.appendChild(element);
 
-    }
+    // }
     private normalizeSelection(startRow: number, startCol: number, endRow: number, endCol: number): CellPosition[] {
         const p1: CellPosition = {
             col: startCol,
@@ -360,5 +361,21 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             return a.col - b.col;
         });
         return sorted;
+    }
+    private cellsRenderer = (row?: number, col?: number, prop?: object): Handsontable.GridSettings => {
+        if (col === 0) {
+            const pk: Handsontable.GridSettings = {
+                className: "cell-key-partition",
+                readOnly: true,
+            };
+
+            return pk;
+        }
+        // if (col === 1) {
+        //     const cell = this.gridInstance.getCell(row, col) as HTMLElement;   // get the cell for the row and column
+        //     cell.style.backgroundColor = "yellow";  // set the background colo";
+        // }
+
+        return {};
     }
 }

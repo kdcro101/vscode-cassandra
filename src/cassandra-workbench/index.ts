@@ -47,6 +47,7 @@ export class CassandraWorkbench {
     public revealCqlPanel() {
         return new Promise((resolve, reject) => {
             if (this.panel != null) {
+                this.panel.panel.reveal();
                 resolve();
                 return;
             }

@@ -11,12 +11,20 @@
             background: transparent;
             position: relative;
             .cluster-actions {
-                border-bottom: 1px solid mat-color($background, 500);
+                // border-bottom: 1px solid mat-color($background, 500);
                 padding-left: 16px;
                 padding-right: 16px;
+                position: relative;
                 mat-icon {
                     margin-right: 8px;
                     margin-bottom: 4px;
+                }
+                .progress{
+                    height: 4px;
+                    position: absolute;
+                    bottom: 0;
+                    right:0;
+                    left:0;
                 }
             }
             ui-query-editor {
