@@ -7,7 +7,9 @@ import { ClusterExecuteResults } from "../../../../../../src/clusters";
 import { AnalyzedStatement, CqlAnalysis } from "../../../../../../src/parser/listeners/cql-analyzer";
 import { CassandraColumn, CassandraTable } from "../../../../../../src/types/index";
 import { ViewDestroyable } from "../../../base/view-destroyable";
+import { measureText } from "./measure-width";
 import { cellRendererJson } from "./renderers/cell-renderer-json";
+import { headerRenderer } from "./renderers/header-renderer";
 
 const ARROW_DOWN = 40;
 const ARROW_UP = 38;
@@ -52,8 +54,9 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     private currentTableStruct: CassandraTable = null;
 
     public currentError: Error = null;
-
-    // public showError: boolean = false;
+    private eventHeaderCellElement = new Subject<[number, HTMLTableHeaderCellElement]>();
+    private stateGridReady = new ReplaySubject<void>(1);
+    private optimalColumnWidth: number[] = [];
 
     constructor(public host: ElementRef<HTMLDivElement>, public change: ChangeDetectorRef) {
         super(change);
@@ -89,6 +92,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     }
     private createGridInstance(data: ClusterExecuteResults) {
         this.currentError = null;
+        this.stateGridReady = new ReplaySubject<void>(1);
         this.detectChanges();
 
         console.log("createGridInstance: ClusterExecuteResults");
@@ -155,7 +159,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 });
                 return row;
             });
-            // const dataRows = data.rows;
+
             const columnDef = columns.map((c) => {
                 if (c.type === "set" || c.type === "map" || c.type === "custom") {
                     return {
@@ -178,12 +182,15 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 minSpareRows: 0,
                 rowHeaders: true,
                 contextMenu: true,
-                colHeaders: names,
+                colHeaders: headerRenderer(this.currentColumns, this.currentTableStruct),
+                // colWidths: columnDef.map(() => 50),
+                // colWidths: 100,
                 columns: columnDef,
                 allowRemoveColumn: false,
                 allowRemoveRow: false,
                 allowInsertColumn: false,
                 allowInsertRow: false,
+                afterGetColHeader: (col: number, th: HTMLTableHeaderCellElement) => this.eventHeaderCellElement.next([col, th]),
                 manualColumnResize: true,
                 manualRowResize: true,
                 beforeKeyDown: this.onBeforeKeydown,
@@ -192,11 +199,15 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 fillHandle: false,
                 sortIndicator: true,
                 // renderAllRows: true,
-                // autoColumnSize: {
-                //     samplingRatio: 23,
-                // },
+                autoColumnSize: true,
                 autoRowSize: { syncLimit: 10 },
                 afterChange: this.onAfterChange,
+                afterRender: (isForced: boolean) => {
+                    if (isForced) {
+                        this.stateGridReady.next();
+
+                    }
+                },
 
             };
 
@@ -204,7 +215,35 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             this.gridInstance.updateSettings({
                 cells: this.cellsRenderer,
             }, false);
-            // this.gridInstance.render();
+
+            this.gridInstance.addHook("modifyColWidth", (width: number, col: number) => {
+                if (col < 0) {
+                    return width;
+                }
+
+                const c = this.currentColumns[col];
+                const m = measureText(c.name) + 48;
+
+                // console.log(`modifyColWidth width=${width} col=${col} measured=${m}`);
+
+                if (m > width) {
+                    return m;
+                }
+
+                return width;
+
+            });
+
+            this.gridInstance.updateSettings({
+                autoColumnSize: true,
+            }, false);
+
+            this.stateGridReady.pipe(
+                take(1),
+            ).subscribe(() => {
+                // this.fixInitialColumnWidths();
+            });
+
         });
 
     }
@@ -317,8 +356,6 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             return;
         }
 
-        // console.log(keyCode);
-
     }
     private onHostResize() {
         if (this.gridInstance == null) {
@@ -327,32 +364,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         console.log("onHostResize");
         this.gridInstance.updateSettings(this.gridSettings, false);
     }
-    // private cellRendererJson = (instance: _Handsontable.Core,
-    //     td: HTMLElement, row: number, col: number, prop: string | number, value: any,
-    //     cellProperties: Handsontable.GridSettings): void => {
 
-    //     const obj = JSON.parse(value);
-
-    //     RenderJson.set_icons("+", "-");
-    //     Handsontable.dom.empty(td);
-
-    //     const key = `R${row}C${col}`;
-    //     const cache = this.htmlCache[key];
-    //     let element: HTMLElement = null;
-
-    //     if (cache == null) {
-    //         element = RenderJson.render(obj, () => {
-    //             this.gridInstance.deselectCell();
-    //             this.gridInstance.selectCell(row, col);
-    //         });
-    //         this.htmlCache[key] = element;
-    //     } else {
-    //         element = cache;
-    //     }
-
-    //     td.appendChild(element);
-
-    // }
     private normalizeSelection(startRow: number, startCol: number, endRow: number, endCol: number): CellPosition[] {
         const p1: CellPosition = {
             col: startCol,
@@ -422,5 +434,63 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             return true;
         }
         return false;
+    }
+    private getHeaderElement(col: number): Promise<HTMLTableHeaderCellElement> {
+        return new Promise((resolve, reject) => {
+
+            this.eventHeaderCellElement.pipe(
+                take(1),
+                filter((data) => data[0] === col),
+            ).subscribe((data) => {
+                resolve(data[1]);
+            }, (e) => {
+                reject(e);
+            });
+
+            const c = this.gridInstance.getColHeader(col);
+
+        });
+    }
+    private onAfterRender = (isForced: boolean) => {
+        console.log("onAfterRender");
+
+        this.getHeaderElement(0)
+            .then((result) => {
+                console.log("onAfterRender result");
+                console.log(result);
+            }).catch((e) => {
+                console.log(e);
+            });
+    }
+    private fixInitialColumnWidths() {
+        console.log("fixInitialColumnWidths");
+        const cols = this.currentColumns;
+        const asp = this.gridInstance.getPlugin("autoColumnSize") as Handsontable.plugins.AutoColumnSize;
+
+        const recommended: number[] = cols.map((c, i) => asp.getColumnWidth(i));
+        const measured: number[] = cols.map((c, i) => measureText(c.name) + 48);
+        const optimal: number[] = cols.map((c, i) => measured[i] > recommended[i] ? measured[i] : recommended[i]);
+
+        console.log(JSON.stringify(recommended));
+        console.log(JSON.stringify(measured));
+        console.log(JSON.stringify(optimal));
+
+        this.optimalColumnWidth = optimal;
+
+        this.optimalColumnWidth.forEach((c, i) => {
+
+            // this.gridInstance.setManualSize(i, c);
+
+        });
+
+        // this.gridInstance.updateSettings({
+        //     // manualColumnResize: false,
+        //     colWidths: optimal,
+        // }, false);
+
+        // this.gridInstance.updateSettings({
+        //     manualColumnResize: true,
+        // }, false);
+
     }
 }
