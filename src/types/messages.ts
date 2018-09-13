@@ -103,3 +103,8 @@ export interface ExecuteDataChangeResponse {
     id: string;
     results: any[];
 }
+export interface DataChangeItemResult {
+    changeIndex: number;
+    success: boolean;
+    error: any;
+}
