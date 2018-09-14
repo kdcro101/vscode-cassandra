@@ -92,6 +92,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 minimap: {
                     enabled: false,
                 },
+                lineHeight: 30,
                 automaticLayout: true,
                 contextmenu: false,
 

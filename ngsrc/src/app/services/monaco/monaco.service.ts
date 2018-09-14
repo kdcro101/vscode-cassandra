@@ -41,6 +41,29 @@ export class MonacoService {
         monaco.languages.setLanguageConfiguration("cql", cqlLanguageConfig);
         monaco.languages.registerCompletionItemProvider("cql", cqlCompletitionProvider(this.autocomplete));
         monaco.editor.setTheme("vs-dark");
+
+        monaco.languages.registerCodeLensProvider("cql", {
+            provideCodeLenses: (model, token) => {
+                return [
+                    {
+                        range: {
+                            startLineNumber: 1,
+                            startColumn: 1,
+                            endLineNumber: 2,
+                            endColumn: 1,
+                        },
+                        id: "First Line",
+                        command: {
+                            id: null,
+                            title: "Abcdefgh",
+                        },
+                    },
+                ];
+            },
+            resolveCodeLens: (model, codeLens, token) => {
+                return codeLens;
+            },
+        });
     }
 
 }

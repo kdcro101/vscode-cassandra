@@ -3,8 +3,9 @@
         <div fxLayout="row" fxLayoutAlign="start center" class="cluster-actions">
             <mat-icon class="icon-18">cloud_queue</mat-icon>
             <mat-form-field color="accent" floatLabel="never" class="no-underline">
-                <mat-select placeholder="Select cluster" [ngModel]="editorCurrent.statement.clusterName" [disabled]="(cqlClient.stateExecuting | async)"
-                    (ngModelChange)="onClusterChange($event)" matTooltip="Select cluster">
+                <mat-select panelClass="material-custom drop-down" placeholder="Select cluster" [ngModel]="editorCurrent.statement.clusterName"
+                    [disabled]="(cqlClient.stateExecuting | async)" (ngModelChange)="onClusterChange($event)"
+                    matTooltip="Select cluster">
                     <mat-option *ngFor="let i of clusterList" [value]="i.name">
                         {{i.name}}
                     </mat-option>
@@ -16,8 +17,9 @@
             <div *ngIf="!clusterLoading" fxLayout="row" fxLayoutAlign="start center">
                 <mat-icon class="icon-18">lens</mat-icon>
                 <mat-form-field color="accent" floatLabel="never" class="no-underline">
-                    <mat-select placeholder="Select keyspace" [ngModel]="editorCurrent.statement.keyspace" [disabled]="(cqlClient.stateExecuting | async)"
-                        (ngModelChange)="onKeyspaceChange($event)" matTooltip="Select keyspace">
+                    <mat-select panelClass="material-custom drop-down" placeholder="Select keyspace" [ngModel]="editorCurrent.statement.keyspace"
+                        [disabled]="(cqlClient.stateExecuting | async)" (ngModelChange)="onKeyspaceChange($event)"
+                        matTooltip="Select keyspace">
                         <mat-option *ngFor="let i of keyspaceList" [value]="i.name">
                             {{i.name}}
                         </mat-option>

@@ -55,7 +55,7 @@ export class InputParser {
         };
         cqlParser.addErrorListener(errorHandler);
 
-        const analyzerListener = new CqlAnalyzerListener(cqlParser.ruleNames, input, structure);
+        const analyzerListener = new CqlAnalyzerListener(cqlParser.ruleNames, input, structure, keyspaceInitial);
         cqlParser.addParseListener(analyzerListener);
 
         const root = cqlParser.root();

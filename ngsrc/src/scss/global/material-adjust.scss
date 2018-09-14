@@ -1,0 +1,15 @@
+@import "../colors";
+
+
+.vscode-dark,
+.vscode-high-contrast {
+    .material-custom.drop-down mat-option {
+        // background-color: red;
+
+        &.mat-selected {
+            background-color: #e91e63 !important;
+            color: #fafafa !important;
+        }
+    }
+
+}

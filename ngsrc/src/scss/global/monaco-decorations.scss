@@ -4,7 +4,12 @@
 .vscode-high-contrast {
 
     .highlight-error {
-        background-color: mat-color($accent, 500,0.75);
+        background-color: mat-color($accent, 500, 0.75);
+    }
+    .monaco-editor,
+    .monaco-editor-background,
+    .monaco-editor .inputarea.ime-input {
+        background-color: mat-color($background,900)!important;
     }
 }
 
