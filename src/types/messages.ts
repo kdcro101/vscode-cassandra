@@ -70,6 +70,7 @@ export interface CheckInputResponse {
 export interface ExecuteQueryRequest {
     id: string;
     clusterName: string;
+    keyspaceInitial: string;
     cql: string;
 }
 export interface ExecuteQueryResponse {
@@ -88,12 +89,11 @@ export interface ClusterStructureResponse extends MessageWithId {
 export interface DataChangeItem {
     clusterName: string;
     keyspace: string;
-    primaryKey: { [name: string]: any };
+    columnKey: { [name: string]: any };
     row: number;
     col: number;
     column: string;
-    valueFrom: any;
-    valueTo: any;
+    value: any;
 }
 export interface ExecuteDataChangeRequest {
     id: string;

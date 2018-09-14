@@ -10,8 +10,15 @@
         right: 0;
         bottom: 0;
         background: transparent;
-        color: #333333;
+
         //
+        .grid-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+        .grid-host {
+            position: relative;
+        }
 
     }
     .error {

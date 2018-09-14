@@ -21,6 +21,7 @@ export const cellRendererJson = (htmlCache: { [key: string]: HTMLElement }): (in
             element = RenderJson.render(obj, () => {
                 instance.deselectCell();
                 instance.selectCell(row, col);
+                instance.render();
             });
             htmlCache[key] = element;
         } else {

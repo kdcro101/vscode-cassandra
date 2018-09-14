@@ -7,6 +7,10 @@ import { ClusterExecuteResults } from "../../../../../../src/clusters";
 import { AnalyzedStatement, CqlAnalysis } from "../../../../../../src/parser/listeners/cql-analyzer";
 import { CassandraColumn, CassandraTable } from "../../../../../../src/types/index";
 import { ViewDestroyable } from "../../../base/view-destroyable";
+import { WorkbenchEditor } from "../../../types/index";
+import { onBeforeChange } from "./before-change";
+import { ChangeManager } from "./change-manager";
+import { gridContextMenu } from "./context-menu";
 import { measureText } from "./measure-width";
 import { cellRenderer } from "./renderers/cell-renderer";
 import { cellRendererJson } from "./renderers/cell-renderer-json";
@@ -27,7 +31,13 @@ interface GridColumn {
     data: string;
     type?: string;
 }
-
+interface CellChangeEvent {
+    col: number;
+    row: number;
+    valueOld: any;
+    valueNew: any;
+    rowData: any;
+}
 declare var window: any;
 
 @Component({
@@ -38,6 +48,7 @@ declare var window: any;
 })
 export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDestroy {
     @ViewChild("root") public root: ElementRef<HTMLDivElement>;
+    @ViewChild("gridHost") public gridHost: ElementRef<HTMLDivElement>;
     // QueryExecuteResult
     private gridInstance: Handsontable = null;
     private gridSettings: Handsontable.GridSettings = null;
@@ -48,8 +59,10 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     private hostResizeObs: ResizeObserver;
     private eventHostResize = new Subject<void>();
 
+    private currentEditor: WorkbenchEditor = null;
+    private currentDataRows: any[] = null;
     private currentAnalysis: CqlAnalysis = null;
-    private currentColumns: ColumnInfo[] = null;
+    public currentColumns: ColumnInfo[] = null;
     private currentStatementIndex: number = -1;
     private currentStatement: AnalyzedStatement = null;
     public currentTableStruct: CassandraTable = null;
@@ -58,7 +71,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
     private eventHeaderCellElement = new Subject<[number, HTMLTableHeaderCellElement]>();
     private stateGridReady = new ReplaySubject<void>(1);
-    private optimalColumnWidth: number[] = [];
+
+    public changeManager: ChangeManager = null;
 
     constructor(public host: ElementRef<HTMLDivElement>, public change: ChangeDetectorRef) {
         super(change);
@@ -69,12 +83,13 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
         window.UiDataGridComponent = this;
     }
-    @Input("queryResult") set setData(data: ClusterExecuteResults) {
+    @Input("editor") set setData(data: WorkbenchEditor) {
         if (data == null) {
             console.log("UiDataGridComponent -> ̣No data");
             return;
         }
-        this.createGridInstance(data);
+        this.currentEditor = data;
+        this.createGridInstance(data.result);
     }
     ngOnInit() {
         this.stateReady.next();
@@ -143,6 +158,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             this.currentStatement = analysis.statements[this.currentStatementIndex];
             this.currentTableStruct = this.currentStatement.tableStruct;
             this.currentPrimaryKeyAvailable = this.primaryKeyAvailable();
+            // const primaryKeyColumns =
+            // this.changeManager = new ChangeManager(analysis,result,columns,);
 
             const types = columns.reduce((acc, curr) => {
                 acc[curr.name] = curr.type;
@@ -154,7 +171,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             const names = columns.map((c) => c.name);
 
             // handle set/map/custom - stringify
-            const dataRows = result.result.rows.map((row) => {
+            this.currentDataRows = result.result.rows.map((row) => {
                 Object.keys(row).forEach((k) => {
                     if (types[k] === "set" || types[k] === "map" || types[k] === "custom") {
                         row[k] = JSON.stringify(row[k]);
@@ -180,14 +197,13 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             });
 
             this.gridSettings = {
-                data: dataRows,
+                data: this.currentDataRows,
                 minSpareCols: 0,
                 minSpareRows: 0,
                 rowHeaders: true,
-                contextMenu: true,
+                // contextMenu: true,
+                contextMenu: gridContextMenu(this),
                 colHeaders: headerRenderer(this.currentColumns, this.currentTableStruct),
-                // colWidths: columnDef.map(() => 50),
-                // colWidths: 100,
                 columns: columnDef,
                 allowRemoveColumn: false,
                 allowRemoveRow: false,
@@ -201,9 +217,9 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 columnSorting: true,
                 fillHandle: false,
                 sortIndicator: true,
-                // renderAllRows: true,
                 autoColumnSize: true,
                 autoRowSize: { syncLimit: 10 },
+                beforeChange: onBeforeChange(this),
                 afterChange: this.onAfterChange,
                 afterRender: (isForced: boolean) => {
                     if (isForced) {
@@ -211,31 +227,27 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
                     }
                 },
+                undo: true,
 
             };
 
-            this.gridInstance = new Handsontable(this.root.nativeElement, this.gridSettings);
+            this.gridInstance = new Handsontable(this.gridHost.nativeElement, this.gridSettings);
             this.gridInstance.updateSettings({
                 cells: cellRenderer(this),
-                // (this.currentPrimaryKeyAvailable),
             }, false);
 
             this.gridInstance.addHook("modifyColWidth", (width: number, col: number) => {
                 if (col < 0) {
                     return width;
                 }
-
                 const c = this.currentColumns[col];
                 const m = measureText(c.name) + 48;
-
-                // console.log(`modifyColWidth width=${width} col=${col} measured=${m}`);
 
                 if (m > width) {
                     return m;
                 }
 
                 return width;
-
             });
 
             this.gridInstance.updateSettings({

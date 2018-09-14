@@ -2002,7 +2002,7 @@ declare namespace Handsontable {
             end: wot.CellCoords
         }
         interface Settings {
-            callback: (key: string, options: contextMenu.Options) => void;
+            callback: (key: string, options: contextMenu.Options, clickEvent: MouseEvent) => void;
             items: any;
         }
     }

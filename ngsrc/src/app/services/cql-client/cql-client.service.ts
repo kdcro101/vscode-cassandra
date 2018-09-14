@@ -19,7 +19,7 @@ export class CqlClientService {
     constructor(private message: MessageService) {
 
     }
-    public execute(clusterName: string, cql: string): Subject<ExecuteQueryResponse> {
+    public execute(clusterName: string, keyspaceInitial: string, cql: string): Subject<ExecuteQueryResponse> {
         this.stateExecuting.next(true);
         const out = new Subject<ExecuteQueryResponse>();
         const id = generateId();
@@ -29,6 +29,7 @@ export class CqlClientService {
             data: {
                 id,
                 clusterName,
+                keyspaceInitial,
                 cql,
             },
         };

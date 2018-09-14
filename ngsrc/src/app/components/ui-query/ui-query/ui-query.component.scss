@@ -20,7 +20,7 @@
                     margin-bottom: 4px;
                 }
                 .progress{
-                    height: 4px;
+                    height: 2px;
                     position: absolute;
                     bottom: 0;
                     right:0;
@@ -75,9 +75,7 @@
                     }
                 }
             }
-            .result-bar {
-                height: 40px;
-            }
+
         }
         ::ng-deep .gutter {
             background-color: mat-color($background, 500);

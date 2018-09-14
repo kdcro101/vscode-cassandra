@@ -1,4 +1,8 @@
-<div class="root" #root>
+<div class="root" #root fxLayout="column">
+    <div fxFlex class="grid-wrap">
+        <div #gridHost class="grid-host"></div>
+    </div>
+    <div>AJ EM BOTTOM</div>
 </div>
 <div *ngIf="currentError" class="error">
     ERROR: {{ currentError.message  }}
