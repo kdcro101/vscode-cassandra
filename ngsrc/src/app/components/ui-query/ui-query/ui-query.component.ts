@@ -137,24 +137,25 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     public executeCql = () => {
         const cql = this.editorCurrent.statement.body;
         const clusterName = this.editorCurrent.statement.clusterName;
+        const keyspace = this.editorCurrent.statement.keyspace;
 
-        // this.cqlClient.execute(clusterName, cql).pipe()
-        //     .subscribe((response: ExecuteQueryResponse) => {
-        //         console.log("[cqlClient.execute] Got result !!!");
+        this.cqlClient.execute(clusterName, keyspace, cql).pipe()
+            .subscribe((response: ExecuteQueryResponse) => {
+                console.log("[cqlClient.execute] Got result !!!");
 
-        //         if (response.error) {
-        //             this.processExecuteError(response);
-        //             return;
-        //         }
+                if (response.error) {
+                    this.processExecuteError(response);
+                    return;
+                }
 
-        //         this.editorCurrent.result = response.result;
+                this.editorCurrent.result = response.result;
 
-        //         this.detectChanges();
-        //     }, (e) => {
-        //         this.snackBar.open(e, "OK", {
-        //             duration: 1000,
-        //         });
-        //     });
+                this.detectChanges();
+            }, (e) => {
+                this.snackBar.open(e, "OK", {
+                    duration: 1000,
+                });
+            });
 
     }
 

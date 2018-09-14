@@ -45,7 +45,12 @@ export class CqlAnalyzerListener implements CqlParserListener {
     private rulePrevious: string;
     private keyspaceAmbiental: string;
 
-    constructor(private ruleNames: string[], private cql: string, private structure: CassandraClusterData) {
+    constructor(
+        private ruleNames: string[],
+        private cql: string,
+        private structure: CassandraClusterData,
+        private keyspaceInitial: string,
+    ) {
 
     }
     public getResult() {

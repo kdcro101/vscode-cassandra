@@ -26,7 +26,7 @@ export interface TokenData {
 }
 
 export class InputParser {
-    public analyze(input: string, structure: CassandraClusterData): CqlAnalysis {
+    public analyze(input: string, structure: CassandraClusterData, keyspaceInitial: string): CqlAnalysis {
         const inputStream = new ANTLRInputStream(input);
         const cqlLexer = new CqlLexer(inputStream);
         const tokenStream = new CommonTokenStream(cqlLexer);

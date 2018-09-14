@@ -184,9 +184,10 @@ export class CassandraWorkbench {
 
         const id = m.data.id;
         const clusterName = m.data.clusterName;
+        const keyspaceInitial = m.data.keyspaceInitial;
         const cql = m.data.cql;
 
-        from(this.clusters.execute(clusterName, cql)).pipe(
+        from(this.clusters.execute(clusterName, keyspaceInitial, cql)).pipe(
         ).subscribe((result: ClusterExecuteResults) => {
 
             const message: ProcMessageStrict<"e2w_executeQueryResponse"> = {

@@ -140,7 +140,7 @@ export class Clusters {
         return this.getClient(i);
 
     }
-    public execute(clusterName: string, cql: string): Promise<ClusterExecuteResults> {
+    public execute(clusterName: string, keyspaceInitial: string, cql: string): Promise<ClusterExecuteResults> {
         return new Promise((resolve, reject) => {
 
             const i = this.getClusterIndex(clusterName);
@@ -155,7 +155,7 @@ export class Clusters {
             from(this.getStructure(i)).pipe(
                 concatMap((d) => {
                     clusterStruct = d;
-                    analysis = this.parser.analyze(cql, clusterStruct);
+                    analysis = this.parser.analyze(cql, clusterStruct, keyspaceInitial);
 
                     if (analysis.selectData && (analysis.alterData || analysis.alterStructure)) {
                         return Promise.reject("select_only");
