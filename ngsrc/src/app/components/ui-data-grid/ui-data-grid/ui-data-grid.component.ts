@@ -8,6 +8,7 @@ import { AnalyzedStatement, CqlAnalysis } from "../../../../../../src/parser/lis
 import { CassandraColumn, CassandraTable } from "../../../../../../src/types/index";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { measureText } from "./measure-width";
+import { cellRenderer } from "./renderers/cell-renderer";
 import { cellRendererJson } from "./renderers/cell-renderer-json";
 import { headerRenderer } from "./renderers/header-renderer";
 
@@ -51,9 +52,10 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     private currentColumns: ColumnInfo[] = null;
     private currentStatementIndex: number = -1;
     private currentStatement: AnalyzedStatement = null;
-    private currentTableStruct: CassandraTable = null;
-
+    public currentTableStruct: CassandraTable = null;
     public currentError: Error = null;
+    public currentPrimaryKeyAvailable: boolean = false;
+
     private eventHeaderCellElement = new Subject<[number, HTMLTableHeaderCellElement]>();
     private stateGridReady = new ReplaySubject<void>(1);
     private optimalColumnWidth: number[] = [];
@@ -79,7 +81,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
         this.eventHostResize.pipe(
             takeUntil(this.eventViewDestroyed),
-            debounceTime(100),
+            debounceTime(20),
             filter(() => this.gridInstance != null),
         ).subscribe(() => {
             this.gridInstance.updateSettings(this.gridSettings, false);
@@ -140,6 +142,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             this.currentAnalysis = analysis;
             this.currentStatement = analysis.statements[this.currentStatementIndex];
             this.currentTableStruct = this.currentStatement.tableStruct;
+            this.currentPrimaryKeyAvailable = this.primaryKeyAvailable();
 
             const types = columns.reduce((acc, curr) => {
                 acc[curr.name] = curr.type;
@@ -213,7 +216,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
             this.gridInstance = new Handsontable(this.root.nativeElement, this.gridSettings);
             this.gridInstance.updateSettings({
-                cells: this.cellsRenderer,
+                cells: cellRenderer(this),
+                // (this.currentPrimaryKeyAvailable),
             }, false);
 
             this.gridInstance.addHook("modifyColWidth", (width: number, col: number) => {
@@ -382,39 +386,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         });
         return sorted;
     }
-    private cellsRenderer = (row?: number, col?: number, prop?: object | number | string): Handsontable.GridSettings => {
 
-        // console.log(`cellsRenderer row=${row} col=${col} prop=${JSON.stringify(prop)}`);
-
-        if (col >= 0 && row >= 0 && this.currentTableStruct) {
-            const name = prop as string;
-            const pkc = this.currentTableStruct.primaryKeys.find((k) => k.name === name);
-            if (pkc && pkc.kind === "partition_key") {
-                const pkcs: Handsontable.GridSettings = {
-                    className: "cell-key-partition",
-                    readOnly: true,
-                };
-
-                return pkcs;
-            }
-            if (pkc && pkc.kind === "clustering") {
-                const pkcs: Handsontable.GridSettings = {
-                    className: "cell-key-column-clustering",
-                    readOnly: true,
-                };
-                return pkcs;
-            }
-
-            // no primary key - everything is readonly
-            if (!this.primaryKeyAvailable()) {
-                return {
-                    readOnly: true,
-                };
-            }
-        }
-
-        return {};
-    }
     private primaryKeyAvailable(): boolean {
         if (!this.currentTableStruct) {
             return false;
@@ -462,35 +434,5 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 console.log(e);
             });
     }
-    private fixInitialColumnWidths() {
-        console.log("fixInitialColumnWidths");
-        const cols = this.currentColumns;
-        const asp = this.gridInstance.getPlugin("autoColumnSize") as Handsontable.plugins.AutoColumnSize;
 
-        const recommended: number[] = cols.map((c, i) => asp.getColumnWidth(i));
-        const measured: number[] = cols.map((c, i) => measureText(c.name) + 48);
-        const optimal: number[] = cols.map((c, i) => measured[i] > recommended[i] ? measured[i] : recommended[i]);
-
-        console.log(JSON.stringify(recommended));
-        console.log(JSON.stringify(measured));
-        console.log(JSON.stringify(optimal));
-
-        this.optimalColumnWidth = optimal;
-
-        this.optimalColumnWidth.forEach((c, i) => {
-
-            // this.gridInstance.setManualSize(i, c);
-
-        });
-
-        // this.gridInstance.updateSettings({
-        //     // manualColumnResize: false,
-        //     colWidths: optimal,
-        // }, false);
-
-        // this.gridInstance.updateSettings({
-        //     manualColumnResize: true,
-        // }, false);
-
-    }
 }

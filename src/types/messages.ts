@@ -101,7 +101,7 @@ export interface ExecuteDataChangeRequest {
 }
 export interface ExecuteDataChangeResponse {
     id: string;
-    results: any[];
+    results: DataChangeItemResult[];
 }
 export interface DataChangeItemResult {
     changeIndex: number;

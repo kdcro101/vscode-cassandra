@@ -3,7 +3,7 @@
 // global
 
 
-.handsontable .wtHider{
+.handsontable .wtHider {
     transform: translate3d(0px, 0px, 0px);
 }
 
@@ -116,4 +116,36 @@
         background: rgba(gold, 0.124);
         color: white;
     }
+    .htContextMenu table tbody tr td.current,
+    .htContextMenu table tbody tr td.zeroclipboard-is-hover {
+        background: mat-color($accent, 500);
+    }
+    .htContextMenu table tbody tr td.htDisabled:hover {
+        background:  mat-color($background, 700);
+        color: #999;
+        cursor: default;
+    }
+    .htContextMenu table.htCore {
+        border: 1px solid mat-color($background, 800);
+        border-bottom-width: 1px!important;
+        border-top-width: 1px!important;
+        border-right-width: 1px!important;
+        border-left-width: 1px!important;
+        box-shadow: 6px 6px 22px -5px rgba(0,0,0,0.75);
+
+        color: #333;
+    }
+    .htContextMenu table tbody tr td{
+
+        border-left: none!important;
+        border-top: none!important;
+        border-right: none!important;
+        border-bottom: none!important;
+        background-color: mat-color($background, 900);
+
+    }
+    .htContextMenu table tbody tr td.htSeparator{
+        border-top: 1px solid mat-color($background, 700)!important;
+    }
+
 }
