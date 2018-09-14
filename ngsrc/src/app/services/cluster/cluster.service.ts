@@ -44,7 +44,7 @@ export class ClusterService {
         };
         this.message.emit(m);
     }
-    private getStructure(clusterName: string): Subject<CassandraClusterData> {
+    public getStructure(clusterName: string): Subject<CassandraClusterData> {
         const out = new Subject<CassandraClusterData>();
 
         console.log(`getStructure: [${clusterName}]`);

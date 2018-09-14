@@ -36,6 +36,7 @@ export interface ProcMessageStrict<T extends keyof ProcMessageList> {
 
 export interface MessageWithId {
     id: string;
+    error?: any;
 }
 
 export interface WebviewStateParams {

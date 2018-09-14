@@ -17,14 +17,20 @@
                 position: relative;
                 mat-icon {
                     margin-right: 8px;
-                    margin-bottom: 4px;
+                    // margin-bottom: 4px;
                 }
-                .progress{
+                .progress {
                     height: 2px;
                     position: absolute;
                     bottom: 0;
-                    right:0;
-                    left:0;
+                    right: 0;
+                    left: 0;
+                }
+                .sep {
+                    width: 32px;
+                }
+                mat-form-field {
+                    margin-bottom: -4px;
                 }
             }
             ui-query-editor {
@@ -43,18 +49,18 @@
                     position: relative;
                     overflow: auto;
                     // .success {}
-                    .errors{
+                    .errors {
                         padding-top: 2px;
-                        .item{
+                        .item {
                             margin-bottom: 2px;
-                            background-color: rgba(0,0,0,0.25);
+                            background-color: rgba(0, 0, 0, 0.25);
                             cursor: pointer;
                             user-select: none;
 
-                            &:active{
-                                background-color: rgba(0,0,0,0.50);
+                            &:active {
+                                background-color: rgba(0, 0, 0, 0.50);
                             }
-                            .index{
+                            .index {
                                 padding-top: 4px;
                                 padding-bottom: 4px;
                                 color: mat-color($warn, 300);
@@ -64,7 +70,7 @@
                                 min-width: 3em;
                                 text-align: right;
                             }
-                            .desc{
+                            .desc {
                                 padding-top: 4px;
                                 padding-bottom: 4px;
                                 padding-left: 8px;

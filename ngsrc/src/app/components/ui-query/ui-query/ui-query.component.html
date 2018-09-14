@@ -2,23 +2,28 @@
     <div #top class="top" fxLayout="column">
         <div fxLayout="row" fxLayoutAlign="start center" class="cluster-actions">
             <mat-icon class="icon-18">cloud_queue</mat-icon>
-            <mat-form-field color="accent" floatLabel="auto" class="no-underline">
+            <mat-form-field color="accent" floatLabel="never" class="no-underline">
                 <mat-select placeholder="Select cluster" [ngModel]="editorCurrent.statement.clusterName" [disabled]="(cqlClient.stateExecuting | async)"
-                    (ngModelChange)="onClusterChange($event)">
+                    (ngModelChange)="onClusterChange($event)" matTooltip="Select cluster">
                     <mat-option *ngFor="let i of clusterList" [value]="i.name">
                         {{i.name}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-icon class="icon-18">lens</mat-icon>
-            <mat-form-field color="accent" floatLabel="auto" class="no-underline">
-                <mat-select placeholder="Select cluster" [ngModel]="editorCurrent.statement.clusterName" [disabled]="(cqlClient.stateExecuting | async)"
-                    (ngModelChange)="onClusterChange($event)">
-                    <mat-option *ngFor="let i of clusterList" [value]="i.name">
-                        {{i.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+            <div class="sep"></div>
+            <mat-progress-spinner *ngIf="clusterLoading" mode="indeterminate" [diameter]="18" color="accent"
+                [strokeWidth]="2" class="keyspace-progress"></mat-progress-spinner>
+            <div *ngIf="!clusterLoading" fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="icon-18">lens</mat-icon>
+                <mat-form-field color="accent" floatLabel="never" class="no-underline">
+                    <mat-select placeholder="Select keyspace" [ngModel]="editorCurrent.statement.keyspace" [disabled]="(cqlClient.stateExecuting | async)"
+                        (ngModelChange)="onKeyspaceChange($event)" matTooltip="Select keyspace">
+                        <mat-option *ngFor="let i of keyspaceList" [value]="i.name">
+                            {{i.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
             <div fxFlex></div>
             <button [disabled]="(cqlClient.stateExecuting | async)" color="accent" mat-button (click)="executeCql()">EXECUTE</button>
             <mat-progress-bar *ngIf="cqlClient.stateExecuting | async" class="progress" mode="indeterminate" color="accent"></mat-progress-bar>

@@ -8,7 +8,7 @@ import { debounceTime, take, takeUntil } from "rxjs/operators";
 import * as Split from "split.js";
 
 import { WorkbenchCqlStatement } from "../../../../../../src/types/editor";
-import { CassandraCluster, ExecuteQueryResponse } from "../../../../../../src/types/index";
+import { CassandraCluster, CassandraClusterData, CassandraKeyspace, ExecuteQueryResponse } from "../../../../../../src/types/index";
 import { ViewDestroyable } from "../../../base/view-destroyable/index";
 import { ClusterService } from "../../../services/cluster/cluster.service";
 import { CqlClientService } from "../../../services/cql-client/cql-client.service";
@@ -30,7 +30,11 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     @ViewChild("monacoEditor") public monacoEditor: UiMonacoEditorComponent;
     @ViewChild("grid") public grid: ElementRef<HTMLTableElement>;
 
+    public clusterLast: string = null;
+    public clusterLoading: boolean = false;
+    public clusterData: CassandraClusterData = null;
     public clusterList: CassandraCluster[] = [];
+    public keyspaceList: CassandraKeyspace[] = [];
     public editorCurrent: WorkbenchEditor = null;
 
     public fontSize: number = 15;
@@ -58,18 +62,6 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         this.fontSize = Math.round(theme.getEditorFontSize() * 1.2);
         this.lineHeight = Math.round(this.fontSize * 1.5);
 
-        this.columnDefs = [
-            { headerName: "Make", field: "make" },
-            { headerName: "Model", field: "model" },
-            { headerName: "Price", field: "price" },
-        ];
-
-        this.rowData = [
-            { make: "Toyota", model: "Celica", price: 35000 },
-            { make: "Ford", model: "Mondeo", price: 32000 },
-            { make: "Porsche", model: "Boxter", price: 72000 },
-        ];
-
     }
     @Input() public set editor(e: WorkbenchEditor) {
         this.stateReady.pipe(
@@ -79,6 +71,11 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
             console.log("set EDITOR");
 
             this.editorCurrent = e;
+
+            if (this.editorCurrent.statement.clusterName !== this.clusterLast) {
+                this.prepareCluster(this.editorCurrent.statement.clusterName);
+            }
+
             this.detectChanges();
 
         });
@@ -126,28 +123,38 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         console.log(`onClusterChange ${clusterName}`);
         this.editorCurrent.statement.clusterName = clusterName;
         this.onStatementChange.emit(this.editorCurrent.statement);
+        this.keyspaceList = [];
+        this.detectChanges();
+
+        this.prepareCluster(clusterName);
+
+    }
+    public onKeyspaceChange = (keyspace: string) => {
+        console.log(`onKeyspaceChange ${keyspace}`);
+        this.editorCurrent.statement.keyspace = keyspace;
+        this.onStatementChange.emit(this.editorCurrent.statement);
     }
     public executeCql = () => {
         const cql = this.editorCurrent.statement.body;
         const clusterName = this.editorCurrent.statement.clusterName;
 
-        this.cqlClient.execute(clusterName, cql).pipe()
-            .subscribe((response: ExecuteQueryResponse) => {
-                console.log("[cqlClient.execute] Got result !!!");
+        // this.cqlClient.execute(clusterName, cql).pipe()
+        //     .subscribe((response: ExecuteQueryResponse) => {
+        //         console.log("[cqlClient.execute] Got result !!!");
 
-                if (response.error) {
-                    this.processExecuteError(response);
-                    return;
-                }
+        //         if (response.error) {
+        //             this.processExecuteError(response);
+        //             return;
+        //         }
 
-                this.editorCurrent.result = response.result;
+        //         this.editorCurrent.result = response.result;
 
-                this.detectChanges();
-            }, (e) => {
-                this.snackBar.open(e, "OK", {
-                    duration: 1000,
-                });
-            });
+        //         this.detectChanges();
+        //     }, (e) => {
+        //         this.snackBar.open(e, "OK", {
+        //             duration: 1000,
+        //         });
+        //     });
 
     }
 
@@ -196,6 +203,26 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         this.decorationsTimeout = setTimeout(() => {
             this.decorations = editor.deltaDecorations(this.decorations, []);
         }, 1000);
+
+    }
+    private prepareCluster(clusterName: string) {
+
+        this.clusterLoading = true;
+
+        this.cluster.getStructure(clusterName).pipe()
+            .subscribe((data) => {
+                this.clusterLast = clusterName;
+                this.clusterData = data;
+                this.keyspaceList = data.keyspaces;
+
+                this.clusterLoading = false;
+                this.detectChanges();
+            }, (e) => {
+                this.snackBar.open("Error loading cluster structure");
+                console.log(e);
+                this.clusterLoading = false;
+                this.detectChanges();
+            });
 
     }
 }

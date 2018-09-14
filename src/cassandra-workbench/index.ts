@@ -140,6 +140,9 @@ export class CassandraWorkbench {
             case "w2e_executeQueryRequest":
                 this.executeQueryRespond(m as ProcMessageStrict<"w2e_executeQueryRequest">);
                 break;
+            case "w2e_getClusterStructRequest":
+                this.getClusterStructureRespond(m as ProcMessageStrict<"w2e_getClusterStructRequest">);
+                break;
 
         }
     }
@@ -206,6 +209,37 @@ export class CassandraWorkbench {
             this.panel.emitMessage(errorMessage);
         });
 
+    }
+    private getClusterStructureRespond(m: ProcMessageStrict<"w2e_getClusterStructRequest">) {
+        const clusterName = m.data.clusterName;
+        const clusterIndex = this.clusters.getClusterIndex(clusterName);
+        const id = m.data.id;
+
+        this.clusters.getStructure(clusterIndex, false)
+            .then((result) => {
+
+                const out: ProcMessageStrict<"e2w_getClusterStructResponse"> = {
+                    name: "e2w_getClusterStructResponse",
+                    data: {
+                        id,
+                        result,
+                    },
+                };
+                this.panel.emitMessage(out);
+
+            }).catch((e) => {
+                console.log(e);
+                const out: ProcMessageStrict<"e2w_getClusterStructResponse"> = {
+                    name: "e2w_getClusterStructResponse",
+                    data: {
+                        id,
+                        error: true,
+                        result: null,
+                    },
+
+                };
+                this.panel.emitMessage(out);
+            });
     }
 
 }
