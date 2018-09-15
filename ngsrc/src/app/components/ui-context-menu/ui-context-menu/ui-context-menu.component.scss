@@ -1,9 +1,7 @@
 @import "../../../../scss/colors";
 :host {
-    // background: red;
     position: relative;
-    // overflow: hidden;
-    // back
+    transform-origin: top left;
 
     .root {
         overflow: hidden;
@@ -16,6 +14,7 @@
         .item {
             padding: 8px 16px;
             padding-right: 56px;
+            position: relative;
             mat-icon {
                 margin-right: 16px;
             }
@@ -26,8 +25,8 @@
         .separator {
             border-top: 1px solid mat-color($background, 700);
             height: 0px;
-            margin-top:2px;
-            margin-bottom:2px;
+            margin-top: 2px;
+            margin-bottom: 2px;
         }
     }
 }

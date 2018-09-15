@@ -52,6 +52,8 @@ export class CqlAnalyzerListener implements CqlParserListener {
         private keyspaceInitial: string,
     ) {
 
+        this.keyspaceAmbiental = this.keyspaceInitial;
+
     }
     public getResult() {
         return this.result;

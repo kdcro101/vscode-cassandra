@@ -16,11 +16,12 @@
                 padding-right: 16px;
                 position: relative;
                 mat-icon {
-                    margin-right: 8px;
+                    margin-right: 16px;
+                    color: mat-color($background, 500);
                     // margin-bottom: 4px;
                 }
                 .progress {
-                    height: 2px;
+                    height: 1px;
                     position: absolute;
                     bottom: 0;
                     right: 0;
@@ -31,6 +32,9 @@
                 }
                 mat-form-field {
                     margin-bottom: -4px;
+                }
+                .cluster-loading-error {
+                    color: mat-color($warn, 500);
                 }
             }
             ui-query-editor {

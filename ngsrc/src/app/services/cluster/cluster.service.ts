@@ -65,8 +65,15 @@ export class ClusterService {
             filter((mi: ProcMessageStrict<"e2w_getClusterStructResponse">) => mi.data.id === id),
             take(1) ,
         ).subscribe((message) => {
-            const result = message.data.result;
-            out.next(result);
+
+            if (message.data.error === true) {
+                out.error("client_error");
+            } else {
+                const result = message.data.result;
+                out.next(result);
+
+            }
+
         }, (e) => {
             console.log(e);
             out.error("response_error");

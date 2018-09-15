@@ -32,6 +32,8 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
 
     public clusterLast: string = null;
     public clusterLoading: boolean = false;
+    public clusterLoadingError: boolean = false;
+
     public clusterData: CassandraClusterData = null;
     public clusterList: CassandraCluster[] = [];
     public keyspaceList: CassandraKeyspace[] = [];
@@ -135,6 +137,11 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         this.onStatementChange.emit(this.editorCurrent.statement);
     }
     public executeCql = () => {
+
+        if (this.clusterLoading || this.clusterLoadingError) {
+            return;
+        }
+
         const cql = this.editorCurrent.statement.body;
         const clusterName = this.editorCurrent.statement.clusterName;
         const keyspace = this.editorCurrent.statement.keyspace;
@@ -217,11 +224,13 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
                 this.keyspaceList = data.keyspaces;
 
                 this.clusterLoading = false;
+                this.clusterLoadingError = false;
                 this.detectChanges();
             }, (e) => {
                 this.snackBar.open("Error loading cluster structure");
                 console.log(e);
                 this.clusterLoading = false;
+                this.clusterLoadingError = true;
                 this.detectChanges();
             });
 

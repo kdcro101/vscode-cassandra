@@ -1,4 +1,5 @@
 import * as cassandra from "cassandra-driver";
+
 import { from, Subject } from "rxjs";
 import { concatMap, tap } from "rxjs/operators";
 import { CassandraClient, ColumnInfo } from "../cassandra-client/index";
@@ -162,17 +163,26 @@ export class Clusters {
                     }
                     return Promise.resolve();
                 }),
-                concatMap(() => this.getClientByClusterName(clusterName)),
+                concatMap(() => {
+                    return this.getClientByClusterName(clusterName)
+                        .then((client) => {
+                            return Promise.all([
+                                client, this.initializeKeyspace(client, keyspaceInitial),
+                            ]);
+                        }).then((result) => {
+                            const client = result[0];
+                            return Promise.resolve(client);
+                        });
+                }),
                 concatMap((client) => this.executeCqlAnalysis(client, analysis)),
             ).subscribe((result) => {
-                // const out: ClusterExecuteResults = {
-                //     results: resultset,
-                //     structure: s,
-                //     analysis: a,
-                // };
+
                 resolve(result);
+
             }, (e) => {
+
                 reject(e);
+
             });
 
         });
@@ -242,6 +252,26 @@ export class Clusters {
                     resolve([result, null, columns]);
                 }).catch((e) => {
                     resolve([null, e, null]);
+                });
+
+        });
+    }
+    private initializeKeyspace(client: CassandraClient, keyspace: string): Promise<void> {
+        if (keyspace == null) {
+            return Promise.resolve();
+        }
+        if (client == null) {
+            return Promise.reject("no_client");
+        }
+        return new Promise((resolve, reject) => {
+
+            const cql = `USE ${keyspace};`;
+
+            client.execute(cql)
+                .then((result) => {
+                    resolve();
+                }).catch((e) => {
+                    reject(e);
                 });
 
         });

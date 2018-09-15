@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { interval, ReplaySubject, Subject } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
 import { AutocompleteService } from "../autocomplete/autocomplete.service";
+import { ThemeService } from "../theme/theme.service";
 import { cqlCompletitionProvider } from "./lang/completition";
 import { cqlLanguageConfig, cqlTokenProvider } from "./lang/tokens";
 
@@ -11,7 +12,7 @@ import { cqlLanguageConfig, cqlTokenProvider } from "./lang/tokens";
 export class MonacoService {
     public stateReady = new ReplaySubject<void>();
     private eventReady = new Subject<void>();
-    constructor(private autocomplete: AutocompleteService) {
+    constructor(private autocomplete: AutocompleteService, private theme: ThemeService) {
 
         interval(20).pipe(
             takeUntil(this.eventReady),
@@ -40,30 +41,9 @@ export class MonacoService {
         monaco.languages.setMonarchTokensProvider("cql", cqlTokenProvider);
         monaco.languages.setLanguageConfiguration("cql", cqlLanguageConfig);
         monaco.languages.registerCompletionItemProvider("cql", cqlCompletitionProvider(this.autocomplete));
-        monaco.editor.setTheme("vs-dark");
+        const theme = this.theme.isDark ? "vs-dark" : "vs-light";
+        monaco.editor.setTheme(theme);
 
-        monaco.languages.registerCodeLensProvider("cql", {
-            provideCodeLenses: (model, token) => {
-                return [
-                    {
-                        range: {
-                            startLineNumber: 1,
-                            startColumn: 1,
-                            endLineNumber: 2,
-                            endColumn: 1,
-                        },
-                        id: "First Line",
-                        command: {
-                            id: null,
-                            title: "Abcdefgh",
-                        },
-                    },
-                ];
-            },
-            resolveCodeLens: (model, codeLens, token) => {
-                return codeLens;
-            },
-        });
     }
 
 }

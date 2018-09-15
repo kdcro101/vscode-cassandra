@@ -101,7 +101,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
                 const rect = this.host.nativeElement.getBoundingClientRect();
 
-                this.contextMenu.show(eme.event.posx, eme.event.posy);
+                this.contextMenu.show(eme.event.posx, eme.event.posy, this.root.nativeElement.getBoundingClientRect());
 
             });
 

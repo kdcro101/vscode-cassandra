@@ -14,8 +14,8 @@
             <div class="sep"></div>
             <mat-progress-spinner *ngIf="clusterLoading" mode="indeterminate" [diameter]="18" color="accent"
                 [strokeWidth]="2" class="keyspace-progress"></mat-progress-spinner>
-            <div *ngIf="!clusterLoading" fxLayout="row" fxLayoutAlign="start center">
-                <mat-icon class="icon-18">lens</mat-icon>
+            <div *ngIf="!clusterLoading && !clusterLoadingError" fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="icon-18">panorama_fish_eye</mat-icon>
                 <mat-form-field color="accent" floatLabel="never" class="no-underline">
                     <mat-select panelClass="material-custom drop-down" placeholder="Select keyspace" [ngModel]="editorCurrent.statement.keyspace"
                         [disabled]="(cqlClient.stateExecuting | async)" (ngModelChange)="onKeyspaceChange($event)"
@@ -26,8 +26,9 @@
                     </mat-select>
                 </mat-form-field>
             </div>
+            <div *ngIf="clusterLoadingError && !clusterLoading" class="cluster-loading-error mat-caption">Error retrieving cluster structure</div>
             <div fxFlex></div>
-            <button [disabled]="(cqlClient.stateExecuting | async)" color="accent" mat-button (click)="executeCql()">EXECUTE</button>
+            <button [disabled]="(cqlClient.stateExecuting | async) || clusterLoadingError || clusterLoading" color="accent" mat-button (click)="executeCql()">EXECUTE</button>
             <mat-progress-bar *ngIf="cqlClient.stateExecuting | async" class="progress" mode="indeterminate" color="accent"></mat-progress-bar>
         </div>
         <ui-monaco-editor #monacoEditor [editor]="editorCurrent" (onCodeChange)="onCodeChange($event)" (onExecute)="executeCql()"
@@ -35,7 +36,8 @@
     </div>
     <div #bottom class="bottom" fxLayout="column">
         <div fxFlex class="bottom-client" fxLayout="column">
-            <ui-data-grid fxFlex [editor]="editorCurrent" *ngIf="editorCurrent.result && editorCurrent.result.analysis.selectData"></ui-data-grid>
+            <ui-data-grid fxFlex [editor]="editorCurrent"
+             *ngIf="(cqlClient.stateExecuting | async) && editorCurrent.result && editorCurrent.result.analysis.selectData"></ui-data-grid>
             <div class="result-panel" *ngIf="editorCurrent.result && !editorCurrent.result.analysis.selectData" fxFlex>
                 <div class="success" *ngIf="editorCurrent.result.errors==null || editorCurrent.result.errors.length===0">
                     Success

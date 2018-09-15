@@ -5,7 +5,10 @@
 .vscode-high-contrast {
     .material-custom.drop-down mat-option {
         // background-color: red;
-
+        user-select: none;
+        * {
+            user-select: none;
+        }
         &.mat-selected {
             background-color: #e91e63 !important;
             color: #fafafa !important;
@@ -23,4 +26,10 @@
         }
     }
 
+}
+
+
+.backdrop-hidden {
+    opacity: 0;
+    background: transparent;
 }
