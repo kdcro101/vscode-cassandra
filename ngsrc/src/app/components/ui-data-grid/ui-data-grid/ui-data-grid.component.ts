@@ -16,6 +16,8 @@ import { cellRenderer } from "./renderers/cell-renderer";
 import { cellRendererJson } from "./renderers/cell-renderer-json";
 import { headerRenderer } from "./renderers/header-renderer";
 
+import beautify from "json-beautify";
+
 const ARROW_DOWN = 40;
 const ARROW_UP = 38;
 const ARROW_LEFT = 37;
@@ -174,7 +176,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             this.currentDataRows = result.result.rows.map((row) => {
                 Object.keys(row).forEach((k) => {
                     if (types[k] === "set" || types[k] === "map" || types[k] === "custom") {
-                        row[k] = JSON.stringify(row[k]);
+                        // row[k] = JSON.stringify(row[k]);
+                        row[k] = beautify(row[k], null, 2);
                     }
                 });
                 return row;
@@ -220,7 +223,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 autoColumnSize: true,
                 autoRowSize: { syncLimit: 10 },
                 beforeChange: onBeforeChange(this),
-                afterChange: this.onAfterChange,
+                // afterChange: this.onAfterChange,
                 afterRender: (isForced: boolean) => {
                     if (isForced) {
                         this.stateGridReady.next();

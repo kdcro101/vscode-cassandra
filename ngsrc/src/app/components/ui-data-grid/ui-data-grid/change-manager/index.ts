@@ -15,7 +15,7 @@ export class ChangeManager {
 
     constructor(private editor: WorkbenchEditor) {
         this.clusterName = editor.statement.clusterName;
-        // this.keyspace = editor.statement.keyspace || editor.result
+        // this.keyspace = editor.statement.keyspace || editor.result.analysis
     }
     public add(row: number, prop: string, valueOld: any, valueNew: any) {
         // const clusterName = dataf

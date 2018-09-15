@@ -29,6 +29,7 @@
     "core-js": "^2.5.4",
     "hoek": "^4.2.1",
     "install": "^0.12.1",
+    "json-beautify": "^1.0.1",
     "lodash-es": "^4.17.10",
     "monaco-editor": "^0.14.3",
     "resize-observer-polyfill": "^1.5.0",

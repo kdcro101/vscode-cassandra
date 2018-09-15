@@ -7,6 +7,7 @@ import { ReplaySubject, Subject } from "rxjs";
 import { debounceTime, take, takeUntil } from "rxjs/operators";
 import * as Split from "split.js";
 
+import { CqlAnalysisError } from "../../../../../../src/parser/listeners/cql-analyzer";
 import { WorkbenchCqlStatement } from "../../../../../../src/types/editor";
 import { CassandraCluster, CassandraClusterData, CassandraKeyspace, ExecuteQueryResponse } from "../../../../../../src/types/index";
 import { ViewDestroyable } from "../../../base/view-destroyable/index";
@@ -146,6 +147,9 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         const clusterName = this.editorCurrent.statement.clusterName;
         const keyspace = this.editorCurrent.statement.keyspace;
 
+        this.editorCurrent.result = null;
+        this.detectChanges();
+
         this.cqlClient.execute(clusterName, keyspace, cql).pipe()
             .subscribe((response: ExecuteQueryResponse) => {
                 console.log("[cqlClient.execute] Got result !!!");
@@ -156,8 +160,8 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
                 }
 
                 this.editorCurrent.result = response.result;
-
                 this.detectChanges();
+
             }, (e) => {
                 this.snackBar.open(e, "OK", {
                     duration: 1000,
@@ -169,9 +173,16 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     public processExecuteError(response: ExecuteQueryResponse) {
         let message: string = "";
         switch (response.error) {
-            case "select_only":
+            case CqlAnalysisError.SELECT_AND_ALTER:
                 message = "Unable to execute SELECT statement along with data or structure altering statements";
                 break;
+            case CqlAnalysisError.MULTIPLE_SELECT:
+                message = "Unable to execute multiple SELECT statements";
+                break;
+            default:
+                message = `ERROR: ${ JSON.stringify(response.error) }`;
+                break;
+
         }
 
         this.snackBar.open(message, "OK", {

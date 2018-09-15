@@ -37,7 +37,7 @@
     <div #bottom class="bottom" fxLayout="column">
         <div fxFlex class="bottom-client" fxLayout="column">
             <ui-data-grid fxFlex [editor]="editorCurrent"
-             *ngIf="(cqlClient.stateExecuting | async) && editorCurrent.result && editorCurrent.result.analysis.selectData"></ui-data-grid>
+             *ngIf="!(cqlClient.stateExecuting | async) && editorCurrent.result && editorCurrent.result.analysis.selectData"></ui-data-grid>
             <div class="result-panel" *ngIf="editorCurrent.result && !editorCurrent.result.analysis.selectData" fxFlex>
                 <div class="success" *ngIf="editorCurrent.result.errors==null || editorCurrent.result.errors.length===0">
                     Success

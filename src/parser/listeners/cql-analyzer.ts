@@ -20,6 +20,12 @@ export interface CqlAnalysis {
     alterData: boolean;
     alterStructure: boolean;
     selectData: boolean;
+    error?: CqlAnalysisError;
+}
+export enum CqlAnalysisError {
+    SELECT_AND_ALTER = "SELECT_AND_ALTER",
+    MULTIPLE_SELECT = "MULTIPLE_SELECT",
+    NO_KEYSPACE = "NO_KEYSPACE",
 }
 
 export type StatementType = "empty" |
@@ -42,6 +48,7 @@ export class CqlAnalyzerListener implements CqlParserListener {
         alterStructure: false,
         selectData: false,
     };
+
     private rulePrevious: string;
     private keyspaceAmbiental: string;
 
@@ -106,6 +113,13 @@ export class CqlAnalyzerListener implements CqlParserListener {
         this.result.statements.forEach((s, i) => {
             this.result.statements[i].text = this.cql.substring(s.charStart, s.charStop + 1);
         });
+
+        if ((this.result.alterData || this.result.alterStructure) && this.result.selectData) {
+            this.result.error = CqlAnalysisError.SELECT_AND_ALTER;
+        }
+        if (selectData.length > 1) {
+            this.result.error = CqlAnalysisError.MULTIPLE_SELECT;
+        }
 
         this.result.statements.forEach((s, i) => {
             if (s.type === "select" && s.keyspace && s.table) {
