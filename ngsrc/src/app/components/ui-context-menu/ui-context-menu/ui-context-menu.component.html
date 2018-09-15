@@ -1,0 +1,15 @@
+<div #root class="root mat-app-background mat-caption mat-elevation-z3">
+    <div class="item copy" fxLayout="row" fxLayoutAlign="start center" (click)="onCommand('copy')">
+        <mat-icon class="icon-18">content_copy</mat-icon>
+        <div>Copy</div>
+    </div>
+    <div class="item cut" fxLayout="row" fxLayoutAlign="start center" (click)="onCommand('cut')">
+        <mat-icon class="icon-18">content_cut</mat-icon>
+        <div>Cut</div>
+    </div>
+    <div class="separator"></div>
+    <div class="item paste" fxLayout="row" fxLayoutAlign="start center"  (click)="onCommand('paste')">
+        <mat-icon class="icon-18">content_paste</mat-icon>
+        <div>Paste</div>
+    </div>
+</div>

@@ -1,8 +1,9 @@
+
 import {
-    ChangeDetectionStrategy, ChangeDetectorRef, Component,
-    ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild,
+    ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef,
+    EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild,
 } from "@angular/core";
-import { MatMenuTrigger } from "@angular/material";
+import { MatMenu, MatMenuTrigger } from "@angular/material";
 import { fromEvent, fromEventPattern, ReplaySubject, Subject } from "rxjs";
 import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
 import { CqlParserError } from "../../../../../../src/parser/index";
@@ -10,8 +11,7 @@ import { ViewDestroyable } from "../../../base/view-destroyable";
 import { MonacoService } from "../../../services/monaco/monaco.service";
 import { ParserService } from "../../../services/parser/parser.service";
 import { WorkbenchEditor } from "../../../types/index";
-
-// declare var window: Window;
+import { UiContextMenuService } from "../../ui-context-menu/service";
 
 @Component({
     selector: "ui-monaco-editor",
@@ -24,8 +24,6 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
     @Output("onExecute") public onExecute = new EventEmitter<string>();
     @ViewChild("root") public root: ElementRef<HTMLDivElement>;
 
-    @ViewChild(MatMenuTrigger) contextMenu: MatMenuTrigger;
-
     public monacoEditor: monaco.editor.IStandaloneCodeEditor;
     public editorCurrent: WorkbenchEditor;
 
@@ -33,15 +31,16 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
     private eventCodeChange = new Subject<string>();
     private stateReady = new ReplaySubject<void>(1);
 
-    public contextMenuX: number = 0;
-    public contextMenuY: number = 0;
-    public contextOpened: boolean = false;
+    // public contextMenuX: number = 0;
+    // public contextMenuY: number = 0;
+    // public contextOpened: boolean = false;
 
     constructor(
         public host: ElementRef<HTMLDivElement>,
         public change: ChangeDetectorRef,
         private monacoService: MonacoService,
         private parser: ParserService,
+        private contextMenu: UiContextMenuService,
     ) {
         super(change);
 
@@ -72,18 +71,10 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             take(1),
         ).subscribe(() => {
 
-            this.contextMenu.menuClosed.pipe(
+            this.contextMenu.eventCommand.pipe(
                 takeUntil(this.eventViewDestroyed),
-            ).subscribe(() => {
-                this.contextOpened = false;
-                this.contextMenuX = 0;
-                this.contextMenuY = 0;
-                this.detectChanges();
-            });
-            this.contextMenu.menuOpened.pipe(
-                takeUntil(this.eventViewDestroyed),
-            ).subscribe(() => {
-                this.contextOpened = true;
+            ).subscribe((c) => {
+                this.doCommand(c);
             });
 
             this.monacoEditor = monaco.editor.create(this.root.nativeElement, {
@@ -110,21 +101,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
                 const rect = this.host.nativeElement.getBoundingClientRect();
 
-                this.contextMenuX = eme.event.posx - rect.left;
-                this.contextMenuY = eme.event.posy - rect.top;
-                this.detectChanges();
-                console.log(`Menu @ [${this.contextMenuX},${this.contextMenuY}]`);
-
-                this.contextMenu.openMenu();
-                this.contextOpened = true;
-
-                fromEvent<KeyboardEvent>(window, "keyup", { capture: true }).pipe(
-                    takeUntil(this.contextMenu.menuClosed),
-                    filter((e) => e.keyCode === 27),
-                ).subscribe(() => {
-                    console.log("Closiung on window event");
-                    this.contextMenu.closeMenu();
-                });
+                this.contextMenu.show(eme.event.posx, eme.event.posy);
 
             });
 
@@ -140,7 +117,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 takeUntil(this.eventViewDestroyed),
                 filter((e) => e.browserEvent.ctrlKey && e.browserEvent.keyCode === 13),
             ).subscribe((e) => {
-                console.log("KY EXECUTE");
+
                 e.preventDefault();
                 e.stopPropagation();
                 this.onExecute.next();
@@ -251,5 +228,23 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         this.monacoEditor.focus();
         document.execCommand("paste");
 
+    }
+    public doCut = () => {
+        this.monacoEditor.focus();
+        document.execCommand("cut");
+
+    }
+    public doCommand(command: string) {
+        switch (command) {
+            case "copy":
+                this.doCopy();
+                break;
+            case "cut":
+                this.doCut();
+                break;
+            case "paste":
+                this.doPaste();
+                break;
+        }
     }
 }

@@ -1,0 +1,33 @@
+@import "../../../../scss/colors";
+:host {
+    // background: red;
+    position: relative;
+    // overflow: hidden;
+    // back
+
+    .root {
+        overflow: hidden;
+        border-radius: 2px;
+
+        padding-top: 8px;
+        padding-bottom: 8px;
+        user-select: none;
+        cursor: pointer;
+        .item {
+            padding: 8px 16px;
+            padding-right: 56px;
+            mat-icon {
+                margin-right: 16px;
+            }
+            &:hover {
+                background: mat-color($accent, 500);
+            }
+        }
+        .separator {
+            border-top: 1px solid mat-color($background, 700);
+            height: 0px;
+            margin-top:2px;
+            margin-bottom:2px;
+        }
+    }
+}
