@@ -16,6 +16,7 @@ import { cellRenderer } from "./renderers/cell-renderer";
 import { cellRendererJson } from "./renderers/cell-renderer-json";
 import { headerRenderer } from "./renderers/header-renderer";
 import { RowSelection } from "./row-selection/row-selection";
+import { ScrollAssist } from "./scroll-assist/scroll-assist";
 
 const ARROW_DOWN = 40;
 const ARROW_UP = 38;
@@ -86,7 +87,10 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     private stateGridReady = new ReplaySubject<void>(1);
 
     public changeManager: ChangeManager = null;
-    public rowSelection: RowSelection = new RowSelection();
+    public scrollAssist: ScrollAssist;
+
+    public selectionActive: boolean = false;
+    public selectionStart: [number, number] = null;
 
     constructor(public host: ElementRef<HTMLDivElement>, public change: ChangeDetectorRef) {
         super(change);
@@ -96,6 +100,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         this.hostResizeObs.observe(this.host.nativeElement);
 
         window.UiDataGridComponent = this;
+
     }
     @Input("editor") set setData(data: WorkbenchEditor) {
         if (data == null) {
@@ -163,7 +168,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
         this.currentError = null;
         this.stateGridReady = new ReplaySubject<void>(1);
-        this.rowSelection.clear();
+        // this.rowSelection.clear();
         this.detectChanges();
 
         console.log("createGridInstance: ClusterExecuteResults");
@@ -263,16 +268,22 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 manualColumnResize: true,
                 manualRowResize: true,
                 beforeKeyDown: this.onBeforeKeydown,
-                selectionMode: "single",
+                selectionMode: "multiple",
                 columnSorting: true,
                 fillHandle: false,
                 sortIndicator: true,
                 autoColumnSize: true,
                 autoRowSize: { syncLimit: 10 },
                 beforeChange: onBeforeChange(this),
+                afterSelection: this.onAfterSelection,
+                afterSelectionEnd: this.onAfterSelectionEnd,
                 // afterChange: this.onAfterChange,
                 afterOnCellMouseDown: this.onCellMouseDown,
-                afterSelectionEnd: this.onAfterSelectionEnd,
+                viewportColumnRenderingOffset: 10,
+                viewportRowRenderingOffset: 10,
+                beforeOnCellMouseOver: this.onBeforeOnCellMouseOver,
+                // disableVisualSelection: ["area"],
+                // currentRowClassName: "highlighted",
                 afterRender: (isForced: boolean) => {
                     if (isForced) {
                         this.stateGridReady.next();
@@ -311,6 +322,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             ).subscribe(() => {
                 // this.fixInitialColumnWidths();
             });
+
+            this.scrollAssist = new ScrollAssist(this);
 
         });
 
@@ -500,23 +513,61 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             });
     }
     private onCellMouseDown = (event: MouseEvent, coords: CellCoord, TD: Element): void => {
-        if (coords.row > -1 && coords.col === -1) {
-            this.onRowHeaderMousedown(event, coords);
-        }
+        // if (coords.row > -1 && coords.col === -1) {
+        //     this.onRowHeaderMousedown(event, coords);
+        // }
+        // if (coords.col > -1) {
+        //     this.rowSelection.clear();
+        // }
+
         this.cellActive.col = coords.col;
         this.cellActive.row = coords.row;
-    }
-    private onAfterSelectionEnd = (r: number, c: number, r2: number, c2: number, selectionLayerLevel: number): void => {
-        const sel = this.gridInstance.getSelected();
-        console.log(`onAfterSelectionEnd`);
-        if (sel.length === 0) {
-            return;
-        }
-        sel.forEach((s, i) => {
-            console.log(JSON.stringify(s));
-        });
-    }
-    private onRowHeaderMousedown(event: MouseEvent, coords: CellCoord) {
 
     }
+
+    private onRowHeaderMousedown(event: MouseEvent, coords: CellCoord) {
+        // console.log(`onRowHeaderMousedown`);
+        // const shift = event.shiftKey;
+        // const ctrl = event.ctrlKey;
+        // if (!shift && !ctrl) {
+        //     this.rowSelection.start(coords.row);
+        //     return;
+        // }
+        // if (shift) {
+        //     this.rowSelection.extendTo(coords.row);
+        //     return;
+        // }
+        // if (ctrl) {
+        //     this.rowSelection.add(coords.row);
+        //     return;
+        // }
+
+    }
+
+    public onAfterSelection = (r: number, c: number, r2: number, c2: number, preventScrolling: object, selectionLayerLevel: number) => {
+        if (this.selectionActive === false) {
+            this.selectionActive = true;
+            this.selectionStart = [c, r];
+            console.log(`onAfterSelection`);
+        }
+    }
+    public onBeforeOnCellMouseOver = (event: Event, coords: Handsontable.wot.CellCoords, TD: Element, blockCalculations: object) => {
+
+        // if (this.selectionActive && coords.row !== this.selectionStart[1] && coords.col >= 0) {
+        //     const c = this.selectionStart[0];
+        //     const r = this.selectionStart[1];
+
+        //     const c1 = coords.col;
+        //     const r1 = this.selectionStart[1];
+
+        //     // this.gridInstance.selectCells([[r, c, r1, c1]], true, true);
+        //     event.stopImmediatePropagation();
+        // }
+
+    }
+    public onAfterSelectionEnd = (r: number, c: number, r2: number, c2: number, selectionLayerLevel: number): void => {
+        this.selectionActive = false;
+        console.log(`onAfterSelectionEnd`);
+    }
+
 }

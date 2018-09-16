@@ -104,8 +104,13 @@
         transform: translate3d(0, 0, 0);
     }
     .handsontable .changed {
-        background-color: mat-color($accent, 500);
-        color: mat-color($background, 50);
+        background-color: mat-color($accent, 500)!important;
+        color: mat-color($background, 50)!important;
+
+    }
+    .handsontable .highlighted {
+        background-color: mat-color($blue, 500)!important;
+        color: mat-color($background, 50)!important;
 
     }
     .handsontable .cell-key-partition {
