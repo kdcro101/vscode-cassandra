@@ -17,10 +17,27 @@ export const gridContextMenu = (dataGrid: UiDataGridComponent): Handsontable.con
             // },
             "revert": { // Own custom option
                 name: "Revert changes",
+                disabled: () => {
+                    const cell = dataGrid.cellActive;
+                    if (cell.row < 0 || cell.col < 0) {
+                        return true;
+                    }
+                    const colName = dataGrid.currentColumns[cell.col].name;
+                    const changed = dataGrid.changeManager.isChanged(cell.row, colName);
+                    return !changed;
+                },
                 callback: () => { // Callback for specific option
-                    setTimeout(() => {
-                        console.log("Reverting changes");
-                    }, 0);
+                    console.log("Reverting changes");
+                    const cell = dataGrid.cellActive;
+                    if (cell.row < 0 || cell.col < 0) {
+                        return true;
+                    }
+                    const colName = dataGrid.currentColumns[cell.col].name;
+                    const item = dataGrid.changeManager.remove(cell.row, colName);
+
+                    dataGrid.currentDataRows[cell.row][colName] = item.valueOld;
+                    dataGrid.gridInstance.render();
+
                 },
             },
             "sep0": { name: "---------" },

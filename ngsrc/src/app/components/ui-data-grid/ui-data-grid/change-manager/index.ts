@@ -20,19 +20,19 @@ export class ChangeManager {
         this.keys = dataGrid.currentTableStruct.primaryKeys;
         this.rowData = dataGrid.currentDataRows;
     }
-    public remove(clusterName: string, keyspace: string, row: number, column: string) {
-        const index = this.getItemIndex(clusterName, keyspace, row, column);
+    public remove(row: number, column: string): DataChangeItem {
+        const index = this.getItemIndex(row, column);
 
         if (index < 0) {
             return;
         }
-        this.removeItem(index);
+        return this.removeItem(index);
     }
-    public add(clusterName: string, keyspace: string, row: number, column: string, valueOld: any, valueNew: any) {
+    public add(row: number, column: string, valueOld: any, valueNew: any) {
 
-        const index = this.getItemIndex(clusterName, keyspace, row, column);
+        const index = this.getItemIndex(row, column);
         if (index === -1) {
-            this.createItem(clusterName, keyspace, row, column, valueOld, valueNew);
+            this.createItem(row, column, valueOld, valueNew);
         } else {
             this.updateItem(index, valueNew);
         }
@@ -42,11 +42,11 @@ export class ChangeManager {
             this.removeItem(i);
         });
     }
-    private getItemIndex(clusterName: string, keyspace: string, row: number, column: string): number {
+    private getItemIndex(row: number, column: string): number {
         const index = this.que.findIndex((i) => {
             return (
-                i.clusterName === clusterName &&
-                i.keyspace === keyspace &&
+                i.clusterName === this.dataGrid.currentClusterName &&
+                i.keyspace === this.dataGrid.currentKeyspace &&
                 i.row === row &&
                 i.column === column
             );
@@ -54,12 +54,12 @@ export class ChangeManager {
         return index;
     }
 
-    private createItem(clusterName: string, keyspace: string, row: number, column: string, valueOld: any, valueNew: any) {
+    private createItem(row: number, column: string, valueOld: any, valueNew: any) {
         const rowData = this.dataGrid.currentDataRows[row];
         const pks = this.collectPrimaryKey(rowData);
         const item: DataChangeItem = {
-            clusterName,
-            keyspace,
+            clusterName: this.dataGrid.currentClusterName,
+            keyspace: this.dataGrid.currentKeyspace,
             row,
             column,
             primaryKeyValues: pks,
@@ -85,11 +85,22 @@ export class ChangeManager {
         item.valueNew = value;
         ChangeManager.eventUpdate.next(item);
     }
-    private removeItem(index: number): void {
+    private removeItem(index: number): DataChangeItem {
         if (index < 0 || index >= this.que.length) {
             return;
         }
         const item = this.que.splice(index, 1)[0];
         ChangeManager.eventRemove.next(item);
+
+        return item;
     }
+    public isChanged(row: number, column: string): boolean {
+        const index = this.getItemIndex(row, column);
+
+        if (index < 0) {
+            return false;
+        }
+        return true;
+    }
+
 }

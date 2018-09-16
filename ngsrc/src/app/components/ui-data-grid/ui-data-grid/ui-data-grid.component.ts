@@ -40,6 +40,12 @@ interface CellChangeEvent {
     valueNew: any;
     rowData: any;
 }
+
+interface CellCoord {
+    row: number;
+    col: number;
+}
+
 declare var window: any;
 
 @Component({
@@ -52,7 +58,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     @ViewChild("root") public root: ElementRef<HTMLDivElement>;
     @ViewChild("gridHost") public gridHost: ElementRef<HTMLDivElement>;
     // QueryExecuteResult
-    private gridInstance: Handsontable = null;
+    public gridInstance: Handsontable = null;
     private gridSettings: Handsontable.GridSettings = null;
     private stateReady = new ReplaySubject<void>(1);
 
@@ -60,6 +66,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
     private hostResizeObs: ResizeObserver;
     private eventHostResize = new Subject<void>();
+
+    public cellActive: CellCoord = { col: -1, row: -1 };
 
     public currentClusterName: string;
     public currentKeyspace: string;
@@ -100,10 +108,10 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
         this.eventHostResize.pipe(
             takeUntil(this.eventViewDestroyed),
-            debounceTime(20),
+            debounceTime(100),
             filter(() => this.gridInstance != null),
         ).subscribe(() => {
-            this.gridInstance.updateSettings(this.gridSettings, false);
+            this.gridInstance.updateSettings({}, false);
 
         });
 
@@ -139,7 +147,14 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         this.detectChanges();
     }
     private onDataChangeRemoved(item: DataChangeItem) {
+        console.log(`onDataChangeRemoved ${JSON.stringify(item)}`);
 
+        const colName = item.column;
+        const colIndex = this.currentColumns.findIndex((c) => c.name === colName);
+
+        this.gridInstance.setCellMeta(item.row, colIndex, "className", "");
+        this.gridInstance.render();
+        this.detectChanges();
     }
 
     private createGridInstance() {
@@ -253,6 +268,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 autoRowSize: { syncLimit: 10 },
                 beforeChange: onBeforeChange(this),
                 // afterChange: this.onAfterChange,
+                afterOnCellMouseDown: this.onCellMouseDown,
                 afterRender: (isForced: boolean) => {
                     if (isForced) {
                         this.stateGridReady.next();
@@ -478,6 +494,10 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             }).catch((e) => {
                 console.log(e);
             });
+    }
+    private onCellMouseDown = (event: object, coords: CellCoord, TD: Element): void => {
+        this.cellActive.col = coords.col;
+        this.cellActive.row = coords.row;
     }
 
 }
