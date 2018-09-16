@@ -104,7 +104,7 @@
         transform: translate3d(0, 0, 0);
     }
     .handsontable .changed {
-        background-color: mat-color($warn, 500);
+        background-color: mat-color($accent, 500);
         color: mat-color($background, 50);
     }
     .handsontable .cell-key-partition {

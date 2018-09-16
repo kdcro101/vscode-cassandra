@@ -5,7 +5,7 @@ import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
 import { ColumnInfo } from "../../../../../../src/cassandra-client/index";
 import { ClusterExecuteResults } from "../../../../../../src/clusters";
 import { AnalyzedStatement, CqlAnalysis } from "../../../../../../src/parser/listeners/cql-analyzer";
-import { CassandraColumn, CassandraTable } from "../../../../../../src/types/index";
+import { CassandraColumn, CassandraTable, DataChangeItem } from "../../../../../../src/types/index";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { WorkbenchEditor } from "../../../types/index";
 import { onBeforeChange } from "./before-change";
@@ -116,10 +116,32 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             console.log(q);
         });
 
+        ChangeManager.eventAdd.pipe(
+            takeUntil(this.eventViewDestroyed),
+        ).subscribe((item) => this.onDataChangeAdded(item));
+
+        ChangeManager.eventRemove.pipe(
+            takeUntil(this.eventViewDestroyed),
+        ).subscribe((item) => this.onDataChangeRemoved(item));
+
     }
     ngOnDestroy() {
         super.ngOnDestroy();
     }
+    private onDataChangeAdded(item: DataChangeItem) {
+        console.log(`onDataChangeAdded ${JSON.stringify(item)}`);
+
+        const colName = item.column;
+        const colIndex = this.currentColumns.findIndex((c) => c.name === colName);
+
+        this.gridInstance.setCellMeta(item.row, colIndex, "className", "changed");
+        this.gridInstance.render();
+        this.detectChanges();
+    }
+    private onDataChangeRemoved(item: DataChangeItem) {
+
+    }
+
     private createGridInstance() {
         this.currentError = null;
         this.stateGridReady = new ReplaySubject<void>(1);
@@ -388,7 +410,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             return;
         }
         console.log("onHostResize");
-        this.gridInstance.updateSettings(this.gridSettings, false);
+        // this.gridInstance.updateSettings(this.gridSettings, false);
+        this.gridInstance.updateSettings({}, false);
     }
 
     private normalizeSelection(startRow: number, startCol: number, endRow: number, endCol: number): CellPosition[] {

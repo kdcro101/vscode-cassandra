@@ -7,6 +7,10 @@ export const onBeforeChange = (dataGrid: UiDataGridComponent):
         if (!changes || changes.length === 0 || source !== "edit") {
             return;
         }
+        if (!dataGrid.currentPrimaryKeyAvailable) {
+            // no keys no change
+            return false;
+        }
 
         const change = changes[0];
         const row = change[0] as number;
@@ -17,11 +21,10 @@ export const onBeforeChange = (dataGrid: UiDataGridComponent):
         const columnInfo = dataGrid.currentColumns.find((c) => c.name === prop);
         const isStringified = columnInfo.type === "set" || columnInfo.type === "map" || columnInfo.type === "custom" ? true : false;
 
-        const clusterName = "";
-        const keyspace = "";
+        const clusterName = dataGrid.currentClusterName;
+        const keyspace = dataGrid.currentKeyspace;
 
-        // change[3] = "AAA";
-        // return false;
+        dataGrid.changeManager.add(clusterName, keyspace, row, prop, valOld, valNew);
 
     };
 };

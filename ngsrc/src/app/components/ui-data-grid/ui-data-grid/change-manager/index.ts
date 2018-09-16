@@ -1,11 +1,16 @@
 import { Subject } from "rxjs";
+import { merge } from "rxjs";
 import { CassandraColumn } from "../../../../../../../src/types/index";
 import { DataChangeItem, DataChangeItemPrimaryKey } from "../../../../../../../src/types/messages";
 import { UiDataGridComponent } from "../ui-data-grid.component";
 
 export class ChangeManager {
 
-    public static eventChange = new Subject<DataChangeItem[]>();
+    public static eventAdd = new Subject<DataChangeItem>();
+    public static eventRemove = new Subject<DataChangeItem>();
+    public static eventUpdate = new Subject<DataChangeItem>();
+    public static eventChange = merge(ChangeManager.eventAdd, ChangeManager.eventRemove, ChangeManager.eventUpdate);
+
     public que: DataChangeItem[];
     public keys: CassandraColumn[];
     public rowData: any[];
@@ -14,6 +19,14 @@ export class ChangeManager {
         this.que = dataGrid.currentEditor.changes;
         this.keys = dataGrid.currentTableStruct.primaryKeys;
         this.rowData = dataGrid.currentDataRows;
+    }
+    public remove(clusterName: string, keyspace: string, row: number, column: string) {
+        const index = this.getItemIndex(clusterName, keyspace, row, column);
+
+        if (index < 0) {
+            return;
+        }
+        this.removeItem(index);
     }
     public add(clusterName: string, keyspace: string, row: number, column: string, valueOld: any, valueNew: any) {
 
@@ -25,8 +38,9 @@ export class ChangeManager {
         }
     }
     public clear() {
-        this.que = [];
-        ChangeManager.eventChange.next();
+        this.que.forEach((c, i) => {
+            this.removeItem(i);
+        });
     }
     private getItemIndex(clusterName: string, keyspace: string, row: number, column: string): number {
         const index = this.que.findIndex((i) => {
@@ -54,7 +68,7 @@ export class ChangeManager {
         };
         this.que.push(item);
 
-        ChangeManager.eventChange.next(this.que);
+        ChangeManager.eventAdd.next(item);
     }
     private collectPrimaryKey(rowData: any): DataChangeItemPrimaryKey {
         const out: DataChangeItemPrimaryKey = {};
@@ -67,7 +81,15 @@ export class ChangeManager {
         return out;
     }
     private updateItem(index: number, value: any) {
-        this.que[index].valueNew = value;
-        ChangeManager.eventChange.next(this.que);
+        const item = this.que[index];
+        item.valueNew = value;
+        ChangeManager.eventUpdate.next(item);
+    }
+    private removeItem(index: number): void {
+        if (index < 0 || index >= this.que.length) {
+            return;
+        }
+        const item = this.que.splice(index, 1)[0];
+        ChangeManager.eventRemove.next(item);
     }
 }
