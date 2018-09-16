@@ -1,42 +1,73 @@
 import { Subject } from "rxjs";
 import { CassandraColumn } from "../../../../../../../src/types/index";
-import { DataChangeItem } from "../../../../../../../src/types/messages";
-import { WorkbenchEditor } from "../../../../types/index";
+import { DataChangeItem, DataChangeItemPrimaryKey } from "../../../../../../../src/types/messages";
+import { UiDataGridComponent } from "../ui-data-grid.component";
 
 export class ChangeManager {
 
-    private sources: { [key: string]: any } = {};
+    public static eventChange = new Subject<DataChangeItem[]>();
+    public que: DataChangeItem[];
+    public keys: CassandraColumn[];
+    public rowData: any[];
 
-    public que: DataChangeItem[] = [];
-    public eventChange = new Subject<DataChangeItem[]>();
-
-    private clusterName: string;
-    private keyspace: string;
-
-    constructor(private editor: WorkbenchEditor) {
-        this.clusterName = editor.statement.clusterName;
-        // this.keyspace = editor.statement.keyspace || editor.result.analysis
+    constructor(private dataGrid: UiDataGridComponent) {
+        this.que = dataGrid.currentEditor.changes;
+        this.keys = dataGrid.currentTableStruct.primaryKeys;
+        this.rowData = dataGrid.currentDataRows;
     }
-    public add(row: number, prop: string, valueOld: any, valueNew: any) {
-        // const clusterName = dataf
-        const key = this.genKey(row, prop);
-        this.sourceAdd(key, valueOld);
+    public add(clusterName: string, keyspace: string, row: number, column: string, valueOld: any, valueNew: any) {
+
+        const index = this.getItemIndex(clusterName, keyspace, row, column);
+        if (index === -1) {
+            this.createItem(clusterName, keyspace, row, column, valueOld, valueNew);
+        } else {
+            this.updateItem(index, valueNew);
+        }
     }
     public clear() {
         this.que = [];
-        this.eventChange.next();
+        ChangeManager.eventChange.next();
     }
-    private genKey(row: number, prop: string): string {
-        return `${prop}/${row}`;
+    private getItemIndex(clusterName: string, keyspace: string, row: number, column: string): number {
+        const index = this.que.findIndex((i) => {
+            return (
+                i.clusterName === clusterName &&
+                i.keyspace === keyspace &&
+                i.row === row &&
+                i.column === column
+            );
+        });
+        return index;
     }
-    private sourceAdd(key: string, value: any) {
-        if (this.sources[key]) {
-            return;
-        }
 
-        this.sources[key] = value;
+    private createItem(clusterName: string, keyspace: string, row: number, column: string, valueOld: any, valueNew: any) {
+        const rowData = this.dataGrid.currentDataRows[row];
+        const pks = this.collectPrimaryKey(rowData);
+        const item: DataChangeItem = {
+            clusterName,
+            keyspace,
+            row,
+            column,
+            primaryKeyValues: pks,
+            valueOld,
+            valueNew,
+        };
+        this.que.push(item);
+
+        ChangeManager.eventChange.next(this.que);
     }
-    private sourceRemove(key: string) {
-        delete this.sources[key];
+    private collectPrimaryKey(rowData: any): DataChangeItemPrimaryKey {
+        const out: DataChangeItemPrimaryKey = {};
+        const keyNames = this.keys.map((i) => i.name);
+
+        keyNames.forEach((k, i) => {
+            out[k] = rowData[k];
+        });
+
+        return out;
+    }
+    private updateItem(index: number, value: any) {
+        this.que[index].valueNew = value;
+        ChangeManager.eventChange.next(this.que);
     }
 }

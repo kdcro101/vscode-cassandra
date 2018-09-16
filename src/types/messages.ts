@@ -87,14 +87,18 @@ export interface ClusterStructureResponse extends MessageWithId {
     result: CassandraClusterData;
 }
 
+export interface DataChangeItemPrimaryKey {
+    [name: string]: any;
+}
+
 export interface DataChangeItem {
     clusterName: string;
     keyspace: string;
-    columnKey: { [name: string]: any };
+    primaryKeyValues: DataChangeItemPrimaryKey;
     row: number;
-    col: number;
     column: string;
-    value: any;
+    valueOld: any;
+    valueNew: any;
 }
 export interface ExecuteDataChangeRequest {
     id: string;

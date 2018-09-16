@@ -21,6 +21,7 @@ export interface CqlAnalysis {
     alterStructure: boolean;
     selectData: boolean;
     error?: CqlAnalysisError;
+    cluserName: string;
 }
 export enum CqlAnalysisError {
     SELECT_AND_ALTER = "SELECT_AND_ALTER",
@@ -47,6 +48,8 @@ export class CqlAnalyzerListener implements CqlParserListener {
         alterData: false,
         alterStructure: false,
         selectData: false,
+        cluserName: null,
+
     };
 
     private rulePrevious: string;
@@ -60,6 +63,7 @@ export class CqlAnalyzerListener implements CqlParserListener {
     ) {
 
         this.keyspaceAmbiental = this.keyspaceInitial;
+        this.result.cluserName = structure.name;
 
     }
     public getResult() {

@@ -27,6 +27,7 @@ export interface ClusterExecuteStatementColumns {
     list: ColumnInfo[];
 }
 export interface ClusterExecuteResults {
+    clusterName: string;
     results: ClusterExecuteStatementResult[];
     analysis: CqlAnalysis;
     errors: ClusterExecuteStatementError[];
@@ -201,6 +202,7 @@ export class Clusters {
             analysis,
             errors: [],
             columns: [],
+            clusterName: client.clusterName,
         };
 
         for (let i = 0; i < statements.length; i++) {

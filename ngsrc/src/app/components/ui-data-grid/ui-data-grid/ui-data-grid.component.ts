@@ -61,12 +61,14 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     private hostResizeObs: ResizeObserver;
     private eventHostResize = new Subject<void>();
 
-    private currentEditor: WorkbenchEditor = null;
-    private currentDataRows: any[] = null;
-    private currentAnalysis: CqlAnalysis = null;
+    public currentClusterName: string;
+    public currentKeyspace: string;
+    public currentEditor: WorkbenchEditor = null;
+    public currentDataRows: any[] = null;
+    public currentAnalysis: CqlAnalysis = null;
     public currentColumns: ColumnInfo[] = null;
-    private currentStatementIndex: number = -1;
-    private currentStatement: AnalyzedStatement = null;
+    public currentStatementIndex: number = -1;
+    public currentStatement: AnalyzedStatement = null;
     public currentTableStruct: CassandraTable = null;
     public currentError: Error = null;
     public currentPrimaryKeyAvailable: boolean = false;
@@ -91,7 +93,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             return;
         }
         this.currentEditor = data;
-        this.createGridInstance(data.result);
+        this.createGridInstance();
     }
     ngOnInit() {
         this.stateReady.next();
@@ -105,15 +107,24 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
         });
 
+        ChangeManager.eventChange.pipe(
+            takeUntil(this.eventViewDestroyed),
+        ).subscribe((q) => {
+            console.log("###################");
+            console.log("ChangeManage que changed");
+            console.log("###################");
+            console.log(q);
+        });
+
     }
     ngOnDestroy() {
         super.ngOnDestroy();
     }
-    private createGridInstance(data: ClusterExecuteResults) {
+    private createGridInstance() {
         this.currentError = null;
         this.stateGridReady = new ReplaySubject<void>(1);
         this.detectChanges();
-
+        const data = this.currentEditor.result;
         console.log("createGridInstance: ClusterExecuteResults");
         console.log("------------------------------------------");
         console.log(data);
@@ -154,24 +165,18 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             const result = data.results[this.currentStatementIndex];
             const analysis = data.analysis;
             const columns = data.columns[this.currentStatementIndex].list;
+            const types = columns.reduce((acc, curr) => {
+                acc[curr.name] = curr.type;
+                return acc;
+            }, {});
 
             this.currentColumns = columns;
             this.currentAnalysis = analysis;
             this.currentStatement = analysis.statements[this.currentStatementIndex];
             this.currentTableStruct = this.currentStatement.tableStruct;
             this.currentPrimaryKeyAvailable = this.primaryKeyAvailable();
-            // const primaryKeyColumns =
-            // this.changeManager = new ChangeManager(analysis,result,columns,);
-
-            const types = columns.reduce((acc, curr) => {
-                acc[curr.name] = curr.type;
-                return acc;
-            }, {});
-
-            console.log(types);
-
-            const names = columns.map((c) => c.name);
-
+            this.currentClusterName = analysis.cluserName;
+            this.currentKeyspace = this.currentStatement.keyspace;
             // handle set/map/custom - stringify
             this.currentDataRows = result.result.rows.map((row) => {
                 Object.keys(row).forEach((k) => {
@@ -182,6 +187,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 });
                 return row;
             });
+
+            this.changeManager = new ChangeManager(this);
 
             const columnDef = columns.map((c) => {
                 if (c.type === "set" || c.type === "map" || c.type === "custom") {

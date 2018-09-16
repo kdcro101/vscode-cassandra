@@ -88,7 +88,7 @@ export class EditorQueService {
                     statement,
                     result: null,
                     executed: false,
-                    response: null,
+                    changes: [],
                     model: monaco.editor.createModel(statement.body, "cql"),
                 };
                 resolve(e);
@@ -108,7 +108,7 @@ export class EditorQueService {
                 statement,
                 result: null,
                 executed: false,
-                response: null,
+                changes: [],
                 model: monaco.editor.createModel(statement.body, "cql"),
             };
 

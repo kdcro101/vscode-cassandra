@@ -53,6 +53,7 @@ export interface QueryExecuteResult {
 export class CassandraClient extends EventEmitter {
 
     public stateConnected = new BehaviorSubject<boolean>(false);
+    public clusterName: string;
 
     private client: cassandra.Client;
     private structure: CassandraKeyspace[];
@@ -77,6 +78,7 @@ export class CassandraClient extends EventEmitter {
         }
 
         this.client = new cassandra.Client(options);
+        this.clusterName = config.name;
 
     }
     public execute(cql: string): Promise<cassandra.types.ResultSet> {

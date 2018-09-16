@@ -17,8 +17,11 @@ export const onBeforeChange = (dataGrid: UiDataGridComponent):
         const columnInfo = dataGrid.currentColumns.find((c) => c.name === prop);
         const isStringified = columnInfo.type === "set" || columnInfo.type === "map" || columnInfo.type === "custom" ? true : false;
 
+        const clusterName = "";
+        const keyspace = "";
+
         // change[3] = "AAA";
-        return false;
+        // return false;
 
     };
 };

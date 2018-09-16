@@ -1,7 +1,7 @@
 
 import { ClusterExecuteResults } from "../../../../src/clusters";
 import { WorkbenchCqlStatement } from "../../../../src/types/editor";
-import { ProcMessage } from "../../../../src/types/messages";
+import { DataChangeItem, ProcMessage } from "../../../../src/types/messages";
 export interface VscodeWebviewInterface {
     postMessage: <T>(data: ProcMessage) => void;
 }
@@ -12,5 +12,5 @@ export interface WorkbenchEditor {
     result: ClusterExecuteResults;
     errors?: any[];
     executed: boolean;
-    response: any;
+    changes: DataChangeItem[];
 }
