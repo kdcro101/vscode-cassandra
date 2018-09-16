@@ -16,7 +16,7 @@ export const gridContextMenu = (dataGrid: UiDataGridComponent): Handsontable.con
             //     },
             // },
             "revert": { // Own custom option
-                name: "Revert changes",
+                name: "Revert change",
                 disabled: () => {
                     const cell = dataGrid.cellActive;
                     if (cell.row < 0 || cell.col < 0) {

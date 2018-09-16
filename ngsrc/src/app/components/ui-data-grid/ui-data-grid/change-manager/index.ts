@@ -1,7 +1,7 @@
 import { Subject } from "rxjs";
 import { merge } from "rxjs";
 import { CassandraColumn } from "../../../../../../../src/types/index";
-import { DataChangeItem, DataChangeItemPrimaryKey } from "../../../../../../../src/types/messages";
+import { DataChangeItem, DataChangeItemPrimaryKey, DataChangeType } from "../../../../../../../src/types/messages";
 import { UiDataGridComponent } from "../ui-data-grid.component";
 
 export class ChangeManager {
@@ -20,29 +20,29 @@ export class ChangeManager {
         this.keys = dataGrid.currentTableStruct.primaryKeys;
         this.rowData = dataGrid.currentDataRows;
     }
-    public remove(row: number, column: string): DataChangeItem {
-        const index = this.getItemIndex(row, column);
+    public removeCellUpdate(row: number, column: string): DataChangeItem {
+        const index = this.getCellUpdateItemIndex(row, column);
 
         if (index < 0) {
             return;
         }
-        return this.removeItem(index);
+        return this.removeCellUpdateItem(index);
     }
-    public add(row: number, column: string, valueOld: any, valueNew: any) {
+    public addCellUpdate(type: DataChangeType, row: number, column: string, valueOld: any, valueNew: any) {
 
-        const index = this.getItemIndex(row, column);
+        const index = this.getCellUpdateItemIndex(row, column);
         if (index === -1) {
-            this.createItem(row, column, valueOld, valueNew);
+            this.createCellUpdateItem(row, column, valueOld, valueNew);
         } else {
-            this.updateItem(index, valueNew);
+            this.updateCellUpdateItem(index, valueNew);
         }
     }
     public clear() {
         this.que.forEach((c, i) => {
-            this.removeItem(i);
+            this.removeCellUpdateItem(i);
         });
     }
-    private getItemIndex(row: number, column: string): number {
+    private getCellUpdateItemIndex(row: number, column: string): number {
         const index = this.que.findIndex((i) => {
             return (
                 i.clusterName === this.dataGrid.currentClusterName &&
@@ -54,15 +54,30 @@ export class ChangeManager {
         return index;
     }
 
-    private createItem(row: number, column: string, valueOld: any, valueNew: any) {
+    private createRowDeleteItem(row: number) {
         const rowData = this.dataGrid.currentDataRows[row];
         const pks = this.collectPrimaryKey(rowData);
         const item: DataChangeItem = {
             clusterName: this.dataGrid.currentClusterName,
             keyspace: this.dataGrid.currentKeyspace,
+            primaryKeyValues: pks,
+            type: "rowDelete",
+            row,
+        };
+        this.que.push(item);
+
+        ChangeManager.eventAdd.next(item);
+    }
+    private createCellUpdateItem(row: number, column: string, valueOld: any, valueNew: any) {
+        const rowData = this.dataGrid.currentDataRows[row];
+        const pks = this.collectPrimaryKey(rowData);
+        const item: DataChangeItem = {
+            clusterName: this.dataGrid.currentClusterName,
+            keyspace: this.dataGrid.currentKeyspace,
+            primaryKeyValues: pks,
+            type: "cellUpdate",
             row,
             column,
-            primaryKeyValues: pks,
             valueOld,
             valueNew,
         };
@@ -80,12 +95,12 @@ export class ChangeManager {
 
         return out;
     }
-    private updateItem(index: number, value: any) {
+    private updateCellUpdateItem(index: number, value: any) {
         const item = this.que[index];
         item.valueNew = value;
         ChangeManager.eventUpdate.next(item);
     }
-    private removeItem(index: number): DataChangeItem {
+    private removeCellUpdateItem(index: number): DataChangeItem {
         if (index < 0 || index >= this.que.length) {
             return;
         }
@@ -94,8 +109,8 @@ export class ChangeManager {
 
         return item;
     }
-    public isChanged(row: number, column: string): boolean {
-        const index = this.getItemIndex(row, column);
+    public isCellChanged(row: number, column: string): boolean {
+        const index = this.getCellUpdateItemIndex(row, column);
 
         if (index < 0) {
             return false;

@@ -90,15 +90,16 @@ export interface ClusterStructureResponse extends MessageWithId {
 export interface DataChangeItemPrimaryKey {
     [name: string]: any;
 }
-
+export type DataChangeType = "rowDelete"|"cellUpdate";
 export interface DataChangeItem {
     clusterName: string;
     keyspace: string;
+    type: DataChangeType;
     primaryKeyValues: DataChangeItemPrimaryKey;
     row: number;
-    column: string;
-    valueOld: any;
-    valueNew: any;
+    column?: string;
+    valueOld?: any;
+    valueNew?: any;
 }
 export interface ExecuteDataChangeRequest {
     id: string;

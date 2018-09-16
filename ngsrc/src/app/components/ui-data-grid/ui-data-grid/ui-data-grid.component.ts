@@ -69,6 +69,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
     public cellActive: CellCoord = { col: -1, row: -1 };
 
+    public currentSelectedRows: number[] = [];
+
     public currentClusterName: string;
     public currentKeyspace: string;
     public currentEditor: WorkbenchEditor = null;
@@ -269,6 +271,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 beforeChange: onBeforeChange(this),
                 // afterChange: this.onAfterChange,
                 afterOnCellMouseDown: this.onCellMouseDown,
+                afterSelectionEnd: this.onAfterSelectionEnd,
                 afterRender: (isForced: boolean) => {
                     if (isForced) {
                         this.stateGridReady.next();
@@ -495,9 +498,19 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 console.log(e);
             });
     }
-    private onCellMouseDown = (event: object, coords: CellCoord, TD: Element): void => {
+    private onCellMouseDown = (event: MouseEvent, coords: CellCoord, TD: Element): void => {
         this.cellActive.col = coords.col;
         this.cellActive.row = coords.row;
+    }
+    private onAfterSelectionEnd = (r: number, c: number, r2: number, c2: number, selectionLayerLevel: number): void => {
+        const sel = this.gridInstance.getSelected();
+        console.log(`onAfterSelectionEnd`);
+        if (sel.length === 0) {
+            return;
+        }
+        sel.forEach((s, i) => {
+            console.log(JSON.stringify(s));
+        });
     }
 
 }
