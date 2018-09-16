@@ -21,7 +21,7 @@ export const onBeforeChange = (dataGrid: UiDataGridComponent):
         const columnInfo = dataGrid.currentColumns.find((c) => c.name === prop);
         const isStringified = columnInfo.type === "set" || columnInfo.type === "map" || columnInfo.type === "custom" ? true : false;
 
-        dataGrid.changeManager.add(row, prop, valOld, valNew);
+        dataGrid.changeManager.addCellUpdate(row, prop, valOld, valNew);
 
     };
 };

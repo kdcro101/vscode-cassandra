@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import beautify from "json-beautify";
 import ResizeObserver from "resize-observer-polyfill";
 import { ReplaySubject, Subject } from "rxjs";
 import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
 import { ColumnInfo } from "../../../../../../src/cassandra-client/index";
-import { ClusterExecuteResults } from "../../../../../../src/clusters";
 import { AnalyzedStatement, CqlAnalysis } from "../../../../../../src/parser/listeners/cql-analyzer";
 import { CassandraColumn, CassandraTable, DataChangeItem } from "../../../../../../src/types/index";
 import { ViewDestroyable } from "../../../base/view-destroyable";
@@ -15,8 +15,7 @@ import { measureText } from "./measure-width";
 import { cellRenderer } from "./renderers/cell-renderer";
 import { cellRendererJson } from "./renderers/cell-renderer-json";
 import { headerRenderer } from "./renderers/header-renderer";
-
-import beautify from "json-beautify";
+import { RowSelection } from "./row-selection/row-selection";
 
 const ARROW_DOWN = 40;
 const ARROW_UP = 38;
@@ -87,6 +86,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     private stateGridReady = new ReplaySubject<void>(1);
 
     public changeManager: ChangeManager = null;
+    public rowSelection: RowSelection = new RowSelection();
 
     constructor(public host: ElementRef<HTMLDivElement>, public change: ChangeDetectorRef) {
         super(change);
@@ -160,13 +160,13 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     }
 
     private createGridInstance() {
+
         this.currentError = null;
         this.stateGridReady = new ReplaySubject<void>(1);
+        this.rowSelection.clear();
         this.detectChanges();
-        const data = this.currentEditor.result;
+
         console.log("createGridInstance: ClusterExecuteResults");
-        console.log("------------------------------------------");
-        console.log(data);
         console.log("------------------------------------------");
 
         this.stateReady.pipe(
@@ -183,6 +183,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             }),
         ).subscribe(() => {
             console.log("createGridInstance");
+            const data = this.currentEditor.result;
             this.htmlCache = {};
 
             this.currentStatementIndex = data.analysis.statements.findIndex((s) => s.type === "select");
@@ -499,6 +500,9 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             });
     }
     private onCellMouseDown = (event: MouseEvent, coords: CellCoord, TD: Element): void => {
+        if (coords.row > -1 && coords.col === -1) {
+            this.onRowHeaderMousedown(event, coords);
+        }
         this.cellActive.col = coords.col;
         this.cellActive.row = coords.row;
     }
@@ -512,5 +516,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             console.log(JSON.stringify(s));
         });
     }
+    private onRowHeaderMousedown(event: MouseEvent, coords: CellCoord) {
 
+    }
 }

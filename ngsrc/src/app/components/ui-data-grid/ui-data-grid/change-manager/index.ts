@@ -28,7 +28,7 @@ export class ChangeManager {
         }
         return this.removeCellUpdateItem(index);
     }
-    public addCellUpdate(type: DataChangeType, row: number, column: string, valueOld: any, valueNew: any) {
+    public addCellUpdate(row: number, column: string, valueOld: any, valueNew: any) {
 
         const index = this.getCellUpdateItemIndex(row, column);
         if (index === -1) {
@@ -37,9 +37,25 @@ export class ChangeManager {
             this.updateCellUpdateItem(index, valueNew);
         }
     }
+    public addRowDelete(row: number) {
+
+        const index = this.getRowDeletedItemIndex(row);
+        if (index > -1) {
+            return;
+        }
+        this.createRowDeleteItem(row);
+    }
     public clear() {
         this.que.forEach((c, i) => {
-            this.removeCellUpdateItem(i);
+            switch (c.type) {
+                case "cellUpdate":
+                    this.removeCellUpdateItem(i);
+                    break;
+                case "rowDelete":
+                    this.removeRowDeleteItem(i);
+                    break;
+            }
+
         });
     }
     private getCellUpdateItemIndex(row: number, column: string): number {
@@ -48,7 +64,20 @@ export class ChangeManager {
                 i.clusterName === this.dataGrid.currentClusterName &&
                 i.keyspace === this.dataGrid.currentKeyspace &&
                 i.row === row &&
-                i.column === column
+                i.column === column &&
+                i.type === "cellUpdate"
+            );
+        });
+        return index;
+    }
+    private getRowDeletedItemIndex(row: number): number {
+        const index = this.que.findIndex((i) => {
+            return (
+                i.clusterName === this.dataGrid.currentClusterName &&
+                i.keyspace === this.dataGrid.currentKeyspace &&
+                i.row === row &&
+                i.type === "rowDelete"
+
             );
         });
         return index;
@@ -109,8 +138,25 @@ export class ChangeManager {
 
         return item;
     }
+    private removeRowDeleteItem(index: number): DataChangeItem {
+        if (index < 0 || index >= this.que.length) {
+            return;
+        }
+        const item = this.que.splice(index, 1)[0];
+        ChangeManager.eventRemove.next(item);
+
+        return item;
+    }
     public isCellChanged(row: number, column: string): boolean {
         const index = this.getCellUpdateItemIndex(row, column);
+
+        if (index < 0) {
+            return false;
+        }
+        return true;
+    }
+    public isRowDeleted(row: number, column: string): boolean {
+        const index = this.getRowDeletedItemIndex(row);
 
         if (index < 0) {
             return false;

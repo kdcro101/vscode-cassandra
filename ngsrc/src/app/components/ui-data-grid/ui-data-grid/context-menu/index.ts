@@ -23,7 +23,7 @@ export const gridContextMenu = (dataGrid: UiDataGridComponent): Handsontable.con
                         return true;
                     }
                     const colName = dataGrid.currentColumns[cell.col].name;
-                    const changed = dataGrid.changeManager.isChanged(cell.row, colName);
+                    const changed = dataGrid.changeManager.isCellChanged(cell.row, colName);
                     return !changed;
                 },
                 callback: () => { // Callback for specific option
@@ -33,7 +33,7 @@ export const gridContextMenu = (dataGrid: UiDataGridComponent): Handsontable.con
                         return true;
                     }
                     const colName = dataGrid.currentColumns[cell.col].name;
-                    const item = dataGrid.changeManager.remove(cell.row, colName);
+                    const item = dataGrid.changeManager.removeCellUpdate(cell.row, colName);
 
                     dataGrid.currentDataRows[cell.row][colName] = item.valueOld;
                     dataGrid.gridInstance.render();
