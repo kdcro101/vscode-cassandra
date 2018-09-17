@@ -1,9 +1,6 @@
+
 import { RenderJson } from "../../../../const/render-json";
 import { UiDataGridComponent } from "../ui-data-grid.component";
-
-// export const cellRendererJson = (dataGrid: UiDataGridComponent): (instance: _Handsontable.Core,
-//     td: HTMLElement, row: number, col: number, prop: string | number, value: any,
-//     cellProperties: Handsontable.GridSettings) => void => {
 
 export const cellRendererJson = (dataGrid: UiDataGridComponent): Function => {
 
@@ -11,29 +8,39 @@ export const cellRendererJson = (dataGrid: UiDataGridComponent): Function => {
         td: HTMLElement, row: number, col: number, prop: string | number, value: any,
         cellProperties: Handsontable.GridSettings): void {
 
-        Handsontable.renderers.BaseRenderer.apply(this, arguments);
+        if (!dataGrid.currentPrimaryKeyAvailable) {
+            cellProperties.readOnly = true;
+        }
+
+        Handsontable.renderers.HtmlRenderer.apply(this, arguments);
+        // Handsontable.renderers.BaseRenderer.apply(this, arguments);
 
         const obj = JSON.parse(value);
 
         RenderJson.set_icons("+", "-");
-        Handsontable.dom.empty(td);
+        let element = dataGrid.htmlCache.get(row, col);
 
-        const key = `R${row}C${col}`;
-        const cache = dataGrid.htmlCache[key];
-        let element: HTMLElement = null;
-
-        if (cache == null) {
+        // const ch1 = td.children.item(0) as HTMLElement;
+        // if (ch1 && ch1.isSameNode(element)) {
+        //     console.log("is the same");
+        //     return;
+        // }
+        const frag = document.createDocumentFragment();
+        if (!element) {
             element = RenderJson.render(obj, () => {
+                console.log("Opening node...");
                 instance.deselectCell();
                 instance.selectCell(row, col);
                 instance.render();
             });
-            dataGrid.htmlCache[key] = element;
-        } else {
-            element = cache;
+            dataGrid.htmlCache.add(row, col, element);
+
         }
+
+        frag.appendChild(element);
         td.style.fontFamily = dataGrid.theme.getEditorFontFamily();
-        td.appendChild(element);
+        td.innerHTML = "";
+        td.appendChild(frag);
 
     };
 

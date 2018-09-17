@@ -1,5 +1,6 @@
 <div class="root" #root fxLayout="column">
-    <div fxFlex class="grid-wrap">
+    <mat-progress-bar [@progressAnimationState] color="primary" mode="indeterminate" *ngIf="renderingProgress"></mat-progress-bar>
+    <div fxFlex class="grid-wrap" [@gridAnimationState]="gridAnimationState">
         <div #gridHost class="grid-host"></div>
     </div>
     <div>AJ EM BOTTOM</div>

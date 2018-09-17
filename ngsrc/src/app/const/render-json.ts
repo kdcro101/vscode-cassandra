@@ -10,7 +10,7 @@ export interface RenderJsonOptions {
     hide?: string;
 }
 
-const append = (...args: Array<HTMLElement | Text | any[]>) => {
+const append = (...args: Array<DocumentFragment | HTMLElement | Text | any[]>) => {
     // const el = Array.prototype.shift.call(arguments);
     const el: HTMLElement = args.shift() as HTMLElement;
 
@@ -162,6 +162,7 @@ export class RenderJson {
     public static render(json: any, onChange?: () => void) {
         const options = new Object(RenderJson.options) as any;
         options.replacer = typeof (options.replacer) === "function" ? options.replacer : function (k, v) { return v; };
+        // const pre = append(document.createDocumentFragment(), _renderjson(json, "", false, options.show_to_level, options, onChange));
         const pre = append(document.createElement("pre"), _renderjson(json, "", false, options.show_to_level, options, onChange));
         pre.className = "renderjson";
         return pre;

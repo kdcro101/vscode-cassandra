@@ -33,7 +33,7 @@ export type ColumnType = "custom" |
 
 export interface ColumnInfo {
     name: string;
-    type: string;
+    type: ColumnType;
 }
 
 export interface QueryExecuteResult {

@@ -11,6 +11,9 @@ export const buildColumns = (dataGrid: UiDataGridComponent): any[] => {
 
         const isPartition = keys.find((k) => c.name === k.name && k.kind === "partition_key");
         const isColClustering = keys.find((k) => c.name === k.name && k.kind === "clustering");
+        const type = c.type;
+
+        // type ??
 
         if (c.type === "set" || c.type === "map" || c.type === "custom") {
             return {
@@ -34,6 +37,11 @@ export const buildColumns = (dataGrid: UiDataGridComponent): any[] => {
                 renderer: cellRendererKeyColumnClustering(dataGrid),
             };
         }
+
+        return {
+            data: c.name,
+            type: "text",
+        };
 
     });
 
