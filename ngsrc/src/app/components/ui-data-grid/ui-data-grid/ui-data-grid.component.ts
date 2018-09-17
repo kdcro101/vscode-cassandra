@@ -542,9 +542,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     }
     public onAfterSelectionEnd = (r: number, c: number, r2: number, c2: number, selectionLayerLevel: number): void => {
         this.selectionActive = false;
-
         this.currentSelectedRows = this.selectionHelper.getRows(this.gridInstance.getSelected());
-
+        console.log(JSON.stringify(this.currentSelectedRows));
     }
 
 }
