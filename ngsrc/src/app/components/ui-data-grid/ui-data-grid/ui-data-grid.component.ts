@@ -1,9 +1,10 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import {
-    ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostBinding,
+    ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef,
     HostListener, Input, OnDestroy, OnInit, ViewChild,
 } from "@angular/core";
 import beautify from "json-beautify";
+import { cloneDeep } from "lodash-es";
 import ResizeObserver from "resize-observer-polyfill";
 import { ReplaySubject, Subject } from "rxjs";
 import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
@@ -35,17 +36,6 @@ interface CellPosition {
     col: number;
     row: number;
 }
-interface GridColumn {
-    data: string;
-    type?: string;
-}
-interface CellChangeEvent {
-    col: number;
-    row: number;
-    valueOld: any;
-    valueNew: any;
-    rowData: any;
-}
 
 interface CellCoord {
     row: number;
@@ -62,11 +52,9 @@ declare var window: any;
     animations: [
         trigger("gridAnimationState", [
             state("hidden", style({
-                // transform: "scale3d(0.01,0.01,1)",
                 opacity: 0,
             })),
             state("ready", style({
-                // transform: "scale3d(1,1,1)",
                 opacity: 1,
             })),
             transition("* => ready", animate("150ms ease-in-out")),
@@ -89,9 +77,7 @@ declare var window: any;
                     opacity: 0,
                 })),
             ]),
-
         ]),
-
     ],
 })
 export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDestroy {
@@ -99,12 +85,9 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     @ViewChild("gridHost") public gridHost: ElementRef<HTMLDivElement>;
     public gridAnimationState: string;
 
-    // QueryExecuteResult
     public gridInstance: Handsontable = null;
     private gridSettings: Handsontable.GridSettings = null;
     private stateViewReady = new ReplaySubject<void>(1);
-
-    // public htmlCache: { [key: string]: HTMLElement } = {};
 
     private hostResizeObs: ResizeObserver;
     private eventHostResize = new Subject<void>();
@@ -134,7 +117,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     public htmlCache = new HtmlCache();
 
     public selectionActive: boolean = false;
-    public eventRender = new Subject<void>();
+    public eventRender: Subject<void>;
+    public eventDestroy: Subject<void>;
     public renderingProgress = false;
     public selectionHelper: SelectionHelper;
 
@@ -155,24 +139,10 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
         this.gridAnimationState = "hidden";
 
-        this.eventRender.pipe(
-            takeUntil(this.eventViewDestroyed),
-            debounceTime(300),
-            take(1),
-        ).subscribe(() => {
-            console.log("##################################");
-            console.log("RENDERING DONE");
-            console.log("##################################");
-            this.stateGridReady.next();
-            this.gridAnimationState = "ready";
-            this.renderingProgress = false;
-            this.detectChanges();
-        });
-
     }
     @HostListener("@gridAnimationState.done", ["$event"])
     private onGridAnimationEnd(event: AnimationEvent) {
-        // console.debug("done Animating :from %s --> %s", event.fromState, event.toState);
+
     }
     @Input("editor") set setData(data: WorkbenchEditor) {
         if (data == null) {
@@ -240,28 +210,54 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
         this.currentError = null;
         this.stateGridReady = new ReplaySubject<void>(1);
+        this.eventRender = new Subject<void>();
         this.renderingProgress = true;
+        this.gridAnimationState = "hidden";
+        this.htmlCache = new HtmlCache();
+
         this.detectChanges();
 
         console.log("createGridInstance: ClusterExecuteResults");
         console.log("------------------------------------------");
 
+        this.eventRender.pipe(
+            takeUntil(this.eventViewDestroyed),
+            debounceTime(300),
+            take(1),
+        ).subscribe(() => {
+            console.log("##################################");
+            console.log("RENDERING DONE");
+            console.log("##################################");
+            this.gridInstance.updateSettings({}, false);
+            this.stateGridReady.next();
+            this.gridAnimationState = "ready";
+            this.renderingProgress = false;
+            this.detectChanges();
+        });
+
         this.stateViewReady.pipe(
             take(1),
             tap(() => {
+
                 if (this.gridInstance) {
+
+                    console.log("createGridInstance gridInstance ");
+                    console.log(this.gridInstance);
+
                     try {
                         this.gridInstance.destroy();
                         this.gridInstance = null;
                     } catch (e) {
                         console.log(e);
+
+                        return;
                     }
                 }
+
             }),
         ).subscribe(() => {
             console.log("createGridInstance");
             const data = this.currentEditor.result;
-            this.htmlCache.clear();
 
             this.currentStatementIndex = data.analysis.statements.findIndex((s) => s.type === "select");
 
@@ -275,6 +271,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 console.log("Statement resulted in error");
                 console.log(error.error);
                 this.currentError = error.error;
+                this.renderingProgress = false;
                 this.detectChanges();
                 return;
             }
@@ -295,7 +292,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             this.currentClusterName = analysis.cluserName;
             this.currentKeyspace = this.currentStatement.keyspace;
             // handle set/map/custom - stringify
-            this.currentDataRows = result.result.rows.map((row) => {
+            this.currentDataRows = cloneDeep(result.result.rows).slice(0).map((row) => {
                 Object.keys(row).forEach((k) => {
                     if (types[k] === "set" || types[k] === "map" || types[k] === "custom") {
                         // row[k] = JSON.stringify(row[k]);
@@ -314,7 +311,6 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 minSpareCols: 0,
                 minSpareRows: 0,
                 rowHeaders: true,
-                // contextMenu: true,
                 contextMenu: gridContextMenu(this),
                 colHeaders: headerRenderer(this.currentColumns, this.currentTableStruct),
                 columns: columnDef,
@@ -335,22 +331,15 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 beforeChange: onBeforeChange(this),
                 afterSelection: this.onAfterSelection,
                 afterSelectionEnd: this.onAfterSelectionEnd,
-                // afterChange: this.onAfterChange,
                 afterOnCellMouseDown: this.onCellMouseDown,
                 viewportColumnRenderingOffset: 10,
                 viewportRowRenderingOffset: 25,
                 beforeOnCellMouseOver: this.onBeforeOnCellMouseOver,
                 afterRender: (isForced: boolean) => {
                     console.log(`afterRender ${isForced}`);
-
                     this.eventRender.next();
-
-                    // if (isForced) {
-                    //     this.stateGridReady.next();
-                    //     this.gridAnimationState = "ready";
-                    //     this.detectChanges();
-                    // }
                 },
+                afterDestroy: () => { this.eventDestroy.next(); },
                 undo: true,
 
             };
@@ -375,38 +364,12 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 autoColumnSize: true,
             }, false);
 
-            this.stateGridReady.pipe(
-                take(1),
-            ).subscribe(() => {
-                // this.fixInitialColumnWidths();
-            });
-
             this.scrollAssist = new ScrollAssist(this);
 
         });
 
     }
-    private onAfterChange = (changes: [number, string | number, any, any][], source: string) => {
-        console.log(`onAfterChange ${source}`);
-        console.log(changes);
 
-        if (source === "edit") {
-            console.log("setting meta source===edit");
-            const row = changes[0][0];
-            const key = changes[0][1];
-
-            const col = ((this.gridSettings.columns as any[]) as GridColumn[]).findIndex((e) => e.data === key);
-
-            if (col < 0) {
-                return;
-            }
-            console.log(`row:${row} col:${col}`);
-
-            this.gridInstance.setCellMeta(row, col, "className", "changed");
-            this.gridInstance.render();
-
-        }
-    }
     private onBeforeKeydown = (e: KeyboardEvent) => {
         const ranges = this.gridInstance.getSelected();
         // [startRow, startCol, endRow, endCol];
@@ -569,25 +532,6 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
     }
 
-    private onRowHeaderMousedown(event: MouseEvent, coords: CellCoord) {
-        // console.log(`onRowHeaderMousedown`);
-        // const shift = event.shiftKey;
-        // const ctrl = event.ctrlKey;
-        // if (!shift && !ctrl) {
-        //     this.rowSelection.start(coords.row);
-        //     return;
-        // }
-        // if (shift) {
-        //     this.rowSelection.extendTo(coords.row);
-        //     return;
-        // }
-        // if (ctrl) {
-        //     this.rowSelection.add(coords.row);
-        //     return;
-        // }
-
-    }
-
     public onAfterSelection = (r: number, c: number, r2: number, c2: number, preventScrolling: object, selectionLayerLevel: number) => {
         if (this.selectionActive === false) {
             this.selectionActive = true;
@@ -598,11 +542,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     }
     public onAfterSelectionEnd = (r: number, c: number, r2: number, c2: number, selectionLayerLevel: number): void => {
         this.selectionActive = false;
-        const sel = this.gridInstance.getSelected();
-        console.log(JSON.stringify(sel, null, 4));
-        console.log("----------NORM");
-        const res = this.selectionHelper.getRows(sel);
-        console.log("rows selected = " + JSON.stringify(res));
+
+        this.currentSelectedRows = this.selectionHelper.getRows(this.gridInstance.getSelected());
 
     }
 

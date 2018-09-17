@@ -52,7 +52,17 @@ export const gridContextMenu = (dataGrid: UiDataGridComponent): Handsontable.con
             },
             "sep2": { name: "---------" },
             "alignment": {},
+            "sep3": { name: "---------" },
+            "row_delete": { // Own custom option
+                name: "Delete row(s)",
+                disabled: () => {
+                    return !dataGrid.currentPrimaryKeyAvailable || dataGrid.currentSelectedRows.length === 0;
+                },
+                callback: () => { // Callback for specific option
+                    console.log("row_delete");
 
+                },
+            },
         },
     };
 };

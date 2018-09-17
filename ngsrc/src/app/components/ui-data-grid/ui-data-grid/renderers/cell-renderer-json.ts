@@ -9,23 +9,17 @@ export const cellRendererJson = (dataGrid: UiDataGridComponent): Function => {
         cellProperties: Handsontable.GridSettings): void {
 
         if (!dataGrid.currentPrimaryKeyAvailable) {
-            cellProperties.readOnly = true;
+            // cellProperties.readOnly = true;
         }
 
-        Handsontable.renderers.HtmlRenderer.apply(this, arguments);
-        // Handsontable.renderers.BaseRenderer.apply(this, arguments);
+        // Handsontable.renderers.HtmlRenderer.apply(this, arguments);
+        Handsontable.renderers.BaseRenderer.apply(this, arguments);
 
         const obj = JSON.parse(value);
 
         RenderJson.set_icons("+", "-");
         let element = dataGrid.htmlCache.get(row, col);
 
-        // const ch1 = td.children.item(0) as HTMLElement;
-        // if (ch1 && ch1.isSameNode(element)) {
-        //     console.log("is the same");
-        //     return;
-        // }
-        const frag = document.createDocumentFragment();
         if (!element) {
             element = RenderJson.render(obj, () => {
                 console.log("Opening node...");
@@ -37,10 +31,9 @@ export const cellRendererJson = (dataGrid: UiDataGridComponent): Function => {
 
         }
 
-        frag.appendChild(element);
         td.style.fontFamily = dataGrid.theme.getEditorFontFamily();
-        td.innerHTML = "";
-        td.appendChild(frag);
+        Handsontable.dom.empty(td);
+        td.appendChild(element);
 
     };
 
