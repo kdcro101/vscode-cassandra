@@ -7,15 +7,15 @@ import { ColumnInfo } from "../../../../../../src/cassandra-client/index";
 import { AnalyzedStatement, CqlAnalysis } from "../../../../../../src/parser/listeners/cql-analyzer";
 import { CassandraColumn, CassandraTable, DataChangeItem } from "../../../../../../src/types/index";
 import { ViewDestroyable } from "../../../base/view-destroyable";
+import { ThemeService } from "../../../services/theme/theme.service";
 import { WorkbenchEditor } from "../../../types/index";
 import { onBeforeChange } from "./before-change";
+import { CellClassManager } from "./cell-class/cell-class";
 import { ChangeManager } from "./change-manager";
+import { buildColumns } from "./column-builder/column-builder";
 import { gridContextMenu } from "./context-menu";
 import { measureText } from "./measure-width";
-import { cellRenderer } from "./renderers/cell-renderer";
-import { cellRendererJson } from "./renderers/cell-renderer-json";
 import { headerRenderer } from "./renderers/header-renderer";
-import { RowSelection } from "./row-selection/row-selection";
 import { ScrollAssist } from "./scroll-assist/scroll-assist";
 
 const ARROW_DOWN = 40;
@@ -62,7 +62,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     private gridSettings: Handsontable.GridSettings = null;
     private stateReady = new ReplaySubject<void>(1);
 
-    private htmlCache: { [key: string]: HTMLElement } = {};
+    public htmlCache: { [key: string]: HTMLElement } = {};
 
     private hostResizeObs: ResizeObserver;
     private eventHostResize = new Subject<void>();
@@ -88,11 +88,15 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
     public changeManager: ChangeManager = null;
     public scrollAssist: ScrollAssist;
+    public cellClassManager: CellClassManager;
 
     public selectionActive: boolean = false;
-    public selectionStart: [number, number] = null;
 
-    constructor(public host: ElementRef<HTMLDivElement>, public change: ChangeDetectorRef) {
+    constructor(
+        public host: ElementRef<HTMLDivElement>,
+        public change: ChangeDetectorRef,
+        public theme: ThemeService,
+    ) {
         super(change);
         this.hostResizeObs = new ResizeObserver(() => {
             this.eventHostResize.next();
@@ -100,6 +104,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         this.hostResizeObs.observe(this.host.nativeElement);
 
         window.UiDataGridComponent = this;
+        this.cellClassManager = new CellClassManager(this);
 
     }
     @Input("editor") set setData(data: WorkbenchEditor) {
@@ -235,21 +240,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
             this.changeManager = new ChangeManager(this);
 
-            const columnDef = columns.map((c) => {
-                if (c.type === "set" || c.type === "map" || c.type === "custom") {
-                    return {
-                        data: c.name,
-                        renderer: cellRendererJson(this.htmlCache),
-                    };
-
-                } else {
-                    return {
-                        data: c.name,
-                        type: "text",
-                    };
-                }
-
-            });
+            const columnDef = buildColumns(this);
 
             this.gridSettings = {
                 data: this.currentDataRows,
@@ -282,6 +273,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 viewportColumnRenderingOffset: 10,
                 viewportRowRenderingOffset: 10,
                 beforeOnCellMouseOver: this.onBeforeOnCellMouseOver,
+                // cells: true,
                 // disableVisualSelection: ["area"],
                 // currentRowClassName: "highlighted",
                 afterRender: (isForced: boolean) => {
@@ -295,9 +287,9 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             };
 
             this.gridInstance = new Handsontable(this.gridHost.nativeElement, this.gridSettings);
-            this.gridInstance.updateSettings({
-                cells: cellRenderer(this),
-            }, false);
+            // this.gridInstance.updateSettings({
+            //     cells: cellRenderer(this),
+            // }, false);
 
             this.gridInstance.addHook("modifyColWidth", (width: number, col: number) => {
                 if (col < 0) {
@@ -513,12 +505,6 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             });
     }
     private onCellMouseDown = (event: MouseEvent, coords: CellCoord, TD: Element): void => {
-        // if (coords.row > -1 && coords.col === -1) {
-        //     this.onRowHeaderMousedown(event, coords);
-        // }
-        // if (coords.col > -1) {
-        //     this.rowSelection.clear();
-        // }
 
         this.cellActive.col = coords.col;
         this.cellActive.row = coords.row;
@@ -547,27 +533,13 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     public onAfterSelection = (r: number, c: number, r2: number, c2: number, preventScrolling: object, selectionLayerLevel: number) => {
         if (this.selectionActive === false) {
             this.selectionActive = true;
-            this.selectionStart = [c, r];
-            console.log(`onAfterSelection`);
         }
     }
     public onBeforeOnCellMouseOver = (event: Event, coords: Handsontable.wot.CellCoords, TD: Element, blockCalculations: object) => {
 
-        // if (this.selectionActive && coords.row !== this.selectionStart[1] && coords.col >= 0) {
-        //     const c = this.selectionStart[0];
-        //     const r = this.selectionStart[1];
-
-        //     const c1 = coords.col;
-        //     const r1 = this.selectionStart[1];
-
-        //     // this.gridInstance.selectCells([[r, c, r1, c1]], true, true);
-        //     event.stopImmediatePropagation();
-        // }
-
     }
     public onAfterSelectionEnd = (r: number, c: number, r2: number, c2: number, selectionLayerLevel: number): void => {
         this.selectionActive = false;
-        console.log(`onAfterSelectionEnd`);
     }
 
 }

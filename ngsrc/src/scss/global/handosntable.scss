@@ -1,12 +1,30 @@
 @import "../colors";
 
-// global
-
-
 .handsontable .wtHider {
     transform: translate3d(0px, 0px, 0px);
 }
+.handsontable {
+    .triangle {
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 8px 8px 0 0;
+        border-color: #007bff transparent transparent transparent;
+        position: absolute;
+        top: 0;
+        left: 0;
 
+        &.partition-key {
+            border-color: mat-color($warn, 500) transparent transparent transparent;
+        }
+        &.column-clustering-key {
+            border-color: mat-color($yellow, 500) transparent transparent transparent;
+        }
+    }
+    td{
+        position: relative;
+    }
+}
 
 .vscode-dark,
 .vscode-high-contrast {
@@ -104,13 +122,13 @@
         transform: translate3d(0, 0, 0);
     }
     .handsontable .changed {
-        background-color: mat-color($accent, 500)!important;
-        color: mat-color($background, 50)!important;
+        background-color: mat-color($accent, 500) !important;
+        color: mat-color($background, 50) !important;
 
     }
     .handsontable .highlighted {
-        background-color: mat-color($blue, 500)!important;
-        color: mat-color($background, 50)!important;
+        background-color: mat-color($blue, 500) !important;
+        color: mat-color($background, 50) !important;
 
     }
     .handsontable .cell-key-partition {
@@ -127,31 +145,31 @@
         background: mat-color($accent, 500);
     }
     .htContextMenu table tbody tr td.htDisabled:hover {
-        background:  mat-color($background, 700);
+        background: mat-color($background, 700);
         color: #999;
         cursor: default;
     }
     .htContextMenu table.htCore {
         border: 1px solid mat-color($background, 800);
-        border-bottom-width: 1px!important;
-        border-top-width: 1px!important;
-        border-right-width: 1px!important;
-        border-left-width: 1px!important;
-        box-shadow: 6px 6px 22px -5px rgba(0,0,0,0.75);
+        border-bottom-width: 1px !important;
+        border-top-width: 1px !important;
+        border-right-width: 1px !important;
+        border-left-width: 1px !important;
+        box-shadow: 6px 6px 22px -5px rgba(0, 0, 0, 0.75);
 
         color: #333;
     }
-    .htContextMenu table tbody tr td{
+    .htContextMenu table tbody tr td {
 
-        border-left: none!important;
-        border-top: none!important;
-        border-right: none!important;
-        border-bottom: none!important;
+        border-left: none !important;
+        border-top: none !important;
+        border-right: none !important;
+        border-bottom: none !important;
         background-color: mat-color($background, 900);
 
     }
-    .htContextMenu table tbody tr td.htSeparator{
-        border-top: 1px solid mat-color($background, 700)!important;
+    .htContextMenu table tbody tr td.htSeparator {
+        border-top: 1px solid mat-color($background, 700) !important;
     }
 
 }

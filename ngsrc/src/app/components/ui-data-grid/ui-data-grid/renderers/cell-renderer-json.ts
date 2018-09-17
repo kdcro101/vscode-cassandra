@@ -1,12 +1,17 @@
 import { RenderJson } from "../../../../const/render-json";
+import { UiDataGridComponent } from "../ui-data-grid.component";
 
-export const cellRendererJson = (htmlCache: { [key: string]: HTMLElement }): (instance: _Handsontable.Core,
-    td: HTMLElement, row: number, col: number, prop: string | number, value: any,
-    cellProperties: Handsontable.GridSettings) => void => {
+// export const cellRendererJson = (dataGrid: UiDataGridComponent): (instance: _Handsontable.Core,
+//     td: HTMLElement, row: number, col: number, prop: string | number, value: any,
+//     cellProperties: Handsontable.GridSettings) => void => {
 
-    return (instance: _Handsontable.Core,
+export const cellRendererJson = (dataGrid: UiDataGridComponent): Function => {
+
+    return function (instance: _Handsontable.Core,
         td: HTMLElement, row: number, col: number, prop: string | number, value: any,
-        cellProperties: Handsontable.GridSettings): void => {
+        cellProperties: Handsontable.GridSettings): void {
+
+        Handsontable.renderers.BaseRenderer.apply(this, arguments);
 
         const obj = JSON.parse(value);
 
@@ -14,7 +19,7 @@ export const cellRendererJson = (htmlCache: { [key: string]: HTMLElement }): (in
         Handsontable.dom.empty(td);
 
         const key = `R${row}C${col}`;
-        const cache = htmlCache[key];
+        const cache = dataGrid.htmlCache[key];
         let element: HTMLElement = null;
 
         if (cache == null) {
@@ -23,12 +28,13 @@ export const cellRendererJson = (htmlCache: { [key: string]: HTMLElement }): (in
                 instance.selectCell(row, col);
                 instance.render();
             });
-            htmlCache[key] = element;
+            dataGrid.htmlCache[key] = element;
         } else {
             element = cache;
         }
-
+        td.style.fontFamily = dataGrid.theme.getEditorFontFamily();
         td.appendChild(element);
+
     };
 
 };

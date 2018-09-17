@@ -1,6 +1,5 @@
-import { fromEvent } from "rxjs";
-import { debounceTime, filter, map } from "rxjs/operators";
-import { headerRenderer } from "../renderers/header-renderer";
+import { fromEvent, interval, merge, Subject } from "rxjs";
+import { debounceTime, filter, map, takeUntil } from "rxjs/operators";
 import { UiDataGridComponent } from "../ui-data-grid.component";
 
 export type DetectionZone = "top" | "left" | "bottom" | "right" | "top-left" | "top-right" | "bottom-left" | "bottom-right";
@@ -17,22 +16,37 @@ export class ScrollAssist {
     private zoneMargin = 64;
     private scrollProgress = 48;
     private zones: DetectionRect[] = [];
-
+    private eventChange = new Subject<DetectionZone>();
+    private eventStop = new Subject<void>();
     constructor(public dataGrid: UiDataGridComponent) {
         this.scroll = document.getElementsByClassName("wtHolder")[0] as HTMLDivElement;
         this.clientRect = this.dataGrid.gridHost.nativeElement.getBoundingClientRect();
 
+        fromEvent<MouseEvent>(document, "mousemove", { capture: true }).pipe()
+            .subscribe(() => {
+                this.eventStop.next();
+            });
+
         fromEvent<MouseEvent>(this.dataGrid.gridHost.nativeElement, "mousemove", { capture: true }).pipe(
             filter(() => this.dataGrid.selectionActive),
             debounceTime(100),
-            map((e) => {
-
-                console.log(`mousemove ${e.pageX}:${e.pageY}`);
-                return this.detectPoint(e.clientX, e.clientY);
-            }),
+            map((e) => this.detectPoint(e.clientX, e.clientY)),
         ).subscribe((zone) => {
-            console.log(zone);
-            this.scrollForZone(zone);
+            this.eventChange.next(zone);
+        });
+
+        this.eventChange.pipe(
+        ).subscribe((zone) => {
+            interval(100).pipe(
+                takeUntil(
+                    merge(
+                        this.eventChange,
+                        this.eventStop,
+                        ),
+                ),
+            ).subscribe(() => {
+                this.scrollForZone(zone);
+            });
         });
 
         const top: DetectionRect = {
