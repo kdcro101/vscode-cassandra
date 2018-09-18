@@ -15,8 +15,6 @@ export class HtmlCache {
     }
     public get(row: number, col: number): HTMLElement | DocumentFragment {
         const key = this.getKey(row, col);
-        console.log("+++++++htmlCache.get+++++++++++++++");
-        console.log(this.htmlCache[key]);
         return this.htmlCache[key];
     }
     public clear() {

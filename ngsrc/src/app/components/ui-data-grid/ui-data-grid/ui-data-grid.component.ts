@@ -87,6 +87,14 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
     public gridInstance: Handsontable = null;
     private gridSettings: Handsontable.GridSettings = null;
+
+    private gridScroll: HTMLDivElement;
+    private gridScrollHeader: HTMLDivElement;
+    private gridScrollContent: HTMLTableElement;
+    private gridScrollContentObserver: ResizeObserver;
+    private gridScrollHeaderSpacer: HTMLDivElement;
+    private gridScrollContentSpacer: HTMLDivElement;
+
     private stateViewReady = new ReplaySubject<void>(1);
 
     private hostResizeObs: ResizeObserver;
@@ -119,6 +127,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     public selectionActive: boolean = false;
     public eventRender: Subject<void>;
     public eventDestroy: Subject<void>;
+    public eventModifyColumnWidth = new Subject<void>();
+    public eventScroll = new Subject<void>();
     public renderingProgress = false;
     public selectionHelper: SelectionHelper;
 
@@ -211,7 +221,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         this.currentError = null;
         this.stateGridReady = new ReplaySubject<void>(1);
         this.eventRender = new Subject<void>();
-        this.renderingProgress = true;
+
         this.gridAnimationState = "hidden";
         this.htmlCache = new HtmlCache();
 
@@ -232,8 +242,36 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             this.stateGridReady.next();
             this.gridAnimationState = "ready";
             this.renderingProgress = false;
+            this.gridScroll = document.getElementsByClassName("wtHolder")[0] as HTMLDivElement;
+            this.gridScrollHeader = document.getElementsByClassName("wtHolder")[1] as HTMLDivElement;
+            this.gridScrollContent = document.querySelectorAll("table.htCore")[0] as HTMLTableElement;
+            this.gridScrollHeaderSpacer = document.createElement("div");
+            this.gridScrollContentSpacer = document.createElement("div");
+
+            // this.gridScrollHeaderSpacer.style.width = "5000px";
+            // this.gridScrollHeaderSpacer.style.height = "4px";
+            // this.gridScrollHeaderSpacer.style.background = "green";
+
+            // this.gridScrollContentSpacer.style.width = "5000px";
+            // this.gridScrollContentSpacer.style.height = "4px";
+            // this.gridScrollContentSpacer.style.background = "red";
+
+            this.gridScrollHeader.appendChild(this.gridScrollHeaderSpacer);
+            this.gridScroll.appendChild(this.gridScrollContentSpacer);
+
+            this.gridScrollContentObserver = new ResizeObserver(() => {
+                this.fixContentWidth();
+            });
+            this.gridScrollContentObserver.observe(this.gridScrollContent);
+
+            this.restoreScrollPosition();
             this.detectChanges();
         });
+
+        this.eventScroll.pipe(
+            takeUntil(this.eventViewDestroyed),
+            debounceTime(100),
+        ).subscribe(() => this.storeScrollPosition());
 
         this.stateViewReady.pipe(
             take(1),
@@ -275,6 +313,9 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 this.detectChanges();
                 return;
             }
+
+            this.renderingProgress = true;
+            this.detectChanges();
 
             const result = data.results[this.currentStatementIndex];
             const analysis = data.analysis;
@@ -332,7 +373,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 afterSelection: this.onAfterSelection,
                 afterSelectionEnd: this.onAfterSelectionEnd,
                 afterOnCellMouseDown: this.onCellMouseDown,
-                viewportColumnRenderingOffset: 10,
+                viewportColumnRenderingOffset: 1000,
                 viewportRowRenderingOffset: 25,
                 beforeOnCellMouseOver: this.onBeforeOnCellMouseOver,
                 afterRender: (isForced: boolean) => {
@@ -340,6 +381,9 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                     this.eventRender.next();
                 },
                 afterDestroy: () => { this.eventDestroy.next(); },
+                afterUpdateSettings: () => { console.log("afterUpdateSettings"); },
+                afterScrollHorizontally: () => this.eventScroll.next(),
+                afterScrollVertically: () => this.eventScroll.next(),
                 undo: true,
 
             };
@@ -347,6 +391,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             this.gridInstance = new Handsontable(this.gridHost.nativeElement, this.gridSettings);
 
             this.gridInstance.addHook("modifyColWidth", (width: number, col: number) => {
+
                 if (col < 0) {
                     return width;
                 }
@@ -356,7 +401,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 if (m > width) {
                     return m;
                 }
-
+                this.eventModifyColumnWidth.next();
                 return width;
             });
 
@@ -365,7 +410,12 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             }, false);
 
             this.scrollAssist = new ScrollAssist(this);
-
+            this.eventModifyColumnWidth.pipe(
+                takeUntil(this.eventViewDestroyed),
+                debounceTime(25),
+            ).subscribe(() => {
+                this.fixContentWidth();
+            });
         });
 
     }
@@ -514,17 +564,6 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
         });
     }
-    private onAfterRender = (isForced: boolean) => {
-        console.log("onAfterRender");
-
-        this.getHeaderElement(0)
-            .then((result) => {
-                console.log("onAfterRender result");
-                console.log(result);
-            }).catch((e) => {
-                console.log(e);
-            });
-    }
     private onCellMouseDown = (event: MouseEvent, coords: CellCoord, TD: Element): void => {
 
         this.cellActive.col = coords.col;
@@ -545,5 +584,42 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         this.currentSelectedRows = this.selectionHelper.getRows(this.gridInstance.getSelected());
         console.log(JSON.stringify(this.currentSelectedRows));
     }
+    private storeScrollPosition() {
+        const rs = this.gridInstance.getPlugin("autoRowSize");
+        const cs = this.gridInstance.getPlugin("autoColumnSize");
+        console.log("storeScrollPosition");
 
+        this.currentEditor.scrollPosition = {
+            left: this.gridScroll.scrollLeft,
+            top: this.gridScroll.scrollTop,
+            row: rs.getFirstVisibleRow(),
+            col: cs.getFirstVisibleColumn(),
+        };
+
+    }
+    private restoreScrollPosition() {
+        if (!this.currentEditor.scrollPosition) {
+            return;
+        }
+        const pos = this.currentEditor.scrollPosition;
+        this.gridInstance.scrollViewportTo(pos.row, pos.col, false, false);
+        this.gridScroll.scrollLeft = pos.left;
+        this.gridScroll.scrollTop = pos.top;
+
+    }
+
+    private fixContentWidth() {
+        if (!this.gridScrollContent) {
+            return;
+        }
+        console.log("fixContentWidth");
+        let added = Math.round(this.gridScroll.offsetWidth / 4);
+        added = added >= 100 ? added : 100;
+        this.gridScrollContentSpacer.style.height = `1px`;
+        this.gridScrollHeaderSpacer.style.height = `1px`;
+
+        this.gridScrollContentSpacer.style.width = `${this.gridScrollContent.offsetWidth + added}px`;
+        this.gridScrollHeaderSpacer.style.width = `${this.gridScrollContent.offsetWidth + added}px`;
+
+    }
 }

@@ -13,4 +13,10 @@ export interface WorkbenchEditor {
     errors?: any[];
     executed: boolean;
     changes: DataChangeItem[];
+    scrollPosition?: {
+        left: number;
+        top: number;
+        row: number;
+        col: number;
+    };
 }
