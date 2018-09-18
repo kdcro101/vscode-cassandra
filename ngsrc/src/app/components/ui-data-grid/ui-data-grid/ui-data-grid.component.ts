@@ -270,7 +270,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
         this.eventScroll.pipe(
             takeUntil(this.eventViewDestroyed),
-            debounceTime(100),
+            debounceTime(300),
         ).subscribe(() => this.storeScrollPosition());
 
         this.stateViewReady.pipe(
