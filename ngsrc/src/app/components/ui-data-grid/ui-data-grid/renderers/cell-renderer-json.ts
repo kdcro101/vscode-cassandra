@@ -24,8 +24,8 @@ export const cellRendererJson = (dataGrid: UiDataGridComponent): Function => {
             element = RenderJson.render(obj, () => {
                 console.log("Opening node...");
                 instance.deselectCell();
-                instance.selectCell(row, col);
                 instance.render();
+                instance.selectCell(row, col);
             });
             dataGrid.htmlCache.add(row, col, element);
 

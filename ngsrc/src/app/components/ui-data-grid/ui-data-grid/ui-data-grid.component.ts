@@ -248,13 +248,13 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             this.gridScrollHeaderSpacer = document.createElement("div");
             this.gridScrollContentSpacer = document.createElement("div");
 
-            // this.gridScrollHeaderSpacer.style.width = "5000px";
-            // this.gridScrollHeaderSpacer.style.height = "4px";
-            // this.gridScrollHeaderSpacer.style.background = "green";
+            this.gridScrollHeaderSpacer.style.width = "5000px";
+            this.gridScrollHeaderSpacer.style.height = "4px";
+            this.gridScrollHeaderSpacer.style.background = "green";
 
-            // this.gridScrollContentSpacer.style.width = "5000px";
-            // this.gridScrollContentSpacer.style.height = "4px";
-            // this.gridScrollContentSpacer.style.background = "red";
+            this.gridScrollContentSpacer.style.width = "5000px";
+            this.gridScrollContentSpacer.style.height = "4px";
+            this.gridScrollContentSpacer.style.background = "red";
 
             this.gridScrollHeader.appendChild(this.gridScrollHeaderSpacer);
             this.gridScroll.appendChild(this.gridScrollContentSpacer);
