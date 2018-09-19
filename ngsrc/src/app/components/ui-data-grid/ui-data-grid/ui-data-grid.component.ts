@@ -264,14 +264,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             });
             this.gridScrollContentObserver.observe(this.gridScrollContent);
 
-            this.restoreScrollPosition();
             this.detectChanges();
         });
-
-        this.eventScroll.pipe(
-            takeUntil(this.eventViewDestroyed),
-            debounceTime(300),
-        ).subscribe(() => this.storeScrollPosition());
 
         this.stateViewReady.pipe(
             take(1),
@@ -583,29 +577,6 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         this.selectionActive = false;
         this.currentSelectedRows = this.selectionHelper.getRows(this.gridInstance.getSelected());
         console.log(JSON.stringify(this.currentSelectedRows));
-    }
-    private storeScrollPosition() {
-        const rs = this.gridInstance.getPlugin("autoRowSize");
-        const cs = this.gridInstance.getPlugin("autoColumnSize");
-        console.log("storeScrollPosition");
-
-        this.currentEditor.scrollPosition = {
-            left: this.gridScroll.scrollLeft,
-            top: this.gridScroll.scrollTop,
-            row: rs.getFirstVisibleRow(),
-            col: cs.getFirstVisibleColumn(),
-        };
-
-    }
-    private restoreScrollPosition() {
-        if (!this.currentEditor.scrollPosition) {
-            return;
-        }
-        const pos = this.currentEditor.scrollPosition;
-        this.gridInstance.scrollViewportTo(pos.row, pos.col, false, false);
-        this.gridScroll.scrollLeft = pos.left;
-        this.gridScroll.scrollTop = pos.top;
-
     }
 
     private fixContentWidth() {

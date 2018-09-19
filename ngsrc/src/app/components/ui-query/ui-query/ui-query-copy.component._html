@@ -4,7 +4,7 @@
             <mat-icon class="icon-18">cloud_queue</mat-icon>
             <mat-form-field color="accent" floatLabel="never" class="no-underline">
                 <mat-select panelClass="material-custom drop-down" placeholder="Select cluster" [ngModel]="editorCurrent.statement.clusterName"
-                    [disabled]="(editorCurrent.stateExecuting | async)" (ngModelChange)="onClusterChange($event)"
+                    [disabled]="(cqlClient.stateExecuting | async)" (ngModelChange)="onClusterChange($event)"
                     matTooltip="Select cluster">
                     <mat-option *ngFor="let i of clusterList" [value]="i.name">
                         {{i.name}}
@@ -18,7 +18,7 @@
                 <mat-icon class="icon-18">panorama_fish_eye</mat-icon>
                 <mat-form-field color="accent" floatLabel="never" class="no-underline">
                     <mat-select panelClass="material-custom drop-down" placeholder="Select keyspace" [ngModel]="editorCurrent.statement.keyspace"
-                        [disabled]="(editorCurrent.stateExecuting | async)" (ngModelChange)="onKeyspaceChange($event)"
+                        [disabled]="(cqlClient.stateExecuting | async)" (ngModelChange)="onKeyspaceChange($event)"
                         matTooltip="Select keyspace">
                         <mat-option *ngFor="let i of keyspaceList" [value]="i.name">
                             {{i.name}}
@@ -26,33 +26,27 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div *ngIf="clusterLoadingError && !clusterLoading" class="cluster-loading-error mat-caption">Error
-                retrieving cluster structure</div>
+            <div *ngIf="clusterLoadingError && !clusterLoading" class="cluster-loading-error mat-caption">Error retrieving cluster structure</div>
             <div fxFlex></div>
-            <button [disabled]="(editorCurrent.stateExecuting | async) || clusterLoadingError || clusterLoading" color="accent"
-                mat-button (click)="executeCql()">EXECUTE</button>
-            <mat-progress-bar *ngIf="editorCurrent.stateExecuting | async" class="progress" mode="indeterminate" color="accent"></mat-progress-bar>
+            <button [disabled]="(cqlClient.stateExecuting | async) || clusterLoadingError || clusterLoading" color="accent" mat-button (click)="executeCql()">EXECUTE</button>
+            <mat-progress-bar *ngIf="cqlClient.stateExecuting | async" class="progress" mode="indeterminate" color="accent"></mat-progress-bar>
         </div>
         <ui-monaco-editor #monacoEditor [editor]="editorCurrent" (onCodeChange)="onCodeChange($event)" (onExecute)="executeCql()"
             fxFlex></ui-monaco-editor>
     </div>
     <div #bottom class="bottom" fxLayout="column">
         <div fxFlex class="bottom-client" fxLayout="column">
-            <div *ngFor="let item of editorService.list;index as ix;trackBy: trackEditor" class="editor-panel"
-                [@panelAnimation]="panelAnimationState[item.id]" (@panelAnimation.done)="panelAnimationDone($event)"
-                fxLayout="column">
-                <ui-data-grid fxFlex [editor]="item" *ngIf="!(item.stateExecuting | async) && item.result && item.result.analysis.selectData"></ui-data-grid>
-                <div class="result-panel" *ngIf="item.result && !item.result.analysis.selectData"
-                    fxFlex>
-                    <div class="success" *ngIf="item.result.errors==null || item.result.errors.length===0">
-                        Success
-                    </div>
-                    <div class="errors" *ngIf="item.result.errors.length>0">
-                        <div *ngFor="let ei of item.result.errors;index as eix;" class="item mat-body-1"
-                            fxLayout="row" fxLayoutAlign="start start" (click)="onErrorClick($event,eix)">
-                            <div class="index">{{ ei.statementIndex}}</div>
-                            <div class="desc">{{  ei.error.message}}</div>
-                        </div>
+            <ui-data-grid fxFlex [editor]="editorCurrent"
+             *ngIf="!(cqlClient.stateExecuting | async) && editorCurrent.result && editorCurrent.result.analysis.selectData"></ui-data-grid>
+            <div class="result-panel" *ngIf="editorCurrent.result && !editorCurrent.result.analysis.selectData" fxFlex>
+                <div class="success" *ngIf="editorCurrent.result.errors==null || editorCurrent.result.errors.length===0">
+                    Success
+                </div>
+                <div class="errors" *ngIf="editorCurrent.result.errors.length>0">
+                    <div *ngFor="let i of editorCurrent.result.errors;index as ix;" class="item mat-body-1" fxLayout="row"
+                        fxLayoutAlign="start start" (click)="onErrorClick($event,ix)">
+                        <div class="index">{{ i.statementIndex}}</div>
+                        <div class="desc">{{ i.error.message}}</div>
                     </div>
                 </div>
             </div>

@@ -1,10 +1,11 @@
 import { Injectable } from "@angular/core";
-import { from, of, Subject } from "rxjs";
-import { ReplaySubject } from "rxjs";
-import { take, tap } from "rxjs/operators";
-import { concatMap } from "rxjs/operators";
+
+import { BehaviorSubject, from, ReplaySubject, Subject } from "rxjs";
+import { concatMap, take } from "rxjs/operators";
+import { ClusterExecuteResults } from "../../../../../src/clusters/index";
 import { WorkbenchCqlStatement } from "../../../../../src/types/editor";
 import { ProcMessage, ProcMessageStrict } from "../../../../../src/types/messages";
+import { generateId } from "../../const/id";
 import { WorkbenchEditor } from "../../types/index";
 import { MessageService } from "../message/message.service";
 import { MonacoService } from "../monaco/monaco.service";
@@ -14,15 +15,15 @@ declare var persistedStatements: WorkbenchCqlStatement[];
 @Injectable({
     providedIn: "root",
 })
-export class EditorQueService {
+export class EditorService {
     private filenamePrefix = "script_";
     private filenameExt = "cql";
 
-    public eventChangeQue = new Subject<void>();
+    public eventListChange = new Subject<void>();
     public stateActive = new ReplaySubject<[number, WorkbenchEditor]>(1);
-    private queCurrent: WorkbenchEditor[] = [];
+    private listCurrent: WorkbenchEditor[] = [];
 
-    public itemActive: number = -1;
+    private indexCurrent: number = -1;
 
     constructor(private messages: MessageService, private monaco: MonacoService) {
 
@@ -36,17 +37,20 @@ export class EditorQueService {
             from(persistedStatements).pipe(
                 concatMap((s) => this.persistedStatement2Editor(s)),
             ).subscribe((e) => {
-                this.queCurrent.push(e);
+                this.listCurrent.push(e);
             }, (e) => { }, () => {
-                if (this.que.length > 0) {
+                if (this.list.length > 0) {
                     this.activate(0);
                 }
             });
         }
 
     }
-    public get que() {
-        return this.queCurrent;
+    public get index() {
+        return this.indexCurrent;
+    }
+    public get list() {
+        return this.listCurrent;
     }
     private processMessage(message: ProcMessage) {
         const name = message.name;
@@ -59,15 +63,15 @@ export class EditorQueService {
 
     }
     public activate(index: number) {
-        if (index < 0 || index >= this.que.length) {
-            this.itemActive = -1;
-            this.stateActive.next([this.itemActive, null]);
+        if (index < 0 || index >= this.list.length) {
+            this.indexCurrent = -1;
+            this.stateActive.next([this.indexCurrent, null]);
             return;
         }
 
-        this.itemActive = index;
-        const e = this.que[index];
-        this.stateActive.next([this.itemActive, e]);
+        this.indexCurrent = index;
+        const e = this.list[index];
+        this.stateActive.next([this.indexCurrent, e]);
 
     }
     private statementCreate(s: ProcMessageStrict<"e2w_editorCreate">) {
@@ -84,14 +88,17 @@ export class EditorQueService {
                 take(1),
             ).subscribe(() => {
 
-                const e: WorkbenchEditor = {
+                const editor: WorkbenchEditor = {
+                    id: generateId(),
                     statement,
                     result: null,
                     executed: false,
                     changes: [],
                     model: monaco.editor.createModel(statement.body, "cql"),
+                    stateExecuting: new BehaviorSubject<boolean>(false),
+                    eventResult: new Subject<void>(),
                 };
-                resolve(e);
+                resolve(editor);
             }, (e) => {
                 reject(e);
             });
@@ -104,15 +111,18 @@ export class EditorQueService {
 
             statement.filename = this.generateFilename();
 
-            const e: WorkbenchEditor = {
+            const editor: WorkbenchEditor = {
+                id: generateId(),
                 statement,
                 result: null,
                 executed: false,
                 changes: [],
                 model: monaco.editor.createModel(statement.body, "cql"),
+                stateExecuting: new BehaviorSubject<boolean>(false),
+                eventResult: new Subject<void>(),
             };
 
-            this.editorPrepend(e);
+            this.editorPrepend(editor);
             this.persistEditors();
 
         });
@@ -121,13 +131,13 @@ export class EditorQueService {
         if (e == null) {
             return;
         }
-        this.queCurrent = [e].concat(this.queCurrent);
-        this.eventChangeQue.next();
+        this.listCurrent = [e].concat(this.listCurrent);
+        this.eventListChange.next();
         this.activate(0);
     }
     private generateFilename(): string {
         const rx = new RegExp(`${this.filenamePrefix}\\d+\\.${this.filenameExt}`);
-        const list = this.que.filter((i) => i.statement.filename.search(rx) === 0);
+        const list = this.list.filter((i) => i.statement.filename.search(rx) === 0);
 
         if (list.length === 0) {
             console.log("que len zero");
@@ -152,23 +162,23 @@ export class EditorQueService {
 
     public swap(source: number, dest: number) {
 
-        const b = this.que[dest];
-        this.que[dest] = this.que[source];
-        this.que[source] = b;
+        const b = this.list[dest];
+        this.list[dest] = this.list[source];
+        this.list[source] = b;
 
         this.activate(dest);
         this.persistEditors();
     }
     public updateStatement(index: number, statement: WorkbenchCqlStatement) {
-        if (index < 0 || index >= this.que.length) {
+        if (index < 0 || index >= this.list.length) {
             return;
         }
 
-        this.que[index].statement = statement;
+        this.list[index].statement = statement;
         this.persistEditors();
     }
     public persistEditors() {
-        const statements = this.que.map((e) => e.statement);
+        const statements = this.list.map((e) => e.statement);
 
         const m: ProcMessageStrict<"w2e_persistEditors"> = {
             name: "w2e_persistEditors",
@@ -178,22 +188,22 @@ export class EditorQueService {
         this.messages.emit(m);
     }
     public remove(index: number) {
-        if (index < 0 || index >= this.que.length) {
+        if (index < 0 || index >= this.list.length) {
             return;
         }
 
-        this.queCurrent.splice(index, 1);
+        this.listCurrent.splice(index, 1);
 
-        let nextActive: number = this.itemActive;
+        let nextActive: number = this.indexCurrent;
 
-        if (this.queCurrent.length > 0 && index <= this.itemActive) {
-            const minusOne = this.itemActive - 1;
+        if (this.listCurrent.length > 0 && index <= this.indexCurrent) {
+            const minusOne = this.indexCurrent - 1;
             nextActive = minusOne >= 0 ? minusOne : 0;
         }
         // activate tab
         this.activate(nextActive);
-        // emit que change
-        this.eventChangeQue.next();
+        // emit list change
+        this.eventListChange.next();
         // persist state
         this.persistEditors();
     }

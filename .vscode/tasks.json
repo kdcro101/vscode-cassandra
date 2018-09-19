@@ -2,8 +2,7 @@
 // for the documentation about the tasks.json format
 {
     "version": "2.0.0",
-    "tasks": [
-        {
+    "tasks": [{
             "type": "npm",
             "script": "watch",
             "problemMatcher": "$tsc-watch",
@@ -21,7 +20,7 @@
             "script": "build",
             "path": "ngsrc/",
             "problemMatcher": [
-                "$tslint5"
+                "$tsc"
             ]
         },
         {
@@ -35,7 +34,22 @@
             "type": "npm",
             "script": "generate",
             "problemMatcher": []
+        },
+        {
+            "type": "typescript",
+            "tsconfig": "tsconfig.json",
+            "problemMatcher": [
+                "$tsc"
+            ]
+        },
+        {
+            "type": "npm",
+            "script": "build-watch",
+            "path": "ngsrc/",
+            "problemMatcher": [
+                "$tsc-watch"
+            ],
+            "isBackground": true
         }
-
     ]
 }

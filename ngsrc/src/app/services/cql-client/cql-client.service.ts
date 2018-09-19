@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 import { BehaviorSubject } from "rxjs";
-import { filter, map, take, timeout } from "rxjs/operators";
+import { filter, map, subscribeOn, take, timeout } from "rxjs/operators";
 import { ExecuteQueryResponse, ProcMessageStrict } from "../../../../../src/types/messages";
 import { generateId } from "../../const/id";
-import { VscodeWebviewInterface } from "../../types/index";
+import { VscodeWebviewInterface, WorkbenchEditor } from "../../types/index";
 import { MessageService } from "../message/message.service";
 
 declare var vscode: VscodeWebviewInterface;
@@ -14,13 +14,28 @@ declare var vscode: VscodeWebviewInterface;
 })
 export class CqlClientService {
 
-    public stateExecuting = new BehaviorSubject(false);
+    // public stateExecuting = new BehaviorSubject(false);
 
     constructor(private message: MessageService) {
 
     }
-    public execute(clusterName: string, keyspaceInitial: string, cql: string): Subject<ExecuteQueryResponse> {
-        this.stateExecuting.next(true);
+    public executeEditor(editor: WorkbenchEditor): Promise<ExecuteQueryResponse> {
+        return new Promise((resolve, reject) => {
+
+            editor.stateExecuting.next(true);
+            this.execute(editor.statement.clusterName, editor.statement.keyspace, editor.statement.body)
+                .subscribe((queryResult) => {
+                    editor.result = queryResult.result;
+                    editor.stateExecuting.next(false);
+                    editor.eventResult.next();
+                    resolve(queryResult);
+                }, (e) => {
+                    reject(e);
+                });
+        });
+    }
+    private execute(clusterName: string, keyspaceInitial: string, cql: string): Subject<ExecuteQueryResponse> {
+        // this.stateExecuting.next(true);
         const out = new Subject<ExecuteQueryResponse>();
         const id = generateId();
 
@@ -41,10 +56,10 @@ export class CqlClientService {
             take(1),
             map((e) => e as ProcMessageStrict<"e2w_executeQueryResponse">),
         ).subscribe((e) => {
-            this.stateExecuting.next(false);
+            // this.stateExecuting.next(false);
             out.next(e.data);
         }, (e) => {
-            this.stateExecuting.next(false);
+            // this.stateExecuting.next(false);
             out.error(e);
         });
 

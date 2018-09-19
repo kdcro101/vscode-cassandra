@@ -10,7 +10,7 @@
         </div>
         <ui-content-horizontal #tabScroll class="tabs" fxFlex>
             <div class="tabs-wrap" #tabList fxLayout="row" fxLayoutAlign="start center">
-                <div #tabItems *ngFor="let i of editorQue.que;index as ix" class="item" [class.active]="ix===editorQue.itemActive"
+                <div #tabItems *ngFor="let i of editorService.list;index as ix" class="item" [class.active]="ix===editorIndex"
                     (mousedown)="onTabMousedown($event,ix)" fxLayout="row" fxLayoutAlign="start center">
                     <div fxFlex class="title dhandle">
                         {{ i.statement.filename }}
@@ -21,7 +21,7 @@
         </ui-content-horizontal>
     </div>
     <div fxFlex class="client" fxLayout="column">
-        <ui-query (onStatementChange)="onActiveStatementChange($event)" *ngIf="editorActive" #queryEditor [editor]="editorActive" fxFlex></ui-query>
+        <ui-query (onStatementChange)="onActiveStatementChange($event)" *ngIf="editorService.list.length>0" #queryEditor [editor]="editor" fxFlex></ui-query>
         <div *ngIf="!editorActive" #container>
 
         </div>

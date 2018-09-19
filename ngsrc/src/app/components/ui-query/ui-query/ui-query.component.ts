@@ -7,21 +7,30 @@ import { ReplaySubject, Subject } from "rxjs";
 import { debounceTime, take, takeUntil } from "rxjs/operators";
 import * as Split from "split.js";
 
+import { AnimationEvent } from "@angular/animations";
+import { merge } from "rxjs";
 import { CqlAnalysisError } from "../../../../../../src/parser/listeners/cql-analyzer";
 import { WorkbenchCqlStatement } from "../../../../../../src/types/editor";
 import { CassandraCluster, CassandraClusterData, CassandraKeyspace, ExecuteQueryResponse } from "../../../../../../src/types/index";
 import { ViewDestroyable } from "../../../base/view-destroyable/index";
 import { ClusterService } from "../../../services/cluster/cluster.service";
 import { CqlClientService } from "../../../services/cql-client/cql-client.service";
+import { EditorService } from "../../../services/editor/editor.service";
 import { ThemeService } from "../../../services/theme/theme.service";
 import { WorkbenchEditor } from "../../../types/index";
 import { UiMonacoEditorComponent } from "../../ui-monaco-editor/ui-monaco-editor/ui-monaco-editor.component";
+import { panelAnimations } from "./animations/panel";
+
+type PanelAnimationState = "active" | "hidden";
 
 @Component({
     selector: "ui-query",
     templateUrl: "./ui-query.component.html",
     styleUrls: ["./ui-query.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: [
+        ...panelAnimations,
+    ],
 })
 export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestroy {
     @Output("onStatementChange") public onStatementChange = new EventEmitter<WorkbenchCqlStatement>();
@@ -38,7 +47,10 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     public clusterData: CassandraClusterData = null;
     public clusterList: CassandraCluster[] = [];
     public keyspaceList: CassandraKeyspace[] = [];
+
+    public editors: WorkbenchEditor[] = [];
     public editorCurrent: WorkbenchEditor = null;
+    public editorIndex: number = -1;
 
     public fontSize: number = 15;
     public lineHeight: number = 23;
@@ -52,12 +64,15 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     private decorations: string[] = [];
     private decorationsTimeout: any;
 
+    public panelAnimationState: { [id: string]: string };
+
     constructor(
         public change: ChangeDetectorRef,
         public cluster: ClusterService,
         public cqlClient: CqlClientService,
         public theme: ThemeService,
         public snackBar: MatSnackBar,
+        public editorService: EditorService,
     ) {
         super(change);
 
@@ -66,22 +81,41 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         this.lineHeight = Math.round(this.fontSize * 1.5);
 
     }
-    @Input() public set editor(e: WorkbenchEditor) {
+    public trackEditor(index: number, e: WorkbenchEditor) {
+        console.log(`trackEditor ${e.id}`);
+        return e.id;
+    }
+    public panelAnimationDone = (event: AnimationEvent) => {
+        console.log(`panelAnimation ${event.fromState} -> ${event.toState}`);
+    }
+    public get editor() {
+        return this.editorCurrent;
+    }
+    @Input("editor") public set editor(editor: WorkbenchEditor) {
         this.stateReady.pipe(
             take(1),
         ).subscribe(() => {
 
-            console.log("set EDITOR");
-
-            this.editorCurrent = e;
+            this.editorCurrent = editor;
 
             if (this.editorCurrent.statement.clusterName !== this.clusterLast) {
                 this.prepareCluster(this.editorCurrent.statement.clusterName);
             }
-
+            this.activateEditorPanel(editor);
             this.detectChanges();
 
         });
+
+        merge(this.editorService.eventListChange, this.editorService.stateActive).pipe(
+            takeUntil(this.eventViewDestroyed),
+        ).subscribe(() => {
+            this.editors = this.editorService.list;
+            this.editorIndex = this.editors.findIndex((e) => e.id === this.editor.id);
+
+            this.activateEditorPanel(this.editor);
+            this.detectChanges();
+        });
+        // .
     }
     ngOnInit() {
 
@@ -105,14 +139,28 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
             this.onStatementChange.emit(d);
         });
 
-        this.cqlClient.stateExecuting.pipe(
-            takeUntil(this.eventViewDestroyed),
-        ).subscribe(() => this.detectChanges());
+        // this.cqlClient.stateExecuting.pipe(
+        //     takeUntil(this.eventViewDestroyed),
+        // ).subscribe(() => this.detectChanges());
 
     }
     ngOnDestroy() {
         super.ngOnDestroy();
     }
+    public activateEditorPanel(editor: WorkbenchEditor) {
+        console.log(`panel Activating ${editor.id}`);
+        const states = {};
+        this.editorService.list.forEach((e) => {
+            if (this.editorCurrent.id === e.id) {
+                states[e.id] = "active";
+                return;
+            }
+            states[e.id] = "hidden";
+        });
+        this.panelAnimationState = states;
+
+    }
+
     public updateEditor(editor: WorkbenchEditor) {
 
     }
@@ -143,15 +191,11 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
             return;
         }
 
-        const cql = this.editorCurrent.statement.body;
-        const clusterName = this.editorCurrent.statement.clusterName;
-        const keyspace = this.editorCurrent.statement.keyspace;
-
         this.editorCurrent.result = null;
         this.detectChanges();
 
-        this.cqlClient.execute(clusterName, keyspace, cql).pipe()
-            .subscribe((response: ExecuteQueryResponse) => {
+        this.cqlClient.executeEditor(this.editorCurrent)
+            .then((response: ExecuteQueryResponse) => {
                 console.log("[cqlClient.execute] Got result !!!");
 
                 if (response.error) {
@@ -159,10 +203,9 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
                     return;
                 }
 
-                this.editorCurrent.result = response.result;
                 this.detectChanges();
 
-            }, (e) => {
+            }).catch((e) => {
                 this.snackBar.open(e, "OK", {
                     duration: 1000,
                 });
@@ -180,7 +223,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
                 message = "Unable to execute multiple SELECT statements";
                 break;
             default:
-                message = `ERROR: ${ JSON.stringify(response.error) }`;
+                message = `ERROR: ${JSON.stringify(response.error)}`;
                 break;
 
         }

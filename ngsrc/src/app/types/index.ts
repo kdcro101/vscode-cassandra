@@ -1,4 +1,6 @@
 
+import { BehaviorSubject } from "rxjs";
+import { Subject } from "rxjs";
 import { ClusterExecuteResults } from "../../../../src/clusters";
 import { WorkbenchCqlStatement } from "../../../../src/types/editor";
 import { DataChangeItem, ProcMessage } from "../../../../src/types/messages";
@@ -6,6 +8,7 @@ export interface VscodeWebviewInterface {
     postMessage: <T>(data: ProcMessage) => void;
 }
 export interface WorkbenchEditor {
+    id: string;
     statement: WorkbenchCqlStatement;
     model?: monaco.editor.ITextModel;
     viewState?: monaco.editor.ICodeEditorViewState;
@@ -13,10 +16,6 @@ export interface WorkbenchEditor {
     errors?: any[];
     executed: boolean;
     changes: DataChangeItem[];
-    scrollPosition?: {
-        left: number;
-        top: number;
-        row: number;
-        col: number;
-    };
+    stateExecuting: BehaviorSubject<boolean>;
+    eventResult: Subject<void>;
 }

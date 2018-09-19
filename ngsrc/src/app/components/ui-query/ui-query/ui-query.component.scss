@@ -48,7 +48,15 @@
 
                 position: relative;
                 overflow: hidden;
+                .editor-panel {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    bottom: 0;
+                    right: 0;
+                    background-color: fuchsia;
 
+                }
                 .result-panel {
                     position: relative;
                     overflow: auto;
