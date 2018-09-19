@@ -12,6 +12,7 @@ import { ColumnInfo } from "../../../../../../src/cassandra-client/index";
 import { AnalyzedStatement, CqlAnalysis } from "../../../../../../src/parser/listeners/cql-analyzer";
 import { CassandraColumn, CassandraTable, DataChangeItem } from "../../../../../../src/types/index";
 import { ViewDestroyable } from "../../../base/view-destroyable";
+import { generateId } from "../../../const/id";
 import { ThemeService } from "../../../services/theme/theme.service";
 import { WorkbenchEditor } from "../../../types/index";
 import { onBeforeChange } from "./before-change";
@@ -84,8 +85,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     @ViewChild("root") public root: ElementRef<HTMLDivElement>;
     @ViewChild("gridHost") public gridHost: ElementRef<HTMLDivElement>;
     public gridAnimationState: string;
-
     public gridInstance: Handsontable = null;
+    public gridInstanceId: string = generateId();
     private gridSettings: Handsontable.GridSettings = null;
 
     private gridScroll: HTMLDivElement;
@@ -242,9 +243,9 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             this.stateGridReady.next();
             this.gridAnimationState = "ready";
             this.renderingProgress = false;
-            this.gridScroll = document.getElementsByClassName("wtHolder")[0] as HTMLDivElement;
-            this.gridScrollHeader = document.getElementsByClassName("wtHolder")[1] as HTMLDivElement;
-            this.gridScrollContent = document.querySelectorAll("table.htCore")[0] as HTMLTableElement;
+            this.gridScroll = document.querySelectorAll(`#${ this.gridInstanceId } .wtHolder`)[0] as HTMLDivElement;
+            this.gridScrollHeader = document.querySelectorAll(`#${ this.gridInstanceId } .wtHolder`)[1] as HTMLDivElement;
+            this.gridScrollContent = document.querySelectorAll(`#${ this.gridInstanceId } table.htCore`)[0] as HTMLTableElement;
             this.gridScrollHeaderSpacer = document.createElement("div");
             this.gridScrollContentSpacer = document.createElement("div");
 

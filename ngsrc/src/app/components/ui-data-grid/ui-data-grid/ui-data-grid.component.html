@@ -1,7 +1,7 @@
 <div class="root" #root fxLayout="column">
     <mat-progress-bar [@progressAnimationState] color="primary" mode="indeterminate" *ngIf="renderingProgress"></mat-progress-bar>
     <div fxFlex class="grid-wrap" [@gridAnimationState]="gridAnimationState">
-        <div #gridHost class="grid-host"></div>
+        <div #gridHost class="grid-host" id="{{ gridInstanceId }}"></div>
     </div>
     <div>AJ EM BOTTOM</div>
 </div>

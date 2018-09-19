@@ -8,7 +8,7 @@ export const panelAnimations: AnimationTriggerMetadata[] = [
             transform: "translate3d(100%,0,0)",
         })),
         state("active", style({
-            transform: "translate3d(0,0,0)",
+            transform: "none",
         })),
         state("void", style({
             transform: "translate3d(0,100%,0)",
