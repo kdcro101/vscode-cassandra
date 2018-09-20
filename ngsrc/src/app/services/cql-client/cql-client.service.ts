@@ -21,15 +21,17 @@ export class CqlClientService {
     }
     public executeEditor(editor: WorkbenchEditor): Promise<ExecuteQueryResponse> {
         return new Promise((resolve, reject) => {
-
+            editor.executed = true;
             editor.stateExecuting.next(true);
             this.execute(editor.statement.clusterName, editor.statement.keyspace, editor.statement.body)
                 .subscribe((queryResult) => {
                     editor.result = queryResult.result;
                     editor.stateExecuting.next(false);
                     editor.eventResult.next();
+
                     resolve(queryResult);
                 }, (e) => {
+
                     reject(e);
                 });
         });

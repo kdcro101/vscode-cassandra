@@ -1,5 +1,5 @@
 import {
-    animate, AnimationTriggerMetadata, state, style, transition, trigger,
+    animate, AnimationTriggerMetadata, query, state, style, transition, trigger,
 } from "@angular/animations";
 
 export const panelAnimations: AnimationTriggerMetadata[] = [
@@ -13,18 +13,22 @@ export const panelAnimations: AnimationTriggerMetadata[] = [
         state("void", style({
             transform: "translate3d(0,100%,0)",
         })),
-        transition("* => active", [
+        transition("hidden => active", [
             style({
-                transform: "translate3d(100%,0,0)",
+                transform: "translate3d(0,0,0) scale3d(0,0,1)",
             }),
-            animate("150ms ease-in-out"),
+            animate("330ms 200ms ease-in-out"),
         ]),
         transition("active => hidden", [
             style({
-                transform: "translate3d(0,0,0)",
+                transform: "translate3d(0,0,0) scale3d(1,1,1)",
+                opacity: 1,
+                transformOrigin: "right center",
             }),
-            animate("150ms ease-in-out", style({
-                transform: "translate3d(-100%,0,0)",
+            animate("330ms 10ms ease-in-out", style({
+                transform: "translate3d(-100%,0,0)  scale3d(0,0,1)",
+                opacity: 0,
+                transformOrigin: "right center",
             })),
         ]),
         transition("* => void", animate("50ms ease-in")),

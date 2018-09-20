@@ -39,19 +39,33 @@
     <div #bottom class="bottom" fxLayout="column">
         <div fxFlex class="bottom-client" fxLayout="column">
             <div *ngFor="let item of editorService.list;index as ix;trackBy: trackEditor" class="editor-panel"
-                [@panelAnimation]="panelAnimationState[item.id]" (@panelAnimation.done)="panelAnimationDone($event)"
-                fxLayout="column">
-                <ui-data-grid fxFlex [editor]="item" *ngIf="!(item.stateExecuting | async) && item.result && item.result.analysis.selectData"></ui-data-grid>
-                <div class="result-panel" *ngIf="item.result && !item.result.analysis.selectData"
-                    fxFlex>
+                [@panelAnimation]="panelAnimationState[item.id]" (@panelAnimation.start)="panelAnimationStart($event,ix)"
+                (@panelAnimation.done)="panelAnimationDone($event,ix)" fxLayout="column">
+                <ui-data-grid #dataGrid fxFlex [editor]="item" *ngIf="!(item.stateExecuting | async) && item.result && item.result.analysis.selectData"></ui-data-grid>
+                <div class="result-panel" *ngIf="item.result && !item.result.analysis.selectData" fxFlex>
                     <div class="success" *ngIf="item.result.errors==null || item.result.errors.length===0">
                         Success
                     </div>
                     <div class="errors" *ngIf="item.result.errors.length>0">
-                        <div *ngFor="let ei of item.result.errors;index as eix;" class="item mat-body-1"
-                            fxLayout="row" fxLayoutAlign="start start" (click)="onErrorClick($event,eix)">
+                        <div *ngFor="let ei of item.result.errors;index as eix;" class="item mat-body-1" fxLayout="row"
+                            fxLayoutAlign="start start" (click)="onErrorClick($event,eix)">
                             <div class="index">{{ ei.statementIndex}}</div>
-                            <div class="desc">{{  ei.error.message}}</div>
+                            <div class="desc">{{ ei.error.message}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="center center" class="not-executed" *ngIf="!item.executed">
+                    <div class="action" fxLayout="column">
+                        <div fxLayoutAlign="center center" fxLayout="row">
+                            <button mat-fab color="accent" (click)="executeCql()">
+                                <mat-icon>cloud_upload</mat-icon>
+                            </button>
+                        </div>
+                        <div class="sep"></div>
+                        <div fxLayoutAlign="center center" fxLayout="row">
+                            <button mat-button color="accent" (click)="executeCql()">
+                                EXECUTE
+                            </button>
                         </div>
                     </div>
                 </div>

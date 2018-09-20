@@ -1,6 +1,6 @@
 import {
     ChangeDetectionStrategy, ChangeDetectorRef,
-    Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild,
+    Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChild, ViewChildren,
 } from "@angular/core";
 import { MatSnackBar } from "@angular/material";
 import { ReplaySubject, Subject } from "rxjs";
@@ -18,6 +18,7 @@ import { CqlClientService } from "../../../services/cql-client/cql-client.servic
 import { EditorService } from "../../../services/editor/editor.service";
 import { ThemeService } from "../../../services/theme/theme.service";
 import { WorkbenchEditor } from "../../../types/index";
+import { UiDataGridComponent } from "../../ui-data-grid/ui-data-grid/ui-data-grid.component";
 import { UiMonacoEditorComponent } from "../../ui-monaco-editor/ui-monaco-editor/ui-monaco-editor.component";
 import { panelAnimations } from "./animations/panel";
 
@@ -38,7 +39,8 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     @ViewChild("top") public top: ElementRef<HTMLDivElement>;
     @ViewChild("bottom") public bottom: ElementRef<HTMLDivElement>;
     @ViewChild("monacoEditor") public monacoEditor: UiMonacoEditorComponent;
-    @ViewChild("grid") public grid: ElementRef<HTMLTableElement>;
+
+    @ViewChildren("dataGrid") public dataGrid: QueryList<UiDataGridComponent>;
 
     public clusterLast: string = null;
     public clusterLoading: boolean = false;
@@ -57,6 +59,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
 
     private stateReady = new ReplaySubject<void>();
     private eventCodeChange = new Subject<WorkbenchCqlStatement>();
+    private eventEditorChange = new Subject<void>();
 
     public columnDefs: any[];
     public rowData: any[];
@@ -64,7 +67,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     private decorations: string[] = [];
     private decorationsTimeout: any;
 
-    public panelAnimationState: { [id: string]: string };
+    public panelAnimationState: { [id: string]: PanelAnimationState };
 
     constructor(
         public change: ChangeDetectorRef,
@@ -82,11 +85,22 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
 
     }
     public trackEditor(index: number, e: WorkbenchEditor) {
-        console.log(`trackEditor ${e.id}`);
+        // console.log(`trackEditor ${e.id}`);
         return e.id;
     }
-    public panelAnimationDone = (event: AnimationEvent) => {
-        console.log(`panelAnimation ${event.fromState} -> ${event.toState}`);
+    public panelAnimationStart = (event: AnimationEvent, index: number) => {
+        // console.log(`[${index}] panelAnimationStart ${event.fromState} -> ${event.toState}`);
+        const e = this.dataGrid.toArray()[index];
+        if (event.toState === "hidden" && e != null) {
+            // e.scrollDisable();
+        }
+    }
+    public panelAnimationDone = (event: AnimationEvent, index: number) => {
+        // console.log(`[${index}] panelAnimationDone ${event.fromState} -> ${event.toState}`);
+        const e = this.dataGrid.toArray()[index];
+        if (event.toState === "active" && e != null) {
+            setTimeout(() => e.scrollEnable());
+        }
     }
     public get editor() {
         return this.editorCurrent;
@@ -95,8 +109,24 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         this.stateReady.pipe(
             take(1),
         ).subscribe(() => {
+            // disable scroll on previous grid
+            if (this.editor && editor.id !== this.editor.id) {
+                const e = this.dataGrid.toArray()[this.editorIndex];
+                if (e) {
+                    console.log("disabling scroll");
+                    e.scrollDisable();
+                }
+            }
+
+            console.log("+++++++++++++++++++++++++++++++++++++");
+            console.log("Input Editor");
+            console.log("+++++++++++++++++++++++++++++++++++++");
 
             this.editorCurrent = editor;
+            this.editors = this.editorService.list;
+            this.editorIndex = this.editors.findIndex((e) => e.id === this.editor.id);
+
+            this.eventEditorChange.next();
 
             if (this.editorCurrent.statement.clusterName !== this.clusterLast) {
                 this.prepareCluster(this.editorCurrent.statement.clusterName);
@@ -104,18 +134,26 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
             this.activateEditorPanel(editor);
             this.detectChanges();
 
+            merge(this.editorService.eventListChange, this.editorService.stateActive).pipe(
+                takeUntil(merge(this.eventViewDestroyed, this.eventEditorChange)),
+            ).subscribe(() => {
+                console.log("+++++++++++++++++++++++++++++++++++++");
+                console.log("editorService change");
+                console.log("+++++++++++++++++++++++++++++++++++++");
+
+                if (this.editor == null) {
+                    console.log("---> EDITOR IS NULL");
+                    return;
+                }
+
+                this.editors = this.editorService.list;
+                this.editorIndex = this.editors.findIndex((e) => e.id === this.editor.id);
+
+                this.activateEditorPanel(this.editor);
+                this.detectChanges();
+            });
         });
 
-        merge(this.editorService.eventListChange, this.editorService.stateActive).pipe(
-            takeUntil(this.eventViewDestroyed),
-        ).subscribe(() => {
-            this.editors = this.editorService.list;
-            this.editorIndex = this.editors.findIndex((e) => e.id === this.editor.id);
-
-            this.activateEditorPanel(this.editor);
-            this.detectChanges();
-        });
-        // .
     }
     ngOnInit() {
 
@@ -148,7 +186,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         super.ngOnDestroy();
     }
     public activateEditorPanel(editor: WorkbenchEditor) {
-        console.log(`panel Activating ${editor.id}`);
+        // console.log(`panel Activating ${editor.id}`);
         const states = {};
         this.editorService.list.forEach((e) => {
             if (this.editorCurrent.id === e.id) {
@@ -233,7 +271,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         });
     }
     public onErrorClick = (ev: Event, index: number) => {
-        console.log(`onErrorClick ${index}`);
+        // console.log(`onErrorClick ${index}`);
 
         if (this.decorationsTimeout) {
             clearTimeout(this.decorationsTimeout);

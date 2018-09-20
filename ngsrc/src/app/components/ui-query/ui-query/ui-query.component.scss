@@ -45,7 +45,7 @@
             background: transparent;
             position: relative;
             .bottom-client {
-
+                // transform: translate3d(0,0,0);
                 position: relative;
                 overflow: hidden;
                 .editor-panel {
@@ -54,7 +54,21 @@
                     left: 0;
                     bottom: 0;
                     right: 0;
-                    background-color: black;
+                    // background-color: black;
+
+                    .not-executed {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        bottom: 0;
+                        right: 0;
+                        .action{
+                            .sep{
+                                height: 16px;
+                            }
+                        }
+
+                    }
 
                 }
                 .result-panel {
