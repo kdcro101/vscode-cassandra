@@ -12,17 +12,16 @@ export interface ExtensionContextBundle {
     context: vscode.ExtensionContext;
     eventDestroy: Subject<void>;
 }
+export type CassandraDataType = "ascii" | "bigint" | "blob" | "boolean" | "counter" | "date" | "decimal" | "double" | "float" |
+    "frozen" | "inet" | "int" | "list" | "map" | "set" | "smallint" | "text" | "time" | "timestamp" | "timeuuid" | "tinyint" |
+    "tuple" | "uuid" | "varchar" | "varint";
 
-export type TreeItemType = "cluster" | "cluster-error" | "keyspace" | "table" |
-    "columns" | "column_item" |
-    "indexes" | "index_item" |
-    "types" | "type_item" |
-    "functions" | "function_item" |
-    "aggregates" | "aggregate_item" |
-    "primarykey" | "partitioning_key" | "clustering_key";
+export type TreeItemType = "cluster" | "cluster-error" | "keyspace" | "table" | "columns" | "column_item" | "indexes" | "index_item" |
+    "types" | "type_item" | "functions" | "function_item" | "aggregates" | "aggregate_item" | "primarykey" | "partitioning_key" |
+    "clustering_key";
 
-export type CassandraConsistency = "ANY" | "ONE" | "TWO" | "THREE" |
-    "QUORUM" | "ALL" | "LOCAL_QUORUM" | "EACH_QUORUM" | "SERIAL" | "LOCAL_SERIAL" | "LOCAL_ONE";
+export type CassandraConsistency = "ANY" | "ONE" | "TWO" | "THREE" | "QUORUM" | "ALL" |
+    "LOCAL_QUORUM" | "EACH_QUORUM" | "SERIAL" | "LOCAL_SERIAL" | "LOCAL_ONE";
 
 export interface WorkbenchConfigAuthProvider {
     class: "PlainTextAuthProvider";

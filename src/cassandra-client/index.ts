@@ -81,9 +81,9 @@ export class CassandraClient extends EventEmitter {
         this.clusterName = config.name;
 
     }
-    public execute(cql: string, params: any): Promise<cassandra.types.ResultSet> {
+    public execute(cql: string, params?: any): Promise<cassandra.types.ResultSet> {
 
-        return this.client.execute(cql);
+        return this.client.execute(cql, params);
 
     }
     public connect(): Promise<void> {

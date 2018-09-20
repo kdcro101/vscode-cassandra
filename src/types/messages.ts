@@ -1,4 +1,3 @@
-import { QueryExecuteResult } from "../cassandra-client/index";
 import { ClusterExecuteResults } from "../clusters";
 import { CompletitionOutput } from "../completition";
 import { CqlParserError } from "../parser";
@@ -94,6 +93,7 @@ export type DataChangeType = "rowDelete"|"cellUpdate";
 export interface DataChangeItem {
     clusterName: string;
     keyspace: string;
+    table: string;
     type: DataChangeType;
     primaryKeyValues: DataChangeItemPrimaryKey;
     row: number;

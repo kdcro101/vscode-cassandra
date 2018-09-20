@@ -159,6 +159,8 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
 
         Split([this.top.nativeElement, this.bottom.nativeElement], {
             direction: "vertical",
+            sizes: [25, 75],
+            minSize: [200, 300],
             gutterSize: 12,
         });
 

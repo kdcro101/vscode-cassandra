@@ -63,12 +63,15 @@ export const gridContextMenu = (dataGrid: UiDataGridComponent): Handsontable.con
                     return true;
                 },
                 callback: () => { // Callback for specific option
-                    console.log("row delete");
+                    console.log("cancelRowDelete");
                     const cell = dataGrid.cellActive;
                     if (cell.row < 0) {
                         return true;
                     }
-                    const item = dataGrid.changeManager.removeRowDelete(cell.row);
+                    const rows = dataGrid.currentSelectedRows;
+                    rows.forEach((r) => {
+                        dataGrid.changeManager.removeRowDelete(cell.row);
+                    });
 
                     dataGrid.gridInstance.render();
 

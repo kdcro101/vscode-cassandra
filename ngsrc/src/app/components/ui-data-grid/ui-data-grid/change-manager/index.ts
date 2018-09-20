@@ -77,6 +77,7 @@ export class ChangeManager {
             return (
                 i.clusterName === this.dataGrid.currentClusterName &&
                 i.keyspace === this.dataGrid.currentKeyspace &&
+                i.table === this.dataGrid.currentTableStruct.name &&
                 i.row === row &&
                 i.column === column &&
                 i.type === "cellUpdate"
@@ -89,6 +90,7 @@ export class ChangeManager {
             return (
                 i.clusterName === this.dataGrid.currentClusterName &&
                 i.keyspace === this.dataGrid.currentKeyspace &&
+                i.table === this.dataGrid.currentTableStruct.name &&
                 i.row === row &&
                 i.type === "rowDelete"
 
@@ -103,6 +105,7 @@ export class ChangeManager {
         const item: DataChangeItem = {
             clusterName: this.dataGrid.currentClusterName,
             keyspace: this.dataGrid.currentKeyspace,
+            table: this.dataGrid.currentTableStruct.name,
             primaryKeyValues: pks,
             type: "rowDelete",
             row,
@@ -117,6 +120,7 @@ export class ChangeManager {
         const item: DataChangeItem = {
             clusterName: this.dataGrid.currentClusterName,
             keyspace: this.dataGrid.currentKeyspace,
+            table: this.dataGrid.currentTableStruct.name,
             primaryKeyValues: pks,
             type: "cellUpdate",
             row,
