@@ -146,12 +146,7 @@ export class Clusters {
         return new Promise((resolve, reject) => {
 
             const i = this.getClusterIndex(clusterName);
-            // const isModifier = this.isStructureModifierStatement(cql);
 
-            // if (isModifier) {
-            //     this.eventStructureChange.next(i);
-            // }
-            // const a = this.parser.analyze(cql);
             let clusterStruct: CassandraClusterData = null;
             let analysis: CqlAnalysis = null;
             from(this.getStructure(i)).pipe(

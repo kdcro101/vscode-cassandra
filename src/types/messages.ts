@@ -103,11 +103,11 @@ export interface DataChangeItem {
 }
 export interface ExecuteDataChangeRequest {
     id: string;
-    changes: DataChangeItem[];
+    change: DataChangeItem;
 }
 export interface ExecuteDataChangeResponse {
     id: string;
-    results: DataChangeItemResult[];
+    results: DataChangeItemResult;
 }
 export interface DataChangeItemResult {
     changeIndex: number;

@@ -81,7 +81,7 @@ export class CassandraClient extends EventEmitter {
         this.clusterName = config.name;
 
     }
-    public execute(cql: string): Promise<cassandra.types.ResultSet> {
+    public execute(cql: string, params: any): Promise<cassandra.types.ResultSet> {
 
         return this.client.execute(cql);
 
@@ -92,14 +92,10 @@ export class CassandraClient extends EventEmitter {
             this.client.connect()
                 .then((result) => {
                     console.log("Connected to cluster with %d host(s): %j", this.client.hosts.length, this.client.hosts.keys());
-                    // this.stateConnected.next(true);
-                    // this.emit("connected", null);
                     resolve();
 
                 }).catch((e) => {
                     reject(e);
-                    // this.emit("error", e);
-                    // this.stateConnected.next(false);
                 });
 
         });

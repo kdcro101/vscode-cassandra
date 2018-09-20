@@ -143,6 +143,9 @@ export class CassandraWorkbench {
             case "w2e_getClusterStructRequest":
                 this.getClusterStructureRespond(m as ProcMessageStrict<"w2e_getClusterStructRequest">);
                 break;
+            case "w2e_executeDataChangeRequest":
+                this.executeDataChangeRespond(m as ProcMessageStrict<"w2e_executeDataChangeRequest">);
+                break;
 
         }
     }
@@ -178,6 +181,9 @@ export class CassandraWorkbench {
         };
 
         this.panel.emitMessage(mo);
+
+    }
+    private executeDataChangeRespond(m: ProcMessageStrict<"w2e_executeDataChangeRequest">) {
 
     }
     private executeQueryRespond(m: ProcMessageStrict<"w2e_executeQueryRequest">) {

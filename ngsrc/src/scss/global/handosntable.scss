@@ -3,6 +3,9 @@
 .handsontable .wtHider {
     transform: translate3d(0px, 0px, 0px);
 }
+// .htContextMenu table tbody .htDisabled {
+//     display: none;
+// }
 .handsontable {
     .triangle {
         width: 0;
@@ -171,5 +174,6 @@
     .htContextMenu table tbody tr td.htSeparator {
         border-top: 1px solid mat-color($background, 700) !important;
     }
+
 
 }
