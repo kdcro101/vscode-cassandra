@@ -592,8 +592,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         console.log("fixContentWidth");
         let added = Math.round(this.hostRect.width / 4);
         added = added >= 100 ? added : 100;
-        this.gridScrollContentSpacer.style.height = `1px`;
-        this.gridScrollHeaderSpacer.style.height = `1px`;
+        this.gridScrollContentSpacer.style.height = `0.1px`;
+        this.gridScrollHeaderSpacer.style.height = `0.1px`;
 
         this.gridScrollContentSpacer.style.width = `${this.gridScrollContent.offsetWidth + added}px`;
         this.gridScrollHeaderSpacer.style.width = `${this.gridScrollContent.offsetWidth + added}px`;
