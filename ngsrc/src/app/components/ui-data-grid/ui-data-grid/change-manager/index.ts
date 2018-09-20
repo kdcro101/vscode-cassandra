@@ -11,12 +11,12 @@ export class ChangeManager {
     public static eventUpdate = new Subject<DataChangeItem>();
     public static eventChange = merge(ChangeManager.eventAdd, ChangeManager.eventRemove, ChangeManager.eventUpdate);
 
-    public que: DataChangeItem[];
+    public list: DataChangeItem[];
     public keys: CassandraColumn[];
     public rowData: any[];
 
     constructor(private dataGrid: UiDataGridComponent) {
-        this.que = dataGrid.currentEditor.changes;
+        this.list = dataGrid.currentEditor.changes;
         this.keys = dataGrid.currentTableStruct.primaryKeys;
         this.rowData = dataGrid.currentDataRows;
     }
@@ -27,6 +27,14 @@ export class ChangeManager {
             return;
         }
         return this.removeCellUpdateItem(index);
+    }
+    public removeRowDelete(row: number): DataChangeItem {
+        const index = this.getRowDeletedItemIndex(row);
+
+        if (index < 0) {
+            return;
+        }
+        return this.removeRowDeleteItem(index);
     }
     public addCellUpdate(row: number, column: string, valueOld: any, valueNew: any) {
 
@@ -43,10 +51,16 @@ export class ChangeManager {
         if (index > -1) {
             return;
         }
+        const cellUpdates = this.list.filter((u) => u.type === "cellUpdate" && u.row === row);
+
+        cellUpdates.forEach((u) => {
+            this.removeCellUpdate(u.row, u.column);
+        });
+
         this.createRowDeleteItem(row);
     }
     public clear() {
-        this.que.forEach((c, i) => {
+        this.list.forEach((c, i) => {
             switch (c.type) {
                 case "cellUpdate":
                     this.removeCellUpdateItem(i);
@@ -59,7 +73,7 @@ export class ChangeManager {
         });
     }
     private getCellUpdateItemIndex(row: number, column: string): number {
-        const index = this.que.findIndex((i) => {
+        const index = this.list.findIndex((i) => {
             return (
                 i.clusterName === this.dataGrid.currentClusterName &&
                 i.keyspace === this.dataGrid.currentKeyspace &&
@@ -71,7 +85,7 @@ export class ChangeManager {
         return index;
     }
     private getRowDeletedItemIndex(row: number): number {
-        const index = this.que.findIndex((i) => {
+        const index = this.list.findIndex((i) => {
             return (
                 i.clusterName === this.dataGrid.currentClusterName &&
                 i.keyspace === this.dataGrid.currentKeyspace &&
@@ -93,7 +107,7 @@ export class ChangeManager {
             type: "rowDelete",
             row,
         };
-        this.que.push(item);
+        this.list.push(item);
 
         ChangeManager.eventAdd.next(item);
     }
@@ -110,7 +124,7 @@ export class ChangeManager {
             valueOld,
             valueNew,
         };
-        this.que.push(item);
+        this.list.push(item);
 
         ChangeManager.eventAdd.next(item);
     }
@@ -125,24 +139,24 @@ export class ChangeManager {
         return out;
     }
     private updateCellUpdateItem(index: number, value: any) {
-        const item = this.que[index];
+        const item = this.list[index];
         item.valueNew = value;
         ChangeManager.eventUpdate.next(item);
     }
     private removeCellUpdateItem(index: number): DataChangeItem {
-        if (index < 0 || index >= this.que.length) {
+        if (index < 0 || index >= this.list.length) {
             return;
         }
-        const item = this.que.splice(index, 1)[0];
+        const item = this.list.splice(index, 1)[0];
         ChangeManager.eventRemove.next(item);
 
         return item;
     }
     private removeRowDeleteItem(index: number): DataChangeItem {
-        if (index < 0 || index >= this.que.length) {
+        if (index < 0 || index >= this.list.length) {
             return;
         }
-        const item = this.que.splice(index, 1)[0];
+        const item = this.list.splice(index, 1)[0];
         ChangeManager.eventRemove.next(item);
 
         return item;
@@ -155,7 +169,7 @@ export class ChangeManager {
         }
         return true;
     }
-    public isRowDeleted(row: number, column: string): boolean {
+    public isRowDeleted(row: number): boolean {
         const index = this.getRowDeletedItemIndex(row);
 
         if (index < 0) {

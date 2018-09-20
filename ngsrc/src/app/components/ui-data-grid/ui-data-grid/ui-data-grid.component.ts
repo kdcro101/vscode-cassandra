@@ -203,20 +203,38 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     private onDataChangeAdded(item: DataChangeItem) {
         console.log(`onDataChangeAdded ${JSON.stringify(item)}`);
 
-        const colName = item.column;
-        const colIndex = this.currentColumns.findIndex((c) => c.name === colName);
+        switch (item.type) {
+            case "cellUpdate":
+                const colName = item.column;
+                const colIndex = this.currentColumns.findIndex((c) => c.name === colName);
+                this.gridInstance.setCellMeta(item.row, colIndex, "className", "changed");
+                break;
+            case "rowDelete":
+                this.currentColumns.forEach((c, i) => {
+                    this.gridInstance.setCellMeta(item.row, i, "className", "changed");
+                });
+                break;
+        }
 
-        this.gridInstance.setCellMeta(item.row, colIndex, "className", "changed");
         this.gridInstance.render();
         this.detectChanges();
     }
     private onDataChangeRemoved(item: DataChangeItem) {
         console.log(`onDataChangeRemoved ${JSON.stringify(item)}`);
+        switch (item.type) {
+            case "cellUpdate":
+                const colName = item.column;
+                const colIndex = this.currentColumns.findIndex((c) => c.name === colName);
+                this.gridInstance.setCellMeta(item.row, colIndex, "className", "");
+                break;
 
-        const colName = item.column;
-        const colIndex = this.currentColumns.findIndex((c) => c.name === colName);
+            case "rowDelete":
+                this.currentColumns.forEach((c, i) => {
+                    this.gridInstance.setCellMeta(item.row, i, "className", "");
+                });
+                break;
+        }
 
-        this.gridInstance.setCellMeta(item.row, colIndex, "className", "");
         this.gridInstance.render();
         this.detectChanges();
     }
@@ -396,17 +414,9 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                     w = m;
                 }
                 this.eventModifyColumnWidth.next();
-                // if (w > max) {
-                //     w = max;
-                // }
+
                 return w;
             });
-
-            // this.gridInstance.updateSettings({
-            //     autoColumnSize: {
-            //         syncLimit: 10,
-            //     },
-            // }, false);
 
             this.scrollAssist = new ScrollAssist(this);
 

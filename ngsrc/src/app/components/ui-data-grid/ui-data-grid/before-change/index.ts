@@ -18,10 +18,16 @@ export const onBeforeChange = (dataGrid: UiDataGridComponent):
         const valOld = change[2] as any;
         const valNew = change[3] as any;
 
+        if (valNew === valOld) {
+            return false;
+        }
+
         const columnInfo = dataGrid.currentColumns.find((c) => c.name === prop);
+        const columnIndex = dataGrid.currentColumns.findIndex((c) => c.name === prop);
         const isStringified = columnInfo.type === "set" || columnInfo.type === "map" || columnInfo.type === "custom" ? true : false;
 
         dataGrid.changeManager.addCellUpdate(row, prop, valOld, valNew);
+        dataGrid.htmlCache.invalidate(row, columnIndex);
 
     };
 };

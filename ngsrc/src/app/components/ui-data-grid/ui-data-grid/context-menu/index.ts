@@ -15,16 +15,21 @@ export const gridContextMenu = (dataGrid: UiDataGridComponent): Handsontable.con
             //         return this.getSelectedLast()[0] === 0; // `this` === hot3
             //     },
             // },
-            "revert": { // Own custom option
-                name: "Revert change",
+            "cancelCellChange": { // Own custom option
+                name: "Cancel cell change",
                 disabled: () => {
                     const cell = dataGrid.cellActive;
                     if (cell.row < 0 || cell.col < 0) {
                         return true;
                     }
                     const colName = dataGrid.currentColumns[cell.col].name;
-                    const changed = dataGrid.changeManager.isCellChanged(cell.row, colName);
-                    return !changed;
+                    const cellChanged = dataGrid.changeManager.isCellChanged(cell.row, colName);
+                    // const rowDeleted = dataGrid.changeManager.isRowDeleted(cell.row);
+
+                    if (cellChanged) {
+                        return false;
+                    }
+                    return true;
                 },
                 callback: () => { // Callback for specific option
                     console.log("Reverting changes");
@@ -35,7 +40,36 @@ export const gridContextMenu = (dataGrid: UiDataGridComponent): Handsontable.con
                     const colName = dataGrid.currentColumns[cell.col].name;
                     const item = dataGrid.changeManager.removeCellUpdate(cell.row, colName);
 
+                    dataGrid.htmlCache.invalidate(cell.row, cell.col);
                     dataGrid.currentDataRows[cell.row][colName] = item.valueOld;
+                    dataGrid.gridInstance.render();
+
+                },
+            },
+            "cancelRowDelete": { // Own custom option
+                name: "Cancel row delete",
+                disabled: () => {
+                    const cell = dataGrid.cellActive;
+
+                    if (cell.row < 0) {
+                        return true;
+                    }
+
+                    const rowDeleted = dataGrid.changeManager.isRowDeleted(cell.row);
+
+                    if (rowDeleted) {
+                        return false;
+                    }
+                    return true;
+                },
+                callback: () => { // Callback for specific option
+                    console.log("row delete");
+                    const cell = dataGrid.cellActive;
+                    if (cell.row < 0) {
+                        return true;
+                    }
+                    const item = dataGrid.changeManager.removeRowDelete(cell.row);
+
                     dataGrid.gridInstance.render();
 
                 },
@@ -60,7 +94,10 @@ export const gridContextMenu = (dataGrid: UiDataGridComponent): Handsontable.con
                 },
                 callback: () => { // Callback for specific option
                     console.log("row_delete");
-
+                    const rows = dataGrid.currentSelectedRows;
+                    rows.forEach((r) => {
+                        dataGrid.changeManager.addRowDelete(r);
+                    });
                 },
             },
         },
