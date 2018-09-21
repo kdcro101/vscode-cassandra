@@ -15,7 +15,7 @@ export class ScrollAssist {
     public scroll: HTMLDivElement;
     public clientRect: ClientRect;
     private zoneMargin = 64;
-    private scrollProgress = 48;
+    private scrollProgress = 16;
     private zones: DetectionRect[] = [];
     private eventChange = new Subject<DetectionZone>();
     private eventStop = new Subject<void>();
@@ -25,36 +25,39 @@ export class ScrollAssist {
         this.scroll = dataGrid.gridScroll;
         this.updateClientRect();
 
-        fromEvent<MouseEvent>(document, "mousemove", { capture: true }).pipe()
-            .subscribe(() => {
-                this.eventStop.next();
-            });
+        fromEvent<MouseEvent>(document, "mousemove", { capture: true }).pipe(
+            takeUntil(dataGrid.eventViewDestroyed),
+        ).subscribe(() => {
+            this.eventStop.next();
+        });
 
         fromEvent<MouseEvent>(this.dataGrid.gridHost.nativeElement, "mousemove", { capture: true }).pipe(
+            takeUntil(dataGrid.eventViewDestroyed),
             filter(() => this.dataGrid.selectionActive),
             debounceTime(100),
             map((e) => this.detectPoint(e.clientX, e.clientY)),
         ).subscribe((zone) => {
-            console.log(`scrollAssist change ${zone}`);
+            // console.log(`scrollAssist change ${zone}`);
             this.eventChange.next(zone);
         });
 
         this.eventChange.pipe().subscribe((zone) => {
-            interval(100).pipe(
+            interval(16).pipe(
                 takeUntil(
                     merge(
+                        dataGrid.eventViewDestroyed,
                         this.eventChange,
                         this.eventStop,
                     ),
                 ),
             ).subscribe(() => {
-                console.log(`scrollAssist scrollToZone ${zone}`);
+                // console.log(`scrollAssist scrollToZone ${zone}`);
                 this.scrollForZone(zone);
             });
         });
 
         dataGrid.eventGridWrapResize.pipe(
-            takeUntil(this.eventDestroy),
+            takeUntil(dataGrid.eventViewDestroyed),
         ).subscribe(() => {
             this.updateClientRect();
         });

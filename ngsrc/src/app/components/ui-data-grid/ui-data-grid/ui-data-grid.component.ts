@@ -153,10 +153,12 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
         this.eventGridWrapResize.pipe(
             takeUntil(this.eventViewDestroyed),
-            debounceTime(16),
+            debounceTime(33),
             filter(() => this.gridInstance != null),
         ).subscribe(() => {
-            this.gridInstance.updateSettings({}, false);
+            this.gridInstance.updateSettings({
+                height: this.gridWrapRect.height,
+            }, false);
         });
 
         ChangeManager.eventChange.pipe(
@@ -273,22 +275,15 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         this.stateViewReady.pipe(
             take(1),
             tap(() => {
-
                 if (this.gridInstance) {
-
-                    console.log("createGridInstance gridInstance ");
                     console.log(this.gridInstance);
-
                     try {
                         this.gridInstance.destroy();
                         this.gridInstance = null;
                     } catch (e) {
-                        console.log(e);
-
                         return;
                     }
                 }
-
             }),
         ).subscribe(() => {
             console.log("createGridInstance");
@@ -307,6 +302,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 console.log(error.error);
                 this.currentError = error.error;
                 this.renderingProgress = false;
+                this.currentResultState = { showError: true };
                 this.detectChanges();
                 return;
             }
