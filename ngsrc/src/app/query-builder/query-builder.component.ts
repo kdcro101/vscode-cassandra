@@ -57,9 +57,6 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
         ).subscribe((data) => {
             this.editorIndex = data[0];
             this.editor = data[1];
-            console.log("///////////////////////////////////////////");
-            console.log(`queryBulder stateActive ${this.editorIndex} ${this.editor.id}`);
-            console.log("///////////////////////////////////////////");
 
             this.detectChanges();
             this.tabScroll.update();
