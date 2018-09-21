@@ -89,7 +89,7 @@ export interface ClusterStructureResponse extends MessageWithId {
 export interface DataChangeItemPrimaryKey {
     [name: string]: any;
 }
-export type DataChangeType = "rowDelete"|"cellUpdate";
+export type DataChangeType = "rowDelete" | "cellUpdate";
 export interface DataChangeItem {
     clusterName: string;
     keyspace: string;
@@ -105,12 +105,11 @@ export interface ExecuteDataChangeRequest {
     id: string;
     change: DataChangeItem;
 }
-export interface ExecuteDataChangeResponse {
-    id: string;
-    results: DataChangeItemResult;
+export interface ExecuteDataChangeResponse extends MessageWithId {
+    result: DataChangeItemResult;
 }
 export interface DataChangeItemResult {
-    changeIndex: number;
+
     success: boolean;
-    error: any;
+    error?: any;
 }

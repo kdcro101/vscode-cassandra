@@ -19,6 +19,7 @@ export const buildColumns = (dataGrid: UiDataGridComponent): any[] => {
             return {
                 data: c.name,
                 renderer: cellRendererJson(dataGrid),
+                readOnly: !dataGrid.currentPrimaryKeyAvailable,
             };
 
         }
@@ -41,6 +42,7 @@ export const buildColumns = (dataGrid: UiDataGridComponent): any[] => {
         return {
             data: c.name,
             type: "text",
+            readOnly: !dataGrid.currentPrimaryKeyAvailable,
         };
 
     });

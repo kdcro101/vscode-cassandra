@@ -1,5 +1,11 @@
 @import "../colors";
 
+.handsontable * {
+    user-select: none;
+}
+.handsontable .ht_clone_top {
+    z-index: 0;
+}
 .handsontable .wtHider {
     transform: translate3d(0px, 0px, 0px);
 }

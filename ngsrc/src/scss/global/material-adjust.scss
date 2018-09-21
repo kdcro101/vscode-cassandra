@@ -1,5 +1,37 @@
 @import "../colors";
 
+$fontConfig: mat-typography-config();
+
+
+.mat-raised-button,
+.mat-button {
+    &.button-18 {
+        line-height: 22px;
+        .mat-button-wrapper {
+            font-size: mat-font-size($fontConfig, caption);
+        }
+    }
+}
+
+
+mat-icon.icon-18 {
+    height: 18px;
+    width: 18px;
+    line-height: 18px;
+    font-size: 18px;
+}
+
+button.mat-icon-button.size-18 {
+    height: 32px;
+    width: 32px;
+    line-height: 32px;
+    mat-icon {
+        height: 18px;
+        width: 18px;
+        font-size: 18px;
+        line-height: 18px;
+    }
+}
 
 .vscode-dark,
 .vscode-high-contrast {

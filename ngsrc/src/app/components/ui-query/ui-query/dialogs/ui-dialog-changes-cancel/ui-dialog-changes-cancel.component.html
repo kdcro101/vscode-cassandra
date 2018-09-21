@@ -1,0 +1,12 @@
+<h1 mat-dialog-title fxLayout="row" fxLayoutAlign="start center" class="title">
+    <mat-icon>warning</mat-icon>
+    <div>Warning</div>
+</h1>
+<div mat-dialog-content>
+    <p>You have uncommited changes in current resultset.</p>
+    <p>Do you want to continue ?</p>
+</div>
+<div mat-dialog-actions>
+    <button mat-button color="primary"  [mat-dialog-close]="false" >CANCEL</button>
+    <button mat-raised-button color="accent" [mat-dialog-close]="true" cdkFocusInitial>CONTINUE</button>
+</div>

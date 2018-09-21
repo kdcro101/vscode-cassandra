@@ -6,25 +6,8 @@
  @import "./scss/global/renderjson";
  @import "./scss/global/handosntable";
  @import "./scss/global/material-adjust";
+ @import "./scss/global/paddings-and-margins";
 
- mat-icon.icon-18 {
-     height: 18px;
-     width: 18px;
-     line-height: 18px;
-     font-size: 18px;
- }
-
- button.mat-icon-button.size-18 {
-     height: 32px;
-     width: 32px;
-     line-height: 32px;
-     mat-icon {
-         height: 18px;
-         width: 18px;
-         font-size: 18px;
-         line-height: 18px;
-     }
- }
 
  body>.app-root {
      // background-color: red;

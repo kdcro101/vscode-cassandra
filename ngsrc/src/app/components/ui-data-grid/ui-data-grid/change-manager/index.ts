@@ -13,12 +13,10 @@ export class ChangeManager {
 
     public list: DataChangeItem[];
     public keys: CassandraColumn[];
-    public rowData: any[];
 
     constructor(private dataGrid: UiDataGridComponent) {
         this.list = dataGrid.currentEditor.changes;
         this.keys = dataGrid.currentTableStruct.primaryKeys;
-        this.rowData = dataGrid.currentDataRows;
     }
     public removeCellUpdate(row: number, column: string): DataChangeItem {
         const index = this.getCellUpdateItemIndex(row, column);

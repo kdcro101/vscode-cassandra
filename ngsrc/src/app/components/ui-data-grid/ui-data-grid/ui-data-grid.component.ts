@@ -185,7 +185,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             console.log("###################");
             console.log("ChangeManage que changed");
             console.log("###################");
-            console.log(q);
+            this.detectChanges();
         });
 
         ChangeManager.eventAdd.pipe(
@@ -244,7 +244,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         this.currentError = null;
         this.stateGridReady = new ReplaySubject<void>(1);
         this.eventRender = new Subject<void>();
-
+        this.currentPrimaryKeyAvailable = false;
         this.gridAnimationState = "hidden";
         this.htmlCache = new HtmlCache();
 
@@ -271,7 +271,6 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             this.gridScrollHeaderSpacer = document.createElement("div");
             this.gridScrollContentSpacer = document.createElement("div");
             this.gridScrollContent.appendChild(this.gridScrollContentSpacer);
-            // this.gridScrollHeader.appendChild(this.gridScrollHeaderSpacer);
             this.gridScrollHeader.insertBefore(this.gridScrollHeaderSpacer, this.gridScrollHeader.children[0]);
 
             this.gridScrollContentObserver = new ResizeObserver(() => {

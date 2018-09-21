@@ -184,7 +184,18 @@ export class CassandraWorkbench {
 
     }
     private executeDataChangeRespond(m: ProcMessageStrict<"w2e_executeDataChangeRequest">) {
+        const id = m.data.id;
+        const mo: ProcMessageStrict<"e2w_executeDataChangeResponse"> = {
+            name: "e2w_executeDataChangeResponse",
+            data: {
+                id,
+                result: {
+                    success: true,
+                },
+            },
+        };
 
+        this.panel.emitMessage(mo);
     }
     private executeQueryRespond(m: ProcMessageStrict<"w2e_executeQueryRequest">) {
 

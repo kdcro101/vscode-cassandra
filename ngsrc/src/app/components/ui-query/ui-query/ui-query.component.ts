@@ -2,7 +2,7 @@ import {
     ChangeDetectionStrategy, ChangeDetectorRef,
     Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChild, ViewChildren,
 } from "@angular/core";
-import { MatSnackBar } from "@angular/material";
+import { MatDialog, MatSnackBar } from "@angular/material";
 import { ReplaySubject, Subject } from "rxjs";
 import { debounceTime, take, takeUntil } from "rxjs/operators";
 import * as Split from "split.js";
@@ -21,6 +21,7 @@ import { WorkbenchEditor } from "../../../types/index";
 import { UiDataGridComponent } from "../../ui-data-grid/ui-data-grid/ui-data-grid.component";
 import { UiMonacoEditorComponent } from "../../ui-monaco-editor/ui-monaco-editor/ui-monaco-editor.component";
 import { panelAnimations } from "./animations/panel";
+import { UiDialogChangesCancelComponent } from "./dialogs/ui-dialog-changes-cancel/ui-dialog-changes-cancel.component";
 
 type PanelAnimationState = "active" | "hidden";
 
@@ -76,6 +77,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         public theme: ThemeService,
         public snackBar: MatSnackBar,
         public editorService: EditorService,
+        public dialog: MatDialog,
     ) {
         super(change);
 
@@ -226,31 +228,50 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         this.onStatementChange.emit(this.editorCurrent.statement);
     }
     public executeCql = () => {
+        return new Promise((resolve, reject) => {
 
-        if (this.clusterLoading || this.clusterLoadingError) {
-            return;
-        }
+            let p: Promise<boolean> = null;
+            if (this.editor.changes.length > 0) {
+                p = this.showDialogChangesWarning();
+            }
 
-        this.editorCurrent.result = null;
-        this.detectChanges();
+            Promise.all([
+                p,
+            ]).then((result) => {
 
-        this.cqlClient.executeEditor(this.editorCurrent)
-            .then((response: ExecuteQueryResponse) => {
-                console.log("[cqlClient.execute] Got result !!!");
-
-                if (response.error) {
-                    this.processExecuteError(response);
+                if (result[0] === false) {
                     return;
                 }
 
+                if (this.clusterLoading || this.clusterLoadingError) {
+                    return;
+                }
+
+                this.editorCurrent.result = null;
+                this.editorCurrent.changes = [];
                 this.detectChanges();
 
-            }).catch((e) => {
-                this.snackBar.open(e, "OK", {
-                    duration: 1000,
-                });
-            });
+                this.cqlClient.executeEditor(this.editorCurrent)
+                    .then((response: ExecuteQueryResponse) => {
+                        console.log("[cqlClient.execute] Got result !!!");
 
+                        if (response.error) {
+                            this.processExecuteError(response);
+                            return;
+                        }
+
+                        this.detectChanges();
+
+                    }).catch((e) => {
+                        this.snackBar.open(e, "OK", {
+                            duration: 1000,
+                        });
+                    });
+
+            }).catch((e) => {
+                reject(e);
+            });
+        });
     }
 
     public processExecuteError(response: ExecuteQueryResponse) {
@@ -328,5 +349,24 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
                 this.detectChanges();
             });
 
+    }
+    private showDialogChangesWarning(): Promise<boolean> {
+        // true continue
+        // false cancel
+        return new Promise((resolve, reject) => {
+            const dialogRef = this.dialog.open(UiDialogChangesCancelComponent, {
+                width: "320px",
+                data: false,
+            });
+
+            dialogRef.afterClosed().subscribe(result => {
+                console.log("The dialog was closed");
+                const out = result === true ? true : false;
+                resolve(out);
+            }, (e) => {
+                console.log(e);
+                resolve(false);
+            });
+        });
     }
 }

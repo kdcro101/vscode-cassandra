@@ -26,17 +26,26 @@
         .grid-host {
             position: relative;
         }
+        .grid-status {
+            height: 40px;
+            .grid-item {
 
-    }
-    .error {
-        color: mat-color($warn, 500);
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        background: transparent;
-        overflow: auto;
-        padding: 16px;
+                padding: 8px 16px 8px 16px;
+                &.readonly {
+                    mat-icon {
+                        color: mat-color($background, 500);
+                    }
+                }
+                &.changes {
+                    mat-icon {
+                        color: mat-color($background, 500);
+                    }
+                }
+                &.error {
+                    color: mat-color($warn, A200);
+                }
+            }
+        }
+
     }
 }
