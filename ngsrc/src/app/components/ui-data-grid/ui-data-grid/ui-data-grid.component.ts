@@ -70,7 +70,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     private gridWrapRect: ClientRect;
     private gridWrapResizeObservable: ResizeObserver;
 
-    private gridScroll: HTMLDivElement;
+    public gridScroll: HTMLDivElement;
     private gridScrollHeader: HTMLDivElement;
     private gridScrollContent: HTMLTableElement;
     private gridScrollContentObserver: ResizeObserver;
@@ -79,7 +79,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
     private stateViewReady = new ReplaySubject<void>(1);
 
-    private eventGridWrapResize = new Subject<void>();
+    public eventGridWrapResize = new Subject<void>();
 
     public cellActive: CellCoord = { col: -1, row: -1 };
 
@@ -153,12 +153,10 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
         this.eventGridWrapResize.pipe(
             takeUntil(this.eventViewDestroyed),
-            debounceTime(100),
+            debounceTime(16),
             filter(() => this.gridInstance != null),
         ).subscribe(() => {
             this.gridInstance.updateSettings({}, false);
-            this.scrollAssist.updateClientRect();
-
         });
 
         ChangeManager.eventChange.pipe(
@@ -261,6 +259,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             this.gridScrollContentSpacer = document.createElement("div");
             this.gridScrollContent.appendChild(this.gridScrollContentSpacer);
             this.gridScrollHeader.insertBefore(this.gridScrollHeaderSpacer, this.gridScrollHeader.children[0]);
+            this.scrollAssist = new ScrollAssist(this);
 
             this.gridScrollContentObserver = new ResizeObserver(() => {
                 console.log("content ResizeObserver");
@@ -394,7 +393,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 if (col < 0) {
                     return width;
                 }
-                const max = Math.round(this.gridWrapRect.width / 2);
+
                 const c = this.currentColumns[col];
                 const m = measureText(c.name) + 48;
                 let w = width;
@@ -406,8 +405,15 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 return w;
             });
 
-            this.scrollAssist = new ScrollAssist(this);
             this.currentResultState = buildResultState(this);
+
+            // autoremove readonly notification
+            if (this.currentResultState.showReadonly) {
+                setTimeout(() => {
+                    this.currentResultState.showReadonly = false;
+                    this.detectChanges();
+                }, 4000);
+            }
 
             this.eventModifyColumnWidth.pipe(
                 takeUntil(this.eventViewDestroyed),

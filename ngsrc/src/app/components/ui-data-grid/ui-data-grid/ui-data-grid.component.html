@@ -4,20 +4,20 @@
         <div #gridHost class="grid-host" id="{{ gridInstanceId }}"></div>
     </div>
     <div [@statusAnimationState] *ngIf="currentResultState.showError" class="grid-status-item error" fxLayout="row" fxLayoutAlign="center center">
-        <div fxLayout="row" fxLayoutAlign="start center" class="status-content mat-app-background mat-elevation-z3 mat-caption">
+        <div fxLayout="row" fxLayoutAlign="start center" class="status-content mat-elevation-z3 mat-caption">
             <mat-icon class="icon-18 mr">error</mat-icon>
             <div>{{ currentError.message  }}</div>
         </div>
     </div>
     <div [@statusAnimationState] *ngIf="currentResultState.showReadonly" class="grid-status-item readonly" fxLayout="row" fxLayoutAlign="center center">
-        <div fxLayout="row" fxLayoutAlign="start center" class="status-content mat-app-background mat-elevation-z3 mat-caption">
+        <div fxLayout="row" fxLayoutAlign="start center" class="status-content  mat-elevation-z3 mat-caption">
             <mat-icon class="icon-18 mr">lock</mat-icon>
             <div class="mr">Result is read-only. Primary key column(s) are not selected.</div>
-            <button mat-button class="button-18 mat-caption mr" color="accent" (click)="currentResultState.showReadonly=false">OK</button>
+            <button mat-button class="button-18 mat-caption" color="accent" (click)="currentResultState.showReadonly=false">OK</button>
         </div>
     </div>
     <div [@statusAnimationState] *ngIf="currentResultState.showChanges" class="grid-status-item changes" fxLayout="row" fxLayoutAlign="center center">
-        <div fxLayout="row" fxLayoutAlign="start center" class="status-content mat-app-background mat-elevation-z3 mat-caption">
+        <div fxLayout="row" fxLayoutAlign="start center" class="status-content mat-elevation-z3 mat-caption">
             <mat-icon class="icon-18 mr">edit</mat-icon>
             <div *ngIf="changeManager.list.length===1" class="mr2">1 change pending</div>
             <div *ngIf="changeManager.list.length > 1" class="mr2">{{ changeManager.list.length }} changes pending</div>

@@ -11,6 +11,7 @@ export interface DetectionRect {
     name: DetectionZone;
 }
 export class ScrollAssist {
+
     public scroll: HTMLDivElement;
     public clientRect: ClientRect;
     private zoneMargin = 64;
@@ -18,9 +19,10 @@ export class ScrollAssist {
     private zones: DetectionRect[] = [];
     private eventChange = new Subject<DetectionZone>();
     private eventStop = new Subject<void>();
+    private eventDestroy = new Subject<void>();
     constructor(public dataGrid: UiDataGridComponent) {
 
-        this.scroll = document.getElementsByClassName("wtHolder")[0] as HTMLDivElement;
+        this.scroll = dataGrid.gridScroll;
         this.updateClientRect();
 
         fromEvent<MouseEvent>(document, "mousemove", { capture: true }).pipe()
@@ -51,7 +53,12 @@ export class ScrollAssist {
             });
         });
 
-        // console.log(JSON.stringify(this.zones));
+        dataGrid.eventGridWrapResize.pipe(
+            takeUntil(this.eventDestroy),
+        ).subscribe(() => {
+            this.updateClientRect();
+        });
+
     }
     public updateClientRect() {
         this.clientRect = this.dataGrid.gridHost.nativeElement.getBoundingClientRect();
