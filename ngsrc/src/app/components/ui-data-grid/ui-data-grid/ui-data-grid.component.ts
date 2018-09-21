@@ -84,13 +84,15 @@ declare var window: any;
 export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDestroy {
     @ViewChild("root") public root: ElementRef<HTMLDivElement>;
     @ViewChild("gridHost") public gridHost: ElementRef<HTMLDivElement>;
+    @ViewChild("gridWrap") public gridWrap: ElementRef<HTMLDivElement>;
+
     public gridAnimationState: string;
     public gridInstance: Handsontable = null;
     public gridInstanceId: string = `grid_${generateId()}`;
     private gridSettings: Handsontable.GridSettings = null;
 
-    private hostRect: ClientRect;
-    private hostResizeObs: ResizeObserver;
+    private gridWrapRect: ClientRect;
+    private gridWrapResizeObservable: ResizeObserver;
 
     private gridScroll: HTMLDivElement;
     private gridScrollHeader: HTMLDivElement;
@@ -101,7 +103,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
     private stateViewReady = new ReplaySubject<void>(1);
 
-    private eventHostResize = new Subject<void>();
+    private eventGridWrapResize = new Subject<void>();
 
     public cellActive: CellCoord = { col: -1, row: -1 };
 
@@ -141,11 +143,6 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         public theme: ThemeService,
     ) {
         super(change);
-        this.hostResizeObs = new ResizeObserver(() => {
-            this.hostRect = this.host.nativeElement.getBoundingClientRect();
-            this.eventHostResize.next();
-        });
-        this.hostResizeObs.observe(this.host.nativeElement);
 
         window.UiDataGridComponent = this;
         this.cellClassManager = new CellClassManager(this);
@@ -168,14 +165,22 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     }
     ngOnInit() {
         this.stateViewReady.next();
-        this.hostRect = this.host.nativeElement.getBoundingClientRect();
+        this.gridWrapRect = this.host.nativeElement.getBoundingClientRect();
 
-        this.eventHostResize.pipe(
+        this.gridWrapResizeObservable = new ResizeObserver(() => {
+            console.log("gridWrap Resize");
+            this.gridWrapRect = this.gridWrap.nativeElement.getBoundingClientRect();
+            this.eventGridWrapResize.next();
+        });
+        this.gridWrapResizeObservable.observe(this.gridWrap.nativeElement);
+
+        this.eventGridWrapResize.pipe(
             takeUntil(this.eventViewDestroyed),
             debounceTime(100),
             filter(() => this.gridInstance != null),
         ).subscribe(() => {
             this.gridInstance.updateSettings({}, false);
+            this.scrollAssist.updateClientRect();
 
         });
 
@@ -196,12 +201,20 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             takeUntil(this.eventViewDestroyed),
         ).subscribe((item) => this.onDataChangeRemoved(item));
 
+        ChangeManager.eventRemove.pipe(
+            takeUntil(this.eventViewDestroyed),
+            debounceTime(300),
+        ).subscribe((item) => {
+            this.gridInstance.render();
+            this.detectChanges();
+        });
+
     }
     ngOnDestroy() {
         super.ngOnDestroy();
     }
     private onDataChangeAdded(item: DataChangeItem) {
-        console.log(`onDataChangeAdded ${JSON.stringify(item)}`);
+        console.log(`onDataChangeAdded`);
 
         switch (item.type) {
             case "cellUpdate":
@@ -220,7 +233,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         this.detectChanges();
     }
     private onDataChangeRemoved(item: DataChangeItem) {
-        console.log(`onDataChangeRemoved ${JSON.stringify(item)}`);
+        console.log(`onDataChangeRemoved`);
         switch (item.type) {
             case "cellUpdate":
                 const colName = item.column;
@@ -235,8 +248,6 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 break;
         }
 
-        this.gridInstance.render();
-        this.detectChanges();
     }
 
     private createGridInstance() {
@@ -405,7 +416,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 if (col < 0) {
                     return width;
                 }
-                const max = Math.round(this.hostRect.width / 2);
+                const max = Math.round(this.gridWrapRect.width / 2);
                 const c = this.currentColumns[col];
                 const m = measureText(c.name) + 48;
                 let w = width;
@@ -599,7 +610,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             return;
         }
         console.log("fixContentWidth");
-        let added = Math.round(this.hostRect.width / 4);
+        let added = Math.round(this.gridWrapRect.width / 4);
         added = added >= 100 ? added : 100;
         this.gridScrollContentSpacer.style.height = `0.1px`;
         this.gridScrollHeaderSpacer.style.height = `0.1px`;
@@ -623,5 +634,19 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         console.log("scrollEnable");
         this.gridScroll.style.overflow = "auto";
         this.gridScroll.style["willChange"] = "unset";
+    }
+    public changesDiscard = () => {
+        this.changeManager.clear();
+        // this.changeManager.list.forEach(() => {
+        // });
+    }
+    public changeCancel(item: DataChangeItem) {
+        if (item.type === "rowDelete") {
+            return;
+        }
+        const colIndex = this.currentColumns.findIndex((c) => c.name === item.column);
+        this.htmlCache.invalidate(item.row, colIndex);
+        this.currentDataRows[item.row][item.column] = item.valueOld;
+        this.gridInstance.render();
     }
 }

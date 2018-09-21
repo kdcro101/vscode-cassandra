@@ -24,7 +24,6 @@ export const gridContextMenu = (dataGrid: UiDataGridComponent): Handsontable.con
                     }
                     const colName = dataGrid.currentColumns[cell.col].name;
                     const cellChanged = dataGrid.changeManager.isCellChanged(cell.row, colName);
-                    // const rowDeleted = dataGrid.changeManager.isRowDeleted(cell.row);
 
                     if (cellChanged) {
                         return false;
@@ -40,9 +39,7 @@ export const gridContextMenu = (dataGrid: UiDataGridComponent): Handsontable.con
                     const colName = dataGrid.currentColumns[cell.col].name;
                     const item = dataGrid.changeManager.removeCellUpdate(cell.row, colName);
 
-                    dataGrid.htmlCache.invalidate(cell.row, cell.col);
-                    dataGrid.currentDataRows[cell.row][colName] = item.valueOld;
-                    dataGrid.gridInstance.render();
+                    dataGrid.changeCancel(item);
 
                 },
             },

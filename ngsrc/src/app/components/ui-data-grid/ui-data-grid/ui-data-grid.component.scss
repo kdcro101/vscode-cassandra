@@ -27,9 +27,8 @@
             position: relative;
         }
         .grid-status {
-            height: 40px;
             .grid-item {
-
+                height: 40px;
                 padding: 8px 16px 8px 16px;
                 &.readonly {
                     mat-icon {

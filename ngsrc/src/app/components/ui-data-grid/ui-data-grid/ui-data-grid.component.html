@@ -1,25 +1,26 @@
 <div class="root" #root fxLayout="column">
     <mat-progress-bar [@progressAnimationState] color="accent" mode="indeterminate" *ngIf="renderingProgress"></mat-progress-bar>
-    <div fxFlex class="grid-wrap" [@gridAnimationState]="gridAnimationState">
+    <div #gridWrap fxFlex class="grid-wrap" [@gridAnimationState]="gridAnimationState">
         <div #gridHost class="grid-host" id="{{ gridInstanceId }}"></div>
     </div>
     <div class="grid-status mat-caption mat-elevation-z3" fxLayout="column">
 
-        <div *ngIf="currentError" class="grid-item error" fxLayout="row" fxLayoutAlign="start center" fxFlex>
+        <div *ngIf="currentError" class="grid-item error" fxLayout="row" fxLayoutAlign="start center">
             <mat-icon class="icon-18 mr">error</mat-icon>
             <div>{{ currentError.message  }}</div>
         </div>
         <div *ngIf="!currentPrimaryKeyAvailable && currentEditor.executed && !renderingProgress && !currentError" class="grid-item readonly"
-            fxLayout="row" fxLayoutAlign="start center" fxFlex>
+            fxLayout="row" fxLayoutAlign="start center">
             <mat-icon class="icon-18 mr">lock</mat-icon>
             <div>Result is read-only. Primary key column(s) are not selected.</div>
         </div>
-        <div *ngIf="changeManager && changeManager.list.length > 0" class="grid-item changes" fxLayout="row" fxLayoutAlign="start center" fxFlex>
+        <div *ngIf="changeManager && changeManager.list.length > 0" class="grid-item changes" fxLayout="row"
+            fxLayoutAlign="start center">
             <mat-icon class="icon-18 mr">edit</mat-icon>
             <div *ngIf="changeManager.list.length===1" class="mr2">1 change pending</div>
             <div *ngIf="changeManager.list.length > 1" class="mr2">{{ changeManager.list.length }} changes pending</div>
             <button mat-raised-button class="button-18 mat-caption mr" color="accent">COMMIT</button>
-            <button mat-button class="button-18 mat-caption mr" color="accent">DISCARD</button>
+            <button mat-button class="button-18 mat-caption mr" color="accent" (click)="changesDiscard()">DISCARD</button>
         </div>
     </div>
 </div>

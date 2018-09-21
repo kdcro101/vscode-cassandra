@@ -19,8 +19,9 @@ export class ScrollAssist {
     private eventChange = new Subject<DetectionZone>();
     private eventStop = new Subject<void>();
     constructor(public dataGrid: UiDataGridComponent) {
+
         this.scroll = document.getElementsByClassName("wtHolder")[0] as HTMLDivElement;
-        this.clientRect = this.dataGrid.gridHost.nativeElement.getBoundingClientRect();
+        this.updateClientRect();
 
         fromEvent<MouseEvent>(document, "mousemove", { capture: true }).pipe()
             .subscribe(() => {
@@ -32,23 +33,28 @@ export class ScrollAssist {
             debounceTime(100),
             map((e) => this.detectPoint(e.clientX, e.clientY)),
         ).subscribe((zone) => {
+            console.log(`scrollAssist change ${zone}`);
             this.eventChange.next(zone);
         });
 
-        this.eventChange.pipe(
-        ).subscribe((zone) => {
+        this.eventChange.pipe().subscribe((zone) => {
             interval(100).pipe(
                 takeUntil(
                     merge(
                         this.eventChange,
                         this.eventStop,
-                        ),
+                    ),
                 ),
             ).subscribe(() => {
+                console.log(`scrollAssist scrollToZone ${zone}`);
                 this.scrollForZone(zone);
             });
         });
 
+        // console.log(JSON.stringify(this.zones));
+    }
+    public updateClientRect() {
+        this.clientRect = this.dataGrid.gridHost.nativeElement.getBoundingClientRect();
         const top: DetectionRect = {
             top: 0,
             left: 0,
@@ -77,18 +83,18 @@ export class ScrollAssist {
             height: this.zoneMargin,
             name: "bottom",
         };
+        this.zones = [];
         this.zones.push(top);
         this.zones.push(left);
         this.zones.push(right);
         this.zones.push(bottom);
-        // console.log(JSON.stringify(this.zones));
     }
     private detectPoint(clientX: number, clientY: number): DetectionZone {
         const cx = clientX - this.clientRect.left;
         const cy = clientY - this.clientRect.top;
         // const cx = pageX ;
         // const cy = pageY ;
-        // console.log(`${cx}:${cy}`);
+        console.log(`${cx}:${cy} ${JSON.stringify(this.clientRect)}`);
         const detected = this.zones.filter((i) => {
             return cx >= i.left && cx <= i.left + i.width && cy >= i.top && cy <= i.top + i.height;
         });

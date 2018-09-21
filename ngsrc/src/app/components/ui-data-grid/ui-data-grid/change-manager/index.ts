@@ -58,17 +58,19 @@ export class ChangeManager {
         this.createRowDeleteItem(row);
     }
     public clear() {
-        this.list.forEach((c, i) => {
-            switch (c.type) {
+
+        while (this.list.length > 0) {
+            const i = this.list[0];
+            switch (i.type) {
                 case "cellUpdate":
-                    this.removeCellUpdateItem(i);
+                    const removed = this.removeCellUpdateItem(0);
+                    this.dataGrid.changeCancel(removed);
                     break;
                 case "rowDelete":
-                    this.removeRowDeleteItem(i);
+                    this.removeRowDeleteItem(0);
                     break;
             }
-
-        });
+        }
     }
     private getCellUpdateItemIndex(row: number, column: string): number {
         const index = this.list.findIndex((i) => {
