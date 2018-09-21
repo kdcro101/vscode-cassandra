@@ -15,6 +15,7 @@ import { ViewDestroyable } from "../../../base/view-destroyable";
 import { generateId } from "../../../const/id";
 import { ThemeService } from "../../../services/theme/theme.service";
 import { WorkbenchEditor } from "../../../types/index";
+import { gridElementAnimations } from "./animations";
 import { onBeforeChange } from "./before-change";
 import { CellClassManager } from "./cell-class/cell-class";
 import { ChangeManager } from "./change-manager";
@@ -23,6 +24,8 @@ import { gridContextMenu } from "./context-menu";
 import { HtmlCache } from "./html-cache/html-cache";
 import { measureText } from "./measure-width";
 import { headerRenderer } from "./renderers/header-renderer";
+import { ResultState } from "./resultset-state";
+import { buildResultState } from "./resultset-state/index";
 import { ScrollAssist } from "./scroll-assist/scroll-assist";
 import { SelectionHelper } from "./selection-helper/selection-helper";
 
@@ -51,34 +54,7 @@ declare var window: any;
     styleUrls: ["./ui-data-grid.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [
-        trigger("gridAnimationState", [
-            state("hidden", style({
-                opacity: 0,
-            })),
-            state("ready", style({
-                opacity: 1,
-            })),
-            transition("* => ready", animate("150ms ease-in-out")),
-            transition("* => void", animate("50ms ease-in")),
-        ]),
-        trigger("progressAnimationState", [
-            transition(":enter", [
-                style({
-                    opacity: 0,
-                }),
-                animate(".25s ease-in-out", style({
-                    opacity: 1,
-                })),
-            ]),
-            transition(":leave", [
-                style({
-                    opacity: 1,
-                }),
-                animate(".25s ease-in-out", style({
-                    opacity: 0,
-                })),
-            ]),
-        ]),
+        ...gridElementAnimations,
     ],
 })
 export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDestroy {
@@ -120,6 +96,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     public currentTableStruct: CassandraTable = null;
     public currentError: Error = null;
     public currentPrimaryKeyAvailable: boolean = false;
+    public currentResultState: ResultState = {};
 
     private eventHeaderCellElement = new Subject<[number, HTMLTableHeaderCellElement]>();
     private stateGridReady = new ReplaySubject<void>(1);
@@ -186,10 +163,11 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
         ChangeManager.eventChange.pipe(
             takeUntil(this.eventViewDestroyed),
-        ).subscribe((q) => {
+        ).subscribe(() => {
             console.log("###################");
-            console.log("ChangeManage que changed");
+            console.log("ChangeManager changed");
             console.log("###################");
+            this.currentResultState.showChanges = this.changeManager.list.length === 0 ? false : true;
             this.detectChanges();
         });
 
@@ -429,6 +407,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             });
 
             this.scrollAssist = new ScrollAssist(this);
+            this.currentResultState = buildResultState(this);
 
             this.eventModifyColumnWidth.pipe(
                 takeUntil(this.eventViewDestroyed),

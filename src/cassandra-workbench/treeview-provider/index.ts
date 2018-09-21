@@ -1,15 +1,11 @@
 import { sortBy } from "lodash";
-import { from, ReplaySubject } from "rxjs";
-import { take } from "rxjs/operators";
+import { from } from "rxjs";
 import * as vscode from "vscode";
-import { CassandraClient } from "../../cassandra-client";
 import { Clusters } from "../../clusters";
-import { CassandraColumn, ValidatedConfigClusterItem } from "../../types";
-import { TreeItemBase } from "./tree-item-base";
-
-import { TreeItemAggregates } from "./tree-item-aggregates";
-
+import { CassandraColumn } from "../../types";
 import { TreeItemAggregateItem } from "./tree-item-aggregate-item";
+import { TreeItemAggregates } from "./tree-item-aggregates";
+import { TreeItemBase } from "./tree-item-base";
 import { TreeItemCluster } from "./tree-item-cluster";
 import { TreeItemClusterError } from "./tree-item-cluster-error";
 import { TreeItemClusteringKey } from "./tree-item-clustering-key";
@@ -192,7 +188,7 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
                     const tableItems = sks.tables.map((t) => {
                         const tooltip = `${name}/${keyspace}/${t.name}`;
                         return new TreeItemTable(t.name, vscode.TreeItemCollapsibleState.Collapsed,
-                            clusterIndex, name, keyspace, "table", tooltip);
+                            clusterIndex, name, keyspace, "table", t, tooltip);
                     });
 
                     items = items.concat(tableItems);

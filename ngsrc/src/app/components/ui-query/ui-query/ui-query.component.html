@@ -57,13 +57,13 @@
                 <div fxLayout="row" fxLayoutAlign="center center" class="not-executed" *ngIf="!item.executed">
                     <div class="action" fxLayout="column">
                         <div fxLayoutAlign="center center" fxLayout="row">
-                            <button mat-fab color="accent" (click)="executeCql()">
+                            <button mat-fab color="accent" (click)="executeCql()" [disabled]="(editorCurrent.stateExecuting | async) || clusterLoadingError || clusterLoading">
                                 <mat-icon>cloud_upload</mat-icon>
                             </button>
                         </div>
                         <div class="sep"></div>
                         <div fxLayoutAlign="center center" fxLayout="row">
-                            <button mat-button color="accent" (click)="executeCql()">
+                            <button mat-button color="accent" (click)="executeCql()" [disabled]="(editorCurrent.stateExecuting | async) || clusterLoadingError || clusterLoading">
                                 EXECUTE
                             </button>
                         </div>

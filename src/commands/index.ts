@@ -84,7 +84,7 @@ export class VsCommands {
             const clusterIndex = item.clusterIndex;
             const keyspace = item.keyspace;
             const table = item.label;
-            const body = this.generator.generateSelectBasic(keyspace, table);
+            const body = this.generator.generateSelectBasic(keyspace, item.tableData);
             this.workbench.editorCreate(clusterIndex, keyspace, body);
         });
     }
