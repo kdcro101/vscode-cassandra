@@ -239,6 +239,7 @@ import { KwOptionsContext } from './CqlParser';
 import { KwOrContext } from './CqlParser';
 import { KwOrderContext } from './CqlParser';
 import { KwOrderByContext } from './CqlParser';
+import { KwPartitionContext } from './CqlParser';
 import { KwPasswordContext } from './CqlParser';
 import { KwPermissionsContext } from './CqlParser';
 import { KwPrimaryContext } from './CqlParser';
@@ -1984,6 +1985,13 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitKwOrderBy?: (ctx: KwOrderByContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.kwPartition`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitKwPartition?: (ctx: KwPartitionContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.kwPassword`.

@@ -1,6 +1,7 @@
 import { ClusterExecuteResults } from "../clusters";
 import { CompletitionOutput } from "../completition";
 import { CqlParserError } from "../parser";
+import { SaveStatementResultType } from "../persistence/index";
 import { WorkbenchCqlStatement } from "./editor";
 import { CassandraCluster, CassandraClusterData } from "./index";
 
@@ -23,6 +24,7 @@ export interface ProcMessageList {
     e2w_checkInputResponse: CheckInputResponse;
     e2w_executeQueryResponse: ExecuteQueryResponse;
     e2w_executeDataChangeResponse: ExecuteDataChangeResponse;
+    e2w_statementSaveResponse: StatementSaveResponse;
 }
 export type ProcMessageType = keyof ProcMessageList;
 export interface ProcMessage {
@@ -116,4 +118,11 @@ export interface DataChangeItemResult {
 
 export interface StatementSaveRequest extends MessageWithId {
     statement: WorkbenchCqlStatement;
+    saveAsMode: boolean;
+}
+export interface StatementSaveResponse extends MessageWithId {
+    fileName?: string;
+    fsPath?: string;
+    responseType: SaveStatementResultType;
+    error?: any;
 }

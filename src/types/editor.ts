@@ -7,4 +7,5 @@ export interface WorkbenchCqlStatement {
     clusterName: string;
     source: WorkbenchCqlStatementSource;
     fsPath?: string;
+    saved: boolean;
 }

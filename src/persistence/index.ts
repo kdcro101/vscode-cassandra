@@ -7,6 +7,13 @@ import { generateId } from "../const/id";
 import { WorkbenchCqlStatement } from "../types";
 
 import { Workspace } from "../workspace";
+export type SaveStatementResultType = "canceled" | "success" | "error";
+export interface SaveStatementResult {
+    responseType: SaveStatementResultType;
+    fsPath?: string;
+    error?: string;
+    fileName?: string;
+}
 
 export class Persistence {
 
@@ -32,13 +39,60 @@ export class Persistence {
         fs.mkdirpSync(this.persistencePathSaved);
 
         this.eventSaveEditors.pipe(
-            concatMap((l) => this.execSaveEditors(l)),
+            concatMap((l) => this.execSaveEditorStatements(l)),
         ).subscribe(() => {
             console.log("Editors saved...");
         });
 
     }
-    public loadStatements(): Promise<WorkbenchCqlStatement[]> {
+    public statementSave(statement: WorkbenchCqlStatement, saveAsMode: boolean = false): Promise<SaveStatementResult> {
+        return new Promise((resolve, reject) => {
+            const pathDefault = vscode.Uri.file(path.join(this.persistencePathSaved, statement.filename));
+            const options: vscode.SaveDialogOptions = {
+                defaultUri: statement.fsPath != null ? vscode.Uri.file(statement.fsPath) : pathDefault,
+                filters: { "Apache Cassandra CQL": ["cql"] },
+            };
+            // const p: Promise<vscode.Uri> = statement.fsPath == null || saveAsMode ?  : null;
+
+            Promise.all([new Promise<vscode.Uri>((res, rej) => {
+                if (statement.fsPath && !saveAsMode) {
+                    res(vscode.Uri.file(statement.fsPath));
+                    return;
+                }
+                vscode.window.showSaveDialog(options).then((uri) => {
+                    res(uri);
+                }, (e) => {
+                    rej(e);
+                });
+
+            })]).then((args) => {
+                const result = args[0];
+
+                if (result == null) {
+                    const outEmpty: SaveStatementResult = {
+                        responseType: "canceled",
+                    };
+                    resolve(outEmpty);
+                    return;
+                }
+                const fsPath = result.fsPath;
+                fs.writeFile(fsPath, statement.body)
+                    .then(() => {
+                        const out: SaveStatementResult = {
+                            responseType: "success",
+                            fsPath,
+                            fileName: path.basename(fsPath),
+                        };
+                        resolve(out);
+                    }).catch((e) => {
+                        reject(e);
+                    });
+
+            });
+
+        });
+    }
+    public loadEditorStatements(): Promise<WorkbenchCqlStatement[]> {
         return new Promise((resolve, reject) => {
 
             from(fs.readdir(this.persistencePathEditors)).pipe(
@@ -60,12 +114,12 @@ export class Persistence {
 
         });
     }
-    public saveStatements(list: WorkbenchCqlStatement[]) {
+    public saveEditorStatements(list: WorkbenchCqlStatement[]) {
 
         this.eventSaveEditors.next(list);
     }
 
-    public execSaveEditors(list: WorkbenchCqlStatement[]): Promise<void> {
+    public execSaveEditorStatements(list: WorkbenchCqlStatement[]): Promise<void> {
         return new Promise((resolve, reject) => {
             const id = generateId();
             const pt = this.persistencePathTemp;

@@ -1,7 +1,7 @@
 <div class="root mat-body-1">
     <div #top class="top" fxLayout="column">
         <div fxLayout="row" fxLayoutAlign="start center" class="cluster-actions">
-            <mat-icon class="icon-18">cloud_queue</mat-icon>
+            <mat-icon class="dropdown icon-18">cloud_queue</mat-icon>
             <mat-form-field color="accent" floatLabel="never" class="no-underline">
                 <mat-select panelClass="material-custom drop-down" placeholder="Select cluster" [ngModel]="editorCurrent.statement.clusterName"
                     [disabled]="(editorCurrent.stateExecuting | async)" (ngModelChange)="onClusterChange($event)"
@@ -15,7 +15,7 @@
             <mat-progress-spinner *ngIf="clusterLoading" mode="indeterminate" [diameter]="18" color="accent"
                 [strokeWidth]="2" class="keyspace-progress"></mat-progress-spinner>
             <div *ngIf="!clusterLoading && !clusterLoadingError" fxLayout="row" fxLayoutAlign="start center">
-                <mat-icon class="icon-18">panorama_fish_eye</mat-icon>
+                <mat-icon class="dropdown icon-18">panorama_fish_eye</mat-icon>
                 <mat-form-field color="accent" floatLabel="never" class="no-underline">
                     <mat-select panelClass="material-custom drop-down" placeholder="Select keyspace" [ngModel]="editorCurrent.statement.keyspace"
                         [disabled]="(editorCurrent.stateExecuting | async)" (ngModelChange)="onKeyspaceChange($event)"
@@ -29,6 +29,10 @@
             <div *ngIf="clusterLoadingError && !clusterLoading" class="cluster-loading-error mat-caption">Error
                 retrieving cluster structure</div>
             <div fxFlex></div>
+            <!-- <button mat-mini-fab color="accent">
+                <mat-icon>save</mat-icon>
+            </button> -->
+            <button *ngIf="!editorCurrent.statement.saved" mat-raised-button color="accent" class="mr" (click)="editorSave()">SAVE</button>
             <button [disabled]="(editorCurrent.stateExecuting | async) || clusterLoadingError || clusterLoading" color="accent"
                 mat-button (click)="executeCql()">EXECUTE</button>
             <mat-progress-bar *ngIf="editorCurrent.stateExecuting | async" class="progress" mode="indeterminate" color="accent"></mat-progress-bar>

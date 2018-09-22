@@ -15,7 +15,7 @@ export class ChangeManager {
     public keys: CassandraColumn[];
 
     constructor(private dataGrid: UiDataGridComponent) {
-        this.list = dataGrid.currentEditor.changes;
+        this.list = dataGrid.currentEditor.dataChanges;
         this.keys = dataGrid.currentTableStruct.primaryKeys;
     }
     public removeCellUpdate(row: number, column: string): DataChangeItem {

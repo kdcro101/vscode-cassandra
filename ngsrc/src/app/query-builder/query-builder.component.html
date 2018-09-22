@@ -29,8 +29,11 @@
                             <span class="mat-caption">Close tabs top the right</span>
                         </button>
                         <mat-divider></mat-divider>
-                        <button mat-menu-item>
+                        <button mat-menu-item (click)="doTabSave($event,ix)">
                             <span class="mat-caption">Save</span>
+                        </button>
+                        <button mat-menu-item (click)="doTabSaveAs($event,ix)">
+                            <span class="mat-caption">Save As...</span>
                         </button>
                         <mat-divider></mat-divider>
                         <button mat-menu-item (click)="doTabDuplicate($event,ix)">

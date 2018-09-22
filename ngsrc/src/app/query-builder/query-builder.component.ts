@@ -103,6 +103,12 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
     public doTabCloseAfter = (e: MouseEvent, index: number) => {
         this.editorService.removeAfter(index);
     }
+    public doTabSave = (e: MouseEvent, index: number) => {
+        this.editorService.save(index, false);
+    }
+    public doTabSaveAs = (e: MouseEvent, index: number) => {
+        this.editorService.save(index, true);
+    }
     public doTabDuplicate = (e: MouseEvent, index: number) => {
         this.editorService.duplicate(index);
     }
@@ -124,8 +130,8 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
         const x = ev.clientX - r.left;
         const y = ev.clientY - r.top;
         // console.log(`${x}:${y} [px=${ev.clientX},py=${ev.clientY}] ofL=${r.left} ofT=${r.top}`);
-        w.style.left = `${x}px`;
-        w.style.top = `${y}px`;
+        w.style.left = `${x + 2}px`;
+        w.style.top = `${y + 2}px`;
 
         t.openMenu(); // Open your custom context menu instead
     }

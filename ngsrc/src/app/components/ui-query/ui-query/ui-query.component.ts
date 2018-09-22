@@ -231,7 +231,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         return new Promise((resolve, reject) => {
 
             let p: Promise<boolean> = null;
-            if (this.editor.changes.length > 0) {
+            if (this.editor.dataChanges.length > 0) {
                 p = this.showDialogChangesWarning();
             }
 
@@ -248,7 +248,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
                 }
 
                 this.editorCurrent.result = null;
-                this.editorCurrent.changes = [];
+                this.editorCurrent.dataChanges = [];
                 this.detectChanges();
 
                 this.cqlClient.executeEditor(this.editorCurrent)
@@ -368,5 +368,16 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
                 resolve(false);
             });
         });
+    }
+    public editorSave = () => {
+        this.editorService.save(this.editorIndex)
+            .then((result) => {
+                this.snackBar.open("Document saved", "OK", {
+                    duration: 2000,
+                });
+            }).catch((e) => {
+                this.snackBar.open("Error saving document", "OK");
+            });
+
     }
 }

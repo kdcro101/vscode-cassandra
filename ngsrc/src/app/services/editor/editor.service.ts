@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
-
 import { cloneDeep } from "lodash";
 import { BehaviorSubject, from, ReplaySubject, Subject } from "rxjs";
-import { concatMap, take } from "rxjs/operators";
-import { ClusterExecuteResults } from "../../../../../src/clusters/index";
+import { concatMap, filter, map, take } from "rxjs/operators";
+import { timeout } from "rxjs/operators";
+import { SaveStatementResultType } from "../../../../../src/persistence";
 import { WorkbenchCqlStatement } from "../../../../../src/types/editor";
 import { ProcMessage, ProcMessageStrict } from "../../../../../src/types/messages";
 import { generateId } from "../../const/id";
@@ -94,7 +94,7 @@ export class EditorService {
                     statement,
                     result: null,
                     executed: false,
-                    changes: [],
+                    dataChanges: [],
                     model: monaco.editor.createModel(statement.body, "cql"),
                     stateExecuting: new BehaviorSubject<boolean>(false),
                     eventResult: new Subject<void>(),
@@ -117,7 +117,7 @@ export class EditorService {
                 statement,
                 result: null,
                 executed: false,
-                changes: [],
+                dataChanges: [],
                 model: monaco.editor.createModel(statement.body, "cql"),
                 stateExecuting: new BehaviorSubject<boolean>(false),
                 eventResult: new Subject<void>(),
@@ -176,7 +176,9 @@ export class EditorService {
         }
 
         this.list[index].statement = statement;
+        this.list[index].statement.saved = false;
         this.persistEditors();
+        this.eventListChange.next();
     }
     public persistEditors() {
         const statements = this.list.map((e) => e.statement);
@@ -248,5 +250,54 @@ export class EditorService {
         this.eventListChange.next();
         // persist state
         this.persistEditors();
+    }
+    public save(index: number, saveAsMode: boolean = false): Promise<SaveStatementResultType> {
+        return new Promise((resolve, reject) => {
+            const id = generateId();
+            if (index < 0 || index >= this.list.length) {
+                resolve();
+                return;
+            }
+            const m: ProcMessageStrict<"w2e_statementSaveRequest"> = {
+                name: "w2e_statementSaveRequest",
+                data: {
+                    id,
+                    statement: this.list[index].statement,
+                    saveAsMode,
+                },
+            };
+
+            this.messages.eventMessage.pipe(
+                timeout(10000),
+                filter((e) => e.name === "e2w_statementSaveResponse"),
+                filter((mi: ProcMessageStrict<"e2w_statementSaveResponse">) => mi.data.id === id),
+                take(1),
+                map((e) => e as ProcMessageStrict<"e2w_statementSaveResponse">),
+            ).subscribe((res) => {
+                const data = res.data;
+                if (!data) {
+                    reject("no_data");
+                    return;
+                }
+                if (data.responseType === "success") {
+                    this.list[index].statement.fsPath = data.fsPath;
+                    this.list[index].statement.filename = data.fileName;
+                    this.list[index].statement.saved = true;
+
+                    this.eventListChange.next();
+                    resolve(data.responseType);
+                } else if (data.responseType === "canceled") {
+                    resolve(data.responseType);
+                } else {
+                    reject(data.error);
+                }
+            }, (e) => {
+                console.log(e);
+                reject(e);
+            });
+
+            this.messages.emit(m);
+
+        });
     }
 }

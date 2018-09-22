@@ -1,3 +1,4 @@
+import { wordWrap } from "../const/string-wrap";
 import { CassandraTable } from "../types/index";
 export class StatementGenerator {
 
@@ -7,10 +8,11 @@ export class StatementGenerator {
 
     public generateSelectBasic(keyspace: string, table: CassandraTable) {
 
-        const cols = table.columns.map((c) => c.name).join(",");
+        const cols = table.columns.map((c) => c.name).join(", ");
 
-        const q = `SELECT ${cols} FROM ${keyspace}.${table.name} LIMIT ${this.limit};\n`;
-        return q;
+        const q = `SELECT ${cols}\nFROM ${keyspace}.${table.name}\nLIMIT ${this.limit};\n`;
+        const wrapped = wordWrap(q, 80);
+        return wrapped;
     }
 
 }

@@ -52,7 +52,7 @@ export class CassandraWorkbench {
                 return;
             }
 
-            from(this.persistence.loadStatements()).pipe()
+            from(this.persistence.loadEditorStatements()).pipe()
                 .subscribe((list) => {
 
                     this.panel = new WorkbenchPanel(this.workspace, list);
@@ -98,6 +98,7 @@ export class CassandraWorkbench {
                         keyspace,
                         clusterName: c.name,
                         source: "action",
+                        saved: false,
                     };
 
                     const m: ProcMessageStrict<"e2w_editorCreate"> = {
@@ -130,7 +131,7 @@ export class CassandraWorkbench {
                 break;
             case "w2e_persistEditors":
                 const pm = m as ProcMessageStrict<"w2e_persistEditors">;
-                this.persistence.saveStatements(pm.data);
+                this.persistence.saveEditorStatements(pm.data);
                 break;
             case "w2e_autocompleteRequest":
                 this.autocompleteRespond(m as ProcMessageStrict<"w2e_autocompleteRequest">);
@@ -147,8 +148,42 @@ export class CassandraWorkbench {
             case "w2e_executeDataChangeRequest":
                 this.executeDataChangeRespond(m as ProcMessageStrict<"w2e_executeDataChangeRequest">);
                 break;
+            case "w2e_statementSaveRequest":
+                this.saveStatementRespond(m as ProcMessageStrict<"w2e_statementSaveRequest">);
+                break;
 
         }
+    }
+    private saveStatementRespond(request: ProcMessageStrict<"w2e_statementSaveRequest">) {
+        const req = request.data;
+        const id = req.id;
+        const saveAsMode = req.saveAsMode;
+
+        this.persistence.statementSave(req.statement, saveAsMode)
+            .then((result) => {
+                const out: ProcMessageStrict<"e2w_statementSaveResponse"> = {
+                    name: "e2w_statementSaveResponse",
+                    data: {
+                        id,
+                        responseType: result.responseType,
+                        fileName: result.fileName,
+                        fsPath: result.fsPath,
+                    },
+                };
+
+                this.panel.emitMessage(out);
+            }).catch((e) => {
+                console.error(e);
+                const out: ProcMessageStrict<"e2w_statementSaveResponse"> = {
+                    name: "e2w_statementSaveResponse",
+                    data: {
+                        id,
+                        responseType: "error",
+                        error: e,
+                    },
+                };
+                this.panel.emitMessage(out);
+            });
     }
     private autocompleteRespond(request: ProcMessageStrict<"w2e_autocompleteRequest">) {
         const req = request.data;

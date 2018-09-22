@@ -747,7 +747,7 @@ tableSpec
 column
     : OBJECT_NAME
     | DQUOTE OBJECT_NAME DQUOTE
-    | kwRole | kwPermissions | kwOptions | kwDurableWrites | kwLanguage | kwType | kwInitcond | kwReplication | kwTtl
+    | kwRole | kwPermissions | kwOptions | kwDurableWrites | kwLanguage | kwType | kwInitcond | kwReplication | kwTtl | kwPartition
     ;
 
 dataType
@@ -893,6 +893,7 @@ kwOptions: K_OPTIONS;
 kwOr: K_OR;
 kwOrder: K_ORDER;
 kwOrderBy: K_ORDER K_BY;
+kwPartition: K_PARTITION;
 kwPassword:K_PASSWORD;
 kwPermissions: K_PERMISSIONS;
 kwPrimary: K_PRIMARY;

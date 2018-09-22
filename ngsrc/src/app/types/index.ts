@@ -15,7 +15,8 @@ export interface WorkbenchEditor {
     result: ClusterExecuteResults;
     errors?: any[];
     executed: boolean;
-    changes: DataChangeItem[];
+    dataChanges: DataChangeItem[];
     stateExecuting: BehaviorSubject<boolean>;
     eventResult: Subject<void>;
+
 }

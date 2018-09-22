@@ -15,10 +15,9 @@
                 padding-left: 16px;
                 padding-right: 16px;
                 position: relative;
-                mat-icon {
+                mat-icon.dropdown {
                     margin-right: 16px;
                     color: mat-color($background, 500);
-                    // margin-bottom: 4px;
                 }
                 .progress {
                     height: 1px;
@@ -62,8 +61,8 @@
                         left: 0;
                         bottom: 0;
                         right: 0;
-                        .action{
-                            .sep{
+                        .action {
+                            .sep {
                                 height: 16px;
                             }
                         }
