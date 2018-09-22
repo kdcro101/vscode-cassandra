@@ -54,7 +54,7 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
             ).subscribe((result) => {
                 if (result === "success") {
                     this.snackBar.open("Document saved", "OK", {
-                        duration: 2000,
+                        duration: 1000,
                     });
                 }
             }, (e) => {
@@ -135,6 +135,11 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
     }
     public doTabDuplicate = (e: MouseEvent, index: number) => {
         this.editorService.duplicate(index);
+    }
+    public doTabCreate = () => {
+        const clusterName = this.editor ? this.editor.statement.clusterName : null;
+        const keyspace = this.editor ? this.editor.statement.keyspace : null;
+        this.editorService.createEmpty(clusterName, keyspace);
     }
     private replaceTabs(source: number, dest: number) {
         this.editorService.swap(source, dest);

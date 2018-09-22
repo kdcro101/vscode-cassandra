@@ -10,6 +10,7 @@ import { CqlParserError } from "../../../../../../src/parser/index";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { MonacoService } from "../../../services/monaco/monaco.service";
 import { ParserService } from "../../../services/parser/parser.service";
+import { ThemeService } from "../../../services/theme/theme.service";
 import { WorkbenchEditor } from "../../../types/index";
 import { UiContextMenuService } from "../../ui-context-menu/service";
 
@@ -41,6 +42,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         private monacoService: MonacoService,
         private parser: ParserService,
         private contextMenu: UiContextMenuService,
+        private theme: ThemeService,
     ) {
         super(change);
 
@@ -83,7 +85,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 minimap: {
                     enabled: false,
                 },
-                lineHeight: 30,
+                lineHeight: Math.round(this.theme.getEditorFontSize() * 1.5),
                 automaticLayout: true,
                 contextmenu: false,
 

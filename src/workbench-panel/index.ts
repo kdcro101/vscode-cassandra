@@ -25,7 +25,7 @@ export class WorkbenchPanel {
 
     ) {
 
-        this.panel = vscode.window.createWebviewPanel("cassandra-console", "Cassandra console", vscode.ViewColumn.Active, {
+        this.panel = vscode.window.createWebviewPanel("cassandra-workbench", "Cassandra workbench", vscode.ViewColumn.Active, {
             enableScripts: true,
             localResourceRoots: [
                 vscode.Uri.file(path.join(this.context.extensionPath, "ng")),

@@ -8,11 +8,19 @@ import { WorkbenchCqlStatement } from "../types";
 
 import { Workspace } from "../workspace";
 export type SaveStatementResultType = "canceled" | "success" | "error";
+export type OpenStatementResultType = "canceled" | "success" | "error";
 export interface SaveStatementResult {
     responseType: SaveStatementResultType;
     fsPath?: string;
     error?: string;
     fileName?: string;
+}
+export interface OpenStatementResult {
+    responseType: OpenStatementResultType;
+    fsPath?: string;
+    error?: string;
+    fileName?: string;
+    body?: string;
 }
 
 export class Persistence {
@@ -44,6 +52,11 @@ export class Persistence {
             console.log("Editors saved...");
         });
 
+    }
+    public statementOpen(): Promise<OpenStatementResult> {
+        return new Promise((resolve, reject) => {
+
+        });
     }
     public statementSave(statement: WorkbenchCqlStatement, saveAsMode: boolean = false): Promise<SaveStatementResult> {
         return new Promise((resolve, reject) => {

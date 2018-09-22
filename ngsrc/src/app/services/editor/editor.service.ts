@@ -280,12 +280,16 @@ export class EditorService {
                     return;
                 }
                 if (data.responseType === "success") {
+
                     this.list[index].statement.fsPath = data.fsPath;
                     this.list[index].statement.filename = data.fileName;
                     this.list[index].statement.saved = true;
 
+                    this.persistEditors();
                     this.eventListChange.next();
+
                     resolve(data.responseType);
+
                 } else if (data.responseType === "canceled") {
                     resolve(data.responseType);
                 } else {
@@ -299,5 +303,18 @@ export class EditorService {
             this.messages.emit(m);
 
         });
+    }
+    public createEmpty(clusterName: string, keyspace: string) {
+        const statement: WorkbenchCqlStatement = {
+            id: generateId(),
+            clusterName,
+            keyspace,
+            body: "",
+            saved: true,
+            filename: null,
+            source: "action",
+
+        };
+        this.editorCreate(statement);
     }
 }
