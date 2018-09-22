@@ -32,7 +32,7 @@
             <!-- <button mat-mini-fab color="accent">
                 <mat-icon>save</mat-icon>
             </button> -->
-            <button *ngIf="!editorCurrent.statement.saved" mat-raised-button color="accent" class="mr" (click)="editorSave()">SAVE</button>
+            <button *ngIf="!editorCurrent.statement.saved" mat-raised-button color="accent" class="mr" (click)="onStatementSave.emit()">SAVE</button>
             <button [disabled]="(editorCurrent.stateExecuting | async) || clusterLoadingError || clusterLoading" color="accent"
                 mat-button (click)="executeCql()">EXECUTE</button>
             <mat-progress-bar *ngIf="editorCurrent.stateExecuting | async" class="progress" mode="indeterminate" color="accent"></mat-progress-bar>

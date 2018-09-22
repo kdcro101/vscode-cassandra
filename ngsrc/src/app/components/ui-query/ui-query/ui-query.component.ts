@@ -36,6 +36,7 @@ type PanelAnimationState = "active" | "hidden";
 })
 export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestroy {
     @Output("onStatementChange") public onStatementChange = new EventEmitter<WorkbenchCqlStatement>();
+    @Output("onStatementSave") public onStatementSave = new EventEmitter<void>();
 
     @ViewChild("top") public top: ElementRef<HTMLDivElement>;
     @ViewChild("bottom") public bottom: ElementRef<HTMLDivElement>;
@@ -176,7 +177,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
 
         this.eventCodeChange.pipe(
             takeUntil(this.eventViewDestroyed),
-            debounceTime(1000),
+            debounceTime(500),
         ).subscribe((d) => {
             this.onStatementChange.emit(d);
         });
@@ -369,15 +370,5 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
             });
         });
     }
-    public editorSave = () => {
-        this.editorService.save(this.editorIndex)
-            .then((result) => {
-                this.snackBar.open("Document saved", "OK", {
-                    duration: 2000,
-                });
-            }).catch((e) => {
-                this.snackBar.open("Error saving document", "OK");
-            });
 
-    }
 }

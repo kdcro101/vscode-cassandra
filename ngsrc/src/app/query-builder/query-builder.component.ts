@@ -2,8 +2,9 @@ import {
     AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef,
     Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren,
 } from "@angular/core";
-import { MatMenuTrigger } from "@angular/material";
-import { takeUntil } from "rxjs/operators";
+import { MatMenuTrigger, MatSnackBar } from "@angular/material";
+import { Subject } from "rxjs";
+import { concatMap, take, takeUntil } from "rxjs/operators";
 import { WorkbenchCqlStatement } from "../../../../src/types/editor";
 import { ViewDestroyable } from "../base/view-destroyable";
 import { UiContentHorizontalComponent } from "../components/ui-content-horizontal/ui-content-horizontal.component";
@@ -33,13 +34,34 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
 
     private drag: TabDraggable;
 
+    public doSave = new Subject<[number, boolean]>(); // [index,saveAsMode]
+
     constructor(
         public change: ChangeDetectorRef,
         public system: SystemService,
         public editorService: EditorService,
+        public snackBar: MatSnackBar,
     ) {
         super(change);
 
+        this.editorService.stateActive.pipe(
+            takeUntil(this.eventViewDestroyed),
+            take(1),
+        ).subscribe(() => {
+            this.doSave.pipe(
+                takeUntil(this.eventViewDestroyed),
+                concatMap((data) => this.editorService.save(data[0], data[1])),
+            ).subscribe((result) => {
+                if (result === "success") {
+                    this.snackBar.open("Document saved", "OK", {
+                        duration: 2000,
+                    });
+                }
+            }, (e) => {
+                this.snackBar.open("Error saving document", "OK");
+            });
+
+        });
     }
 
     ngOnInit() {
@@ -104,10 +126,12 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
         this.editorService.removeAfter(index);
     }
     public doTabSave = (e: MouseEvent, index: number) => {
-        this.editorService.save(index, false);
+        // this.editorService.save(index, false);
+        this.doSave.next([this.editorIndex, false]);
     }
     public doTabSaveAs = (e: MouseEvent, index: number) => {
-        this.editorService.save(index, true);
+        // this.editorService.save(index, true);
+        this.doSave.next([this.editorIndex, true]);
     }
     public doTabDuplicate = (e: MouseEvent, index: number) => {
         this.editorService.duplicate(index);
@@ -130,8 +154,8 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
         const x = ev.clientX - r.left;
         const y = ev.clientY - r.top;
         // console.log(`${x}:${y} [px=${ev.clientX},py=${ev.clientY}] ofL=${r.left} ofT=${r.top}`);
-        w.style.left = `${x + 2}px`;
-        w.style.top = `${y + 2}px`;
+        w.style.left = `${x + 1}px`;
+        w.style.top = `${y + 1}px`;
 
         t.openMenu(); // Open your custom context menu instead
     }
