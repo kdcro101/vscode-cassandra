@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 
+import { cloneDeep } from "lodash";
 import { BehaviorSubject, from, ReplaySubject, Subject } from "rxjs";
 import { concatMap, take } from "rxjs/operators";
 import { ClusterExecuteResults } from "../../../../../src/clusters/index";
@@ -187,6 +188,47 @@ export class EditorService {
 
         this.messages.emit(m);
     }
+    public duplicate(index) {
+        if (index < 0 || index >= this.list.length) {
+            return;
+        }
+        const item = this.list[index];
+        const statement = cloneDeep(item.statement);
+        statement.source = "action";
+
+        this.editorCreate(statement);
+    }
+    public removeAfter(index: number) {
+        if (index < 0 || index >= this.list.length) {
+            return;
+        }
+        const lastActive = this.index;
+        this.listCurrent = this.listCurrent.filter((item, i) => i <= index);
+        // activate tab
+        if (lastActive <= index) {
+            this.activate(0);
+        } else {
+            this.activate(this.listCurrent.length - 1);
+        }
+        // emit list change
+        this.eventListChange.next();
+        // persist state
+        this.persistEditors();
+    }
+    public removeExcept(index: number) {
+        if (index < 0 || index >= this.list.length) {
+            return;
+        }
+
+        this.listCurrent = this.listCurrent.filter((item, i) => i === index);
+        // activate tab
+        this.activate(0);
+        // emit list change
+        this.eventListChange.next();
+        // persist state
+        this.persistEditors();
+    }
+
     public remove(index: number) {
         if (index < 0 || index >= this.list.length) {
             return;

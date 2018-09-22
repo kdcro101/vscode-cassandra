@@ -12,16 +12,39 @@
             <div class="tabs-wrap" #tabList fxLayout="row" fxLayoutAlign="start center">
                 <div #tabItems *ngFor="let i of editorService.list;index as ix" class="item" [class.active]="ix===editorIndex"
                     (mousedown)="onTabMousedown($event,ix)" fxLayout="row" fxLayoutAlign="start center">
+                    <div #triggerWrapper class="menu-trigger" [matMenuTriggerFor]="menu"></div>
                     <div fxFlex class="title dhandle">
                         {{ i.statement.filename }}
                     </div>
-                    <div class="vsui-close" (mousedown)="$event.stopPropagation();$event.preventDefault()" (click)="onTabClose($event,ix)"></div>
+                    <div class="vsui-close" (mousedown)="$event.stopPropagation();$event.preventDefault()" (click)="$event.stopPropagation();$event.preventDefault();doTabClose($event,ix)"></div>
+
+                    <mat-menu #menu="matMenu" class="material-custom context-menu">
+                        <button mat-menu-item (click)="doTabClose($event,ix)">
+                            <span class="mat-caption">Close</span>
+                        </button>
+                        <button mat-menu-item (click)="doTabCloseExcept($event,ix)" [disabled]="editorService.list.length===1">
+                            <span class="mat-caption">Close other tabs</span>
+                        </button>
+                        <button mat-menu-item (click)="doTabCloseAfter($event,ix)" [disabled]="(editorService.list.length-1)===ix">
+                            <span class="mat-caption">Close tabs top the right</span>
+                        </button>
+                        <mat-divider></mat-divider>
+                        <button mat-menu-item>
+                            <span class="mat-caption">Save</span>
+                        </button>
+                        <mat-divider></mat-divider>
+                        <button mat-menu-item (click)="doTabDuplicate($event,ix)">
+                            <span class="mat-caption">Duplicate</span>
+                        </button>
+                    </mat-menu>
+
                 </div>
             </div>
         </ui-content-horizontal>
     </div>
     <div fxFlex class="client" fxLayout="column">
-        <ui-query (onStatementChange)="onActiveStatementChange($event)" *ngIf="editorService.list.length>0 && editor" #queryEditor [editor]="editor" fxFlex></ui-query>
+        <ui-query (onStatementChange)="onActiveStatementChange($event)" *ngIf="editorService.list.length>0 && editor"
+            #queryEditor [editor]="editor" fxFlex></ui-query>
         <div *ngIf="!editorActive" #container>
 
         </div>

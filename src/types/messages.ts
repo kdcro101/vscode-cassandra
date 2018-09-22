@@ -13,6 +13,7 @@ export interface ProcMessageList {
     w2e_autocompleteRequest: AutocompleteRequest;
     w2e_executeQueryRequest: ExecuteQueryRequest;
     w2e_executeDataChangeRequest: ExecuteDataChangeRequest;
+    w2e_statementSaveRequest: StatementSaveRequest;
 
     e2w_goState: WebviewStateParams;
     e2w_getClusterStructResponse: ClusterStructureResponse;
@@ -101,8 +102,7 @@ export interface DataChangeItem {
     valueOld?: any;
     valueNew?: any;
 }
-export interface ExecuteDataChangeRequest {
-    id: string;
+export interface ExecuteDataChangeRequest extends MessageWithId {
     change: DataChangeItem;
 }
 export interface ExecuteDataChangeResponse extends MessageWithId {
@@ -112,4 +112,8 @@ export interface DataChangeItemResult {
 
     success: boolean;
     error?: any;
+}
+
+export interface StatementSaveRequest extends MessageWithId {
+    statement: WorkbenchCqlStatement;
 }

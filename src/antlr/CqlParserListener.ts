@@ -240,6 +240,7 @@ import { KwOrContext } from './CqlParser';
 import { KwOrderContext } from './CqlParser';
 import { KwOrderByContext } from './CqlParser';
 import { KwPasswordContext } from './CqlParser';
+import { KwPermissionsContext } from './CqlParser';
 import { KwPrimaryContext } from './CqlParser';
 import { KwRenameContext } from './CqlParser';
 import { KwReplaceContext } from './CqlParser';
@@ -2935,6 +2936,17 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitKwPassword?: (ctx: KwPasswordContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.kwPermissions`.
+	 * @param ctx the parse tree
+	 */
+	enterKwPermissions?: (ctx: KwPermissionsContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.kwPermissions`.
+	 * @param ctx the parse tree
+	 */
+	exitKwPermissions?: (ctx: KwPermissionsContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.kwPrimary`.

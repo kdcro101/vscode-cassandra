@@ -2,6 +2,7 @@ import {
     AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef,
     Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren,
 } from "@angular/core";
+import { MatMenuTrigger } from "@angular/material";
 import { takeUntil } from "rxjs/operators";
 import { WorkbenchCqlStatement } from "../../../../src/types/editor";
 import { ViewDestroyable } from "../base/view-destroyable";
@@ -24,6 +25,8 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
     @ViewChild("tabList") public tabList: ElementRef<HTMLDivElement>;
     @ViewChild("container") public container: ElementRef<HTMLDivElement>;
     @ViewChildren("tabItems") public tabItems: QueryList<ElementRef<HTMLDivElement>>;
+    @ViewChildren(MatMenuTrigger) menuTriggers: QueryList<MatMenuTrigger>;
+    @ViewChildren("triggerWrapper") triggerWrapper: QueryList<ElementRef<HTMLDivElement>>;
 
     public editor: WorkbenchEditor = null;
     public editorIndex: number = -1;
@@ -80,24 +83,51 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
     }
 
     public onTabMousedown = (e: MouseEvent, index: number) => {
+
+        if (e.button === 2) {
+            this.menuOpen(e, index);
+            return;
+        }
+
         this.tabActivate(index);
         console.log(`Clicked index=${index}`);
         this.drag.dragStart(index, e);
-    }
-    public onTabClose = (e: MouseEvent, index: number) => {
-        e.stopPropagation();
-        e.preventDefault();
-        this.editorService.remove(index);
 
+    }
+    public doTabClose = (e: MouseEvent, index: number) => {
+        this.editorService.remove(index);
+    }
+    public doTabCloseExcept = (e: MouseEvent, index: number) => {
+        this.editorService.removeExcept(index);
+    }
+    public doTabCloseAfter = (e: MouseEvent, index: number) => {
+        this.editorService.removeAfter(index);
+    }
+    public doTabDuplicate = (e: MouseEvent, index: number) => {
+        this.editorService.duplicate(index);
     }
     private replaceTabs(source: number, dest: number) {
-        console.log(`replacing ${source} with ${dest}`);
-
         this.editorService.swap(source, dest);
-
     }
     public onActiveStatementChange = (statement: WorkbenchCqlStatement) => {
         this.editorService.updateStatement(this.editorService.index, statement);
+    }
+    public menuOpen(ev: MouseEvent, index: number) {
+        ev.preventDefault();
+        ev.stopImmediatePropagation();
+        ev.stopPropagation();
+        console.log("Right button");
+        const e = this.tabItems.toArray()[index].nativeElement;
+        const r = e.getBoundingClientRect();
+        const w = this.triggerWrapper.toArray()[index].nativeElement;
+        const t = this.menuTriggers.toArray()[index];
+        const x = ev.clientX - r.left;
+        const y = ev.clientY - r.top;
+        // console.log(`${x}:${y} [px=${ev.clientX},py=${ev.clientY}] ofL=${r.left} ofT=${r.top}`);
+        w.style.left = `${x}px`;
+        w.style.top = `${y}px`;
+
+        t.openMenu(); // Open your custom context menu instead
     }
 
 }
