@@ -137,6 +137,7 @@
         "lodash": "^4.17.10",
         "monaco-editor": "^0.14.3",
         "rxjs": "^6.2.1",
-        "url-parse": "^1.4.3"
+        "url-parse": "^1.4.3",
+        "word-wrap": "^1.2.3"
     }
 }

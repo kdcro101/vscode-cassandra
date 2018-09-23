@@ -1,4 +1,4 @@
-import { wordWrap } from "../const/string-wrap";
+import wrap = require("word-wrap");
 import { CassandraTable } from "../types/index";
 export class StatementGenerator {
 
@@ -11,7 +11,10 @@ export class StatementGenerator {
         const cols = table.columns.map((c) => c.name).join(", ");
 
         const q = `SELECT ${cols}\nFROM ${keyspace}.${table.name}\nLIMIT ${this.limit};\n`;
-        const wrapped = wordWrap(q, 80);
+        const wrapped = wrap(q, {
+            width: 80,
+            trim: true,
+        });
         return wrapped;
     }
 

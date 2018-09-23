@@ -8,6 +8,7 @@ import { debounceTime, take, takeUntil } from "rxjs/operators";
 import * as Split from "split.js";
 
 import { AnimationEvent } from "@angular/animations";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { merge } from "rxjs";
 import { CqlAnalysisError } from "../../../../../../src/parser/listeners/cql-analyzer";
 import { WorkbenchCqlStatement } from "../../../../../../src/types/editor";
@@ -71,6 +72,8 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
 
     public panelAnimationState: { [id: string]: PanelAnimationState };
 
+    public formGroup: FormGroup;
+
     constructor(
         public change: ChangeDetectorRef,
         public cluster: ClusterService,
@@ -79,12 +82,21 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         public snackBar: MatSnackBar,
         public editorService: EditorService,
         public dialog: MatDialog,
+        public fb: FormBuilder,
     ) {
         super(change);
 
         this.clusterList = this.cluster.list;
         this.fontSize = Math.round(theme.getEditorFontSize() * 1.2);
         this.lineHeight = Math.round(this.fontSize * 1.5);
+
+        this.formGroup = this.fb.group({
+            clusterName: new FormControl(null, [
+                Validators.required,
+            ]),
+            keyspace: new FormControl(null, []),
+
+        });
 
     }
     public trackEditor(index: number, e: WorkbenchEditor) {
@@ -162,7 +174,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
 
         Split([this.top.nativeElement, this.bottom.nativeElement], {
             direction: "vertical",
-            sizes: [25, 75],
+            sizes: [33, 64],
             minSize: [200, 300],
             gutterSize: 12,
         });

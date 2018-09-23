@@ -55,7 +55,41 @@ export class Persistence {
     }
     public statementOpen(): Promise<OpenStatementResult> {
         return new Promise((resolve, reject) => {
+            const options: vscode.OpenDialogOptions = {
+                defaultUri: vscode.Uri.file(this.persistencePathSaved),
+                canSelectMany: false,
+                canSelectFolders: false,
+                filters: { "Apache Cassandra CQL": ["cql"] },
+            };
 
+            vscode.window.showOpenDialog(options)
+                .then((result) => {
+
+                    if (result == null || result.length === 0) {
+                        const outEmpty: OpenStatementResult = {
+                            responseType: "canceled",
+                        };
+                        resolve(outEmpty);
+                        return;
+                    }
+
+                    const fsPath = result[0].fsPath;
+                    fs.readFile(fsPath)
+                        .then((data) => {
+                            const out: OpenStatementResult = {
+                                responseType: "success",
+                                fsPath,
+                                body: data.toString(),
+                                fileName: path.basename(fsPath),
+                            };
+                            resolve(out);
+                        }).catch((e) => {
+                            reject(e);
+                        });
+
+                }, (e) => {
+                    reject(e);
+                });
         });
     }
     public statementSave(statement: WorkbenchCqlStatement, saveAsMode: boolean = false): Promise<SaveStatementResult> {

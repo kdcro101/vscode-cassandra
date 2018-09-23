@@ -151,8 +151,44 @@ export class CassandraWorkbench {
             case "w2e_statementSaveRequest":
                 this.saveStatementRespond(m as ProcMessageStrict<"w2e_statementSaveRequest">);
                 break;
+            case "w2e_statementOpenRequest":
+                this.openStatementRespond(m as ProcMessageStrict<"w2e_statementOpenRequest">);
+                break;
 
         }
+    }
+    private openStatementRespond(request: ProcMessageStrict<"w2e_statementOpenRequest">) {
+        const req = request.data;
+        const id = req.id;
+
+        this.persistence.statementOpen()
+            .then((result) => {
+                const out: ProcMessageStrict<"e2w_statementOpenResponse"> = {
+                    name: "e2w_statementOpenResponse",
+                    data: {
+                        id,
+                        responseType: result.responseType,
+                        fileName: result.fileName,
+                        fsPath: result.fsPath,
+                        body: result.body,
+                    },
+                };
+
+                this.panel.emitMessage(out);
+
+            }).catch((e) => {
+                console.error(e);
+                const out: ProcMessageStrict<"e2w_statementSaveResponse"> = {
+                    name: "e2w_statementSaveResponse",
+                    data: {
+                        id,
+                        responseType: "error",
+                        error: e,
+                    },
+                };
+                this.panel.emitMessage(out);
+            });
+
     }
     private saveStatementRespond(request: ProcMessageStrict<"w2e_statementSaveRequest">) {
         const req = request.data;
@@ -172,6 +208,7 @@ export class CassandraWorkbench {
                 };
 
                 this.panel.emitMessage(out);
+
             }).catch((e) => {
                 console.error(e);
                 const out: ProcMessageStrict<"e2w_statementSaveResponse"> = {

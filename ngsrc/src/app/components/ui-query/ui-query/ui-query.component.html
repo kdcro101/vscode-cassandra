@@ -1,11 +1,11 @@
 <div class="root mat-body-1">
     <div #top class="top" fxLayout="column">
-        <div fxLayout="row" fxLayoutAlign="start center" class="cluster-actions">
+        <form fxLayout="row" fxLayoutAlign="start center" class="cluster-actions" [formGroup]="formGroup">
             <mat-icon class="dropdown icon-18">cloud_queue</mat-icon>
             <mat-form-field color="accent" floatLabel="never" class="no-underline">
                 <mat-select panelClass="material-custom drop-down" placeholder="Select cluster" [ngModel]="editorCurrent.statement.clusterName"
                     [disabled]="(editorCurrent.stateExecuting | async)" (ngModelChange)="onClusterChange($event)"
-                    matTooltip="Select cluster">
+                    formControlName="clusterName" matTooltip="Select cluster">
                     <mat-option *ngFor="let i of clusterList" [value]="i.name">
                         {{i.name}}
                     </mat-option>
@@ -19,24 +19,24 @@
                 <mat-form-field color="accent" floatLabel="never" class="no-underline">
                     <mat-select panelClass="material-custom drop-down" placeholder="Select keyspace" [ngModel]="editorCurrent.statement.keyspace"
                         [disabled]="(editorCurrent.stateExecuting | async)" (ngModelChange)="onKeyspaceChange($event)"
-                        matTooltip="Select keyspace">
+                        formControlName="keyspace" matTooltip="Select keyspace">
                         <mat-option *ngFor="let i of keyspaceList" [value]="i.name">
                             {{i.name}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div *ngIf="clusterLoadingError && !clusterLoading" class="cluster-loading-error mat-caption">Error
-                retrieving cluster structure</div>
+
+            <div *ngIf="formGroup.controls['clusterName'].errors?.required" class="cluster-loading-error mat-caption">Cluster
+                selection is required</div>
+            <div *ngIf="clusterLoadingError && !clusterLoading && !formGroup.controls['clusterName'].errors?.required"
+                class="cluster-loading-error mat-caption">Error retrieving cluster structure</div>
             <div fxFlex></div>
-            <!-- <button mat-mini-fab color="accent">
-                <mat-icon>save</mat-icon>
-            </button> -->
             <button *ngIf="!editorCurrent.statement.saved" mat-raised-button color="accent" class="mr" (click)="onStatementSave.emit()">SAVE</button>
-            <button [disabled]="(editorCurrent.stateExecuting | async) || clusterLoadingError || clusterLoading" color="accent"
-                mat-button (click)="executeCql()">EXECUTE</button>
+            <button [disabled]="(editorCurrent.stateExecuting | async) || clusterLoadingError || clusterLoading || !formGroup.valid"
+                color="accent" mat-button (click)="executeCql()">EXECUTE</button>
             <mat-progress-bar *ngIf="editorCurrent.stateExecuting | async" class="progress" mode="indeterminate" color="accent"></mat-progress-bar>
-        </div>
+        </form>
         <ui-monaco-editor #monacoEditor [editor]="editorCurrent" (onCodeChange)="onCodeChange($event)" (onExecute)="executeCql()"
             fxFlex></ui-monaco-editor>
     </div>

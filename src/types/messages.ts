@@ -132,4 +132,6 @@ export interface StatementOpenResponse extends MessageWithId {
     body?: string;
     responseType: OpenStatementResultType;
     error?: any;
+    fileName?: string;
+    fsPath?: string;
 }

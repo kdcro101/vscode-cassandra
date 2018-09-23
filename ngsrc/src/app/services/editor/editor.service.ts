@@ -3,7 +3,7 @@ import { cloneDeep } from "lodash";
 import { BehaviorSubject, from, ReplaySubject, Subject } from "rxjs";
 import { concatMap, filter, map, take } from "rxjs/operators";
 import { timeout } from "rxjs/operators";
-import { SaveStatementResultType } from "../../../../../src/persistence";
+import { OpenStatementResultType, SaveStatementResultType } from "../../../../../src/persistence";
 import { WorkbenchCqlStatement } from "../../../../../src/types/editor";
 import { ProcMessage, ProcMessageStrict } from "../../../../../src/types/messages";
 import { generateId } from "../../const/id";
@@ -316,5 +316,68 @@ export class EditorService {
 
         };
         this.editorCreate(statement);
+    }
+    public open(): Promise<OpenStatementResultType> {
+        return new Promise((resolve, reject) => {
+            const id = generateId();
+            const m: ProcMessageStrict<"w2e_statementOpenRequest"> = {
+                name: "w2e_statementOpenRequest",
+                data: {
+                    id,
+                },
+            };
+
+            this.messages.eventMessage.pipe(
+                timeout(10000),
+                filter((e) => e.name === "e2w_statementOpenResponse"),
+                filter((mi: ProcMessageStrict<"e2w_statementOpenResponse">) => mi.data.id === id),
+                take(1),
+                map((e) => e as ProcMessageStrict<"e2w_statementOpenResponse">),
+            ).subscribe((res) => {
+                const data = res.data;
+                if (!data) {
+                    reject("no_data");
+                    return;
+                }
+                if (data.responseType === "success") {
+
+                    const statement: WorkbenchCqlStatement = {
+                        id: generateId(),
+                        body: data.body,
+                        filename: data.fileName,
+                        keyspace: null,
+                        clusterName: null,
+                        source: "storage",
+                        fsPath: data.fsPath,
+                        saved: true,
+                    };
+
+                    this.persistedStatement2Editor(statement)
+                        .then((editor) => {
+
+                            this.editorPrepend(editor);
+                            this.persistEditors();
+                            this.eventListChange.next();
+
+                            resolve(data.responseType);
+
+                        }).catch((e) => {
+                            reject(e);
+                        });
+
+                } else if (data.responseType === "canceled") {
+                    resolve(data.responseType);
+                } else {
+                    reject(data.error);
+                }
+            }, (e) => {
+                console.log(e);
+                reject(e);
+            });
+
+            this.messages.emit(m);
+
+        });
+
     }
 }

@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {
     MatButtonModule,
     MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule,
@@ -16,6 +16,7 @@ import { UiQueryComponent } from "./ui-query/ui-query.component";
     imports: [
         CommonModule,
         FormsModule,
+        ReactiveFormsModule,
         FlexLayoutModule,
         MatIconModule,
         MatProgressBarModule,

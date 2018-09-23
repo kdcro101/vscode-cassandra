@@ -141,6 +141,9 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
         const keyspace = this.editor ? this.editor.statement.keyspace : null;
         this.editorService.createEmpty(clusterName, keyspace);
     }
+    public doTabOpen = () => {
+        this.editorService.open();
+    }
     private replaceTabs(source: number, dest: number) {
         this.editorService.swap(source, dest);
     }
