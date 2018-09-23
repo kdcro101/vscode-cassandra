@@ -25,17 +25,21 @@ export type ViewAnimationState = "void" | "active" | "hidden";
             })),
             transition("void => active", [
                 style({
+                    opacity: 0,
                     transform: "translate3d(0,100%,0)",
                 }),
                 animate("200ms ease-in-out", style({
+                    opacity: 1,
                     transform: "translate3d(0,0,0)",
                 })),
             ]),
             transition("active => hidden", [
                 style({
+                    opacity: 1,
                     transform: "translate3d(0,0,0)",
                 }),
-                animate("200ms ease-in", style({
+                animate("150ms ease-in", style({
+                    opacity: 0,
                     transform: "translate3d(0,100%,0)",
                 })),
             ]),

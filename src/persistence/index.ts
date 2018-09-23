@@ -32,6 +32,7 @@ export class Persistence {
     private persistencePathEditors: string;
     private persistencePathSaved: string;
     private persistencePathTemp: string;
+    private persistencePathHistory: string;
 
     private eventSaveEditors = new Subject<WorkbenchCqlStatement[]>();
 
