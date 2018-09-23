@@ -7,6 +7,7 @@ import { generateId } from "../const/id";
 import { WorkbenchCqlStatement } from "../types";
 
 import { Workspace } from "../workspace";
+import { HistoryManager } from "./history";
 export type SaveStatementResultType = "canceled" | "success" | "error";
 export type OpenStatementResultType = "canceled" | "success" | "error";
 export interface SaveStatementResult {
@@ -25,6 +26,8 @@ export interface OpenStatementResult {
 
 export class Persistence {
 
+    public history: HistoryManager;
+
     private editorExt = ".json";
     private editorFileNameRx = new RegExp(`\\d+${this.editorExt}`);
 
@@ -42,6 +45,9 @@ export class Persistence {
         this.persistencePathEditors = path.join(this.persistenceRoot, "editors");
         this.persistencePathSaved = path.join(this.persistenceRoot, "saved");
         this.persistencePathTemp = path.join(this.persistenceRoot, "temp");
+        this.persistencePathHistory = path.join(this.persistenceRoot);
+
+        this.history = new HistoryManager(this.persistencePathHistory);
 
         fs.mkdirpSync(this.persistencePathEditors);
         fs.mkdirpSync(this.persistencePathTemp);

@@ -1,5 +1,5 @@
 import { from, merge, Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { takeUntil, tap } from "rxjs/operators";
 import * as vscode from "vscode";
 import { ColumnInfo } from "../cassandra-client";
 import { ClusterExecuteResults, Clusters } from "../clusters";
@@ -278,6 +278,9 @@ export class CassandraWorkbench {
         const cql = m.data.cql;
 
         from(this.clusters.execute(clusterName, keyspaceInitial, cql)).pipe(
+            tap((result) => {
+                this.persistence.history.append(clusterName, keyspaceInitial, cql);
+            }),
         ).subscribe((result: ClusterExecuteResults) => {
 
             const message: ProcMessageStrict<"e2w_executeQueryResponse"> = {
