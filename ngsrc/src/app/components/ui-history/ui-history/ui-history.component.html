@@ -1,8 +1,14 @@
-<div class="root mat-app-background mat-elevation-z8" fxLayout="column">
+<div class="root mat-app-background mat-elevation-z22" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="start center" class="title">
         <mat-icon>history</mat-icon>
         <div class="mat-headline">History</div>
         <div fxFlex></div>
         <button mat-button color="accent" (click)="close()">CLOSE</button>
+    </div>
+    <div class="client" fxFlex>
+        <div #itemRef *ngFor="let i of items;index as ix;trackBy: trackById" class="item" [class.even]="ix%2===0"
+            [class.odd]="ix%2!==0" fxLayout="column">
+            <div #itemBodyRef [style.fontFamily]="fontFamily" [style.fontSize.px]="fontSize" class="body" data-lang="cql">{{i.body}}</div>
+        </div>
     </div>
 </div>

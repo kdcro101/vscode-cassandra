@@ -50,7 +50,7 @@ export class CqlClientService {
                 cql,
             },
         };
-        vscode.postMessage(message);
+        this.message.emit(message);
         this.message.eventMessage.pipe(
             timeout(30000),
             filter((e) => e.name === "e2w_executeQueryResponse"),

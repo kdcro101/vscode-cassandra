@@ -1,8 +1,16 @@
 import { animate, AnimationEvent, state, style, transition, trigger } from "@angular/animations";
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, HostListener, OnDestroy, OnInit } from "@angular/core";
+import {
+    ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostBinding,
+    HostListener, OnDestroy, OnInit, QueryList, ViewChildren,
+} from "@angular/core";
+import { MatSnackBar } from "@angular/material";
 import { Subject } from "rxjs";
 import { filter, take } from "rxjs/operators";
+import { HistroyItem } from "../../../../../../src/types/history";
 import { ViewDestroyable } from "../../../base/view-destroyable";
+import { HistoryService } from "../../../services/history/history.service";
+import { ThemeService } from "../../../services/theme/theme.service";
+
 import { UiHistoryService } from "../service";
 
 export type ViewAnimationState = "void" | "active" | "hidden";
@@ -48,6 +56,12 @@ export type ViewAnimationState = "void" | "active" | "hidden";
 })
 export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDestroy {
     public static service: UiHistoryService;
+
+    @ViewChildren("itemRef") public itemRef: QueryList<ElementRef<HTMLDivElement>>;
+    @ViewChildren("itemBodyRef") public itemBodyRef: QueryList<ElementRef<HTMLDivElement>>;
+    public items: HistroyItem[] = [];
+    public fontSize: number;
+    public fontFamily: string;
     public eventAnimation = new Subject<ViewAnimationState>();
     @HostBinding("@viewAnimationState") public viewAnimationState: ViewAnimationState;
     @HostListener("@viewAnimationState.done", ["$event"]) public viewAnimationStateDone = (e: AnimationEvent) => {
@@ -56,13 +70,34 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
 
     constructor(
         public change: ChangeDetectorRef,
+        private history: HistoryService,
+        public snackBar: MatSnackBar,
+        public theme: ThemeService,
     ) {
         super(change);
-    }
 
+        this.fontFamily = theme.getEditorFontFamily();
+        this.fontSize = theme.getEditorFontSize();
+    }
+    public trackById = (index: number, item: HistroyItem) => {
+        return item.id;
+    }
     ngOnInit() {
         this.viewAnimationState = "active";
         this.detectChanges();
+
+        this.history.get()
+            .then((result) => {
+
+                this.items = result;
+                this.detectChanges();
+                this.colorize();
+
+            }).catch((e) => {
+                this.snackBar.open("Error retrieving history", "OK", {
+                    duration: 2000,
+                });
+            });
     }
 
     ngOnDestroy() {
@@ -85,5 +120,13 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
     }
     public close = () => {
         UiHistoryComponent.service.terminate.next();
+    }
+    private colorize() {
+        this.itemBodyRef.toArray().forEach((e) => {
+            monaco.editor.colorizeElement(e.nativeElement, {
+                tabSize: 4,
+                theme: this.theme.isDark ? "vs-dark" : "vs-light",
+            });
+        });
     }
 }

@@ -3,6 +3,7 @@ import { Subject } from "rxjs";
 import * as vscode from "vscode";
 export * from "./messages";
 export * from "./editor";
+export * from "./history";
 
 export interface VscodeCassandraGlobal extends NodeJS.Global {
     extensionContextBundle: ExtensionContextBundle;

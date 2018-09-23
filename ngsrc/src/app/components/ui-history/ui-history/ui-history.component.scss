@@ -22,16 +22,34 @@
     }
     .root {
         .title {
-            *{
+            * {
                 user-select: none;
             }
             margin:8px 0 32px 8px;
-            mat-icon{
+            mat-icon {
                 margin-right: 8px;
             }
-            .mat-headline{
+            .mat-headline {
                 margin: 0;
                 padding: 0;
+            }
+        }
+        .client {
+            overflow-x: hidden;
+            overflow-y: auto;
+            .item {
+                // max-height: 250px;
+                overflow-x: auto;
+
+                &.odd {
+                    background-color: rgba(0, 0, 0, 0.06);
+                }
+                &.even {
+                    background-color: rgba(0, 0, 0, 0.12);
+                }
+                .body {
+                    padding: 16px;
+                }
             }
         }
     }

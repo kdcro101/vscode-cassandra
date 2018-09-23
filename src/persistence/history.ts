@@ -2,14 +2,7 @@ import * as fs from "fs-extra";
 import * as moment from "moment";
 import * as path from "path";
 import { generateId } from "../const/id";
-
-export interface HistroyItem {
-    id: string;
-    timestamp: string;
-    clusterName: string;
-    keyspace: string;
-    body: string;
-}
+import { HistroyItem } from "../types/history";
 
 export class HistoryManager {
     private filePath: string;
@@ -38,7 +31,7 @@ export class HistoryManager {
                     clusterName,
                     keyspace,
                     timestamp: ts,
-                    body,
+                    body: body != null ? body.trim() : "",
                 };
                 list.push(item);
 

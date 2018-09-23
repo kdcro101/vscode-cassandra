@@ -3,11 +3,13 @@ import { CompletitionOutput } from "../completition";
 import { CqlParserError } from "../parser";
 import { OpenStatementResultType, SaveStatementResultType } from "../persistence/index";
 import { WorkbenchCqlStatement } from "./editor";
+import { HistroyItem } from "./history";
 import { CassandraCluster, CassandraClusterData } from "./index";
 
 export interface ProcMessageList {
     w2e_getClustersRequest: boolean;
     w2e_getClusterStructRequest: ClusterStructureRequest;
+    w2e_getHistoryRequest: MessageWithId;
     w2e_onReady: boolean;
     w2e_checkInputRequest: CheckInputRequest;
     w2e_persistEditors: WorkbenchCqlStatement[];
@@ -19,6 +21,7 @@ export interface ProcMessageList {
 
     e2w_goState: WebviewStateParams;
     e2w_getClusterStructResponse: ClusterStructureResponse;
+    e2w_getHistoryResponse: HistoryGetResponse;
     e2w_editorCreate: EditorCreateParams;
     e2w_getClustersResponse: CassandraCluster[];
     e2w_autocompleteResponse: AutocompleteResponse;
@@ -134,4 +137,9 @@ export interface StatementOpenResponse extends MessageWithId {
     error?: any;
     fileName?: string;
     fsPath?: string;
+}
+
+export interface HistoryGetResponse extends MessageWithId {
+    list: HistroyItem[];
+    error?: any;
 }

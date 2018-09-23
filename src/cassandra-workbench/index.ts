@@ -145,6 +145,9 @@ export class CassandraWorkbench {
             case "w2e_getClusterStructRequest":
                 this.getClusterStructureRespond(m as ProcMessageStrict<"w2e_getClusterStructRequest">);
                 break;
+            case "w2e_getHistoryRequest":
+                this.getHistoryRespond(m as ProcMessageStrict<"w2e_getHistoryRequest">);
+                break;
             case "w2e_executeDataChangeRequest":
                 this.executeDataChangeRespond(m as ProcMessageStrict<"w2e_executeDataChangeRequest">);
                 break;
@@ -156,6 +159,36 @@ export class CassandraWorkbench {
                 break;
 
         }
+    }
+    private getHistoryRespond(request: ProcMessageStrict<"w2e_getHistoryRequest">) {
+        const req = request.data;
+        const id = req.id;
+
+        this.persistence.history.get()
+            .then((result) => {
+
+                const out: ProcMessageStrict<"e2w_getHistoryResponse"> = {
+                    name: "e2w_getHistoryResponse",
+                    data: {
+                        id,
+                        list: result,
+                    },
+                };
+                this.panel.emitMessage(out);
+
+            }).catch((e) => {
+
+                const out: ProcMessageStrict<"e2w_getHistoryResponse"> = {
+                    name: "e2w_getHistoryResponse",
+                    data: {
+                        id,
+                        list: [],
+                        error: e,
+                    },
+                };
+                this.panel.emitMessage(out);
+            });
+
     }
     private openStatementRespond(request: ProcMessageStrict<"w2e_statementOpenRequest">) {
         const req = request.data;
