@@ -60,8 +60,22 @@ button.mat-icon-button.size-18 {
 
 }
 
+.cdk-overlay-container {
+    .cdk-overlay-backdrop {
+        //         opacity: 0;
+        transition: 150ms linear;
+        //         transform: translate3d(0, 0, 0);
+        //         background-color: green;
+        //         &.backdrop-animated {
+        //             background-color: red;
+        //             opacity: 1;
+        //         }
+        &.cdk-overlay-backdrop-showing {
+            opacity: 1;
+        }
+    }
+}
 
 .backdrop-hidden {
-    opacity: 0;
     background: transparent;
 }

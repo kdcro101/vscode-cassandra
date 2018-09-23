@@ -355,8 +355,6 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
                 this.clusterLoadingError = false;
                 this.detectChanges();
             }, (e) => {
-                this.snackBar.open("Error loading cluster structure");
-                console.log(e);
                 this.clusterLoading = false;
                 this.clusterLoadingError = true;
                 this.detectChanges();

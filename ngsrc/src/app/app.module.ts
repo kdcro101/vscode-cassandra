@@ -1,6 +1,9 @@
 import { NgModule, NgModuleFactoryLoader, SystemJsNgModuleLoader } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { MatButtonModule, MatDividerModule, MatIconModule, MatMenuModule, MatSnackBarModule } from "@angular/material";
+import {
+    MatButtonModule, MatDividerModule, MatIconModule, MatMenuModule, MatSnackBarModule,
+    MatTooltipModule,
+} from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { UIRouterModule, UIView } from "@uirouter/angular";
 import { MessageService } from "./services/message/message.service";
@@ -8,6 +11,7 @@ import { ThemeService } from "./services/theme/theme.service";
 
 import { UiContentHorizontalModule } from "./components/ui-content-horizontal";
 
+import { UiHistoryModule } from "./components/ui-history/ui-history.module";
 import { UiQueryModule } from "./components/ui-query";
 import { QueryBuilderComponent } from "./query-builder/query-builder.component";
 import { routerConfig } from "./router";
@@ -31,6 +35,8 @@ export const rootRoutes = [
         MatMenuModule,
         MatDividerModule,
         MatSnackBarModule,
+        MatTooltipModule,
+        UiHistoryModule,
         UiContentHorizontalModule,
         UiQueryModule,
         UIRouterModule.forRoot({ states: rootRoutes, useHash: true, otherwise: { state: "query-builder" }, config: routerConfig }),

@@ -8,6 +8,7 @@ import { concatMap, take, takeUntil } from "rxjs/operators";
 import { WorkbenchCqlStatement } from "../../../../src/types/editor";
 import { ViewDestroyable } from "../base/view-destroyable";
 import { UiContentHorizontalComponent } from "../components/ui-content-horizontal/ui-content-horizontal.component";
+import { UiHistoryService } from "../components/ui-history/service";
 import { UiQueryComponent } from "../components/ui-query/ui-query/ui-query.component";
 import { EditorService } from "../services/editor/editor.service";
 import { SystemService } from "../services/system/system.service";
@@ -41,6 +42,7 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
         public system: SystemService,
         public editorService: EditorService,
         public snackBar: MatSnackBar,
+        public history: UiHistoryService,
     ) {
         super(change);
 
@@ -143,6 +145,9 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
     }
     public doTabOpen = () => {
         this.editorService.open();
+    }
+    public doShowHistory = () => {
+        this.history.show();
     }
     private replaceTabs(source: number, dest: number) {
         this.editorService.swap(source, dest);
