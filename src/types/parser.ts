@@ -9,10 +9,13 @@ export interface InputParseResult {
 
 export interface CqlStatementColumn {
     kind: CqlStatementColumnType;
+    kindIndex: number;
+    kindCount: number;
     type: string;
     charStart?: number;
     charStop?: number;
     text: string;
+    clustering_order?: string;
 }
 
 export interface AnalyzedStatement {

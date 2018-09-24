@@ -137,6 +137,8 @@ export class CqlAnalyzerListener implements CqlParserListener {
     exitColumn = (ctx: ColumnContext): void => {
         const column: CqlStatementColumn = {
             kind: null,
+            kindIndex: -1,
+            kindCount: -1,
             type: null,
             text: ctx.text,
             charStart: ctx.start.startIndex,
@@ -333,6 +335,9 @@ export class CqlAnalyzerListener implements CqlParserListener {
             }
             i.kind = tc.kind;
             i.type = tc.type;
+            i.kindIndex = tc.position;
+            i.kindCount = tbd.columns.filter((c) => c.kind === tc.kind).length;
+            i.clustering_order = tc.clustering_order;
             return i;
         });
 

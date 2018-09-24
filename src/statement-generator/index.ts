@@ -8,9 +8,20 @@ export class StatementGenerator {
 
     public generateSelectBasic(keyspace: string, table: CassandraTable) {
 
-        const cols = table.columns.map((c) => c.name).join(", ");
+        const cols = table.columns;
+        const pks = table.primaryKeys;
 
-        const q = `SELECT ${cols}\nFROM ${keyspace}.${table.name}\nLIMIT ${this.limit};\n`;
+        const names = pks.map((i) => i.name);
+
+        cols.forEach((c) => {
+            const f = names.find((i) => i === c.name);
+            if (f) {
+                return;
+            }
+            names.push(c.name);
+        });
+        const elements = names.join(", ");
+        const q = `SELECT ${elements}\nFROM ${keyspace}.${table.name}\nLIMIT ${this.limit};\n`;
         const wrapped = wrap(q, {
             width: 80,
             trim: true,

@@ -42,9 +42,14 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         private monacoService: MonacoService,
         private parser: ParserService,
         private contextMenu: UiContextMenuService,
-        private theme: ThemeService,
+        public theme: ThemeService,
     ) {
         super(change);
+
+        const style: string = `.monaco-editor {font-family: ${this.theme.getEditorFontFamily()}; }`;
+        const styleElement = document.createElement("style");
+        styleElement.appendChild(document.createTextNode(style));
+        host.nativeElement.appendChild(styleElement);
 
     }
     @Input("editor") public set setEditor(value: WorkbenchEditor) {
@@ -87,7 +92,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 minimap: {
                     enabled: false,
                 },
-                lineHeight: this.theme.getEditorFontSize() + 10,
+                lineHeight: this.theme.getEditorFontSize() + 12,
                 automaticLayout: true,
                 contextmenu: false,
 
@@ -210,14 +215,21 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 if (c.kind === "partition_key") {
                     o.options.inlineClassName = "decoration partition_key";
                     o.options.hoverMessage = {
-                        value: `${c.type} as Partition key`,
+                        value: `${c.type} as PARTITION KEY [${c.kindIndex + 1}/${c.kindCount}]`,
                     };
                     acc.push(o);
                 }
                 if (c.kind === "clustering") {
                     o.options.inlineClassName = "decoration clustering";
                     o.options.hoverMessage = {
-                        value: `${c.type} as Column clustering key`,
+                        value: `${c.type} as COLUMN CLUSTERING KEY [${c.kindIndex + 1}/${c.kindCount}]`,
+                    };
+                    acc.push(o);
+                }
+                if (c.kind === "regular") {
+                    o.options.inlineClassName = "decoration";
+                    o.options.hoverMessage = {
+                        value: `${c.type}`,
                     };
                     acc.push(o);
                 }
