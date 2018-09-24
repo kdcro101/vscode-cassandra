@@ -1,9 +1,7 @@
 @import "../colors";
 
-.highlight-demo {
-    background-color: mat-color($accent, 500, 0.75);
-    padding:2px 2px;
-    border: 1px solid  mat-color($accent, 700, 1);
+.decoration {
+    padding: 2px 2px;
     border-radius: 2px;
 }
 .vscode-dark,
@@ -16,6 +14,18 @@
     .monaco-editor-background,
     .monaco-editor .inputarea.ime-input {
         background-color: mat-color($background, 900) !important;
+    }
+
+    .decoration {
+        &.partition_key {
+            background-color: mat-color($warn, 500, 0.2);
+            border: 1px solid mat-color($warn, 700, 1);
+
+        }
+        &.clustering {
+            background-color: mat-color($yellow, 500, 0.2);
+            border: 1px solid mat-color($yellow, 700, 1);
+        }
     }
 }
 

@@ -1,13 +1,11 @@
 
 import {
-    ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef,
-    EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild,
+    ChangeDetectionStrategy, ChangeDetectorRef, Component,
+    ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild,
 } from "@angular/core";
-import { MatMenu, MatMenuTrigger } from "@angular/material";
-import { fromEvent, fromEventPattern, ReplaySubject, Subject } from "rxjs";
+import { fromEventPattern, ReplaySubject, Subject } from "rxjs";
 import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
-
-import { AnalyzedStatement, CqlAnalysis, CqlParserError } from "../../../../../../src/types/parser";
+import { CqlAnalysis, CqlParserError } from "../../../../../../src/types/parser";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { MonacoService } from "../../../services/monaco/monaco.service";
 import { ParserService } from "../../../services/parser/parser.service";
@@ -140,7 +138,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
         this.eventCodeChange.pipe(
             takeUntil(this.eventViewDestroyed),
-            debounceTime(1000),
+            debounceTime(250),
         ).subscribe((code) => {
             this.parseCode(code);
         });
@@ -210,11 +208,17 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 };
 
                 if (c.kind === "partition_key") {
-                    o.options.inlineClassName = "highlight-demo";
+                    o.options.inlineClassName = "decoration partition_key";
+                    o.options.hoverMessage = {
+                        value: `${c.type} as Partition key`,
+                    };
                     acc.push(o);
                 }
                 if (c.kind === "clustering") {
-                    o.options.inlineClassName = "highlight-demo";
+                    o.options.inlineClassName = "decoration clustering";
+                    o.options.hoverMessage = {
+                        value: `${c.type} as Column clustering key`,
+                    };
                     acc.push(o);
                 }
             });
