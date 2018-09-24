@@ -48,6 +48,10 @@ export function collectKeyspaces(client: cassandra.Client): Promise<CassandraKey
 
                     };
                     return out;
+                }).sort((a, b) => {
+                    if (a.name < b.name) { return -1; }
+                    if (a.name > b.name) { return 1; }
+                    return 0;
                 });
             }),
         ).subscribe((data) => {
