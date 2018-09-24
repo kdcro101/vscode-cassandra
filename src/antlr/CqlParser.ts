@@ -8233,70 +8233,70 @@ export class CqlParser extends Parser {
 				this.enterOuterAlt(_localctx, 3);
 				{
 				this.state = 2018;
-				this.kwRole();
+				this.match(CqlParser.K_ROLE);
 				}
 				break;
 			case CqlParser.K_PERMISSIONS:
 				this.enterOuterAlt(_localctx, 4);
 				{
 				this.state = 2019;
-				this.kwPermissions();
+				this.match(CqlParser.K_PERMISSIONS);
 				}
 				break;
 			case CqlParser.K_OPTIONS:
 				this.enterOuterAlt(_localctx, 5);
 				{
 				this.state = 2020;
-				this.kwOptions();
+				this.match(CqlParser.K_OPTIONS);
 				}
 				break;
 			case CqlParser.K_DURABLE_WRITES:
 				this.enterOuterAlt(_localctx, 6);
 				{
 				this.state = 2021;
-				this.kwDurableWrites();
+				this.match(CqlParser.K_DURABLE_WRITES);
 				}
 				break;
 			case CqlParser.K_LANGUAGE:
 				this.enterOuterAlt(_localctx, 7);
 				{
 				this.state = 2022;
-				this.kwLanguage();
+				this.match(CqlParser.K_LANGUAGE);
 				}
 				break;
 			case CqlParser.K_TYPE:
 				this.enterOuterAlt(_localctx, 8);
 				{
 				this.state = 2023;
-				this.kwType();
+				this.match(CqlParser.K_TYPE);
 				}
 				break;
 			case CqlParser.K_INITCOND:
 				this.enterOuterAlt(_localctx, 9);
 				{
 				this.state = 2024;
-				this.kwInitcond();
+				this.match(CqlParser.K_INITCOND);
 				}
 				break;
 			case CqlParser.K_REPLICATION:
 				this.enterOuterAlt(_localctx, 10);
 				{
 				this.state = 2025;
-				this.kwReplication();
+				this.match(CqlParser.K_REPLICATION);
 				}
 				break;
 			case CqlParser.K_TTL:
 				this.enterOuterAlt(_localctx, 11);
 				{
 				this.state = 2026;
-				this.kwTtl();
+				this.match(CqlParser.K_TTL);
 				}
 				break;
 			case CqlParser.K_PARTITION:
 				this.enterOuterAlt(_localctx, 12);
 				{
 				this.state = 2027;
-				this.kwPartition();
+				this.match(CqlParser.K_PARTITION);
 				}
 				break;
 			default:
@@ -13831,100 +13831,99 @@ export class CqlParser extends Parser {
 		"\u07DE\u07D8\x03\x02\x02\x02\u07DE\u07D9\x03\x02\x02\x02\u07DE\u07DD\x03"+
 		"\x02\x02\x02\u07DF\u0131\x03\x02\x02\x02\u07E0\u07EF\x07\xAC\x02\x02\u07E1"+
 		"\u07E2\x07\f\x02\x02\u07E2\u07E3\x07\xAC\x02\x02\u07E3\u07EF\x07\f\x02"+
-		"\x02\u07E4\u07EF\x05\u01EA\xF6\x02\u07E5\u07EF\x05\u01DE\xF0\x02\u07E6"+
-		"\u07EF\x05\u01D2\xEA\x02\u07E7\u07EF\x05\u018C\xC7\x02\u07E8\u07EF\x05"+
-		"\u01B6\xDC\x02\u07E9\u07EF\x05\u0206\u0104\x02\u07EA\u07EF\x05\u01A6\xD4"+
-		"\x02\u07EB\u07EF\x05\u01E6\xF4\x02\u07EC\u07EF\x05\u0204\u0103\x02\u07ED"+
-		"\u07EF\x05\u01DA\xEE\x02\u07EE\u07E0\x03\x02\x02\x02\u07EE\u07E1\x03\x02"+
-		"\x02\x02\u07EE\u07E4\x03\x02\x02\x02\u07EE\u07E5\x03\x02\x02\x02\u07EE"+
-		"\u07E6\x03\x02\x02\x02\u07EE\u07E7\x03\x02\x02\x02\u07EE\u07E8\x03\x02"+
-		"\x02\x02\u07EE\u07E9\x03\x02\x02\x02\u07EE\u07EA\x03\x02\x02\x02\u07EE"+
-		"\u07EB\x03\x02\x02\x02\u07EE\u07EC\x03\x02\x02\x02\u07EE\u07ED\x03\x02"+
-		"\x02\x02\u07EF\u0133\x03\x02\x02\x02\u07F0\u080B\x05\u021E\u0110\x02\u07F1"+
-		"\u080B\x05\u0220\u0111\x02\u07F2\u080B\x05\u0222\u0112\x02\u07F3\u080B"+
-		"\x05\u0224\u0113\x02\u07F4\u080B\x05\u0226\u0114\x02\u07F5\u080B\x05\u0228"+
-		"\u0115\x02\u07F6\u080B\x05\u022A\u0116\x02\u07F7\u080B\x05\u022C\u0117"+
-		"\x02\u07F8\u080B\x05\u022E\u0118\x02\u07F9\u080B\x05\u0230\u0119\x02\u07FA"+
-		"\u080B\x05\u0232\u011A\x02\u07FB\u080B\x05\u0234\u011B\x02\u07FC\u080B"+
-		"\x05\u0236\u011C\x02\u07FD\u080B\x05\u0238\u011D\x02\u07FE\u080B\x05\u023C"+
-		"\u011F\x02\u07FF\u080B\x05\u023A\u011E\x02\u0800\u080B\x05\u023E\u0120"+
-		"\x02\u0801\u080B\x05\u0240\u0121\x02\u0802\u080B\x05\u0242\u0122\x02\u0803"+
-		"\u080B\x05\u0244\u0123\x02\u0804\u080B\x05\u0246\u0124\x02\u0805\u080B"+
-		"\x05\u0248\u0125\x02\u0806\u080B\x05\u024A\u0126\x02\u0807\u080B\x05\u024C"+
-		"\u0127\x02\u0808\u080B\x05\u024E\u0128\x02\u0809\u080B\x05\u0250\u0129"+
-		"\x02\u080A\u07F0\x03\x02\x02\x02\u080A\u07F1\x03\x02\x02\x02\u080A\u07F2"+
-		"\x03\x02\x02\x02\u080A\u07F3\x03\x02\x02\x02\u080A\u07F4\x03\x02\x02\x02"+
-		"\u080A\u07F5\x03\x02\x02\x02\u080A\u07F6\x03\x02\x02\x02\u080A\u07F7\x03"+
-		"\x02\x02\x02\u080A\u07F8\x03\x02\x02\x02\u080A\u07F9\x03\x02\x02\x02\u080A"+
-		"\u07FA\x03\x02\x02\x02\u080A\u07FB\x03\x02\x02\x02\u080A\u07FC\x03\x02"+
-		"\x02\x02\u080A\u07FD\x03\x02\x02\x02\u080A\u07FE\x03\x02\x02\x02\u080A"+
-		"\u07FF\x03\x02\x02\x02\u080A\u0800\x03\x02\x02\x02\u080A\u0801\x03\x02"+
-		"\x02\x02\u080A\u0802\x03\x02\x02\x02\u080A\u0803\x03\x02\x02\x02\u080A"+
-		"\u0804\x03\x02\x02\x02\u080A\u0805\x03\x02\x02\x02\u080A\u0806\x03\x02"+
-		"\x02\x02\u080A\u0807\x03\x02\x02\x02\u080A\u0808\x03\x02\x02\x02\u080A"+
-		"\u0809\x03\x02\x02\x02\u080B\u0135\x03\x02\x02\x02\u080C\u080F\x05\u016C"+
-		"\xB7\x02\u080D\u080F\x05\u0184\xC3\x02\u080E\u080C\x03\x02\x02\x02\u080E"+
-		"\u080D\x03\x02\x02\x02\u080F\u0137\x03\x02\x02\x02\u0810\u0811\x07\xAC"+
-		"\x02\x02\u0811\u0139\x03\x02\x02\x02\u0812\u0813\x07\xAC\x02\x02\u0813"+
-		"\u013B\x03\x02\x02\x02\u0814\u0815\x05\u0126\x94\x02\u0815\u013D\x03\x02"+
-		"\x02\x02\u0816\u0817\x07\xAC\x02\x02\u0817\u013F\x03\x02\x02\x02\u0818"+
-		"\u0819\x07\xAC\x02\x02\u0819\u0141\x03\x02\x02\x02\u081A\u081B\x07\xAC"+
-		"\x02\x02\u081B\u0143\x03\x02\x02\x02\u081C\u081D\x07\xAC\x02\x02\u081D"+
-		"\u0145\x03\x02\x02\x02\u081E\u081F\x07\xAC\x02\x02\u081F\u0147\x03\x02"+
-		"\x02\x02\u0820\u0821\x07\xAC\x02\x02\u0821\u0149\x03\x02\x02\x02\u0822"+
-		"\u0823\x05\u0126\x94\x02\u0823\u014B\x03\x02\x02\x02\u0824\u0825\x07\xAC"+
-		"\x02\x02\u0825\u014D\x03\x02\x02\x02\u0826\u0827\x05\u0150\xA9\x02\u0827"+
-		"\u0828\x05\u0134\x9B\x02\u0828\u014F\x03\x02\x02\x02\u0829\u082A\x07\xAC"+
-		"\x02\x02\u082A\u0151\x03\x02\x02\x02\u082B\u082C\x07\x19\x02\x02\u082C"+
-		"\u0153\x03\x02\x02\x02\u082D\u082E\x07\x1A\x02\x02\u082E\u0155\x03\x02"+
-		"\x02\x02\u082F\u0830\x07\x1B\x02\x02\u0830\u0157\x03\x02\x02\x02\u0831"+
-		"\u0832\x07\x1E\x02\x02\u0832\u0159\x03\x02\x02\x02\u0833\u0834\x07\x1D"+
-		"\x02\x02\u0834\u015B\x03\x02\x02\x02\u0835\u0836\x07\x1C\x02\x02\u0836"+
-		"\u015D\x03\x02\x02\x02\u0837\u0838\x07\x1B\x02\x02\u0838\u0839\x07g\x02"+
-		"\x02\u0839\u015F\x03\x02\x02\x02\u083A\u083B\x07\x1F\x02\x02\u083B\u0161"+
-		"\x03\x02\x02\x02\u083C\u083D\x07\x1F\x02\x02\u083D\u083E\x07=\x02\x02"+
-		"\u083E\u0163\x03\x02\x02\x02\u083F\u0840\x07 \x02\x02\u0840\u0165\x03"+
-		"\x02\x02\x02\u0841\u0842\x07!\x02\x02\u0842\u0167\x03\x02\x02\x02\u0843"+
-		"\u0844\x07#\x02\x02\u0844\u0169\x03\x02\x02\x02\u0845\u0846\x07$\x02\x02"+
-		"\u0846\u016B\x03\x02\x02\x02\u0847\u0848\x07%\x02\x02\u0848\u016D\x03"+
-		"\x02\x02\x02\u0849\u084A\x07&\x02\x02\u084A\u016F\x03\x02\x02\x02\u084B"+
-		"\u084C\x07\'\x02\x02\u084C\u0171\x03\x02\x02\x02\u084D\u084E\x07(\x02"+
-		"\x02\u084E\u0173\x03\x02\x02\x02\u084F\u0850\x07)\x02\x02\u0850\u0175"+
-		"\x03\x02\x02\x02\u0851\u0852\x07*\x02\x02\u0852\u0177\x03\x02\x02\x02"+
-		"\u0853\u0854\x07+\x02\x02\u0854\u0179\x03\x02\x02\x02\u0855\u0856\x07"+
-		"-\x02\x02\u0856\u017B\x03\x02\x02\x02\u0857\u0858\x07/\x02\x02\u0858\u017D"+
-		"\x03\x02\x02\x02\u0859\u085A\x07/\x02\x02\u085A\u085B\x07L\x02\x02\u085B"+
-		"\u017F\x03\x02\x02\x02\u085C\u085D\x070\x02\x02\u085D\u0181\x03\x02\x02"+
-		"\x02\u085E\u085F\x072\x02\x02\u085F\u0183\x03\x02\x02\x02\u0860\u0861"+
-		"\x073\x02\x02\u0861\u0185\x03\x02\x02\x02\u0862\u0863\x074\x02\x02\u0863"+
-		"\u0187\x03\x02\x02\x02\u0864\u0865\x075\x02\x02\u0865\u0189\x03\x02\x02"+
-		"\x02\u0866\u0867\x076\x02\x02\u0867\u018B\x03\x02\x02\x02\u0868\u0869"+
-		"\x077\x02\x02\u0869\u018D\x03\x02\x02\x02\u086A\u086B\x079\x02\x02\u086B"+
-		"\u018F\x03\x02\x02\x02\u086C\u086D\x07:\x02\x02\u086D\u0191\x03\x02\x02"+
-		"\x02\u086E\u086F\x07;\x02\x02\u086F\u0193\x03\x02\x02\x02\u0870\u0871"+
-		"\x07=\x02\x02\u0871\u0195\x03\x02\x02\x02\u0872\u0873\x07>\x02\x02\u0873"+
-		"\u0197\x03\x02\x02\x02\u0874\u0875\x07?\x02\x02\u0875\u0199\x03\x02\x02"+
-		"\x02\u0876\u0877\x07@\x02\x02\u0877\u019B\x03\x02\x02\x02\u0878\u0879"+
-		"\x07A\x02\x02\u0879\u019D\x03\x02\x02\x02\u087A\u087B\x07B\x02\x02\u087B"+
-		"\u019F\x03\x02\x02\x02\u087C\u087D\x07C\x02\x02\u087D\u01A1\x03\x02\x02"+
-		"\x02\u087E\u087F\x07D\x02\x02\u087F\u01A3\x03\x02\x02\x02\u0880\u0881"+
-		"\x07E\x02\x02\u0881\u01A5\x03\x02\x02\x02\u0882\u0883\x07G\x02\x02\u0883"+
-		"\u01A7\x03\x02\x02\x02\u0884\u0885\x07H\x02\x02\u0885\u01A9\x03\x02\x02"+
-		"\x02\u0886\u0887\x07I\x02\x02\u0887\u01AB\x03\x02\x02\x02\u0888\u0889"+
-		"\x07J\x02\x02\u0889\u01AD\x03\x02\x02\x02\u088A\u088B\x07K\x02\x02\u088B"+
-		"\u01AF\x03\x02\x02\x02\u088C\u088D\x07L\x02\x02\u088D\u01B1\x03\x02\x02"+
-		"\x02\u088E\u088F\x07M\x02\x02\u088F\u01B3\x03\x02\x02\x02\u0890\u0891"+
-		"\x07N\x02\x02\u0891\u01B5\x03\x02\x02\x02\u0892\u0893\x07O\x02\x02\u0893"+
-		"\u01B7\x03\x02\x02\x02\u0894\u0895\x07Q\x02\x02\u0895\u01B9\x03\x02\x02"+
-		"\x02\u0896\u0897\x07\x99\x02\x02\u0897\u01BB\x03\x02\x02\x02\u0898\u0899"+
-		"\x07\x9A\x02\x02\u0899\u01BD\x03\x02\x02\x02\u089A\u089B\x07T\x02\x02"+
-		"\u089B\u01BF\x03\x02\x02\x02\u089C\u089D\x07U\x02\x02\u089D\u01C1\x03"+
-		"\x02\x02\x02\u089E\u089F\x07V\x02\x02\u089F\u01C3\x03\x02\x02\x02\u08A0"+
-		"\u08A1\x07W\x02\x02\u08A1\u01C5\x03\x02\x02\x02\u08A2\u08A3\x07Z\x02\x02"+
-		"\u08A3\u01C7\x03\x02\x02\x02\u08A4\u08A5\x07Y\x02\x02\u08A5\u01C9\x03"+
-		"\x02\x02\x02\u08A6\u08A7\x07[\x02\x02\u08A7\u01CB\x03\x02\x02\x02\u08A8"+
-		"\u08A9\x07\\\x02\x02\u08A9\u01CD\x03\x02\x02\x02\u08AA\u08AB\x07]\x02"+
-		"\x02\u08AB\u01CF\x03\x02\x02\x02\u08AC\u08AD\x07^\x02\x02\u08AD\u01D1"+
+		"\x02\u07E4\u07EF\x07o\x02\x02\u07E5\u07EF\x07g\x02\x02\u07E6\u07EF\x07"+
+		"`\x02\x02\u07E7\u07EF\x077\x02\x02\u07E8\u07EF\x07O\x02\x02\u07E9\u07EF"+
+		"\x07\x82\x02\x02\u07EA\u07EF\x07G\x02\x02\u07EB\u07EF\x07l\x02\x02\u07EC"+
+		"\u07EF\x07\x80\x02\x02\u07ED\u07EF\x07c\x02\x02\u07EE\u07E0\x03\x02\x02"+
+		"\x02\u07EE\u07E1\x03\x02\x02\x02\u07EE\u07E4\x03\x02\x02\x02\u07EE\u07E5"+
+		"\x03\x02\x02\x02\u07EE\u07E6\x03\x02\x02\x02\u07EE\u07E7\x03\x02\x02\x02"+
+		"\u07EE\u07E8\x03\x02\x02\x02\u07EE\u07E9\x03\x02\x02\x02\u07EE\u07EA\x03"+
+		"\x02\x02\x02\u07EE\u07EB\x03\x02\x02\x02\u07EE\u07EC\x03\x02\x02\x02\u07EE"+
+		"\u07ED\x03\x02\x02\x02\u07EF\u0133\x03\x02\x02\x02\u07F0\u080B\x05\u021E"+
+		"\u0110\x02\u07F1\u080B\x05\u0220\u0111\x02\u07F2\u080B\x05\u0222\u0112"+
+		"\x02\u07F3\u080B\x05\u0224\u0113\x02\u07F4\u080B\x05\u0226\u0114\x02\u07F5"+
+		"\u080B\x05\u0228\u0115\x02\u07F6\u080B\x05\u022A\u0116\x02\u07F7\u080B"+
+		"\x05\u022C\u0117\x02\u07F8\u080B\x05\u022E\u0118\x02\u07F9\u080B\x05\u0230"+
+		"\u0119\x02\u07FA\u080B\x05\u0232\u011A\x02\u07FB\u080B\x05\u0234\u011B"+
+		"\x02\u07FC\u080B\x05\u0236\u011C\x02\u07FD\u080B\x05\u0238\u011D\x02\u07FE"+
+		"\u080B\x05\u023C\u011F\x02\u07FF\u080B\x05\u023A\u011E\x02\u0800\u080B"+
+		"\x05\u023E\u0120\x02\u0801\u080B\x05\u0240\u0121\x02\u0802\u080B\x05\u0242"+
+		"\u0122\x02\u0803\u080B\x05\u0244\u0123\x02\u0804\u080B\x05\u0246\u0124"+
+		"\x02\u0805\u080B\x05\u0248\u0125\x02\u0806\u080B\x05\u024A\u0126\x02\u0807"+
+		"\u080B\x05\u024C\u0127\x02\u0808\u080B\x05\u024E\u0128\x02\u0809\u080B"+
+		"\x05\u0250\u0129\x02\u080A\u07F0\x03\x02\x02\x02\u080A\u07F1\x03\x02\x02"+
+		"\x02\u080A\u07F2\x03\x02\x02\x02\u080A\u07F3\x03\x02\x02\x02\u080A\u07F4"+
+		"\x03\x02\x02\x02\u080A\u07F5\x03\x02\x02\x02\u080A\u07F6\x03\x02\x02\x02"+
+		"\u080A\u07F7\x03\x02\x02\x02\u080A\u07F8\x03\x02\x02\x02\u080A\u07F9\x03"+
+		"\x02\x02\x02\u080A\u07FA\x03\x02\x02\x02\u080A\u07FB\x03\x02\x02\x02\u080A"+
+		"\u07FC\x03\x02\x02\x02\u080A\u07FD\x03\x02\x02\x02\u080A\u07FE\x03\x02"+
+		"\x02\x02\u080A\u07FF\x03\x02\x02\x02\u080A\u0800\x03\x02\x02\x02\u080A"+
+		"\u0801\x03\x02\x02\x02\u080A\u0802\x03\x02\x02\x02\u080A\u0803\x03\x02"+
+		"\x02\x02\u080A\u0804\x03\x02\x02\x02\u080A\u0805\x03\x02\x02\x02\u080A"+
+		"\u0806\x03\x02\x02\x02\u080A\u0807\x03\x02\x02\x02\u080A\u0808\x03\x02"+
+		"\x02\x02\u080A\u0809\x03\x02\x02\x02\u080B\u0135\x03\x02\x02\x02\u080C"+
+		"\u080F\x05\u016C\xB7\x02\u080D\u080F\x05\u0184\xC3\x02\u080E\u080C\x03"+
+		"\x02\x02\x02\u080E\u080D\x03\x02\x02\x02\u080F\u0137\x03\x02\x02\x02\u0810"+
+		"\u0811\x07\xAC\x02\x02\u0811\u0139\x03\x02\x02\x02\u0812\u0813\x07\xAC"+
+		"\x02\x02\u0813\u013B\x03\x02\x02\x02\u0814\u0815\x05\u0126\x94\x02\u0815"+
+		"\u013D\x03\x02\x02\x02\u0816\u0817\x07\xAC\x02\x02\u0817\u013F\x03\x02"+
+		"\x02\x02\u0818\u0819\x07\xAC\x02\x02\u0819\u0141\x03\x02\x02\x02\u081A"+
+		"\u081B\x07\xAC\x02\x02\u081B\u0143\x03\x02\x02\x02\u081C\u081D\x07\xAC"+
+		"\x02\x02\u081D\u0145\x03\x02\x02\x02\u081E\u081F\x07\xAC\x02\x02\u081F"+
+		"\u0147\x03\x02\x02\x02\u0820\u0821\x07\xAC\x02\x02\u0821\u0149\x03\x02"+
+		"\x02\x02\u0822\u0823\x05\u0126\x94\x02\u0823\u014B\x03\x02\x02\x02\u0824"+
+		"\u0825\x07\xAC\x02\x02\u0825\u014D\x03\x02\x02\x02\u0826\u0827\x05\u0150"+
+		"\xA9\x02\u0827\u0828\x05\u0134\x9B\x02\u0828\u014F\x03\x02\x02\x02\u0829"+
+		"\u082A\x07\xAC\x02\x02\u082A\u0151\x03\x02\x02\x02\u082B\u082C\x07\x19"+
+		"\x02\x02\u082C\u0153\x03\x02\x02\x02\u082D\u082E\x07\x1A\x02\x02\u082E"+
+		"\u0155\x03\x02\x02\x02\u082F\u0830\x07\x1B\x02\x02\u0830\u0157\x03\x02"+
+		"\x02\x02\u0831\u0832\x07\x1E\x02\x02\u0832\u0159\x03\x02\x02\x02\u0833"+
+		"\u0834\x07\x1D\x02\x02\u0834\u015B\x03\x02\x02\x02\u0835\u0836\x07\x1C"+
+		"\x02\x02\u0836\u015D\x03\x02\x02\x02\u0837\u0838\x07\x1B\x02\x02\u0838"+
+		"\u0839\x07g\x02\x02\u0839\u015F\x03\x02\x02\x02\u083A\u083B\x07\x1F\x02"+
+		"\x02\u083B\u0161\x03\x02\x02\x02\u083C\u083D\x07\x1F\x02\x02\u083D\u083E"+
+		"\x07=\x02\x02\u083E\u0163\x03\x02\x02\x02\u083F\u0840\x07 \x02\x02\u0840"+
+		"\u0165\x03\x02\x02\x02\u0841\u0842\x07!\x02\x02\u0842\u0167\x03\x02\x02"+
+		"\x02\u0843\u0844\x07#\x02\x02\u0844\u0169\x03\x02\x02\x02\u0845\u0846"+
+		"\x07$\x02\x02\u0846\u016B\x03\x02\x02\x02\u0847\u0848\x07%\x02\x02\u0848"+
+		"\u016D\x03\x02\x02\x02\u0849\u084A\x07&\x02\x02\u084A\u016F\x03\x02\x02"+
+		"\x02\u084B\u084C\x07\'\x02\x02\u084C\u0171\x03\x02\x02\x02\u084D\u084E"+
+		"\x07(\x02\x02\u084E\u0173\x03\x02\x02\x02\u084F\u0850\x07)\x02\x02\u0850"+
+		"\u0175\x03\x02\x02\x02\u0851\u0852\x07*\x02\x02\u0852\u0177\x03\x02\x02"+
+		"\x02\u0853\u0854\x07+\x02\x02\u0854\u0179\x03\x02\x02\x02\u0855\u0856"+
+		"\x07-\x02\x02\u0856\u017B\x03\x02\x02\x02\u0857\u0858\x07/\x02\x02\u0858"+
+		"\u017D\x03\x02\x02\x02\u0859\u085A\x07/\x02\x02\u085A\u085B\x07L\x02\x02"+
+		"\u085B\u017F\x03\x02\x02\x02\u085C\u085D\x070\x02\x02\u085D\u0181\x03"+
+		"\x02\x02\x02\u085E\u085F\x072\x02\x02\u085F\u0183\x03\x02\x02\x02\u0860"+
+		"\u0861\x073\x02\x02\u0861\u0185\x03\x02\x02\x02\u0862\u0863\x074\x02\x02"+
+		"\u0863\u0187\x03\x02\x02\x02\u0864\u0865\x075\x02\x02\u0865\u0189\x03"+
+		"\x02\x02\x02\u0866\u0867\x076\x02\x02\u0867\u018B\x03\x02\x02\x02\u0868"+
+		"\u0869\x077\x02\x02\u0869\u018D\x03\x02\x02\x02\u086A\u086B\x079\x02\x02"+
+		"\u086B\u018F\x03\x02\x02\x02\u086C\u086D\x07:\x02\x02\u086D\u0191\x03"+
+		"\x02\x02\x02\u086E\u086F\x07;\x02\x02\u086F\u0193\x03\x02\x02\x02\u0870"+
+		"\u0871\x07=\x02\x02\u0871\u0195\x03\x02\x02\x02\u0872\u0873\x07>\x02\x02"+
+		"\u0873\u0197\x03\x02\x02\x02\u0874\u0875\x07?\x02\x02\u0875\u0199\x03"+
+		"\x02\x02\x02\u0876\u0877\x07@\x02\x02\u0877\u019B\x03\x02\x02\x02\u0878"+
+		"\u0879\x07A\x02\x02\u0879\u019D\x03\x02\x02\x02\u087A\u087B\x07B\x02\x02"+
+		"\u087B\u019F\x03\x02\x02\x02\u087C\u087D\x07C\x02\x02\u087D\u01A1\x03"+
+		"\x02\x02\x02\u087E\u087F\x07D\x02\x02\u087F\u01A3\x03\x02\x02\x02\u0880"+
+		"\u0881\x07E\x02\x02\u0881\u01A5\x03\x02\x02\x02\u0882\u0883\x07G\x02\x02"+
+		"\u0883\u01A7\x03\x02\x02\x02\u0884\u0885\x07H\x02\x02\u0885\u01A9\x03"+
+		"\x02\x02\x02\u0886\u0887\x07I\x02\x02\u0887\u01AB\x03\x02\x02\x02\u0888"+
+		"\u0889\x07J\x02\x02\u0889\u01AD\x03\x02\x02\x02\u088A\u088B\x07K\x02\x02"+
+		"\u088B\u01AF\x03\x02\x02\x02\u088C\u088D\x07L\x02\x02\u088D\u01B1\x03"+
+		"\x02\x02\x02\u088E\u088F\x07M\x02\x02\u088F\u01B3\x03\x02\x02\x02\u0890"+
+		"\u0891\x07N\x02\x02\u0891\u01B5\x03\x02\x02\x02\u0892\u0893\x07O\x02\x02"+
+		"\u0893\u01B7\x03\x02\x02\x02\u0894\u0895\x07Q\x02\x02\u0895\u01B9\x03"+
+		"\x02\x02\x02\u0896\u0897\x07\x99\x02\x02\u0897\u01BB\x03\x02\x02\x02\u0898"+
+		"\u0899\x07\x9A\x02\x02\u0899\u01BD\x03\x02\x02\x02\u089A\u089B\x07T\x02"+
+		"\x02\u089B\u01BF\x03\x02\x02\x02\u089C\u089D\x07U\x02\x02\u089D\u01C1"+
+		"\x03\x02\x02\x02\u089E\u089F\x07V\x02\x02\u089F\u01C3\x03\x02\x02\x02"+
+		"\u08A0\u08A1\x07W\x02\x02\u08A1\u01C5\x03\x02\x02\x02\u08A2\u08A3\x07"+
+		"Z\x02\x02\u08A3\u01C7\x03\x02\x02\x02\u08A4\u08A5\x07Y\x02\x02\u08A5\u01C9"+
+		"\x03\x02\x02\x02\u08A6\u08A7\x07[\x02\x02\u08A7\u01CB\x03\x02\x02\x02"+
+		"\u08A8\u08A9\x07\\\x02\x02\u08A9\u01CD\x03\x02\x02\x02\u08AA\u08AB\x07"+
+		"]\x02\x02\u08AB\u01CF\x03\x02\x02\x02\u08AC\u08AD\x07^\x02\x02\u08AD\u01D1"+
 		"\x03\x02\x02\x02\u08AE\u08AF\x07`\x02\x02\u08AF\u01D3\x03\x02\x02\x02"+
 		"\u08B0\u08B1\x07a\x02\x02\u08B1\u01D5\x03\x02\x02\x02\u08B2\u08B3\x07"+
 		"b\x02\x02\u08B3\u01D7\x03\x02\x02\x02\u08B4\u08B5\x07b\x02\x02\u08B5\u08B6"+
@@ -19913,36 +19912,16 @@ export class ColumnContext extends ParserRuleContext {
 			return this.getToken(CqlParser.DQUOTE, i);
 		}
 	}
-	public kwRole(): KwRoleContext | undefined {
-		return this.tryGetRuleContext(0, KwRoleContext);
-	}
-	public kwPermissions(): KwPermissionsContext | undefined {
-		return this.tryGetRuleContext(0, KwPermissionsContext);
-	}
-	public kwOptions(): KwOptionsContext | undefined {
-		return this.tryGetRuleContext(0, KwOptionsContext);
-	}
-	public kwDurableWrites(): KwDurableWritesContext | undefined {
-		return this.tryGetRuleContext(0, KwDurableWritesContext);
-	}
-	public kwLanguage(): KwLanguageContext | undefined {
-		return this.tryGetRuleContext(0, KwLanguageContext);
-	}
-	public kwType(): KwTypeContext | undefined {
-		return this.tryGetRuleContext(0, KwTypeContext);
-	}
-	public kwInitcond(): KwInitcondContext | undefined {
-		return this.tryGetRuleContext(0, KwInitcondContext);
-	}
-	public kwReplication(): KwReplicationContext | undefined {
-		return this.tryGetRuleContext(0, KwReplicationContext);
-	}
-	public kwTtl(): KwTtlContext | undefined {
-		return this.tryGetRuleContext(0, KwTtlContext);
-	}
-	public kwPartition(): KwPartitionContext | undefined {
-		return this.tryGetRuleContext(0, KwPartitionContext);
-	}
+	public K_ROLE(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_ROLE, 0); }
+	public K_PERMISSIONS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_PERMISSIONS, 0); }
+	public K_OPTIONS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_OPTIONS, 0); }
+	public K_DURABLE_WRITES(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_DURABLE_WRITES, 0); }
+	public K_LANGUAGE(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_LANGUAGE, 0); }
+	public K_TYPE(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_TYPE, 0); }
+	public K_INITCOND(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_INITCOND, 0); }
+	public K_REPLICATION(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_REPLICATION, 0); }
+	public K_TTL(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_TTL, 0); }
+	public K_PARTITION(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_PARTITION, 0); }
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);

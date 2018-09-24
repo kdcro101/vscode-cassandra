@@ -36,7 +36,7 @@ export class ParserService {
             take(1),
             map((e) => e as ProcMessageStrict<"e2w_checkInputResponse">),
         ).subscribe((e) => {
-            out.next(e.data.result);
+            out.next(e.data.errors);
         }, (e) => {
             out.error(e);
         });

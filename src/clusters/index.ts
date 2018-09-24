@@ -4,8 +4,9 @@ import { from, Subject } from "rxjs";
 import { concatMap, tap } from "rxjs/operators";
 import { CassandraClient, ColumnInfo } from "../cassandra-client/index";
 import { InputParser } from "../parser";
-import { AnalyzedStatement, CqlAnalysis } from "../parser/listeners/cql-analyzer";
+
 import { CassandraCluster, CassandraClusterData, ValidatedConfigClusterItem } from "../types";
+import { AnalyzedStatement, CqlAnalysis } from "../types/parser";
 
 export interface CassandraClientCache {
     client: CassandraClient;

@@ -649,12 +649,12 @@ whereSpec
     : kwWhere relationElements
     ;
 
-
 selectElements
     : specialStar
     | selectElement (syntaxComma selectElement)*
     | { this.notifyErrorListeners("rule.select.selectElements"); }
     ;
+
 selectElement
     : column
     | column (kwAs OBJECT_NAME)?
@@ -747,7 +747,7 @@ tableSpec
 column
     : OBJECT_NAME
     | DQUOTE OBJECT_NAME DQUOTE
-    | kwRole | kwPermissions | kwOptions | kwDurableWrites | kwLanguage | kwType | kwInitcond | kwReplication | kwTtl | kwPartition
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND | K_REPLICATION | K_TTL | K_PARTITION
     ;
 
 dataType

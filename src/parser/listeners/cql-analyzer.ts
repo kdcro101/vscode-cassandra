@@ -1,41 +1,8 @@
 import { ParserRuleContext } from "antlr4ts";
-import { CqlContext, KeyspaceContext, RootContext, TableSpecContext, UseContext } from "../../antlr/CqlParser";
+import { ColumnContext, CqlContext, KeyspaceContext, RootContext, TableSpecContext, UseContext } from "../../antlr/CqlParser";
 import { CqlParserListener } from "../../antlr/CqlParserListener";
 import { CassandraClusterData } from "../../types";
-import { CassandraTable } from "../../types/index";
-
-export interface AnalyzedStatement {
-    type: StatementType;
-    charStart?: number;
-    charStop?: number;
-    limit?: number;
-    keyspace?: string;
-    table?: string;
-    text?: string;
-    tableStruct?: CassandraTable;
-
-}
-export interface CqlAnalysis {
-    statements: AnalyzedStatement[];
-    alterData: boolean;
-    alterStructure: boolean;
-    selectData: boolean;
-    error?: CqlAnalysisError;
-    cluserName: string;
-}
-export enum CqlAnalysisError {
-    SELECT_AND_ALTER = "SELECT_AND_ALTER",
-    MULTIPLE_SELECT = "MULTIPLE_SELECT",
-    NO_KEYSPACE = "NO_KEYSPACE",
-}
-
-export type StatementType = "empty" |
-    "alterKeyspace" | "alterMaterializedView" | "alterRole" | "alterTable" | "alterType" | "alterUser"
-    | "applyBatch" | "createAggregate" | "createFunction" | "createIndex" | "createKeyspace" | "createMaterializedView"
-    | "createRole" | "createTable" | "createTrigger" | "createType" | "createUser" | "delete" | "dropAggregate"
-    | "dropFunction" | "dropIndex" | "dropKeyspace" | "dropMaterializedView" | "dropRole" | "dropTable" | "dropTrigger"
-    | "dropType" | "dropUser" | "grant" | "insert" | "listPermissions" | "listRoles" | "revoke" | "select" | "truncate"
-    | "update" | "use";
+import { AnalyzedStatement, CqlAnalysis, CqlAnalysisError, CqlStatementType } from "../../types/parser";
 
 const KEYSPACE_RULE = "keyspace";
 const TABLE_RULE = "table";
@@ -156,6 +123,7 @@ export class CqlAnalyzerListener implements CqlParserListener {
         this.statementCurrent += 1;
         this.result.statements[this.statementCurrent] = {
             type: null,
+            columns: [],
         };
 
     }
@@ -167,6 +135,9 @@ export class CqlAnalyzerListener implements CqlParserListener {
         this.setCurrentStatementValue("charStart", ctx.start.startIndex);
         this.setCurrentStatementValue("charStop", ctx.stop.stopIndex);
         console.log("abc");
+    }
+    exitColumn = (ctx: ColumnContext): void => {
+        // this.result.statements[this.statementCurrent][k] = v;
     }
     exitUse = (ctx: UseContext): void => {
         if (ctx.children.length < 2) {
@@ -195,121 +166,123 @@ export class CqlAnalyzerListener implements CqlParserListener {
         console.log("abc");
 
     }
+
+    // ------------------------------------------------------------------------------------
     private collectType(ctx: ParserRuleContext): void {
         const rule: string = this.ruleNames[ctx.ruleIndex];
-        let type: StatementType = null;
+        let type: CqlStatementType = null;
 
         switch (rule) {
             case "alterKeyspace":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "alterMaterializedView":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "alterRole":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "alterTable":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "alterType":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "alterUser":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "applyBatch":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "createAggregate":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "createFunction":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "createIndex":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "createKeyspace":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "createMaterializedView":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "createRole":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "createTable":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "createTrigger":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "createType":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "createUser":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "delete":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "dropAggregate":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "dropFunction":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "dropIndex":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "dropKeyspace":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "dropMaterializedView":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "dropRole":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "dropTable":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "dropTrigger":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "dropType":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "dropUser":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "grant":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "insert":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "listPermissions":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "listRoles":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "revoke":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "select":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "truncate":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "update":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
             case "use":
-                type = rule as StatementType;
+                type = rule as CqlStatementType;
                 break;
 
             default:

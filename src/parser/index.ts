@@ -1,11 +1,12 @@
 import {
-    ANTLRErrorListener, ANTLRInputStream, CommonTokenStream,
-    ConsoleErrorListener, RecognitionException, Recognizer, Token,
+    ANTLRErrorListener, ANTLRInputStream, CommonTokenStream, ConsoleErrorListener,
+    RecognitionException, Recognizer, Token,
 } from "antlr4ts";
 import { CqlLexer } from "../antlr/CqlLexer";
-import { CqlParser, RootContext } from "../antlr/CqlParser";
+import { CqlParser } from "../antlr/CqlParser";
 import { CassandraClusterData } from "../types/index";
-import { CqlAnalysis, CqlAnalyzerListener } from "./listeners/cql-analyzer";
+import { CqlAnalysis } from "../types/parser";
+import { CqlAnalyzerListener } from "./listeners/cql-analyzer";
 
 export interface CqlParserError {
     name: string;

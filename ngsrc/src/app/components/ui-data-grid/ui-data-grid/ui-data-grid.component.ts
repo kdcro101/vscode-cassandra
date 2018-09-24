@@ -9,8 +9,9 @@ import ResizeObserver from "resize-observer-polyfill";
 import { ReplaySubject, Subject } from "rxjs";
 import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
 import { ColumnInfo } from "../../../../../../src/cassandra-client/index";
-import { AnalyzedStatement, CqlAnalysis } from "../../../../../../src/parser/listeners/cql-analyzer";
+
 import { CassandraColumn, CassandraTable, DataChangeItem } from "../../../../../../src/types/index";
+import { AnalyzedStatement, CqlAnalysis } from "../../../../../../src/types/parser";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { generateId } from "../../../const/id";
 import { ThemeService } from "../../../services/theme/theme.service";

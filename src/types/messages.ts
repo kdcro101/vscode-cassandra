@@ -73,7 +73,7 @@ export interface CheckInputRequest {
 }
 export interface CheckInputResponse {
     id: string;
-    result: CqlParserError[];
+    errors: CqlParserError[];
 }
 export interface ExecuteQueryRequest {
     id: string;

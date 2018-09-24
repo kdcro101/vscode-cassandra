@@ -202,6 +202,8 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         //     };
         //     return o;
         // });
+        // const d = this.editor.deltaDecorations([], errorDecs);
+
         const errorDecs: monaco.editor.IMarkerData[] = errors.map((e) => {
             console.log(`Message is : <${e.name}>`);
             const o: monaco.editor.IMarkerData = {
@@ -214,7 +216,6 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             };
             return o;
         });
-        // const d = this.editor.deltaDecorations([], errorDecs);
 
         monaco.editor.setModelMarkers(this.monacoEditor.getModel(), "markersOwnerId", errorDecs);
 

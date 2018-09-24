@@ -10,9 +10,10 @@ import * as Split from "split.js";
 import { AnimationEvent } from "@angular/animations";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { merge } from "rxjs";
-import { CqlAnalysisError } from "../../../../../../src/parser/listeners/cql-analyzer";
+
 import { WorkbenchCqlStatement } from "../../../../../../src/types/editor";
 import { CassandraCluster, CassandraClusterData, CassandraKeyspace, ExecuteQueryResponse } from "../../../../../../src/types/index";
+import { CqlAnalysisError } from "../../../../../../src/types/parser";
 import { ViewDestroyable } from "../../../base/view-destroyable/index";
 import { ClusterService } from "../../../services/cluster/cluster.service";
 import { CqlClientService } from "../../../services/cql-client/cql-client.service";
