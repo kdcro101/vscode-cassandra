@@ -1,8 +1,10 @@
 import { Injectable } from "@angular/core";
+
 import { fromEvent, Subject } from "rxjs";
 import { filter, map, take, timeout } from "rxjs/operators";
-import { CqlParserError } from "../../../../../src/parser/index";
+
 import { ProcMessage, ProcMessageStrict } from "../../../../../src/types/messages";
+import { InputParseResult } from "../../../../../src/types/parser";
 import { generateId } from "../../const/id";
 import { VscodeWebviewInterface } from "../../types/index";
 
@@ -17,8 +19,8 @@ export class ParserService {
     constructor() {
         console.log(`starting ParserService isVscode=${this.isVscode}`);
     }
-    public collectErrors(input: string): Subject<CqlParserError[]> {
-        const out = new Subject<CqlParserError[]>();
+    public parseInput(input: string, clusterName: string, keyspaceInitial: string): Subject<InputParseResult> {
+        const out = new Subject<InputParseResult>();
         const id = generateId();
 
         const message: ProcMessageStrict<"w2e_checkInputRequest"> = {
@@ -26,6 +28,8 @@ export class ParserService {
             data: {
                 id,
                 input,
+                clusterName,
+                keyspaceInitial,
             },
         };
         vscode.postMessage(message);
@@ -36,7 +40,7 @@ export class ParserService {
             take(1),
             map((e) => e as ProcMessageStrict<"e2w_checkInputResponse">),
         ).subscribe((e) => {
-            out.next(e.data.errors);
+            out.next(e.data.result);
         }, (e) => {
             out.error(e);
         });

@@ -2,7 +2,7 @@ import { ParserRuleContext } from "antlr4ts";
 import { ColumnContext, CqlContext, KeyspaceContext, RootContext, TableSpecContext, UseContext } from "../../antlr/CqlParser";
 import { CqlParserListener } from "../../antlr/CqlParserListener";
 import { CassandraClusterData } from "../../types";
-import { AnalyzedStatement, CqlAnalysis, CqlAnalysisError, CqlStatementType } from "../../types/parser";
+import { AnalyzedStatement, CqlAnalysis, CqlAnalysisError, CqlStatementColumn, CqlStatementType } from "../../types/parser";
 
 const KEYSPACE_RULE = "keyspace";
 const TABLE_RULE = "table";
@@ -116,9 +116,6 @@ export class CqlAnalyzerListener implements CqlParserListener {
         // ----
         this.rulePrevious = rule;
     }
-    exitEveryRule = (ctx: ParserRuleContext): void => {
-
-    }
     enterCql = (ctx: ParserRuleContext): void => {
         this.statementCurrent += 1;
         this.result.statements[this.statementCurrent] = {
@@ -134,10 +131,20 @@ export class CqlAnalyzerListener implements CqlParserListener {
         }
         this.setCurrentStatementValue("charStart", ctx.start.startIndex);
         this.setCurrentStatementValue("charStop", ctx.stop.stopIndex);
-        console.log("abc");
+
+        // check column types! After cql keyspace + table needed
+        this.columnsRecognize(this.statementCurrent);
     }
     exitColumn = (ctx: ColumnContext): void => {
-        // this.result.statements[this.statementCurrent][k] = v;
+        const column: CqlStatementColumn = {
+            kind: null,
+            type: null,
+            text: ctx.text,
+            charStart: ctx.start.startIndex,
+            charStop: ctx.stop.stopIndex,
+        };
+
+        this.result.statements[this.statementCurrent].columns.push(column);
     }
     exitUse = (ctx: UseContext): void => {
         if (ctx.children.length < 2) {
@@ -162,8 +169,6 @@ export class CqlAnalyzerListener implements CqlParserListener {
         if (tbc) {
             this.setCurrentStatementValue("table", tbc.text);
         }
-
-        console.log("abc");
 
     }
 
@@ -298,6 +303,41 @@ export class CqlAnalyzerListener implements CqlParserListener {
     }
     private getResultValue<K extends keyof AnalyzedStatement>(k: K): AnalyzedStatement[K] {
         return this.result.statements[this.statementCurrent][k];
+    }
+    private columnsRecognize(currentStatementIndex: number) {
+        const s = this.result.statements[currentStatementIndex];
+        const k = s.keyspace;
+        const t = s.table;
+        if (!k || !t) {
+            return;
+        }
+        const ksi = this.structure.keyspaces.findIndex((i) => i.name === k);
+
+        if (ksi < 0) {
+            return;
+        }
+
+        const ksd = this.structure.keyspaces[ksi];
+        const tbi = ksd.tables.findIndex((i) => i.name === t);
+
+        if (tbi < 0) {
+            return;
+        }
+        const tbd = ksd.tables[tbi];
+
+        const columns = s.columns.map((i) => {
+
+            const tc = tbd.columns.find((z) => z.name === i.text);
+            if (!tc) {
+                i.type = "not_found";
+                return i;
+            }
+            i.kind = tc.kind;
+            i.type = tc.type;
+            return i;
+        });
+
+        s.columns = columns;
     }
 
 }

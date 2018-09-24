@@ -6,7 +6,8 @@ import {
 import { MatMenu, MatMenuTrigger } from "@angular/material";
 import { fromEvent, fromEventPattern, ReplaySubject, Subject } from "rxjs";
 import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
-import { CqlParserError } from "../../../../../../src/parser/index";
+
+import { CqlParserError } from "../../../../../../src/types/parser";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { MonacoService } from "../../../services/monaco/monaco.service";
 import { ParserService } from "../../../services/parser/parser.service";
@@ -32,9 +33,8 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
     private eventCodeChange = new Subject<string>();
     private stateReady = new ReplaySubject<void>(1);
 
-    // public contextMenuX: number = 0;
-    // public contextMenuY: number = 0;
-    // public contextOpened: boolean = false;
+    private clusterName: string;
+    private keyspace: string;
 
     constructor(
         public host: ElementRef<HTMLDivElement>,
@@ -65,6 +65,8 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             if (this.editorCurrent.viewState) {
                 this.monacoEditor.restoreViewState(this.editorCurrent.viewState);
             }
+
+            this.updateExecuteParams();
 
         });
     }
@@ -180,11 +182,10 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
     }
 
     private parseCode(code: string) {
-        this.parser.collectErrors(code).pipe(take(1))
+        this.parser.parseInput(code, this.clusterName, this.keyspace).pipe(take(1))
             .subscribe((res) => {
                 console.log(`Parse done for [${code}]`);
                 console.log(res);
-                this.addErrorDecorations(res);
             });
     }
     private addErrorDecorations(errors: CqlParserError[]) {
@@ -249,5 +250,10 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 this.doPaste();
                 break;
         }
+    }
+    public updateExecuteParams() {
+        this.clusterName = this.editorCurrent.statement.clusterName;
+        this.keyspace = this.editorCurrent.statement.keyspace;
+        console.log(`updateExecuteParams [${this.clusterName}] [${this.keyspace}]`);
     }
 }

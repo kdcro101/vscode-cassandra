@@ -232,14 +232,20 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         this.onStatementChange.emit(this.editorCurrent.statement);
         this.keyspaceList = [];
         this.detectChanges();
-
         this.prepareCluster(clusterName);
 
+        if (this.monacoEditor) {
+            this.monacoEditor.updateExecuteParams();
+        }
     }
     public onKeyspaceChange = (keyspace: string) => {
         console.log(`onKeyspaceChange ${keyspace}`);
         this.editorCurrent.statement.keyspace = keyspace;
         this.onStatementChange.emit(this.editorCurrent.statement);
+
+        if (this.monacoEditor) {
+            this.monacoEditor.updateExecuteParams();
+        }
     }
     public executeCql = () => {
         return new Promise((resolve, reject) => {

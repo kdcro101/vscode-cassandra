@@ -1,10 +1,11 @@
 import { ClusterExecuteResults } from "../clusters";
 import { CompletitionOutput } from "../completition";
-import { CqlParserError } from "../parser";
+
 import { OpenStatementResultType, SaveStatementResultType } from "../persistence/index";
 import { WorkbenchCqlStatement } from "./editor";
 import { HistroyItem } from "./history";
 import { CassandraCluster, CassandraClusterData } from "./index";
+import { InputParseResult } from "./parser";
 
 export interface ProcMessageList {
     w2e_getClustersRequest: boolean;
@@ -69,11 +70,14 @@ export interface AutocompleteItem {
 }
 export interface CheckInputRequest {
     id: string;
+    clusterName: string;
+    keyspaceInitial: string;
     input: string;
 }
 export interface CheckInputResponse {
     id: string;
-    errors: CqlParserError[];
+    result?: InputParseResult;
+    error?: any;
 }
 export interface ExecuteQueryRequest {
     id: string;

@@ -1,5 +1,5 @@
 import { from, merge, Subject } from "rxjs";
-import { takeUntil, tap } from "rxjs/operators";
+import { concatMap, map, takeUntil, tap } from "rxjs/operators";
 import * as vscode from "vscode";
 import { ColumnInfo } from "../cassandra-client";
 import { ClusterExecuteResults, Clusters } from "../clusters";
@@ -275,18 +275,42 @@ export class CassandraWorkbench {
         const req = request.data;
         const id = req.id;
         const input = req.input;
+        const clusterName = req.clusterName;
+        const keyspaceInitial = req.keyspaceInitial;
+        const clusterIndex = this.clusters.getClusterIndex(clusterName);
 
-        const result = this.parser.collectErrors(input);
-
-        const mo: ProcMessageStrict<"e2w_checkInputResponse"> = {
-            name: "e2w_checkInputResponse",
-            data: {
-                id,
-                result,
-            },
-        };
-
-        this.panel.emitMessage(mo);
+        if (clusterIndex === -1) {
+            const er: ProcMessageStrict<"e2w_checkInputResponse"> = {
+                name: "e2w_checkInputResponse",
+                data: {
+                    id,
+                    error: true,
+                },
+            };
+            this.panel.emitMessage(er);
+            return;
+        }
+        from(this.clusters.getStructure(clusterIndex)).pipe(
+            map((data) => this.parser.parse(input, data, keyspaceInitial)),
+        ).subscribe((result) => {
+            const mo: ProcMessageStrict<"e2w_checkInputResponse"> = {
+                name: "e2w_checkInputResponse",
+                data: {
+                    id,
+                    result,
+                },
+            };
+            this.panel.emitMessage(mo);
+        }, (e) => {
+            const er: ProcMessageStrict<"e2w_checkInputResponse"> = {
+                name: "e2w_checkInputResponse",
+                data: {
+                    id,
+                    error: true,
+                },
+            };
+            this.panel.emitMessage(er);
+        });
 
     }
     private executeDataChangeRespond(m: ProcMessageStrict<"w2e_executeDataChangeRequest">) {

@@ -5,26 +5,8 @@ import {
 import { CqlLexer } from "../antlr/CqlLexer";
 import { CqlParser } from "../antlr/CqlParser";
 import { CassandraClusterData } from "../types/index";
-import { CqlAnalysis } from "../types/parser";
+import { CqlAnalysis, CqlParserError, InputParseResult, TokenData } from "../types/parser";
 import { CqlAnalyzerListener } from "./listeners/cql-analyzer";
-
-export interface CqlParserError {
-    name: string;
-    token: TokenData;
-    line: number;
-    linePos: number;
-}
-
-export interface TokenData {
-    text: string;
-    type: number;
-    line: number;
-    charPositionInLine: number;
-    channel: number;
-    tokenIndex: number;
-    startIndex: number;
-    stopIndex: number;
-}
 
 export class InputParser {
     public analyze(input: string, structure: CassandraClusterData, keyspaceInitial: string): CqlAnalysis {
@@ -64,14 +46,11 @@ export class InputParser {
 
         return analysis;
     }
-    public collectErrors(input: string): CqlParserError[] {
+    public parse(input: string, structure: CassandraClusterData, keyspaceInitial: string): InputParseResult {
         const inputStream = new ANTLRInputStream(input);
         const cqlLexer = new CqlLexer(inputStream);
         const tokenStream = new CommonTokenStream(cqlLexer);
         const cqlParser = new CqlParser(tokenStream);
-
-        // cqlLexer.addErrorListener(errorLexer);
-        // cqlParser.addErrorListener(errorParser);
 
         cqlParser.removeErrorListener(ConsoleErrorListener.INSTANCE);
         const errors: CqlParserError[] = [];
@@ -93,12 +72,17 @@ export class InputParser {
         };
         cqlParser.addErrorListener(errorHandler);
 
-        // const listener = new AntlrListener(tokenStream, cqlParser.ruleNames);
-        // cqlParser.addParseListener(listener);
-        const root = cqlParser.root();
+        const analyzerListener = new CqlAnalyzerListener(cqlParser.ruleNames, input, structure, keyspaceInitial);
+        cqlParser.addParseListener(analyzerListener);
 
-        // const out = listener.rewriter.getText();
-        return errors;
+        const root = cqlParser.root();
+        const analysis = analyzerListener.getResult();
+
+        const out: InputParseResult = {
+            errors,
+            analysis,
+        };
+        return out;
     }
     private extractTokenData(token: Token): TokenData {
         if (token == null) {
