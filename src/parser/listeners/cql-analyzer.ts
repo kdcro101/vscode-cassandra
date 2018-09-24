@@ -330,7 +330,7 @@ export class CqlAnalyzerListener implements CqlParserListener {
 
             const tc = tbd.columns.find((z) => z.name === i.text);
             if (!tc) {
-                i.type = "not_found";
+                i.kind = "not_found";
                 return i;
             }
             i.kind = tc.kind;

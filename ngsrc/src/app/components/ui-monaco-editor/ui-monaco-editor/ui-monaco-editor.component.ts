@@ -5,7 +5,7 @@ import {
 } from "@angular/core";
 import { fromEventPattern, ReplaySubject, Subject } from "rxjs";
 import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
-import { CqlAnalysis, CqlParserError } from "../../../../../../src/types/parser";
+import { CqlAnalysis, CqlParserError, InputParseResult } from "../../../../../../src/types/parser";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { MonacoService } from "../../../services/monaco/monaco.service";
 import { ParserService } from "../../../services/parser/parser.service";
@@ -191,7 +191,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         this.parser.parseInput(code, this.clusterName, this.keyspace).pipe(take(1))
             .subscribe((result) => {
                 console.log(`Parse done for [${code}]`);
-                this.addErrorDecorations(result.errors);
+                this.addErrorDecorations(result);
                 this.addDeltaDecorations(result.analysis);
             });
     }
@@ -242,7 +242,10 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         this.currentDeltaDecorations = this.monacoEditor.deltaDecorations(this.currentDeltaDecorations, deltas);
 
     }
-    private addErrorDecorations(errors: CqlParserError[]) {
+    private addErrorDecorations(result: InputParseResult) {
+        const errors = result.errors;
+        const analysis = result.analysis;
+
         monaco.editor.setModelMarkers(this.monacoEditor.getModel(), "markersOwnerId", []);
 
         const errorDecs: monaco.editor.IMarkerData[] = errors.map((e) => {
@@ -257,7 +260,34 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             };
             return o;
         });
-        monaco.editor.setModelMarkers(this.monacoEditor.getModel(), "markersOwnerId", errorDecs);
+        // monaco.editor.setModelMarkers(this.monacoEditor.getModel(), "markersOwnerId", errorDecs);
+
+        const columnErrors = analysis.statements.reduce<monaco.editor.IMarkerData[]>((acc, cur) => {
+            cur.columns.forEach((c) => {
+                const ps = this.modelCurrent.getPositionAt(c.charStart);
+                const pe = this.modelCurrent.getPositionAt(c.charStop);
+
+                if (c.kind === "not_found") {
+                    console.log("not_found item");
+                    const o: monaco.editor.IMarkerData = {
+                        severity: monaco.MarkerSeverity.Error,
+                        message: `column '${c.text}' not found in ${cur.keyspace}.${cur.table}`,
+                        startLineNumber: ps.lineNumber,
+                        startColumn: ps.column,
+                        endLineNumber: pe.lineNumber,
+                        endColumn: pe.column + 1,
+                    };
+                    acc.push(o);
+                }
+            });
+            return acc;
+        }, []);
+        console.log("-------------------------------");
+        console.log("ERROR MARKERS");
+        console.log("-------------------------------");
+        console.log(columnErrors);
+
+        monaco.editor.setModelMarkers(this.monacoEditor.getModel(), "markersOwnerId", errorDecs.concat(columnErrors));
     }
 
     public doCopy = () => {
