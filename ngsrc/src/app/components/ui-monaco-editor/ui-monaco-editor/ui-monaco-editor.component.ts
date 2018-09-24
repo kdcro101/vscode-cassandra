@@ -62,13 +62,13 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             }
 
             this.editorCurrent = value;
+            this.updateExecuteParams();
+
             this.setModel(value.model);
 
             if (this.editorCurrent.viewState) {
                 this.monacoEditor.restoreViewState(this.editorCurrent.viewState);
             }
-
-            this.updateExecuteParams();
 
         });
     }
@@ -193,19 +193,6 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             });
     }
     private addDeltaDecorations(analysis: CqlAnalysis) {
-        // const deltas: monaco.editor.IModelDeltaDecoration[] = errors.map((e) => {
-        //     const o: monaco.editor.IModelDeltaDecoration = {
-        //         range: new monaco.Range(e.line, e.linePos, e.line, (e.linePos + e.token.text.length + 1)),
-        //         options: {
-        //             inlineClassName: "cqlError",
-        //             hoverMessage: {
-        //                 value: e.name,
-        //             },
-
-        //         },
-        //     };
-        //     return o;
-        // });
 
         const deltas = analysis.statements.reduce<monaco.editor.IModelDeltaDecoration[]>((acc, cur) => {
             cur.columns.forEach((c) => {
@@ -215,14 +202,21 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 const o: monaco.editor.IModelDeltaDecoration = {
                     range: new monaco.Range(ps.lineNumber, ps.column, pe.lineNumber, pe.column + 1),
                     options: {
-                        inlineClassName: "highlight-demo",
+                        inlineClassName: null,
                         hoverMessage: {
                             value: c.text,
                         },
-
                     },
                 };
-                acc.push(o);
+
+                if (c.kind === "partition_key") {
+                    o.options.inlineClassName = "highlight-demo";
+                    acc.push(o);
+                }
+                if (c.kind === "clustering") {
+                    o.options.inlineClassName = "highlight-demo";
+                    acc.push(o);
+                }
             });
 
             return acc;
