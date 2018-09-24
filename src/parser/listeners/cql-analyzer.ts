@@ -107,7 +107,6 @@ export class CqlAnalyzerListener implements CqlParserListener {
     }
     enterEveryRule = (ctx: ParserRuleContext): void => {
         const rule: string = this.ruleNames[ctx.ruleIndex];
-        console.log(`rule: ${rule}`);
 
         if (this.rulePrevious === STATEMENT_ROOT_RULE) {
             this.collectType(ctx);

@@ -7,7 +7,7 @@ import { MatMenu, MatMenuTrigger } from "@angular/material";
 import { fromEvent, fromEventPattern, ReplaySubject, Subject } from "rxjs";
 import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
 
-import { CqlParserError } from "../../../../../../src/types/parser";
+import { AnalyzedStatement, CqlAnalysis, CqlParserError } from "../../../../../../src/types/parser";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { MonacoService } from "../../../services/monaco/monaco.service";
 import { ParserService } from "../../../services/parser/parser.service";
@@ -28,6 +28,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
     public monacoEditor: monaco.editor.IStandaloneCodeEditor;
     public editorCurrent: WorkbenchEditor;
+    public modelCurrent: monaco.editor.ITextModel;
 
     private eventCodeSet = new Subject<void>();
     private eventCodeChange = new Subject<string>();
@@ -35,6 +36,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
     private clusterName: string;
     private keyspace: string;
+    private currentDeltaDecorations: string[] = [];
 
     constructor(
         public host: ElementRef<HTMLDivElement>,
@@ -87,7 +89,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 minimap: {
                     enabled: false,
                 },
-                lineHeight: Math.round(this.theme.getEditorFontSize() * 1.5),
+                lineHeight: this.theme.getEditorFontSize() + 10,
                 automaticLayout: true,
                 contextmenu: false,
 
@@ -154,7 +156,8 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 console.log("------------------------------------");
                 console.log("Setting MODEL");
                 console.log("------------------------------------");
-                console.log(model);
+
+                this.modelCurrent = model;
 
                 this.eventCodeSet.next();
                 this.monacoEditor.setModel(model);
@@ -183,14 +186,14 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
     private parseCode(code: string) {
         this.parser.parseInput(code, this.clusterName, this.keyspace).pipe(take(1))
-            .subscribe((res) => {
+            .subscribe((result) => {
                 console.log(`Parse done for [${code}]`);
-                console.log(res);
+                this.addErrorDecorations(result.errors);
+                this.addDeltaDecorations(result.analysis);
             });
     }
-    private addErrorDecorations(errors: CqlParserError[]) {
-        monaco.editor.setModelMarkers(this.monacoEditor.getModel(), "markersOwnerId", []);
-        // const errorDecs: monaco.editor.IModelDeltaDecoration[] = errors.map((e) => {
+    private addDeltaDecorations(analysis: CqlAnalysis) {
+        // const deltas: monaco.editor.IModelDeltaDecoration[] = errors.map((e) => {
         //     const o: monaco.editor.IModelDeltaDecoration = {
         //         range: new monaco.Range(e.line, e.linePos, e.line, (e.linePos + e.token.text.length + 1)),
         //         options: {
@@ -203,7 +206,34 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         //     };
         //     return o;
         // });
-        // const d = this.editor.deltaDecorations([], errorDecs);
+
+        const deltas = analysis.statements.reduce<monaco.editor.IModelDeltaDecoration[]>((acc, cur) => {
+            cur.columns.forEach((c) => {
+                const ps = this.modelCurrent.getPositionAt(c.charStart);
+                const pe = this.modelCurrent.getPositionAt(c.charStop);
+
+                const o: monaco.editor.IModelDeltaDecoration = {
+                    range: new monaco.Range(ps.lineNumber, ps.column, pe.lineNumber, pe.column + 1),
+                    options: {
+                        inlineClassName: "highlight-demo",
+                        hoverMessage: {
+                            value: c.text,
+                        },
+
+                    },
+                };
+                acc.push(o);
+            });
+
+            return acc;
+
+        }, []);
+
+        this.currentDeltaDecorations = this.monacoEditor.deltaDecorations(this.currentDeltaDecorations, deltas);
+
+    }
+    private addErrorDecorations(errors: CqlParserError[]) {
+        monaco.editor.setModelMarkers(this.monacoEditor.getModel(), "markersOwnerId", []);
 
         const errorDecs: monaco.editor.IMarkerData[] = errors.map((e) => {
             console.log(`Message is : <${e.name}>`);
@@ -217,9 +247,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             };
             return o;
         });
-
         monaco.editor.setModelMarkers(this.monacoEditor.getModel(), "markersOwnerId", errorDecs);
-
     }
 
     public doCopy = () => {

@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 declare var document: Document;
 
 declare var codeFontFamily: string;
-declare var codeFontSize: number;
+declare var codeFontSize: string;
 declare var codeLineHeight: number;
 
 @Injectable({
@@ -25,7 +25,8 @@ export class ThemeService {
         return f;
     }
     public getEditorFontSize(): number {
-        const s = (codeFontSize && codeFontSize > 0) ? codeFontSize : 15;
+        const size = parseInt(codeFontSize, 10);
+        const s = (size && size > 0) ? size : 15;
         return s;
     }
     public getEditorLineHeight(): number {

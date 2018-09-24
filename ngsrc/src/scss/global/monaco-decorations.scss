@@ -1,5 +1,11 @@
 @import "../colors";
 
+.highlight-demo {
+    background-color: mat-color($accent, 500, 0.75);
+    padding:2px 2px;
+    border: 1px solid  mat-color($accent, 700, 1);
+    border-radius: 2px;
+}
 .vscode-dark,
 .vscode-high-contrast {
 
@@ -9,7 +15,7 @@
     .monaco-editor,
     .monaco-editor-background,
     .monaco-editor .inputarea.ime-input {
-        background-color: mat-color($background,900)!important;
+        background-color: mat-color($background, 900) !important;
     }
 }
 
