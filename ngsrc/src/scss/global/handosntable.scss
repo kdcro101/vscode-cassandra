@@ -151,6 +151,9 @@
         td {
             border-right: 1px solid lighten(mat-color($background, 900), 3%);
             border-bottom: 1px solid lighten(mat-color($background, 900), 3%);
+            transition: 300ms ease-in-out;
+            transition-property: color, background-color;
+
         }
     }
 
