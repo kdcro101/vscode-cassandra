@@ -6,6 +6,8 @@ import * as vscode from "vscode";
 import { CassandraWorkbench } from "./cassandra-workbench";
 import { VsCommands } from "./commands";
 import { ConfigurationManager } from "./configuration-manager";
+import { DataTypeValueBase } from "./data-type/base/data-type";
+import { AsciiDataTypeValue } from "./data-type/class/ascii";
 import { Icons } from "./icons";
 import { StatementGenerator } from "./statement-generator";
 import { ExtensionContextBundle, VscodeCassandraGlobal } from "./types";
@@ -38,6 +40,11 @@ export function activate(context: vscode.ExtensionContext) {
             commands.setWorkbench(workbench);
         });
 
+    const a = new AsciiDataTypeValue();
+
+    const b = a.parse("šđčćć");
+    const c = a.parse("abcdasdasd");
+    console.log("");
 }
 
 // this method is called when your extension is deactivated
