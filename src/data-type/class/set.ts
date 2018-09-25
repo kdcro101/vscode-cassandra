@@ -21,7 +21,16 @@ export class SetDataTypeValue extends DataTypeValueBase<any[]> {
         return val;
     }
     protected toString(value: any[]): string {
-        return `${JSON.stringify(value)}`;
+        const values = value.map((i) => {
+            if (typeof i === "string") {
+                return `'${i}'`;
+            } else {
+                return i;
+            }
+        });
+
+        const set = `{${values.join(", ")}}`;
+        return `${set}`;
     }
     public get stringPlaceholder(): string {
         return `[]`;

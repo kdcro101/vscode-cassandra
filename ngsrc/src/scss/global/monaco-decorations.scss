@@ -1,9 +1,5 @@
 @import "../colors";
 
-.decoration {
-    padding: 2px 2px;
-    border-radius: 2px;
-}
 .vscode-dark,
 .vscode-high-contrast {
 
@@ -20,11 +16,15 @@
         &.partition_key {
             background-color: mat-color($warn, 500, 0.2);
             border: 1px solid mat-color($warn, 700, 1);
+            padding: 2px 2px;
+            border-radius: 2px;
 
         }
         &.clustering {
             background-color: mat-color($yellow, 500, 0.2);
             border: 1px solid mat-color($yellow, 700, 1);
+            padding: 2px 2px;
+            border-radius: 2px;
         }
     }
 }
