@@ -25,7 +25,7 @@ export class BooleanDataTypeValue extends DataTypeValueBase<boolean> {
         return `${this.resultValue}`;
     }
     public get stringPlaceholder(): string {
-        return `true | false | NULL `;
+        return `true | false | NULL`;
     }
 
 }

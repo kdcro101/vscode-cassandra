@@ -1,4 +1,5 @@
 import * as cassandra from "cassandra-driver";
+import * as moment from "moment";
 import { DataTypeValueBase } from "../base/data-type";
 
 export class DateDataTypeValue extends DataTypeValueBase<cassandra.types.LocalDate> {
@@ -20,6 +21,7 @@ export class DateDataTypeValue extends DataTypeValueBase<cassandra.types.LocalDa
         return `${value.toString()}`;
     }
     public get stringPlaceholder(): string {
-        return `'00:00:00'`;
+        const s = moment().format("YYYY-MM-DD");
+        return `'${s}'`;
     }
 }

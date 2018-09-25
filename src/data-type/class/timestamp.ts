@@ -23,8 +23,8 @@ export class TimestampDataTypeValue extends DataTypeValueBase<Date> {
         return `${s}`;
     }
     public get stringPlaceholder(): string {
-        const year = moment().year();
-        return `'${year}-00:00:00'`;
+        const s = moment().format("YYYY-MM-DD HH:mm:ss");
+        return `'${s}`;
     }
     private parseDateString(dateString: string): moment.Moment {
         const m = moment(dateString, [

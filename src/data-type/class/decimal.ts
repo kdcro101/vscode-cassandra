@@ -13,6 +13,6 @@ export class DecimalDataTypeValue extends DataTypeValueBase<cassandra.types.BigD
         return `${value.toString()}`;
     }
     public get stringPlaceholder(): string {
-        return `000`;
+        return `000.00`;
     }
 }
