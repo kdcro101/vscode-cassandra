@@ -406,7 +406,7 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
                     const t = sks.tables.find((i) => i.name === table);
                     const items = t.columns.map((c) => {
                         return new TreeItemColumnItem(c.name, vscode.TreeItemCollapsibleState.None,
-                            clusterIndex, keyspace, table, "column_item");
+                            clusterIndex, keyspace, table, "column_item", c.type);
                     });
 
                     resolve(items);
