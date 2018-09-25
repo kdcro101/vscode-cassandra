@@ -57,5 +57,8 @@ export abstract class DataTypeValueBase<T> {
         }
         return true;
     }
+    protected isObject(obj: any): boolean {
+        return (typeof obj === "object" && !Array.isArray(obj) && obj !== null);
+    }
 
 }

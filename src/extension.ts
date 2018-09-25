@@ -1,13 +1,10 @@
 
-import * as fs from "fs-extra";
-import * as path from "path";
 import { from, Subject } from "rxjs";
 import * as vscode from "vscode";
 import { CassandraWorkbench } from "./cassandra-workbench";
 import { VsCommands } from "./commands";
 import { ConfigurationManager } from "./configuration-manager";
-import { DataTypeValueBase } from "./data-type/base/data-type";
-import { AsciiDataTypeValue } from "./data-type/class/ascii";
+import { TupleDataTypeValue } from "./data-type/class/tuple";
 import { Icons } from "./icons";
 import { StatementGenerator } from "./statement-generator";
 import { ExtensionContextBundle, VscodeCassandraGlobal } from "./types";
@@ -40,10 +37,10 @@ export function activate(context: vscode.ExtensionContext) {
             commands.setWorkbench(workbench);
         });
 
-    const a = new AsciiDataTypeValue();
+    const a = new TupleDataTypeValue(`[1,2,3,"abeceda",["drugi","niz"]]`);
 
-    const b = a.parse("šđčćć");
-    const c = a.parse("abcdasdasd");
+    const b = a.value;
+    const c = a.stringValue;
     console.log("");
 }
 

@@ -7,15 +7,22 @@ import { DecimalDataTypeValue } from "../class/decimal";
 import { DoubleDataTypeValue } from "../class/double";
 import { InetDataTypeValue } from "../class/inet";
 import { IntDataTypeValue } from "../class/int";
+import { ListDataTypeValue } from "../class/list";
+import { MapDataTypeValue } from "../class/map";
+import { SetDataTypeValue } from "../class/set";
 import { TextDataTypeValue } from "../class/text";
 import { TimeDataTypeValue } from "../class/time";
+import { TimestampDataTypeValue } from "../class/timestamp";
+import { TimeUuidDataTypeValue } from "../class/timeuuid";
+import { TupleDataTypeValue } from "../class/tuple";
+import { UuidDataTypeValue } from "../class/uuid";
 
 export interface DataTypeClass {
     ascii: AsciiDataTypeValue;
     bigint: BigIntDataTypeValue;
     blob: BlobDataTypeValue;
     boolean: BooleanDataTypeValue;
-    counter: any;
+    counter: IntDataTypeValue;
     date: DateDataTypeValue;
     decimal: DecimalDataTypeValue;
     double: DoubleDataTypeValue;
@@ -23,17 +30,17 @@ export interface DataTypeClass {
     frozen: any;
     inet: InetDataTypeValue;
     int: IntDataTypeValue;
-    list: any;
-    map: any;
-    set: any;
+    list: ListDataTypeValue;
+    map: MapDataTypeValue;
+    set: SetDataTypeValue;
     smallint: IntDataTypeValue;
     text: TextDataTypeValue;
     time: TimeDataTypeValue;
-    timestamp: any;
-    timeuuid: any;
+    timestamp: TimestampDataTypeValue;
+    timeuuid: TimeUuidDataTypeValue;
     tinyint: IntDataTypeValue;
-    tuple: any;
-    uuid: any;
+    tuple: TupleDataTypeValue;
+    uuid: UuidDataTypeValue;
     varchar: TextDataTypeValue;
     varint: IntDataTypeValue;
 }

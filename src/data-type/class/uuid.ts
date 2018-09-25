@@ -13,6 +13,6 @@ export class UuidDataTypeValue extends DataTypeValueBase<cassandra.types.Uuid> {
         return `${value.toString()}`;
     }
     public get stringPlaceholder(): string {
-        return `000`;
+        return `00000000-0000-0000-0000-000000000000`;
     }
 }
