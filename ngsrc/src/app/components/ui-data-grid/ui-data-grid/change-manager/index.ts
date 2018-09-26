@@ -184,4 +184,24 @@ export class ChangeManager {
         return true;
     }
 
+    public remove(id: string): void {
+        const index = this.list.findIndex((i) => i.id === id);
+        console.log(`ChangeManager.REMOVE [${index}]`);
+        const item = this.list[index];
+
+        if (!item) {
+            return;
+        }
+
+        switch (item.type) {
+            case "cellUpdate":
+                this.removeCellUpdateItem(index);
+                break;
+            case "rowDelete":
+                this.removeRowDeleteItem(index);
+                break;
+        }
+
+    }
+
 }

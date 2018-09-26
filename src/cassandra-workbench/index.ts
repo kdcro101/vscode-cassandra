@@ -5,6 +5,7 @@ import { ColumnInfo } from "../cassandra-client";
 import { ClusterExecuteResults, Clusters } from "../clusters";
 import { Completition } from "../completition";
 import { generateId } from "../const/id";
+import { DataChangeProcessor } from "../data-change";
 import { InputParser } from "../parser";
 import { Persistence } from "../persistence";
 import { ExtensionContextBundle, ValidatedConfigClusterItem, WorkbenchCqlStatement } from "../types";
@@ -24,6 +25,7 @@ export class CassandraWorkbench {
     private eventPanelReset = new Subject<void>();
     private clusters: Clusters = null;
     private persistence: Persistence;
+    private changeProcessor: DataChangeProcessor;
     private parser = new InputParser();
 
     private completition = new Completition();
@@ -33,6 +35,7 @@ export class CassandraWorkbench {
     ) {
         this.clusters = new Clusters(config);
         this.persistence = new Persistence(workspace);
+        this.changeProcessor = new DataChangeProcessor(this.clusters);
     }
     public start() {
         this.treeProvider = new TreeviewProvider(this.clusters);

@@ -34,6 +34,7 @@
             false,
             "ignore-params"
         ],
+        "unified-signatures":false,
         "no-input-rename": false,
         "import-spacing": false,
         "no-output-on-prefix": false,

@@ -1,4 +1,3 @@
-import { animate, state, style, transition, trigger } from "@angular/animations";
 import {
     ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef,
     HostListener, Input, OnDestroy, OnInit, ViewChild,
@@ -9,11 +8,11 @@ import ResizeObserver from "resize-observer-polyfill";
 import { merge, ReplaySubject, Subject } from "rxjs";
 import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
 import { ColumnInfo } from "../../../../../../src/cassandra-client/index";
-
 import { CassandraColumn, CassandraTable, DataChangeItem } from "../../../../../../src/types/index";
 import { AnalyzedStatement, CqlAnalysis } from "../../../../../../src/types/parser";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { generateId } from "../../../const/id";
+import { DataChangeService } from "../../../services/data-change/data-change.service";
 import { ThemeService } from "../../../services/theme/theme.service";
 import { WorkbenchEditor } from "../../../types/index";
 import { gridElementAnimations } from "./animations";
@@ -119,6 +118,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         public host: ElementRef<HTMLDivElement>,
         public change: ChangeDetectorRef,
         public theme: ThemeService,
+        public dataChange: DataChangeService,
     ) {
         super(change);
 
@@ -127,6 +127,16 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         this.selectionHelper = new SelectionHelper(this);
 
         this.gridAnimationState = "hidden";
+
+        this.dataChange.eventProgress.pipe(
+            takeUntil(this.eventViewDestroyed),
+        ).subscribe((progress) => {
+            if (progress.success) {
+                this.changeManager.remove(progress.item.id);
+            }
+
+            this.detectChanges();
+        });
 
     }
     @HostListener("@gridAnimationState.done", ["$event"])
@@ -629,9 +639,12 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     }
     public changesDiscard = () => {
         this.changeManager.clear();
-        // this.changeManager.list.forEach(() => {
-        // });
     }
+    public changesCommit = () => {
+        const items = this.changeManager.list;
+        this.dataChange.commit(items);
+    }
+
     public changeCancel(item: DataChangeItem) {
         if (item.type === "rowDelete") {
             return;

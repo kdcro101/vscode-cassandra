@@ -16,12 +16,12 @@
             <button mat-button class="button-18 mat-caption" color="accent" (click)="currentResultState.showReadonly=false">OK</button>
         </div>
     </div>
-    <div [@statusAnimationState] *ngIf="currentResultState.showChanges" class="grid-status-item changes" fxLayout="row" fxLayoutAlign="center center">
+    <div [@statusAnimationState] *ngIf="currentResultState.showChanges && !(dataChange.stateRunning | async)" class="grid-status-item changes" fxLayout="row" fxLayoutAlign="center center">
         <div fxLayout="row" fxLayoutAlign="start center" class="status-content mat-elevation-z3 mat-caption">
             <mat-icon class="icon-18 mr">edit</mat-icon>
             <div *ngIf="changeManager.list.length===1" class="mr2">1 change pending</div>
             <div *ngIf="changeManager.list.length > 1" class="mr2">{{ changeManager.list.length }} changes pending</div>
-            <button mat-raised-button class="button-18 mat-caption mr" color="accent">COMMIT</button>
+            <button mat-raised-button class="button-18 mat-caption mr" color="accent" (click)="changesCommit()">COMMIT</button>
             <button mat-button class="button-18 mat-caption mr" color="accent" (click)="changesDiscard()">DISCARD</button>
         </div>
     </div>
