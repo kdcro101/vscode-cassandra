@@ -4,7 +4,9 @@ import {
 } from "@angular/core";
 import { MatMenuTrigger, MatSnackBar } from "@angular/material";
 import { Subject } from "rxjs";
+import { fromEvent } from "rxjs";
 import { concatMap, take, takeUntil } from "rxjs/operators";
+import { filter } from "rxjs/operators";
 import { WorkbenchCqlStatement } from "../../../../src/types/editor";
 import { ViewDestroyable } from "../base/view-destroyable";
 import { UiContentHorizontalComponent } from "../components/ui-content-horizontal/ui-content-horizontal.component";
@@ -64,6 +66,17 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
             });
 
         });
+
+        // fromEvent<KeyboardEvent>(window, "keydown", { capture: true }).pipe(
+        //     filter((e) => {
+        //         return e.keyCode === 87;
+        //     }),
+        // ).subscribe((e) => {
+        //     e.preventDefault();
+        //     e.stopImmediatePropagation();
+        //     e.stopPropagation();
+        //     alert("Keyxcode");
+        // });
     }
 
     ngOnInit() {

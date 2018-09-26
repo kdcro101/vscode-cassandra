@@ -53,6 +53,7 @@
             }
             &.error {
                 color: mat-color($warn, A200);
+                word-wrap: normal;
             }
         }
 

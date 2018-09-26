@@ -1,7 +1,7 @@
-import { Subject } from "rxjs";
-import { merge } from "rxjs";
+import { merge, Subject } from "rxjs";
 import { CassandraColumn } from "../../../../../../../src/types/index";
-import { DataChangeItem, DataChangeItemPrimaryKey, DataChangeType } from "../../../../../../../src/types/messages";
+import { DataChangeItem, DataChangeItemPrimaryKey } from "../../../../../../../src/types/messages";
+import { generateId } from "../../../../const/id";
 import { UiDataGridComponent } from "../ui-data-grid.component";
 
 export class ChangeManager {
@@ -103,6 +103,7 @@ export class ChangeManager {
         const rowData = this.dataGrid.currentDataRows[row];
         const pks = this.collectPrimaryKey(rowData);
         const item: DataChangeItem = {
+            id: generateId(),
             clusterName: this.dataGrid.currentClusterName,
             keyspace: this.dataGrid.currentKeyspace,
             table: this.dataGrid.currentTableStruct.name,
@@ -118,6 +119,7 @@ export class ChangeManager {
         const rowData = this.dataGrid.currentDataRows[row];
         const pks = this.collectPrimaryKey(rowData);
         const item: DataChangeItem = {
+            id: generateId(),
             clusterName: this.dataGrid.currentClusterName,
             keyspace: this.dataGrid.currentKeyspace,
             table: this.dataGrid.currentTableStruct.name,

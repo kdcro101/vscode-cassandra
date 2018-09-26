@@ -103,6 +103,7 @@ export interface DataChangeItemPrimaryKey {
 }
 export type DataChangeType = "rowDelete" | "cellUpdate";
 export interface DataChangeItem {
+    id: string;
     clusterName: string;
     keyspace: string;
     table: string;

@@ -6,7 +6,7 @@ import {
 import beautify from "json-beautify";
 import { cloneDeep } from "lodash-es";
 import ResizeObserver from "resize-observer-polyfill";
-import { ReplaySubject, Subject } from "rxjs";
+import { merge, ReplaySubject, Subject } from "rxjs";
 import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
 import { ColumnInfo } from "../../../../../../src/cassandra-client/index";
 
@@ -180,13 +180,15 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             takeUntil(this.eventViewDestroyed),
         ).subscribe((item) => this.onDataChangeRemoved(item));
 
-        ChangeManager.eventRemove.pipe(
-            takeUntil(this.eventViewDestroyed),
-            debounceTime(300),
-        ).subscribe((item) => {
-            this.gridInstance.render();
-            this.detectChanges();
-        });
+        merge(ChangeManager.eventRemove, ChangeManager.eventChange)
+            .pipe(
+                takeUntil(this.eventViewDestroyed),
+                debounceTime(300),
+            ).subscribe((item) => {
+                console.log(">>> change or remove debounced");
+                this.gridInstance.render();
+                this.detectChanges();
+            });
 
     }
     ngOnDestroy() {
@@ -208,8 +210,6 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 break;
         }
 
-        this.gridInstance.render();
-        this.detectChanges();
     }
     private onDataChangeRemoved(item: DataChangeItem) {
         console.log(`onDataChangeRemoved`);
@@ -609,8 +609,6 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
         this.gridScrollContentSpacer.style.width = `${rect.width + added}px`;
         this.gridScrollHeaderSpacer.style.width = `${rect.width + added}px`;
-        // this.gridScrollContentSpacer.style.width = `${this.gridScrollContent.offsetWidth + added}px`;
-        // this.gridScrollHeaderSpacer.style.width = `${this.gridScrollContent.offsetWidth + added}px`;
 
     }
     public scrollDisable() {
