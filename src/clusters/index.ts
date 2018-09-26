@@ -1,7 +1,7 @@
 import * as cassandra from "cassandra-driver";
 
-import { from, Subject } from "rxjs";
-import { concatMap, tap } from "rxjs/operators";
+import { empty, from, Subject } from "rxjs";
+import { concat, concatMap, tap } from "rxjs/operators";
 import { CassandraClient, ColumnInfo } from "../cassandra-client/index";
 import { InputParser } from "../parser";
 
@@ -142,6 +142,28 @@ export class Clusters {
         const i = this.getClusterIndex(clusterName);
         return this.getClient(i);
 
+    }
+    public getClientAndStructure(clusterName: string): Promise<[CassandraClient, CassandraClusterData]> {
+        return new Promise((resolve, reject) => {
+            const clusterIndex = this.getClusterIndex(clusterName);
+
+            if (clusterIndex < 0) {
+                reject("no_cluster");
+                return;
+            }
+
+            empty().pipe(
+                concatMap(() => this.getClient(clusterIndex)),
+                concatMap((client) => {
+                    return Promise.all([client, this.getStructure(clusterIndex)]);
+                }),
+            ).subscribe((data) => {
+                resolve(data);
+            }, (e) => {
+                reject(e);
+            });
+
+        });
     }
     public execute(clusterName: string, keyspaceInitial: string, cql: string): Promise<ClusterExecuteResults> {
         return new Promise((resolve, reject) => {
