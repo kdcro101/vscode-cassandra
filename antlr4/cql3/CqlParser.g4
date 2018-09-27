@@ -751,6 +751,19 @@ column
     ;
 
 dataType
+    : dataTypeFundamental
+    | dataTypeCollection
+    ;
+
+dataTypeCollection
+    : dataTypeFrozen dataTypeStructure
+    | dataTypeSet dataTypeStructure
+    | dataTypeList dataTypeStructure
+    | dataTypeMap dataTypeStructure
+    | dataTypeTuple dataTypeStructure
+    ;
+
+dataTypeFundamental
     : dataTypeAscii
     | dataTypeBigint
     | dataTypeBlob
@@ -760,23 +773,18 @@ dataType
     | dataTypeDecimal
     | dataTypeDouble
     | dataTypeFloat
-    | dataTypeFrozen
     | dataTypeInet
     | dataTypeInt
-    | dataTypeList
-    | dataTypeMap
-    | dataTypeSet
     | dataTypeSmallInt
     | dataTypeText
     | dataTypeTime
     | dataTypeTimeUuid
     | dataTypeTimestamp
     | dataTypeTinyInt
-    | dataTypeTuple
-    | dataTypeUserDefined
     | dataTypeUuid
     | dataTypeVarChar
     | dataTypeVarInt
+    | dataTypeUserDefined
     ;
 
 orderDirection
@@ -937,41 +945,27 @@ dataTypeDate: K_DATE;
 dataTypeDecimal:K_DECIMAL;
 dataTypeDouble: K_DOUBLE;
 dataTypeFloat: K_FLOAT;
-dataTypeFrozen: K_FROZEN dataTypeFrozenSpec;
+dataTypeFrozen: K_FROZEN;
 dataTypeInet: K_INET;
 dataTypeInt: K_INT;
-dataTypeList: K_LIST dataTypeListSpec;
-dataTypeMap: K_MAP dataTypeMapSpec;
+dataTypeList: K_LIST;
+dataTypeMap: K_MAP;
 dataTypeSmallInt:  K_SMALLINT;
-dataTypeSet: K_SET dataTypeSetSpec;
+dataTypeSet: K_SET;
 dataTypeText: K_TEXT;
 dataTypeTime: K_TIME;
 dataTypeTimeUuid:K_TIMEUUID;
 dataTypeTimestamp: K_TIMESTAMP;
 dataTypeTinyInt: K_TINYINT;
-dataTypeTuple: K_TUPLE dataTypeTupleSpec;
+dataTypeTuple: K_TUPLE;
 dataTypeUserDefined: OBJECT_NAME;
 dataTypeUuid:  K_UUID;
 dataTypeVarChar: K_VARCHAR;
 dataTypeVarInt: K_VARINT;
 
-dataTypeTupleSpec
+dataTypeStructure
     : syntaxBracketLa dataType (syntaxComma dataType)* syntaxBracketRa
     ;
-dataTypeMapSpec
-    : syntaxBracketLa dataType syntaxComma dataType syntaxBracketRa
-    ;
-
-dataTypeListSpec
-    : syntaxBracketLa dataType syntaxBracketRa
-    ;
-dataTypeSetSpec
-    : syntaxBracketLa dataType syntaxBracketRa
-    ;
-dataTypeFrozenSpec
-    : syntaxBracketLa dataType syntaxBracketRa
-    ;
-
 
 specialStar: STAR;
 specialDot: DOT;

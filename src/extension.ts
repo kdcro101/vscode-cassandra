@@ -5,6 +5,7 @@ import { CassandraWorkbench } from "./cassandra-workbench";
 import { VsCommands } from "./commands";
 import { ConfigurationManager } from "./configuration-manager";
 import { TupleDataTypeValue } from "./data-type/class/tuple";
+import { typeParser } from "./data-type/type-parser";
 import { Icons } from "./icons";
 import { StatementGenerator } from "./statement-generator";
 import { ExtensionContextBundle, VscodeCassandraGlobal } from "./types";
@@ -37,11 +38,15 @@ export function activate(context: vscode.ExtensionContext) {
             commands.setWorkbench(workbench);
         });
 
-    const a = new TupleDataTypeValue(`[1,2,3,"abeceda",["drugi","niz"]]`);
+    // const a = new TupleDataTypeValue(`[1,2,3,"abeceda",["drugi","niz"]]`);
 
-    const b = a.value;
-    const c = a.stringValue;
-    console.log("");
+    // const b = a.value;
+    // const c = a.stringValue;
+    // console.log("");
+
+    const p = typeParser("frozen<text,frozen<map<int,int>>>");
+    // const p = typeParser("text");
+    console.log(p);
 }
 
 // this method is called when your extension is deactivated

@@ -157,6 +157,8 @@ import { TableContext } from './CqlParser';
 import { TableSpecContext } from './CqlParser';
 import { ColumnContext } from './CqlParser';
 import { DataTypeContext } from './CqlParser';
+import { DataTypeCollectionContext } from './CqlParser';
+import { DataTypeFundamentalContext } from './CqlParser';
 import { OrderDirectionContext } from './CqlParser';
 import { RoleContext } from './CqlParser';
 import { TriggerContext } from './CqlParser';
@@ -299,11 +301,7 @@ import { DataTypeUserDefinedContext } from './CqlParser';
 import { DataTypeUuidContext } from './CqlParser';
 import { DataTypeVarCharContext } from './CqlParser';
 import { DataTypeVarIntContext } from './CqlParser';
-import { DataTypeTupleSpecContext } from './CqlParser';
-import { DataTypeMapSpecContext } from './CqlParser';
-import { DataTypeListSpecContext } from './CqlParser';
-import { DataTypeSetSpecContext } from './CqlParser';
-import { DataTypeFrozenSpecContext } from './CqlParser';
+import { DataTypeStructureContext } from './CqlParser';
 import { SpecialStarContext } from './CqlParser';
 import { SpecialDotContext } from './CqlParser';
 import { EofContext } from './CqlParser';
@@ -1413,6 +1411,20 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitDataType?: (ctx: DataTypeContext) => Result;
 
 	/**
+	 * Visit a parse tree produced by `CqlParser.dataTypeCollection`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitDataTypeCollection?: (ctx: DataTypeCollectionContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.dataTypeFundamental`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitDataTypeFundamental?: (ctx: DataTypeFundamentalContext) => Result;
+
+	/**
 	 * Visit a parse tree produced by `CqlParser.orderDirection`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -2407,39 +2419,11 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitDataTypeVarInt?: (ctx: DataTypeVarIntContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.dataTypeTupleSpec`.
+	 * Visit a parse tree produced by `CqlParser.dataTypeStructure`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitDataTypeTupleSpec?: (ctx: DataTypeTupleSpecContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `CqlParser.dataTypeMapSpec`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitDataTypeMapSpec?: (ctx: DataTypeMapSpecContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `CqlParser.dataTypeListSpec`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitDataTypeListSpec?: (ctx: DataTypeListSpecContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `CqlParser.dataTypeSetSpec`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitDataTypeSetSpec?: (ctx: DataTypeSetSpecContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `CqlParser.dataTypeFrozenSpec`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitDataTypeFrozenSpec?: (ctx: DataTypeFrozenSpecContext) => Result;
+	visitDataTypeStructure?: (ctx: DataTypeStructureContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.specialStar`.

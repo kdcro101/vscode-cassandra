@@ -89,7 +89,7 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
         this.history.get()
             .then((result) => {
 
-                this.items = result;
+                this.items = result.reverse();
                 this.detectChanges();
                 this.colorize();
 

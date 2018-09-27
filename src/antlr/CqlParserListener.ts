@@ -157,6 +157,8 @@ import { TableContext } from './CqlParser';
 import { TableSpecContext } from './CqlParser';
 import { ColumnContext } from './CqlParser';
 import { DataTypeContext } from './CqlParser';
+import { DataTypeCollectionContext } from './CqlParser';
+import { DataTypeFundamentalContext } from './CqlParser';
 import { OrderDirectionContext } from './CqlParser';
 import { RoleContext } from './CqlParser';
 import { TriggerContext } from './CqlParser';
@@ -299,11 +301,7 @@ import { DataTypeUserDefinedContext } from './CqlParser';
 import { DataTypeUuidContext } from './CqlParser';
 import { DataTypeVarCharContext } from './CqlParser';
 import { DataTypeVarIntContext } from './CqlParser';
-import { DataTypeTupleSpecContext } from './CqlParser';
-import { DataTypeMapSpecContext } from './CqlParser';
-import { DataTypeListSpecContext } from './CqlParser';
-import { DataTypeSetSpecContext } from './CqlParser';
-import { DataTypeFrozenSpecContext } from './CqlParser';
+import { DataTypeStructureContext } from './CqlParser';
 import { SpecialStarContext } from './CqlParser';
 import { SpecialDotContext } from './CqlParser';
 import { EofContext } from './CqlParser';
@@ -2026,6 +2024,28 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitDataType?: (ctx: DataTypeContext) => void;
 
 	/**
+	 * Enter a parse tree produced by `CqlParser.dataTypeCollection`.
+	 * @param ctx the parse tree
+	 */
+	enterDataTypeCollection?: (ctx: DataTypeCollectionContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.dataTypeCollection`.
+	 * @param ctx the parse tree
+	 */
+	exitDataTypeCollection?: (ctx: DataTypeCollectionContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.dataTypeFundamental`.
+	 * @param ctx the parse tree
+	 */
+	enterDataTypeFundamental?: (ctx: DataTypeFundamentalContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.dataTypeFundamental`.
+	 * @param ctx the parse tree
+	 */
+	exitDataTypeFundamental?: (ctx: DataTypeFundamentalContext) => void;
+
+	/**
 	 * Enter a parse tree produced by `CqlParser.orderDirection`.
 	 * @param ctx the parse tree
 	 */
@@ -3588,59 +3608,15 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitDataTypeVarInt?: (ctx: DataTypeVarIntContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.dataTypeTupleSpec`.
+	 * Enter a parse tree produced by `CqlParser.dataTypeStructure`.
 	 * @param ctx the parse tree
 	 */
-	enterDataTypeTupleSpec?: (ctx: DataTypeTupleSpecContext) => void;
+	enterDataTypeStructure?: (ctx: DataTypeStructureContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.dataTypeTupleSpec`.
+	 * Exit a parse tree produced by `CqlParser.dataTypeStructure`.
 	 * @param ctx the parse tree
 	 */
-	exitDataTypeTupleSpec?: (ctx: DataTypeTupleSpecContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `CqlParser.dataTypeMapSpec`.
-	 * @param ctx the parse tree
-	 */
-	enterDataTypeMapSpec?: (ctx: DataTypeMapSpecContext) => void;
-	/**
-	 * Exit a parse tree produced by `CqlParser.dataTypeMapSpec`.
-	 * @param ctx the parse tree
-	 */
-	exitDataTypeMapSpec?: (ctx: DataTypeMapSpecContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `CqlParser.dataTypeListSpec`.
-	 * @param ctx the parse tree
-	 */
-	enterDataTypeListSpec?: (ctx: DataTypeListSpecContext) => void;
-	/**
-	 * Exit a parse tree produced by `CqlParser.dataTypeListSpec`.
-	 * @param ctx the parse tree
-	 */
-	exitDataTypeListSpec?: (ctx: DataTypeListSpecContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `CqlParser.dataTypeSetSpec`.
-	 * @param ctx the parse tree
-	 */
-	enterDataTypeSetSpec?: (ctx: DataTypeSetSpecContext) => void;
-	/**
-	 * Exit a parse tree produced by `CqlParser.dataTypeSetSpec`.
-	 * @param ctx the parse tree
-	 */
-	exitDataTypeSetSpec?: (ctx: DataTypeSetSpecContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `CqlParser.dataTypeFrozenSpec`.
-	 * @param ctx the parse tree
-	 */
-	enterDataTypeFrozenSpec?: (ctx: DataTypeFrozenSpecContext) => void;
-	/**
-	 * Exit a parse tree produced by `CqlParser.dataTypeFrozenSpec`.
-	 * @param ctx the parse tree
-	 */
-	exitDataTypeFrozenSpec?: (ctx: DataTypeFrozenSpecContext) => void;
+	exitDataTypeStructure?: (ctx: DataTypeStructureContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.specialStar`.

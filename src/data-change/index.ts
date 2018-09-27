@@ -55,4 +55,7 @@ export class DataChangeProcessor {
     private doCellUpdate(item: DataChangeItem, tableStruct: CassandraTable) {
 
     }
+    private checkPrimaryKey(item: DataChangeItem): boolean {
+        return false;
+    }
 }
