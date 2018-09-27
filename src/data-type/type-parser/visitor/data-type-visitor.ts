@@ -10,6 +10,7 @@ import { DataTypeAnalysis } from "../types";
 const RULE_COLLECTION = "dataTypeCollection";
 const RULE_FUNDAMENTAL = "dataTypeFundamental";
 const RULE_DATATYPE = "dataType";
+const TYPE_FROZEN = "frozen";
 
 export class DataTypeParserVisitor implements CqlParserVisitor<any> {
     constructor(
@@ -28,15 +29,16 @@ export class DataTypeParserVisitor implements CqlParserVisitor<any> {
     public visitErrorNode(node: ErrorNode): any {
 
     }
-    public visitDataType(ctx: DataTypeContext) {
+    public visitDataType(ctx: DataTypeContext): DataTypeAnalysis {
         console.log(`visitDataType  ${ctx.text}`);
         const root: DataTypeAnalysis = {
             name: null,
             contains: null,
+            isFrozen: false,
         };
         this.parseDataType(ctx, root);
 
-        console.log("done");
+        return root;
     }
     private parseDataType(ctx: DataTypeContext, current: DataTypeAnalysis) {
         if (ctx.childCount === 0) {
@@ -53,6 +55,12 @@ export class DataTypeParserVisitor implements CqlParserVisitor<any> {
         }
         if (isColl) {
             current.name = name;
+            current.isFrozen = name === TYPE_FROZEN ? true : false;
+
+            if (current.parent && current.parent.isFrozen) {
+                current.parent.frozenAs = name;
+            }
+
             const structure = child.children[1] as DataTypeStructureContext;
             const childTypes = structure.children.filter((c: ParserRuleContext) => this.ruleName(c.ruleIndex) === RULE_DATATYPE);
             current.contains = [];
@@ -60,11 +68,14 @@ export class DataTypeParserVisitor implements CqlParserVisitor<any> {
                 const nt: DataTypeAnalysis = {
                     name: null,
                     contains: null,
+                    isFrozen: false,
+                    parent: current,
+
                 };
                 current.contains[i] = nt;
                 this.parseDataType(ct, nt);
             });
-            console.log("abc");
+
         }
 
         return;

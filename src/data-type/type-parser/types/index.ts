@@ -1,4 +1,7 @@
 export interface DataTypeAnalysis {
     name: string;
-    contains: DataTypeAnalysis[];
+    isFrozen: boolean;
+    contains?: DataTypeAnalysis[];
+    frozenAs?: string;
+    parent?: DataTypeAnalysis;
 }

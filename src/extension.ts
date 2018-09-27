@@ -44,8 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
     // const c = a.stringValue;
     // console.log("");
 
-    const p = typeParser("frozen<text,frozen<map<int,int>>>");
-    // const p = typeParser("text");
+    const p = typeParser("frozen<tuple<text,frozen<map<int,int>>>>");
     console.log(p);
 }
 
