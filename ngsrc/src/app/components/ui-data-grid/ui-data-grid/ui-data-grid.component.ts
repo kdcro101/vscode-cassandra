@@ -1,6 +1,6 @@
 import {
-    ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef,
-    HostListener, Input, OnDestroy, OnInit, ViewChild,
+    ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener,
+    Input, OnDestroy, OnInit, ViewChild,
 } from "@angular/core";
 import beautify from "json-beautify";
 import { cloneDeep } from "lodash-es";
