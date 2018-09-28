@@ -134,6 +134,9 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             if (progress.success) {
                 this.changeManager.remove(progress.item.id);
             }
+            if (progress.success && progress.item.type === "rowDelete") {
+                this.removeDataRow(progress.item);
+            }
 
             this.detectChanges();
         });
@@ -652,6 +655,19 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         const colIndex = this.currentColumns.findIndex((c) => c.name === item.column);
         this.htmlCache.invalidate(item.row, colIndex);
         this.currentDataRows[item.row][item.column] = item.valueOld;
+        this.gridInstance.render();
+    }
+    private removeDataRow(item: DataChangeItem) {
+        const row = item.row;
+
+        this.currentDataRows.splice(row, 1);
+
+        // invalidate html cache
+        this.currentColumns.forEach((c, i) => {
+            this.htmlCache.invalidate(row, i);
+        });
+
+        this.detectChanges();
         this.gridInstance.render();
     }
 }

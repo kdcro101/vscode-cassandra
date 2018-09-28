@@ -12,6 +12,7 @@ import { ParserService } from "../../../services/parser/parser.service";
 import { ThemeService } from "../../../services/theme/theme.service";
 import { WorkbenchEditor } from "../../../types/index";
 import { UiContextMenuService } from "../../ui-context-menu/service";
+import { decorationsForStatement, markersForStatement } from "./decorations";
 
 @Component({
     selector: "ui-monaco-editor",
@@ -197,47 +198,13 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
     }
     private addDeltaDecorations(analysis: CqlAnalysis) {
 
-        const deltas = analysis.statements.reduce<monaco.editor.IModelDeltaDecoration[]>((acc, cur) => {
-            cur.columns.forEach((c) => {
-                const ps = this.modelCurrent.getPositionAt(c.charStart);
-                const pe = this.modelCurrent.getPositionAt(c.charStop);
-
-                const o: monaco.editor.IModelDeltaDecoration = {
-                    range: new monaco.Range(ps.lineNumber, ps.column, pe.lineNumber, pe.column + 1),
-                    options: {
-                        inlineClassName: null,
-                        hoverMessage: {
-                            value: c.text,
-                        },
-                    },
-                };
-
-                if (c.kind === "partition_key") {
-                    o.options.inlineClassName = "decoration partition_key";
-                    o.options.hoverMessage = {
-                        value: `${c.type} as PARTITION KEY [${c.kindIndex + 1}/${c.kindCount}]`,
-                    };
-                    acc.push(o);
-                }
-                if (c.kind === "clustering") {
-                    o.options.inlineClassName = "decoration clustering";
-                    o.options.hoverMessage = {
-                        value: `${c.type} as COLUMN CLUSTERING KEY [${c.kindIndex + 1}/${c.kindCount}]`,
-                    };
-                    acc.push(o);
-                }
-                if (c.kind === "regular") {
-                    o.options.inlineClassName = "decoration";
-                    o.options.hoverMessage = {
-                        value: `${c.type}`,
-                    };
-                    acc.push(o);
-                }
-            });
-
-            return acc;
-
-        }, []);
+        let deltas: monaco.editor.IModelDeltaDecoration[] = [];
+        analysis.statements.forEach((s) => {
+            const l = decorationsForStatement(this.modelCurrent, s);
+            if (l) {
+                deltas = deltas.concat(l);
+            }
+        });
 
         this.currentDeltaDecorations = this.monacoEditor.deltaDecorations(this.currentDeltaDecorations, deltas);
 
@@ -260,34 +227,16 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             };
             return o;
         });
-        // monaco.editor.setModelMarkers(this.monacoEditor.getModel(), "markersOwnerId", errorDecs);
 
-        const columnErrors = analysis.statements.reduce<monaco.editor.IMarkerData[]>((acc, cur) => {
-            cur.columns.forEach((c) => {
-                const ps = this.modelCurrent.getPositionAt(c.charStart);
-                const pe = this.modelCurrent.getPositionAt(c.charStop);
+        let statementErrors: monaco.editor.IMarkerData[] = [];
+        analysis.statements.forEach((s) => {
+            const l = markersForStatement(this.modelCurrent, s);
+            if (l) {
+                statementErrors = statementErrors.concat(l);
+            }
+        });
 
-                if (c.kind === "not_found") {
-                    console.log("not_found item");
-                    const o: monaco.editor.IMarkerData = {
-                        severity: monaco.MarkerSeverity.Error,
-                        message: `column '${c.text}' not found in ${cur.keyspace}.${cur.table}`,
-                        startLineNumber: ps.lineNumber,
-                        startColumn: ps.column,
-                        endLineNumber: pe.lineNumber,
-                        endColumn: pe.column + 1,
-                    };
-                    acc.push(o);
-                }
-            });
-            return acc;
-        }, []);
-        console.log("-------------------------------");
-        console.log("ERROR MARKERS");
-        console.log("-------------------------------");
-        console.log(columnErrors);
-
-        monaco.editor.setModelMarkers(this.monacoEditor.getModel(), "markersOwnerId", errorDecs.concat(columnErrors));
+        monaco.editor.setModelMarkers(this.monacoEditor.getModel(), "markersOwnerId", errorDecs.concat(statementErrors));
     }
 
     public doCopy = () => {

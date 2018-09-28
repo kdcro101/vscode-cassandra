@@ -39,7 +39,7 @@ export class DataChangeProcessor {
             }
             const p: Array<Promise<void>> = [];
             if (item.type === "rowDelete") {
-                p.push(this.doDeleteRow(item, tableStruct));
+                p.push(this.doDeleteRow(item, tableStruct, client));
             }
             if (item.type === "cellUpdate") {
                 p.push(this.doCellUpdate(item, tableStruct, client));
@@ -63,9 +63,33 @@ export class DataChangeProcessor {
         const tbd = ksd.tables.find((t) => t.name === table);
         return tbd;
     }
-    private doDeleteRow(item: DataChangeItem, tableStruct: CassandraTable): Promise<void> {
+    private doDeleteRow(item: DataChangeItem, tableStruct: CassandraTable, client: CassandraClient): Promise<void> {
         return new Promise((resolve, reject) => {
-            resolve();
+
+            const checkPk = this.checkPrimaryKey(item, tableStruct);
+            const pkeys = tableStruct.primaryKeys;
+
+            if (!checkPk) {
+                reject("invalid_primary_key");
+                return;
+            }
+
+            const where = pkeys.map((k) => `${k.name}=?`).join(" AND ");
+            const q = `DELETE FROM ${item.keyspace}.${item.table} WHERE ${where}`;
+
+            const params: any[] = []; // first is value to update
+            pkeys.forEach((k) => {
+                const ctype = rootColumnType(k.type);
+                const kdt = this.dataTypeManager.get(ctype, item.primaryKeyValues[k.name].toString());
+                params.push(kdt.value);
+            });
+
+            client.execute(q, params, true)
+                .then(() => {
+                    resolve();
+                }).catch((e) => {
+                    reject(e);
+                });
         });
     }
     private doCellUpdate(item: DataChangeItem, tableStruct: CassandraTable, client: CassandraClient): Promise<void> {
@@ -101,7 +125,9 @@ export class DataChangeProcessor {
 
             const params: any[] = [dt.value]; // first is value to update
             pkeys.forEach((k) => {
-                params.push(item.primaryKeyValues[k.name]);
+                const ctype = rootColumnType(k.type);
+                const kdt = this.dataTypeManager.get(ctype, item.primaryKeyValues[k.name].toString());
+                params.push(kdt.value);
             });
 
             client.execute(q, params, true)

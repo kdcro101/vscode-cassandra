@@ -99,7 +99,7 @@
     // .handsontable tbody th.ht__highlight,
     .handsontable .ht_clone_top {
         thead {
-             tr:first-child th.ht__highlight {
+            tr:first-child th.ht__highlight {
                 background-color: mat-color($background, 700);
                 color: mat-color($background, 100);
                 border-top: 1px solid mat-color($background, 700);
@@ -134,7 +134,7 @@
 
         }
         tbody {
-            th.ht__highlight:last-child  {
+            th.ht__highlight:last-child {
                 background-color: mat-color($background, 700);
                 border-bottom: 1px solid mat-color($background, 700);
                 color: mat-color($background, 100);
@@ -184,7 +184,7 @@
         transform: translate3d(0, 0, 0);
     }
     .handsontable .changed {
-        background-color: mat-color($accent, 500) !important;
+        background-color: mat-color($accent, 500, 0.5) !important;
         color: mat-color($background, 50) !important;
 
     }

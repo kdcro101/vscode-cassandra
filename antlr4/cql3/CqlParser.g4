@@ -621,7 +621,11 @@ columnList
     : column (syntaxComma column)*
     ;
 expressionList
-    : (constant| assignmentMap | assignmentSet | assignmentList) (syntaxComma (constant| assignmentMap | assignmentSet | assignmentList))*
+    : expression (syntaxComma expression)*
+    ;
+
+expression
+    : (constant| assignmentMap | assignmentSet | assignmentList)
     ;
 
 select

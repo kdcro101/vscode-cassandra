@@ -131,6 +131,7 @@ import { InsertValuesSpecContext } from './CqlParser';
 import { InsertColumnSpecContext } from './CqlParser';
 import { ColumnListContext } from './CqlParser';
 import { ExpressionListContext } from './CqlParser';
+import { ExpressionContext } from './CqlParser';
 import { SelectContext } from './CqlParser';
 import { LimitSpecContext } from './CqlParser';
 import { FromSpecContext } from './CqlParser';
@@ -1227,6 +1228,13 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitExpressionList?: (ctx: ExpressionListContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.expression`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitExpression?: (ctx: ExpressionContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.select`.

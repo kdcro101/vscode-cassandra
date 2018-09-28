@@ -17,6 +17,11 @@ export interface CqlStatementColumn {
     text: string;
     clustering_order?: string;
 }
+export interface CqlStatementExpression {
+    charStart?: number;
+    charStop?: number;
+    text: string;
+}
 
 export interface AnalyzedStatement {
     type: CqlStatementType;
@@ -28,6 +33,7 @@ export interface AnalyzedStatement {
     text?: string;
     tableStruct?: CassandraTable;
     columns: CqlStatementColumn[];
+    expressions: CqlStatementExpression[];
 
 }
 export interface CqlAnalysis {

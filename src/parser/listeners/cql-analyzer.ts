@@ -1,8 +1,14 @@
 import { ParserRuleContext } from "antlr4ts";
-import { ColumnContext, CqlContext, KeyspaceContext, RootContext, TableSpecContext, UseContext } from "../../antlr/CqlParser";
+import {
+    ColumnContext, CqlContext, ExpressionContext,
+    KeyspaceContext, RootContext, TableSpecContext, UseContext,
+} from "../../antlr/CqlParser";
 import { CqlParserListener } from "../../antlr/CqlParserListener";
 import { CassandraClusterData } from "../../types";
-import { AnalyzedStatement, CqlAnalysis, CqlAnalysisError, CqlStatementColumn, CqlStatementType } from "../../types/parser";
+import {
+    AnalyzedStatement, CqlAnalysis, CqlAnalysisError, CqlStatementColumn,
+    CqlStatementExpression, CqlStatementType,
+} from "../../types/parser";
 
 const KEYSPACE_RULE = "keyspace";
 const TABLE_RULE = "table";
@@ -120,6 +126,7 @@ export class CqlAnalyzerListener implements CqlParserListener {
         this.result.statements[this.statementCurrent] = {
             type: null,
             columns: [],
+            expressions: [],
         };
 
     }
@@ -133,6 +140,19 @@ export class CqlAnalyzerListener implements CqlParserListener {
 
         // check column types! After cql keyspace + table needed
         this.columnsRecognize(this.statementCurrent);
+    }
+    exitExpression = (ctx: ExpressionContext): void => {
+        const expression: CqlStatementExpression = {
+            //     kind: null,
+            //     kindIndex: -1,
+            //     kindCount: -1,
+            //     type: null,
+            text: ctx.text,
+            charStart: ctx.start.startIndex,
+            charStop: ctx.stop.stopIndex,
+        };
+
+        this.result.statements[this.statementCurrent].expressions.push(expression);
     }
     exitColumn = (ctx: ColumnContext): void => {
         const column: CqlStatementColumn = {

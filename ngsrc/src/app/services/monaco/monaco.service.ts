@@ -5,6 +5,7 @@ import { AutocompleteService } from "../autocomplete/autocomplete.service";
 import { ThemeService } from "../theme/theme.service";
 import { cqlCompletitionProvider } from "./lang/completition";
 import { cqlLanguageConfig, cqlTokenProvider } from "./lang/tokens";
+import { cqlHoverTokenProvider } from "./lang/tokens-hover";
 
 @Injectable({
     providedIn: "root",
@@ -34,11 +35,17 @@ export class MonacoService {
             this.eventReady.next();
             this.stateReady.next();
         });
+        const d = 22 + 1;
+        if (d > 22) {
 
+        }
     }
     private prepareMonacoEditor() {
         monaco.languages.register({ id: "cql" });
+        monaco.languages.register({ id: "cqlhover" });
+
         monaco.languages.setMonarchTokensProvider("cql", cqlTokenProvider);
+        monaco.languages.setMonarchTokensProvider("cqlhover", cqlHoverTokenProvider);
         monaco.languages.setLanguageConfiguration("cql", cqlLanguageConfig);
         monaco.languages.registerCompletionItemProvider("cql", cqlCompletitionProvider(this.autocomplete));
         const theme = this.theme.isDark ? "vs-dark" : "vs-light";
