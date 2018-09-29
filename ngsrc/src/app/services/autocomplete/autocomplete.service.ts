@@ -1,8 +1,11 @@
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
-import { filter, take, tap, timeout } from "rxjs/operators";
+
+import { BehaviorSubject, ReplaySubject, Subject } from "rxjs";
+import { filter, take, timeout } from "rxjs/operators";
 import { CompletitionOutput } from "../../../../../src/completition";
-import { AutocompleteItem, ProcMessageStrict } from "../../../../../src/types";
+import { ProcMessageStrict } from "../../../../../src/types";
+import { CassandraClusterData } from "../../../../../src/types/index";
+import { CqlAnalysis, InputParseResult } from "../../../../../src/types/parser";
 import { generateId } from "../../const/id";
 import { MessageService } from "../message/message.service";
 
@@ -11,9 +14,39 @@ import { MessageService } from "../message/message.service";
 })
 export class AutocompleteService {
 
-    constructor(private messages: MessageService) {
+    public activeClusterName: string;
+    public activeClusterData: CassandraClusterData;
+    public activeKeyspace: string;
+    public activeParseResults: InputParseResult;
+    public activeAnalysis: CqlAnalysis;
+    public stateCluster = new BehaviorSubject<CassandraClusterData>(null);
+    public stateKeypace = new BehaviorSubject<string>(null);
+    public stateAnalysis = new BehaviorSubject<CqlAnalysis>(null);
 
+    constructor(private messages: MessageService) {
     }
+    public setParseResult(input: InputParseResult) {
+        this.activeParseResults = input;
+        this.activeAnalysis = input.analysis;
+        this.stateAnalysis.next(this.activeAnalysis);
+    }
+    public setCluster(clusterName: string, data: CassandraClusterData) {
+        this.activeClusterName = clusterName;
+        this.activeClusterData = data;
+        this.stateCluster.next(data);
+    }
+    public setKeyspace(keyspace: string) {
+        this.activeKeyspace = keyspace;
+        try {
+
+            this.stateKeypace.next(keyspace);
+        } catch (e) {
+            console.log("ERROR EMITING stateKeypace");
+            console.log(e);
+            console.log(this);
+        }
+    }
+
     public getCandidates(partialInput: string): Subject<CompletitionOutput> {
 
         console.log(`AUTOCOMLETE: [${partialInput}]`);

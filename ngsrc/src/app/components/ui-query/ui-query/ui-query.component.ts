@@ -15,6 +15,7 @@ import { WorkbenchCqlStatement } from "../../../../../../src/types/editor";
 import { CassandraCluster, CassandraClusterData, CassandraKeyspace, ExecuteQueryResponse } from "../../../../../../src/types/index";
 import { CqlAnalysisError } from "../../../../../../src/types/parser";
 import { ViewDestroyable } from "../../../base/view-destroyable/index";
+import { AutocompleteService } from "../../../services/autocomplete/autocomplete.service";
 import { ClusterService } from "../../../services/cluster/cluster.service";
 import { CqlClientService } from "../../../services/cql-client/cql-client.service";
 import { EditorService } from "../../../services/editor/editor.service";
@@ -78,6 +79,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     constructor(
         public change: ChangeDetectorRef,
         public cluster: ClusterService,
+        public autocomplete: AutocompleteService,
         public cqlClient: CqlClientService,
         public theme: ThemeService,
         public snackBar: MatSnackBar,
@@ -149,6 +151,20 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
             }
             this.activateEditorPanel(editor);
             this.detectChanges();
+
+            this.editorCurrent.stateExecuting.pipe(
+                takeUntil(this.eventEditorChange),
+            ).subscribe((state) => {
+                const c = this.formGroup.controls["clusterName"];
+                const k = this.formGroup.controls["keyspace"];
+                if (state) {
+                    c.disable();
+                    k.disable();
+                } else {
+                    c.enable();
+                    k.enable();
+                }
+            });
 
             merge(this.editorService.eventListChange, this.editorService.stateActive).pipe(
                 takeUntil(merge(this.eventViewDestroyed, this.eventEditorChange)),
@@ -242,6 +258,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         console.log(`onKeyspaceChange ${keyspace}`);
         this.editorCurrent.statement.keyspace = keyspace;
         this.onStatementChange.emit(this.editorCurrent.statement);
+        this.autocomplete.setKeyspace(keyspace);
 
         if (this.monacoEditor) {
             this.monacoEditor.updateExecuteParams();
@@ -357,6 +374,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
                 this.clusterLast = clusterName;
                 this.clusterData = data;
                 this.keyspaceList = data.keyspaces;
+                this.autocomplete.setCluster(clusterName, data);
 
                 this.clusterLoading = false;
                 this.clusterLoadingError = false;

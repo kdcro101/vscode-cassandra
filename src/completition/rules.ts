@@ -22,7 +22,7 @@ export interface PreferredRules {
 export const preferredRules: PreferredRules = {
 
     "specialStar": { text: "*", type: "special" },
-    "specialDot": { text: ".", type: "special" },
+    // "specialDot": { text: ".", type: "special" },
 
     "column": { text: "", type: "inputColumn" },
     "keyspace": { text: "", type: "inputKeyspace" },

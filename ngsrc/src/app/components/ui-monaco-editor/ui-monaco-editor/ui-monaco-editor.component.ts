@@ -7,6 +7,7 @@ import { fromEventPattern, ReplaySubject, Subject } from "rxjs";
 import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
 import { CqlAnalysis, CqlParserError, InputParseResult } from "../../../../../../src/types/parser";
 import { ViewDestroyable } from "../../../base/view-destroyable";
+import { AutocompleteService } from "../../../services/autocomplete/autocomplete.service";
 import { MonacoService } from "../../../services/monaco/monaco.service";
 import { ParserService } from "../../../services/parser/parser.service";
 import { ThemeService } from "../../../services/theme/theme.service";
@@ -44,6 +45,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         private parser: ParserService,
         private contextMenu: UiContextMenuService,
         public theme: ThemeService,
+        public autocomplete: AutocompleteService,
     ) {
         super(change);
 
@@ -96,6 +98,8 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 lineHeight: this.theme.getEditorFontSize() + 12,
                 automaticLayout: true,
                 contextmenu: false,
+                wordBasedSuggestions: false,
+                quickSuggestions: false,
 
             });
 
@@ -191,6 +195,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
     private parseCode(code: string) {
         this.parser.parseInput(code, this.clusterName, this.keyspace).pipe(take(1))
             .subscribe((result) => {
+                this.autocomplete.setParseResult(result);
                 console.log(`Parse done for [${code}]`);
                 this.addErrorDecorations(result);
                 this.addDeltaDecorations(result.analysis);

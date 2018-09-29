@@ -292,6 +292,7 @@ alterTableOperation
     | alterTableDropCompactStorage
     | alterTableRename
     | alterTableWith
+    | { this.notifyErrorListeners("rule.alterTableOperation"); }
     ;
 alterTableWith
     : kwWith tableOptions
@@ -663,6 +664,7 @@ selectElement
     : column
     | column (kwAs OBJECT_NAME)?
     | functionCall (kwAs OBJECT_NAME)?
+    | { this.notifyErrorListeners("rule.select.selectElement"); }
     ;
 
 relationElements
@@ -739,6 +741,7 @@ keyspace
 table
     : OBJECT_NAME
     | DQUOTE OBJECT_NAME DQUOTE
+    | { this.notifyErrorListeners("rule.table"); }
     ;
 
 
