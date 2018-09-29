@@ -5,7 +5,7 @@ import { CqlParser } from "../antlr/CqlParser";
 import * as c3 from "./CodeCompletionCore";
 import { preferredRules, RuleData } from "./rules";
 
-import * as XRegExp from "xregexp";
+import * as XRegExp  from "xregexp";
 
 import { escapeRegExp } from "lodash";
 
@@ -38,20 +38,21 @@ export class Completition {
         let codePartial: string = null;
         let codeWithoutPartial: string = code;
 
-        if (!lastNonWord) {
+        if (lastNonWord) {
+            console.log("Completition last is NONWORD");
+            code = `${code} `;
+        } else {
             const match = rxPartial.exec(code);
             codePartial = match ? match[0] : null;
             codeWithoutPartial = code.replace(rxPartial, "");
         }
 
-        const codeToExecute = `${codeWithoutPartial} `;
-
-        const tokenLexer = new CqlLexer(new ANTLRInputStream(codeToExecute));
+        const tokenLexer = new CqlLexer(new ANTLRInputStream(code));
         const tokens = tokenLexer.getAllTokens();
 
-        const normCaretPosition = this.normalizeCaretPosition(codeToExecute, tokens, caretPosition);
+        const normCaretPosition = this.normalizeCaretPosition(code, tokens, caretPosition);
 
-        const inputStream = new ANTLRInputStream(codeToExecute);
+        const inputStream = new ANTLRInputStream(code);
         const lexer = new CqlLexer(inputStream);
 
         // const lastNon;
@@ -67,14 +68,14 @@ export class Completition {
         const ruleNames = Object.keys(preferredRules);
         const ruleNumbers = ruleNames.map((rule) => parser.getRuleIndex(rule));
 
-        const analysis = this.analyzeSituation(codeToExecute, normCaretPosition, tokens);
+        const analysis = this.analyzeSituation(code, normCaretPosition, tokens);
 
         core.preferredRules = new Set<number>([
             ...ruleNumbers,
         ]);
 
         const tree = parser.root();
-        const candidates = core.collectCandidates(tokens.length - 1);
+        const candidates = core.collectCandidates(analysis.caretTokenIndex);
         const candidateRules: RuleData[] = [];
 
         candidates.rules.forEach((v, k) => {

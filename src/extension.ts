@@ -41,19 +41,6 @@ export function activate(context: vscode.ExtensionContext) {
             commands.setWorkbench(workbench);
         });
 
-    const inputStream = new ANTLRInputStream(`select c_time,c_ascii,c_date,c_blob
-from abc_keyspace.example WHERE c_bigint=123 and ;
-
-DELETE FROM abc_keyspace.example WHERE`);
-
-    const cqlLexer = new CqlLexer(inputStream);
-    const tokenStream = new CommonTokenStream(cqlLexer);
-    const cqlParser = new CqlParser(tokenStream);
-
-    const p = cqlParser.cqls();
-
-    console.log("done");
-
 }
 
 // this method is called when your extension is deactivated

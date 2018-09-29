@@ -125,6 +125,16 @@ export class CqlAnalyzerListener implements CqlParserListener {
             this.result.statementRanges.push(item);
         }
 
+        if (this.result.statements.length === 1 && this.result.statementRanges.length === 0) {
+            // add ALL as range
+            const item: AnalyzedStatementRange = {
+                start: 0, // to skip last semicolon
+                stop: this.cql.length,
+                text: this.cql,
+            };
+            this.result.statementRanges.push(item);
+        }
+
     }
     enterEveryRule = (ctx: ParserRuleContext): void => {
         const rule: string = this.ruleNames[ctx.ruleIndex];

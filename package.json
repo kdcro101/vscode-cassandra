@@ -106,13 +106,11 @@
     "devDependencies": {
         "@types/cassandra-driver": "^3.4.0",
         "@types/fs-extra": "^5.0.4",
+        "@types/jasmine": "^2.8.8",
         "@types/lodash": "^4.14.111",
         "@types/mocha": "^2.2.42",
         "@types/node": "^10.5.2",
-        "tslint": "^5.10.0",
-        "typescript": "^2.9.2",
-        "vscode": "^1.1.6",
-        "@types/jasmine": "^2.8.8",
+        "@types/xregexp": "^3.0.29",
         "babel-core": "^6.26.3",
         "babel-preset-env": "^1.7.0",
         "babelify": "^8.0.0",
@@ -126,7 +124,10 @@
         "jasmine-ts": "^0.2.1",
         "merge2": "^1.2.2",
         "rimraf": "^2.6.2",
-        "run-sequence": "^2.2.1"
+        "run-sequence": "^2.2.1",
+        "tslint": "^5.10.0",
+        "typescript": "^2.9.2",
+        "vscode": "^1.1.6"
     },
     "dependencies": {
         "antlr4ts": "^0.4.1-alpha.0",
@@ -141,6 +142,7 @@
         "npm": "^6.4.1",
         "rxjs": "^6.2.1",
         "url-parse": "^1.4.3",
-        "word-wrap": "^1.2.3"
+        "word-wrap": "^1.2.3",
+        "xregexp": "^4.2.0"
     }
 }
