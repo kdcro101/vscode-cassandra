@@ -19,11 +19,11 @@ export interface AnalyzedSituation {
 }
 export interface CompletitionOutput {
     list: RuleData[];
-    // partial: string;
+    partial: string;
     // tokenStart: number;
     // tokenStop: number;
     // tokenText: string;
-    isPartial: boolean;
+    // isPartial: boolean;
 }
 export class Completition {
 
@@ -33,8 +33,7 @@ export class Completition {
         const rxPartial = new RegExp(/\b\w+$/);
 
         const lastNonWord = rxNonWord.test(code);
-        const hasPartial: boolean = rxPartial.test(code);
-        // const codeAll = code;
+
         let codePartial: string = null;
         let codeWithoutPartial: string = code;
 
@@ -48,8 +47,6 @@ export class Completition {
 
         const tokenLexer = new CqlLexer(new ANTLRInputStream(codeToExecute));
         const tokens = tokenLexer.getAllTokens();
-
-        const normCaretPosition = this.normalizeCaretPosition(codeToExecute, tokens, caretPosition);
 
         const inputStream = new ANTLRInputStream(codeToExecute);
         const lexer = new CqlLexer(inputStream);
@@ -66,8 +63,6 @@ export class Completition {
         const ruleMapArray = Array.from(ruleMap.entries());
         const ruleNames = Object.keys(preferredRules);
         const ruleNumbers = ruleNames.map((rule) => parser.getRuleIndex(rule));
-
-        const analysis = this.analyzeSituation(codeToExecute, normCaretPosition, tokens);
 
         core.preferredRules = new Set<number>([
             ...ruleNumbers,
@@ -86,55 +81,52 @@ export class Completition {
                 console.log(`WARNING: no rule data for ${name}`);
             }
         });
-        const f = this.createOutput(candidateRules, analysis, tokens);
+        const lastToken = this.getLastToken(tokens);
+        const f = this.createOutput(candidateRules, codePartial, lastToken);
         return f;
     }
-    private createOutput(candidates: RuleData[], analysis: AnalyzedSituation, tokens: Token[]): CompletitionOutput {
+    private createOutput(candidates: RuleData[], codePartial: string, lastToken: Token): CompletitionOutput {
 
         console.log("-------------------------------");
         console.log(candidates);
         console.log("-------------------------------");
 
-        const prevText = analysis.lastKnown == null ? null : analysis.lastKnown.text;
-        const partial = this.isWhitespace(analysis.partialInput) ? "" : analysis.partialInput;
-        let filtered: RuleData[] = candidates;
-        if (prevText) {
-
-            filtered = candidates.filter((i) => !this.isEqual(i.text, prevText));
+        let list: RuleData[] = candidates;
+        // let filtered: RuleData[] = candidates;
+        if (lastToken) {
+            list = candidates.filter((i) => !this.isEqual(i.text, lastToken.text));
         }
-        if (prevText && prevText.length > 0) {
-            filtered = filtered.filter((i) => this.isBeginningWith(i.text, partial));
+        if (codePartial && codePartial.length > 0) {
+            list = list.filter((i) => this.isBeginningWith(i.text, codePartial) && i.type === "keyword");
         }
+        const inputs = candidates.filter((r) => r.type.search(/^input/) === 0 );
+        list = list.concat(inputs);
 
-        // const token = tokens[analysis.caretTokenIndex];
         const out: CompletitionOutput = {
-            list: filtered,
-            // tokenText: analysis.caretTokenText,
-            // tokenStart: token ? token.startIndex : -1,
-            // tokenStop: token ? token.stopIndex : -1,
-            isPartial: partial.length > 0 ? true : false,
+            list,
+            partial: codePartial,
         };
 
         return out;
     }
-    private analyzeSituation(code: string, caretPosition: number, tokens: Token[]): AnalyzedSituation {
-        const tokenIndex = this.getCaretTokenIndex(tokens, caretPosition);
-        const token = tokens[tokenIndex];
-        const tokenPart = this.getTokenPart(token, caretPosition);
-        const tokenLast = this.getLastToken(tokens, tokenIndex);
-        const out: AnalyzedSituation = {
+    // private analyzeSituation(code: string, caretPosition: number, tokens: Token[]): AnalyzedSituation {
+    //     const tokenIndex = this.getCaretTokenIndex(tokens, caretPosition);
+    //     const token = tokens[tokenIndex];
+    //     const tokenPart = this.getTokenPart(token, caretPosition);
+    //     const tokenLast = this.getLastToken(tokens, tokenIndex);
+    //     const out: AnalyzedSituation = {
 
-            lastKnown: tokenLast,
-            partialInput: tokenPart,
-            caretTokenIndex: tokenIndex,
-            caretTokenText: token == null ? null : token.text,
-            invalid: false,
-        };
-        return out;
-    }
-    private getLastToken(tokens: Token[], caretTokenIndex: number): Token {
+    //         lastKnown: tokenLast,
+    //         partialInput: tokenPart,
+    //         caretTokenIndex: tokenIndex,
+    //         caretTokenText: token == null ? null : token.text,
+    //         invalid: false,
+    //     };
+    //     return out;
+    // }
+    private getLastToken(tokens: Token[]): Token {
 
-        for (let i = (caretTokenIndex - 1); i >= 0; i--) {
+        for (let i = (tokens.length - 1); i >= 0; i--) {
             const t = tokens[i];
             if (t.channel === 0) {
                 return t;
