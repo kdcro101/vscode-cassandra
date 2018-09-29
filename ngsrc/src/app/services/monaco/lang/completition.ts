@@ -3,6 +3,11 @@ import { take } from "rxjs/operators";
 import { AnalyzedStatement, CqlAnalysis } from "../../../../../../src/types/parser";
 import { AutocompleteService } from "../../autocomplete/autocomplete.service";
 
+interface AutocompleteAnalysis {
+    statement: AnalyzedStatement;
+    autocompleteInput: string;
+}
+
 export const cqlCompletitionProvider = (autocomplete: AutocompleteService): monaco.languages.CompletionItemProvider => {
 
     const p: monaco.languages.CompletionItemProvider = {
@@ -11,7 +16,7 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
             return new Promise((resolve, reject) => {
 
                 // get editor content before the pointer
-                const text = model.getValueInRange({
+                const textToOffset = model.getValueInRange({
                     startLineNumber: 1,
                     startColumn: 1, endLineNumber: pos.lineNumber,
                     endColumn: pos.column,
@@ -30,16 +35,21 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                         const keyspaceInitial = args[1];
                         const analysis = args[2];
 
-                        const statement = getStatement(offset, analysis);
+                        const state = locateCursor(offset, analysis, textToOffset);
+                        // const statement = getStatement(offset, analysis, textToOffset);
+                        const statement = state.statement;
                         const keyspace = statement && statement.keyspace ? statement.keyspace : keyspaceInitial;
                         const table = statement && statement.table ? statement.table : null;
-                        const completeInput = getAutocompleteInput(statement, text, offset);
+                        // const completeInput = getAutocompleteInput(statement, textToOffset, offset);
+                        const completeInput = state.autocompleteInput;
 
                         const keyspaceData = clusterData && keyspace ?
                             clusterData.keyspaces.find((k) => k.name === keyspace) : null;
                         const tableData = keyspaceData ? keyspaceData.tables.find((t) => t.name === table) : null;
 
-                        console.log(`autocompleteProvide OFF:${offset} ${Object.keys(clusterData).join(",")} ksInit: ${keyspaceInitial}`);
+                        console.log(`autocompleteProvide OFF:${offset}`);
+                        console.log("state");
+                        console.log(state);
                         console.log("analysis");
                         console.log(analysis);
                         console.log("statement");
@@ -119,26 +129,58 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
 
     return p;
 };
-const getAutocompleteInput = (statement: AnalyzedStatement, fullText: string, offset: number): string => {
-    if (statement == null) {
-        return `${fullText} `;
+
+function locateCursor(offset: number, analysis: CqlAnalysis, textToOffset: string): AutocompleteAnalysis {
+    const out: AutocompleteAnalysis = {
+        statement: null,
+        autocompleteInput: textToOffset,
+    };
+    const statementIndex = analysis.statementRanges.findIndex((s) => {
+        return offset >= s.start && offset <= s.stop;
+    });
+    if (analysis == null || statementIndex === -1) {
+        console.log("AUTOCOMPLETE no analysis or statementIndex===-1");
+        out.statement = null;
+        out.autocompleteInput = textToOffset;
+        return out;
     }
-    const st = statement.text;
-    const len = offset - statement.charStart;
-    const part = st.substring(0, len).concat(" ");
-    return part;
-};
-const getStatement = (offset: number, analysis: CqlAnalysis): AnalyzedStatement => {
+
+    console.log(`AUTOCOMPLETE Statement index=${statementIndex}`);
+    const range = analysis.statementRanges[statementIndex];
+    const partEnd = offset - range.start;
+    const part = range.text.substring(0, partEnd);
+
+    out.statement = analysis.statements[statementIndex];
+    out.autocompleteInput = part;
+
+    console.log("AUTOCOMPLETE locateCursor");
+    console.log(out);
+
+    return out;
+}
+
+function analyzeState(offset: number, analysis: CqlAnalysis, textToOffset: string): AutocompleteAnalysis {
+
+    const out: AutocompleteAnalysis = {
+        statement: null,
+        autocompleteInput: null,
+    };
+
     if (analysis == null) {
-        return null;
+        out.statement = null;
+        out.autocompleteInput = textToOffset;
+        return out;
     }
     const statements = analysis.statements;
 
     console.log(`statements.length=${statements.length}`);
 
     if (statements.length === 0) {
-        return null;
+        out.statement = null;
+        out.autocompleteInput = textToOffset;
+        return out;
     }
+
     console.log(`looking for offset=${offset}`);
     const found = statements.find((s) => {
         console.log(`item start=${s.charStart} stop=${s.charStop}`);
@@ -146,15 +188,29 @@ const getStatement = (offset: number, analysis: CqlAnalysis): AnalyzedStatement 
     });
 
     if (found) {
-        return found;
+        out.statement = found;
+        out.autocompleteInput = found.text.substring(found.charStart, found.charStart + (offset - found.charStart) + 1);
+        return out;
     }
 
     const last = statements[statements.length - 1];
 
-    if (offset > last.charStop) {
-        return last;
+    const restStart = last.charStop + 1;
+    const rest = textToOffset.substring(restStart, restStart + (offset - last.charStop));
+
+    const lastTerminated = rest.trim() === ";" ? true : false;
+
+    console.log(`lastTerminated=${lastTerminated}  [rest]=[${rest}]`);
+
+    if (offset > last.charStop && !lastTerminated) {
+        out.statement = last;
+        out.autocompleteInput = textToOffset.substring(last.charStart, offset + 1) + " ";
+        return out;
+    }
+    if (offset > last.charStop && lastTerminated) {
+        out.statement = null;
+        out.autocompleteInput = "";
+        return out;
     }
 
-    return null;
-
-};
+}

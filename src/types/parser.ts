@@ -23,6 +23,11 @@ export interface CqlStatementExpression {
     text: string;
 }
 
+export interface AnalyzedStatementRange {
+    start: number;
+    stop: number;
+    text: string;
+}
 export interface AnalyzedStatement {
     type: CqlStatementType;
     charStart?: number;
@@ -38,6 +43,7 @@ export interface AnalyzedStatement {
 }
 export interface CqlAnalysis {
     statements: AnalyzedStatement[];
+    statementRanges: AnalyzedStatementRange[];
     alterData: boolean;
     alterStructure: boolean;
     selectData: boolean;

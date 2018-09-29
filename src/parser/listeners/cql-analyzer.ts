@@ -1,10 +1,11 @@
 import { ParserRuleContext } from "antlr4ts";
 import {
     ColumnContext, CqlContext, ExpressionContext,
-    KeyspaceContext, RootContext, TableSpecContext, UseContext,
+    KeyspaceContext, RootContext, StatementSeparatorContext, TableSpecContext, UseContext,
 } from "../../antlr/CqlParser";
 import { CqlParserListener } from "../../antlr/CqlParserListener";
 import { CassandraClusterData } from "../../types";
+import { AnalyzedStatementRange } from "../../types/parser";
 import {
     AnalyzedStatement, CqlAnalysis, CqlAnalysisError, CqlStatementColumn,
     CqlStatementExpression, CqlStatementType,
@@ -18,6 +19,7 @@ export class CqlAnalyzerListener implements CqlParserListener {
     private statementCurrent: number = -1;
     private result: CqlAnalysis = {
         statements: [],
+        statementRanges: [],
         alterData: false,
         alterStructure: false,
         selectData: false,
@@ -27,6 +29,7 @@ export class CqlAnalyzerListener implements CqlParserListener {
 
     private rulePrevious: string;
     private keyspaceAmbiental: string;
+    private separators: number[] = [];
 
     constructor(
         private ruleNames: string[],
@@ -110,6 +113,18 @@ export class CqlAnalyzerListener implements CqlParserListener {
                 }
             }
         });
+
+        if (this.result.statementRanges.length < this.result.statements.length && this.result.statementRanges.length > 0) {
+            // add last range
+            const last = this.result.statementRanges[this.result.statementRanges.length - 1];
+            const item: AnalyzedStatementRange = {
+                start: last.stop + 2, // to skip last semicolon
+                stop: this.cql.length,
+                text: this.cql.substring(last.stop + 2, this.cql.length),
+            };
+            this.result.statementRanges.push(item);
+        }
+
     }
     enterEveryRule = (ctx: ParserRuleContext): void => {
         const rule: string = this.ruleNames[ctx.ruleIndex];
@@ -140,6 +155,22 @@ export class CqlAnalyzerListener implements CqlParserListener {
 
         // check column types! After cql keyspace + table needed
         this.columnsRecognize(this.statementCurrent);
+    }
+    exitStatementSeparator = (ctx: StatementSeparatorContext) => {
+        const pos = ctx.start.startIndex;
+        const lastIndex = this.separators.length - 1;
+        const nextIndex = lastIndex >= 0 ? lastIndex + 1 : 0;
+        const lastPos = lastIndex >= 0 ? this.separators[lastIndex] : 0;
+        const body = this.cql.substring(lastPos, pos);
+
+        const item: AnalyzedStatementRange = {
+            start: lastPos,
+            stop: pos,
+            text: body,
+        };
+
+        this.result.statementRanges.push(item);
+
     }
     exitExpression = (ctx: ExpressionContext): void => {
         const expression: CqlStatementExpression = {

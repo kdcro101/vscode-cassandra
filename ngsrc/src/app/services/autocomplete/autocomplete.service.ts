@@ -49,7 +49,7 @@ export class AutocompleteService {
 
     public getCandidates(partialInput: string): Subject<CompletitionOutput> {
 
-        console.log(`AUTOCOMLETE: [${partialInput}]`);
+        console.log(`AUTOCOMPLETE: [${partialInput}]`);
 
         const o = new Subject<CompletitionOutput>();
         const id = generateId();

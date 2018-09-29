@@ -531,8 +531,8 @@ deleteColumnList
     ;
 
 deleteColumnItem
-    : OBJECT_NAME
-    | OBJECT_NAME LS_BRACKET (literalString|literalDecimal)  RS_BRACKET
+    : column
+    | column syntaxBracketLs (literalString|literalDecimal)  syntaxBracketRs
     ;
 
 
@@ -678,6 +678,7 @@ relationElement
     | column kwIn syntaxBracketLr functionArgs? syntaxBracketRr
     | relalationContainsKey
     | relalationContains
+    | { this.notifyErrorListeners("rule.relationElement"); }
     ;
 
 relalationContains
