@@ -109,21 +109,6 @@ export class Completition {
 
         return out;
     }
-    // private analyzeSituation(code: string, caretPosition: number, tokens: Token[]): AnalyzedSituation {
-    //     const tokenIndex = this.getCaretTokenIndex(tokens, caretPosition);
-    //     const token = tokens[tokenIndex];
-    //     const tokenPart = this.getTokenPart(token, caretPosition);
-    //     const tokenLast = this.getLastToken(tokens, tokenIndex);
-    //     const out: AnalyzedSituation = {
-
-    //         lastKnown: tokenLast,
-    //         partialInput: tokenPart,
-    //         caretTokenIndex: tokenIndex,
-    //         caretTokenText: token == null ? null : token.text,
-    //         invalid: false,
-    //     };
-    //     return out;
-    // }
     private getLastToken(tokens: Token[]): Token {
 
         for (let i = (tokens.length - 1); i >= 0; i--) {
@@ -135,34 +120,7 @@ export class Completition {
 
         return null;
     }
-    private getTokenPart(token: Token, caretPosition: number): string {
-        let out = "";
-        if (token == null) {
-            return out;
-        }
 
-        const text = token.text;
-        const split = text.split("");
-        for (let i = token.startIndex; i <= caretPosition; i++) {
-            const c = split[i - token.startIndex];
-            if (c == null) {
-                break;
-            }
-            out = out + c;
-        }
-        return out;
-    }
-
-    private isWhitespace(data: string): boolean {
-        if (data == null) {
-            return false;
-        }
-        if (data.search(/\S/) > -1) {
-            return false;
-        }
-        return true;
-
-    }
     private isEqual(a: string, b: string): boolean {
         if (a.toLowerCase() === b.toLowerCase()) {
             return true;
@@ -184,38 +142,5 @@ export class Completition {
         return false;
 
     }
-    private getCaretTokenIndex(tokens: Token[], caretPosition?: number): number {
-        const max = tokens.length + 1;
 
-        if (tokens.length === 0) {
-            return 0;
-        }
-
-        if (caretPosition == null && tokens.length > 0) {
-            return tokens.length - 1;
-        }
-
-        const i = tokens.findIndex((tk) => {
-            return caretPosition >= tk.startIndex && caretPosition <= tk.stopIndex;
-        });
-
-        return i;
-    }
-    private normalizeCaretPosition(code: string, tokens: Token[], caretPosition: number): number {
-        if (tokens.length === 0) {
-            return 0;
-        }
-        if (code.length === 0) {
-            return 0;
-        }
-        if (caretPosition > (code.length - 1)) {
-            return code.length - 1;
-        }
-
-        if (caretPosition == null) {
-            return code.length - 1;
-        }
-
-        return caretPosition;
-    }
 }
