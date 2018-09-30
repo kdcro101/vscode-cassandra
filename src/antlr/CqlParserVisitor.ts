@@ -143,8 +143,8 @@ import { SelectElementsContext } from './CqlParser';
 import { SelectElementContext } from './CqlParser';
 import { RelationElementsContext } from './CqlParser';
 import { RelationElementContext } from './CqlParser';
-import { RelalationContainsContext } from './CqlParser';
-import { RelalationContainsKeyContext } from './CqlParser';
+import { RelationContainsContext } from './CqlParser';
+import { RelationContainsKeyContext } from './CqlParser';
 import { FunctionCallContext } from './CqlParser';
 import { FunctionArgsContext } from './CqlParser';
 import { ConstantContext } from './CqlParser';
@@ -317,6 +317,8 @@ import { SyntaxBracketLsContext } from './CqlParser';
 import { SyntaxBracketRsContext } from './CqlParser';
 import { SyntaxCommaContext } from './CqlParser';
 import { SyntaxColonContext } from './CqlParser';
+import { SyntaxPlusContext } from './CqlParser';
+import { SyntaxMinusContext } from './CqlParser';
 import { SyntaxSquoteContext } from './CqlParser';
 import { SyntaxDquoteContext } from './CqlParser';
 import { SyntaxOperatorEqContext } from './CqlParser';
@@ -1315,18 +1317,18 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitRelationElement?: (ctx: RelationElementContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.relalationContains`.
+	 * Visit a parse tree produced by `CqlParser.relationContains`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitRelalationContains?: (ctx: RelalationContainsContext) => Result;
+	visitRelationContains?: (ctx: RelationContainsContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.relalationContainsKey`.
+	 * Visit a parse tree produced by `CqlParser.relationContainsKey`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitRelalationContainsKey?: (ctx: RelalationContainsKeyContext) => Result;
+	visitRelationContainsKey?: (ctx: RelationContainsKeyContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.functionCall`.
@@ -2531,6 +2533,20 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitSyntaxColon?: (ctx: SyntaxColonContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.syntaxPlus`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitSyntaxPlus?: (ctx: SyntaxPlusContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.syntaxMinus`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitSyntaxMinus?: (ctx: SyntaxMinusContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.syntaxSquote`.

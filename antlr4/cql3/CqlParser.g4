@@ -125,7 +125,7 @@ resource
     ;
 
 createUser
-    : kwCreate kwUser ifNotExist? user kwWith kwPassword literalString (kwSuperuser|kwNosuperuser)?
+    : kwCreate kwUser ifNotExist? user kwWith kwPassword constantString (kwSuperuser|kwNosuperuser)?
     ;
 
 createRole
@@ -247,7 +247,7 @@ alterUser
     ;
 
 userPassword
-    : kwPassword literalString
+    : kwPassword constantString
     ;
 
 userSuperUser
@@ -328,9 +328,9 @@ roleWith
     : kwWith (roleWithOptions (kwAnd roleWithOptions)*)
     ;
 roleWithOptions
-    : kwPassword OPERATOR_EQ literalString
-    | kwLogin OPERATOR_EQ literalBoolean
-    | kwSuperuser OPERATOR_EQ literalBoolean
+    : kwPassword OPERATOR_EQ constantString
+    | kwLogin OPERATOR_EQ constantBoolean
+    | kwSuperuser OPERATOR_EQ constantBoolean
     | kwOptions OPERATOR_EQ optionHash
     ;
 
@@ -396,8 +396,8 @@ tableOptionName
     ;
 
 tableOptionValue
-    : literalString
-    | literalFloat
+    : constantString
+    | constantFloat
     ;
 optionHash
     : syntaxBracketLc optionHashItem (syntaxComma optionHashItem)*  syntaxBracketRc
@@ -406,11 +406,11 @@ optionHashItem
     : optionHashKey COLON optionHashValue
     ;
 optionHashKey
-    : literalString
+    : constantString
     ;
 optionHashValue
-    : literalString
-    | literalFloat
+    : constantString
+    | constantFloat
     ;
 
 columnDefinitionList
@@ -494,7 +494,7 @@ replicationListItem
     | STRING_LITERAL COLON DECIMAL_LITERAL
     ;
 durableWrites
-    : kwDurableWrites OPERATOR_EQ literalBoolean
+    : kwDurableWrites OPERATOR_EQ constantBoolean
     ;
 
 use
@@ -511,7 +511,7 @@ createIndex
     ;
 indexName
     : OBJECT_NAME
-    | literalString
+    | constantString
     ;
 indexColumnSpec
     : column
@@ -540,7 +540,7 @@ deleteColumnList
 
 deleteColumnItem
     : column
-    | column syntaxBracketLs (literalString|literalDecimal)  syntaxBracketRs
+    | column syntaxBracketLs (constantString|constantDecimal)  syntaxBracketRs
     ;
 
 
@@ -565,15 +565,15 @@ updateAssignments
     ;
 
 updateAssignmentElement
-    : column OPERATOR_EQ (constant | assignmentMap | assignmentSet | assignmentList)
-    | column OPERATOR_EQ column (PLUS | MINUS) literalDecimal
-    | column OPERATOR_EQ column (PLUS | MINUS) assignmentSet
-    | column OPERATOR_EQ assignmentSet (PLUS | MINUS) OBJECT_NAME
-    | column OPERATOR_EQ column (PLUS | MINUS) assignmentMap
-    | column OPERATOR_EQ assignmentMap (PLUS | MINUS) OBJECT_NAME
-    | column OPERATOR_EQ column (PLUS | MINUS) assignmentList
-    | column OPERATOR_EQ assignmentList (PLUS | MINUS) OBJECT_NAME
-    | column syntaxBracketLs literalDecimal syntaxBracketRs OPERATOR_EQ constant
+    : column syntaxOperatorEq (constant | assignmentMap | assignmentSet | assignmentList)
+    | column syntaxOperatorEq column (syntaxPlus | syntaxMinus) constantDecimal
+    | column syntaxOperatorEq column (syntaxPlus | syntaxMinus) assignmentMap
+    | column syntaxOperatorEq column (syntaxPlus | syntaxMinus) assignmentSet
+    | column syntaxOperatorEq column (syntaxPlus | syntaxMinus) assignmentList
+    | column syntaxOperatorEq assignmentSet (syntaxPlus | syntaxMinus) OBJECT_NAME
+    | column syntaxOperatorEq assignmentMap (syntaxPlus | syntaxMinus) OBJECT_NAME
+    | column syntaxOperatorEq assignmentList (syntaxPlus | syntaxMinus) OBJECT_NAME
+    | column syntaxBracketLs constantDecimal syntaxBracketRs syntaxOperatorEq constant
     | { this.notifyErrorListeners("rule.updateAssignmentElement"); }
     ;
 
@@ -601,11 +601,11 @@ usingTtlTimestamp
     ;
 
 timestamp
-    : kwTimestamp literalDecimal
+    : kwTimestamp constantDecimal
     ;
 
 ttl
-    : kwTtl literalDecimal
+    : kwTtl constantDecimal
     ;
 
 usingTimestampSpec
@@ -647,7 +647,7 @@ select
     ;
 
 limitSpec
-    : kwLimit literalDecimal
+    : kwLimit constantDecimal
     ;
 
 fromSpec
@@ -684,20 +684,31 @@ relationElements
     ;
 
 relationElement
-    : column (syntaxOperatorEq | syntaxOperatorLt | syntaxOperatorGt | syntaxOperatorLte | syntaxOperatorGte) constant
-    | functionCall (syntaxOperatorEq | syntaxOperatorLt | syntaxOperatorGt | syntaxOperatorLte | syntaxOperatorGte) constant
-    | functionCall (syntaxOperatorEq | syntaxOperatorLt | syntaxOperatorGt | syntaxOperatorLte | syntaxOperatorGte) functionCall
+    : column relationOperator constant
+    | functionCall relationOperator constant
+    | functionCall relationOperator functionCall
     | column kwIn syntaxBracketLr functionArgs? syntaxBracketRr
-    | relalationContainsKey
-    | relalationContains
+    | relationContainsKey
+    | relationContains
     | { this.notifyErrorListeners("rule.relationElement"); }
     ;
 
-relalationContains
+
+relationOperator
+    : syntaxOperatorEq
+    | syntaxOperatorLt
+    | syntaxOperatorGt
+    | syntaxOperatorLte
+    | syntaxOperatorGte
+    ;
+
+
+
+relationContains
     : column kwContains constant
     ;
-relalationContainsKey
-    : column (kwContainsKey) constant
+relationContainsKey
+    : column kwContainsKey constant
     ;
 
 functionCall
@@ -715,34 +726,35 @@ functionArgs
 
 
 constant
-    : literalUuid
-    | literalString
-    | literalDecimal
-    | literalHexadecimal
-    | literalBoolean
+    : constantUuid
+    | constantString
+    | constantDecimal
+    | constantHexadecimal
+    | constantBoolean
     | kwNull
     ;
 
-literalUuid
+constantUuid
     : UUID
     ;
-literalDecimal
+
+constantDecimal
     : DECIMAL_LITERAL
-    // | ZERO_DECIMAL | ONE_DECIMAL | TWO_DECIMAL
     ;
-literalFloat
+
+constantFloat
     : DECIMAL_LITERAL
     | FLOAT_LITERAL
     ;
 
-literalString
+constantString
     : STRING_LITERAL
     ;
 
-literalBoolean
+constantBoolean
     : K_TRUE | K_FALSE;
 
-literalHexadecimal
+constantHexadecimal
     : HEXADECIMAL_LITERAL
     ;
 
@@ -756,7 +768,6 @@ table
     | DQUOTE OBJECT_NAME DQUOTE
     | { this.notifyErrorListeners("rule.table"); }
     ;
-
 
 tableSpec
     : table
@@ -820,7 +831,7 @@ trigger
     : OBJECT_NAME
     ;
 triggerClass
-    : literalString
+    : constantString
     ;
 
 materializedView
@@ -842,7 +853,7 @@ user
     : OBJECT_NAME
     ;
 password
-    : literalString
+    : constantString
     ;
 hashKey: OBJECT_NAME;
 
@@ -1012,6 +1023,8 @@ syntaxBracketRs : RS_BRACKET;
 
 syntaxComma: COMMA;
 syntaxColon: COLON;
+syntaxPlus: PLUS;
+syntaxMinus: MINUS;
 
 syntaxSquote: SQUOTE;
 syntaxDquote: DQUOTE;

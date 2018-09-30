@@ -125,8 +125,8 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 d.dispose();
             }).pipe(
                 tap((e) => {
-                    console.log("STARTING onKeyDown");
-                    console.log(e);
+                    // console.log("STARTING onKeyDown");
+                    // console.log(e);
                 }),
                 takeUntil(this.eventViewDestroyed),
                 filter((e) => e.browserEvent.ctrlKey && e.browserEvent.keyCode === 13),
@@ -196,7 +196,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         this.parser.parseInput(code, this.clusterName, this.keyspace).pipe(take(1))
             .subscribe((result) => {
                 this.autocomplete.setParseResult(result);
-                console.log(`Parse done for [${code}]`);
+                // console.log(`Parse done for [${code}]`);
                 this.addErrorDecorations(result);
                 this.addDeltaDecorations(result.analysis);
             });

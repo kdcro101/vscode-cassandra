@@ -143,8 +143,8 @@ import { SelectElementsContext } from './CqlParser';
 import { SelectElementContext } from './CqlParser';
 import { RelationElementsContext } from './CqlParser';
 import { RelationElementContext } from './CqlParser';
-import { RelalationContainsContext } from './CqlParser';
-import { RelalationContainsKeyContext } from './CqlParser';
+import { RelationContainsContext } from './CqlParser';
+import { RelationContainsKeyContext } from './CqlParser';
 import { FunctionCallContext } from './CqlParser';
 import { FunctionArgsContext } from './CqlParser';
 import { ConstantContext } from './CqlParser';
@@ -317,6 +317,8 @@ import { SyntaxBracketLsContext } from './CqlParser';
 import { SyntaxBracketRsContext } from './CqlParser';
 import { SyntaxCommaContext } from './CqlParser';
 import { SyntaxColonContext } from './CqlParser';
+import { SyntaxPlusContext } from './CqlParser';
+import { SyntaxMinusContext } from './CqlParser';
 import { SyntaxSquoteContext } from './CqlParser';
 import { SyntaxDquoteContext } from './CqlParser';
 import { SyntaxOperatorEqContext } from './CqlParser';
@@ -1872,26 +1874,26 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitRelationElement?: (ctx: RelationElementContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.relalationContains`.
+	 * Enter a parse tree produced by `CqlParser.relationContains`.
 	 * @param ctx the parse tree
 	 */
-	enterRelalationContains?: (ctx: RelalationContainsContext) => void;
+	enterRelationContains?: (ctx: RelationContainsContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.relalationContains`.
+	 * Exit a parse tree produced by `CqlParser.relationContains`.
 	 * @param ctx the parse tree
 	 */
-	exitRelalationContains?: (ctx: RelalationContainsContext) => void;
+	exitRelationContains?: (ctx: RelationContainsContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.relalationContainsKey`.
+	 * Enter a parse tree produced by `CqlParser.relationContainsKey`.
 	 * @param ctx the parse tree
 	 */
-	enterRelalationContainsKey?: (ctx: RelalationContainsKeyContext) => void;
+	enterRelationContainsKey?: (ctx: RelationContainsKeyContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.relalationContainsKey`.
+	 * Exit a parse tree produced by `CqlParser.relationContainsKey`.
 	 * @param ctx the parse tree
 	 */
-	exitRelalationContainsKey?: (ctx: RelalationContainsKeyContext) => void;
+	exitRelationContainsKey?: (ctx: RelationContainsKeyContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.functionCall`.
@@ -3784,6 +3786,28 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitSyntaxColon?: (ctx: SyntaxColonContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.syntaxPlus`.
+	 * @param ctx the parse tree
+	 */
+	enterSyntaxPlus?: (ctx: SyntaxPlusContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.syntaxPlus`.
+	 * @param ctx the parse tree
+	 */
+	exitSyntaxPlus?: (ctx: SyntaxPlusContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.syntaxMinus`.
+	 * @param ctx the parse tree
+	 */
+	enterSyntaxMinus?: (ctx: SyntaxMinusContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.syntaxMinus`.
+	 * @param ctx the parse tree
+	 */
+	exitSyntaxMinus?: (ctx: SyntaxMinusContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.syntaxSquote`.
