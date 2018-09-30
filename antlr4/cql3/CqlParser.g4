@@ -214,10 +214,6 @@ createAggregate
       kwInitcond initCondDefinition
     ;
 
-// paramList
-    // :
-
-
 initCondDefinition
     : constant
     | initCondList
@@ -373,10 +369,14 @@ dropIndex
     : kwDrop kwIndex ifExist? (keyspace DOT)? indexName
     ;
 createTable
-    : kwCreate kwTable ifNotExist? tableSpec
-      syntaxBracketLr columnDefinitionList syntaxBracketRr
-      withElement?
+    : kwCreate kwTable ifNotExist? tableSpec createTableDef withElement?
     ;
+
+createTableDef
+    : syntaxBracketLr columnDefinitionList syntaxBracketRr
+    | { this.notifyErrorListeners("rule.createTableDef"); }
+    ;
+
 withElement
     : kwWith tableOptions? clusteringOrder?
     ;
@@ -414,17 +414,19 @@ optionHashValue
     ;
 
 columnDefinitionList
-    :( columnDefinition ) (syntaxComma columnDefinition)* (syntaxComma primaryKeyElement)?
+    : columnDefinition (syntaxComma columnDefinition)* (syntaxComma primaryKeyElement)?
     ;
-//
+
 columnDefinition
-    : column dataType primaryKeyColumn
+    : column dataType primaryKeyModifier
     | column dataType kwStatic
     | column dataType
+    | { this.notifyErrorListeners("rule.columnDefinition"); }
     ;
-//
-primaryKeyColumn
+
+primaryKeyModifier
     : kwPrimary kwKey
+    | kwPrimary { this.notifyErrorListeners("rule.primaryKeyModifier"); }
     ;
 primaryKeyElement
     : kwPrimary kwKey syntaxBracketLr primaryKeyDefinition syntaxBracketRr
@@ -506,26 +508,38 @@ truncate
     ;
 
 createIndex
-    : kwCreate kwIndex ifNotExist? indexName? kwOn  tableSpec syntaxBracketLr indexColumnSpec syntaxBracketRr
+    : kwCreate kwIndex ifNotExist? indexName? createIndexSubject createIndexDef
     ;
+
+createIndexSubject
+    : kwOn tableSpec
+    | { this.notifyErrorListeners("rule.createIndexSubject"); }
+    ;
+
 indexName
     : OBJECT_NAME
     | constantString
     ;
-indexColumnSpec
+createIndexDef
+    : syntaxBracketLr createIndexTarget syntaxBracketRr
+    | { this.notifyErrorListeners("rule.createIndexDef"); }
+    ;
+createIndexTarget
     : column
     | indexKeysSpec
     | indexEntriesSSpec
     | indexFullSpec
+    | { this.notifyErrorListeners("rule.createIndexTarget"); }
     ;
+
 indexKeysSpec
-    : kwKeys syntaxBracketLr OBJECT_NAME syntaxBracketRr
+    : kwKeys syntaxBracketLr column syntaxBracketRr
     ;
 indexEntriesSSpec
-    : kwEntries syntaxBracketLr OBJECT_NAME syntaxBracketRr
+    : kwEntries syntaxBracketLr column syntaxBracketRr
     ;
 indexFullSpec
-    : kwFull syntaxBracketLr OBJECT_NAME syntaxBracketRr
+    : kwFull syntaxBracketLr column syntaxBracketRr
     ;
 
 delete

@@ -71,6 +71,7 @@ import { DropTableContext } from './CqlParser';
 import { DropKeyspaceContext } from './CqlParser';
 import { DropIndexContext } from './CqlParser';
 import { CreateTableContext } from './CqlParser';
+import { CreateTableDefContext } from './CqlParser';
 import { WithElementContext } from './CqlParser';
 import { ClusteringOrderContext } from './CqlParser';
 import { TableOptionsContext } from './CqlParser';
@@ -83,7 +84,7 @@ import { OptionHashKeyContext } from './CqlParser';
 import { OptionHashValueContext } from './CqlParser';
 import { ColumnDefinitionListContext } from './CqlParser';
 import { ColumnDefinitionContext } from './CqlParser';
-import { PrimaryKeyColumnContext } from './CqlParser';
+import { PrimaryKeyModifierContext } from './CqlParser';
 import { PrimaryKeyElementContext } from './CqlParser';
 import { PrimaryKeyDefinitionContext } from './CqlParser';
 import { SinglePrimaryKeyContext } from './CqlParser';
@@ -104,8 +105,10 @@ import { DurableWritesContext } from './CqlParser';
 import { UseContext } from './CqlParser';
 import { TruncateContext } from './CqlParser';
 import { CreateIndexContext } from './CqlParser';
+import { CreateIndexSubjectContext } from './CqlParser';
 import { IndexNameContext } from './CqlParser';
-import { IndexColumnSpecContext } from './CqlParser';
+import { CreateIndexDefContext } from './CqlParser';
+import { CreateIndexTargetContext } from './CqlParser';
 import { IndexKeysSpecContext } from './CqlParser';
 import { IndexEntriesSSpecContext } from './CqlParser';
 import { IndexFullSpecContext } from './CqlParser';
@@ -1081,6 +1084,17 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitCreateTable?: (ctx: CreateTableContext) => void;
 
 	/**
+	 * Enter a parse tree produced by `CqlParser.createTableDef`.
+	 * @param ctx the parse tree
+	 */
+	enterCreateTableDef?: (ctx: CreateTableDefContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.createTableDef`.
+	 * @param ctx the parse tree
+	 */
+	exitCreateTableDef?: (ctx: CreateTableDefContext) => void;
+
+	/**
 	 * Enter a parse tree produced by `CqlParser.withElement`.
 	 * @param ctx the parse tree
 	 */
@@ -1213,15 +1227,15 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitColumnDefinition?: (ctx: ColumnDefinitionContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.primaryKeyColumn`.
+	 * Enter a parse tree produced by `CqlParser.primaryKeyModifier`.
 	 * @param ctx the parse tree
 	 */
-	enterPrimaryKeyColumn?: (ctx: PrimaryKeyColumnContext) => void;
+	enterPrimaryKeyModifier?: (ctx: PrimaryKeyModifierContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.primaryKeyColumn`.
+	 * Exit a parse tree produced by `CqlParser.primaryKeyModifier`.
 	 * @param ctx the parse tree
 	 */
-	exitPrimaryKeyColumn?: (ctx: PrimaryKeyColumnContext) => void;
+	exitPrimaryKeyModifier?: (ctx: PrimaryKeyModifierContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.primaryKeyElement`.
@@ -1444,6 +1458,17 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitCreateIndex?: (ctx: CreateIndexContext) => void;
 
 	/**
+	 * Enter a parse tree produced by `CqlParser.createIndexSubject`.
+	 * @param ctx the parse tree
+	 */
+	enterCreateIndexSubject?: (ctx: CreateIndexSubjectContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.createIndexSubject`.
+	 * @param ctx the parse tree
+	 */
+	exitCreateIndexSubject?: (ctx: CreateIndexSubjectContext) => void;
+
+	/**
 	 * Enter a parse tree produced by `CqlParser.indexName`.
 	 * @param ctx the parse tree
 	 */
@@ -1455,15 +1480,26 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitIndexName?: (ctx: IndexNameContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.indexColumnSpec`.
+	 * Enter a parse tree produced by `CqlParser.createIndexDef`.
 	 * @param ctx the parse tree
 	 */
-	enterIndexColumnSpec?: (ctx: IndexColumnSpecContext) => void;
+	enterCreateIndexDef?: (ctx: CreateIndexDefContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.indexColumnSpec`.
+	 * Exit a parse tree produced by `CqlParser.createIndexDef`.
 	 * @param ctx the parse tree
 	 */
-	exitIndexColumnSpec?: (ctx: IndexColumnSpecContext) => void;
+	exitCreateIndexDef?: (ctx: CreateIndexDefContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.createIndexTarget`.
+	 * @param ctx the parse tree
+	 */
+	enterCreateIndexTarget?: (ctx: CreateIndexTargetContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.createIndexTarget`.
+	 * @param ctx the parse tree
+	 */
+	exitCreateIndexTarget?: (ctx: CreateIndexTargetContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.indexKeysSpec`.

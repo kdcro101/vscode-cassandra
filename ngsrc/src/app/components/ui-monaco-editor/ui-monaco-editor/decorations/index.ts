@@ -1,5 +1,5 @@
 import { AnalyzedStatement } from "../../../../../../../src/types/parser";
-import { insertDecorations } from "./insert";
+import { insertDecorations, insertMarkers } from "./insert";
 import { selectDecorations, selectMarkers } from "./select";
 export const decorationsForStatement = (model: monaco.editor.ITextModel,
     statement: AnalyzedStatement): monaco.editor.IModelDeltaDecoration[] => {
@@ -11,6 +11,9 @@ export const decorationsForStatement = (model: monaco.editor.ITextModel,
             break;
         case "insert":
             out = insertDecorations(model, statement);
+            break;
+        case "delete":
+            out = selectDecorations(model, statement);
             break;
         default:
             out = null;
@@ -25,6 +28,12 @@ export const markersForStatement = (model: monaco.editor.ITextModel,
     let out: monaco.editor.IMarkerData[] = [];
     switch (statement.type) {
         case "select":
+            out = selectMarkers(model, statement);
+            break;
+        case "insert":
+            out = insertMarkers(model, statement);
+            break;
+        case "delete":
             out = selectMarkers(model, statement);
             break;
         default:

@@ -71,6 +71,7 @@ import { DropTableContext } from './CqlParser';
 import { DropKeyspaceContext } from './CqlParser';
 import { DropIndexContext } from './CqlParser';
 import { CreateTableContext } from './CqlParser';
+import { CreateTableDefContext } from './CqlParser';
 import { WithElementContext } from './CqlParser';
 import { ClusteringOrderContext } from './CqlParser';
 import { TableOptionsContext } from './CqlParser';
@@ -83,7 +84,7 @@ import { OptionHashKeyContext } from './CqlParser';
 import { OptionHashValueContext } from './CqlParser';
 import { ColumnDefinitionListContext } from './CqlParser';
 import { ColumnDefinitionContext } from './CqlParser';
-import { PrimaryKeyColumnContext } from './CqlParser';
+import { PrimaryKeyModifierContext } from './CqlParser';
 import { PrimaryKeyElementContext } from './CqlParser';
 import { PrimaryKeyDefinitionContext } from './CqlParser';
 import { SinglePrimaryKeyContext } from './CqlParser';
@@ -104,8 +105,10 @@ import { DurableWritesContext } from './CqlParser';
 import { UseContext } from './CqlParser';
 import { TruncateContext } from './CqlParser';
 import { CreateIndexContext } from './CqlParser';
+import { CreateIndexSubjectContext } from './CqlParser';
 import { IndexNameContext } from './CqlParser';
-import { IndexColumnSpecContext } from './CqlParser';
+import { CreateIndexDefContext } from './CqlParser';
+import { CreateIndexTargetContext } from './CqlParser';
 import { IndexKeysSpecContext } from './CqlParser';
 import { IndexEntriesSSpecContext } from './CqlParser';
 import { IndexFullSpecContext } from './CqlParser';
@@ -812,6 +815,13 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitCreateTable?: (ctx: CreateTableContext) => Result;
 
 	/**
+	 * Visit a parse tree produced by `CqlParser.createTableDef`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitCreateTableDef?: (ctx: CreateTableDefContext) => Result;
+
+	/**
 	 * Visit a parse tree produced by `CqlParser.withElement`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -896,11 +906,11 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitColumnDefinition?: (ctx: ColumnDefinitionContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.primaryKeyColumn`.
+	 * Visit a parse tree produced by `CqlParser.primaryKeyModifier`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitPrimaryKeyColumn?: (ctx: PrimaryKeyColumnContext) => Result;
+	visitPrimaryKeyModifier?: (ctx: PrimaryKeyModifierContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.primaryKeyElement`.
@@ -1043,6 +1053,13 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitCreateIndex?: (ctx: CreateIndexContext) => Result;
 
 	/**
+	 * Visit a parse tree produced by `CqlParser.createIndexSubject`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitCreateIndexSubject?: (ctx: CreateIndexSubjectContext) => Result;
+
+	/**
 	 * Visit a parse tree produced by `CqlParser.indexName`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -1050,11 +1067,18 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitIndexName?: (ctx: IndexNameContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.indexColumnSpec`.
+	 * Visit a parse tree produced by `CqlParser.createIndexDef`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitIndexColumnSpec?: (ctx: IndexColumnSpecContext) => Result;
+	visitCreateIndexDef?: (ctx: CreateIndexDefContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.createIndexTarget`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitCreateIndexTarget?: (ctx: CreateIndexTargetContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.indexKeysSpec`.
