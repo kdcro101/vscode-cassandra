@@ -66,6 +66,7 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
         "CLUSTERING",
         "COLUMNFAMILY",
         "COMPACT",
+        "CONTAINS",
         "CONSISTENCY",
         "COUNT",
         "COUNTER",

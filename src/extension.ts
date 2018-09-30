@@ -39,6 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
             workbench = new CassandraWorkbench(workspace, clusterItems);
             workbench.start();
             commands.setWorkbench(workbench);
+            workbench.revealCqlPanel();
         });
 
 }

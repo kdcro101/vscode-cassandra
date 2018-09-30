@@ -143,17 +143,16 @@ import { SelectElementsContext } from './CqlParser';
 import { SelectElementContext } from './CqlParser';
 import { RelationElementsContext } from './CqlParser';
 import { RelationElementContext } from './CqlParser';
-import { RelationContainsContext } from './CqlParser';
-import { RelationContainsKeyContext } from './CqlParser';
+import { RelationOperatorContext } from './CqlParser';
 import { FunctionCallContext } from './CqlParser';
 import { FunctionArgsContext } from './CqlParser';
 import { ConstantContext } from './CqlParser';
-import { LiteralUuidContext } from './CqlParser';
-import { LiteralDecimalContext } from './CqlParser';
-import { LiteralFloatContext } from './CqlParser';
-import { LiteralStringContext } from './CqlParser';
-import { LiteralBooleanContext } from './CqlParser';
-import { LiteralHexadecimalContext } from './CqlParser';
+import { ConstantUuidContext } from './CqlParser';
+import { ConstantDecimalContext } from './CqlParser';
+import { ConstantFloatContext } from './CqlParser';
+import { ConstantStringContext } from './CqlParser';
+import { ConstantBooleanContext } from './CqlParser';
+import { ConstantHexadecimalContext } from './CqlParser';
 import { KeyspaceContext } from './CqlParser';
 import { TableContext } from './CqlParser';
 import { TableSpecContext } from './CqlParser';
@@ -1874,26 +1873,15 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitRelationElement?: (ctx: RelationElementContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.relationContains`.
+	 * Enter a parse tree produced by `CqlParser.relationOperator`.
 	 * @param ctx the parse tree
 	 */
-	enterRelationContains?: (ctx: RelationContainsContext) => void;
+	enterRelationOperator?: (ctx: RelationOperatorContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.relationContains`.
+	 * Exit a parse tree produced by `CqlParser.relationOperator`.
 	 * @param ctx the parse tree
 	 */
-	exitRelationContains?: (ctx: RelationContainsContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `CqlParser.relationContainsKey`.
-	 * @param ctx the parse tree
-	 */
-	enterRelationContainsKey?: (ctx: RelationContainsKeyContext) => void;
-	/**
-	 * Exit a parse tree produced by `CqlParser.relationContainsKey`.
-	 * @param ctx the parse tree
-	 */
-	exitRelationContainsKey?: (ctx: RelationContainsKeyContext) => void;
+	exitRelationOperator?: (ctx: RelationOperatorContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.functionCall`.
@@ -1929,70 +1917,70 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitConstant?: (ctx: ConstantContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.literalUuid`.
+	 * Enter a parse tree produced by `CqlParser.constantUuid`.
 	 * @param ctx the parse tree
 	 */
-	enterLiteralUuid?: (ctx: LiteralUuidContext) => void;
+	enterConstantUuid?: (ctx: ConstantUuidContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.literalUuid`.
+	 * Exit a parse tree produced by `CqlParser.constantUuid`.
 	 * @param ctx the parse tree
 	 */
-	exitLiteralUuid?: (ctx: LiteralUuidContext) => void;
+	exitConstantUuid?: (ctx: ConstantUuidContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.literalDecimal`.
+	 * Enter a parse tree produced by `CqlParser.constantDecimal`.
 	 * @param ctx the parse tree
 	 */
-	enterLiteralDecimal?: (ctx: LiteralDecimalContext) => void;
+	enterConstantDecimal?: (ctx: ConstantDecimalContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.literalDecimal`.
+	 * Exit a parse tree produced by `CqlParser.constantDecimal`.
 	 * @param ctx the parse tree
 	 */
-	exitLiteralDecimal?: (ctx: LiteralDecimalContext) => void;
+	exitConstantDecimal?: (ctx: ConstantDecimalContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.literalFloat`.
+	 * Enter a parse tree produced by `CqlParser.constantFloat`.
 	 * @param ctx the parse tree
 	 */
-	enterLiteralFloat?: (ctx: LiteralFloatContext) => void;
+	enterConstantFloat?: (ctx: ConstantFloatContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.literalFloat`.
+	 * Exit a parse tree produced by `CqlParser.constantFloat`.
 	 * @param ctx the parse tree
 	 */
-	exitLiteralFloat?: (ctx: LiteralFloatContext) => void;
+	exitConstantFloat?: (ctx: ConstantFloatContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.literalString`.
+	 * Enter a parse tree produced by `CqlParser.constantString`.
 	 * @param ctx the parse tree
 	 */
-	enterLiteralString?: (ctx: LiteralStringContext) => void;
+	enterConstantString?: (ctx: ConstantStringContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.literalString`.
+	 * Exit a parse tree produced by `CqlParser.constantString`.
 	 * @param ctx the parse tree
 	 */
-	exitLiteralString?: (ctx: LiteralStringContext) => void;
+	exitConstantString?: (ctx: ConstantStringContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.literalBoolean`.
+	 * Enter a parse tree produced by `CqlParser.constantBoolean`.
 	 * @param ctx the parse tree
 	 */
-	enterLiteralBoolean?: (ctx: LiteralBooleanContext) => void;
+	enterConstantBoolean?: (ctx: ConstantBooleanContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.literalBoolean`.
+	 * Exit a parse tree produced by `CqlParser.constantBoolean`.
 	 * @param ctx the parse tree
 	 */
-	exitLiteralBoolean?: (ctx: LiteralBooleanContext) => void;
+	exitConstantBoolean?: (ctx: ConstantBooleanContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.literalHexadecimal`.
+	 * Enter a parse tree produced by `CqlParser.constantHexadecimal`.
 	 * @param ctx the parse tree
 	 */
-	enterLiteralHexadecimal?: (ctx: LiteralHexadecimalContext) => void;
+	enterConstantHexadecimal?: (ctx: ConstantHexadecimalContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.literalHexadecimal`.
+	 * Exit a parse tree produced by `CqlParser.constantHexadecimal`.
 	 * @param ctx the parse tree
 	 */
-	exitLiteralHexadecimal?: (ctx: LiteralHexadecimalContext) => void;
+	exitConstantHexadecimal?: (ctx: ConstantHexadecimalContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.keyspace`.

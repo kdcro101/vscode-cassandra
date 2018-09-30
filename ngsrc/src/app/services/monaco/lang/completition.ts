@@ -74,7 +74,7 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                                 console.log(`listKs:${listKeyspaces} listTb: ${listTables} listCol: ${listColumns}`);
 
                                 const keywords: monaco.languages.CompletionItem[] = list
-                                    .filter((i) => i.type === "keyword")
+                                    .filter((i) => i.type === "keyword" || i.type === "dataType")
                                     .map((item) => {
                                         const o: monaco.languages.CompletionItem = {
                                             label: item.text,

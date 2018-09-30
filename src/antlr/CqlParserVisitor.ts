@@ -143,17 +143,16 @@ import { SelectElementsContext } from './CqlParser';
 import { SelectElementContext } from './CqlParser';
 import { RelationElementsContext } from './CqlParser';
 import { RelationElementContext } from './CqlParser';
-import { RelationContainsContext } from './CqlParser';
-import { RelationContainsKeyContext } from './CqlParser';
+import { RelationOperatorContext } from './CqlParser';
 import { FunctionCallContext } from './CqlParser';
 import { FunctionArgsContext } from './CqlParser';
 import { ConstantContext } from './CqlParser';
-import { LiteralUuidContext } from './CqlParser';
-import { LiteralDecimalContext } from './CqlParser';
-import { LiteralFloatContext } from './CqlParser';
-import { LiteralStringContext } from './CqlParser';
-import { LiteralBooleanContext } from './CqlParser';
-import { LiteralHexadecimalContext } from './CqlParser';
+import { ConstantUuidContext } from './CqlParser';
+import { ConstantDecimalContext } from './CqlParser';
+import { ConstantFloatContext } from './CqlParser';
+import { ConstantStringContext } from './CqlParser';
+import { ConstantBooleanContext } from './CqlParser';
+import { ConstantHexadecimalContext } from './CqlParser';
 import { KeyspaceContext } from './CqlParser';
 import { TableContext } from './CqlParser';
 import { TableSpecContext } from './CqlParser';
@@ -1317,18 +1316,11 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitRelationElement?: (ctx: RelationElementContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.relationContains`.
+	 * Visit a parse tree produced by `CqlParser.relationOperator`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitRelationContains?: (ctx: RelationContainsContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `CqlParser.relationContainsKey`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitRelationContainsKey?: (ctx: RelationContainsKeyContext) => Result;
+	visitRelationOperator?: (ctx: RelationOperatorContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.functionCall`.
@@ -1352,46 +1344,46 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitConstant?: (ctx: ConstantContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.literalUuid`.
+	 * Visit a parse tree produced by `CqlParser.constantUuid`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitLiteralUuid?: (ctx: LiteralUuidContext) => Result;
+	visitConstantUuid?: (ctx: ConstantUuidContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.literalDecimal`.
+	 * Visit a parse tree produced by `CqlParser.constantDecimal`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitLiteralDecimal?: (ctx: LiteralDecimalContext) => Result;
+	visitConstantDecimal?: (ctx: ConstantDecimalContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.literalFloat`.
+	 * Visit a parse tree produced by `CqlParser.constantFloat`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitLiteralFloat?: (ctx: LiteralFloatContext) => Result;
+	visitConstantFloat?: (ctx: ConstantFloatContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.literalString`.
+	 * Visit a parse tree produced by `CqlParser.constantString`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitLiteralString?: (ctx: LiteralStringContext) => Result;
+	visitConstantString?: (ctx: ConstantStringContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.literalBoolean`.
+	 * Visit a parse tree produced by `CqlParser.constantBoolean`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitLiteralBoolean?: (ctx: LiteralBooleanContext) => Result;
+	visitConstantBoolean?: (ctx: ConstantBooleanContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.literalHexadecimal`.
+	 * Visit a parse tree produced by `CqlParser.constantHexadecimal`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitLiteralHexadecimal?: (ctx: LiteralHexadecimalContext) => Result;
+	visitConstantHexadecimal?: (ctx: ConstantHexadecimalContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.keyspace`.

@@ -501,7 +501,6 @@ use
     : kwUse keyspace
     ;
 
-
 truncate
     : kwTruncate (kwTable)? tableSpec
     ;
@@ -685,11 +684,11 @@ relationElements
 
 relationElement
     : column relationOperator constant
+    | column kwIn syntaxBracketLr functionArgs? syntaxBracketRr
+    | column kwContains constant
+    | column kwContainsKey constant
     | functionCall relationOperator constant
     | functionCall relationOperator functionCall
-    | column kwIn syntaxBracketLr functionArgs? syntaxBracketRr
-    | relationContainsKey
-    | relationContains
     | { this.notifyErrorListeners("rule.relationElement"); }
     ;
 
@@ -703,13 +702,6 @@ relationOperator
     ;
 
 
-
-relationContains
-    : column kwContains constant
-    ;
-relationContainsKey
-    : column kwContainsKey constant
-    ;
 
 functionCall
     : OBJECT_NAME '(' STAR ')'
