@@ -29,10 +29,14 @@ export class Completition {
 
     public execute(code: string, caretPosition?: number): CompletitionOutput {
 
+        code = code == null ? "" : code;
+
         const rxNonWord = new RegExp(/\W$/);
         const rxPartial = new RegExp(/\b\w+$/);
+        const rxSeparator = new RegExp(/(\.|\:)$/);
 
         const lastNonWord = rxNonWord.test(code);
+        const lastSeparator = rxSeparator.test(code);
 
         let codePartial: string = null;
         let codeWithoutPartial: string = code;
@@ -43,7 +47,10 @@ export class Completition {
             codeWithoutPartial = code.replace(rxPartial, "");
         }
 
-        const codeToExecute = `${codeWithoutPartial} `;
+        const codeToExecute = lastSeparator ? `${codeWithoutPartial} ` : codeWithoutPartial;
+
+        console.log(`AC [codePartial]=[${codePartial}] lastSeparator=${lastSeparator}`);
+        console.log(`AC [codeToExecute]=[${codeToExecute}]`);
 
         const tokenLexer = new CqlLexer(new ANTLRInputStream(codeToExecute));
         const tokens = tokenLexer.getAllTokens();
@@ -91,16 +98,18 @@ export class Completition {
         console.log(candidates);
         console.log("-------------------------------");
 
-        let list: RuleData[] = candidates;
-        // let filtered: RuleData[] = candidates;
+        let list: RuleData[] = [];
+        let keywords = candidates.filter((i) => i.type === "keyword");
+        const inputs = candidates.filter((i) => i.type.search(/^input/) === 0);
+
         if (lastToken) {
-            list = candidates.filter((i) => !this.isEqual(i.text, lastToken.text));
+            keywords = keywords.filter((i) => !this.isEqual(i.text, lastToken.text));
         }
         if (codePartial && codePartial.length > 0) {
-            list = list.filter((i) => this.isBeginningWith(i.text, codePartial) && i.type === "keyword");
+            keywords = keywords.filter((i) => this.isBeginningWith(i.text, codePartial) && i.type === "keyword");
         }
-        const inputs = candidates.filter((r) => r.type.search(/^input/) === 0 );
-        list = list.concat(inputs);
+
+        list = list.concat(keywords).concat(inputs);
 
         const out: CompletitionOutput = {
             list,

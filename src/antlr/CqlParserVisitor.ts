@@ -95,6 +95,7 @@ import { PartitionKeyContext } from './CqlParser';
 import { ClusteringKeyContext } from './CqlParser';
 import { ApplyBatchContext } from './CqlParser';
 import { BeginBatchContext } from './CqlParser';
+import { BeginBatchSpecContext } from './CqlParser';
 import { BatchTypeContext } from './CqlParser';
 import { AlterKeyspaceContext } from './CqlParser';
 import { ReplicationListContext } from './CqlParser';
@@ -115,8 +116,8 @@ import { UpdateContext } from './CqlParser';
 import { IfSpecContext } from './CqlParser';
 import { IfConditionListContext } from './CqlParser';
 import { IfConditionContext } from './CqlParser';
-import { AssignmentsContext } from './CqlParser';
-import { AssignmentElementContext } from './CqlParser';
+import { UpdateAssignmentsContext } from './CqlParser';
+import { UpdateAssignmentElementContext } from './CqlParser';
 import { AssignmentSetContext } from './CqlParser';
 import { AssignmentMapContext } from './CqlParser';
 import { AssignmentListContext } from './CqlParser';
@@ -978,6 +979,13 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitBeginBatch?: (ctx: BeginBatchContext) => Result;
 
 	/**
+	 * Visit a parse tree produced by `CqlParser.beginBatchSpec`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitBeginBatchSpec?: (ctx: BeginBatchSpecContext) => Result;
+
+	/**
 	 * Visit a parse tree produced by `CqlParser.batchType`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -1118,18 +1126,18 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitIfCondition?: (ctx: IfConditionContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.assignments`.
+	 * Visit a parse tree produced by `CqlParser.updateAssignments`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitAssignments?: (ctx: AssignmentsContext) => Result;
+	visitUpdateAssignments?: (ctx: UpdateAssignmentsContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.assignmentElement`.
+	 * Visit a parse tree produced by `CqlParser.updateAssignmentElement`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitAssignmentElement?: (ctx: AssignmentElementContext) => Result;
+	visitUpdateAssignmentElement?: (ctx: UpdateAssignmentElementContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.assignmentSet`.

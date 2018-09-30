@@ -36,11 +36,10 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                         const analysis = args[2];
 
                         const state = locateCursor(offset, analysis, textToOffset);
-                        // const statement = getStatement(offset, analysis, textToOffset);
                         const statement = state.statement;
                         const keyspace = statement && statement.keyspace ? statement.keyspace : keyspaceInitial;
                         const table = statement && statement.table ? statement.table : null;
-                        // const completeInput = getAutocompleteInput(statement, textToOffset, offset);
+
                         const completeInput = state.autocompleteInput;
 
                         const keyspaceData = clusterData && keyspace ?
@@ -54,17 +53,20 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                         console.log(analysis);
                         console.log("statement");
                         console.log(statement);
-                        console.log("completeInput");
-                        console.log(completeInput);
+                        console.log(`completeInput: [${completeInput}]`);
 
                         console.log("tableData");
                         console.log(tableData);
 
                         autocomplete.getCandidates(completeInput).pipe()
-                            .subscribe((results) => {
+                            .subscribe((result) => {
+
+                                console.log("completition results");
+                                console.log(result);
 
                                 let all: monaco.languages.CompletionItem[] = [];
-                                const list = results.list;
+                                const list = result.list;
+                                const partial = result.partial == null ? "" : result.partial;
                                 const listKeyspaces = list.find((i) => i.type === "inputKeyspace") ? true : false;
                                 const listTables = list.find((i) => i.type === "inputTable") ? true : false;
                                 const listColumns = list.find((i) => i.type === "inputColumn") ? true : false;
@@ -91,7 +93,8 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                                         };
                                         return o;
                                     });
-                                    all = all.concat(keyspaces);
+
+                                    all = all.concat(keyspaces.filter((k) => k.label.search(partial) === 0));
                                 }
                                 if (listTables && keyspaceData) {
                                     const tables: monaco.languages.CompletionItem[] = keyspaceData.tables.map((t) => {
@@ -101,7 +104,7 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                                         };
                                         return o;
                                     });
-                                    all = all.concat(tables);
+                                    all = all.concat(tables.filter((t) => t.label.search(partial) === 0));
                                 }
                                 if (listColumns && tableData) {
                                     const columns: monaco.languages.CompletionItem[] = tableData.columns.map((t) => {
@@ -111,7 +114,7 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                                         };
                                         return o;
                                     });
-                                    all = all.concat(columns);
+                                    all = all.concat(columns.filter((c) => c.label.search(partial) === 0));
                                 }
 
                                 resolve(all);

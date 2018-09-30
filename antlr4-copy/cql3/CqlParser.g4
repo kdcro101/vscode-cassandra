@@ -41,8 +41,7 @@ empty
     ;
 
 cql
-    : beginBatch
-    | alterKeyspace
+    : alterKeyspace
     | alterMaterializedView
     | alterRole
     | alterTable
@@ -466,12 +465,6 @@ applyBatch
     ;
 
 beginBatch
-    : beginBatchSpec delete
-    | beginBatchSpec insert
-    | beginBatchSpec update
-    ;
-
-beginBatchSpec
     : kwBegin batchType? kwBatch usingTimestampSpec?
     ;
 batchType
@@ -530,8 +523,7 @@ indexFullSpec
     ;
 
 delete
-    : kwDelete deleteColumnList? fromSpec usingTimestampSpec?
-      ( whereSpec | { this.notifyErrorListeners("rule.whereSpec"); } ) (ifExist | ifSpec)?
+    : beginBatch? kwDelete deleteColumnList? fromSpec usingTimestampSpec? whereSpec (ifExist | ifSpec)?
     ;
 
 deleteColumnList
@@ -545,8 +537,8 @@ deleteColumnItem
 
 
 update
-    : kwUpdate tableSpec  usingTtlTimestamp?  updateAssignments
-      (whereSpec | { this.notifyErrorListeners("rule.whereSpec"); }) (ifExist | ifSpec)?
+    : beginBatch? kwUpdate tableSpec  usingTtlTimestamp? kwSet assignments
+      whereSpec (ifExist | ifSpec)?
     ;
 
 ifSpec
@@ -559,22 +551,20 @@ ifCondition
     : OBJECT_NAME OPERATOR_EQ constant
     ;
 
-updateAssignments
-    : kwSet ( updateAssignmentElement ) (syntaxComma updateAssignmentElement)*
-    | { this.notifyErrorListeners("rule.updateAssignments"); }
+assignments
+    : ( assignmentElement ) (syntaxComma assignmentElement)*
     ;
 
-updateAssignmentElement
-    : column OPERATOR_EQ (constant | assignmentMap | assignmentSet | assignmentList)
-    | column OPERATOR_EQ column (PLUS | MINUS) literalDecimal
-    | column OPERATOR_EQ column (PLUS | MINUS) assignmentSet
-    | column OPERATOR_EQ assignmentSet (PLUS | MINUS) OBJECT_NAME
-    | column OPERATOR_EQ column (PLUS | MINUS) assignmentMap
-    | column OPERATOR_EQ assignmentMap (PLUS | MINUS) OBJECT_NAME
-    | column OPERATOR_EQ column (PLUS | MINUS) assignmentList
-    | column OPERATOR_EQ assignmentList (PLUS | MINUS) OBJECT_NAME
-    | column syntaxBracketLs literalDecimal syntaxBracketRs OPERATOR_EQ constant
-    | { this.notifyErrorListeners("rule.updateAssignmentElement"); }
+assignmentElement
+    : OBJECT_NAME OPERATOR_EQ (constant | assignmentMap | assignmentSet | assignmentList)
+    | OBJECT_NAME OPERATOR_EQ OBJECT_NAME (PLUS | MINUS) literalDecimal
+    | OBJECT_NAME OPERATOR_EQ OBJECT_NAME (PLUS | MINUS) assignmentSet
+    | OBJECT_NAME OPERATOR_EQ assignmentSet (PLUS | MINUS) OBJECT_NAME
+    | OBJECT_NAME OPERATOR_EQ OBJECT_NAME (PLUS | MINUS) assignmentMap
+    | OBJECT_NAME OPERATOR_EQ assignmentMap (PLUS | MINUS) OBJECT_NAME
+    | OBJECT_NAME OPERATOR_EQ OBJECT_NAME (PLUS | MINUS) assignmentList
+    | OBJECT_NAME OPERATOR_EQ assignmentList (PLUS | MINUS) OBJECT_NAME
+    | OBJECT_NAME syntaxBracketLs literalDecimal syntaxBracketRs OPERATOR_EQ constant
     ;
 
 assignmentSet
@@ -591,7 +581,8 @@ assignmentList
 
 
 insert
-    : kwInsert kwInto tableSpec insertColumnSpec insertValuesSpec (ifNotExist|) usingTtlTimestamp?
+    : (beginBatch|) kwInsert kwInto tableSpec insertColumnSpec insertValuesSpec
+      (ifNotExist|) usingTtlTimestamp?
     ;
 usingTtlTimestamp
     : kwUsing ttl
@@ -620,18 +611,15 @@ ifExist
     ;
 
 insertValuesSpec
-    : kwValues syntaxBracketLr expressionList syntaxBracketRr
-    | { this.notifyErrorListeners("rule.insertValuesSpec"); }
+    : kwValues '(' expressionList ')'
     ;
 
 insertColumnSpec
-    : syntaxBracketLr columnList syntaxBracketRr
-    | { this.notifyErrorListeners("rule.insertColumnSpec"); }
+    : '(' columnList ')'
     ;
 
 columnList
-    : column (syntaxComma (column | { this.notifyErrorListeners("rule.column"); }))*
-    | { this.notifyErrorListeners("rule.column_list"); }
+    : column (syntaxComma column)*
     ;
 expressionList
     : expression (syntaxComma expression)*
@@ -639,11 +627,11 @@ expressionList
 
 expression
     : (constant| assignmentMap | assignmentSet | assignmentList)
-    | { this.notifyErrorListeners("rule.expression"); }
     ;
 
 select
-    : kwSelect kwDistinct? selectElements fromSpec whereSpec? orderSpec? limitSpec? kwAllowFiltering?
+    : kwSelect kwDistinct? selectElements
+      fromSpec whereSpec? orderSpec? limitSpec? kwAllowFiltering?
     ;
 
 limitSpec
@@ -754,13 +742,12 @@ keyspace
 table
     : OBJECT_NAME
     | DQUOTE OBJECT_NAME DQUOTE
-    | { this.notifyErrorListeners("rule.table"); }
     ;
 
 
 tableSpec
     : table
-    | keyspace specialDot table
+    | keyspace specialDot (table| { this.notifyErrorListeners("rule.table"); })
     | { this.notifyErrorListeners("rule.tableSpec"); }
     ;
 

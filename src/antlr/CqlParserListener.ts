@@ -95,6 +95,7 @@ import { PartitionKeyContext } from './CqlParser';
 import { ClusteringKeyContext } from './CqlParser';
 import { ApplyBatchContext } from './CqlParser';
 import { BeginBatchContext } from './CqlParser';
+import { BeginBatchSpecContext } from './CqlParser';
 import { BatchTypeContext } from './CqlParser';
 import { AlterKeyspaceContext } from './CqlParser';
 import { ReplicationListContext } from './CqlParser';
@@ -115,8 +116,8 @@ import { UpdateContext } from './CqlParser';
 import { IfSpecContext } from './CqlParser';
 import { IfConditionListContext } from './CqlParser';
 import { IfConditionContext } from './CqlParser';
-import { AssignmentsContext } from './CqlParser';
-import { AssignmentElementContext } from './CqlParser';
+import { UpdateAssignmentsContext } from './CqlParser';
+import { UpdateAssignmentElementContext } from './CqlParser';
 import { AssignmentSetContext } from './CqlParser';
 import { AssignmentMapContext } from './CqlParser';
 import { AssignmentListContext } from './CqlParser';
@@ -1343,6 +1344,17 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitBeginBatch?: (ctx: BeginBatchContext) => void;
 
 	/**
+	 * Enter a parse tree produced by `CqlParser.beginBatchSpec`.
+	 * @param ctx the parse tree
+	 */
+	enterBeginBatchSpec?: (ctx: BeginBatchSpecContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.beginBatchSpec`.
+	 * @param ctx the parse tree
+	 */
+	exitBeginBatchSpec?: (ctx: BeginBatchSpecContext) => void;
+
+	/**
 	 * Enter a parse tree produced by `CqlParser.batchType`.
 	 * @param ctx the parse tree
 	 */
@@ -1563,26 +1575,26 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitIfCondition?: (ctx: IfConditionContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.assignments`.
+	 * Enter a parse tree produced by `CqlParser.updateAssignments`.
 	 * @param ctx the parse tree
 	 */
-	enterAssignments?: (ctx: AssignmentsContext) => void;
+	enterUpdateAssignments?: (ctx: UpdateAssignmentsContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.assignments`.
+	 * Exit a parse tree produced by `CqlParser.updateAssignments`.
 	 * @param ctx the parse tree
 	 */
-	exitAssignments?: (ctx: AssignmentsContext) => void;
+	exitUpdateAssignments?: (ctx: UpdateAssignmentsContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.assignmentElement`.
+	 * Enter a parse tree produced by `CqlParser.updateAssignmentElement`.
 	 * @param ctx the parse tree
 	 */
-	enterAssignmentElement?: (ctx: AssignmentElementContext) => void;
+	enterUpdateAssignmentElement?: (ctx: UpdateAssignmentElementContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.assignmentElement`.
+	 * Exit a parse tree produced by `CqlParser.updateAssignmentElement`.
 	 * @param ctx the parse tree
 	 */
-	exitAssignmentElement?: (ctx: AssignmentElementContext) => void;
+	exitUpdateAssignmentElement?: (ctx: UpdateAssignmentElementContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.assignmentSet`.

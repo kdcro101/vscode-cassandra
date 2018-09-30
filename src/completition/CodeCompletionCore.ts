@@ -81,6 +81,7 @@ export class CodeCompletionCore {
     // A rule which has been visited before with the same input position will always produce the same output positions.
     private shortcutMap: Map<number, Map<number, RuleEndStatus>> = new Map();
     private candidates: CandidatesCollection = new CandidatesCollection(); // The collected candidates (rules and tokens).
+    private candidateRulesToIgnore: number[] = [];
 
     // tslint:disable-next-line:member-ordering
     private static followSetsByATN: Map<string, FollowSetsPerState> = new Map();
@@ -104,6 +105,8 @@ export class CodeCompletionCore {
         this.shortcutMap.clear();
         this.candidates.rules.clear();
         this.candidates.tokens.clear();
+        this.candidateRulesToIgnore = [];
+
         this.statesProcessed = 0;
 
         this.tokenStartIndex = context ? context.start.tokenIndex : 0;
@@ -127,7 +130,7 @@ export class CodeCompletionCore {
         this.processRule(this.atn.ruleToStartState[startRule], 0, callStack, "");
 
         if (this.showResult) {
-            console.log("States processed: " + this.statesProcessed);
+            // console.log("States processed: " + this.statesProcessed);
             console.log("\n\nCollected rules:\n");
             for (const rule of this.candidates.rules) {
                 let path = "";
@@ -153,6 +156,11 @@ export class CodeCompletionCore {
             console.log("\n\n");
         }
 
+        this.candidateRulesToIgnore.forEach((ruleIndex) => {
+            // console.log("removing rules to ignore...", ruleIndex, this.ruleNames[ruleIndex]);
+            this.candidates.rules.delete(ruleIndex);
+        });
+
         return this.candidates;
     }
 
@@ -171,6 +179,8 @@ export class CodeCompletionCore {
         if (this.preferredRules.size === 0) {
             return false;
         }
+        // console.log(ruleStack);
+        // console.log(`translateToRuleIndex ${ruleStack[ruleStack.length - 1]}`);
 
         // Loop over the rule stack from highest to lowest rule level. This way we properly handle the higher rule
         // if it contains a lower one that is also a preferred rule.
@@ -192,9 +202,11 @@ export class CodeCompletionCore {
                 }
 
                 if (addNew) {
-                    this.candidates.rules.set(ruleStack[i], path);
+                    const ruleNumber = ruleStack[i];
+
+                    this.candidates.rules.set(ruleNumber, path);
                     if (this.showDebugOutput) {
-                        console.log("=====> collected: ", this.ruleNames[i]);
+                        console.log("=====> collected candidates.rules: ", this.ruleNames[ruleNumber]);
                     }
                 }
                 return true;
@@ -315,6 +327,10 @@ export class CodeCompletionCore {
         // Start with rule specific handling before going into the ATN walk.
 
         // Check first if we've taken this path with the same input before.
+
+        // const isAtCaret = tokenIndex >= this.tokens.length - 1;
+        const rn = this.ruleNames[startState.ruleIndex];
+
         let positionMap = this.shortcutMap.get(startState.ruleIndex);
         if (!positionMap) {
             positionMap = new Map();
@@ -322,7 +338,7 @@ export class CodeCompletionCore {
         } else {
             if (positionMap.has(tokenIndex)) {
                 if (this.showDebugOutput) {
-                    console.log("=====> shortcut");
+                    // console.log("=====> shortcut");
                 }
                 return positionMap.get(tokenIndex)!;
             }
@@ -360,9 +376,14 @@ export class CodeCompletionCore {
         }
 
         callStack.push(startState.ruleIndex);
+
         if (tokenIndex >= this.tokens.length - 1) { // At caret?
             if (this.preferredRules.has(startState.ruleIndex)) {
                 // No need to go deeper when collecting entries and we reach a rule that we want to collect anyway.
+                // const f = startState.getTransitions().filter((t) =>
+                //  t.target.ruleIndex === startState.ruleIndex && t.target.stateType === ATNStateType.RULE_STOP);
+                // console.log(`at caret adding ${startState.ruleIndex}`);
+                // console.log(`has RULE STOP=${f.length}`);
                 this.translateToRuleIndex(callStack);
             } else {
                 // Convert all follow sets to either single symbols or their associated preferred rule and add
@@ -413,7 +434,9 @@ export class CodeCompletionCore {
         statePipeline.push({ state: startState, tokenIndex });
 
         while (statePipeline.length > 0) {
+            // console.log(`statePipeline.len = ${statePipeline.length}`);
             currentEntry = statePipeline.pop()!;
+            // console.log(`statePipeline.rule = ${currentEntry.state.ruleIndex}`);
             ++this.statesProcessed;
 
             const currentSymbol = this.tokens[currentEntry.tokenIndex];
@@ -479,6 +502,13 @@ export class CodeCompletionCore {
                         if (transition.isEpsilon) {
                             if (atCaret) {
                                 this.translateToRuleIndex(callStack);
+                            }
+                            if (atCaret && transition.target.stateType === ATNStateType.RULE_STOP) {
+                                const stoppedRule = transition.target.ruleIndex;
+                                // console.log("-----------------");
+                                // console.log(`Should ignore ${stoppedRule} has direct link to ruleStop`);
+                                // console.log("-----------------");
+                                this.candidateRulesToIgnore.push(stoppedRule);
                             }
                             // Jump over simple states with a single outgoing epsilon transition.
                             statePipeline.push({ state: transition.target, tokenIndex: currentEntry.tokenIndex });
@@ -586,7 +616,7 @@ export class CodeCompletionCore {
         } else {
             output += "<" + this.tokenStartIndex + tokenIndex + "> ";
         }
-        console.log(output + "Current state: " + baseDescription + transitionDescription);
+        // console.log(output + "Current state: " + baseDescription + transitionDescription);
     }
 
     private printRuleState(stack: number[]) {

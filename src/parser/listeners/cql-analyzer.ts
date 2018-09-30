@@ -114,15 +114,19 @@ export class CqlAnalyzerListener implements CqlParserListener {
             }
         });
 
-        if (this.result.statementRanges.length < this.result.statements.length && this.result.statementRanges.length > 0) {
+        // if (this.result.statementRanges.length < this.result.statements.length && this.result.statementRanges.length > 0) {
+        if (this.separators && this.separators[this.separators.length - 1] < this.cql.length) {
             // add last range
-            const last = this.result.statementRanges[this.result.statementRanges.length - 1];
-            const item: AnalyzedStatementRange = {
-                start: last.stop + 2, // to skip last semicolon
-                stop: this.cql.length,
-                text: this.cql.substring(last.stop + 2, this.cql.length),
-            };
-            this.result.statementRanges.push(item);
+            const sp = this.cql.length;
+            this.addStatementRange(sp);
+
+            // const last = this.result.statementRanges[this.result.statementRanges.length - 1];
+            // const item: AnalyzedStatementRange = {
+            //     start: last.stop + 2, // to skip last semicolon
+            //     stop: this.cql.length,
+            //     text: this.cql.substring(last.stop + 2, this.cql.length),
+            // };
+            // this.result.statementRanges.push(item);
         }
 
         if (this.result.statements.length === 1 && this.result.statementRanges.length === 0) {
@@ -168,19 +172,7 @@ export class CqlAnalyzerListener implements CqlParserListener {
     }
     exitStatementSeparator = (ctx: StatementSeparatorContext) => {
         const pos = ctx.start.startIndex;
-        const lastIndex = this.separators.length - 1;
-        const nextIndex = lastIndex >= 0 ? lastIndex + 1 : 0;
-        const lastPos = lastIndex >= 0 ? this.separators[lastIndex] : 0;
-        const body = this.cql.substring(lastPos, pos);
-
-        const item: AnalyzedStatementRange = {
-            start: lastPos,
-            stop: pos,
-            text: body,
-        };
-
-        this.result.statementRanges.push(item);
-
+        this.addStatementRange(pos);
     }
     exitExpression = (ctx: ExpressionContext): void => {
         const expression: CqlStatementExpression = {
@@ -403,6 +395,21 @@ export class CqlAnalyzerListener implements CqlParserListener {
         });
 
         s.columns = columns;
+
+    }
+    private addStatementRange(endPosition: number) {
+        const lastIndex = this.separators.length - 1;
+        const lastPos = lastIndex >= 0 ? this.separators[lastIndex] + 2 : 0;
+        const body = this.cql.substring(lastPos, endPosition);
+
+        const item: AnalyzedStatementRange = {
+            start: lastPos,
+            stop: endPosition,
+            text: body,
+        };
+
+        this.result.statementRanges.push(item);
+        this.separators.push(endPosition);
     }
 
 }
