@@ -98,6 +98,7 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
         "INT",
         "INTO",
         "KEY",
+        "KEYS",
         "KEYSPACE",
         "KEYSPACES",
         "LEVEL",

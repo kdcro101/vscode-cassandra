@@ -533,13 +533,13 @@ createIndexTarget
     ;
 
 indexKeysSpec
-    : kwKeys syntaxBracketLr column syntaxBracketRr
+    : kwKeys syntaxBracketLr (column| { this.notifyErrorListeners("rule.indexKeysSpec"); }) syntaxBracketRr
     ;
 indexEntriesSSpec
-    : kwEntries syntaxBracketLr column syntaxBracketRr
+    : kwEntries syntaxBracketLr (column| { this.notifyErrorListeners("rule.indexEntriesSSpec"); }) syntaxBracketRr
     ;
 indexFullSpec
-    : kwFull syntaxBracketLr column syntaxBracketRr
+    : kwFull syntaxBracketLr (column| { this.notifyErrorListeners("rule.indexFullSpec"); }) syntaxBracketRr
     ;
 
 delete

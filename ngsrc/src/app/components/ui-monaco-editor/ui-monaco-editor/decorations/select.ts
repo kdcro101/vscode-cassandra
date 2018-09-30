@@ -23,6 +23,9 @@ export const selectDecorations = (model: monaco.editor.ITextModel, statement: An
                 {
                     value: `\`\`\`cqlhover\n${c.type} AS PARTITION KEY [${c.kindIndex + 1}/${c.kindCount}]\`\`\``,
                 },
+                {
+                    value: `[some link](http://www.google.com)`,
+                },
             ];
             out.push(o);
         }
