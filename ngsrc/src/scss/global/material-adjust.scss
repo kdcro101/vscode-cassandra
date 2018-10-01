@@ -12,7 +12,12 @@ $fontConfig: mat-typography-config();
         }
     }
 }
-
+.mat-button {
+    mat-icon.icon-18 {
+        margin-bottom: 2px;
+        margin-right: 8px;
+    }
+}
 
 mat-icon.icon-18 {
     height: 18px;
@@ -31,6 +36,13 @@ button.mat-icon-button.size-18 {
         font-size: 18px;
         line-height: 18px;
     }
+}
+
+.mat-tooltip.filename {
+    max-width: 80%;
+    word-break: break-all;
+    text-overflow: clip;
+
 }
 
 .vscode-dark,

@@ -25,14 +25,21 @@
                 </mat-form-field>
             </div>
 
-            <div *ngIf="formGroup.controls['clusterName'].errors?.required" class="cluster-loading-error mat-caption">Cluster
+            <div *ngIf="formGroup.controls['clusterName'].errors?.required" class="cluster-loading-error mat-caption mr">Cluster
                 selection is required</div>
             <div *ngIf="clusterLoadingError && !clusterLoading && !formGroup.controls['clusterName'].errors?.required"
-                class="cluster-loading-error mat-caption">Error retrieving cluster structure</div>
+                class="cluster-loading-error mat-caption mr">Error retrieving cluster structure</div>
+
+            <div class="sep"></div>
+            <button *ngIf="editorCurrent.statement.modified" color="warn" mat-button matTooltip="Save {{ editorCurrent.statement.filename }}"
+                (click)="onStatementSave.emit()">
+                <span fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon class="icon-18">save</mat-icon><span>SAVE</span>
+                </span>
+            </button>
             <div fxFlex></div>
-            <button *ngIf="!editorCurrent.statement.saved" mat-raised-button color="accent" class="mr" (click)="onStatementSave.emit()">SAVE</button>
             <button [disabled]="(editorCurrent.stateExecuting | async) || clusterLoadingError || clusterLoading || !formGroup.valid"
-                color="accent" mat-button (click)="executeCql()">EXECUTE</button>
+                color="primary" mat-button (click)="executeCql()">EXECUTE</button>
             <mat-progress-bar *ngIf="editorCurrent.stateExecuting | async" class="progress" mode="indeterminate" color="accent"></mat-progress-bar>
         </form>
         <ui-monaco-editor #monacoEditor [editor]="editorCurrent" (onCodeChange)="onCodeChange($event)" (onExecute)="executeCql()"

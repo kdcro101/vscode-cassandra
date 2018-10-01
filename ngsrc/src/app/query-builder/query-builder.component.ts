@@ -125,9 +125,12 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
             this.menuOpen(e, index);
             return;
         }
+        if (e.button === 1) {
+            this.editorService.remove(index);
+            return;
+        }
 
         this.tabActivate(index);
-        console.log(`Clicked index=${index}`);
         this.drag.dragStart(index, e);
 
     }

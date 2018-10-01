@@ -259,6 +259,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         this.editorCurrent.statement.keyspace = keyspace;
         this.onStatementChange.emit(this.editorCurrent.statement);
         this.autocomplete.setKeyspace(keyspace);
+        this.editorService.keyspace = keyspace;
 
         if (this.monacoEditor) {
             this.monacoEditor.updateExecuteParams();
@@ -375,6 +376,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
                 this.clusterData = data;
                 this.keyspaceList = data.keyspaces;
                 this.autocomplete.setCluster(clusterName, data);
+                this.editorService.clusterName = clusterName;
 
                 this.clusterLoading = false;
                 this.clusterLoadingError = false;

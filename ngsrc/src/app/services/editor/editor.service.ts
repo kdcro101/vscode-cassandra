@@ -26,6 +26,9 @@ export class EditorService {
 
     private indexCurrent: number = -1;
 
+    private activeClusterName: string;
+    private activeKeyspace: string;
+
     constructor(private messages: MessageService, private monaco: MonacoService) {
 
         this.messages.eventMessage.pipe()
@@ -46,6 +49,20 @@ export class EditorService {
             });
         }
 
+    }
+    public get clusterName() {
+        return this.activeClusterName;
+    }
+    public get keyspace() {
+        return this.activeKeyspace;
+    }
+    public set clusterName(val: string) {
+        console.log(`##################SETTING cluster = ${val}`);
+        this.activeClusterName = val;
+    }
+    public set keyspace(val: string) {
+        console.log(`##################SETTING keyspace = ${val}`);
+        this.activeKeyspace = val;
     }
     public get index() {
         return this.indexCurrent;
@@ -176,7 +193,7 @@ export class EditorService {
         }
 
         this.list[index].statement = statement;
-        this.list[index].statement.saved = false;
+        this.list[index].statement.modified = true;
         this.persistEditors();
         this.eventListChange.next();
     }
@@ -283,7 +300,7 @@ export class EditorService {
 
                     this.list[index].statement.fsPath = data.fsPath;
                     this.list[index].statement.filename = data.fileName;
-                    this.list[index].statement.saved = true;
+                    this.list[index].statement.modified = false;
 
                     this.persistEditors();
                     this.eventListChange.next();
@@ -310,7 +327,7 @@ export class EditorService {
             clusterName,
             keyspace,
             body: "",
-            saved: true,
+            modified: false,
             filename: null,
             source: "action",
 
@@ -345,11 +362,11 @@ export class EditorService {
                         id: generateId(),
                         body: data.body,
                         filename: data.fileName,
-                        keyspace: null,
-                        clusterName: null,
+                        keyspace: this.keyspace,
+                        clusterName: this.clusterName,
                         source: "storage",
                         fsPath: data.fsPath,
-                        saved: true,
+                        modified: false,
                     };
 
                     this.persistedStatement2Editor(statement)

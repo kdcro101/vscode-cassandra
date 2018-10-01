@@ -16,7 +16,7 @@
                 <div #tabItems *ngFor="let i of editorService.list;index as ix" class="item" [class.active]="ix===editorIndex"
                     (mousedown)="onTabMousedown($event,ix)" fxLayout="row" fxLayoutAlign="start center">
                     <div #triggerWrapper class="menu-trigger" [matMenuTriggerFor]="menu"></div>
-                    <div fxFlex class="title dhandle">
+                    <div fxFlex class="title dhandle" matTooltip="{{ i.statement.filename }}" matTooltipClass="filename">
                         {{ i.statement.filename }}
                     </div>
                     <div class="vsui-close" (mousedown)="$event.stopPropagation();$event.preventDefault()" (click)="$event.stopPropagation();$event.preventDefault();doTabClose($event,ix)"></div>
