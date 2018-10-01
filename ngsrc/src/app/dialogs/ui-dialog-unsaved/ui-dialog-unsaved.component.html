@@ -3,10 +3,11 @@
     <div>Unsaved changes</div>
 </h1>
 <div mat-dialog-content>
-    <p>You have unsaved changes in editor.</p>
+    <p>You have unsaved changes in file <b>{{filename}}</b>.</p>
     <p>Do you want to close without saving?</p>
 </div>
-<div mat-dialog-actions>
-    <button mat-button color="primary"  [mat-dialog-close]="false" >CANCEL</button>
+<div mat-dialog-actions fxLayout="row">
+    <button mat-button color="primary" [mat-dialog-close]="false">CANCEL</button>
+    <div fxFlex></div>
     <button mat-raised-button color="accent" [mat-dialog-close]="true" cdkFocusInitial>CLOSE EDITOR</button>
 </div>

@@ -11,7 +11,7 @@ export class UiDialogUnsavedComponent implements OnInit {
 
     constructor(
         public dialogRef: MatDialogRef<UiDialogUnsavedComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: boolean) { }
+        @Inject(MAT_DIALOG_DATA) public filename: string) { }
 
     ngOnInit() {
     }

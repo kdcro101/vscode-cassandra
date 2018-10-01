@@ -16,9 +16,43 @@
     ],
     "main": "./out/extension",
     "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "Cassandra workbench configuration",
+            "properties": {
+                "cassandraWorkbench.activeClusterName": {
+                    "type": "string",
+                    "default": null,
+                    "description": "Active cluster"
+                },
+                "cassandraWorkbench.activeKeyspace": {
+                    "type": "array",
+                    "description": "Last used keyspace for cluster (Array of ['clusterName','keyspace'] pairs)",
+                    "items": {
+                        "type": "array",
+                        "title": "inner objects",
+                        "description": "Cluster name, keypace",
+                        "items": [{
+                                "type": "string",
+                                "description": "Cluster name"
+                            },
+                            {
+                                "type": "string",
+                                "description": "Keyspace"
+                            }
+                        ]
+                    }
+
+                },
+                "cassandraWorkbench.defaultSelectLimit": {
+                    "type": "number",
+                    "default": 500,
+                    "description": "Default LIMIT clause value when generating SELECT statements"
+                }
+            }
+        },
         "menus": {
-            "view/title": [
-                {
+            "view/title": [{
                     "when": "view == cassandraWorkbenchView",
                     "command": "cassandraWorkbench.refresh",
                     "group": "navigation"
@@ -34,16 +68,13 @@
                     "group": "navigation"
                 }
             ],
-            "view/item/context": [
-                {
-                    "command": "cassandraWorkbench.tableSelectStatement",
-                    "when": "view == cassandraWorkbenchView && viewItem == table",
-                    "group": "navigation@1"
-                }
-            ]
+            "view/item/context": [{
+                "command": "cassandraWorkbench.tableSelectStatement",
+                "when": "view == cassandraWorkbenchView && viewItem == table",
+                "group": "navigation@1"
+            }]
         },
-        "commands": [
-            {
+        "commands": [{
                 "command": "cassandraWorkbench.generateConfiguration",
                 "title": "CASSANDRA WORKBENCH: Generate configuration template"
             },
@@ -77,22 +108,18 @@
             }
         ],
         "viewsContainers": {
-            "activitybar": [
-                {
-                    "id": "object-explorer",
-                    "title": "Casssandra workbench",
-                    "icon": "icons/activity.svg",
-                    "when": "dd==dom"
-                }
-            ]
+            "activitybar": [{
+                "id": "object-explorer",
+                "title": "Casssandra workbench",
+                "icon": "icons/activity.svg",
+                "when": "dd==dom"
+            }]
         },
         "views": {
-            "object-explorer": [
-                {
-                    "id": "cassandraWorkbenchView",
-                    "name": "Explorer"
-                }
-            ]
+            "object-explorer": [{
+                "id": "cassandraWorkbenchView",
+                "name": "Explorer"
+            }]
         }
     },
     "scripts": {

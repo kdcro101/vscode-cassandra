@@ -228,13 +228,17 @@ export class EditorService {
         }
 
         const lastActive = this.index;
+        const ids = this.list.reduce((acc, cur, i) => {
+            if (i > editorIndex) {
+                acc.push(cur.id);
+            }
+            return acc;
+        }, []);
 
-        for (let i = editorIndex; i < this.list.length; i++) {
-            const eid = this.list[i].id;
-            await this.remove(eid);
+        for (let i = 0; i < ids.length; i++) {
+            await this.remove(ids[i]);
         }
 
-        // this.listCurrent = this.listCurrent.filter((item, i) => i <= index);
         // activate tab
         if (lastActive <= editorIndex) {
             this.activate(0);
@@ -254,12 +258,15 @@ export class EditorService {
             return;
         }
 
-        for (let i = 0; i < this.list.length; i++) {
-            const eid = this.list[i].id;
-            if (eid === editorId) {
-                continue;
+        const ids = this.list.reduce((acc, cur, i) => {
+            if (cur.id !== editorId) {
+                acc.push(cur.id);
             }
-            await this.remove(eid);
+            return acc;
+        }, []);
+
+        for (let i = 0; i < ids.length; i++) {
+            await this.remove(ids[i]);
         }
 
         // activate tab
@@ -283,10 +290,10 @@ export class EditorService {
             const modified = editor.statement.modified;
 
             // if modified verify close with dialog!
-            from(modified === true ? this.dialogCloseUnsaved() : Promise.resolve(true))
+            from(modified === true ? this.dialogCloseUnsaved(editor.statement.filename) : Promise.resolve(true))
                 .pipe().subscribe((continueClose) => {
 
-                    if (!continueClose) {
+                    if (continueClose !== true) {
                         resolve();
                         return;
                     }
@@ -444,12 +451,12 @@ export class EditorService {
         });
 
     }
-    private dialogCloseUnsaved(): Promise<boolean> {
+    private dialogCloseUnsaved(filename: string): Promise<boolean> {
         return new Promise((resolve, reject) => {
 
             const dialogRef = this.dialog.open(UiDialogUnsavedComponent, {
                 width: "320px",
-                data: false,
+                data: filename,
             });
 
             dialogRef.afterClosed().subscribe(result => {
