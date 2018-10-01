@@ -103,11 +103,11 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
             });
 
-            window.addEventListener("click", (e) => {
-                console.log(e);
-            }, {
-                capture: false,
-            });
+            // window.addEventListener("click", (e) => {
+            //     console.log(e);
+            // }, {
+            //     capture: false,
+            // });
 
             fromEventPattern<monaco.editor.IEditorMouseEvent>((f: (e: any) => any) => {
                 return this.monacoEditor.onMouseDown(f);

@@ -101,7 +101,7 @@ export class CassandraWorkbench {
                         keyspace,
                         clusterName: c.name,
                         source: "action",
-                        saved: false,
+                        modified: statementBody == null ? false : true,
                     };
 
                     const m: ProcMessageStrict<"e2w_editorCreate"> = {

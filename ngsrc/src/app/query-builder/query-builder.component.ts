@@ -37,7 +37,7 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
 
     private drag: TabDraggable;
 
-    public doSave = new Subject<[number, boolean]>(); // [index,saveAsMode]
+    public doSave = new Subject<[string, boolean]>(); // [index,saveAsMode]
 
     constructor(
         public change: ChangeDetectorRef,
@@ -62,6 +62,7 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
                     });
                 }
             }, (e) => {
+                console.log(e);
                 this.snackBar.open("Error saving document", "OK");
             });
 
@@ -121,12 +122,14 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
 
     public onTabMousedown = (e: MouseEvent, index: number) => {
 
+        const editor = this.editorService.list[index];
+
         if (e.button === 2) {
             this.menuOpen(e, index);
             return;
         }
         if (e.button === 1) {
-            this.editorService.remove(index);
+            this.editorService.remove(editor.id);
             return;
         }
 
@@ -135,21 +138,29 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
 
     }
     public doTabClose = (e: MouseEvent, index: number) => {
-        this.editorService.remove(index);
+
+        const editor = this.editorService.list[index];
+        this.editorService.remove(editor.id);
     }
     public doTabCloseExcept = (e: MouseEvent, index: number) => {
-        this.editorService.removeExcept(index);
+
+        const editor = this.editorService.list[index];
+        this.editorService.removeExcept(editor.id);
     }
     public doTabCloseAfter = (e: MouseEvent, index: number) => {
-        this.editorService.removeAfter(index);
+
+        const editor = this.editorService.list[index];
+        this.editorService.removeAfter(editor.id);
     }
     public doTabSave = (e: MouseEvent, index: number) => {
-        // this.editorService.save(index, false);
-        this.doSave.next([this.editorIndex, false]);
+
+        const editor = this.editorService.list[index];
+        this.doSave.next([editor.id, false]);
     }
     public doTabSaveAs = (e: MouseEvent, index: number) => {
-        // this.editorService.save(index, true);
-        this.doSave.next([this.editorIndex, true]);
+
+        const editor = this.editorService.list[index];
+        this.doSave.next([editor.id, true]);
     }
     public doTabDuplicate = (e: MouseEvent, index: number) => {
         this.editorService.duplicate(index);

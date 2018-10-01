@@ -1,20 +1,18 @@
+import { AnimationEvent } from "@angular/animations";
 import {
-    ChangeDetectionStrategy, ChangeDetectorRef,
-    Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChild, ViewChildren,
+    ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef,
+    EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChild, ViewChildren,
 } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog, MatSnackBar } from "@angular/material";
-import { ReplaySubject, Subject } from "rxjs";
+import { merge, ReplaySubject, Subject } from "rxjs";
 import { debounceTime, take, takeUntil } from "rxjs/operators";
 import * as Split from "split.js";
-
-import { AnimationEvent } from "@angular/animations";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { merge } from "rxjs";
-
 import { WorkbenchCqlStatement } from "../../../../../../src/types/editor";
 import { CassandraCluster, CassandraClusterData, CassandraKeyspace, ExecuteQueryResponse } from "../../../../../../src/types/index";
 import { CqlAnalysisError } from "../../../../../../src/types/parser";
 import { ViewDestroyable } from "../../../base/view-destroyable/index";
+import { UiDialogChangesCancelComponent } from "../../../dialogs";
 import { AutocompleteService } from "../../../services/autocomplete/autocomplete.service";
 import { ClusterService } from "../../../services/cluster/cluster.service";
 import { CqlClientService } from "../../../services/cql-client/cql-client.service";
@@ -24,7 +22,6 @@ import { WorkbenchEditor } from "../../../types/index";
 import { UiDataGridComponent } from "../../ui-data-grid/ui-data-grid/ui-data-grid.component";
 import { UiMonacoEditorComponent } from "../../ui-monaco-editor/ui-monaco-editor/ui-monaco-editor.component";
 import { panelAnimations } from "./animations/panel";
-import { UiDialogChangesCancelComponent } from "./dialogs/ui-dialog-changes-cancel/ui-dialog-changes-cancel.component";
 
 type PanelAnimationState = "active" | "hidden";
 

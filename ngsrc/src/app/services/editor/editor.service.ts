@@ -1,12 +1,14 @@
 import { Injectable } from "@angular/core";
+import { MatDialog } from "@angular/material";
 import { cloneDeep } from "lodash";
 import { BehaviorSubject, from, ReplaySubject, Subject } from "rxjs";
-import { concatMap, filter, map, take } from "rxjs/operators";
 import { timeout } from "rxjs/operators";
+import { concatMap, filter, map, take } from "rxjs/operators";
 import { OpenStatementResultType, SaveStatementResultType } from "../../../../../src/persistence";
 import { WorkbenchCqlStatement } from "../../../../../src/types/editor";
 import { ProcMessage, ProcMessageStrict } from "../../../../../src/types/messages";
 import { generateId } from "../../const/id";
+import { UiDialogUnsavedComponent } from "../../dialogs/ui-dialog-unsaved/ui-dialog-unsaved.component";
 import { WorkbenchEditor } from "../../types/index";
 import { MessageService } from "../message/message.service";
 import { MonacoService } from "../monaco/monaco.service";
@@ -29,7 +31,7 @@ export class EditorService {
     private activeClusterName: string;
     private activeKeyspace: string;
 
-    constructor(private messages: MessageService, private monaco: MonacoService) {
+    constructor(private messages: MessageService, private monaco: MonacoService, public dialog: MatDialog) {
 
         this.messages.eventMessage.pipe()
             .subscribe((d) => {
@@ -217,29 +219,49 @@ export class EditorService {
 
         this.editorCreate(statement);
     }
-    public removeAfter(index: number) {
-        if (index < 0 || index >= this.list.length) {
+    public async removeAfter(editorId: string): Promise<void> {
+
+        const editorIndex = this.list.findIndex((e) => e.id === editorId);
+
+        if (editorIndex < 0) {
             return;
         }
+
         const lastActive = this.index;
-        this.listCurrent = this.listCurrent.filter((item, i) => i <= index);
+
+        for (let i = editorIndex; i < this.list.length; i++) {
+            const eid = this.list[i].id;
+            await this.remove(eid);
+        }
+
+        // this.listCurrent = this.listCurrent.filter((item, i) => i <= index);
         // activate tab
-        if (lastActive <= index) {
+        if (lastActive <= editorIndex) {
             this.activate(0);
         } else {
-            this.activate(this.listCurrent.length - 1);
+            this.activate(this.list.length - 1);
         }
         // emit list change
         this.eventListChange.next();
         // persist state
         this.persistEditors();
     }
-    public removeExcept(index: number) {
-        if (index < 0 || index >= this.list.length) {
+    public async removeExcept(editorId: string): Promise<void> {
+
+        const editorIndex = this.list.findIndex((e) => e.id === editorId);
+
+        if (editorIndex < 0) {
             return;
         }
 
-        this.listCurrent = this.listCurrent.filter((item, i) => i === index);
+        for (let i = 0; i < this.list.length; i++) {
+            const eid = this.list[i].id;
+            if (eid === editorId) {
+                continue;
+            }
+            await this.remove(eid);
+        }
+
         // activate tab
         this.activate(0);
         // emit list change
@@ -248,38 +270,63 @@ export class EditorService {
         this.persistEditors();
     }
 
-    public remove(index: number) {
-        if (index < 0 || index >= this.list.length) {
-            return;
-        }
-
-        this.listCurrent.splice(index, 1);
-
-        let nextActive: number = this.indexCurrent;
-
-        if (this.listCurrent.length > 0 && index <= this.indexCurrent) {
-            const minusOne = this.indexCurrent - 1;
-            nextActive = minusOne >= 0 ? minusOne : 0;
-        }
-        // activate tab
-        this.activate(nextActive);
-        // emit list change
-        this.eventListChange.next();
-        // persist state
-        this.persistEditors();
-    }
-    public save(index: number, saveAsMode: boolean = false): Promise<SaveStatementResultType> {
+    public remove(editorId: string): Promise<void> {
         return new Promise((resolve, reject) => {
-            const id = generateId();
-            if (index < 0 || index >= this.list.length) {
+
+            const editorIndex = this.list.findIndex((e) => e.id === editorId);
+
+            if (editorIndex < 0) {
                 resolve();
                 return;
             }
+            const editor = this.list[editorIndex];
+            const modified = editor.statement.modified;
+
+            // if modified verify close with dialog!
+            from(modified === true ? this.dialogCloseUnsaved() : Promise.resolve(true))
+                .pipe().subscribe((continueClose) => {
+
+                    if (!continueClose) {
+                        resolve();
+                        return;
+                    }
+
+                    this.list.splice(editorIndex, 1);
+                    let nextActive: number = this.indexCurrent;
+
+                    if (this.listCurrent.length > 0 && editorIndex <= this.indexCurrent) {
+                        const minusOne = this.indexCurrent - 1;
+                        nextActive = minusOne >= 0 ? minusOne : 0;
+                    }
+                    // activate tab
+                    this.activate(nextActive);
+                    // emit list change
+                    this.eventListChange.next();
+                    // persist state
+                    this.persistEditors();
+                    resolve();
+
+                });
+
+        });
+    }
+    public save(editorId: string, saveAsMode: boolean = false): Promise<SaveStatementResultType> {
+        return new Promise((resolve, reject) => {
+            console.log(`saving editor=${editorId}`);
+            const editorIndex = this.list.findIndex((e) => e.id === editorId);
+
+            if (editorIndex < 0) {
+                reject("no_editor");
+                return;
+            }
+
+            const id = generateId();
+
             const m: ProcMessageStrict<"w2e_statementSaveRequest"> = {
                 name: "w2e_statementSaveRequest",
                 data: {
                     id,
-                    statement: this.list[index].statement,
+                    statement: this.list[editorIndex].statement,
                     saveAsMode,
                 },
             };
@@ -298,9 +345,9 @@ export class EditorService {
                 }
                 if (data.responseType === "success") {
 
-                    this.list[index].statement.fsPath = data.fsPath;
-                    this.list[index].statement.filename = data.fileName;
-                    this.list[index].statement.modified = false;
+                    this.list[editorIndex].statement.fsPath = data.fsPath;
+                    this.list[editorIndex].statement.filename = data.fileName;
+                    this.list[editorIndex].statement.modified = false;
 
                     this.persistEditors();
                     this.eventListChange.next();
@@ -396,5 +443,23 @@ export class EditorService {
 
         });
 
+    }
+    private dialogCloseUnsaved(): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+
+            const dialogRef = this.dialog.open(UiDialogUnsavedComponent, {
+                width: "320px",
+                data: false,
+            });
+
+            dialogRef.afterClosed().subscribe(result => {
+                console.log("The dialog was closed");
+                const out = result === true ? true : false;
+                resolve(out);
+            }, (e) => {
+                console.log(e);
+                resolve(false);
+            });
+        });
     }
 }

@@ -1,7 +1,8 @@
 import { NgModule, NgModuleFactoryLoader, SystemJsNgModuleLoader } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import {
-    MatButtonModule, MatDividerModule, MatIconModule, MatMenuModule, MatSnackBarModule,
+    MatButtonModule, MatDialogModule,
+    MatDividerModule, MatIconModule, MatMenuModule, MatSnackBarModule,
     MatTooltipModule,
 } from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -13,17 +14,13 @@ import { UiContentHorizontalModule } from "./components/ui-content-horizontal";
 
 import { UiHistoryModule } from "./components/ui-history/ui-history.module";
 import { UiQueryModule } from "./components/ui-query";
+import { UiDialogModule } from "./dialogs";
 import { QueryBuilderComponent } from "./query-builder/query-builder.component";
 import { routerConfig } from "./router";
 import { ClusterService } from "./services/cluster/cluster.service";
 
 export const rootRoutes = [
-
     { name: "query-builder", url: "/query-builder", component: QueryBuilderComponent },
-    // { name: "bootstate.**", url: "/bs", loadChildren: "./bootstate/bootstate.module#BootstateModule" },
-    // { name: "logout.**", url: "/logout", loadChildren: "./logout/logout.module#LogoutModule" },
-    // { name: "system.**", url: "/system", loadChildren: "./system/system.module#SystemModule" },
-
 ];
 
 @NgModule({
@@ -36,9 +33,11 @@ export const rootRoutes = [
         MatDividerModule,
         MatSnackBarModule,
         MatTooltipModule,
+        MatDialogModule,
         UiHistoryModule,
         UiContentHorizontalModule,
         UiQueryModule,
+        UiDialogModule,
         UIRouterModule.forRoot({ states: rootRoutes, useHash: true, otherwise: { state: "query-builder" }, config: routerConfig }),
 
     ],

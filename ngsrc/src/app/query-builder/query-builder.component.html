@@ -49,7 +49,7 @@
         </ui-content-horizontal>
     </div>
     <div fxFlex class="client" fxLayout="column">
-        <ui-query (onStatementChange)="onActiveStatementChange($event)" (onStatementSave)="doSave.next([editorIndex,false])"
+        <ui-query (onStatementChange)="onActiveStatementChange($event)" (onStatementSave)="doSave.next([editor.id,false])"
             *ngIf="editorService.list.length>0 && editor" #queryEditor [editor]="editor" fxFlex></ui-query>
         <div *ngIf="!editorActive" #container>
 

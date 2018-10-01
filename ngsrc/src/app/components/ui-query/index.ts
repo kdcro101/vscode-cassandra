@@ -7,9 +7,9 @@ import {
     MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule,
     MatOptionModule, MatProgressBarModule, MatProgressSpinnerModule, MatSelectModule, MatSnackBarModule, MatTooltipModule,
 } from "@angular/material";
+import { UiDialogModule } from "../../dialogs";
 import { UiDataGridModule } from "../ui-data-grid";
 import { UiMonacoEditorModule } from "../ui-monaco-editor";
-import { UiDialogChangesCancelComponent } from "./ui-query/dialogs/ui-dialog-changes-cancel/ui-dialog-changes-cancel.component";
 import { UiQueryComponent } from "./ui-query/ui-query.component";
 
 @NgModule({
@@ -31,16 +31,15 @@ import { UiQueryComponent } from "./ui-query/ui-query.component";
         MatTooltipModule,
         UiMonacoEditorModule,
         UiDataGridModule,
+        UiDialogModule,
     ],
     declarations: [
         UiQueryComponent,
-        UiDialogChangesCancelComponent,
     ],
     exports: [
         UiQueryComponent,
     ],
     entryComponents: [
-        UiDialogChangesCancelComponent,
     ],
 })
 export class UiQueryModule {

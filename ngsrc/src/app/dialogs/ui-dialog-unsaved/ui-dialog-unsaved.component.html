@@ -1,0 +1,12 @@
+<h1 mat-dialog-title fxLayout="row" fxLayoutAlign="start center" class="title">
+    <mat-icon>warning</mat-icon>
+    <div>Unsaved changes</div>
+</h1>
+<div mat-dialog-content>
+    <p>You have unsaved changes in editor.</p>
+    <p>Do you want to close without saving?</p>
+</div>
+<div mat-dialog-actions>
+    <button mat-button color="primary"  [mat-dialog-close]="false" >CANCEL</button>
+    <button mat-raised-button color="accent" [mat-dialog-close]="true" cdkFocusInitial>CLOSE EDITOR</button>
+</div>
