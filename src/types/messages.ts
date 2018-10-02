@@ -19,6 +19,10 @@ export interface ProcMessageList {
     w2e_executeDataChangeRequest: ExecuteDataChangeRequest;
     w2e_statementSaveRequest: StatementSaveRequest;
     w2e_statementOpenRequest: MessageWithId;
+    w2e_setActiveClusterNameRequest: SetActiveClusterNameRequest;
+    w2e_setActiveKeyspaceRequest: SetActiveKeyspaceRequest;
+    w2e_getActiveKeyspaceRequest: GetActiveKeyspaceRequest;
+    w2e_getActiveClusterAndKeyspaceRequest: MessageWithId;
 
     e2w_goState: WebviewStateParams;
     e2w_getClusterStructResponse: ClusterStructureResponse;
@@ -31,6 +35,10 @@ export interface ProcMessageList {
     e2w_executeDataChangeResponse: ExecuteDataChangeResponse;
     e2w_statementSaveResponse: StatementSaveResponse;
     e2w_statementOpenResponse: StatementOpenResponse;
+    e2w_setActiveClusterNameResponse: MessageSimpleResponse;
+    e2w_setActiveKeyspaceResponse: MessageSimpleResponse;
+    e2w_getActiveKeyspaceResponse: GetActiveKeyspaceResponse;
+    e2w_getActiveClusterAndKeyspaceResponse: GetActiveClusterAndKeyspaceResponse;
 }
 export type ProcMessageType = keyof ProcMessageList;
 export interface ProcMessage {
@@ -147,4 +155,35 @@ export interface StatementOpenResponse extends MessageWithId {
 export interface HistoryGetResponse extends MessageWithId {
     list: HistroyItem[];
     error?: any;
+}
+
+export interface SetActiveClusterNameRequest extends MessageWithId {
+    clusterName: string;
+}
+export interface SetActiveKeyspaceRequest extends MessageWithId {
+    clusterName: string;
+    keyspace: string;
+}
+export interface MessageSimpleResponse extends MessageWithId {
+    success: boolean;
+    error?: any;
+}
+export interface MessageStringResponse extends MessageWithId {
+    result: string;
+    success: boolean;
+    error: any;
+}
+
+export interface GetActiveKeyspaceRequest extends MessageWithId {
+    clusterName: string;
+}
+
+export interface GetActiveKeyspaceResponse extends MessageWithId {
+    keyspace: string;
+    success: boolean;
+}
+export interface GetActiveClusterAndKeyspaceResponse extends MessageWithId {
+    clusterName: string;
+    keyspace: string;
+    success: boolean;
 }

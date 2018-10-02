@@ -1,7 +1,6 @@
 import { from, merge, Subject } from "rxjs";
-import { concatMap, map, takeUntil, tap } from "rxjs/operators";
+import { map, takeUntil, tap } from "rxjs/operators";
 import * as vscode from "vscode";
-import { ColumnInfo } from "../cassandra-client";
 import { ClusterExecuteResults, Clusters } from "../clusters";
 import { Completition } from "../completition";
 import { generateId } from "../const/id";
@@ -9,7 +8,7 @@ import { DataChangeProcessor } from "../data-change";
 import { InputParser } from "../parser";
 import { Persistence } from "../persistence";
 import { ExtensionContextBundle, ValidatedConfigClusterItem, WorkbenchCqlStatement } from "../types";
-import { ProcMessage, ProcMessageStrict } from "../types/messages";
+import { ProcMessage, ProcMessageStrict, SetActiveKeyspaceRequest } from "../types/messages";
 import { WorkbenchPanel } from "../workbench-panel";
 import { Workspace } from "../workspace";
 import { TreeviewProvider } from "./treeview-provider";
@@ -36,6 +35,7 @@ export class CassandraWorkbench {
         this.clusters = new Clusters(config);
         this.persistence = new Persistence(workspace);
         this.changeProcessor = new DataChangeProcessor(this.clusters);
+
     }
     public start() {
         this.treeProvider = new TreeviewProvider(this.clusters);
@@ -160,8 +160,126 @@ export class CassandraWorkbench {
             case "w2e_statementOpenRequest":
                 this.openStatementRespond(m as ProcMessageStrict<"w2e_statementOpenRequest">);
                 break;
+            case "w2e_setActiveClusterNameRequest":
+                this.setActiveClusterNameRespond(m as ProcMessageStrict<"w2e_setActiveClusterNameRequest">);
+                break;
+            case "w2e_setActiveKeyspaceRequest":
+                this.SetActiveKeyspaceRespond(m as ProcMessageStrict<"w2e_setActiveKeyspaceRequest">);
+                break;
+            case "w2e_getActiveKeyspaceRequest":
+                this.getActiveKeyspaceRespond(m as ProcMessageStrict<"w2e_getActiveKeyspaceRequest">);
+                break;
 
         }
+    }
+
+    private getActiveKeyspaceRespond(request: ProcMessageStrict<"w2e_getActiveKeyspaceRequest">) {
+        const req = request.data;
+        const id = req.id;
+        const clusterName = req.clusterName;
+        try {
+            const pairs = this.workspace.read("activeKeyspace") || [];
+            const clusterIndex = pairs.findIndex((i) => i[0] === clusterName);
+            let keyspace: string = null;
+
+            if (clusterIndex < 0) {
+                keyspace = null;
+            } else {
+                keyspace = pairs[clusterIndex][1];
+            }
+
+            const out: ProcMessageStrict<"e2w_getActiveKeyspaceResponse"> = {
+                name: "e2w_getActiveKeyspaceResponse",
+                data: {
+                    id,
+                    success: true,
+                    keyspace,
+                },
+            };
+            this.panel.emitMessage(out);
+
+        } catch (e) {
+            const errorOut: ProcMessageStrict<"e2w_getActiveKeyspaceResponse"> = {
+                name: "e2w_getActiveKeyspaceResponse",
+                data: {
+                    id,
+                    success: false,
+                    keyspace: null,
+                    error: e,
+                },
+            };
+            this.panel.emitMessage(errorOut);
+        }
+
+    }
+    private SetActiveKeyspaceRespond(request: ProcMessageStrict<"w2e_setActiveKeyspaceRequest">) {
+        const req = request.data;
+        const id = req.id;
+        const clusterName = req.clusterName;
+        const keyspace = req.keyspace;
+        try {
+            const pairs = this.workspace.read("activeKeyspace") || [];
+            const clusterIndex = pairs.findIndex((i) => i[0] === clusterName);
+
+            if (clusterIndex < 0) {
+                pairs.push([clusterName, keyspace]);
+            } else {
+                pairs[clusterIndex][1] = keyspace;
+            }
+
+            this.workspace.write("activeKeyspace", pairs);
+
+            const out: ProcMessageStrict<"e2w_setActiveClusterNameResponse"> = {
+                name: "e2w_setActiveClusterNameResponse",
+                data: {
+                    id,
+                    success: true,
+                },
+            };
+            this.panel.emitMessage(out);
+
+        } catch (e) {
+            const errorOut: ProcMessageStrict<"e2w_setActiveClusterNameResponse"> = {
+                name: "e2w_setActiveClusterNameResponse",
+                data: {
+                    id,
+                    success: false,
+                    error: e,
+                },
+            };
+            this.panel.emitMessage(errorOut);
+        }
+
+    }
+    private setActiveClusterNameRespond(request: ProcMessageStrict<"w2e_setActiveClusterNameRequest">) {
+        const req = request.data;
+        const id = req.id;
+        const name = req.clusterName;
+        try {
+            this.workspace.write("activeClusterName", name);
+
+            const out: ProcMessageStrict<"e2w_setActiveClusterNameResponse"> = {
+                name: "e2w_setActiveClusterNameResponse",
+                data: {
+                    id,
+                    success: true,
+                },
+            };
+            this.panel.emitMessage(out);
+
+        } catch (e) {
+            const errorOut: ProcMessageStrict<"e2w_setActiveClusterNameResponse"> = {
+                name: "e2w_setActiveClusterNameResponse",
+                data: {
+                    id,
+                    success: false,
+                    error: e,
+                },
+            };
+            this.panel.emitMessage(errorOut);
+
+        }
+
     }
     private getHistoryRespond(request: ProcMessageStrict<"w2e_getHistoryRequest">) {
         const req = request.data;
