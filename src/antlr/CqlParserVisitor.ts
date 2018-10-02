@@ -146,6 +146,9 @@ import { SelectElementsContext } from './CqlParser';
 import { SelectElementContext } from './CqlParser';
 import { RelationElementsContext } from './CqlParser';
 import { RelationElementContext } from './CqlParser';
+import { RelationElementConstantContext } from './CqlParser';
+import { RelationElementInContext } from './CqlParser';
+import { RelationElementFunctionContext } from './CqlParser';
 import { RelationOperatorContext } from './CqlParser';
 import { FunctionCallContext } from './CqlParser';
 import { FunctionArgsContext } from './CqlParser';
@@ -1338,6 +1341,27 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitRelationElement?: (ctx: RelationElementContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.relationElementConstant`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitRelationElementConstant?: (ctx: RelationElementConstantContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.relationElementIn`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitRelationElementIn?: (ctx: RelationElementInContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.relationElementFunction`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitRelationElementFunction?: (ctx: RelationElementFunctionContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.relationOperator`.

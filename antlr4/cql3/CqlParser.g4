@@ -633,7 +633,7 @@ ifExist
     ;
 
 insertValuesSpec
-    : kwValues syntaxBracketLr expressionList syntaxBracketRr
+    : kwValues syntaxBracketLr expressionList (syntaxBracketRr| { this.notifyErrorListeners("rule.syntaxBracketRr"); })
     | { this.notifyErrorListeners("rule.insertValuesSpec"); }
     ;
 
@@ -673,6 +673,7 @@ orderSpec
     ;
 orderSpecElement
     : column (kwAsc|kwDesc)?
+    | { this.notifyErrorListeners("rule.orderSpecElement"); }
     ;
 
 whereSpec
@@ -697,13 +698,23 @@ relationElements
     ;
 
 relationElement
-    : column relationOperator constant
-    | column kwIn syntaxBracketLr functionArgs? syntaxBracketRr
-    | column kwContains constant
-    | column kwContainsKey constant
-    | functionCall relationOperator constant
-    | functionCall relationOperator functionCall
+    : relationElementConstant
+    | relationElementIn
+    | relationElementFunction
+    | OBJECT_NAME { this.notifyErrorListeners("rule.relationElement"); }
     | { this.notifyErrorListeners("rule.relationElement"); }
+    ;
+
+relationElementConstant
+    : column relationOperator (constant | { this.notifyErrorListeners("rule.constant"); } )
+    ;
+
+relationElementIn
+    : column kwIn syntaxBracketLr functionArgs? syntaxBracketRr
+    ;
+
+relationElementFunction
+    : functionCall relationOperator functionCall
     ;
 
 
@@ -713,6 +724,9 @@ relationOperator
     | syntaxOperatorGt
     | syntaxOperatorLte
     | syntaxOperatorGte
+    | kwContains
+    | kwContainsKey
+    | { this.notifyErrorListeners("rule.relationOperator"); }
     ;
 
 

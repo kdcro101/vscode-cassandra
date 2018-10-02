@@ -146,6 +146,9 @@ import { SelectElementsContext } from './CqlParser';
 import { SelectElementContext } from './CqlParser';
 import { RelationElementsContext } from './CqlParser';
 import { RelationElementContext } from './CqlParser';
+import { RelationElementConstantContext } from './CqlParser';
+import { RelationElementInContext } from './CqlParser';
+import { RelationElementFunctionContext } from './CqlParser';
 import { RelationOperatorContext } from './CqlParser';
 import { FunctionCallContext } from './CqlParser';
 import { FunctionArgsContext } from './CqlParser';
@@ -1907,6 +1910,39 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitRelationElement?: (ctx: RelationElementContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.relationElementConstant`.
+	 * @param ctx the parse tree
+	 */
+	enterRelationElementConstant?: (ctx: RelationElementConstantContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.relationElementConstant`.
+	 * @param ctx the parse tree
+	 */
+	exitRelationElementConstant?: (ctx: RelationElementConstantContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.relationElementIn`.
+	 * @param ctx the parse tree
+	 */
+	enterRelationElementIn?: (ctx: RelationElementInContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.relationElementIn`.
+	 * @param ctx the parse tree
+	 */
+	exitRelationElementIn?: (ctx: RelationElementInContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.relationElementFunction`.
+	 * @param ctx the parse tree
+	 */
+	enterRelationElementFunction?: (ctx: RelationElementFunctionContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.relationElementFunction`.
+	 * @param ctx the parse tree
+	 */
+	exitRelationElementFunction?: (ctx: RelationElementFunctionContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.relationOperator`.

@@ -70,11 +70,12 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                                 const listKeyspaces = list.find((i) => i.type === "inputKeyspace") ? true : false;
                                 const listTables = list.find((i) => i.type === "inputTable") ? true : false;
                                 const listColumns = list.find((i) => i.type === "inputColumn") ? true : false;
+                                // const listSynOperators = list.find((i) => i.type === "syntaxOperator") ? true : false;
 
                                 console.log(`listKs:${listKeyspaces} listTb: ${listTables} listCol: ${listColumns}`);
 
                                 const keywords: monaco.languages.CompletionItem[] = list
-                                    .filter((i) => i.type === "keyword" || i.type === "dataType")
+                                    .filter((i) => i.type === "keyword" || i.type === "dataType" || i.type === "syntaxOperator")
                                     .map((item) => {
                                         const o: monaco.languages.CompletionItem = {
                                             label: item.text,

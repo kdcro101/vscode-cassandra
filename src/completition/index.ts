@@ -102,6 +102,7 @@ export class Completition {
         let list: RuleData[] = [];
         let keywords = candidates.filter((i) => i.type === "keyword" || i.type === "dataType");
         const inputs = candidates.filter((i) => i.type.search(/^input/) === 0);
+        const operators = candidates.filter((i) => i.type.search(/^syntaxOperator/) === 0);
 
         if (lastToken) {
             keywords = keywords.filter((i) => !this.isEqual(i.text, lastToken.text));
@@ -110,7 +111,7 @@ export class Completition {
             keywords = keywords.filter((i) => this.isBeginningWith(i.text, codePartial) && i.type === "keyword");
         }
 
-        list = list.concat(keywords).concat(inputs);
+        list = list.concat(keywords).concat(inputs).concat(operators);
 
         const out: CompletitionOutput = {
             list,

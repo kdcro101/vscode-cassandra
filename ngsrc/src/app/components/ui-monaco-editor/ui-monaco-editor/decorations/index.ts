@@ -15,6 +15,9 @@ export const decorationsForStatement = (model: monaco.editor.ITextModel,
         case "delete":
             out = selectDecorations(model, statement);
             break;
+        case "update":
+            out = selectDecorations(model, statement);
+            break;
         default:
             out = null;
             break;
