@@ -36,7 +36,6 @@ export interface ClusterExecuteResults {
 export class Clusters {
 
     public eventStructureChange = new Subject<number>();
-    // private clusters: CassandraCluster[] = null;
     private clientsCache: CassandraClientCache[] = [];
 
     private parser = new InputParser();

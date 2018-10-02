@@ -5,8 +5,8 @@ import {
 } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog, MatSnackBar } from "@angular/material";
-import { merge, ReplaySubject, Subject } from "rxjs";
-import { debounceTime, take, takeUntil } from "rxjs/operators";
+import { from, merge, ReplaySubject, Subject } from "rxjs";
+import { concatMap, debounceTime, take, takeUntil } from "rxjs/operators";
 import * as Split from "split.js";
 import { WorkbenchCqlStatement } from "../../../../../../src/types/editor";
 import { CassandraCluster, CassandraClusterData, CassandraKeyspace, ExecuteQueryResponse } from "../../../../../../src/types/index";
@@ -18,13 +18,17 @@ import { ClusterService } from "../../../services/cluster/cluster.service";
 import { CqlClientService } from "../../../services/cql-client/cql-client.service";
 import { EditorService } from "../../../services/editor/editor.service";
 import { ThemeService } from "../../../services/theme/theme.service";
+import { WorkspaceService } from "../../../services/workspace/workspace.service";
 import { WorkbenchEditor } from "../../../types/index";
 import { UiDataGridComponent } from "../../ui-data-grid/ui-data-grid/ui-data-grid.component";
 import { UiMonacoEditorComponent } from "../../ui-monaco-editor/ui-monaco-editor/ui-monaco-editor.component";
 import { panelAnimations } from "./animations/panel";
 
 type PanelAnimationState = "active" | "hidden";
-
+export interface StatementChangeEvent {
+    statement: WorkbenchCqlStatement;
+    isCodeModified: boolean;
+}
 @Component({
     selector: "ui-query",
     templateUrl: "./ui-query.component.html",
@@ -35,7 +39,7 @@ type PanelAnimationState = "active" | "hidden";
     ],
 })
 export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestroy {
-    @Output("onStatementChange") public onStatementChange = new EventEmitter<WorkbenchCqlStatement>();
+    @Output("onStatementChange") public onStatementChange = new EventEmitter<StatementChangeEvent>();
     @Output("onStatementSave") public onStatementSave = new EventEmitter<void>();
 
     @ViewChild("top") public top: ElementRef<HTMLDivElement>;
@@ -81,6 +85,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         public theme: ThemeService,
         public snackBar: MatSnackBar,
         public editorService: EditorService,
+        public workspace: WorkspaceService,
         public dialog: MatDialog,
         public fb: FormBuilder,
     ) {
@@ -204,8 +209,11 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         this.eventCodeChange.pipe(
             takeUntil(this.eventViewDestroyed),
             debounceTime(500),
-        ).subscribe((d) => {
-            this.onStatementChange.emit(d);
+        ).subscribe((statement) => {
+            this.onStatementChange.emit({
+                statement,
+                isCodeModified: true,
+            });
         });
 
         // this.cqlClient.stateExecuting.pipe(
@@ -242,7 +250,12 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     public onClusterChange = (clusterName: string) => {
         console.log(`onClusterChange ${clusterName}`);
         this.editorCurrent.statement.clusterName = clusterName;
-        this.onStatementChange.emit(this.editorCurrent.statement);
+
+        this.onStatementChange.emit({
+            statement: this.editorCurrent.statement,
+            isCodeModified: false,
+        });
+
         this.keyspaceList = [];
         this.detectChanges();
         this.prepareCluster(clusterName);
@@ -254,9 +267,20 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     public onKeyspaceChange = (keyspace: string) => {
         console.log(`onKeyspaceChange ${keyspace}`);
         this.editorCurrent.statement.keyspace = keyspace;
-        this.onStatementChange.emit(this.editorCurrent.statement);
+
+        this.onStatementChange.emit({
+            statement: this.editorCurrent.statement,
+            isCodeModified: false,
+        });
+
         this.autocomplete.setKeyspace(keyspace);
-        this.editorService.keyspace = keyspace;
+        // this.editorService.keyspace = keyspace;
+        this.workspace.setActiveKeyspace(this.editor.statement.clusterName, keyspace)
+            .then((result) => {
+                console.log("workspace.setActiveKeyspace OK");
+            }).catch((e) => {
+                console.log(e);
+            });
 
         if (this.monacoEditor) {
             this.monacoEditor.updateExecuteParams();
@@ -367,13 +391,15 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
 
         this.clusterLoading = true;
 
-        this.cluster.getStructure(clusterName).pipe()
+        from(this.workspace.setActiveClusterName(clusterName)).pipe(
+            concatMap(() => this.cluster.getStructure(clusterName)),
+        ).pipe()
             .subscribe((data) => {
                 this.clusterLast = clusterName;
                 this.clusterData = data;
                 this.keyspaceList = data.keyspaces;
                 this.autocomplete.setCluster(clusterName, data);
-                this.editorService.clusterName = clusterName;
+                // this.editorService.clusterName = clusterName;
 
                 this.clusterLoading = false;
                 this.clusterLoadingError = false;

@@ -115,9 +115,10 @@ export class WorkspaceService {
                 }
                 reject("no_response");
             }, (e) => {
+                console.log(e);
                 reject(e);
             });
-
+            console.log(`setActiveClusterName [${clusterName}]`);
             this.message.emit(m);
         });
 

@@ -10,7 +10,7 @@ export class Workspace {
     }
     public read<T extends keyof WorkspaceSettings>(key: T): WorkspaceSettings[T] {
         const ws = vscode.workspace.getConfiguration();
-        const v: WorkspaceSettings[T] = ws.get("redis-console." + key) as WorkspaceSettings[T];
+        const v: WorkspaceSettings[T] = ws.get("cassandraWorkbench." + key) as WorkspaceSettings[T];
         return v;
     }
     public write<T extends keyof WorkspaceSettings>(key: T, value: WorkspaceSettings[T]): void {

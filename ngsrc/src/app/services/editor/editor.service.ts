@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { cloneDeep } from "lodash";
-import { BehaviorSubject, from, ReplaySubject, Subject } from "rxjs";
+import { BehaviorSubject, from, ReplaySubject, Subject, zip } from "rxjs";
 import { timeout } from "rxjs/operators";
 import { concatMap, filter, map, take } from "rxjs/operators";
 import { OpenStatementResultType, SaveStatementResultType } from "../../../../../src/persistence";
@@ -12,6 +12,7 @@ import { UiDialogUnsavedComponent } from "../../dialogs/ui-dialog-unsaved/ui-dia
 import { WorkbenchEditor } from "../../types/index";
 import { MessageService } from "../message/message.service";
 import { MonacoService } from "../monaco/monaco.service";
+import { WorkspaceService } from "../workspace/workspace.service";
 
 declare var persistedStatements: WorkbenchCqlStatement[];
 
@@ -28,10 +29,14 @@ export class EditorService {
 
     private indexCurrent: number = -1;
 
-    private activeClusterName: string;
-    private activeKeyspace: string;
+    // private activeClusterName: string;
+    // private activeKeyspace: string;
 
-    constructor(private messages: MessageService, private monaco: MonacoService, public dialog: MatDialog) {
+    constructor(
+        private messages: MessageService,
+        private monaco: MonacoService,
+        private workspace: WorkspaceService,
+        public dialog: MatDialog) {
 
         this.messages.eventMessage.pipe()
             .subscribe((d) => {
@@ -52,20 +57,20 @@ export class EditorService {
         }
 
     }
-    public get clusterName() {
-        return this.activeClusterName;
-    }
-    public get keyspace() {
-        return this.activeKeyspace;
-    }
-    public set clusterName(val: string) {
-        console.log(`##################SETTING cluster = ${val}`);
-        this.activeClusterName = val;
-    }
-    public set keyspace(val: string) {
-        console.log(`##################SETTING keyspace = ${val}`);
-        this.activeKeyspace = val;
-    }
+    // public get clusterName() {
+    //     return this.activeClusterName;
+    // }
+    // public get keyspace() {
+    //     return this.activeKeyspace;
+    // }
+    // public set clusterName(val: string) {
+    //     console.log(`##################SETTING cluster = ${val}`);
+    //     this.activeClusterName = val;
+    // }
+    // public set keyspace(val: string) {
+    //     console.log(`##################SETTING keyspace = ${val}`);
+    //     this.activeKeyspace = val;
+    // }
     public get index() {
         return this.indexCurrent;
     }
@@ -77,7 +82,7 @@ export class EditorService {
 
         switch (name) {
             case "e2w_editorCreate":
-                this.statementCreate(message as ProcMessageStrict<"e2w_editorCreate">);
+                this.onStatementCreate(message as ProcMessageStrict<"e2w_editorCreate">);
                 break;
         }
 
@@ -94,13 +99,7 @@ export class EditorService {
         this.stateActive.next([this.indexCurrent, e]);
 
     }
-    private statementCreate(s: ProcMessageStrict<"e2w_editorCreate">) {
-        console.log("statementPrepend");
-        console.log(JSON.stringify(s.data));
 
-        this.editorCreate(s.data.statement);
-
-    }
     private persistedStatement2Editor(statement: WorkbenchCqlStatement): Promise<WorkbenchEditor> {
         return new Promise((resolve, reject) => {
 
@@ -189,13 +188,19 @@ export class EditorService {
         this.activate(dest);
         this.persistEditors();
     }
-    public updateStatement(index: number, statement: WorkbenchCqlStatement) {
-        if (index < 0 || index >= this.list.length) {
+    public updateStatement(editorId: string, statement: WorkbenchCqlStatement, isCodeModified: boolean) {
+        const editorIndex = this.list.findIndex((e) => e.id === editorId);
+
+        if (editorIndex < 0) {
             return;
         }
+        // const targetStatement = this.list[editorIndex].statement;
+        this.list[editorIndex].statement = statement;
 
-        this.list[index].statement = statement;
-        this.list[index].statement.modified = true;
+        if (isCodeModified) {
+            this.list[editorIndex].statement.modified = isCodeModified;
+        }
+
         this.persistEditors();
         this.eventListChange.next();
     }
@@ -209,7 +214,7 @@ export class EditorService {
 
         this.messages.emit(m);
     }
-    public duplicate(index) {
+    public duplicate(index: number) {
         if (index < 0 || index >= this.list.length) {
             return;
         }
@@ -375,18 +380,29 @@ export class EditorService {
 
         });
     }
-    public createEmpty(clusterName: string, keyspace: string) {
-        const statement: WorkbenchCqlStatement = {
-            id: generateId(),
-            clusterName,
-            keyspace,
-            body: "",
-            modified: false,
-            filename: null,
-            source: "action",
+    public createEmpty(): Promise<void> {
+        return new Promise((resolve, reject) => {
 
-        };
-        this.editorCreate(statement);
+            this.workspace.getActiveClusterKeyspace()
+                .then((clusterKeyspace) => {
+                    const statement: WorkbenchCqlStatement = {
+                        id: generateId(),
+                        clusterName: clusterKeyspace.clusterName,
+                        keyspace: clusterKeyspace.keyspace,
+                        body: "",
+                        modified: false,
+                        filename: null,
+                        source: "action",
+
+                    };
+                    this.editorCreate(statement);
+
+                }).catch((e) => {
+                    console.log(e);
+                    reject(e);
+                });
+
+        });
     }
     public open(): Promise<OpenStatementResultType> {
         return new Promise((resolve, reject) => {
@@ -398,14 +414,19 @@ export class EditorService {
                 },
             };
 
-            this.messages.eventMessage.pipe(
-                timeout(10000),
-                filter((e) => e.name === "e2w_statementOpenResponse"),
-                filter((mi: ProcMessageStrict<"e2w_statementOpenResponse">) => mi.data.id === id),
-                take(1),
-                map((e) => e as ProcMessageStrict<"e2w_statementOpenResponse">),
-            ).subscribe((res) => {
-                const data = res.data;
+            zip(
+                this.messages.eventMessage.pipe(
+                    timeout(10000),
+                    filter((e) => e.name === "e2w_statementOpenResponse"),
+                    filter((mi: ProcMessageStrict<"e2w_statementOpenResponse">) => mi.data.id === id),
+                    take(1),
+                    map((e) => e as ProcMessageStrict<"e2w_statementOpenResponse">),
+                ),
+                this.workspace.getActiveClusterKeyspace(),
+            ).pipe().subscribe((results) => {
+                const messageData = results[0];
+                const clusterKeyspace = results[1];
+                const data = messageData.data;
                 if (!data) {
                     reject("no_data");
                     return;
@@ -416,8 +437,8 @@ export class EditorService {
                         id: generateId(),
                         body: data.body,
                         filename: data.fileName,
-                        keyspace: this.keyspace,
-                        clusterName: this.clusterName,
+                        clusterName: clusterKeyspace.clusterName,
+                        keyspace: clusterKeyspace.keyspace,
                         source: "storage",
                         fsPath: data.fsPath,
                         modified: false,
@@ -468,5 +489,8 @@ export class EditorService {
                 resolve(false);
             });
         });
+    }
+    private onStatementCreate(s: ProcMessageStrict<"e2w_editorCreate">) {
+        this.editorCreate(s.data.statement);
     }
 }

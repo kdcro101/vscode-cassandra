@@ -181,11 +181,11 @@ export class CassandraWorkbench {
         const id = req.id;
 
         try {
-            const activeClusterName = this.workspace.read("activeClusterName") || null;
-            let clusterName: string = null;
+
+            let clusterName: string = this.workspace.read("activeClusterName") || null;
             let keyspace: string = null;
 
-            if (!activeClusterName) {
+            if (!clusterName) {
                 clusterName = null;
                 keyspace = null;
             } else {

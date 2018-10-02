@@ -11,7 +11,7 @@ import { WorkbenchCqlStatement } from "../../../../src/types/editor";
 import { ViewDestroyable } from "../base/view-destroyable";
 import { UiContentHorizontalComponent } from "../components/ui-content-horizontal/ui-content-horizontal.component";
 import { UiHistoryService } from "../components/ui-history/service";
-import { UiQueryComponent } from "../components/ui-query/ui-query/ui-query.component";
+import { StatementChangeEvent, UiQueryComponent } from "../components/ui-query/ui-query/ui-query.component";
 import { EditorService } from "../services/editor/editor.service";
 import { SystemService } from "../services/system/system.service";
 import { WorkbenchEditor } from "../types/index";
@@ -68,16 +68,6 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
 
         });
 
-        // fromEvent<KeyboardEvent>(window, "keydown", { capture: true }).pipe(
-        //     filter((e) => {
-        //         return e.keyCode === 87;
-        //     }),
-        // ).subscribe((e) => {
-        //     e.preventDefault();
-        //     e.stopImmediatePropagation();
-        //     e.stopPropagation();
-        //     alert("Keyxcode");
-        // });
     }
 
     ngOnInit() {
@@ -166,9 +156,11 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
         this.editorService.duplicate(index);
     }
     public doTabCreate = () => {
-        const clusterName = this.editor ? this.editor.statement.clusterName : null;
-        const keyspace = this.editor ? this.editor.statement.keyspace : null;
-        this.editorService.createEmpty(clusterName, keyspace);
+
+        this.editorService.createEmpty()
+            .catch((e) => {
+                console.log(e);
+            });
     }
     public doTabOpen = () => {
         this.editorService.open();
@@ -179,8 +171,8 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
     private replaceTabs(source: number, dest: number) {
         this.editorService.swap(source, dest);
     }
-    public onActiveStatementChange = (statement: WorkbenchCqlStatement) => {
-        this.editorService.updateStatement(this.editorService.index, statement);
+    public onActiveStatementChange = (event: StatementChangeEvent) => {
+        this.editorService.updateStatement(this.editor.id, event.statement, event.isCodeModified);
     }
     public menuOpen(ev: MouseEvent, index: number) {
         ev.preventDefault();
