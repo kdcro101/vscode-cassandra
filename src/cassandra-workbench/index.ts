@@ -8,7 +8,7 @@ import { DataChangeProcessor } from "../data-change";
 import { InputParser } from "../parser";
 import { Persistence } from "../persistence";
 import { ExtensionContextBundle, ValidatedConfigClusterItem, WorkbenchCqlStatement } from "../types";
-import { ProcMessage, ProcMessageStrict, SetActiveKeyspaceRequest } from "../types/messages";
+import { EditorCreateParams, ProcMessage, ProcMessageStrict, SetActiveKeyspaceRequest } from "../types/messages";
 import { WorkbenchPanel } from "../workbench-panel";
 import { Workspace } from "../workspace";
 import { TreeviewProvider } from "./treeview-provider";
@@ -169,15 +169,74 @@ export class CassandraWorkbench {
             case "w2e_getActiveKeyspaceRequest":
                 this.getActiveKeyspaceRespond(m as ProcMessageStrict<"w2e_getActiveKeyspaceRequest">);
                 break;
+            case "w2e_getActiveClusterAndKeyspaceRequest":
+                this.getActiveClusterAndKeyspaceRespond(m as ProcMessageStrict<"w2e_getActiveClusterAndKeyspaceRequest">);
+                break;
 
         }
     }
 
+    private getActiveClusterAndKeyspaceRespond(request: ProcMessageStrict<"w2e_getActiveClusterAndKeyspaceRequest">) {
+        const req = request.data;
+        const id = req.id;
+
+        try {
+            const activeClusterName = this.workspace.read("activeClusterName") || null;
+            let clusterName: string = null;
+            let keyspace: string = null;
+
+            if (!activeClusterName) {
+                clusterName = null;
+                keyspace = null;
+            } else {
+
+                if (!this.clusters.isValidName(clusterName)) {
+                    throw new Error("invalid_cluster_name");
+                }
+                const pairs = this.workspace.read("activeKeyspace") || [];
+                const clusterIndex = pairs.findIndex((i) => i[0] === clusterName);
+
+                if (clusterIndex < 0) {
+                    keyspace = null;
+                } else {
+                    keyspace = pairs[clusterIndex][1];
+                }
+            }
+            const out: ProcMessageStrict<"e2w_getActiveClusterAndKeyspaceResponse"> = {
+                name: "e2w_getActiveClusterAndKeyspaceResponse",
+                data: {
+                    id,
+                    success: true,
+                    clusterName,
+                    keyspace,
+                },
+            };
+            this.panel.emitMessage(out);
+
+        } catch (e) {
+            const errorOut: ProcMessageStrict<"e2w_getActiveClusterAndKeyspaceResponse"> = {
+                name: "e2w_getActiveClusterAndKeyspaceResponse",
+                data: {
+                    id,
+                    success: false,
+                    keyspace: null,
+                    clusterName: null,
+                    error: e,
+                },
+            };
+            this.panel.emitMessage(errorOut);
+        }
+    }
     private getActiveKeyspaceRespond(request: ProcMessageStrict<"w2e_getActiveKeyspaceRequest">) {
         const req = request.data;
         const id = req.id;
         const clusterName = req.clusterName;
         try {
+
+            if (!this.clusters.isValidName(clusterName)) {
+                throw new Error("invalid_cluster_name");
+            }
+
             const pairs = this.workspace.read("activeKeyspace") || [];
             const clusterIndex = pairs.findIndex((i) => i[0] === clusterName);
             let keyspace: string = null;
@@ -218,6 +277,11 @@ export class CassandraWorkbench {
         const clusterName = req.clusterName;
         const keyspace = req.keyspace;
         try {
+
+            if (!this.clusters.isValidName(clusterName)) {
+                throw new Error("invalid_cluster_name");
+            }
+
             const pairs = this.workspace.read("activeKeyspace") || [];
             const clusterIndex = pairs.findIndex((i) => i[0] === clusterName);
 
@@ -254,9 +318,14 @@ export class CassandraWorkbench {
     private setActiveClusterNameRespond(request: ProcMessageStrict<"w2e_setActiveClusterNameRequest">) {
         const req = request.data;
         const id = req.id;
-        const name = req.clusterName;
+        const clusterName = req.clusterName;
         try {
-            this.workspace.write("activeClusterName", name);
+
+            if (!this.clusters.isValidName(clusterName)) {
+                throw new Error("invalid_cluster_name");
+            }
+
+            this.workspace.write("activeClusterName", clusterName);
 
             const out: ProcMessageStrict<"e2w_setActiveClusterNameResponse"> = {
                 name: "e2w_setActiveClusterNameResponse",

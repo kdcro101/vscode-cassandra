@@ -49,6 +49,14 @@ export class Clusters {
 
         });
     }
+    public isValidName(clusterName: string) {
+        const i = this.configItems.findIndex((c) => c.name === clusterName);
+        if (i < 0) {
+            return false;
+        }
+
+        return true;
+    }
     public getClient(index: number, force: boolean = false): Promise<CassandraClient> {
         return new Promise((resolve, reject) => {
 

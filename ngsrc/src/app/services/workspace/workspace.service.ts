@@ -7,7 +7,7 @@ import { generateId } from "../../../../../src/const/id";
 import { ProcMessageStrict } from "../../../../../src/types/messages";
 import { MessageService } from "../message/message.service";
 
-export interface ActiveKeyspace {
+export interface ActiveClusterKeyspace {
     clusterName: string;
     keyspace: string;
 }
@@ -19,7 +19,43 @@ export class WorkspaceService {
 
     constructor(private message: MessageService) { }
 
-    public getActiveKeyspace(clusterName: string): Promise<ActiveKeyspace> {
+    public getActiveClusterKeyspace(): Promise<ActiveClusterKeyspace> {
+        return new Promise((resolve, reject) => {
+            const id = generateId();
+            const m: ProcMessageStrict<"w2e_getActiveClusterAndKeyspaceRequest"> = {
+                name: "w2e_getActiveClusterAndKeyspaceRequest",
+                data: {
+                    id,
+                },
+            };
+            this.message.eventMessage.pipe(
+                timeout(30000),
+                filter((e) => e.name === "e2w_getActiveClusterAndKeyspaceResponse"),
+                filter((mi: ProcMessageStrict<"e2w_getActiveClusterAndKeyspaceResponse">) => mi.data.id === id),
+                take(1),
+                map((e) => e as ProcMessageStrict<"e2w_getActiveClusterAndKeyspaceResponse">),
+            ).subscribe((e) => {
+                if (e.data && e.data.success) {
+
+                    resolve({
+                        clusterName: e.data.clusterName,
+                        keyspace: e.data.keyspace,
+                    } as ActiveClusterKeyspace);
+                    return;
+
+                }
+                if (e.data && !e.data.success) {
+                    reject(e.data.error);
+                }
+                reject("no_response");
+            }, (e) => {
+                reject(e);
+            });
+
+            this.message.emit(m);
+        });
+    }
+    public getActiveKeyspace(clusterName: string): Promise<string> {
         return new Promise((resolve, reject) => {
             const id = generateId();
             const m: ProcMessageStrict<"w2e_getActiveKeyspaceRequest"> = {
@@ -30,8 +66,6 @@ export class WorkspaceService {
                 },
             };
 
-            this.message.emit(m);
-
             this.message.eventMessage.pipe(
                 timeout(30000),
                 filter((e) => e.name === "e2w_getActiveKeyspaceResponse"),
@@ -40,10 +74,7 @@ export class WorkspaceService {
                 map((e) => e as ProcMessageStrict<"e2w_getActiveKeyspaceResponse">),
             ).subscribe((e) => {
                 if (e.data && e.data.success) {
-                    resolve({
-                        clusterName: e.data.clusterName,
-                        keyspace: e.data.keyspace,
-                    });
+                    resolve(e.data.keyspace);
                     return;
                 }
                 if (e.data && !e.data.success) {
@@ -53,6 +84,7 @@ export class WorkspaceService {
             }, (e) => {
                 reject(e);
             });
+            this.message.emit(m);
         });
 
     }
@@ -66,8 +98,6 @@ export class WorkspaceService {
                     clusterName,
                 },
             };
-
-            this.message.emit(m);
 
             this.message.eventMessage.pipe(
                 timeout(30000),
@@ -87,6 +117,8 @@ export class WorkspaceService {
             }, (e) => {
                 reject(e);
             });
+
+            this.message.emit(m);
         });
 
     }
@@ -101,8 +133,6 @@ export class WorkspaceService {
                     keyspace,
                 },
             };
-
-            this.message.emit(m);
 
             this.message.eventMessage.pipe(
                 timeout(30000),
@@ -122,6 +152,8 @@ export class WorkspaceService {
             }, (e) => {
                 reject(e);
             });
+
+            this.message.emit(m);
         });
     }
 
