@@ -32,11 +32,7 @@ export const insertDecorations = (model: monaco.editor.ITextModel, statement: An
             ];
         } else {
             o.options.inlineClassName = "decoration expression";
-            o.options.hoverMessage = [
-                {
-                    value: `**Error**`,
-                },
-            ];
+            o.options.hoverMessage = [];
         }
 
         out.push(o);
@@ -72,6 +68,8 @@ export const insertMarkers = (model: monaco.editor.ITextModel, statement: Analyz
         return acc;
 
     }, []);
+
+    out = out.concat(noValue);
 
     const noDestination = statement.expressions.reduce((acc, cur, i) => {
         const ps = model.getPositionAt(cur.charStart);

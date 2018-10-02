@@ -153,6 +153,10 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         });
 
         this.eventCodeChange.pipe(
+            tap(() => {
+                console.log("autocomplete.reset");
+                this.autocomplete.reset();
+            }),
             takeUntil(this.eventViewDestroyed),
             debounceTime(250),
         ).subscribe((code) => {
@@ -175,6 +179,8 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
                 this.eventCodeSet.next();
                 this.monacoEditor.setModel(model);
+
+                this.autocomplete.reset();
                 this.parseCode(model.getValue());
 
                 fromEventPattern<monaco.editor.IModelContentChangedEvent>((f: (e: any) => any) => {

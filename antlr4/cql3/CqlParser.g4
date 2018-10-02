@@ -660,7 +660,7 @@ select
     ;
 
 limitSpec
-    : kwLimit constantDecimal
+    : kwLimit (constantDecimal| { this.notifyErrorListeners("rule.constantDecimal"); })
     ;
 
 fromSpec

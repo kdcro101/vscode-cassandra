@@ -21,9 +21,13 @@ export class AutocompleteService {
     public activeAnalysis: CqlAnalysis;
     public stateCluster = new BehaviorSubject<CassandraClusterData>(null);
     public stateKeypace = new BehaviorSubject<string>(null);
-    public stateAnalysis = new BehaviorSubject<CqlAnalysis>(null);
+    // public stateAnalysis = new BehaviorSubject<CqlAnalysis>(null);
+    public stateAnalysis = new ReplaySubject<CqlAnalysis>(1);
 
-    constructor(private messages: MessageService) {
+    constructor(private messages: MessageService) { }
+
+    public reset() {
+        this.stateAnalysis = new ReplaySubject<CqlAnalysis>(1);
     }
     public setParseResult(input: InputParseResult) {
         this.activeParseResults = input;
