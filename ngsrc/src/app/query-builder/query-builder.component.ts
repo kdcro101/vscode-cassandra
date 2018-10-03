@@ -24,18 +24,18 @@ import { TabDraggable } from "./tab-draggable/index";
         trigger("tabAnimation", [
             transition(":enter", [
                 style({
-                    transform: "translate3d(0,100%,0)",
+                    transform: "translate3d(0,100%,0) scale3d(0,0,1)",
                 }),
                 animate(".25s ease-in-out", style({
-                    transform: "translate3d(0,0,0)",
+                    transform: "translate3d(0,0,0) scale3d(1,1,1)",
                 })),
             ]),
             transition(":leave", [
                 style({
-                    transform: "translate3d(0,0,0)",
+                    transform: "translate3d(0,0,0) scale3d(1,1,1)",
                 }),
                 animate(".25s ease-in-out", style({
-                    transform: "translate3d(0,100%,0)",
+                    transform: "translate3d(0,100%,0) scale3d(0,0,1)",
                 })),
             ]),
         ]),
