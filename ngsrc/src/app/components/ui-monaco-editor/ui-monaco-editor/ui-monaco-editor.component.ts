@@ -206,6 +206,12 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                     });
                 });
 
+                const domNode = document.createElement("div");
+
+                this.monacoEditor.changeViewZones(zones => {
+                    zones.addZone({ afterLineNumber: 0, heightInLines: 1, domNode });
+                });
+
             });
     }
 

@@ -43,11 +43,7 @@
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "src/tsconfig.app.json",
-                        "assets": [{
-                                "glob": "**/*",
-                                "input": "node_modules/ngx-monaco-editor/assets/monaco",
-                                "output": "./assets/monaco/"
-                            },
+                        "assets": [
                             "src/favicon.ico",
                             "src/assets"
                         ],

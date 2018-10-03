@@ -31,7 +31,7 @@
         &.column {
             font-style: italic;
             color: #97e1f1;
-            }
+        }
     }
     .decoration {
         &.partition_key {
@@ -53,5 +53,7 @@
     }
 }
 
-
+.test-inline {
+    background: red;
+}
 // .vscode-light {}
