@@ -1,4 +1,20 @@
 @import "../colors";
+.color-list {
+
+    color: #97e1f1;
+    color: #282a36;
+    color: #f6f6f4;
+    color: #44475a;
+    color: #7b7f8b;
+    color: #97e1f1;
+    color: #62e884;
+    color: #ffb86c;
+    color: #f286c4;
+    color: #bf9eee;
+    color: #ee6666;
+    color: #e7ee98;
+
+}
 
 .vscode-dark,
 .vscode-high-contrast {
@@ -15,20 +31,27 @@
     .decoration {
         &.partition_key {
             background-color: mat-color($warn, 500, 0.2);
-            border: 1px solid mat-color($warn, 700, 1);
+            border: 1px solid mat-color($warn, 700, 0.2);
             padding: 2px 2px;
             border-radius: 2px;
 
         }
         &.clustering {
             background-color: mat-color($yellow, 500, 0.2);
-            border: 1px solid mat-color($yellow, 700, 1);
+            border: 1px solid mat-color($yellow, 700, 0.2);
             padding: 2px 2px;
             border-radius: 2px;
         }
         &.expression {
-            background-color: rgba(0,0,0,0.2);
+            background-color: rgba(0, 0, 0, 0.2);
 
+        }
+
+        &.base{
+            &.column{
+                font-style: italic;
+                color: #97e1f1,
+            }
         }
     }
 }

@@ -1,13 +1,11 @@
+import { animate, style, transition, trigger } from "@angular/animations";
 import {
     AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef,
     Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren,
 } from "@angular/core";
 import { MatMenuTrigger, MatSnackBar } from "@angular/material";
 import { Subject } from "rxjs";
-import { fromEvent } from "rxjs";
 import { concatMap, take, takeUntil } from "rxjs/operators";
-import { filter } from "rxjs/operators";
-import { WorkbenchCqlStatement } from "../../../../src/types/editor";
 import { ViewDestroyable } from "../base/view-destroyable";
 import { UiContentHorizontalComponent } from "../components/ui-content-horizontal/ui-content-horizontal.component";
 import { UiHistoryService } from "../components/ui-history/service";
@@ -22,6 +20,26 @@ import { TabDraggable } from "./tab-draggable/index";
     templateUrl: "./query-builder.component.html",
     styleUrls: ["./query-builder.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: [
+        trigger("tabAnimation", [
+            transition(":enter", [
+                style({
+                    transform: "translate3d(0,100%,0)",
+                }),
+                animate(".25s ease-in-out", style({
+                    transform: "translate3d(0,0,0)",
+                })),
+            ]),
+            transition(":leave", [
+                style({
+                    transform: "translate3d(0,0,0)",
+                }),
+                animate(".25s ease-in-out", style({
+                    transform: "translate3d(0,100%,0)",
+                })),
+            ]),
+        ]),
+    ],
 })
 export class QueryBuilderComponent extends ViewDestroyable implements OnInit, OnDestroy, AfterViewInit {
     @ViewChild("queryEditor") public queryEditor: UiQueryComponent;
@@ -110,6 +128,14 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
         this.editorService.activate(index);
     }
 
+    public onTabMouseup = (e: MouseEvent, index: number) => {
+
+        const editor = this.editorService.list[index];
+        if (e.button === 1) {
+            this.editorService.remove(editor.id);
+            return;
+        }
+    }
     public onTabMousedown = (e: MouseEvent, index: number) => {
 
         const editor = this.editorService.list[index];
@@ -119,7 +145,7 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
             return;
         }
         if (e.button === 1) {
-            this.editorService.remove(editor.id);
+            // this.editorService.remove(editor.id);
             return;
         }
 

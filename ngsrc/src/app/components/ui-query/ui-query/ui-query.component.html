@@ -1,7 +1,7 @@
 <div class="root mat-body-1">
     <div #top class="top" fxLayout="column">
         <form fxLayout="row" fxLayoutAlign="start center" class="cluster-actions mat-app-background" [formGroup]="formGroup">
-            <mat-icon class="dropdown icon-18">cloud_queue</mat-icon>
+            <div class="dropdown icon-svg cluster size-18"></div>
             <mat-form-field color="accent" floatLabel="never" class="no-underline">
                 <mat-select panelClass="material-custom drop-down" placeholder="Select cluster" [ngModel]="editorCurrent.statement.clusterName"
                     (ngModelChange)="onClusterChange($event)" formControlName="clusterName" matTooltip="Select cluster">
@@ -14,7 +14,7 @@
             <mat-progress-spinner *ngIf="clusterLoading" mode="indeterminate" [diameter]="18" color="accent"
                 [strokeWidth]="2" class="keyspace-progress"></mat-progress-spinner>
             <div *ngIf="!clusterLoading && !clusterLoadingError" fxLayout="row" fxLayoutAlign="start center">
-                <mat-icon class="dropdown icon-18">panorama_fish_eye</mat-icon>
+                <div class="dropdown icon-svg keyspace size-18"></div>
                 <mat-form-field color="accent" floatLabel="never" class="no-underline">
                     <mat-select panelClass="material-custom drop-down" placeholder="Select keyspace" [ngModel]="editorCurrent.statement.keyspace"
                         (ngModelChange)="onKeyspaceChange($event)" formControlName="keyspace" matTooltip="Select keyspace">

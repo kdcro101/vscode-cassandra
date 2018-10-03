@@ -14,6 +14,7 @@ import { ThemeService } from "../../../services/theme/theme.service";
 import { WorkbenchEditor } from "../../../types/index";
 import { UiContextMenuService } from "../../ui-context-menu/service";
 import { decorationsForStatement, markersForStatement } from "./decorations";
+import { baseColumnDecorations } from "./decorations/base/columns";
 
 @Component({
     selector: "ui-monaco-editor",
@@ -166,7 +167,6 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
     }
     ngOnDestroy() {
         super.ngOnDestroy();
-
     }
     public setModel(model: monaco.editor.ITextModel) {
         this.stateReady.pipe()
@@ -188,12 +188,17 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 }, (f: any, d: monaco.IDisposable) => {
                     d.dispose();
                 }).pipe(
+                    tap(() => {
+                        console.log("--- *************");
+                        console.log("--- *************");
+                        console.log("--- MODEL CHANGED");
+                        console.log("--- *************");
+                    }),
                     takeUntil(this.eventCodeSet),
                 ).subscribe(() => {
 
                     const v = this.monacoEditor.getValue();
                     console.log(`--> onDidChangeModelContent`);
-                    console.log(`[${v}]`);
 
                     setTimeout(() => {
                         this.eventCodeChange.next(v);
@@ -216,10 +221,15 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
     private addDeltaDecorations(analysis: CqlAnalysis) {
 
         let deltas: monaco.editor.IModelDeltaDecoration[] = [];
+
         analysis.statements.forEach((s) => {
-            const l = decorationsForStatement(this.modelCurrent, s);
-            if (l) {
-                deltas = deltas.concat(l);
+            const base = baseColumnDecorations(this.modelCurrent, s);
+            const sd = decorationsForStatement(this.modelCurrent, s);
+
+            deltas = deltas.concat(base);
+
+            if (sd) {
+                deltas = deltas.concat(sd);
             }
         });
 
