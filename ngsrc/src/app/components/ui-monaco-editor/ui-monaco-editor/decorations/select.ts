@@ -34,7 +34,8 @@ export const selectDecorations = (model: monaco.editor.ITextModel, statement: An
             out.push(o);
         }
         if (c.kind === "regular") {
-            o.options.inlineClassName = "decoration";
+            // o.options.inlineClassName = "decoration";
+            o.options.inlineClassName = "";
             o.options.hoverMessage = {
                 value: `\`\`\`cqlhover\n${c.text} AS ${c.type}\`\`\``,
             };

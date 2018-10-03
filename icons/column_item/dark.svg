@@ -7,8 +7,8 @@
       <flowPara/>
     </flowRoot>
     <path fill="#607d8b" d="M7 292h10v-15H7z"/>
-    <path fill="#455a64" d="M2 290h4v-11H2z"/>
-    <path fill="#455a64" d="M18 279v11h4v-11z"/>
+    <path fill="#78909c" d="M2 290h4v-11H2z"/>
+    <path fill="#78909c" d="M18 279v11h4v-11z"/>
     <path fill="none" d="M0 273h24v24H0z"/>
   </g>
 </svg>

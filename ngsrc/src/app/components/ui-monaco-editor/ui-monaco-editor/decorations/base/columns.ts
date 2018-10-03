@@ -13,7 +13,7 @@ export const baseColumnDecorations = (
         const o: monaco.editor.IModelDeltaDecoration = {
             range: new monaco.Range(ps.lineNumber, ps.column, pe.lineNumber, pe.column + 1),
             options: {
-                inlineClassName: "decoration base column",
+                inlineClassName: "decoration-base column",
             },
         };
 

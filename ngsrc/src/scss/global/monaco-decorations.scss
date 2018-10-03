@@ -27,7 +27,12 @@
     .monaco-editor .inputarea.ime-input {
         background-color: mat-color($background, 900) !important;
     }
-
+    .decoration-base {
+        &.column {
+            font-style: italic;
+            color: #97e1f1;
+            }
+    }
     .decoration {
         &.partition_key {
             background-color: mat-color($warn, 500, 0.2);
@@ -44,16 +49,9 @@
         }
         &.expression {
             background-color: rgba(0, 0, 0, 0.2);
-
-        }
-
-        &.base{
-            &.column{
-                font-style: italic;
-                color: #97e1f1,
-            }
         }
     }
 }
+
 
 // .vscode-light {}

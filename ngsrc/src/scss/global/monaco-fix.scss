@@ -1,0 +1,41 @@
+ // adds margin to top! CAUTION
+ .monaco-editor {
+     .monaco-editor-hover {
+         transform: translateY(32px);
+     }
+     .editor-widget {
+         transform: translateY(32px);
+     }
+     .view-line,
+     .view-overlays,
+     .cursor {
+         margin-top: 32px;
+     }
+     .margin-view-overlays {
+         margin-top: 32px;
+     }
+     .lines-content.monaco-editor-background {
+         margin-left: 16px;
+     }
+
+     //  .view-line {
+     //      margin-left: 16px;
+     //  }
+     //  /* fix highlighted text selection */
+     //  .selectionHighlight {
+     //     //  margin-left: 16px;
+     //  }
+     //  /* fix highlighted brackets */
+     //  .bracket-match {
+     //      margin-left: 16px;
+     //  }
+     //  /* fix multiline text selection */
+     //  .cslr.selected-text {
+     //      margin-left: 16px;
+     //  }
+     //  //  margin-left: 16px;
+     //  .bottom-left-radius,
+     //  .top-left-radius {
+     //      margin-left: 16px;
+     //  }
+ }
