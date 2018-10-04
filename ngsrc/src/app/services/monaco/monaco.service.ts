@@ -56,16 +56,17 @@ export class MonacoService {
             inherit: true, // can also be false to completely replace the builtin rules
             rules: [
                 { token: "comment", foreground: "7b7f8b", fontStyle: "" },
-                // { token: "keyword", foreground: "f286c4", fontStyle: "" },
-                // { token: "default", foreground: "ff0000", fontStyle: "" },
-                { token: "type", foreground: "f286c4", fontStyle: "" },
-                { token: "delimiter.parenthesis", foreground: "ffb86c", fontStyle: "" },
-                { token: "delimiter.angle", foreground: "ffb86c", fontStyle: "" },
-                { token: "delimiter.square", foreground: "ffb86c", fontStyle: "" },
-                { token: "number", foreground: "f286c4", fontStyle: "" },
+                { token: "keyword", foreground: "6495ED", fontStyle: "" },
+                { token: "type", foreground: "97e1f1", fontStyle: "" },
+                { token: "delimiter.parenthesis", foreground: "FFFF00", fontStyle: "" },
+                { token: "delimiter.angle", foreground: "FFFF00", fontStyle: "" },
+                { token: "delimiter.square", foreground: "DAA520", fontStyle: "" },
+                { token: "delimiter.curly", foreground: "D2691E", fontStyle: "" },
+                { token: "number", foreground: "bf9eee", fontStyle: "" },
                 { token: "string", foreground: "62e884", fontStyle: "" },
-                // { token: "comment.js", foreground: "008800", fontStyle: "bold" },
-                // { token: "comment.css", foreground: "0000ff" }, // will inherit fontStyle from `comment` above
+                { token: "delimiter.type.definition", foreground: "FFD700", fontStyle: "" },
+                { token: "operator", foreground: "40E0D0", fontStyle: "" },
+
             ],
             colors: null,
         });

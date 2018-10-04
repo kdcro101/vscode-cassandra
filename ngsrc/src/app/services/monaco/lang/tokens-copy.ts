@@ -37,23 +37,26 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
     defaultToken: "",
     tokenPostfix: ".cql",
     ignoreCase: true,
+
+    brackets: [
+        { open: "[", close: "]", token: "delimiter.square" },
+        { open: "(", close: ")", token: "delimiter.parenthesis" },
+        { open: "<", close: ">", token: "delimiter.angle" },
+        { open: "{", close: "}", token: "delimiter.curly" },
+    ],
     keywords: [
         "ADD", "AGGREGATE",
-        "ALL", "ALLOW", "ALTER", "AND", "ANY", "APPLY", "AS", "ASC",
-        "AUTHORIZE", "BATCH", "BEGIN", "BY", "CLUSTERING",
-        "COLUMNFAMILY", "COMPACT", "CONTAINS", "CONSISTENCY",
-        "COUNT", "CREATE", "CUSTOM", "DELETE", "DESC", "DISTINCT", "DROP",
-        "EACH_QUORUM", "ENTRIES", "EXISTS", "FILTERING", "FROM", "FULL",
-        "FUNCTION", "FUNCTIONS", "GRANT", "IF", "IN", "INDEX", "INFINITY",
-        "INSERT", "INTO", "KEY", "KEYS", "KEYSPACE", "KEYSPACES", "LEVEL", "LIMIT",
-        "LOCAL_ONE", "LOCAL_QUORUM", "MATERIALIZED", "MODIFY", "NAN",
-        "NORECURSIVE", "NOSUPERUSER", "NOT", "OF", "ON", "ONE", "ORDER",
-        "PARTITION", "PASSWORD", "PER", "PERMISSION", "PERMISSIONS",
-        "PRIMARY", "QUORUM", "RENAME", "REVOKE", "ROLES", "SCHEMA", "SELECT",
-        "SET", "STATIC",
-        "STORAGE", "SUPERUSER", "TABLE", "THREE", "TO", "TOKEN", "TRUNCATE", "TTL",
-        "TWO", "TYPE", "UNLOGGED", "UPDATE", "USE", "USER", "USERS", "USING", "VALUES",
-        "VIEW", "WHERE", "WITH", "WRITETIME",
+        "ALL", "ALLOW", "ALTER", "AND", "ANY", "APPLY", "AS", "ASC", "ASCII", "AUTHORIZE", "BATCH", "BEGIN",
+        "BIGINT", "BLOB", "BOOLEAN", "BY", "CLUSTERING", "COLUMNFAMILY", "COMPACT", "CONTAINS", "CONSISTENCY",
+        "COUNT", "COUNTER", "CREATE", "CUSTOM", "DECIMAL", "DELETE", "DESC", "DISTINCT", "DOUBLE", "DROP",
+        "EACH_QUORUM", "ENTRIES", "EXISTS", "FILTERING", "FLOAT", "FROM", "FROZEN", "FULL", "FUNCTION", "FUNCTIONS",
+        "GRANT", "IF", "IN", "INDEX", "INET", "INFINITY", "INSERT", "INT", "INTO", "KEY", "KEYS", "KEYSPACE",
+        "KEYSPACES", "LEVEL", "LIMIT", "LIST", "LOCAL_ONE", "LOCAL_QUORUM", "MAP", "MATERIALIZED", "MODIFY", "NAN",
+        "NORECURSIVE", "NOSUPERUSER", "NOT", "OF", "ON", "ONE", "ORDER", "PARTITION", "PASSWORD", "PER", "PERMISSION",
+        "PERMISSIONS", "PRIMARY", "QUORUM", "RENAME", "REVOKE", "ROLES", "SCHEMA", "SELECT", "SET", "STATIC", "STORAGE",
+        "SUPERUSER", "TABLE", "TEXT", "TIME", "TIMESTAMP", "TIMEUUID", "THREE", "TO", "TOKEN", "TRUNCATE", "TTL", "TUPLE",
+        "TWO", "TYPE", "UNLOGGED", "UPDATE", "USE", "USER", "USERS", "USING", "UUID", "VALUES", "VARCHAR",
+        "VARINT", "VIEW", "WHERE", "WITH", "WRITETIME",
     ],
     typeKeywords: [
         "ascii", "bigint", "blob", "boolean", "counter", "date", "decimal",
@@ -64,12 +67,6 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
     operators: [
         "=", "<", ">", ">=", "<=",
     ],
-    brackets: [
-        { open: "[", close: "]", token: "delimiter.square" },
-        { open: "(", close: ")", token: "delimiter.parenthesis" },
-        { open: "<", close: ">", token: "delimiter.angle" },
-        { open: "{", close: "}", token: "delimiter.curly" },
-    ],
     symbols: /[=><!~?:&|+\-*\/\^%]+/,
     escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
     tokenizer: {
@@ -78,68 +75,28 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
             { include: "@whitespace" },
             { include: "@numbers" },
 
-            [/(list|map|set|frozen)(\s*<)(?![^>]+>\s*(?:\(|$))/,
-                ["type.identifier", { token: "delimiter.type.definition", next: "@type" }],
-            ],
-
-            [/[{}()\[\]]/, "@brackets"],
-            [/@symbols/, {
+            [/[;,.]/, "delimiter"],
+            [/[()<>\[\]]/, "@brackets"],
+            [/[\w@#$]+/, {
                 cases: {
-                    "@operators": "operator",
-
+                    "@typeKeywords": "type",
+                    "@keywords": "keyword",
+                    "@builtinFunctions": "predefined",
+                    "@default": "identifier",
                 },
             }],
-            // identifiers and keywords
-            [/[a-zA-Z0-9_]\w*/, {
+            [/@symbols/, {
                 cases: {
-                    "@keywords": { token: "keyword", next: "@qualified" },
-                    "@typeKeywords": { token: "type", next: "@qualified" },
-                    "@default": { token: "identifier", next: "@qualified" },
+                    "@operators": "keyword",
+                    "@default": "",
                 },
             }],
             [/"/, "string", "@doubleQuotedString"],
             [/'/, "string", "@singleQuotedString"],
+
         ],
         whitespace: [
-            [/[ \t\r\n]+/, "white"],
-        ],
-        qualified: [
-            [/[a-zA-Z_][\w]*/, {
-                cases: {
-                    // '@typeFollows': { token: 'keyword', next: '@type' },
-                    // '@typeKeywords': 'type.identifier',
-                    // '@keywords': 'keyword',
-                    "@default": "identifier",
-                },
-            }],
-            ["", "", "@pop"],
-        ],
-        type: [
-            { include: "@whitespace" },
-            [/[A-Z]\w*/, "type.identifier"],
-            // identifiers and keywords
-            [/[a-zA-Z_]\w*/, {
-                cases: {
-                    "@typeKeywords": "type.identifier",
-                    //   '@keywordInType': 'keyword',
-                    "@keywords": { token: "@rematch", next: "@popall" },
-                    "@default": "type.identifier",
-                },
-            }],
-            [/[<]/, "delimiter.type.definition", "@type_nested"],
-            [/[>]/, "delimiter.type.definition", "@pop"],
-            [/[\.,:]/, {
-                cases: {
-                    "@keywords": "keyword",
-                    "@default": "delimiter",
-                },
-            }],
-            ["", "", "@popall"], // catch all
-        ],
-
-        type_nested: [
-            [/[<]/, "delimiter.type.definition", "@type_nested"],
-            { include: "type" },
+            [/\s+/, "white"],
         ],
         comments: [
             [/--+.*/, "comment"],
@@ -170,5 +127,20 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
             [/\\./, "string.escape.invalid"],
             [/'/, "string", "@pop"],
         ],
+        complexIdentifiers: [
+            [/\[/, { token: "identifier.quote", next: "@bracketedIdentifier" }],
+            [/"/, { token: "identifier.quote", next: "@quotedIdentifier" }],
+        ],
+        bracketedIdentifier: [
+            [/[^\]]+/, "identifier"],
+            [/]]/, "identifier"],
+            [/]/, { token: "identifier.quote", next: "@pop" }],
+        ],
+        quotedIdentifier: [
+            [/[^"]+/, "identifier"],
+            [/""/, "identifier"],
+            [/"/, { token: "identifier.quote", next: "@pop" }],
+        ],
+
     },
 };

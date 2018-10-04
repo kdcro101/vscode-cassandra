@@ -1,0 +1,274 @@
+// Register a new language
+monaco.languages.register({ id: 'cql' });
+
+// Register a tokens provider for the language
+monaco.languages.setMonarchTokensProvider('cql', {
+    ignoreCase: true,
+    keywords: [
+        "ADD", "AGGREGATE",
+        "ALL", "ALLOW", "ALTER", "AND", "ANY", "APPLY", "AS", "ASC",
+        "AUTHORIZE", "BATCH", "BEGIN", "BY", "CLUSTERING",
+        "COLUMNFAMILY", "COMPACT", "CONTAINS", "CONSISTENCY",
+        "COUNT", "CREATE", "CUSTOM", "DELETE", "DESC", "DISTINCT", "DROP",
+        "EACH_QUORUM", "ENTRIES", "EXISTS", "FILTERING", "FROM", "FULL",
+        "FUNCTION", "FUNCTIONS", "GRANT", "IF", "IN", "INDEX", "INFINITY",
+        "INSERT", "INTO", "KEY", "KEYS", "KEYSPACE", "KEYSPACES", "LEVEL", "LIMIT",
+        "LOCAL_ONE", "LOCAL_QUORUM", "MATERIALIZED", "MODIFY", "NAN",
+        "NORECURSIVE", "NOSUPERUSER", "NOT", "OF", "ON", "ONE", "ORDER",
+        "PARTITION", "PASSWORD", "PER", "PERMISSION", "PERMISSIONS",
+        "PRIMARY", "QUORUM", "RENAME", "REVOKE", "ROLES", "SCHEMA", "SELECT",
+        "SET", "STATIC",
+        "STORAGE", "SUPERUSER", "TABLE", "THREE", "TO", "TOKEN", "TRUNCATE", "TTL",
+        "TWO", "TYPE", "UNLOGGED", "UPDATE", "USE", "USER", "USERS", "USING", "VALUES",
+        "VIEW", "WHERE", "WITH", "WRITETIME"
+    ],
+    typeKeywords: [
+        "ascii", "bigint", "blob", "boolean", "counter", "date", "decimal",
+        "double", "float", "frozen", "inet", "int", "list", "map", "set",
+        "smallint", "text", "time", "timestamp", "timeuuid", "tinyint",
+        "tuple", "uuid", "varchar", "varint",
+    ],
+    operators: [
+        "=", "<", ">", ">=", "<=",
+    ],
+    brackets: [
+        ['(', ')', 'delimiter.parenthesis'],
+        ['{', '}', 'delimiter.curly'],
+        ['[', ']', 'delimiter.square'],
+        ['<', '>', 'delimiter.angle'],
+    ],
+
+
+    operators: [
+        '=', '>', '<', '==', '<=', '>=', '!=', '&&', '||', '+',
+        '-', '|'
+    ],
+    symbols: /[=><!~?:&|+\-*\/\^%]+/,
+    escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
+    tokenizer: {
+        root: [
+            { include: "@comments" },
+            { include: "@whitespace" },
+            { include: "@numbers" },
+
+            [/(list|map|set|frozen)(\s*<)(?![^>]+>\s*(?:\(|$))/,
+                ['type.identifier', { token: 'delimiter.type.definition', next: '@type' }]
+            ],
+
+            [/[{}()\[\]]/, '@brackets'],
+            [/@symbols/, {
+                cases: {
+                    '@operators': 'operator'
+
+                }
+            }],
+            // identifiers and keywords
+            [/[a-zA-Z0-9_]\w*/, {
+                cases: {
+                    '@keywords': { token: 'keyword', next: '@qualified' },
+                    '@typeKeywords': { token: 'type', next: '@qualified' },
+                    '@default': { token: 'identifier', next: '@qualified' }
+                }
+            }],
+            [/"/, "string", "@doubleQuotedString"],
+            [/'/, "string", "@singleQuotedString"],
+
+        ],
+        whitespace: [
+            [/[ \t\r\n]+/, 'white']
+        ],
+        qualified: [
+            [/[a-zA-Z_][\w]*/, {
+                cases: {
+                    // '@typeFollows': { token: 'keyword', next: '@type' },
+                    // '@typeKeywords': 'type.identifier',
+                    // '@keywords': 'keyword',
+                    '@default': 'identifier'
+                }
+            }],
+            ['', '', '@pop'],
+        ],
+        type: [
+            { include: '@whitespace' },
+            [/[A-Z]\w*/, 'type.identifier'],
+            // identifiers and keywords
+            [/[a-zA-Z_]\w*/, {
+                cases: {
+                    '@typeKeywords': 'type.identifier',
+                    //   '@keywordInType': 'keyword',
+                    '@keywords': { token: '@rematch', next: '@popall' },
+                    '@default': 'type.identifier'
+                }
+            }],
+            [/[<]/, 'delimiter.type.definition', '@type_nested'],
+            [/[>]/, 'delimiter.type.definition', '@pop'],
+            [/[\.,:]/, {
+                cases: {
+                    '@keywords': 'keyword',
+                    '@default': 'delimiter'
+                }
+            }],
+            ['', '', '@popall'], // catch all
+        ],
+
+        type_nested: [
+            [/[<]/, 'delimiter.type.definition', '@type_nested'],
+            { include: 'type' }
+        ],
+        comments: [
+            [/--+.*/, "comment"],
+            [/\/\*/, { token: "comment.quote", next: "@comment" }],
+        ],
+        comment: [
+            [/[^*/]+/, "comment"],
+            // Not supporting nested comments, as nested comments seem to not be standard?
+            // i.e. http://stackoverflow.com/questions/728172/are-there-multiline-comment-delimiters-in-sql-that-are-vendor-agnostic
+            // [/\/\*/, { token: 'comment.quote', next: '@push' }],    // nested comment not allowed :-(
+            [/\*\//, { token: "comment.quote", next: "@pop" }],
+            [/./, "comment"],
+        ],
+        numbers: [
+            [/0[xX][0-9a-fA-F]*/, "number"],
+            [/[$][+-]*\d*(\.\d*)?/, "number"],
+            [/((\d+(\.\d*)?)|(\.\d+))([eE][\-+]?\d+)?/, "number"],
+        ],
+        doubleQuotedString: [
+            [/[^\\"]+/, "string"],
+            [/@escapes/, "string.escape"],
+            [/\\./, "string.escape.invalid"],
+            [/"/, "string", "@pop"],
+        ],
+        singleQuotedString: [
+            [/[^\\']+/, "string"],
+            [/@escapes/, "string.escape"],
+            [/\\./, "string.escape.invalid"],
+            [/'/, "string", "@pop"],
+        ],
+    }
+});
+
+// Define a new theme that contains only rules that match this language
+monaco.editor.defineTheme("vs-dark-custom", {
+    base: "vs-dark", // can also be vs-dark or hc-black
+    inherit: true, // can also be false to completely replace the builtin rules
+    rules: [
+        { token: "comment", foreground: "7b7f8b", fontStyle: "" },
+        { token: "keyword", foreground: "6495ED", fontStyle: "" },
+        { token: "type", foreground: "97e1f1", fontStyle: "" },
+        { token: "delimiter.parenthesis", foreground: "FFFF00", fontStyle: "" },
+        { token: "delimiter.angle", foreground: "FFFF00", fontStyle: "" },
+        { token: "delimiter.square", foreground: "DAA520", fontStyle: "" },
+        { token: "delimiter.curly", foreground: "D2691E", fontStyle: "" },
+        { token: "number", foreground: "bf9eee", fontStyle: "" },
+        { token: "string", foreground: "62e884", fontStyle: "" },
+        { token: "delimiter.type.definition", foreground: "FFD700", fontStyle: "" },
+        { token: "operator", foreground: "40E0D0", fontStyle: "" },
+    ],
+    colors: null,
+});
+
+function getCode() {
+    return `
+
+update example set c_tuple = ('a','b',123) where pk='a' and cck='1' and b>1 and c < 2;
+update example set c_tuple = ('a','b',123) where pk>='a' and cck<='1' and b>1 and c < 2;
+update example set c_tuple['somestring'] = {'field1': 'a'} where pk>='a' and cck<='1' and b>1 and c < 2;
+-- comment
+/*
+    Also a comment
+*/
+CREATE TABLE abc_keyspace.example (
+    pk text,
+    cck text,
+    c_ascii ascii,
+    c_fake fake<int,text>,
+    c_bigint bigint,
+    c_blob blob,
+    c_boolean boolean,
+    c_date date,
+    c_decimal decimal,
+    c_double double,
+    c_float float,
+    c_frozen frozen<set<text>>,
+    c_inet inet,
+    c_int int,
+    c_list_int list<int>,
+    c_list_text list<text>,
+    c_map_int map<int, int>,
+    c_map_text map<text, text>,
+    c_set_int set<int>,
+    c_set_text set<text>,
+    c_smallint smallint,
+    c_text text,
+    c_time time,
+    c_timestamp timestamp,
+    c_timeuuid timeuuid,
+    c_tinyint tinyint,
+    c_tuple frozen <tuple<text, text, int>>,
+    c_user_data frozen<abc_keyspace.user_data_example>,
+    c_uuid uuid,
+    c_varchar text,
+    c_varint varint,
+    testmap map<text, frozen<map<int, int>>>,
+    testmap2 frozen<map<text, frozen<map<int, int>>>>,
+    PRIMARY KEY (pk, cck)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.1
+   AND gc_grace_seconds = 864000
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = ''
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 64, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99PERCENTILE'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0;
+
+CREATE INDEX directory_object_za_tags ON db_socex.directory_object_za (values(tags));
+
+
+
+
+
+`;
+}
+
+monaco.languages.setLanguageConfiguration("cql", {
+    comments: {
+        lineComment: "--",
+        blockComment: ["/*", "*/"],
+    },
+    brackets: [
+        ["{", "}"],
+        ["[", "]"],
+        ["(", ")"],
+    ],
+    autoClosingPairs: [
+        { open: "{", close: "}" },
+        { open: "[", close: "]" },
+        { open: "(", close: ")" },
+        { open: "\"", close: "\"" },
+        { open: "'", close: "'" },
+        { open: "/*", close: "*/" },
+    ],
+    surroundingPairs: [
+        { open: "<", close: ">" },
+        { open: "{", close: "}" },
+        { open: "[", close: "]" },
+        { open: "(", close: ")" },
+        { open: "\"", close: "\"" },
+        { open: "'", close: "'" },
+    ],
+});
+
+monaco.editor.create(document.getElementById("container"), {
+    theme: 'vs-dark-custom',
+    value: getCode(),
+    language: 'cql',
+    //fontSize: 11,
+    minimap: {
+        enabled: false,
+    }
+});
