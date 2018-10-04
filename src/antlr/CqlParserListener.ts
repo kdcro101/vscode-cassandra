@@ -148,7 +148,8 @@ import { RelationElementsContext } from './CqlParser';
 import { RelationElementContext } from './CqlParser';
 import { RelationElementConstantContext } from './CqlParser';
 import { RelationElementInContext } from './CqlParser';
-import { RelationElementFunctionContext } from './CqlParser';
+import { RelationElementTokenContext } from './CqlParser';
+import { RelationElementTokenSpecContext } from './CqlParser';
 import { RelationOperatorContext } from './CqlParser';
 import { FunctionCallContext } from './CqlParser';
 import { FunctionArgsContext } from './CqlParser';
@@ -267,6 +268,7 @@ import { KwSuperuserContext } from './CqlParser';
 import { KwTableContext } from './CqlParser';
 import { KwTimestampContext } from './CqlParser';
 import { KwToContext } from './CqlParser';
+import { KwTokenContext } from './CqlParser';
 import { KwTriggerContext } from './CqlParser';
 import { KwTruncateContext } from './CqlParser';
 import { KwTtlContext } from './CqlParser';
@@ -1934,15 +1936,26 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitRelationElementIn?: (ctx: RelationElementInContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.relationElementFunction`.
+	 * Enter a parse tree produced by `CqlParser.relationElementToken`.
 	 * @param ctx the parse tree
 	 */
-	enterRelationElementFunction?: (ctx: RelationElementFunctionContext) => void;
+	enterRelationElementToken?: (ctx: RelationElementTokenContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.relationElementFunction`.
+	 * Exit a parse tree produced by `CqlParser.relationElementToken`.
 	 * @param ctx the parse tree
 	 */
-	exitRelationElementFunction?: (ctx: RelationElementFunctionContext) => void;
+	exitRelationElementToken?: (ctx: RelationElementTokenContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.relationElementTokenSpec`.
+	 * @param ctx the parse tree
+	 */
+	enterRelationElementTokenSpec?: (ctx: RelationElementTokenSpecContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.relationElementTokenSpec`.
+	 * @param ctx the parse tree
+	 */
+	exitRelationElementTokenSpec?: (ctx: RelationElementTokenSpecContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.relationOperator`.
@@ -3241,6 +3254,17 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitKwTo?: (ctx: KwToContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.kwToken`.
+	 * @param ctx the parse tree
+	 */
+	enterKwToken?: (ctx: KwTokenContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.kwToken`.
+	 * @param ctx the parse tree
+	 */
+	exitKwToken?: (ctx: KwTokenContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.kwTrigger`.

@@ -34,7 +34,7 @@ export class Completition {
         const rxNonWord = new RegExp(/\W$/);
         const rxPartial = new RegExp(/\b\w+$/);
         // const rxSeparator = new RegExp(/(\.|\:|\(,))$/);
-        const rxSeparator = new RegExp(/[\.\:\(,]$/);
+        const rxSeparator = new RegExp(/[\.\:\(,=><]$/);
 
         const lastNonWord = rxNonWord.test(code);
         const lastSeparator = rxSeparator.test(code);

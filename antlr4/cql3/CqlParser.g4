@@ -700,7 +700,7 @@ relationElements
 relationElement
     : relationElementConstant
     | relationElementIn
-    | relationElementFunction
+    | relationElementToken
     | OBJECT_NAME { this.notifyErrorListeners("rule.relationElement"); }
     | { this.notifyErrorListeners("rule.relationElement"); }
     ;
@@ -713,10 +713,18 @@ relationElementIn
     : column kwIn syntaxBracketLr functionArgs? syntaxBracketRr
     ;
 
-relationElementFunction
-    : functionCall relationOperator functionCall
+relationElementToken
+    : relationElementTokenSpec
+      (relationOperator | { this.notifyErrorListeners("rule.relationOperator"); })
+      relationElementTokenSpec
     ;
-
+relationElementTokenSpec
+    : kwToken
+      (syntaxBracketLr  | { this.notifyErrorListeners("rule.syntaxBracketLr"); })
+      (column           | { this.notifyErrorListeners("rule.column"); })
+      (syntaxBracketRr  | { this.notifyErrorListeners("rule.syntaxBracketRr"); })
+    | { this.notifyErrorListeners("rule.relationElementTokenSpec"); }
+    ;
 
 relationOperator
     : syntaxOperatorEq
@@ -971,6 +979,7 @@ kwSuperuser : K_SUPERUSER;
 kwTable: K_TABLE;
 kwTimestamp: K_TIMESTAMP;
 kwTo: K_TO;
+kwToken: K_TOKEN;
 kwTrigger: K_TRIGGER;
 kwTruncate: K_TRUNCATE;
 kwTtl: K_TTL;

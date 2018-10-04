@@ -112,6 +112,7 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                                         const o: monaco.languages.CompletionItem = {
                                             label: t.name,
                                             kind: monaco.languages.CompletionItemKind.Field,
+                                            detail: t.type,
                                         };
                                         return o;
                                     });

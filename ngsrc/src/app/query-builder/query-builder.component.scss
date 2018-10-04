@@ -47,7 +47,13 @@
                     box-sizing: border-box;
                     cursor: pointer;
                     transform-origin: center bottom;
-
+                    .modified{
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 50%;
+                        background-color: mat-color($accent, 500);
+                        margin-right: 8px;
+                    }
                     .menu-trigger {
                         position: absolute;
                         left: 0;

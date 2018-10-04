@@ -60,8 +60,10 @@ export class MonacoService {
                 // { token: "default", foreground: "ff0000", fontStyle: "" },
                 { token: "type", foreground: "f286c4", fontStyle: "" },
                 { token: "delimiter.parenthesis", foreground: "ffb86c", fontStyle: "" },
-                { token: "number", foreground: "62e884", fontStyle: "" },
-                { token: "string", foreground: "f286c4", fontStyle: "" },
+                { token: "delimiter.angle", foreground: "ffb86c", fontStyle: "" },
+                { token: "delimiter.square", foreground: "ffb86c", fontStyle: "" },
+                { token: "number", foreground: "f286c4", fontStyle: "" },
+                { token: "string", foreground: "62e884", fontStyle: "" },
                 // { token: "comment.js", foreground: "008800", fontStyle: "bold" },
                 // { token: "comment.css", foreground: "0000ff" }, // will inherit fontStyle from `comment` above
             ],

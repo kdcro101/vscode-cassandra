@@ -61,8 +61,7 @@ export const cqlHoverTokenProvider = <monaco.languages.IMonarchLanguage>{
             { include: "@whitespace" },
 
             [/[;,.]/, "delimiter"],
-            [/[<>]/, "string"],
-            [/[\[\]]/, "string"],
+            [/[()<>\[\]]/, "@brackets"],
             [/[\w@#$]+/, {
                 cases: {
                     "@typeKeywords": "type",

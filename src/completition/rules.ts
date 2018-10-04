@@ -135,6 +135,7 @@ export const preferredRules: PreferredRules = {
     "kwTable": { text: "TABLE", type: "keyword" },
     "kwTimestamp": { text: "TIMESTAMP", type: "keyword" },
     "kwTo": { text: "TO", type: "keyword" },
+    "kwToken": { text: "TOKEN", type: "keyword" },
     "kwTrigger": { text: "TRIGGER", type: "keyword" },
     "kwTruncate": { text: "TRUNCATE", type: "keyword" },
     "kwTtl": { text: "TTL", type: "keyword" },

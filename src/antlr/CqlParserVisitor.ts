@@ -148,7 +148,8 @@ import { RelationElementsContext } from './CqlParser';
 import { RelationElementContext } from './CqlParser';
 import { RelationElementConstantContext } from './CqlParser';
 import { RelationElementInContext } from './CqlParser';
-import { RelationElementFunctionContext } from './CqlParser';
+import { RelationElementTokenContext } from './CqlParser';
+import { RelationElementTokenSpecContext } from './CqlParser';
 import { RelationOperatorContext } from './CqlParser';
 import { FunctionCallContext } from './CqlParser';
 import { FunctionArgsContext } from './CqlParser';
@@ -267,6 +268,7 @@ import { KwSuperuserContext } from './CqlParser';
 import { KwTableContext } from './CqlParser';
 import { KwTimestampContext } from './CqlParser';
 import { KwToContext } from './CqlParser';
+import { KwTokenContext } from './CqlParser';
 import { KwTriggerContext } from './CqlParser';
 import { KwTruncateContext } from './CqlParser';
 import { KwTtlContext } from './CqlParser';
@@ -1357,11 +1359,18 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitRelationElementIn?: (ctx: RelationElementInContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.relationElementFunction`.
+	 * Visit a parse tree produced by `CqlParser.relationElementToken`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitRelationElementFunction?: (ctx: RelationElementFunctionContext) => Result;
+	visitRelationElementToken?: (ctx: RelationElementTokenContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.relationElementTokenSpec`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitRelationElementTokenSpec?: (ctx: RelationElementTokenSpecContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.relationOperator`.
@@ -2188,6 +2197,13 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitKwTo?: (ctx: KwToContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.kwToken`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitKwToken?: (ctx: KwTokenContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.kwTrigger`.

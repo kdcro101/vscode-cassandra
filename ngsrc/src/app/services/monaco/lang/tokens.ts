@@ -101,7 +101,7 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
             { include: "@numbers" },
 
             [/[;,.]/, "delimiter"],
-            [/[()]/, "@brackets"],
+            [/[()<>\[\]]/, "@brackets"],
             [/[\w@#$]+/, {
                 cases: {
                     "@typeKeywords": "type",
