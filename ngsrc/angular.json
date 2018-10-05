@@ -48,7 +48,7 @@
                             "src/assets"
                         ],
                         "styles": [
-                            "src/lib/handsontable/index.css",
+                            "node_modules/handsontable/dist/handsontable.full.css",
                             "src/scss/fonts/material-icons.css",
                             "src/scss/fonts/roboto.css",
                             "src/scss/fonts/inconsolata.css",
@@ -56,7 +56,7 @@
                         ],
                         "scripts": [
                             "src/lib/iscroll/iscroll-probe.js",
-                            "src/lib/handsontable/index.js",
+                            "node_modules/handsontable/dist/handsontable.full.js",
                             "node_modules/monaco-editor/min/vs/loader.js",
                             "node_modules/monaco-editor/min/vs/editor/editor.main.nls.js",
                             "node_modules/monaco-editor/min/vs/editor/editor.main.js"

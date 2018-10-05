@@ -1,12 +1,15 @@
 import { UiDataGridComponent } from "../ui-data-grid.component";
 
-export type ContextMenuCommand = "copy" | "paste" | "cut" | "cancelChange" | "cancelRowDelete" | "deleteRows";
+export type ContextMenuCommand = "undo" | "copy" | "paste" | "cut" | "cancelChange" | "cancelRowDelete" | "deleteRows";
 
 export const contexMenuHandler = (grid: UiDataGridComponent, command: ContextMenuCommand) => {
 
     console.log(`contexMenuHandler=${command}`);
 
     switch (command) {
+        case "undo":
+            onUndo(grid);
+            break;
         case "copy":
             onCopy(grid);
             break;
@@ -26,6 +29,13 @@ export const contexMenuHandler = (grid: UiDataGridComponent, command: ContextMen
 
 };
 
+function onUndo(grid: UiDataGridComponent) {
+    console.log("command.undo");
+
+    // const p = grid.gridInstance.getPlugin("");
+    // p.copy();
+    // grid.gridInstance.undo();
+}
 function onCopy(grid: UiDataGridComponent) {
     console.log("command.copy");
 

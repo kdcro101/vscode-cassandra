@@ -31,8 +31,12 @@
     </div>
 
 </div>
-<!-- fxLayout="row" fxLayoutAlign="start center" -->
 <mat-menu #menu="matMenu" class="material-custom context-menu" [hasBackdrop]="false">
+    <button mat-menu-item class="" (click)="onContextMenu('copy')">
+        <mat-icon class="icon-18">settings_backup_restore</mat-icon>
+        <span class="mat-caption">Cancel value change</span>
+    </button>
+    <mat-divider></mat-divider>
     <button mat-menu-item class="" (click)="onContextMenu('copy')">
         <mat-icon class="icon-18">content_copy</mat-icon>
         <span class="mat-caption">Copy</span>
@@ -45,5 +49,14 @@
     <button mat-menu-item class="" (click)="onContextMenu('paste')">
         <mat-icon class="icon-18">content_paste</mat-icon>
         <span class="mat-caption">Paste</span>
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="onContextMenu('deleteRows')">
+        <mat-icon class="icon-18">content_paste</mat-icon>
+        <span class="mat-caption">Delete row(s)123</span>
+    </button>
+    <button mat-menu-item (click)="onContextMenu('deleteRows')">
+        <mat-icon class="icon-18">delete_outline</mat-icon>
+        <span class="mat-caption">Close</span>
     </button>
 </mat-menu>

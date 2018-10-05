@@ -27,6 +27,7 @@
     "@uirouter/angular": "^2.0.0",
     "adm-zip": "^0.4.11",
     "core-js": "^2.5.4",
+    "handsontable": "^6.0.1",
     "hoek": "^4.2.1",
     "install": "^0.12.1",
     "json-beautify": "^1.0.1",
