@@ -1,7 +1,10 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { MatButtonModule, MatIconModule, MatProgressBarModule, MatRippleModule } from "@angular/material";
+import {
+    MatButtonModule, MatDividerModule, MatIconModule,
+    MatMenuModule, MatProgressBarModule, MatRippleModule,
+} from "@angular/material";
 import { UiDataGridComponent } from "./ui-data-grid/ui-data-grid.component";
 
 @NgModule({
@@ -11,6 +14,8 @@ import { UiDataGridComponent } from "./ui-data-grid/ui-data-grid.component";
         MatButtonModule,
         MatRippleModule,
         MatIconModule,
+        MatMenuModule,
+        MatDividerModule,
         MatProgressBarModule,
     ],
     declarations: [

@@ -22,6 +22,14 @@
             position: relative;
             overflow: hidden;
             margin-top: 1px;
+            .menu-trigger {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 1px;
+                height: 1px;
+                background: transparent;
+            }
         }
         .grid-host {
             position: relative;

@@ -2,21 +2,25 @@
     <mat-progress-bar [@progressAnimationState] color="accent" mode="indeterminate" *ngIf="renderingProgress"></mat-progress-bar>
     <div #gridWrap fxFlex class="grid-wrap" [@gridAnimationState]="gridAnimationState">
         <div #gridHost class="grid-host" id="{{ gridInstanceId }}"></div>
+        <div #menuTriggerElem class="menu-trigger" [matMenuTriggerFor]="menu"></div>
     </div>
-    <div [@statusAnimationState] *ngIf="currentResultState.showError" class="grid-status-item error" fxLayout="row" fxLayoutAlign="center center">
+    <div [@statusAnimationState] *ngIf="currentResultState.showError" class="grid-status-item error" fxLayout="row"
+        fxLayoutAlign="center center">
         <div fxLayout="row" fxLayoutAlign="start center" class="status-content mat-elevation-z3 mat-caption">
             <mat-icon class="icon-18 mr">error</mat-icon>
             <div>{{ currentError.message  }}</div>
         </div>
     </div>
-    <div [@statusAnimationState] *ngIf="currentResultState.showReadonly" class="grid-status-item readonly" fxLayout="row" fxLayoutAlign="center center">
+    <div [@statusAnimationState] *ngIf="currentResultState.showReadonly" class="grid-status-item readonly" fxLayout="row"
+        fxLayoutAlign="center center">
         <div fxLayout="row" fxLayoutAlign="start center" class="status-content  mat-elevation-z3 mat-caption">
             <mat-icon class="icon-18 mr">lock</mat-icon>
             <div class="mr">Result is read-only. Primary key column(s) are not selected.</div>
             <button mat-button class="button-18 mat-caption" color="accent" (click)="currentResultState.showReadonly=false">OK</button>
         </div>
     </div>
-    <div [@statusAnimationState] *ngIf="currentResultState.showChanges && !(dataChange.stateRunning | async)" class="grid-status-item changes" fxLayout="row" fxLayoutAlign="center center">
+    <div [@statusAnimationState] *ngIf="currentResultState.showChanges && !(dataChange.stateRunning | async)" class="grid-status-item changes"
+        fxLayout="row" fxLayoutAlign="center center">
         <div fxLayout="row" fxLayoutAlign="start center" class="status-content mat-elevation-z3 mat-caption">
             <mat-icon class="icon-18 mr">edit</mat-icon>
             <div *ngIf="changeManager.list.length===1" class="mr2">1 change pending</div>
@@ -27,3 +31,19 @@
     </div>
 
 </div>
+<!-- fxLayout="row" fxLayoutAlign="start center" -->
+<mat-menu #menu="matMenu" class="material-custom context-menu" [hasBackdrop]="false">
+    <button mat-menu-item class="" (click)="onContextMenu('copy')">
+        <mat-icon class="icon-18">content_copy</mat-icon>
+        <span class="mat-caption">Copy</span>
+    </button>
+    <button mat-menu-item class="" (click)="onContextMenu('cut')">
+        <mat-icon class="icon-18">content_cut</mat-icon>
+        <span class="mat-caption">Cut</span>
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item class="" (click)="onContextMenu('paste')">
+        <mat-icon class="icon-18">content_paste</mat-icon>
+        <span class="mat-caption">Paste</span>
+    </button>
+</mat-menu>

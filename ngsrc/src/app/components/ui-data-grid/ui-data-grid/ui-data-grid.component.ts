@@ -1,12 +1,13 @@
 import {
-    ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener,
-    Input, OnDestroy, OnInit, ViewChild,
+    ChangeDetectionStrategy, ChangeDetectorRef, Component,
+    ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild,
 } from "@angular/core";
+import { MatMenu, MatMenuTrigger } from "@angular/material";
 import beautify from "json-beautify";
-import { cloneDeep } from "lodash-es";
+import { cloneDeep, concat } from "lodash-es";
 import ResizeObserver from "resize-observer-polyfill";
-import { merge, ReplaySubject, Subject } from "rxjs";
-import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
+import { fromEvent, merge, of, ReplaySubject, Subject } from "rxjs";
+import { concatMap, debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
 import { ColumnInfo } from "../../../../../../src/cassandra-client/index";
 import { CassandraColumn, CassandraTable, DataChangeItem } from "../../../../../../src/types/index";
 import { AnalyzedStatement, CqlAnalysis } from "../../../../../../src/types/parser";
@@ -20,7 +21,7 @@ import { onBeforeChange } from "./before-change";
 import { CellClassManager } from "./cell-class/cell-class";
 import { ChangeManager } from "./change-manager";
 import { buildColumns } from "./column-builder/column-builder";
-import { gridContextMenu } from "./context-menu";
+import { contexMenuHandler, ContextMenuCommand } from "./context-commands";
 import { HtmlCache } from "./html-cache/html-cache";
 import { measureText } from "./measure-width";
 import { headerRenderer } from "./renderers/header-renderer";
@@ -28,6 +29,8 @@ import { ResultState } from "./resultset-state";
 import { buildResultState } from "./resultset-state/index";
 import { ScrollAssist } from "./scroll-assist/scroll-assist";
 import { SelectionHelper } from "./selection-helper/selection-helper";
+
+import SheetClip from "sheetclip";
 
 const ARROW_DOWN = 40;
 const ARROW_UP = 38;
@@ -61,6 +64,12 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     @ViewChild("root") public root: ElementRef<HTMLDivElement>;
     @ViewChild("gridHost") public gridHost: ElementRef<HTMLDivElement>;
     @ViewChild("gridWrap") public gridWrap: ElementRef<HTMLDivElement>;
+    @ViewChild("menuTriggerElem") menuTriggerElem: ElementRef<HTMLDivElement>;
+    @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger;
+    @ViewChild("menu") contextMenu: MatMenu;
+
+    public clipboardCache = "";
+    public sheetclip = new SheetClip();
 
     public gridAnimationState: string;
     public gridInstance: Handsontable = null;
@@ -362,7 +371,9 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 minSpareCols: 0,
                 minSpareRows: 0,
                 rowHeaders: true,
-                contextMenu: gridContextMenu(this),
+                copyPaste: true,
+                // contextMenu: gridContextMenu(this),
+                contextMenu: false,
                 colHeaders: headerRenderer(this.currentColumns, this.currentTableStruct),
                 columns: columnDef,
                 allowRemoveColumn: false,
@@ -387,6 +398,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 viewportColumnRenderingOffset: 255,
                 viewportRowRenderingOffset: 5,
                 beforeOnCellMouseOver: this.onBeforeOnCellMouseOver,
+                outsideClickDeselects: false,
+                undo: true,
                 afterRender: (isForced: boolean) => {
                     console.log(`afterRender ${isForced}`);
                     this.eventRender.next();
@@ -395,7 +408,18 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 afterUpdateSettings: () => { console.log("afterUpdateSettings"); },
                 afterScrollHorizontally: () => this.eventScroll.next(),
                 afterScrollVertically: () => this.eventScroll.next(),
-                undo: true,
+                afterCopy: (changes) => {
+                    console.log("afterCopy");
+                    this.clipboardCache = this.sheetclip.stringify(changes);
+                },
+                afterCut: (changes) => {
+                    console.log("afterCut");
+                    this.clipboardCache = this.sheetclip.stringify(changes);
+                },
+                afterPaste: (changes) => {
+                    console.log("afterPaste");
+                    this.clipboardCache = this.sheetclip.stringify(changes);
+                },
 
             };
 
@@ -438,6 +462,20 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             ).subscribe(() => {
                 this.fixContentWidth();
             });
+
+            fromEvent<MouseEvent>(this.gridWrap.nativeElement, "mousedown", { capture: false }).pipe(
+                takeUntil(this.eventViewDestroyed),
+                tap((e) => {
+                    if (e.button === 0 && this.menuTrigger.menuOpen) {
+                        this.menuTrigger.closeMenu();
+                    }
+                }),
+                filter((e) => e.button === 2),
+            ).subscribe((e) => {
+                console.log("mousedown on gridwrapper");
+                this.menuOpen(e);
+            });
+
         });
 
     }
@@ -669,5 +707,48 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
         this.detectChanges();
         this.gridInstance.render();
+    }
+
+    public menuOpen(ev: MouseEvent) {
+        // ev.preventDefault();
+        // ev.stopImmediatePropagation();
+        // ev.stopPropagation();
+
+        of(this.menuTrigger.menuOpen).pipe(
+            concatMap((opened) => {
+                if (!opened) {
+                    return Promise.resolve();
+                }
+                return new Promise<void>((resolve, reject) => {
+                    this.contextMenu._animationDone
+                        .pipe(filter(event => event.toState === "void"), take(1))
+                        .subscribe(() => {
+                            resolve();
+                        }, (err) => {
+                            resolve();
+                        });
+
+                    this.menuTrigger.closeMenu();
+                });
+            }),
+        ).subscribe(() => {
+
+            const e = this.gridWrap.nativeElement;
+            const r = e.getBoundingClientRect();
+            const w = this.menuTriggerElem.nativeElement;
+            const t = this.menuTrigger;
+            const x = ev.clientX - r.left;
+            const y = ev.clientY - r.top;
+
+            w.style.left = `${x + 1}px`;
+            w.style.top = `${y + 1}px`;
+
+            t.openMenu(); // Open your custom context menu instead
+
+        });
+
+    }
+    public onContextMenu = (command: ContextMenuCommand) => {
+        contexMenuHandler(this, command);
     }
 }

@@ -21,7 +21,7 @@ export const selectDecorations = (model: monaco.editor.ITextModel, statement: An
             o.options.inlineClassName = "decoration partition_key";
             o.options.hoverMessage = [
                 {
-                    value: `\`\`\`cqlhover\n${c.type} AS PARTITION KEY [${c.kindIndex + 1}/${c.kindCount}]\`\`\``,
+                    value: `\`\`\`cql\n${c.type} AS PARTITION KEY [${c.kindIndex + 1}/${c.kindCount}]\`\`\``,
                 },
             ];
             out.push(o);
@@ -29,7 +29,7 @@ export const selectDecorations = (model: monaco.editor.ITextModel, statement: An
         if (c.kind === "clustering") {
             o.options.inlineClassName = "decoration clustering";
             o.options.hoverMessage = {
-                value: `\`\`\`cqlhover\n${c.type} AS COLUMN CLUSTERING KEY [${c.kindIndex + 1}/${c.kindCount}]\`\`\``,
+                value: `\`\`\`cql\n${c.type} AS COLUMN CLUSTERING KEY [${c.kindIndex + 1}/${c.kindCount}]\`\`\``,
             };
             out.push(o);
         }
@@ -37,7 +37,7 @@ export const selectDecorations = (model: monaco.editor.ITextModel, statement: An
             // o.options.inlineClassName = "decoration";
             o.options.inlineClassName = "";
             o.options.hoverMessage = {
-                value: `\`\`\`cqlhover\n${c.text} AS ${c.type}\`\`\``,
+                value: `\`\`\`cql\n${c.text} AS ${c.type}\`\`\``,
             };
             out.push(o);
         }
