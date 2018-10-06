@@ -1,4 +1,4 @@
-<div class="root mat-body-1">
+<div #root class="root mat-body-1">
     <div #top class="top" fxLayout="column">
         <form fxLayout="row" fxLayoutAlign="start center" class="cluster-actions mat-app-background" [formGroup]="formGroup">
             <div class="dropdown icon-svg cluster size-18"></div>
@@ -66,14 +66,8 @@
                 <div fxLayout="row" fxLayoutAlign="center center" class="not-executed" *ngIf="!item.executed">
                     <div class="action" fxLayout="column">
                         <div fxLayoutAlign="center center" fxLayout="row">
-                            <button mat-fab color="accent" (click)="executeCql()" [disabled]="(editorCurrent.stateExecuting | async) || clusterLoadingError || clusterLoading">
+                            <button  matTooltip="Execute query" mat-fab color="accent" (click)="executeCql()" [disabled]="(editorCurrent.stateExecuting | async) || clusterLoadingError || clusterLoading">
                                 <mat-icon>cloud_upload</mat-icon>
-                            </button>
-                        </div>
-                        <div class="sep"></div>
-                        <div fxLayoutAlign="center center" fxLayout="row">
-                            <button mat-button color="accent" (click)="executeCql()" [disabled]="(editorCurrent.stateExecuting | async) || clusterLoadingError || clusterLoading">
-                                EXECUTE
                             </button>
                         </div>
                     </div>

@@ -6,7 +6,8 @@ import {
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog, MatSnackBar } from "@angular/material";
 import { from, merge, ReplaySubject, Subject } from "rxjs";
-import { concatMap, debounceTime, take, takeUntil } from "rxjs/operators";
+import { fromEvent } from "rxjs";
+import { concatMap, debounceTime, map, take, takeUntil } from "rxjs/operators";
 import * as Split from "split.js";
 import { WorkbenchCqlStatement } from "../../../../../../src/types/editor";
 import { CassandraCluster, CassandraClusterData, CassandraKeyspace, ExecuteQueryResponse } from "../../../../../../src/types/index";
@@ -25,6 +26,8 @@ import { UiMonacoEditorComponent } from "../../ui-monaco-editor/ui-monaco-editor
 import { panelAnimations } from "./animations/panel";
 
 type PanelAnimationState = "active" | "hidden";
+type GutterAction = "minimize" | "maximize" | "center";
+
 export interface StatementChangeEvent {
     statement: WorkbenchCqlStatement;
     isCodeModified: boolean;
@@ -45,6 +48,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     @ViewChild("top") public top: ElementRef<HTMLDivElement>;
     @ViewChild("bottom") public bottom: ElementRef<HTMLDivElement>;
     @ViewChild("monacoEditor") public monacoEditor: UiMonacoEditorComponent;
+    @ViewChild("root") public root: ElementRef<HTMLDivElement>;
 
     @ViewChildren("dataGrid") public dataGrid: QueryList<UiDataGridComponent>;
 
@@ -76,6 +80,10 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     public panelAnimationState: { [id: string]: PanelAnimationState };
 
     public formGroup: FormGroup;
+
+    private splitInstance: Split.Instance;
+    private gutterElement: HTMLDivElement;
+    private gutterSize = 12;
 
     constructor(
         public change: ChangeDetectorRef,
@@ -191,11 +199,17 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
     }
     ngOnInit() {
 
-        Split([this.top.nativeElement, this.bottom.nativeElement], {
+        this.gutterElement = document.createElement("div");
+
+        this.splitInstance = Split([this.top.nativeElement, this.bottom.nativeElement], {
             direction: "vertical",
             sizes: [50, 50],
-            minSize: [200, 300],
-            gutterSize: 12,
+            minSize: [200, 72],
+            gutterSize: this.gutterSize,
+            gutter: (index: number, direction: "horizontal" | "vertical") => {
+                this.gutterElement.className = `gutter gutter-${direction}`;
+                return this.gutterElement;
+            },
         });
 
         this.cluster.eventChange.pipe()
@@ -219,6 +233,36 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         // this.cqlClient.stateExecuting.pipe(
         //     takeUntil(this.eventViewDestroyed),
         // ).subscribe(() => this.detectChanges());
+
+        const gutterButtonMax = document.createElement("div");
+        gutterButtonMax.className = "gutter-button maximize";
+        gutterButtonMax.style.right = `0px`;
+        this.gutterElement.appendChild(gutterButtonMax);
+
+        const gutterButtonMin = document.createElement("div");
+        gutterButtonMin.className = "gutter-button minimize";
+        gutterButtonMin.style.right = `24px`;
+        this.gutterElement.appendChild(gutterButtonMin);
+
+        merge(
+            fromEvent<MouseEvent>(gutterButtonMax, "mouseup").pipe(map<MouseEvent, [MouseEvent, GutterAction]>((e) => [e, "maximize"])),
+            fromEvent<MouseEvent>(gutterButtonMin, "mouseup").pipe(map<MouseEvent, [MouseEvent, GutterAction]>((e) => [e, "minimize"])),
+        ).pipe(
+            takeUntil(this.eventViewDestroyed),
+        ).subscribe((e) => {
+            this.onGutterAction(e[0], e[1]);
+        });
+
+        merge(
+            fromEvent<MouseEvent>(gutterButtonMax, "mousedown"),
+            fromEvent<MouseEvent>(gutterButtonMin, "mousedown"),
+        ).pipe(
+            takeUntil(this.eventViewDestroyed),
+        ).subscribe((e) => {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            e.stopPropagation();
+        });
 
     }
     ngOnDestroy() {
@@ -429,6 +473,27 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
                 resolve(false);
             });
         });
+    }
+    private onGutterAction = (e: MouseEvent, action: GutterAction) => {
+
+        // minSize: [200, 72],
+        const rect = this.root.nativeElement.getBoundingClientRect();
+        const pxPerPc = rect.height / 100;
+
+        // console.log(JSON.stringify(this.splitInstance.getSizes()));
+
+        let calculatedHeightPc: number = 0;
+        switch (action) {
+            case "minimize":
+                calculatedHeightPc = Math.round(72 / pxPerPc);
+                this.splitInstance.setSizes([100 - calculatedHeightPc, calculatedHeightPc]);
+                break;
+            case "maximize":
+                calculatedHeightPc = Math.round(200 / pxPerPc);
+                this.splitInstance.setSizes([calculatedHeightPc, 100 - calculatedHeightPc]);
+                break;
+
+        }
     }
 
 }

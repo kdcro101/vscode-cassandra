@@ -110,6 +110,36 @@
         }
         ::ng-deep .gutter {
             background-color: mat-color($background, 500);
+            position: relative;
+            .gutter-button {
+                position: absolute;
+                top: 0;
+                width: 24px;
+                bottom: 0;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0.125);
+                }
+                &:active {
+                    background-color: rgba(0, 0, 0, 0.25);
+                }
+
+                &.maximize {
+                    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNyAxNGw1LTUgNSA1eiIvPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz48L3N2Zz4=);
+                    background-repeat: no-repeat;
+                    background-position: center center;
+                    background-size: 18px 18px;
+
+                }
+                &.minimize {
+                    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNyAxMGw1IDUgNS01eiIvPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz48L3N2Zz4=);
+                    background-repeat: no-repeat;
+                    background-position: center center;
+                    background-size: 18px 18px;
+
+                }
+            }
             &.gutter-vertical {
                 background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiPiAgPGRlZnM+ICAgIDxwYXRoIGlkPSJhIiBkPSJNMCAwaDI0djI0SDBWMHoiLz4gIDwvZGVmcz4gIDxjbGlwUGF0aCBpZD0iYiI+ICAgIDx1c2Ugb3ZlcmZsb3c9InZpc2libGUiIHhsaW5rOmhyZWY9IiNhIi8+ICA8L2NsaXBQYXRoPiAgPHBhdGggZD0iTTIwIDlINHYyaDE2Vjl6TTQgMTVoMTZ2LTJINHYyeiIgY2xpcC1wYXRoPSJ1cmwoI2IpIi8+PC9zdmc+);
                 background-repeat: no-repeat;
