@@ -1,18 +1,22 @@
-// adds margin to top! CAUTION
-// .monaco-editor {
-//     .monaco-editor-hover {
-//         transform: translateY(32px);
-//     }
-//     .editor-widget {
-//         transform: translateY(32px);
-//     }
-//     .view-line,
-//     .view-overlays,
-//     .cursor {
-//         margin-top: 32px;
-//     }
-//     .margin-view-overlays {
-//         margin-top: 32px;
-//     }
-// }
-//
+//  .monaco-editor {
+
+//      .cursor {
+
+//          overflow: visible !important;
+
+//      }
+//      .cursor::after {
+
+//          content: " ";
+//          position: absolute;
+//          height: 8px;
+//          width: 8px;
+//          border-radius: 50%;
+//          background-color: red;
+//          bottom: 4px;
+//          right: -12px;
+//          z-index: 1000;
+//      }
+
+//  }
+
