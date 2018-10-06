@@ -24,6 +24,7 @@ export const contexMenuHandler = (grid: UiDataGridComponent, command: ContextMen
         case "cancelRowDelete":
             break;
         case "deleteRows":
+            onDeleteRows(grid);
             break;
     }
 
@@ -59,5 +60,9 @@ function onCancelRowDelete(grid: UiDataGridComponent) {
 
 }
 function onDeleteRows(grid: UiDataGridComponent) {
+    const rows = grid.currentSelectedRows;
+    rows.forEach((r) => {
+        grid.changeManager.addRowDelete(r);
+    });
 
 }

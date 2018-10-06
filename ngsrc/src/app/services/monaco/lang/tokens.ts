@@ -89,6 +89,7 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
 
                 },
             }],
+            [/[a-z0-9A-z]+(?=\.)/, "type.keyspace"],
             // identifiers and keywords
             [/[a-zA-Z0-9_]\w*/, {
                 cases: {
@@ -99,6 +100,10 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
             }],
             [/"/, "string", "@doubleQuotedString"],
             [/'/, "string", "@singleQuotedString"],
+            [/[,]/, "delimiter.comma"],
+            [/[;]/, "delimiter.statement"],
+            [/[\.]/, "delimiter.dot"],
+
         ],
         whitespace: [
             [/[ \t\r\n]+/, "white"],

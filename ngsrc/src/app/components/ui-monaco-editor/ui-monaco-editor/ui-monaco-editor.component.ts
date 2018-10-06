@@ -227,7 +227,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         let deltas: monaco.editor.IModelDeltaDecoration[] = [];
 
         analysis.statements.forEach((s) => {
-            const base = baseColumnDecorations(this.modelCurrent, s);
+            const base = []; // baseColumnDecorations(this.modelCurrent, s);
             const sd = decorationsForStatement(this.modelCurrent, s);
 
             deltas = deltas.concat(base);

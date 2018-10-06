@@ -5,7 +5,7 @@ import {
 } from "@angular/core";
 import { MatSnackBar } from "@angular/material";
 import { Subject } from "rxjs";
-import { filter, take } from "rxjs/operators";
+import { concatMap, filter, take, takeUntil } from "rxjs/operators";
 import { HistroyItem } from "../../../../../../src/types/history";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { HistoryService } from "../../../services/history/history.service";
@@ -62,6 +62,7 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
     public items: HistroyItem[] = [];
     public fontSize: number;
     public fontFamily: string;
+    private eventColorize = new Subject<HTMLDivElement>();
     public eventAnimation = new Subject<ViewAnimationState>();
     @HostBinding("@viewAnimationState") public viewAnimationState: ViewAnimationState;
     @HostListener("@viewAnimationState.done", ["$event"]) public viewAnimationStateDone = (e: AnimationEvent) => {
@@ -98,6 +99,18 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
                     duration: 2000,
                 });
             });
+
+        this.eventColorize.pipe(
+            takeUntil(this.eventViewDestroyed),
+            concatMap((element) => {
+                return monaco.editor.colorizeElement(element, {
+                    tabSize: 4,
+                    theme: this.theme.monacoTheme,
+                });
+            }),
+        ).subscribe(() => {
+
+        });
     }
 
     ngOnDestroy() {
@@ -123,10 +136,7 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
     }
     private colorize() {
         this.itemBodyRef.toArray().forEach((e) => {
-            monaco.editor.colorizeElement(e.nativeElement, {
-                tabSize: 4,
-                theme: this.theme.isDark ? "vs-dark" : "vs-light",
-            });
+            this.eventColorize.next(e.nativeElement);
         });
     }
 }

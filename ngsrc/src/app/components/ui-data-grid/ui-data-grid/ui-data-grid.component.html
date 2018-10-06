@@ -32,31 +32,27 @@
 
 </div>
 <mat-menu #menu="matMenu" class="material-custom context-menu" [hasBackdrop]="false">
-    <button mat-menu-item class="" (click)="onContextMenu('copy')">
+    <button mat-menu-item (click)="onContextMenu('copy')">
         <mat-icon class="icon-18">settings_backup_restore</mat-icon>
         <span class="mat-caption">Cancel value change</span>
     </button>
     <mat-divider></mat-divider>
-    <button mat-menu-item class="" (click)="onContextMenu('copy')">
+    <button mat-menu-item (click)="onContextMenu('copy')">
         <mat-icon class="icon-18">content_copy</mat-icon>
         <span class="mat-caption">Copy</span>
     </button>
-    <button mat-menu-item class="" (click)="onContextMenu('cut')">
+    <button mat-menu-item (click)="onContextMenu('cut')">
         <mat-icon class="icon-18">content_cut</mat-icon>
         <span class="mat-caption">Cut</span>
     </button>
     <mat-divider></mat-divider>
-    <button mat-menu-item class="" (click)="onContextMenu('paste')">
+    <button mat-menu-item (click)="onContextMenu('paste')">
         <mat-icon class="icon-18">content_paste</mat-icon>
         <span class="mat-caption">Paste</span>
     </button>
     <mat-divider></mat-divider>
-    <button mat-menu-item (click)="onContextMenu('deleteRows')">
-        <mat-icon class="icon-18">content_paste</mat-icon>
-        <span class="mat-caption">Delete row(s)123</span>
-    </button>
-    <button mat-menu-item (click)="onContextMenu('deleteRows')">
+    <button mat-menu-item (click)="onContextMenu('deleteRows')" [disabled]="currentSelectedRows.length===0">
         <mat-icon class="icon-18">delete_outline</mat-icon>
-        <span class="mat-caption">Close</span>
+        <span class="mat-caption">Delete row(s)</span>
     </button>
 </mat-menu>

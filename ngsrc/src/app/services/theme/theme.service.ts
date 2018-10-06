@@ -11,14 +11,14 @@ declare var codeLineHeight: number;
 })
 export class ThemeService {
     public isDark: boolean = false;
-
+    public monacoThemeCurrent: string;
     constructor() {
         this.isDark =
             document.body.classList.contains("vscode-dark") || document.body.classList.contains("vscode-high-contrast") ? true : false;
 
-        if (this.isDark) {
-            document.body.classList.add("dark-theme");
-        }
+        // if (this.isDark) {
+        //     document.body.classList.add("dark-theme");
+        // }
     }
     public getEditorFontFamily(): string {
         const f = (codeFontFamily && codeFontFamily.trim() !== "") ? codeFontFamily : "Inconsolata";
@@ -34,5 +34,11 @@ export class ThemeService {
         const lh = fs + 2 + 4;
         const s = (codeLineHeight && codeLineHeight > 0) ? codeLineHeight : 20;
         return s;
+    }
+    public set monacoTheme(themeName: string) {
+        this.monacoThemeCurrent = themeName;
+    }
+    public get monacoTheme() {
+        return this.monacoThemeCurrent;
     }
 }

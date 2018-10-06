@@ -55,26 +55,31 @@ export class MonacoService {
             base: "vs-dark", // can also be vs-dark or hc-black
             inherit: true, // can also be false to completely replace the builtin rules
             rules: [
+                { token: "identifier", foreground: "ffffff", fontStyle: "" },
                 { token: "comment", foreground: "7b7f8b", fontStyle: "" },
                 { token: "keyword", foreground: "6495ED", fontStyle: "" },
                 { token: "type", foreground: "97e1f1", fontStyle: "" },
+                { token: "type.keyspace", foreground: "B09BDB", fontStyle: "italic" },
                 { token: "delimiter.parenthesis", foreground: "FFFF00", fontStyle: "" },
                 { token: "delimiter.angle", foreground: "FFFF00", fontStyle: "" },
                 { token: "delimiter.square", foreground: "DAA520", fontStyle: "" },
                 { token: "delimiter.curly", foreground: "D2691E", fontStyle: "" },
-                { token: "number", foreground: "bf9eee", fontStyle: "" },
+                { token: "delimiter.statement", foreground: "FFFF00", fontStyle: "" },
+                { token: "delimiter.comma", foreground: "00FFFF", fontStyle: "" },
+                { token: "delimiter.dot", foreground: "00FFFF", fontStyle: "" },
+                { token: "number", foreground: "ff00ff", fontStyle: "" },
                 { token: "string", foreground: "62e884", fontStyle: "" },
-                { token: "delimiter.type.definition", foreground: "FFD700", fontStyle: "" },
+                { token: "delimiter.type.definition", foreground: "ffffff", fontStyle: "" },
                 { token: "operator", foreground: "40E0D0", fontStyle: "" },
-
             ],
             colors: null,
         });
 
         monaco.languages.setMonarchTokensProvider("cqlhover", cqlHoverTokenProvider);
         monaco.languages.registerCompletionItemProvider("cql", cqlCompletitionProvider(this.autocomplete));
-        const theme = this.theme.isDark ? "vs-dark-custom" : "vs-light";
-        monaco.editor.setTheme(theme);
+        const themeName = this.theme.isDark ? "vs-dark-custom" : "vs-light";
+        monaco.editor.setTheme(themeName);
+        this.theme.monacoTheme = themeName;
 
     }
 
