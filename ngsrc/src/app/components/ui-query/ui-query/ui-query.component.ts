@@ -247,6 +247,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         merge(
             fromEvent<MouseEvent>(gutterButtonMax, "mouseup").pipe(map<MouseEvent, [MouseEvent, GutterAction]>((e) => [e, "maximize"])),
             fromEvent<MouseEvent>(gutterButtonMin, "mouseup").pipe(map<MouseEvent, [MouseEvent, GutterAction]>((e) => [e, "minimize"])),
+            fromEvent<MouseEvent>(this.gutterElement, "dblclick").pipe(map<MouseEvent, [MouseEvent, GutterAction]>((e) => [e, "center"])),
         ).pipe(
             takeUntil(this.eventViewDestroyed),
         ).subscribe((e) => {
@@ -491,6 +492,10 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
             case "maximize":
                 calculatedHeightPc = Math.round(200 / pxPerPc);
                 this.splitInstance.setSizes([calculatedHeightPc, 100 - calculatedHeightPc]);
+                break;
+
+            case "center":
+                this.splitInstance.setSizes([50, 50]);
                 break;
 
         }

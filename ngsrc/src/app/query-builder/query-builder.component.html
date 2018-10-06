@@ -13,7 +13,7 @@
         </div>
         <ui-content-horizontal #tabScroll class="tabs" fxFlex>
             <div class="tabs-wrap" #tabList fxLayout="row" fxLayoutAlign="start center">
-                <div [@tabAnimation] #tabItems *ngFor="let i of editorService.list;index as ix" class="item"
+                <div [@tabAnimation] #tabItems *ngFor="let i of editorService.list;index as ix;trackBy: trackById" class="item"
                     [class.active]="ix===editorIndex" (mousedown)="onTabMousedown($event,ix)" (mouseup)="onTabMouseup($event,ix)"
                     fxLayout="row" fxLayoutAlign="start center">
                     <div #triggerWrapper class="menu-trigger" [matMenuTriggerFor]="menu"></div>

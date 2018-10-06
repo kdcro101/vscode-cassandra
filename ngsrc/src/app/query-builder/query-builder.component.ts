@@ -25,17 +25,25 @@ import { TabDraggable } from "./tab-draggable/index";
             transition(":enter", [
                 style({
                     transform: "translate3d(0,100%,0) scale3d(0,0,1)",
+                    minWidth: 0,
+                    maxWidth: 0,
                 }),
                 animate(".25s ease-in-out", style({
                     transform: "translate3d(0,0,0) scale3d(1,1,1)",
+                    maxWidth: "200px",
+                    minWidth: 0,
                 })),
             ]),
             transition(":leave", [
                 style({
                     transform: "translate3d(0,0,0) scale3d(1,1,1)",
+                    maxWidth: "200px",
+                    minWidth: 0,
                 }),
                 animate(".25s ease-in-out", style({
                     transform: "translate3d(0,100%,0) scale3d(0,0,1)",
+                    maxWidth: 0,
+                    minWidth: 0,
                 })),
             ]),
         ]),
@@ -87,7 +95,9 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
         });
 
     }
-
+    public trackById = (index: number, item: WorkbenchEditor) => {
+        return item.id;
+    }
     ngOnInit() {
         this.system.runReady();
 
