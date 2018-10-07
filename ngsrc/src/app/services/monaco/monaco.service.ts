@@ -4,7 +4,6 @@ import { filter, takeUntil } from "rxjs/operators";
 import { AutocompleteService } from "../autocomplete/autocomplete.service";
 import { ThemeService } from "../theme/theme.service";
 import { cqlCompletitionProvider } from "./lang/completition";
-import { CqlTokenizer } from "./lang/cql-tokenizer";
 import { cqlLanguageConfig, cqlTokenProvider } from "./lang/tokens";
 import { cqlHoverTokenProvider } from "./lang/tokens-hover";
 

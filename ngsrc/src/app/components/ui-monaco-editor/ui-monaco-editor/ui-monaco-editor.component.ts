@@ -3,9 +3,10 @@ import {
     ChangeDetectionStrategy, ChangeDetectorRef, Component,
     ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild,
 } from "@angular/core";
-import { fromEventPattern, ReplaySubject, Subject } from "rxjs";
-import { debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
-import { CqlAnalysis, CqlParserError, InputParseResult } from "../../../../../../src/types/parser";
+import { MatMenu, MatMenuTrigger } from "@angular/material";
+import { fromEvent, fromEventPattern, of, ReplaySubject, Subject } from "rxjs";
+import { concatMap, debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
+import { CqlAnalysis, InputParseResult } from "../../../../../../src/types/parser";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { AutocompleteService } from "../../../services/autocomplete/autocomplete.service";
 import { MonacoService } from "../../../services/monaco/monaco.service";
@@ -14,7 +15,8 @@ import { ThemeService } from "../../../services/theme/theme.service";
 import { WorkbenchEditor } from "../../../types/index";
 import { UiContextMenuService } from "../../ui-context-menu/service";
 import { decorationsForStatement, markersForStatement } from "./decorations";
-import { baseColumnDecorations } from "./decorations/base/columns";
+
+declare var window: any;
 
 @Component({
     selector: "ui-monaco-editor",
@@ -24,8 +26,13 @@ import { baseColumnDecorations } from "./decorations/base/columns";
 })
 export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, OnDestroy {
     @Output("onCodeChange") public onCodeChange = new EventEmitter<string>();
-    @Output("onExecute") public onExecute = new EventEmitter<string>();
+    @Output("onExecute") public onExecute = new EventEmitter<void>();
+    @Output("onSave") public onSave = new EventEmitter<void>();
     @ViewChild("root") public root: ElementRef<HTMLDivElement>;
+
+    @ViewChild("menuTriggerElem") menuTriggerElem: ElementRef<HTMLDivElement>;
+    @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger;
+    @ViewChild("menu") menu: MatMenu;
 
     public monacoEditor: monaco.editor.IStandaloneCodeEditor;
     public editorCurrent: WorkbenchEditor;
@@ -39,16 +46,18 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
     private keyspace: string;
     private currentDeltaDecorations: string[] = [];
 
+    private actionFind: monaco.editor.IEditorAction = null;
+
     constructor(
         public host: ElementRef<HTMLDivElement>,
         public change: ChangeDetectorRef,
         private monacoService: MonacoService,
         private parser: ParserService,
-        private contextMenu: UiContextMenuService,
         public theme: ThemeService,
         public autocomplete: AutocompleteService,
     ) {
         super(change);
+        window.UiMonacoEditorComponent = this;
 
         const style: string = `.monaco-editor {font-family: ${this.theme.getEditorFontFamily()}; }`;
         const styleElement = document.createElement("style");
@@ -84,12 +93,6 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             take(1),
         ).subscribe(() => {
 
-            this.contextMenu.eventCommand.pipe(
-                takeUntil(this.eventViewDestroyed),
-            ).subscribe((c) => {
-                this.doCommand(c);
-            });
-
             this.monacoEditor = monaco.editor.create(this.root.nativeElement, {
                 value: null,
                 language: "cql",
@@ -104,31 +107,26 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
             });
 
-            fromEventPattern<monaco.editor.IEditorMouseEvent>((f: (e: any) => any) => {
-                return this.monacoEditor.onMouseDown(f);
-                // return this.editor.onContextMenu(f);
-            }, (f: any, d: monaco.IDisposable) => {
-                d.dispose();
-            }).pipe(
-                takeUntil(this.eventViewDestroyed),
-                filter((e) => e.event.rightButton),
-            ).subscribe((eme) => {
+            this.actionFind = this.monacoEditor.getAction("actions.find");
 
-                const rect = this.host.nativeElement.getBoundingClientRect();
+            this.monacoEditor
+                // tslint:disable-next-line:no-bitwise
+                .addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.F10, () => {
+                    console.log("SAVE");
+                    this.onSave.emit();
+                }, null);
 
-                this.contextMenu.show(eme.event.posx, eme.event.posy, this.root.nativeElement.getBoundingClientRect());
-
-            });
+            this.monacoEditor
+                // tslint:disable-next-line:no-bitwise
+                .addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyMod.Alt | monaco.KeyCode.KEY_F, () => {
+                    this.actionFind.run();
+                }, null);
 
             fromEventPattern<monaco.IKeyboardEvent>((f: (e: any) => any) => {
                 return this.monacoEditor.onKeyDown(f);
             }, (f: any, d: monaco.IDisposable) => {
                 d.dispose();
             }).pipe(
-                tap((e) => {
-                    // console.log("STARTING onKeyDown");
-                    // console.log(e);
-                }),
                 takeUntil(this.eventViewDestroyed),
                 filter((e) => e.browserEvent.ctrlKey && e.browserEvent.keyCode === 13),
             ).subscribe((e) => {
@@ -136,6 +134,32 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 e.preventDefault();
                 e.stopPropagation();
                 this.onExecute.next();
+            });
+
+            fromEventPattern<monaco.editor.IEditorMouseEvent>((f: (e: any) => any) => {
+                return this.monacoEditor.onMouseDown(f);
+            }, (f: any, d: monaco.IDisposable) => {
+                d.dispose();
+            }).pipe(
+                takeUntil(this.eventViewDestroyed),
+                filter((e) => e.event.rightButton),
+            ).subscribe((e) => {
+
+                this.menuOpen(e.event.browserEvent);
+
+            });
+
+            fromEvent<MouseEvent>(window, "mousedown", { capture: false }).pipe(
+                takeUntil(this.eventViewDestroyed),
+                tap((e) => {
+                    if (e.button === 0 && this.menuTrigger.menuOpen) {
+                        this.menuTrigger.closeMenu();
+                    }
+                }),
+                filter((e) => e.button === 0),
+            ).subscribe((e) => {
+                console.log("mousedown on gridwrapper");
+                // this.menuOpen(e);
             });
 
             this.stateReady.next();
@@ -286,22 +310,52 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         document.execCommand("cut");
 
     }
-    public doCommand(command: string) {
-        switch (command) {
-            case "copy":
-                this.doCopy();
-                break;
-            case "cut":
-                this.doCut();
-                break;
-            case "paste":
-                this.doPaste();
-                break;
-        }
+    public doFind() {
+        this.actionFind.run();
     }
     public updateExecuteParams() {
         this.clusterName = this.editorCurrent.statement.clusterName;
         this.keyspace = this.editorCurrent.statement.keyspace;
         console.log(`updateExecuteParams [${this.clusterName}] [${this.keyspace}]`);
+    }
+
+    public menuOpen(ev: MouseEvent) {
+        // ev.preventDefault();
+        // ev.stopImmediatePropagation();
+        // ev.stopPropagation();
+
+        of(this.menuTrigger.menuOpen).pipe(
+            concatMap((opened) => {
+                if (!opened) {
+                    return Promise.resolve();
+                }
+                return new Promise<void>((resolve, reject) => {
+                    this.menu._animationDone
+                        .pipe(filter(event => event.toState === "void"), take(1))
+                        .subscribe(() => {
+                            resolve();
+                        }, (err) => {
+                            resolve();
+                        });
+
+                    this.menuTrigger.closeMenu();
+                });
+            }),
+        ).subscribe(() => {
+
+            const e = this.host.nativeElement;
+            const r = e.getBoundingClientRect();
+            const w = this.menuTriggerElem.nativeElement;
+            const t = this.menuTrigger;
+            const x = ev.clientX - r.left;
+            const y = ev.clientY - r.top;
+
+            w.style.left = `${x + 1}px`;
+            w.style.top = `${y + 1}px`;
+
+            t.openMenu(); // Open your custom context menu instead
+
+        });
+
     }
 }

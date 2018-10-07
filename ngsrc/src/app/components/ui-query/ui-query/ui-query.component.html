@@ -42,7 +42,8 @@
                 color="primary" mat-button (click)="executeCql()">EXECUTE</button>
             <mat-progress-bar *ngIf="editorCurrent.stateExecuting | async" class="progress" mode="indeterminate" color="accent"></mat-progress-bar>
         </form>
-        <ui-monaco-editor #monacoEditor [editor]="editorCurrent" (onCodeChange)="onCodeChange($event)" (onExecute)="executeCql()"
+        <ui-monaco-editor #monacoEditor [editor]="editorCurrent" (onCodeChange)="onCodeChange($event)"
+         (onExecute)="executeCql()" (onSave)="onStatementSave.emit()"
             fxFlex></ui-monaco-editor>
     </div>
     <div #bottom class="bottom" fxLayout="column">
@@ -66,7 +67,7 @@
                 <div fxLayout="row" fxLayoutAlign="center center" class="not-executed" *ngIf="!item.executed">
                     <div class="action" fxLayout="column">
                         <div fxLayoutAlign="center center" fxLayout="row">
-                            <button  matTooltip="Execute query" mat-fab color="accent" (click)="executeCql()" [disabled]="(editorCurrent.stateExecuting | async) || clusterLoadingError || clusterLoading">
+                            <button matTooltip="Execute query" mat-fab color="accent" (click)="executeCql()" [disabled]="(editorCurrent.stateExecuting | async) || clusterLoadingError || clusterLoading">
                                 <mat-icon>cloud_upload</mat-icon>
                             </button>
                         </div>

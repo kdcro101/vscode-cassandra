@@ -398,7 +398,6 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         });
     }
     public onErrorClick = (ev: Event, index: number) => {
-        // console.log(`onErrorClick ${index}`);
 
         if (this.decorationsTimeout) {
             clearTimeout(this.decorationsTimeout);
