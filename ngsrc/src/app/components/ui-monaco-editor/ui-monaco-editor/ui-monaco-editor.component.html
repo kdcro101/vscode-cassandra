@@ -3,21 +3,21 @@
 </div>
 <div #menuTriggerElem class="menu-trigger" [matMenuTriggerFor]="menu"></div>
 <mat-menu #menu="matMenu" class="material-custom context-menu" [hasBackdrop]="false">
-    <button mat-menu-item>
-        <mat-icon class="icon-18" (click)="doCopy()">content_copy</mat-icon>
+    <button mat-menu-item (click)="doCopy($event)">
+        <mat-icon class="icon-18">content_copy</mat-icon>
         <span class="mat-caption">Copy</span>
     </button>
-    <button mat-menu-item  (click)="doCut()">
+    <button mat-menu-item (click)="doCut($event)">
         <mat-icon class="icon-18">content_cut</mat-icon>
         <span class="mat-caption">Cut</span>
     </button>
     <mat-divider></mat-divider>
-    <button mat-menu-item  (click)="doPaste()">
+    <button mat-menu-item (click)="doPaste($event)">
         <mat-icon class="icon-18">content_paste</mat-icon>
         <span class="mat-caption">Paste</span>
     </button>
     <mat-divider></mat-divider>
-    <button mat-menu-item  (click)="doFind()">
+    <button mat-menu-item (click)="doFind($event)">
         <mat-icon class="icon-18">find_replace</mat-icon>
         <span class="mat-caption">Find and Replace</span>
     </button>

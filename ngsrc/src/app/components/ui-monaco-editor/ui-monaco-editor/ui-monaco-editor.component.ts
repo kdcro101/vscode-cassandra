@@ -149,17 +149,16 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
             });
 
-            fromEvent<MouseEvent>(window, "mousedown", { capture: false }).pipe(
+            fromEvent<MouseEvent>(document.body, "click", { capture: false }).pipe(
                 takeUntil(this.eventViewDestroyed),
+                filter((e) => e.button === 0),
                 tap((e) => {
-                    if (e.button === 0 && this.menuTrigger.menuOpen) {
+                    if (this.menuTrigger.menuOpen) {
                         this.menuTrigger.closeMenu();
                     }
                 }),
-                filter((e) => e.button === 0),
             ).subscribe((e) => {
-                console.log("mousedown on gridwrapper");
-                // this.menuOpen(e);
+                console.log("mousedown for menu close");
             });
 
             this.stateReady.next();
@@ -294,24 +293,54 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         monaco.editor.setModelMarkers(this.monacoEditor.getModel(), "markersOwnerId", errorDecs.concat(statementErrors));
     }
 
-    public doCopy = () => {
+    public doCopy = (e: MouseEvent) => {
+
+        console.log("doCopy");
+
+        // e.preventDefault();
+        // e.stopImmediatePropagation();
+        // e.stopPropagation();
 
         this.monacoEditor.focus();
         document.execCommand("copy");
 
+        // this.menuTrigger.closeMenu();
     }
-    public doPaste = () => {
+    public doPaste = (e: MouseEvent) => {
+        console.log("doPaste");
+
+        // e.preventDefault();
+        // e.stopImmediatePropagation();
+        // e.stopPropagation();
+
         this.monacoEditor.focus();
         document.execCommand("paste");
 
+        // this.menuTrigger.closeMenu();
     }
-    public doCut = () => {
+    public doCut = (e: MouseEvent) => {
+        console.log("doCut");
+
+        // e.preventDefault();
+        // e.stopImmediatePropagation();
+        // e.stopPropagation();
+
         this.monacoEditor.focus();
         document.execCommand("cut");
 
+        // this.menuTrigger.closeMenu();
+
     }
-    public doFind() {
+    public doFind(e: MouseEvent) {
+        console.log("doFind");
+
+        // e.preventDefault();
+        // e.stopImmediatePropagation();
+        // e.stopPropagation();
+
         this.actionFind.run();
+
+        // this.menuTrigger.closeMenu();
     }
     public updateExecuteParams() {
         this.clusterName = this.editorCurrent.statement.clusterName;
@@ -320,9 +349,6 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
     }
 
     public menuOpen(ev: MouseEvent) {
-        // ev.preventDefault();
-        // ev.stopImmediatePropagation();
-        // ev.stopPropagation();
 
         of(this.menuTrigger.menuOpen).pipe(
             concatMap((opened) => {

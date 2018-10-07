@@ -815,11 +815,11 @@ dataType
     ;
 
 dataTypeCollection
-    : dataTypeFrozen dataTypeStructure
-    | dataTypeSet dataTypeStructure
-    | dataTypeList dataTypeStructure
-    | dataTypeMap dataTypeStructure
-    | dataTypeTuple dataTypeStructure
+    : dataTypeFrozen (dataTypeStructure | { this.notifyErrorListeners("rule.dataTypeStructure"); })
+    | dataTypeSet (dataTypeStructure | { this.notifyErrorListeners("rule.dataTypeStructure"); })
+    | dataTypeList (dataTypeStructure | { this.notifyErrorListeners("rule.dataTypeStructure"); })
+    | dataTypeMap (dataTypeStructure | { this.notifyErrorListeners("rule.dataTypeStructure"); })
+    | dataTypeTuple (dataTypeStructure | { this.notifyErrorListeners("rule.dataTypeStructure"); })
     ;
 
 dataTypeFundamental
