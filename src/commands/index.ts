@@ -37,6 +37,16 @@ export class VsCommands {
             .push(vscode.commands.registerCommand("cassandraWorkbench.revealPanel", this.onRevealCqlPanel));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.tableSelectStatement", this.onTableSelectStatement));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.openEditorInWorkbench", this.onOpenEditorInWorkbench));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.openFileInWorkbench", this.onOpenFileInWorkbench));
+    }
+    private onOpenEditorInWorkbench = (fileUri: vscode.Uri) => {
+        console.log(fileUri);
+    }
+    private onOpenFileInWorkbench = (fileUri: vscode.Uri, list: any[]) => {
+
     }
 
     private onConfigurationGenerate = () => {

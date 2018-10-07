@@ -16,6 +16,11 @@
     ],
     "main": "./out/extension",
     "contributes": {
+        "languages": [{
+            "id": "cql",
+            "aliases": ["CQL", "Apache Cassandra CQL"],
+            "extensions": [".cql"]
+        }],
         "configuration": {
             "type": "object",
             "title": "Cassandra workbench configuration",
@@ -52,6 +57,11 @@
             }
         },
         "menus": {
+            "explorer/context": [{
+                "when": "resourceLangId == cql",
+                "command": "cassandraWorkbench.openFileInWorkbench",
+                "group": "vscode-cassandra"
+            }],
             "view/title": [{
                     "when": "view == cassandraWorkbenchView",
                     "command": "cassandraWorkbench.refresh",
@@ -72,6 +82,11 @@
                 "command": "cassandraWorkbench.tableSelectStatement",
                 "when": "view == cassandraWorkbenchView && viewItem == table",
                 "group": "navigation@1"
+            }],
+            "editor/title": [{
+                "when": "resourceLangId == cql",
+                "command": "cassandraWorkbench.openEditorInWorkbench",
+                "group": "navigation"
             }]
         },
         "commands": [{
@@ -105,14 +120,25 @@
                     "light": "./icons/cql/light.svg",
                     "dark": "./icons/cql/dark.svg"
                 }
+            },
+            {
+                "command": "cassandraWorkbench.openEditorInWorkbench",
+                "title": "Edit in Cassandra Workbench",
+                "icon": {
+                    "light": "./icons/cql/light.svg",
+                    "dark": "./icons/cql/dark.svg"
+                }
+            },
+            {
+                "command": "cassandraWorkbench.openFileInWorkbench",
+                "title": "CQL: Open in Cassandra Workbench"
             }
         ],
         "viewsContainers": {
             "activitybar": [{
                 "id": "object-explorer",
                 "title": "Casssandra workbench",
-                "icon": "icons/activity.svg",
-                "when": "dd==dom"
+                "icon": "icons/activity.svg"
             }]
         },
         "views": {
