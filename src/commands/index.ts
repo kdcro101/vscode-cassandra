@@ -52,7 +52,6 @@ export class VsCommands {
             take(1),
         ).subscribe(() => {
             this.workbench.refreshClusterTree();
-            vscode.window.showInformationMessage("Refreshing...");
         });
     }
     private onEditConfig = () => {

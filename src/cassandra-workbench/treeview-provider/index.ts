@@ -1,5 +1,6 @@
 import { sortBy } from "lodash";
-import { from } from "rxjs";
+import { from, of } from "rxjs";
+import { delay, tap } from "rxjs/operators";
 import * as vscode from "vscode";
 import { Clusters } from "../../clusters";
 import { CassandraColumn } from "../../types";
@@ -26,19 +27,46 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
     public onDidChangeTreeDataEmmiter = new vscode.EventEmitter<TreeItemBase | undefined>();
     public readonly onDidChangeTreeData: vscode.Event<TreeItemBase | undefined> = this.onDidChangeTreeDataEmmiter.event;
 
+    public isRefreshing = false;
+
     constructor(
         private clusters: Clusters,
     ) { }
     public refresh(): void {
-        // this.stateStructuresReady = new ReplaySubject<boolean>(1);
-        // this.collectClusterData(this.config);
-        this.onDidChangeTreeDataEmmiter.fire();
+
+        this.isRefreshing = true;
+        of(true).pipe(
+            tap(() => {
+
+                this.clusters.configItems.forEach((c, i) => {
+                    this.clusters.invalidateStructure(i);
+                });
+
+                this.onDidChangeTreeDataEmmiter.fire();
+            }),
+            delay(500),
+        ).subscribe(() => {
+            this.isRefreshing = false;
+            this.onDidChangeTreeDataEmmiter.fire();
+        });
+
     }
     public getTreeItem(item: TreeItemBase): vscode.TreeItem {
         return item;
     }
     public getChildren(element?: TreeItemBase): Thenable<TreeItemBase[]> {
         return new Promise((resolve, reject) => {
+
+            if (this.isRefreshing) {
+                resolve([]);
+                return;
+            }
+
+            if (element) {
+                console.log(`getChildren[${element.label}]`);
+            } else {
+                console.log(`getChildren[ROOT]`);
+            }
 
             if (element == null) {
                 resolve(this.getRoot());

@@ -1,5 +1,5 @@
 import { from, merge, Subject } from "rxjs";
-import { map, takeUntil, tap } from "rxjs/operators";
+import { concatMap, map, takeUntil, tap } from "rxjs/operators";
 import * as vscode from "vscode";
 import { ClusterExecuteResults, Clusters } from "../clusters";
 import { Completition } from "../completition";
@@ -543,21 +543,42 @@ export class CassandraWorkbench {
         const clusterName = m.data.clusterName;
         const keyspaceInitial = m.data.keyspaceInitial;
         const cql = m.data.cql;
+        const clusterIndex = this.clusters.getClusterIndex(clusterName);
 
         from(this.clusters.execute(clusterName, keyspaceInitial, cql)).pipe(
             tap((result) => {
                 this.persistence.history.append(clusterName, keyspaceInitial, cql);
             }),
+            tap((result) => {
+                const message: ProcMessageStrict<"e2w_executeQueryResponse"> = {
+                    name: "e2w_executeQueryResponse",
+                    data: {
+                        id,
+                        result,
+                    },
+                };
+                this.panel.emitMessage(message);
+            }),
+            concatMap((result) => {
+                return new Promise((resolve, reject) => {
+
+                    if (!result.analysis.alterStructure) {
+                        resolve(result);
+                        return;
+                    }
+
+                    this.clusters.invalidateStructure(clusterIndex);
+                    this.treeProvider.onDidChangeTreeDataEmmiter.fire();
+                    resolve();
+
+                });
+            }),
         ).subscribe((result: ClusterExecuteResults) => {
 
-            const message: ProcMessageStrict<"e2w_executeQueryResponse"> = {
-                name: "e2w_executeQueryResponse",
-                data: {
-                    id,
-                    result,
-                },
-            };
-            this.panel.emitMessage(message);
+            if (result.analysis.alterStructure) {
+                console.log("ALTER STRUCTURE RESULT!");
+            }
+
         }, (e) => {
             const errorMessage: ProcMessageStrict<"e2w_executeQueryResponse"> = {
                 name: "e2w_executeQueryResponse",

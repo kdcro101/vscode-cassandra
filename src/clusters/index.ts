@@ -39,7 +39,7 @@ export class Clusters {
     private clientsCache: CassandraClientCache[] = [];
 
     private parser = new InputParser();
-    constructor(private configItems: ValidatedConfigClusterItem[]) {
+    constructor(public configItems: ValidatedConfigClusterItem[]) {
         this.clientsCache = configItems.map(() => null); // null array
 
         this.eventStructureChange.pipe().subscribe((index: number) => {
@@ -47,6 +47,18 @@ export class Clusters {
             this.clientsCache[index] = null;
 
         });
+    }
+    public invalidateStructure(index: number): void {
+        if (index < 0 || index >= this.configItems.length) {
+            console.log("Index ou of bounds for invalidateStructure");
+            return;
+        }
+        if (this.clientsCache[index]) {
+            this.clientsCache[index].structure = null;
+            console.log(`invalidateStructure DONE ${index}`);
+        } else {
+            console.log(`invalidateStructure DATA IS NULL ${index}`);
+        }
     }
     public isValidName(clusterName: string) {
         const i = this.configItems.findIndex((c) => c.name === clusterName);
@@ -96,6 +108,7 @@ export class Clusters {
 
             const cache = this.clientsCache[index];
             if (cache != null && cache.structure && cache.error === false && force === false) {
+                console.log("STRUCTURE FROM CACHE");
                 resolve(cache.structure);
                 return;
             }
@@ -103,7 +116,7 @@ export class Clusters {
             from(this.getClient(index)).pipe(
                 concatMap((client) => client.getStructure()),
             ).subscribe((structure) => {
-
+                console.log("STRUCTURE READ");
                 // store to cache
                 this.clientsCache[index].structure = structure;
 
@@ -258,7 +271,8 @@ export class Clusters {
 
         }
 
-        return Promise.resolve(out);
+        return out;
+        // return Promise.resolve(out);
 
     }
     private executeCqlAnalysisStatement(
@@ -270,7 +284,7 @@ export class Clusters {
 
             client.execute(cql)
                 .then((result) => {
-                    const hasColumns = result.columns.length > 0 ? true : false;
+                    const hasColumns = result.columns && result.columns.length > 0 ? true : false;
                     const columns = hasColumns ? result.columns.map((c) => {
                         const out: ColumnInfo = {
                             name: c.name,
