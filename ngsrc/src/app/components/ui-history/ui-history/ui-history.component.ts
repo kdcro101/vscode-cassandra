@@ -1,10 +1,10 @@
 import { animate, AnimationEvent, state, style, transition, trigger } from "@angular/animations";
 import {
-    ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef,
-    HostBinding, HostListener, OnDestroy, OnInit, QueryList, ViewChildren,
+    AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component,
+    ElementRef, HostBinding, HostListener, OnDestroy, OnInit, QueryList, ViewChildren,
 } from "@angular/core";
 import { MatSnackBar } from "@angular/material";
-import { from, Subject } from "rxjs";
+import { from, of, Subject } from "rxjs";
 import { concatMap, delay, filter, map, take, takeUntil, tap } from "rxjs/operators";
 import { WorkbenchCqlStatement } from "../../../../../../src/types/editor";
 import { HistroyItem } from "../../../../../../src/types/history";
@@ -106,7 +106,7 @@ export type ViewAnimationState = "void" | "active" | "hidden";
         ]),
     ],
 })
-export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDestroy {
+export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDestroy, AfterContentInit {
     public static service: UiHistoryService;
 
     @ViewChildren("itemRef") public itemRef: QueryList<ElementRef<HTMLDivElement>>;
@@ -158,7 +158,7 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
                 });
             }),
         ).subscribe(() => {
-            console.log("Done colorizing");
+
         });
     }
     public trackById = (index: number, item: HistroyItem) => {
@@ -168,26 +168,28 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
         this.viewAnimationState = "active";
         this.detectChanges();
 
+    }
+    ngAfterContentInit() {
+
         this.eventAnimation.pipe(
             take(1),
             filter((s) => s === "active"),
         ).subscribe(() => {
             this.loadHistory();
         });
-
     }
     public loadHistory() {
 
-        this.loading = true;
-        this.detectChanges();
+        // this.loading = true;
+        // this.detectChanges();
 
-        from(this.history.get()).pipe(
+        of(null).pipe(
             tap(() => {
                 this.loading = true;
                 this.detectChanges();
-
             }),
-            delay(50),
+            delay(17),
+            concatMap(() => this.history.get()),
             tap((result) => {
                 this.items = result.map((i) => {
                     i.body = i.body.trim();

@@ -6,21 +6,23 @@
         <button mat-button color="warn" (click)="removeAll()" *ngIf="items?.length>0">CLEAR</button>
         <button mat-button color="primary" (click)="close()">CLOSE</button>
     </div>
-    <div [@noItemsAnimation] *ngIf="items?.length===0" fxLayout="row" fxLayoutAlign="center center" fxFlex>
-        <div class="mat-body-1">No items to display</div>
-    </div>
-    <div class="client" fxFlex *ngIf="items?.length>0">
+    <div class="client" fxFlex fxLayout="column">
         <mat-progress-bar *ngIf="loading" [@progressAnimation] color="accent" mode="indeterminate"></mat-progress-bar>
-        <div [@itemAnimation] #itemRef *ngFor="let i of items;index as ix;trackBy: trackById" class="item" [class.even]="ix%2===0"
-            [class.odd]="ix%2!==0" fxLayout="column">
-            <div #itemBodyRef [style.lineHeight.px]="lineHeight" [style.fontFamily]="fontFamily" [style.fontSize.px]="fontSize"
-                class="body" data-lang="cql">{{i.body}}
-            </div>
-            <div class="actions" fxLayout="row" fxLayoutAlign="start center">
-                <button mat-button class="button-18" color="warn" (click)="removeItem(i)">REMOVE</button>
-                <div fxFlex></div>
-                <button mat-button class="button-18" color="primary" (click)="copyBody(i)">COPY</button>
-                <button mat-button class="button-18" color="primary" (click)="createEditor(i)">OPEN</button>
+        <div [@noItemsAnimation] *ngIf="items?.length===0" fxLayout="row" fxLayoutAlign="center center" fxFlex>
+            <div class="mat-body-1">No items to display</div>
+        </div>
+        <div class="scroller" *ngIf="items?.length>0" fxFlex>
+            <div [@itemAnimation] #itemRef *ngFor="let i of items;index as ix;trackBy: trackById" class="item"
+                [class.even]="ix%2===0" [class.odd]="ix%2!==0" fxLayout="column">
+                <div #itemBodyRef [style.lineHeight.px]="lineHeight" [style.fontFamily]="fontFamily"
+                    [style.fontSize.px]="fontSize" class="body" data-lang="cql">{{i.body}}
+                </div>
+                <div class="actions" fxLayout="row" fxLayoutAlign="start center">
+                    <button mat-button class="button-18" color="warn" (click)="removeItem(i)">REMOVE</button>
+                    <div fxFlex></div>
+                    <button mat-button class="button-18" color="primary" (click)="copyBody(i)">COPY</button>
+                    <button mat-button class="button-18" color="primary" (click)="createEditor(i)">OPEN</button>
+                </div>
             </div>
         </div>
     </div>

@@ -38,58 +38,53 @@
             }
         }
         .client {
-            overflow-x: hidden;
-            overflow-y: auto;
             position: relative;
             mat-progress-bar {
                 position: absolute;
-                top:0;
-                left:0;
-                height: 2px;
+                top: 0;
+                left: 0;
+                height: 1px;
                 right: 0;
                 z-index: 10;
             }
-            .item {
-                overflow-x: auto;
-                padding-bottom: 32px;
-                position: relative;
-                background-color: rgba(0, 0, 0, 0.06);
-                margin-bottom: 2px;
-                transform-origin: center center;
+            .scroller {
+                overflow-x: hidden;
+                overflow-y: auto;
+                .item {
+                    overflow-x: auto;
+                    padding-bottom: 32px;
+                    position: relative;
+                    background-color: rgba(0, 0, 0, 0.06);
+                    margin-bottom: 2px;
+                    transform-origin: center center;
+                    .body {
+                        padding: 8px;
+                        cursor: pointer;
+                    }
 
-                // &.odd {
-                //     background-color: rgba(0, 0, 0, 0.06);
-                // }
-                // &.even {
-                //     background-color: rgba(0, 0, 0, 0.12);
-                // }
-                .body {
-                    padding: 8px;
-                    cursor: pointer;
-                }
-
-                &:hover {
+                    &:hover {
+                        .actions {
+                            opacity: 1;
+                        }
+                    }
                     .actions {
-                        opacity: 1;
-                    }
-                }
-                .actions {
-                    transition: opacity 200ms ease-in-out;
-                    opacity: 0;
-                    position: absolute;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                    height: 32px;
-                    background-color: transparent;
-                    z-index: 100;
-                    padding: 0 8px 8px 8px;
+                        transition: opacity 200ms ease-in-out;
+                        opacity: 0;
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        right: 0;
+                        height: 32px;
+                        background-color: transparent;
+                        z-index: 100;
+                        padding: 0 8px 8px 8px;
 
-                    .mat-button {
-                        margin-left: 8px;
-                    }
-                    .mat-button:first-of-type {
-                        margin-left: 0px;
+                        .mat-button {
+                            margin-left: 8px;
+                        }
+                        .mat-button:first-of-type {
+                            margin-left: 0px;
+                        }
                     }
                 }
             }
