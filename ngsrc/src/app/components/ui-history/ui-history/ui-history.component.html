@@ -15,8 +15,8 @@
             <div class="actions" fxLayout="row" fxLayoutAlign="start center">
                 <button mat-raised-button class="button-18" color="warn">REMOVE</button>
                 <div fxFlex></div>
-                <button mat-raised-button class="button-18" color="primary">APPEND</button>
-                <button mat-raised-button class="button-18" color="primary">USE</button>
+                <button mat-raised-button class="button-18" color="primary" (click)="copyBody(i)">COPY</button>
+                <button mat-raised-button class="button-18" color="primary" (click)="createEditor(i)">OPEN</button>
             </div>
         </div>
     </div>

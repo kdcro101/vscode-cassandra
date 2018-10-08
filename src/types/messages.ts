@@ -23,6 +23,7 @@ export interface ProcMessageList {
     w2e_setActiveKeyspaceRequest: SetActiveKeyspaceRequest;
     w2e_getActiveKeyspaceRequest: GetActiveKeyspaceRequest;
     w2e_getActiveClusterAndKeyspaceRequest: MessageWithId;
+    w2e_clipboardCopyRequest: ClipboardCopyRequest;
 
     e2w_goState: WebviewStateParams;
     e2w_getClusterStructResponse: ClusterStructureResponse;
@@ -39,6 +40,7 @@ export interface ProcMessageList {
     e2w_setActiveKeyspaceResponse: MessageSimpleResponse;
     e2w_getActiveKeyspaceResponse: GetActiveKeyspaceResponse;
     e2w_getActiveClusterAndKeyspaceResponse: GetActiveClusterAndKeyspaceResponse;
+    e2w_clipboardCopyResponse: MessageWithId;
 }
 export type ProcMessageType = keyof ProcMessageList;
 export interface ProcMessage {
@@ -186,4 +188,7 @@ export interface GetActiveClusterAndKeyspaceResponse extends MessageWithId {
     clusterName: string;
     keyspace: string;
     success: boolean;
+}
+export interface ClipboardCopyRequest extends MessageWithId {
+    data: string;
 }

@@ -16,11 +16,18 @@
     ],
     "main": "./out/extension",
     "contributes": {
-        "languages": [{
-            "id": "cql",
-            "aliases": ["CQL", "Apache Cassandra CQL"],
-            "extensions": [".cql"]
-        }],
+        "languages": [
+            {
+                "id": "cql",
+                "aliases": [
+                    "CQL",
+                    "Apache Cassandra CQL"
+                ],
+                "extensions": [
+                    ".cql"
+                ]
+            }
+        ],
         "configuration": {
             "type": "object",
             "title": "Cassandra workbench configuration",
@@ -37,7 +44,8 @@
                         "type": "array",
                         "title": "inner objects",
                         "description": "Cluster name, keypace",
-                        "items": [{
+                        "items": [
+                            {
                                 "type": "string",
                                 "description": "Cluster name"
                             },
@@ -47,7 +55,6 @@
                             }
                         ]
                     }
-
                 },
                 "cassandraWorkbench.defaultSelectLimit": {
                     "type": "number",
@@ -57,12 +64,15 @@
             }
         },
         "menus": {
-            "explorer/context": [{
-                "when": "resourceLangId == cql",
-                "command": "cassandraWorkbench.openFileInWorkbench",
-                "group": "vscode-cassandra"
-            }],
-            "view/title": [{
+            "explorer/context": [
+                {
+                    "when": "resourceLangId == cql",
+                    "command": "cassandraWorkbench.openFileInWorkbench",
+                    "group": "vscode-cassandra"
+                }
+            ],
+            "view/title": [
+                {
                     "when": "view == cassandraWorkbenchView",
                     "command": "cassandraWorkbench.refresh",
                     "group": "navigation"
@@ -78,18 +88,23 @@
                     "group": "navigation"
                 }
             ],
-            "view/item/context": [{
-                "command": "cassandraWorkbench.tableSelectStatement",
-                "when": "view == cassandraWorkbenchView && viewItem == table",
-                "group": "navigation@1"
-            }],
-            "editor/title": [{
-                "when": "resourceLangId == cql",
-                "command": "cassandraWorkbench.openEditorInWorkbench",
-                "group": "navigation"
-            }]
+            "view/item/context": [
+                {
+                    "command": "cassandraWorkbench.tableSelectStatement",
+                    "when": "view == cassandraWorkbenchView && viewItem == table",
+                    "group": "navigation@1"
+                }
+            ],
+            "editor/title": [
+                {
+                    "when": "resourceLangId == cql",
+                    "command": "cassandraWorkbench.openEditorInWorkbench",
+                    "group": "navigation"
+                }
+            ]
         },
-        "commands": [{
+        "commands": [
+            {
                 "command": "cassandraWorkbench.generateConfiguration",
                 "title": "CASSANDRA WORKBENCH: Generate configuration template"
             },
@@ -135,17 +150,21 @@
             }
         ],
         "viewsContainers": {
-            "activitybar": [{
-                "id": "object-explorer",
-                "title": "Casssandra workbench",
-                "icon": "icons/activity.svg"
-            }]
+            "activitybar": [
+                {
+                    "id": "object-explorer",
+                    "title": "Casssandra workbench",
+                    "icon": "icons/activity.svg"
+                }
+            ]
         },
         "views": {
-            "object-explorer": [{
-                "id": "cassandraWorkbenchView",
-                "name": "Explorer"
-            }]
+            "object-explorer": [
+                {
+                    "id": "cassandraWorkbenchView",
+                    "name": "Explorer"
+                }
+            ]
         }
     },
     "scripts": {
@@ -158,6 +177,7 @@
     },
     "devDependencies": {
         "@types/cassandra-driver": "^3.4.0",
+        "@types/clipboardy": "^1.1.0",
         "@types/fs-extra": "^5.0.4",
         "@types/jasmine": "^2.8.8",
         "@types/lodash": "^4.14.111",
@@ -186,6 +206,7 @@
         "antlr4ts": "^0.4.1-alpha.0",
         "antlr4ts-cli": "^0.4.0-alpha.4",
         "cassandra-driver": "^3.5.0",
+        "clipboardy": "^1.2.3",
         "fs-extra": "^6.0.1",
         "install": "^0.12.1",
         "jsmin": "^1.0.1",

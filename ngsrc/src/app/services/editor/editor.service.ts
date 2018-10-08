@@ -109,44 +109,49 @@ export class EditorService {
             });
         });
     }
-    private editorCreate(statement: WorkbenchCqlStatement) {
-        zip(
-            this.workspace.getActiveClusterKeyspace(),
-            this.monaco.stateReady,
-        ).pipe(
-            take(1),
-        ).subscribe((result) => {
+    public editorCreate(statement: WorkbenchCqlStatement) {
+        return new Promise((resolve, reject) => {
 
-            const clusterKeyspace = result[0];
+            zip(
+                this.workspace.getActiveClusterKeyspace(),
+                this.monaco.stateReady,
+            ).pipe(
+                take(1),
+            ).subscribe((result) => {
 
-            statement.filename = statement.filename == null ? this.generateFilename() : statement.filename;
+                const clusterKeyspace = result[0];
 
-            statement.clusterName = statement.clusterName == null ? clusterKeyspace.clusterName : statement.clusterName;
-            statement.keyspace = statement.keyspace == null ? clusterKeyspace.keyspace : statement.keyspace;
+                statement.filename = statement.filename == null ? this.generateFilename() : statement.filename;
 
-            const editor: WorkbenchEditor = {
-                id: generateId(),
-                statement,
-                result: null,
-                executed: false,
-                dataChanges: [],
-                model: monaco.editor.createModel(statement.body, "cql"),
-                stateExecuting: new BehaviorSubject<boolean>(false),
-                eventResult: new Subject<void>(),
-            };
+                statement.clusterName = statement.clusterName == null ? clusterKeyspace.clusterName : statement.clusterName;
+                statement.keyspace = statement.keyspace == null ? clusterKeyspace.keyspace : statement.keyspace;
 
-            from(Promise.all(
-                this.list.filter((i) => statement.fsPath != null && i.statement.fsPath === statement.fsPath)
-                .map((i) => {
-                    console.log(`REMOVING EDITOR WITH fsPath=${statement.fsPath}`);
-                    return this.remove(i.id);
-                }))).subscribe(() => {
+                const editor: WorkbenchEditor = {
+                    id: generateId(),
+                    statement,
+                    result: null,
+                    executed: false,
+                    dataChanges: [],
+                    model: monaco.editor.createModel(statement.body, "cql"),
+                    stateExecuting: new BehaviorSubject<boolean>(false),
+                    eventResult: new Subject<void>(),
+                };
 
-                    this.editorPrepend(editor);
-                    this.persistEditors();
+                from(Promise.all(
+                    this.list.filter((i) => statement.fsPath != null && i.statement.fsPath === statement.fsPath)
+                        .map((i) => {
+                            console.log(`REMOVING EDITOR WITH fsPath=${statement.fsPath}`);
+                            return this.remove(i.id);
+                        }))).subscribe(() => {
 
-                });
+                            this.editorPrepend(editor);
+                            this.persistEditors();
+                            resolve();
+                        }, (e) => {
+                            reject(e);
+                        });
 
+            });
         });
     }
     private editorPrepend(e: WorkbenchEditor) {

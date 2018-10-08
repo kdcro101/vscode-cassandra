@@ -1,3 +1,4 @@
+import * as path from "path";
 import { from, merge, Subject } from "rxjs";
 import { concatMap, map, takeUntil, tap } from "rxjs/operators";
 import * as vscode from "vscode";
@@ -8,12 +9,12 @@ import { DataChangeProcessor } from "../data-change";
 import { InputParser } from "../parser";
 import { Persistence } from "../persistence";
 import { ExtensionContextBundle, ValidatedConfigClusterItem, WorkbenchCqlStatement } from "../types";
-import { EditorCreateParams, ProcMessage, ProcMessageStrict, SetActiveKeyspaceRequest } from "../types/messages";
+import { ProcMessage, ProcMessageStrict } from "../types/messages";
 import { WorkbenchPanel } from "../workbench-panel";
 import { Workspace } from "../workspace";
 import { TreeviewProvider } from "./treeview-provider";
 
-import * as path from "path";
+import * as clipboardy from "clipboardy";
 
 declare var extensionContextBundle: ExtensionContextBundle;
 
@@ -89,8 +90,8 @@ export class CassandraWorkbench {
 
             clusterIndex = clusterIndex == null ? -1 : clusterIndex;
 
-            const vClusterName =  clusterIndex === -1 ? null :  clusters[clusterIndex].name;
-            const vKeyspace =   keyspace == null ? null :  keyspace;
+            const vClusterName = clusterIndex === -1 ? null : clusters[clusterIndex].name;
+            const vKeyspace = keyspace == null ? null : keyspace;
 
             const vFilename = fsPath == null ? null : path.basename(fsPath);
 
@@ -104,7 +105,7 @@ export class CassandraWorkbench {
                         fsPath,
                         clusterName: vClusterName,
                         keyspace: vKeyspace,
-                        source: "action",
+                        source: fsPath == null ? "action" : "storage",
                         modified: fsPath == null ? true : false,
                     };
 
@@ -139,6 +140,9 @@ export class CassandraWorkbench {
             case "w2e_persistEditors":
                 const pm = m as ProcMessageStrict<"w2e_persistEditors">;
                 this.persistence.saveEditorStatements(pm.data);
+                break;
+            case "w2e_clipboardCopyRequest":
+                this.clipboardCopyRespond(m as ProcMessageStrict<"w2e_clipboardCopyRequest">);
                 break;
             case "w2e_autocompleteRequest":
                 this.autocompleteRespond(m as ProcMessageStrict<"w2e_autocompleteRequest">);
@@ -180,6 +184,18 @@ export class CassandraWorkbench {
         }
     }
 
+    private clipboardCopyRespond(request: ProcMessageStrict<"w2e_clipboardCopyRequest">) {
+        const id = request.data.id;
+
+        clipboardy.writeSync(request.data.data);
+        const out: ProcMessageStrict<"e2w_clipboardCopyResponse"> = {
+            name: "e2w_clipboardCopyResponse",
+            data: {
+                id,
+            },
+        };
+        this.panel.emitMessage(out);
+    }
     private getActiveClusterAndKeyspaceRespond(request: ProcMessageStrict<"w2e_getActiveClusterAndKeyspaceRequest">) {
         const req = request.data;
         const id = req.id;

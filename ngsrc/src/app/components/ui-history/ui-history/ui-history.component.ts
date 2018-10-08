@@ -1,19 +1,21 @@
 import { animate, AnimationEvent, state, style, transition, trigger } from "@angular/animations";
 import {
-    ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostBinding,
-    HostListener, OnDestroy, OnInit, QueryList, ViewChildren,
+    ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef,
+    HostBinding, HostListener, OnDestroy, OnInit, QueryList, ViewChildren,
 } from "@angular/core";
 import { MatSnackBar } from "@angular/material";
-import { Subject } from "rxjs";
-import { concatMap, filter, take, takeUntil } from "rxjs/operators";
+import { from, Subject } from "rxjs";
+import { concatMap, filter, map, take, takeUntil, tap } from "rxjs/operators";
+import { WorkbenchCqlStatement } from "../../../../../../src/types/editor";
 import { HistroyItem } from "../../../../../../src/types/history";
+// import * as clipboardy from "clipboardy";
+import { ProcMessageStrict } from "../../../../../../src/types/messages";
 import { ViewDestroyable } from "../../../base/view-destroyable";
+import { generateId } from "../../../const/id";
+import { EditorService } from "../../../services/editor/editor.service";
 import { HistoryService } from "../../../services/history/history.service";
+import { MessageService } from "../../../services/message/message.service";
 import { ThemeService } from "../../../services/theme/theme.service";
-
-import { from } from "rxjs";
-import { tap } from "rxjs/operators";
-import { map } from "rxjs/operators";
 import { WorkbenchEditor } from "../../../types/index";
 import { UiHistoryService } from "../service";
 
@@ -83,6 +85,8 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
         private history: HistoryService,
         public snackBar: MatSnackBar,
         public theme: ThemeService,
+        public editorService: EditorService,
+        public message: MessageService,
     ) {
         super(change);
 
@@ -132,7 +136,6 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
                     return i;
                 }).reverse();
                 this.detectChanges();
-                this.colorize();
 
             }),
             map(() => this.itemBodyRef.toArray().map((e) => e.nativeElement)),
@@ -174,7 +177,32 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
     public close = () => {
         UiHistoryComponent.service.terminate.next();
     }
-    private colorize() {
+    public createEditor = (item: HistroyItem) => {
+        const statement: WorkbenchCqlStatement = {
+            body: item.body,
+            filename: null,
+            modified: true,
+            clusterName: null,
+            keyspace: null,
+            source: "action",
+            id: generateId(),
+        };
+        this.editorService.editorCreate(statement);
+        this.close();
+    }
+    public copyBody = (i: HistroyItem) => {
+
+        const message: ProcMessageStrict<"w2e_clipboardCopyRequest"> = {
+            name: "w2e_clipboardCopyRequest",
+            data: {
+                id: generateId(),
+                data: i.body,
+            },
+        };
+
+        this.message.emit(message);
+
+        this.close();
 
     }
 }
