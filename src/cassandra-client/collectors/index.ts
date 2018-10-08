@@ -6,7 +6,8 @@ import {
     CassandraAggregate,
     CassandraColumn, CassandraColumnType,
     CassandraFunction, CassandraIndex, CassandraKeyspace,
-    CassandraTable, CassandraType, RowAggregate, RowColumn, RowFunction, RowIndex, RowKeyspace, RowTable, RowType,
+    CassandraMaterializedView, CassandraTable, CassandraType,
+    RowAggregate, RowColumn, RowFunction, RowIndex, RowKeyspace, RowMaterializedView, RowTable, RowType,
 } from "../../types";
 
 export function collectKeyspaces(client: cassandra.Client): Promise<CassandraKeyspace[]> {
@@ -21,6 +22,7 @@ export function collectKeyspaces(client: cassandra.Client): Promise<CassandraKey
                     Promise.all(rows.map((i) => collectFunctions(client, i.keyspace_name))),
                     Promise.all(rows.map((i) => collectTypes(client, i.keyspace_name))),
                     Promise.all(rows.map((i) => collectAggregates(client, i.keyspace_name))),
+                    Promise.all(rows.map((i) => collectMaterializedViews(client, i.keyspace_name))),
                 ]);
             }),
             map((data) => {
@@ -29,12 +31,14 @@ export function collectKeyspaces(client: cassandra.Client): Promise<CassandraKey
                 const allFunctions = data[2];
                 const allTypes = data[3];
                 const allAggregates = data[4];
+                const allViews = data[5];
 
                 return rows.map((row, i) => {
                     const tables = allTables[i];
                     const functions = allFunctions[i];
                     const types = allTypes[i];
                     const aggregates = allAggregates[i];
+                    const views = allViews[i];
 
                     const out: CassandraKeyspace = {
                         name: row.keyspace_name,
@@ -42,6 +46,7 @@ export function collectKeyspaces(client: cassandra.Client): Promise<CassandraKey
                         tables,
                         functions,
                         types,
+                        materializedViews: views,
                         aggregates,
                         replication: row.replication,
                         all: row,
@@ -59,6 +64,29 @@ export function collectKeyspaces(client: cassandra.Client): Promise<CassandraKey
         }, (e) => {
             reject(e);
         });
+
+    });
+}
+export function collectMaterializedViews(client: cassandra.Client, keyspace: string): Promise<CassandraMaterializedView[]> {
+    return new Promise((resolve, reject) => {
+        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.views where keyspace_name=?", [keyspace])).pipe(
+            map((data) => {
+                const rows = data.rows as RowMaterializedView[];
+
+                return rows.map((row, i) => {
+
+                    const out: CassandraMaterializedView = {
+                        name: row.view_name,
+                        base_table_name: row.base_table_name,
+                        all: row,
+
+                    };
+                    return out;
+                });
+            }),
+        ).subscribe((data) => {
+            resolve(data);
+        }, (e) => reject(e));
 
     });
 }

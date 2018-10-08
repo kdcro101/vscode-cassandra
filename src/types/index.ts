@@ -19,7 +19,8 @@ export type CassandraDataType = "ascii" | "bigint" | "blob" | "boolean" | "count
     "tuple" | "uuid" | "varchar" | "varint";
 
 export type TreeItemType = "cluster" | "cluster-error" | "keyspace" | "table" | "columns" | "column_item" | "indexes" | "index_item" |
-    "types" | "type_item" | "functions" | "function_item" | "aggregates" | "aggregate_item" | "primarykey" | "partitioning_key" |
+    "types" | "type_item" | "functions" | "function_item" | "aggregates" | "aggregate_item" |
+    "materialized-views" | "materialized-views_item" | "primarykey" | "partitioning_key" |
     "clustering_key";
 
 export type CassandraConsistency = "ANY" | "ONE" | "TWO" | "THREE" | "QUORUM" | "ALL" |
@@ -84,6 +85,32 @@ export interface CassandraType {
     field_types: string[];
     all: RowType;
 }
+export interface CassandraMaterializedView {
+    //     keyspace_name text,
+    name: string;
+    base_table_name: string;
+    // bloom_filter_fp_chance double,
+    // caching frozen<map<text, text>>,
+    // cdc boolean,
+    // comment text,
+    // compaction frozen<map<text, text>>,
+    // compression frozen<map<text, text>>,
+    // crc_check_chance double,
+    // dclocal_read_repair_chance double,
+    // default_time_to_live int,
+    // extensions frozen<map<text, blob>>,
+    // gc_grace_seconds int,
+    // id uuid,
+    // include_all_columns boolean,
+    // max_index_interval int,
+    // memtable_flush_period_in_ms int,
+    // min_index_interval int,
+    // read_repair_chance double,
+    // speculative_retry text,
+    // where_clause text,
+
+    all: RowMaterializedView;
+}
 export interface CassandraAggregate {
     name: string;
     argument_types: string[];
@@ -110,6 +137,7 @@ export interface CassandraKeyspace {
     functions: CassandraFunction[];
     types: CassandraType[];
     aggregates: CassandraAggregate[];
+    materializedViews: CassandraMaterializedView[];
     name: string;
     durable_writes: number;
     replication: { [key: string]: string };
@@ -148,6 +176,31 @@ export interface RowAggregate extends cassandra.types.Row {
     return_type: string;
     state_func: string;
     state_type: string;
+}
+export interface RowMaterializedView extends cassandra.types.Row {
+    keyspace_name: string;
+    view_name: string;
+    base_table_id: string;
+    base_table_name: string;
+    bloom_filter_fp_chance: number;
+    caching: { [key: string]: string };
+    cdc: boolean;
+    comment: string;
+    compaction: { [key: string]: string };
+    compression: { [key: string]: string };
+    crc_check_chance: number;
+    dclocal_read_repair_chance: number;
+    default_time_to_live: number;
+    extensions: { [key: string]: any };
+    gc_grace_seconds: number;
+    id: string;
+    include_all_columns: boolean;
+    max_index_interval: number;
+    memtable_flush_period_in_ms: number;
+    min_index_interval: number;
+    read_repair_chance: number;
+    speculative_retry: string;
+    where_clause: string;
 }
 export interface RowType extends cassandra.types.Row {
     keyspace_name: string;

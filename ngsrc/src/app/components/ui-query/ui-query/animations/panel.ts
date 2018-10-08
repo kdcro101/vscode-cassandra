@@ -5,17 +5,15 @@ import {
 export const panelAnimations: AnimationTriggerMetadata[] = [
     trigger("panelAnimation", [
         state("hidden", style({
-            // transform: "translate3d(100%,0,0)",
             opacity: 0,
             zIndex: 0,
         })),
         state("active", style({
-            // transform: "none",
             opacity: 1,
             zIndex: 10,
         })),
         state("void", style({
-            // transform: "translate3d(0,100%,0)",
+
             opacity: 0,
             zIndex: 0,
         })),

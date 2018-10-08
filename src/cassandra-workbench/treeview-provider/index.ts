@@ -17,6 +17,8 @@ import { TreeItemFunctions } from "./tree-item-functions";
 import { TreeItemIndexItem } from "./tree-item-index-item";
 import { TreeItemIndexes } from "./tree-item-indexes";
 import { TreeItemKeyspace } from "./tree-item-keyspace";
+import { TreeItemMaterializedViewItem } from "./tree-item-materialized-view-item";
+import { TreeItemMaterializedViews } from "./tree-item-materialized-views";
 import { TreeItemPartitioningKey } from "./tree-item-partitioning-key";
 import { TreeItemPrimaryKey } from "./tree-item-primarykey";
 import { TreeItemTable } from "./tree-item-table";
@@ -109,6 +111,10 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
                 const e = element as TreeItemTypes;
                 resolve(this.getAggregates(e.clusterIndex, e.keyspace));
             }
+            if (element.type === "materialized-views") {
+                const e = element as TreeItemMaterializedViews;
+                resolve(this.getMaterializedViews(e.clusterIndex, e.keyspace));
+            }
 
             resolve(null);
 
@@ -196,6 +202,7 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
                     const types = sks.types;
                     const functions = sks.functions;
                     const aggregates = sks.aggregates;
+                    const materializedViews = sks.materializedViews;
 
                     if (types.length > 0) {
                         items.push(new TreeItemTypes("Types", vscode.TreeItemCollapsibleState.Collapsed,
@@ -210,6 +217,11 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
                     if (aggregates.length > 0) {
                         items.push(new TreeItemAggregates("Aggregates", vscode.TreeItemCollapsibleState.Collapsed,
                             clusterIndex, keyspace, "aggregates", `aggregates@${keyspace}`,
+                        ));
+                    }
+                    if (materializedViews.length > 0) {
+                        items.push(new TreeItemMaterializedViews("Aggregates", vscode.TreeItemCollapsibleState.Collapsed,
+                            clusterIndex, keyspace, "materialized-views", `views@${keyspace}`,
                         ));
                     }
 
@@ -279,6 +291,39 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
                 });
         });
 
+    }
+    private getMaterializedViews(clusterIndex: number, keyspace: string): Promise<TreeItemMaterializedViewItem[]> {
+        return new Promise((resolve, reject) => {
+
+            from(this.clusters.getStructure(clusterIndex)).pipe()
+                .subscribe((clusterData) => {
+
+                    const ks = clusterData.keyspaces;
+
+                    if (ks == null || ks.length === 0) {
+                        resolve(null);
+                    }
+                    const name = this.clusters.getClusterName(clusterIndex);
+                    const sks = ks.find((i) => i.name === keyspace);
+
+                    if (sks == null) {
+                        resolve(null);
+                        return;
+                    }
+
+                    const views = sks.materializedViews;
+                    const items = views.map((c) => {
+                        return new TreeItemMaterializedViewItem(c.name, vscode.TreeItemCollapsibleState.None,
+                            clusterIndex, keyspace, "materialized-views_item");
+                    });
+
+                    resolve(items);
+
+                }, (error) => {
+                    resolve(null);
+                });
+
+        });
     }
     private getAggregates(clusterIndex: number, keyspace: string): Promise<TreeItemTypeItem[]> {
         return new Promise((resolve, reject) => {

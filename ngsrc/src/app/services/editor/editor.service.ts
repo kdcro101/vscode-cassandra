@@ -57,20 +57,6 @@ export class EditorService {
         }
 
     }
-    // public get clusterName() {
-    //     return this.activeClusterName;
-    // }
-    // public get keyspace() {
-    //     return this.activeKeyspace;
-    // }
-    // public set clusterName(val: string) {
-    //     console.log(`##################SETTING cluster = ${val}`);
-    //     this.activeClusterName = val;
-    // }
-    // public set keyspace(val: string) {
-    //     console.log(`##################SETTING keyspace = ${val}`);
-    //     this.activeKeyspace = val;
-    // }
     public get index() {
         return this.indexCurrent;
     }
@@ -124,9 +110,14 @@ export class EditorService {
         });
     }
     private editorCreate(statement: WorkbenchCqlStatement) {
-        this.monaco.stateReady.pipe(
+        zip(
+            this.workspace.getActiveClusterKeyspace(),
+            this.monaco.stateReady,
+        ).pipe(
             take(1),
-        ).subscribe(() => {
+        ).subscribe((result) => {
+
+            const clusterKeyspace = result[0];
 
             statement.filename = this.generateFilename();
 

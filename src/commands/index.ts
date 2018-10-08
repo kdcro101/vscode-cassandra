@@ -1,3 +1,4 @@
+import * as fs from "fs-extra";
 import { ReplaySubject } from "rxjs";
 import { take } from "rxjs/operators";
 import * as vscode from "vscode";
@@ -43,7 +44,18 @@ export class VsCommands {
             .push(vscode.commands.registerCommand("cassandraWorkbench.openFileInWorkbench", this.onOpenFileInWorkbench));
     }
     private onOpenEditorInWorkbench = (fileUri: vscode.Uri) => {
-        console.log(fileUri);
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            try {
+                const body = fs.readFileSync(fileUri.fsPath).toString();
+                this.workbench.editorCreate(null, null, body, fileUri.fsPath);
+
+            } catch (e) {
+                vscode.window.showErrorMessage(`Unable to read ${fileUri.fsPath}`);
+            }
+        });
     }
     private onOpenFileInWorkbench = (fileUri: vscode.Uri, list: any[]) => {
 

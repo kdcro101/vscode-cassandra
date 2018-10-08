@@ -80,7 +80,7 @@ export class CassandraWorkbench {
                 });
         });
     }
-    public editorCreate(clusterIndex: number, keyspace: string, statementBody?: string): Promise<void> {
+    public editorCreate(clusterIndex: number, keyspace: string, statementBody?: string, fsPath?: string): Promise<void> {
         return new Promise((resolve, reject) => {
 
             const clusters = this.clusters.getClusters();
@@ -97,7 +97,7 @@ export class CassandraWorkbench {
                     const s: WorkbenchCqlStatement = {
                         id: generateId(),
                         body: statementBody,
-                        filename: null,
+                        filename: fsPath,
                         keyspace,
                         clusterName: c.name,
                         source: "action",
