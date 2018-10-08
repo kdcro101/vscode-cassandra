@@ -11,6 +11,8 @@ export interface ProcMessageList {
     w2e_getClustersRequest: boolean;
     w2e_getClusterStructRequest: ClusterStructureRequest;
     w2e_getHistoryRequest: MessageWithId;
+    w2e_removeHistoryItemRequest: HistoryRemoveRequest;
+    w2e_removeAllHistoryRequest: MessageWithId;
     w2e_onReady: boolean;
     w2e_checkInputRequest: CheckInputRequest;
     w2e_persistEditors: WorkbenchCqlStatement[];
@@ -41,6 +43,8 @@ export interface ProcMessageList {
     e2w_getActiveKeyspaceResponse: GetActiveKeyspaceResponse;
     e2w_getActiveClusterAndKeyspaceResponse: GetActiveClusterAndKeyspaceResponse;
     e2w_clipboardCopyResponse: MessageWithId;
+    e2w_removeHistoryItemResponse: MessageWithId;
+    e2w_removeAllHistoryResponse: MessageWithId;
 }
 export type ProcMessageType = keyof ProcMessageList;
 export interface ProcMessage {
@@ -191,4 +195,7 @@ export interface GetActiveClusterAndKeyspaceResponse extends MessageWithId {
 }
 export interface ClipboardCopyRequest extends MessageWithId {
     data: string;
+}
+export interface HistoryRemoveRequest extends MessageWithId {
+    item_id: string;
 }

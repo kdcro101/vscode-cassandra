@@ -3,17 +3,17 @@
         <mat-icon>history</mat-icon>
         <div class="mat-headline">History</div>
         <div fxFlex></div>
-        <button mat-button color="warn">CLEAR</button>
+        <button mat-button color="warn" (click)="removeAll()">CLEAR</button>
         <button mat-button color="primary" (click)="close()">CLOSE</button>
     </div>
     <div class="client" fxFlex>
-        <div #itemRef *ngFor="let i of items;index as ix;trackBy: trackById" class="item" [class.even]="ix%2===0"
+        <div [@itemAnimation] #itemRef *ngFor="let i of items;index as ix;trackBy: trackById" class="item" [class.even]="ix%2===0"
             [class.odd]="ix%2!==0" fxLayout="column">
             <div #itemBodyRef [style.lineHeight.px]="lineHeight" [style.fontFamily]="fontFamily" [style.fontSize.px]="fontSize"
                 class="body" data-lang="cql">{{i.body}}
             </div>
             <div class="actions" fxLayout="row" fxLayoutAlign="start center">
-                <button mat-raised-button class="button-18" color="warn">REMOVE</button>
+                <button mat-raised-button class="button-18" color="warn" (click)="removeItem(i)">REMOVE</button>
                 <div fxFlex></div>
                 <button mat-raised-button class="button-18" color="primary" (click)="copyBody(i)">COPY</button>
                 <button mat-raised-button class="button-18" color="primary" (click)="createEditor(i)">OPEN</button>

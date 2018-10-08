@@ -159,6 +159,12 @@ export class CassandraWorkbench {
             case "w2e_getHistoryRequest":
                 this.getHistoryRespond(m as ProcMessageStrict<"w2e_getHistoryRequest">);
                 break;
+            case "w2e_removeHistoryItemRequest":
+                this.removeHistoryItemRespond(m as ProcMessageStrict<"w2e_removeHistoryItemRequest">);
+                break;
+            case "w2e_removeAllHistoryRequest":
+                this.removeHistoryAllRespond(m as ProcMessageStrict<"w2e_removeAllHistoryRequest">);
+                break;
             case "w2e_executeDataChangeRequest":
                 this.executeDataChangeRespond(m as ProcMessageStrict<"w2e_executeDataChangeRequest">);
                 break;
@@ -183,7 +189,55 @@ export class CassandraWorkbench {
 
         }
     }
+    private removeHistoryAllRespond(request: ProcMessageStrict<"w2e_removeAllHistoryRequest">) {
+        const id = request.data.id;
+        from(this.persistence.history.removeAll())
+            .pipe().subscribe(() => {
+                const out: ProcMessageStrict<"e2w_removeAllHistoryResponse"> = {
+                    name: "e2w_removeAllHistoryResponse",
+                    data: {
+                        id,
+                    },
+                };
+                this.panel.emitMessage(out);
+            }, (e) => {
+                const out: ProcMessageStrict<"e2w_removeAllHistoryResponse"> = {
+                    name: "e2w_removeAllHistoryResponse",
+                    data: {
+                        id,
+                        error: e,
+                    },
+                };
+                this.panel.emitMessage(out);
+            });
 
+    }
+    private removeHistoryItemRespond(request: ProcMessageStrict<"w2e_removeHistoryItemRequest">) {
+        const id = request.data.id;
+        const itemId = request.data.item_id;
+
+        from(this.persistence.history.remove(itemId)).pipe(
+
+        ).subscribe(() => {
+            const out: ProcMessageStrict<"e2w_removeHistoryItemResponse"> = {
+                name: "e2w_removeHistoryItemResponse",
+                data: {
+                    id,
+                },
+            };
+            this.panel.emitMessage(out);
+        }, (e) => {
+            const out: ProcMessageStrict<"e2w_removeHistoryItemResponse"> = {
+                name: "e2w_removeHistoryItemResponse",
+                data: {
+                    id,
+                    error: e,
+                },
+            };
+            this.panel.emitMessage(out);
+        });
+
+    }
     private clipboardCopyRespond(request: ProcMessageStrict<"w2e_clipboardCopyRequest">) {
         const id = request.data.id;
 

@@ -58,6 +58,30 @@ export type ViewAnimationState = "void" | "active" | "hidden";
                 })),
             ]),
         ]),
+        trigger("itemAnimation", [
+            // transition(":enter", [
+            //     style({
+            //         opacity: 0,
+            //     }),
+            //     animate(".25s ease-in-out", style({
+            //         opacity: 1,
+            //     })),
+            // ]),
+            transition(":leave", [
+                style({
+                    transform: "translate3d(0,0,0)",
+                    filter: "blur(0px)",
+                }),
+                animate(".6s ease-in-out", style({
+                    transform: "translate3d(0,0,0) scale3d(0.5,0.5,1)",
+                    filter: "blur(8px)",
+                })),
+                animate(".25s ease-in-out", style({
+                    transform: "translate3d(-100%,0,0) scale3d(0.8,0.8,1)",
+                    filter: "blur(8px)",
+                })),
+            ]),
+        ]),
     ],
 })
 export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDestroy {
@@ -123,11 +147,11 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
             take(1),
             filter((s) => s === "active"),
         ).subscribe(() => {
-            this.initialize();
+            this.loadHistory();
         });
 
     }
-    public initialize() {
+    public loadHistory() {
 
         from(this.history.get()).pipe(
             tap((result) => {
@@ -203,6 +227,25 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
         this.message.emit(message);
 
         this.close();
+
+    }
+    public removeItem(i: HistroyItem) {
+
+        this.history.remove(i.id)
+            .then((result) => {
+                this.loadHistory();
+            }).catch((e) => {
+                console.log(e);
+            });
+
+    }
+    public removeAll = () => {
+        this.history.removeAll()
+            .then((result) => {
+                this.loadHistory();
+            }).catch((e) => {
+                console.log(e);
+            });
 
     }
 }

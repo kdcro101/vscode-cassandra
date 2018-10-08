@@ -1,0 +1,14 @@
+:host {
+
+    .title {
+        mat-icon{
+            margin-right: 16px;
+        }
+    }
+
+    .content{
+        p{
+            word-break: break-all;
+        }
+    }
+}

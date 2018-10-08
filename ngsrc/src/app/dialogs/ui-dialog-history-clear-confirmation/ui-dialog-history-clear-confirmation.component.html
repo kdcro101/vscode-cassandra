@@ -1,0 +1,12 @@
+<h1 mat-dialog-title fxLayout="row" fxLayoutAlign="start center" class="title">
+    <mat-icon>warning</mat-icon>
+    <div>Clear history</div>
+</h1>
+<div mat-dialog-content class="content">
+    <p>Do you want to clear history?</p>
+</div>
+<div mat-dialog-actions fxLayout="row">
+    <button mat-button color="primary" [mat-dialog-close]="false">NO</button>
+    <div fxFlex></div>
+    <button mat-raised-button color="accent" [mat-dialog-close]="true" cdkFocusInitial>YES</button>
+</div>

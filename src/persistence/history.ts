@@ -1,6 +1,8 @@
 import * as fs from "fs-extra";
 import * as moment from "moment";
 import * as path from "path";
+import { from } from "rxjs";
+import { concatMap, map, mapTo } from "rxjs/operators";
 import { generateId } from "../const/id";
 import { HistroyItem } from "../types/history";
 
@@ -62,8 +64,33 @@ export class HistoryManager {
         });
 
     }
+    public removeAll() {
+        return new Promise((resolve, reject) => {
+
+            from(this.save([])).pipe(
+            ).subscribe(() => {
+                resolve();
+            }, (e) => {
+                reject(e);
+            });
+
+        });
+    }
+    public remove(id: string) {
+        return new Promise((resolve, reject) => {
+
+            from(this.get()).pipe(
+                map((list) => list.filter((i) => i.id !== id)),
+                concatMap((filtered) => this.save(filtered)),
+            ).subscribe(() => {
+                resolve();
+            }, (e) => {
+                reject(e);
+            });
+
+        });
+    }
     private save(list: HistroyItem[]): Promise<void> {
         return fs.writeJson(this.filePath, list);
     }
-
 }
