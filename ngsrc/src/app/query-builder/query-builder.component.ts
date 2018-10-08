@@ -202,7 +202,7 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
         this.editorService.open();
     }
     public doShowHistory = () => {
-        this.history.show();
+        this.history.show(this.editor);
     }
     private replaceTabs(source: number, dest: number) {
         this.editorService.swap(source, dest);

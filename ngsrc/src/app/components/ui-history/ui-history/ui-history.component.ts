@@ -14,6 +14,7 @@ import { ThemeService } from "../../../services/theme/theme.service";
 import { from } from "rxjs";
 import { tap } from "rxjs/operators";
 import { map } from "rxjs/operators";
+import { WorkbenchEditor } from "../../../types/index";
 import { UiHistoryService } from "../service";
 
 export type ViewAnimationState = "void" | "active" | "hidden";
@@ -68,6 +69,8 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
     public lineHeight: number;
     public fontFamily: string;
 
+    public editor: WorkbenchEditor = null;
+
     private eventColorize = new Subject<HTMLDivElement>();
     public eventAnimation = new Subject<ViewAnimationState>();
     @HostBinding("@viewAnimationState") public viewAnimationState: ViewAnimationState;
@@ -87,17 +90,23 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
         this.fontSize = theme.getEditorFontSize();
         this.lineHeight = theme.getEditorFontSize() + 10,
 
-            this.eventColorize.pipe(
-                takeUntil(this.eventViewDestroyed),
-                concatMap((element) => {
-                    return monaco.editor.colorizeElement(element, {
-                        tabSize: 4,
-                        theme: this.theme.monacoTheme,
-                    });
-                }),
-            ).subscribe(() => {
-                console.log("Done colorizing");
+            UiHistoryComponent.service.stateData.pipe(
+                take(1),
+            ).subscribe((data) => {
+                this.editor = data;
             });
+
+        this.eventColorize.pipe(
+            takeUntil(this.eventViewDestroyed),
+            concatMap((element) => {
+                return monaco.editor.colorizeElement(element, {
+                    tabSize: 4,
+                    theme: this.theme.monacoTheme,
+                });
+            }),
+        ).subscribe(() => {
+            console.log("Done colorizing");
+        });
     }
     public trackById = (index: number, item: HistroyItem) => {
         return item.id;

@@ -11,7 +11,7 @@
     height: 100%;
     position: relative;
     &>.root {
-        padding: 16px;
+        padding: 16px 16px 0px 16px;
         border-radius: 2px 2px 0 0;
         overflow: hidden;
         position: absolute;
@@ -44,13 +44,15 @@
                 overflow-x: auto;
                 padding-bottom: 32px;
                 position: relative;
+                background-color: rgba(0, 0, 0, 0.06);
+                margin-bottom: 2px;
 
-                &.odd {
-                    background-color: rgba(0, 0, 0, 0.06);
-                }
-                &.even {
-                    background-color: rgba(0, 0, 0, 0.12);
-                }
+                // &.odd {
+                //     background-color: rgba(0, 0, 0, 0.06);
+                // }
+                // &.even {
+                //     background-color: rgba(0, 0, 0, 0.12);
+                // }
                 .body {
                     padding: 8px;
                     cursor: pointer;
@@ -69,7 +71,7 @@
                     left: 0;
                     right: 0;
                     height: 32px;
-                    background-color:transparent;
+                    background-color: transparent;
                     z-index: 100;
                     padding: 0 8px 8px 8px;
 

@@ -1,8 +1,9 @@
 import { Overlay, OverlayConfig, OverlayRef } from "@angular/cdk/overlay";
 import { ComponentPortal } from "@angular/cdk/portal";
 import { Injectable, NgZone } from "@angular/core";
-import { fromEvent, Subject } from "rxjs";
+import { fromEvent, ReplaySubject, Subject } from "rxjs";
 import { concatMap, filter, take, takeUntil, tap } from "rxjs/operators";
+import { WorkbenchEditor } from "../../types/index";
 import { UiHistoryComponent } from "./ui-history/ui-history.component";
 
 const ESCAPE_KEYCODE = 27;
@@ -17,6 +18,8 @@ export class UiHistoryService {
     public eventClosed = new Subject<void>();
     public terminate = new Subject<void>();
     public eventCommand = new Subject<string>();
+    public stateData = new ReplaySubject<WorkbenchEditor>(1);
+
     constructor(public overlay: Overlay, public zone: NgZone) {
         this.terminate.pipe(
             concatMap(() => this.component.hide()),
@@ -25,7 +28,7 @@ export class UiHistoryService {
             console.info("UiHistoryService terminate.done");
         });
     }
-    public show() {
+    public show(editor: WorkbenchEditor) {
 
         Promise.all([
             this.close(),
@@ -40,6 +43,8 @@ export class UiHistoryService {
                 config.positionStrategy = this.overlay.position()
                     .global().height("70%").width("80%")
                     .bottom("0").centerHorizontally();
+
+                this.stateData.next(editor);
 
                 this.overlayRef = this.overlay.create(config);
                 this.component = this.overlayRef.attach(new ComponentPortal(UiHistoryComponent, null)).instance;
