@@ -5,10 +5,10 @@ import {
 } from "@angular/core";
 import { MatSnackBar } from "@angular/material";
 import { from, Subject } from "rxjs";
-import { concatMap, filter, map, take, takeUntil, tap } from "rxjs/operators";
+import { concatMap, delay, filter, map, take, takeUntil, tap } from "rxjs/operators";
 import { WorkbenchCqlStatement } from "../../../../../../src/types/editor";
 import { HistroyItem } from "../../../../../../src/types/history";
-// import * as clipboardy from "clipboardy";
+
 import { ProcMessageStrict } from "../../../../../../src/types/messages";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { generateId } from "../../../const/id";
@@ -59,14 +59,6 @@ export type ViewAnimationState = "void" | "active" | "hidden";
             ]),
         ]),
         trigger("itemAnimation", [
-            // transition(":enter", [
-            //     style({
-            //         opacity: 0,
-            //     }),
-            //     animate(".25s ease-in-out", style({
-            //         opacity: 1,
-            //     })),
-            // ]),
             transition(":leave", [
                 style({
                     transform: "translate3d(0,0,0)",
@@ -82,6 +74,36 @@ export type ViewAnimationState = "void" | "active" | "hidden";
                 })),
             ]),
         ]),
+        trigger("progressAnimation", [
+            transition(":leave", [
+                style({
+                    opacity: 1,
+                }),
+                animate(".3s ease-in-out", style({
+                    opacity: 0,
+                })),
+
+            ]),
+        ]),
+        trigger("noItemsAnimation", [
+            transition(":enter", [
+                style({
+                    opacity: 0,
+                }),
+                animate("300ms ease-in-out", style({
+                    opacity: 1,
+                })),
+            ]),
+            transition(":leave", [
+                style({
+                    opacity: 1,
+                }),
+                animate(".3s ease-in-out", style({
+                    opacity: 0,
+                })),
+
+            ]),
+        ]),
     ],
 })
 export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDestroy {
@@ -89,7 +111,7 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
 
     @ViewChildren("itemRef") public itemRef: QueryList<ElementRef<HTMLDivElement>>;
     @ViewChildren("itemBodyRef") public itemBodyRef: QueryList<ElementRef<HTMLDivElement>>;
-    public items: HistroyItem[] = [];
+    public items: HistroyItem[] = null;
 
     public fontSize: number;
     public lineHeight: number;
@@ -99,6 +121,9 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
 
     private eventColorize = new Subject<HTMLDivElement>();
     public eventAnimation = new Subject<ViewAnimationState>();
+
+    public loading = true;
+
     @HostBinding("@viewAnimationState") public viewAnimationState: ViewAnimationState;
     @HostListener("@viewAnimationState.done", ["$event"]) public viewAnimationStateDone = (e: AnimationEvent) => {
         this.eventAnimation.next(e.toState as ViewAnimationState);
@@ -153,7 +178,16 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
     }
     public loadHistory() {
 
+        this.loading = true;
+        this.detectChanges();
+
         from(this.history.get()).pipe(
+            tap(() => {
+                this.loading = true;
+                this.detectChanges();
+
+            }),
+            delay(50),
             tap((result) => {
                 this.items = result.map((i) => {
                     i.body = i.body.trim();
@@ -170,8 +204,13 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
 
                 }
             }),
+            // delay(500),
         ).subscribe(() => {
             console.log("initialize done!");
+
+            this.loading = false;
+            this.detectChanges();
+
         }, (e) => {
             this.snackBar.open("Error retrieving history", "OK", {
                 duration: 2000,
