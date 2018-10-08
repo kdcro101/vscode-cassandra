@@ -58,7 +58,18 @@ export class VsCommands {
         });
     }
     private onOpenFileInWorkbench = (fileUri: vscode.Uri, list: any[]) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
 
+            try {
+                const body = fs.readFileSync(fileUri.fsPath).toString();
+                this.workbench.editorCreate(null, null, body, fileUri.fsPath);
+
+            } catch (e) {
+                vscode.window.showErrorMessage(`Unable to read ${fileUri.fsPath}`);
+            }
+        });
     }
 
     private onConfigurationGenerate = () => {

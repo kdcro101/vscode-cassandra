@@ -119,7 +119,10 @@ export class EditorService {
 
             const clusterKeyspace = result[0];
 
-            statement.filename = this.generateFilename();
+            statement.filename = statement.filename == null ? this.generateFilename() : statement.filename;
+
+            statement.clusterName = statement.clusterName == null ? clusterKeyspace.clusterName : statement.clusterName;
+            statement.keyspace = statement.keyspace == null ? clusterKeyspace.keyspace : statement.keyspace;
 
             const editor: WorkbenchEditor = {
                 id: generateId(),
@@ -132,8 +135,17 @@ export class EditorService {
                 eventResult: new Subject<void>(),
             };
 
-            this.editorPrepend(editor);
-            this.persistEditors();
+            from(Promise.all(
+                this.list.filter((i) => statement.fsPath != null && i.statement.fsPath === statement.fsPath)
+                .map((i) => {
+                    console.log(`REMOVING EDITOR WITH fsPath=${statement.fsPath}`);
+                    return this.remove(i.id);
+                }))).subscribe(() => {
+
+                    this.editorPrepend(editor);
+                    this.persistEditors();
+
+                });
 
         });
     }

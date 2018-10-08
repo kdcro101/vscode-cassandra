@@ -13,6 +13,8 @@ import { WorkbenchPanel } from "../workbench-panel";
 import { Workspace } from "../workspace";
 import { TreeviewProvider } from "./treeview-provider";
 
+import * as path from "path";
+
 declare var extensionContextBundle: ExtensionContextBundle;
 
 export class CassandraWorkbench {
@@ -84,12 +86,13 @@ export class CassandraWorkbench {
         return new Promise((resolve, reject) => {
 
             const clusters = this.clusters.getClusters();
-            const c = clusters[clusterIndex];
 
-            if (c == null) {
-                reject("no_cluster");
-                return;
-            }
+            clusterIndex = clusterIndex == null ? -1 : clusterIndex;
+
+            const vClusterName =  clusterIndex === -1 ? null :  clusters[clusterIndex].name;
+            const vKeyspace =   keyspace == null ? null :  keyspace;
+
+            const vFilename = fsPath == null ? null : path.basename(fsPath);
 
             from(this.revealCqlPanel()).pipe()
                 .subscribe(() => {
@@ -97,11 +100,12 @@ export class CassandraWorkbench {
                     const s: WorkbenchCqlStatement = {
                         id: generateId(),
                         body: statementBody,
-                        filename: fsPath,
-                        keyspace,
-                        clusterName: c.name,
+                        filename: vFilename,
+                        fsPath,
+                        clusterName: vClusterName,
+                        keyspace: vKeyspace,
                         source: "action",
-                        modified: statementBody == null ? false : true,
+                        modified: fsPath == null ? true : false,
                     };
 
                     const m: ProcMessageStrict<"e2w_editorCreate"> = {

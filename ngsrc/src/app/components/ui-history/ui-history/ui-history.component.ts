@@ -11,6 +11,9 @@ import { ViewDestroyable } from "../../../base/view-destroyable";
 import { HistoryService } from "../../../services/history/history.service";
 import { ThemeService } from "../../../services/theme/theme.service";
 
+import { from } from "rxjs";
+import { tap } from "rxjs/operators";
+import { map } from "rxjs/operators";
 import { UiHistoryService } from "../service";
 
 export type ViewAnimationState = "void" | "active" | "hidden";
@@ -60,8 +63,11 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
     @ViewChildren("itemRef") public itemRef: QueryList<ElementRef<HTMLDivElement>>;
     @ViewChildren("itemBodyRef") public itemBodyRef: QueryList<ElementRef<HTMLDivElement>>;
     public items: HistroyItem[] = [];
+
     public fontSize: number;
+    public lineHeight: number;
     public fontFamily: string;
+
     private eventColorize = new Subject<HTMLDivElement>();
     public eventAnimation = new Subject<ViewAnimationState>();
     @HostBinding("@viewAnimationState") public viewAnimationState: ViewAnimationState;
@@ -79,6 +85,19 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
 
         this.fontFamily = theme.getEditorFontFamily();
         this.fontSize = theme.getEditorFontSize();
+        this.lineHeight = theme.getEditorFontSize() + 10,
+
+            this.eventColorize.pipe(
+                takeUntil(this.eventViewDestroyed),
+                concatMap((element) => {
+                    return monaco.editor.colorizeElement(element, {
+                        tabSize: 4,
+                        theme: this.theme.monacoTheme,
+                    });
+                }),
+            ).subscribe(() => {
+                console.log("Done colorizing");
+            });
     }
     public trackById = (index: number, item: HistroyItem) => {
         return item.id;
@@ -87,32 +106,44 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
         this.viewAnimationState = "active";
         this.detectChanges();
 
-        this.history.get()
-            .then((result) => {
+        this.eventAnimation.pipe(
+            take(1),
+            filter((s) => s === "active"),
+        ).subscribe(() => {
+            this.initialize();
+        });
 
-                this.items = result.reverse();
+    }
+    public initialize() {
+
+        from(this.history.get()).pipe(
+            tap((result) => {
+                this.items = result.map((i) => {
+                    i.body = i.body.trim();
+                    return i;
+                }).reverse();
                 this.detectChanges();
                 this.colorize();
 
-            }).catch((e) => {
-                this.snackBar.open("Error retrieving history", "OK", {
-                    duration: 2000,
-                });
-            });
+            }),
+            map(() => this.itemBodyRef.toArray().map((e) => e.nativeElement)),
+            concatMap(async (elements) => {
 
-        this.eventColorize.pipe(
-            takeUntil(this.eventViewDestroyed),
-            concatMap((element) => {
-                return monaco.editor.colorizeElement(element, {
-                    tabSize: 4,
-                    theme: this.theme.monacoTheme,
-                });
+                for (let i = 0; i < elements.length; i++) {
+                    await this.eventColorize.next(elements[i]);
+
+                }
             }),
         ).subscribe(() => {
+            console.log("initialize done!");
+        }, (e) => {
+            this.snackBar.open("Error retrieving history", "OK", {
+                duration: 2000,
+            });
 
         });
-    }
 
+    }
     ngOnDestroy() {
         super.ngOnDestroy();
     }
@@ -135,8 +166,6 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
         UiHistoryComponent.service.terminate.next();
     }
     private colorize() {
-        this.itemBodyRef.toArray().forEach((e) => {
-            this.eventColorize.next(e.nativeElement);
-        });
+
     }
 }

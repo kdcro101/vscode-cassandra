@@ -20,7 +20,7 @@
                     <div fxFlex class="title dhandle" matTooltip="{{ i.statement.filename }}" matTooltipClass="filename"
                         fxLayout="row" fxLayoutAlign="start center">
                         <div class="modified" *ngIf="i.statement.modified"></div>
-                        <div>{{ i.statement.filename }}</div>
+                        <div fxFlex class="filename">{{ i.statement.filename }}</div>
                     </div>
                     <div class="vsui-close" (mousedown)="$event.stopPropagation();$event.preventDefault()" (click)="$event.stopPropagation();$event.preventDefault();doTabClose($event,ix)"></div>
 

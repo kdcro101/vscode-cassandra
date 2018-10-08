@@ -38,7 +38,8 @@ export class UiHistoryService {
 
                 UiHistoryComponent.service = this;
                 config.positionStrategy = this.overlay.position()
-                    .global().height("70%").width("100%").bottom("0");
+                    .global().height("70%").width("80%")
+                    .bottom("0").centerHorizontally();
 
                 this.overlayRef = this.overlay.create(config);
                 this.component = this.overlayRef.attach(new ComponentPortal(UiHistoryComponent, null)).instance;

@@ -48,7 +48,7 @@
                     box-sizing: border-box;
                     cursor: pointer;
                     transform-origin: center bottom;
-                    .modified{
+                    .modified {
                         width: 8px;
                         height: 8px;
                         border-radius: 50%;
@@ -93,9 +93,14 @@
                     .title {
                         padding-right: 8px;
                         position: relative;
-                        text-overflow: ellipsis;
                         white-space: nowrap;
                         overflow: hidden;
+                        .filename {
+                            position: relative;
+                            overflow: hidden;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                        }
                     }
                     .vsui-close {
                         margin-right: 0.5em;
