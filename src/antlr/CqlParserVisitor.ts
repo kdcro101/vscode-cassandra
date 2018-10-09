@@ -74,6 +74,7 @@ import { CreateTableContext } from './CqlParser';
 import { CreateTableDefContext } from './CqlParser';
 import { WithElementContext } from './CqlParser';
 import { ClusteringOrderContext } from './CqlParser';
+import { ClusteringOrderItemContext } from './CqlParser';
 import { TableOptionsContext } from './CqlParser';
 import { TableOptionItemContext } from './CqlParser';
 import { TableOptionNameContext } from './CqlParser';
@@ -839,6 +840,13 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitClusteringOrder?: (ctx: ClusteringOrderContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.clusteringOrderItem`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitClusteringOrderItem?: (ctx: ClusteringOrderItemContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.tableOptions`.

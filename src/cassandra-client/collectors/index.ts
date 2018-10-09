@@ -9,6 +9,7 @@ import {
     CassandraMaterializedView, CassandraTable, CassandraType,
     RowAggregate, RowColumn, RowFunction, RowIndex, RowKeyspace, RowMaterializedView, RowTable, RowType,
 } from "../../types";
+import { CassandraClusteringOrder } from "../../types/index";
 
 export function collectKeyspaces(client: cassandra.Client): Promise<CassandraKeyspace[]> {
     return new Promise((resolve, reject) => {
@@ -229,7 +230,7 @@ export function collectPrimaryKeys(client: cassandra.Client, keyspace: string, t
                     const item: CassandraColumn = {
                         name: row.column_name,
                         all: row,
-                        clustering_order: row.clustering_order,
+                        clustering_order: row.clustering_order as CassandraClusteringOrder,
                         kind: row.kind as CassandraColumnType,
                         position: row.position,
                         type: row.type,
@@ -295,7 +296,7 @@ export function collectColumns(client: cassandra.Client, keyspace: string, table
                     const out: CassandraColumn = {
                         name: row.column_name,
                         all: row,
-                        clustering_order: row.clustering_order,
+                        clustering_order: row.clustering_order as CassandraClusteringOrder,
                         kind: row.kind as CassandraColumnType,
                         position: row.position,
                         type: row.type,

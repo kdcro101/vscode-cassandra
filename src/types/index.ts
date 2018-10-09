@@ -55,10 +55,11 @@ export interface CassandraClientEvents {
 }
 
 export type CassandraColumnType = "regular" | "partition_key" | "clustering";
+export type CassandraClusteringOrder = "none" | "asc" | "desc";
 
 export interface CassandraColumn {
     name: string;
-    clustering_order: string;
+    clustering_order: CassandraClusteringOrder;
     kind: CassandraColumnType;
     position: number;
     type: string;

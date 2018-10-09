@@ -381,8 +381,13 @@ withElement
     : kwWith tableOptions? clusteringOrder?
     ;
 clusteringOrder
-    : kwClustering kwOrder kwBy syntaxBracketLr column orderDirection? syntaxBracketRr
+    : kwClustering kwOrder kwBy syntaxBracketLr clusteringOrderItem (syntaxComma clusteringOrderItem)* syntaxBracketRr
     ;
+
+clusteringOrderItem
+    : column orderDirection?
+    ;
+
 
 tableOptions
     :  tableOptionItem (kwAnd tableOptionItem)*

@@ -6,6 +6,7 @@ import { CassandraWorkbench } from "../cassandra-workbench";
 import { TreeItemTable } from "../cassandra-workbench/treeview-provider/tree-item-table/index";
 import { ConfigurationManager } from "../configuration-manager";
 import { StatementGenerator } from "../statement-generator";
+import { tableClone } from "../statement-generator/table/clone";
 import { ExtensionContextBundle } from "../types";
 
 declare var extensionContextBundle: ExtensionContextBundle;
@@ -42,6 +43,29 @@ export class VsCommands {
             .push(vscode.commands.registerCommand("cassandraWorkbench.openEditorInWorkbench", this.onOpenEditorInWorkbench));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.openFileInWorkbench", this.onOpenFileInWorkbench));
+
+        // ------------------------------------------------------------------------------------------------------------------
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableClone", this.cqlTableClone));
+    }
+    // private _cqlTableClone = () => { };
+    private cqlTableClone = (item: TreeItemTable) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+            const clusterName = item.clusterName;
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+            const table = item.label;
+
+            this.generator.tableClone(keyspace, item.tableData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
     }
     private onOpenEditorInWorkbench = (fileUri: vscode.Uri) => {
         this.stateWorkbench.pipe(
