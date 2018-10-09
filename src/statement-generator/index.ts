@@ -1,9 +1,18 @@
 import wrap = require("word-wrap");
 import { CassandraTable } from "../types/index";
+import { tableAlterAdd } from "./table/alter-add";
+import { tableAlterDrop } from "./table/alter-drop";
 import { tableClone } from "./table/clone";
+import { tableDrop } from "./table/drop";
+import { tableTruncate } from "./table/truncate";
 export class StatementGenerator {
 
     public tableClone = tableClone;
+    public tableDrop = tableDrop;
+    public tableTruncate = tableTruncate;
+    public tableAlterAdd = tableAlterAdd;
+    public tableAlterDrop = tableAlterDrop;
+
     constructor(private limit: number = 1000) {
 
     }

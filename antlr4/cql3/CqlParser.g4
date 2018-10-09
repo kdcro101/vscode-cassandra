@@ -378,8 +378,10 @@ createTableDef
     ;
 
 withElement
-    : kwWith tableOptions? clusteringOrder?
+    : kwWith tableOptions (kwAnd clusteringOrder)?
+    | kwWith clusteringOrder? (kwAnd tableOptions)?
     ;
+
 clusteringOrder
     : kwClustering kwOrder kwBy syntaxBracketLr clusteringOrderItem (syntaxComma clusteringOrderItem)* syntaxBracketRr
     ;

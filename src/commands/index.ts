@@ -6,7 +6,6 @@ import { CassandraWorkbench } from "../cassandra-workbench";
 import { TreeItemTable } from "../cassandra-workbench/treeview-provider/tree-item-table/index";
 import { ConfigurationManager } from "../configuration-manager";
 import { StatementGenerator } from "../statement-generator";
-import { tableClone } from "../statement-generator/table/clone";
 import { ExtensionContextBundle } from "../types";
 
 declare var extensionContextBundle: ExtensionContextBundle;
@@ -47,16 +46,87 @@ export class VsCommands {
         // ------------------------------------------------------------------------------------------------------------------
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableClone", this.cqlTableClone));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableDrop", this.cqlTableDrop));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableTruncate", this.cqlTableTruncate));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableAlterAdd", this.cqlTableAlterAdd));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableAlterDrop", this.cqlTableAlterDrop));
     }
-    // private _cqlTableClone = () => { };
+
+    private cqlTableAlterDrop = (item: TreeItemTable) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.tableAlterDrop(keyspace, item.tableData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlTableAlterAdd = (item: TreeItemTable) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.tableAlterAdd(keyspace, item.tableData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlTableTruncate = (item: TreeItemTable) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.tableTruncate(keyspace, item.tableData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlTableDrop = (item: TreeItemTable) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.tableDrop(keyspace, item.tableData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
     private cqlTableClone = (item: TreeItemTable) => {
         this.stateWorkbench.pipe(
             take(1),
         ).subscribe(() => {
-            const clusterName = item.clusterName;
+
             const clusterIndex = item.clusterIndex;
             const keyspace = item.keyspace;
-            const table = item.label;
 
             this.generator.tableClone(keyspace, item.tableData)
                 .then((result) => {

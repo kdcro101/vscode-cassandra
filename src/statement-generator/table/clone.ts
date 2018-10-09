@@ -61,18 +61,18 @@ function tableOptions(data: CassandraTable): string {
     const compressionString = Object.keys(data.all.compression).map((k) => `'${k}': '${data.all.compression[k]}'`).join(", ");
 
     out = out.concat([
-        `dclocal_read_repair_chance = ${data.all.dclocal_read_repair_chance}`,
-        `gc_grace_seconds = ${data.all.gc_grace_seconds}`,
-        `bloom_filter_fp_chance = ${data.all.bloom_filter_fp_chance}`,
-        `caching = { ${cachingString} }`,
-        `comment = '${data.all.comment}'`,
-        `compaction = { ${compactionString} }`,
-        `compression = { ${compressionString} }`,
-        `default_time_to_live = ${data.all.default_time_to_live}`,
-        `speculative_retry = '${data.all.speculative_retry}'`,
-        `min_index_interval = ${data.all.min_index_interval}`,
-        `max_index_interval = ${data.all.max_index_interval}`,
-        `crc_check_chance = ${data.all.crc_check_chance}`,
+        `\tdclocal_read_repair_chance = ${data.all.dclocal_read_repair_chance}`,
+        `\tgc_grace_seconds = ${data.all.gc_grace_seconds}`,
+        `\tbloom_filter_fp_chance = ${data.all.bloom_filter_fp_chance}`,
+        `\tcaching = { ${cachingString} }`,
+        `\tcomment = '${data.all.comment}'`,
+        `\tcompaction = { ${compactionString} }`,
+        `\tcompression = { ${compressionString} }`,
+        `\tdefault_time_to_live = ${data.all.default_time_to_live}`,
+        `\tspeculative_retry = '${data.all.speculative_retry}'`,
+        `\tmin_index_interval = ${data.all.min_index_interval}`,
+        `\tmax_index_interval = ${data.all.max_index_interval}`,
+        `\tcrc_check_chance = ${data.all.crc_check_chance}`,
     ]);
     return ` WITH ${out.join(" AND \n")}`;
 }

@@ -98,12 +98,32 @@
             "view/item/context": [{
                     "command": "cassandraWorkbench.tableSelectStatement",
                     "when": "view == cassandraWorkbenchView && viewItem == table",
-                    "group": "navigation@1"
+                    "group": "01_common@1"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlTableAlterAdd",
+                    "when": "view == cassandraWorkbenchView && viewItem == table",
+                    "group": "02_alter@1"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlTableAlterDrop",
+                    "when": "view == cassandraWorkbenchView && viewItem == table",
+                    "group": "02_alter@2"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlTableTruncate",
+                    "when": "view == cassandraWorkbenchView && viewItem == table",
+                    "group": "10_operations@1"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlTableDrop",
+                    "when": "view == cassandraWorkbenchView && viewItem == table",
+                    "group": "10_operations@2"
                 },
                 {
                     "command": "cassandraWorkbench.cqlTableClone",
                     "when": "view == cassandraWorkbenchView && viewItem == table",
-                    "group": "1_modification@1"
+                    "group": "20_special@1"
                 }
 
 
@@ -120,7 +140,7 @@
             },
             {
                 "command": "cassandraWorkbench.tableSelectStatement",
-                "title": "SELECT query"
+                "title": "SELECT"
             },
             {
                 "command": "cassandraWorkbench.refresh",
@@ -161,6 +181,22 @@
             {
                 "command": "cassandraWorkbench.cqlTableClone",
                 "title": "Clone Table"
+            },
+            {
+                "command": "cassandraWorkbench.cqlTableDrop",
+                "title": "DROP TABLE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlTableAlterAdd",
+                "title": "ALTER TABLE ADD"
+            },
+            {
+                "command": "cassandraWorkbench.cqlTableAlterDrop",
+                "title": "ALTER TABLE DROP"
+            },
+            {
+                "command": "cassandraWorkbench.cqlTableTruncate",
+                "title": "TRUNCATE TABLE"
             }
         ]
     },
