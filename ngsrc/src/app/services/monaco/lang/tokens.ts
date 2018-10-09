@@ -78,6 +78,7 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
             { include: "@whitespace" },
             { include: "@numbers" },
 
+            [/(PRIMARY)(\s*)(KEY)/, "keyword.primary-key"],
             [/(list|map|set|frozen)(\s*<)(?![^>]+>\s*(?:\(|$))/,
                 ["type.identifier", { token: "delimiter.type.definition", next: "@type" }],
             ],
