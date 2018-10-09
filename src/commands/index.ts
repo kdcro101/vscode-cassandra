@@ -3,6 +3,7 @@ import { ReplaySubject } from "rxjs";
 import { take } from "rxjs/operators";
 import * as vscode from "vscode";
 import { CassandraWorkbench } from "../cassandra-workbench";
+import { TreeItemKeyspace } from "../cassandra-workbench/treeview-provider/tree-item-keyspace";
 import { TreeItemTable } from "../cassandra-workbench/treeview-provider/tree-item-table/index";
 import { ConfigurationManager } from "../configuration-manager";
 import { StatementGenerator } from "../statement-generator";
@@ -54,8 +55,62 @@ export class VsCommands {
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableAlterAdd", this.cqlTableAlterAdd));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableAlterDrop", this.cqlTableAlterDrop));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlKeyspaceDrop", this.cqlKeyspaceDrop));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlKeyspaceAlter", this.cqlKeyspaceAlter));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlKeyspaceClone", this.cqlKeyspaceClone));
     }
 
+    private cqlKeyspaceClone = (item: TreeItemKeyspace) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.label;
+
+            this.generator.keyspaceClone(keyspace, item.keyspaceData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlKeyspaceAlter = (item: TreeItemKeyspace) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.label;
+
+            this.generator.keyspaceAlter(keyspace, item.keyspaceData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlKeyspaceDrop = (item: TreeItemKeyspace) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.label;
+
+            this.generator.keyspaceDrop(keyspace, item.keyspaceData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
     private cqlTableAlterDrop = (item: TreeItemTable) => {
         this.stateWorkbench.pipe(
             take(1),

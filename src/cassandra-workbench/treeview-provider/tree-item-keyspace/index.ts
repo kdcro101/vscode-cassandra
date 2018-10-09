@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { Icons } from "../../../icons";
 import { TreeItemType } from "../../../types";
+import { CassandraKeyspace } from "../../../types/index";
 import { TreeItemBase } from "../tree-item-base";
 
 export class TreeItemKeyspace extends TreeItemBase {
@@ -10,6 +11,7 @@ export class TreeItemKeyspace extends TreeItemBase {
         public collapsibleState: vscode.TreeItemCollapsibleState,
         public clusterIndex: number,
         public contextValue: string,
+        public keyspaceData: CassandraKeyspace,
         public tooltipText?: string,
     ) {
         super(label, collapsibleState);

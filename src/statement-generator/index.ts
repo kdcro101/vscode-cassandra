@@ -1,10 +1,14 @@
 import wrap = require("word-wrap");
 import { CassandraTable } from "../types/index";
+import { keyspaceAlter } from "./keyspace/alter";
+import { keyspaceClone } from "./keyspace/clone";
+import { keyspaceDrop } from "./keyspace/drop";
 import { tableAlterAdd } from "./table/alter-add";
 import { tableAlterDrop } from "./table/alter-drop";
 import { tableClone } from "./table/clone";
 import { tableDrop } from "./table/drop";
 import { tableTruncate } from "./table/truncate";
+
 export class StatementGenerator {
 
     public tableClone = tableClone;
@@ -12,6 +16,9 @@ export class StatementGenerator {
     public tableTruncate = tableTruncate;
     public tableAlterAdd = tableAlterAdd;
     public tableAlterDrop = tableAlterDrop;
+    public keyspaceDrop = keyspaceDrop;
+    public keyspaceAlter = keyspaceAlter;
+    public keyspaceClone = keyspaceClone;
 
     constructor(private limit: number = 1000) {
 

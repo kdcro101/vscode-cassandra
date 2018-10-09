@@ -124,8 +124,22 @@
                     "command": "cassandraWorkbench.cqlTableClone",
                     "when": "view == cassandraWorkbenchView && viewItem == table",
                     "group": "20_special@1"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlKeyspaceAlter",
+                    "when": "view == cassandraWorkbenchView && viewItem == keyspace",
+                    "group": "10_operations@1"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlKeyspaceDrop",
+                    "when": "view == cassandraWorkbenchView && viewItem == keyspace",
+                    "group": "10_operations@2"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlKeyspaceClone",
+                    "when": "view == cassandraWorkbenchView && viewItem == keyspace",
+                    "group": "20_special@1"
                 }
-
 
             ],
             "editor/title": [{
@@ -180,7 +194,7 @@
             },
             {
                 "command": "cassandraWorkbench.cqlTableClone",
-                "title": "Clone Table"
+                "title": "Clone TABLE"
             },
             {
                 "command": "cassandraWorkbench.cqlTableDrop",
@@ -197,6 +211,18 @@
             {
                 "command": "cassandraWorkbench.cqlTableTruncate",
                 "title": "TRUNCATE TABLE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlKeyspaceDrop",
+                "title": "DROP KEYSPACE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlKeyspaceAlter",
+                "title": "ALTER KEYSPACE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlKeyspaceClone",
+                "title": "Clone KEYSPACE"
             }
         ]
     },

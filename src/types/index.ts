@@ -140,7 +140,7 @@ export interface CassandraKeyspace {
     aggregates: CassandraAggregate[];
     materializedViews: CassandraMaterializedView[];
     name: string;
-    durable_writes: number;
+    durable_writes: boolean;
     replication: { [key: string]: string };
     all: RowKeyspace;
 }
@@ -154,7 +154,7 @@ export interface CassandraClusterData {
 
 export interface RowKeyspace extends cassandra.types.Row {
     keyspace_name: string;
-    durable_writes: number;
+    durable_writes: boolean;
     replication: { [key: string]: string };
 }
 

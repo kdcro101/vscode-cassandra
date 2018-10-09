@@ -149,7 +149,7 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
 
         });
     }
-    private getKeyspaces(clusterIndex: number): Promise<TreeItemKeyspace[]> {
+    private getKeyspaces(clusterIndex: number): Promise<TreeItemKeyspace[] | TreeItemClusterError[]> {
         return new Promise((resolve, reject) => {
 
             from(this.clusters.getStructure(clusterIndex)).pipe()
@@ -159,7 +159,8 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
                     const items = ks.map((k) => {
                         const name = this.clusters.getClusterName(clusterIndex);
                         const tooltip = `${k.name}@${name}`;
-                        return new TreeItemKeyspace(k.name, vscode.TreeItemCollapsibleState.Collapsed, clusterIndex, "keyspace", tooltip);
+                        return new TreeItemKeyspace(k.name, vscode.TreeItemCollapsibleState.Collapsed,
+                            clusterIndex, "keyspace", k, tooltip);
                     });
                     resolve(items);
 
