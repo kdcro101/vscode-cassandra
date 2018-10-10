@@ -67,7 +67,7 @@ export interface CassandraColumn {
 }
 
 export interface CassandraIndex {
-    index_name: string;
+    name: string;
     kind: string;
     options: { [key: string]: string };
     all: RowIndex;

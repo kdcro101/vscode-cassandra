@@ -269,7 +269,7 @@ export function collectIndexes(client: cassandra.Client, keyspace: string, table
                 return rows.map((row, i) => {
 
                     const out: CassandraIndex = {
-                        index_name: row.index_name,
+                        name: row.index_name,
                         kind: row.kind,
                         options: row.options,
                         all: row,

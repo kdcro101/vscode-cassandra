@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { Icons } from "../../../icons";
-import { TreeItemType } from "../../../types";
+import { CassandraTable, TreeItemType } from "../../../types";
 import { TreeItemBase } from "../tree-item-base";
 
 export class TreeItemIndexItem extends TreeItemBase {
@@ -12,6 +12,7 @@ export class TreeItemIndexItem extends TreeItemBase {
         public keyspace: string,
         public table: string,
         public contextValue: string,
+        public tableData: CassandraTable,
         public tooltipText?: string,
     ) {
         super(label, collapsibleState);

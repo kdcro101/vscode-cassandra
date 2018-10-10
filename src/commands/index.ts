@@ -3,6 +3,8 @@ import { ReplaySubject } from "rxjs";
 import { take } from "rxjs/operators";
 import * as vscode from "vscode";
 import { CassandraWorkbench } from "../cassandra-workbench";
+import { TreeItemColumnItem } from "../cassandra-workbench/treeview-provider/tree-item-column-item/index";
+import { TreeItemIndexItem } from "../cassandra-workbench/treeview-provider/tree-item-index-item";
 import { TreeItemKeyspace } from "../cassandra-workbench/treeview-provider/tree-item-keyspace";
 import { TreeItemTable } from "../cassandra-workbench/treeview-provider/tree-item-table/index";
 import { ConfigurationManager } from "../configuration-manager";
@@ -38,13 +40,15 @@ export class VsCommands {
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.revealPanel", this.onRevealCqlPanel));
         this.context.subscriptions
-            .push(vscode.commands.registerCommand("cassandraWorkbench.tableSelectStatement", this.onTableSelectStatement));
-        this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.openEditorInWorkbench", this.onOpenEditorInWorkbench));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.openFileInWorkbench", this.onOpenFileInWorkbench));
 
         // ------------------------------------------------------------------------------------------------------------------
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableSelect", this.cqlTableSelect));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableSelectAll", this.cqlTableSelectAll));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableClone", this.cqlTableClone));
         this.context.subscriptions
@@ -61,8 +65,93 @@ export class VsCommands {
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlKeyspaceAlter", this.cqlKeyspaceAlter));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlKeyspaceClone", this.cqlKeyspaceClone));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlColumnDrop", this.cqlColumnDrop));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlIndexCreate", this.cqlIndexCreate));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlIndexDrop", this.cqlIndexDrop));
     }
+    private cqlIndexDrop = (item: TreeItemIndexItem) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
 
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.indexDrop(keyspace, item.tableData, item.label)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlIndexCreate = (item: TreeItemColumnItem) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.indexCreate(keyspace, item.tableData, item.label)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlColumnDrop = (item: TreeItemColumnItem) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.tableAlterDrop(keyspace, item.tableData, item.label)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlTableSelectAll = (item: TreeItemTable) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.tableSelectAll(keyspace, item.tableData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlTableSelect = (item: TreeItemTable) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.tableSelect(keyspace, item.tableData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
     private cqlKeyspaceClone = (item: TreeItemKeyspace) => {
         this.stateWorkbench.pipe(
             take(1),
@@ -257,16 +346,5 @@ export class VsCommands {
 
         });
     }
-    private onTableSelectStatement = (item: TreeItemTable) => {
-        this.stateWorkbench.pipe(
-            take(1),
-        ).subscribe(() => {
-            const clusterName = item.clusterName;
-            const clusterIndex = item.clusterIndex;
-            const keyspace = item.keyspace;
-            const table = item.label;
-            const body = this.generator.generateSelectBasic(keyspace, item.tableData);
-            this.workbench.editorCreate(clusterIndex, keyspace, body);
-        });
-    }
+
 }

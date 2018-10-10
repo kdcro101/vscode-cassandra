@@ -96,9 +96,14 @@
                 }
             ],
             "view/item/context": [{
-                    "command": "cassandraWorkbench.tableSelectStatement",
+                    "command": "cassandraWorkbench.cqlTableSelect",
                     "when": "view == cassandraWorkbenchView && viewItem == table",
                     "group": "01_common@1"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlTableSelectAll",
+                    "when": "view == cassandraWorkbenchView && viewItem == table",
+                    "group": "01_common@2"
                 },
                 {
                     "command": "cassandraWorkbench.cqlTableAlterAdd",
@@ -139,6 +144,21 @@
                     "command": "cassandraWorkbench.cqlKeyspaceClone",
                     "when": "view == cassandraWorkbenchView && viewItem == keyspace",
                     "group": "20_special@1"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlIndexCreate",
+                    "when": "view == cassandraWorkbenchView && viewItem == column_item",
+                    "group": "02_alter@1"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlColumnDrop",
+                    "when": "view == cassandraWorkbenchView && viewItem == column_item",
+                    "group": "10_operations@2"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlIndexDrop",
+                    "when": "view == cassandraWorkbenchView && viewItem == index_item",
+                    "group": "10_operations@2"
                 }
 
             ],
@@ -149,12 +169,63 @@
             }]
         },
         "commands": [{
+                "command": "cassandraWorkbench.cqlIndexDrop",
+                "title": "DROP INDEX"
+            }, {
+                "command": "cassandraWorkbench.cqlColumnDrop",
+                "title": "DROP Column"
+            }, {
+                "command": "cassandraWorkbench.cqlIndexCreate",
+                "title": "CREATE INDEX"
+            },
+            {
+                "command": "cassandraWorkbench.cqlTableSelect",
+                "title": "SELECT"
+            },
+            {
+                "command": "cassandraWorkbench.cqlTableSelectAll",
+                "title": "SELECT ALL"
+            },
+
+            {
+                "command": "cassandraWorkbench.cqlTableClone",
+                "title": "Clone TABLE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlTableDrop",
+                "title": "DROP TABLE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlTableAlterAdd",
+                "title": "ALTER TABLE ADD"
+            },
+            {
+                "command": "cassandraWorkbench.cqlTableAlterDrop",
+                "title": "ALTER TABLE DROP"
+            },
+            {
+                "command": "cassandraWorkbench.cqlTableTruncate",
+                "title": "TRUNCATE TABLE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlKeyspaceDrop",
+                "title": "DROP KEYSPACE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlKeyspaceAlter",
+                "title": "ALTER KEYSPACE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlKeyspaceClone",
+                "title": "Clone KEYSPACE"
+            },
+            {
                 "command": "cassandraWorkbench.generateConfiguration",
                 "title": "CASSANDRA WORKBENCH: Generate configuration template"
             },
             {
-                "command": "cassandraWorkbench.tableSelectStatement",
-                "title": "SELECT"
+                "command": "cassandraWorkbench.openFileInWorkbench",
+                "title": "CQL: Open in Cassandra Workbench"
             },
             {
                 "command": "cassandraWorkbench.refresh",
@@ -187,43 +258,8 @@
                     "light": "./icons/cql/light.svg",
                     "dark": "./icons/cql/dark.svg"
                 }
-            },
-            {
-                "command": "cassandraWorkbench.openFileInWorkbench",
-                "title": "CQL: Open in Cassandra Workbench"
-            },
-            {
-                "command": "cassandraWorkbench.cqlTableClone",
-                "title": "Clone TABLE"
-            },
-            {
-                "command": "cassandraWorkbench.cqlTableDrop",
-                "title": "DROP TABLE"
-            },
-            {
-                "command": "cassandraWorkbench.cqlTableAlterAdd",
-                "title": "ALTER TABLE ADD"
-            },
-            {
-                "command": "cassandraWorkbench.cqlTableAlterDrop",
-                "title": "ALTER TABLE DROP"
-            },
-            {
-                "command": "cassandraWorkbench.cqlTableTruncate",
-                "title": "TRUNCATE TABLE"
-            },
-            {
-                "command": "cassandraWorkbench.cqlKeyspaceDrop",
-                "title": "DROP KEYSPACE"
-            },
-            {
-                "command": "cassandraWorkbench.cqlKeyspaceAlter",
-                "title": "ALTER KEYSPACE"
-            },
-            {
-                "command": "cassandraWorkbench.cqlKeyspaceClone",
-                "title": "Clone KEYSPACE"
             }
+
         ]
     },
     "scripts": {

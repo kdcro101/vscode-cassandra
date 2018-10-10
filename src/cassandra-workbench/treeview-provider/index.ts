@@ -425,7 +425,7 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
 
         });
     }
-    private getIndexes(clusterIndex: number, keyspace: string, table: string): Promise<TreeItemColumnItem[]> {
+    private getIndexes(clusterIndex: number, keyspace: string, table: string): Promise<TreeItemIndexItem[]> {
         return new Promise((resolve, reject) => {
 
             from(this.clusters.getStructure(clusterIndex)).pipe()
@@ -445,9 +445,9 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
                     }
 
                     const t = sks.tables.find((i) => i.name === table);
-                    const items = t.columns.map((c) => {
+                    const items = t.indexes.map((c) => {
                         return new TreeItemIndexItem(c.name, vscode.TreeItemCollapsibleState.None,
-                            clusterIndex, keyspace, table, "index_item");
+                            clusterIndex, keyspace, table, "index_item", t, c.kind);
                     });
 
                     resolve(items);
@@ -480,7 +480,7 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
                     const t = sks.tables.find((i) => i.name === table);
                     const items = t.columns.map((c) => {
                         return new TreeItemColumnItem(c.name, vscode.TreeItemCollapsibleState.None,
-                            clusterIndex, keyspace, table, "column_item", c.type);
+                            clusterIndex, keyspace, table, "column_item", t, c.type);
                     });
 
                     resolve(items);
