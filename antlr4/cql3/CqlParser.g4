@@ -495,8 +495,11 @@ alterKeyspace
     ;
 
 replicationList
-    : ( replicationListItem ) (syntaxComma replicationListItem)*
+    : replicationListItem (syntaxComma replicationListItem)*
     ;
+// replicationList
+//     : ( replicationListItem ) (syntaxComma replicationListItem)*
+//     ;
 
 replicationListItem
     : STRING_LITERAL COLON STRING_LITERAL

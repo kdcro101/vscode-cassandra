@@ -3,7 +3,9 @@ import { ReplaySubject } from "rxjs";
 import { take } from "rxjs/operators";
 import * as vscode from "vscode";
 import { CassandraWorkbench } from "../cassandra-workbench";
+import { TreeItemCluster } from "../cassandra-workbench/treeview-provider/tree-item-cluster";
 import { TreeItemColumnItem } from "../cassandra-workbench/treeview-provider/tree-item-column-item/index";
+import { TreeItemFunctionItem } from "../cassandra-workbench/treeview-provider/tree-item-function-item";
 import { TreeItemIndexItem } from "../cassandra-workbench/treeview-provider/tree-item-index-item";
 import { TreeItemKeyspace } from "../cassandra-workbench/treeview-provider/tree-item-keyspace";
 import { TreeItemTable } from "../cassandra-workbench/treeview-provider/tree-item-table/index";
@@ -66,11 +68,85 @@ export class VsCommands {
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlKeyspaceClone", this.cqlKeyspaceClone));
         this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlKeyspaceCreate", this.cqlKeyspaceCreate));
+        this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlColumnDrop", this.cqlColumnDrop));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlIndexCreate", this.cqlIndexCreate));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlIndexDrop", this.cqlIndexDrop));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlFunctionCreate", this.cqlFunctionCreate));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlFunctionClone", this.cqlFunctionClone));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlFunctionDrop", this.cqlFunctionDrop));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlFunctionReplace", this.cqlFunctionReplace));
+    }
+    private cqlFunctionReplace = (item: TreeItemFunctionItem) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.functionClone(keyspace, item.functionData, true)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlFunctionDrop = (item: TreeItemFunctionItem) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.functionDrop(keyspace, item.label)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlFunctionClone = (item: TreeItemFunctionItem) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.functionClone(keyspace, item.functionData, false)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlFunctionCreate = (item: TreeItemKeyspace) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.label;
+
+            this.generator.functionCreate(keyspace)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
     }
     private cqlIndexDrop = (item: TreeItemIndexItem) => {
         this.stateWorkbench.pipe(
@@ -147,6 +223,21 @@ export class VsCommands {
             this.generator.tableSelect(keyspace, item.tableData)
                 .then((result) => {
                     this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlKeyspaceCreate = (item: TreeItemCluster) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+
+            this.generator.keyspaceCreate()
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, null, result);
                 }).catch((e) => {
                     console.log(e);
                 });

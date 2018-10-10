@@ -221,7 +221,7 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
                         ));
                     }
                     if (materializedViews.length > 0) {
-                        items.push(new TreeItemMaterializedViews("Aggregates", vscode.TreeItemCollapsibleState.Collapsed,
+                        items.push(new TreeItemMaterializedViews("Materialized views", vscode.TreeItemCollapsibleState.Collapsed,
                             clusterIndex, keyspace, "materialized-views", `views@${keyspace}`,
                         ));
                     }
@@ -381,7 +381,7 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
                     const functions = sks.functions;
                     const items = functions.map((c) => {
                         return new TreeItemFunctionItem(c.name, vscode.TreeItemCollapsibleState.None,
-                            clusterIndex, keyspace, "function_item");
+                            clusterIndex, keyspace, "function_item", c);
                     });
 
                     resolve(items);

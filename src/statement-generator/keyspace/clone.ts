@@ -20,6 +20,6 @@ export const keyspaceClone = (keyspace: string, data: CassandraKeyspace): Promis
 
 function replicationOptions(data: CassandraKeyspace): string {
 
-    const out = Object.keys(data.replication).map((k) => `\t'${k}': '${data.replication[k]}'`);
+    const out = Object.keys(data.replication).map((k) => `\t\t'${k}': '${data.replication[k]}'`);
     return out.join(",\n");
 }

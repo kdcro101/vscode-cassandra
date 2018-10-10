@@ -54,11 +54,13 @@ export class MonacoService {
             base: "vs-dark", // can also be vs-dark or hc-black
             inherit: true, // can also be false to completely replace the builtin rules
             rules: [
+                { token: "invalid", foreground: "ff00ff", fontStyle: "" },
                 { token: "identifier", foreground: "ffffff", fontStyle: "" },
                 { token: "comment", foreground: "7b7f8b", fontStyle: "" },
                 { token: "keyword", foreground: "6495ED", fontStyle: "" },
                 { token: "keyword.primary-key", foreground: "ef5350", fontStyle: "" },
                 { token: "type", foreground: "97e1f1", fontStyle: "" },
+                { token: "type.null", foreground: "00acc1", fontStyle: "" },
                 { token: "type.keyspace", foreground: "B09BDB", fontStyle: "italic" },
                 { token: "delimiter.parenthesis", foreground: "FFFF00", fontStyle: "" },
                 { token: "delimiter.angle", foreground: "FFFF00", fontStyle: "" },
@@ -71,6 +73,8 @@ export class MonacoService {
                 { token: "string", foreground: "62e884", fontStyle: "" },
                 { token: "delimiter.type.definition", foreground: "ffffff", fontStyle: "" },
                 { token: "operator", foreground: "40E0D0", fontStyle: "" },
+                { token: "code.delimiter", foreground: "455a64", fontStyle: "" },
+                { token: "code", foreground: "78909c", fontStyle: "" },
             ],
             colors: null,
         });

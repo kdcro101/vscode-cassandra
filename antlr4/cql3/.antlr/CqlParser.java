@@ -6822,10 +6822,8 @@ public class CqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			{
 			setState(1559);
 			replicationListItem();
-			}
 			setState(1565);
 			_errHandler.sync(this);
 			_la = _input.LA(1);

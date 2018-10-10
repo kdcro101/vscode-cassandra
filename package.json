@@ -96,6 +96,11 @@
                 }
             ],
             "view/item/context": [{
+                    "command": "cassandraWorkbench.cqlKeyspaceCreate",
+                    "when": "view == cassandraWorkbenchView && viewItem == cluster",
+                    "group": "02_alter@1"
+                },
+                {
                     "command": "cassandraWorkbench.cqlTableSelect",
                     "when": "view == cassandraWorkbenchView && viewItem == table",
                     "group": "01_common@1"
@@ -136,6 +141,11 @@
                     "group": "10_operations@1"
                 },
                 {
+                    "command": "cassandraWorkbench.cqlFunctionCreate",
+                    "when": "view == cassandraWorkbenchView && viewItem == keyspace",
+                    "group": "01_common@1"
+                },
+                {
                     "command": "cassandraWorkbench.cqlKeyspaceDrop",
                     "when": "view == cassandraWorkbenchView && viewItem == keyspace",
                     "group": "10_operations@2"
@@ -159,6 +169,21 @@
                     "command": "cassandraWorkbench.cqlIndexDrop",
                     "when": "view == cassandraWorkbenchView && viewItem == index_item",
                     "group": "10_operations@2"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlFunctionReplace",
+                    "when": "view == cassandraWorkbenchView && viewItem == function_item",
+                    "group": "02_alter@1"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlFunctionDrop",
+                    "when": "view == cassandraWorkbenchView && viewItem == function_item",
+                    "group": "10_operations@1"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlFunctionClone",
+                    "when": "view == cassandraWorkbenchView && viewItem == function_item",
+                    "group": "20_special@1"
                 }
 
             ],
@@ -169,6 +194,19 @@
             }]
         },
         "commands": [{
+                "command": "cassandraWorkbench.cqlFunctionDrop",
+                "title": "DROP FUNCTION"
+            }, {
+                "command": "cassandraWorkbench.cqlFunctionReplace",
+                "title": "REPLACE FUNCTION"
+            }, {
+                "command": "cassandraWorkbench.cqlFunctionClone",
+                "title": "Clone FUNCTION"
+            }, {
+                "command": "cassandraWorkbench.cqlFunctionCreate",
+                "title": "CREATE FUNCTION"
+            },
+            {
                 "command": "cassandraWorkbench.cqlIndexDrop",
                 "title": "DROP INDEX"
             }, {
@@ -210,6 +248,10 @@
             {
                 "command": "cassandraWorkbench.cqlKeyspaceDrop",
                 "title": "DROP KEYSPACE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlKeyspaceCreate",
+                "title": "CREATE KEYSPACE"
             },
             {
                 "command": "cassandraWorkbench.cqlKeyspaceAlter",

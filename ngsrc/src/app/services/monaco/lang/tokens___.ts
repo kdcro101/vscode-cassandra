@@ -47,9 +47,9 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
         "FUNCTION", "FUNCTIONS", "GRANT", "IF", "IN", "INPUT", "INDEX", "INFINITY",
         "INSERT", "INTO", "KEY", "KEYS", "KEYSPACE", "KEYSPACES", "LANGUAGE",
         "LEVEL", "LIMIT", "LOCAL_ONE", "LOCAL_QUORUM", "MATERIALIZED", "MODIFY", "NAN",
-        "NORECURSIVE", "NOSUPERUSER", "NOT", "OF", "ON", "ONE", "ORDER", "OR",
+        "NORECURSIVE", "NOSUPERUSER", "NOT", "OF", "ON", "ONE", "ORDER",
         "PASSWORD", "PER", "PERMISSION", "PERMISSIONS",
-        "PRIMARY", "QUORUM", "RENAME", "RETURNS", "REVOKE", "REPLACE", "ROLES", "SCHEMA", "SELECT",
+        "PRIMARY", "QUORUM", "RENAME", "RETURNS", "REVOKE", "ROLES", "SCHEMA", "SELECT",
         "SET", "STATIC",
         "STORAGE", "SUPERUSER", "TABLE", "THREE", "TO", "TOKEN", "TRUNCATE", "TTL",
         "TWO", "TYPE", "UNLOGGED", "UPDATE", "USE", "USER", "USERS", "USING", "VALUES",
@@ -57,10 +57,9 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
     ],
     typeKeywords: [
         "ascii", "bigint", "blob", "boolean", "counter", "date", "decimal",
-        "double", "float", "inet", "int",
+        "double", "float", "frozen", "inet", "int", "list", "map", "set",
         "smallint", "text", "time", "timestamp", "timeuuid", "tinyint",
-        "uuid", "varchar", "varint",
-        // "list", "map", "set","tuple","frozen"
+        "tuple", "uuid", "varchar", "varint",
     ],
     operators: [
         "=", "<", ">", ">=", "<=",
@@ -76,16 +75,20 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
     null: ["null"],
     tokenizer: {
         root: [
-            { include: "@comments" },
-            { include: "@whitespace" },
-            { include: "@numbers" },
-
-            [/PRIMARY/, "keyword.primary-key", "@primary_key"],
+            [/[a-zA-Z0-9_]\w*/, {
+                cases: {
+                    "@keywords": { token: "keyword"},
+                    "@typeKeywords": { token: "type" },
+                    "@default": { token: "identifier" },
+                },
+            }],
+            [/[a-z0-9A-z]+(?=\.)/, "type.keyspace"],
+            // [/CALLED/, "keyword", "@called_on_null_input"],
+            // [/PRIMARY/, "keyword.primary-key", "@primary_key"],
             [/(list|map|set|frozen)(\s*<)(?![^>]+>\s*(?:\(|$))/,
                 ["type.identifier", { token: "delimiter.type.definition", next: "@type" }],
             ],
 
-            [/[a-zA-z][a-z0-9A-z]*(?=\.)/, "type.keyspace"],
             [/[{}()\[\]]/, "@brackets"],
             [/@symbols/, {
                 cases: {
@@ -94,21 +97,16 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
                 },
             }],
             // identifiers and keywords
-            [/[a-zA-Z0-9_]\w*/, {
-                cases: {
-                    "@keywords": { token: "keyword" },
-                    "@typeKeywords": { token: "type" },
-                    "@null": { token: "type.null" },
-                    "@default": { token: "identifier" },
-                },
-            }],
+
             [/"/, "string", "@doubleQuotedString"],
             [/'/, "string", "@singleQuotedString"],
-            [/\$\$/, "code.delimiter", "@codeQuotedString"],
-
             [/[,]/, "delimiter.comma"],
             [/[;]/, "delimiter.statement"],
             [/[\.]/, "delimiter.dot"],
+
+            { include: "@comments" },
+            { include: "@whitespace" },
+            { include: "@numbers" },
         ],
         primary_key: [
             { include: "@whitespace" },
@@ -147,17 +145,17 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
         whitespace: [
             [/[ \t\r\n]+/, "white"],
         ],
-        qualified: [
-            [/[a-zA-Z_][\w]*/, {
-                cases: {
-                    // '@typeFollows': { token: 'keyword', next: '@type' },
-                    // '@typeKeywords': 'type.identifier',
-                    // '@keywords': 'keyword',
-                    "@default": "identifier",
-                },
-            }],
-            ["", "", "@pop"],
-        ],
+        // qualified: [
+        //     [/[a-zA-Z_][\w]*/, {
+        //         cases: {
+        //             // '@typeFollows': { token: 'keyword', next: '@type' },
+        //             // '@typeKeywords': 'type.identifier',
+        //             // '@keywords': 'keyword',
+        //             "@default": "identifier",
+        //         },
+        //     }],
+        //     ["", "", "@pop"],
+        // ],
         type: [
             { include: "@whitespace" },
             [/[A-Z]\w*/, "type.identifier"],
@@ -197,16 +195,10 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
             [/./, "comment"],
         ],
         numbers: [
-            // [/0[xX][0-9a-fA-F]*/, "number"],
-            [/[\-]?\d+(\.\d+)?/, "number"],
+            [/0[xX][0-9a-fA-F]*/, "number"],
+            [/[$][+-]*\d*(\.\d*)?/, "number"],
             [/((\d+(\.\d*)?)|(\.\d+))([eE][\-+]?\d+)?/, "number"],
         ],
-        // numbers: [
-        //     [/0[xX][0-9a-fA-F]*/, "number"],
-        //     [/[$][+-]*\d*(\.\d*)?/, "number"],
-        //     // [/[+-]*\d*(\.\d*)?/, "number"],
-        //     [/((\d+(\.\d*)?)|(\.\d+))([eE][\-+]?\d+)?/, "number"],
-        // ],
         doubleQuotedString: [
             [/[^\\"]+/, "string"],
             [/@escapes/, "string.escape"],
@@ -218,13 +210,6 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
             [/@escapes/, "string.escape"],
             [/\\./, "string.escape.invalid"],
             [/'/, "string", "@pop"],
-        ],
-        codeQuotedString: [
-            [/[^\$]+/, "code"],
-            [/[\$](?!\$)+/, "code"],
-            [/@escapes/, "string.escape"],
-            [/\\./, "string.escape.invalid"],
-            [/\$\$/, "code.delimiter", "@pop"],
         ],
     },
 };
