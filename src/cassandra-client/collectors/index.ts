@@ -71,12 +71,34 @@ export function collectKeyspaces(client: cassandra.Client): Promise<CassandraKey
 export function collectMaterializedViews(client: cassandra.Client, keyspace: string): Promise<CassandraMaterializedView[]> {
     return new Promise((resolve, reject) => {
         from<cassandra.types.ResultSet>(client.execute("select * from system_schema.views where keyspace_name=?", [keyspace])).pipe(
-            map((data) => {
+            concatMap((data) => {
                 const rows = data.rows as RowMaterializedView[];
+                return Promise.all([
+                    rows,
+                    Promise.all(rows.map((i) => collectColumns(client, i.keyspace_name, i.view_name))),
+                    Promise.all(rows.map((i) => collectIndexes(client, i.keyspace_name, i.view_name))),
+                    Promise.all(rows.map((i) => collectPrimaryKeys(client, i.keyspace_name, i.view_name))),
+                ]);
+            }),
+            map((data) => {
+
+                const rows = data[0];
+                const allColumns = data[1];
+                const allIndexes = data[2];
+                const allPrimaryKeys = data[3];
+
+                // const rows = data.rows as RowMaterializedView[];
 
                 return rows.map((row, i) => {
+                    const columns = allColumns[i];
+                    const indexes = allIndexes[i];
+                    const primaryKeys = allPrimaryKeys[i];
 
                     const out: CassandraMaterializedView = {
+                        columns,
+                        indexes,
+                        primaryKeys,
+                        keyspace,
                         name: row.view_name,
                         base_table_name: row.base_table_name,
                         all: row,

@@ -87,29 +87,12 @@ export interface CassandraType {
     all: RowType;
 }
 export interface CassandraMaterializedView {
-    //     keyspace_name text,
+    keyspace: string;
     name: string;
     base_table_name: string;
-    // bloom_filter_fp_chance double,
-    // caching frozen<map<text, text>>,
-    // cdc boolean,
-    // comment text,
-    // compaction frozen<map<text, text>>,
-    // compression frozen<map<text, text>>,
-    // crc_check_chance double,
-    // dclocal_read_repair_chance double,
-    // default_time_to_live int,
-    // extensions frozen<map<text, blob>>,
-    // gc_grace_seconds int,
-    // id uuid,
-    // include_all_columns boolean,
-    // max_index_interval int,
-    // memtable_flush_period_in_ms int,
-    // min_index_interval int,
-    // read_repair_chance double,
-    // speculative_retry text,
-    // where_clause text,
-
+    columns: CassandraColumn[];
+    indexes: CassandraIndex[];
+    primaryKeys: CassandraColumn[];
     all: RowMaterializedView;
 }
 export interface CassandraAggregate {

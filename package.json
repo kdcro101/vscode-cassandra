@@ -146,6 +146,16 @@
                     "group": "01_common@1"
                 },
                 {
+                    "command": "cassandraWorkbench.cqlTypeCreate",
+                    "when": "view == cassandraWorkbenchView && viewItem == keyspace",
+                    "group": "01_common@2"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlMaterializedViewCreate",
+                    "when": "view == cassandraWorkbenchView && viewItem == keyspace",
+                    "group": "01_common@3"
+                },
+                {
                     "command": "cassandraWorkbench.cqlKeyspaceDrop",
                     "when": "view == cassandraWorkbenchView && viewItem == keyspace",
                     "group": "10_operations@2"
@@ -184,8 +194,37 @@
                     "command": "cassandraWorkbench.cqlFunctionClone",
                     "when": "view == cassandraWorkbenchView && viewItem == function_item",
                     "group": "20_special@1"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlTypeAlter",
+                    "when": "view == cassandraWorkbenchView && viewItem == type_item",
+                    "group": "10_operations@1"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlTypeDrop",
+                    "when": "view == cassandraWorkbenchView && viewItem == type_item",
+                    "group": "10_operations@2"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlTypeClone",
+                    "when": "view == cassandraWorkbenchView && viewItem == type_item",
+                    "group": "20_special@1"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlMaterializedViewAlter",
+                    "when": "view == cassandraWorkbenchView && viewItem == materialized-views_item",
+                    "group": "10_operations@1"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlMaterializedViewDrop",
+                    "when": "view == cassandraWorkbenchView && viewItem == materialized-views_item",
+                    "group": "10_operations@2"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlMaterializedViewClone",
+                    "when": "view == cassandraWorkbenchView && viewItem == materialized-views_item",
+                    "group": "20_special@1"
                 }
-
             ],
             "editor/title": [{
                 "when": "resourceLangId == cql",
@@ -194,9 +233,46 @@
             }]
         },
         "commands": [{
+                "command": "cassandraWorkbench.cqlMaterializedViewClone",
+                "title": "Clone MATERIALIZED VIEW"
+            },
+            {
+                "command": "cassandraWorkbench.cqlMaterializedViewDrop",
+                "title": "DROP MATERIALIZED VIEW"
+            },
+            {
+                "command": "cassandraWorkbench.cqlMaterializedViewAlter",
+                "title": "ALTER MATERIALIZED VIEW"
+            },
+            {
+                "command": "cassandraWorkbench.cqlMaterializedViewCreate",
+                "title": "CREATE MATERIALIZED VIEW"
+            },
+
+
+
+
+            {
+                "command": "cassandraWorkbench.cqlTypeClone",
+                "title": "Clone TYPE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlTypeDrop",
+                "title": "DROP TYPE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlTypeAlter",
+                "title": "ALTER TYPE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlTypeCreate",
+                "title": "CREATE TYPE"
+            },
+            {
                 "command": "cassandraWorkbench.cqlFunctionDrop",
                 "title": "DROP FUNCTION"
-            }, {
+            },
+            {
                 "command": "cassandraWorkbench.cqlFunctionReplace",
                 "title": "REPLACE FUNCTION"
             }, {

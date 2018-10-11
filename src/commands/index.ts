@@ -8,10 +8,12 @@ import { TreeItemColumnItem } from "../cassandra-workbench/treeview-provider/tre
 import { TreeItemFunctionItem } from "../cassandra-workbench/treeview-provider/tree-item-function-item";
 import { TreeItemIndexItem } from "../cassandra-workbench/treeview-provider/tree-item-index-item";
 import { TreeItemKeyspace } from "../cassandra-workbench/treeview-provider/tree-item-keyspace";
+import { TreeItemMaterializedViewItem } from "../cassandra-workbench/treeview-provider/tree-item-materialized-view-item/index";
 import { TreeItemTable } from "../cassandra-workbench/treeview-provider/tree-item-table/index";
+import { TreeItemTypeItem } from "../cassandra-workbench/treeview-provider/tree-item-type-item";
 import { ConfigurationManager } from "../configuration-manager";
 import { StatementGenerator } from "../statement-generator";
-import { ExtensionContextBundle } from "../types";
+import { ExtensionContextBundle, TreeItemType } from "../types";
 
 declare var extensionContextBundle: ExtensionContextBundle;
 
@@ -83,6 +85,152 @@ export class VsCommands {
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlFunctionDrop", this.cqlFunctionDrop));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlFunctionReplace", this.cqlFunctionReplace));
+
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTypeDrop", this.cqlTypeDrop));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTypeAlter", this.cqlTypeAlter));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTypeClone", this.cqlTypeClone));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTypeCreate", this.cqlTypeCreate));
+
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlMaterializedViewDrop", this.cqlMaterializedViewDrop));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlMaterializedViewAlter", this.cqlMaterializedViewAlter));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlMaterializedViewClone", this.cqlMaterializedViewClone));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlMaterializedViewCreate", this.cqlMaterializedViewCreate));
+    }
+    private cqlMaterializedViewDrop = (item: TreeItemMaterializedViewItem) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.label;
+
+            this.generator.typeCreate(keyspace)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlMaterializedViewAlter = (item: TreeItemMaterializedViewItem) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.materializedViewAlter(keyspace, item.viewData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlMaterializedViewClone = (item: TreeItemMaterializedViewItem) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.materializedViewClone(keyspace, item.viewData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlMaterializedViewCreate = (item: TreeItemKeyspace) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            // const clusterIndex = item.clusterIndex;
+            // const keyspace = item.label;
+
+            // this.generator.typeCreate(keyspace)
+            //     .then((result) => {
+            //         this.workbench.editorCreate(clusterIndex, keyspace, result);
+            //     }).catch((e) => {
+            //         console.log(e);
+            //     });
+        });
+    }
+    private cqlTypeCreate = (item: TreeItemKeyspace) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.label;
+
+            this.generator.typeCreate(keyspace)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlTypeClone = (item: TreeItemTypeItem) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.typeClone(keyspace, item.typeData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlTypeAlter = (item: TreeItemTypeItem) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.typeAlter(keyspace, item.typeData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlTypeDrop = (item: TreeItemTypeItem) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.typeDrop(keyspace, item.typeData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
     }
     private cqlFunctionReplace = (item: TreeItemFunctionItem) => {
         this.stateWorkbench.pipe(

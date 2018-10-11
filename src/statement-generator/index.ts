@@ -8,12 +8,14 @@ import { keyspaceAlter } from "./keyspace/alter";
 import { keyspaceClone } from "./keyspace/clone";
 import { keyspaceCreate } from "./keyspace/create";
 import { keyspaceDrop } from "./keyspace/drop";
+import { materializedViewAlter, materializedViewClone, materializedViewCreate, materializedViewDrop } from "./materialized-view/index";
 import { tableAlterAdd } from "./table/alter-add";
 import { tableAlterDrop } from "./table/alter-drop";
 import { tableClone } from "./table/clone";
 import { tableDrop } from "./table/drop";
 import { tableSelect, tableSelectAll } from "./table/select";
 import { tableTruncate } from "./table/truncate";
+import { typeAlter, typeClone, typeCreate, typeDrop } from "./type/index";
 
 export class StatementGenerator {
 
@@ -33,6 +35,16 @@ export class StatementGenerator {
     public functionCreate = functionCreate;
     public functionClone = functionClone;
     public functionDrop = functionDrop;
+
+    public typeCreate = typeCreate;
+    public typeAlter = typeAlter;
+    public typeClone = typeClone;
+    public typeDrop = typeDrop;
+
+    public materializedViewCreate = materializedViewCreate;
+    public materializedViewAlter = materializedViewAlter;
+    public materializedViewClone = materializedViewClone;
+    public materializedViewDrop = materializedViewDrop;
 
     constructor(private limit: number = 1000) {
 

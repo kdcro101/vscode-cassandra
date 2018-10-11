@@ -3,6 +3,7 @@ export const tableClone = (keyspace: string, data: CassandraTable): Promise<stri
     return new Promise((resolve, reject) => {
         const name = `${data.name}_clone`;
         const lines: string[] = [
+            `-- change table name`,
             `CREATE TABLE ${keyspace}.${name} (`,
             `${columns(data)},`,
             `\t${primaryKey(data)}`,

@@ -255,9 +255,7 @@ alterType
     : kwAlter kwType (keyspace DOT)? type alterTypeOperation
     ;
 alterTypeOperation
-    : alterTypeAlterType
-    | alterTypeAdd
-    | alterTypeRename
+    : alterTypeAlterType? alterTypeAdd? alterTypeRename?
     ;
 
 alterTypeRename

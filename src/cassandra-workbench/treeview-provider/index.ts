@@ -315,7 +315,7 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
                     const views = sks.materializedViews;
                     const items = views.map((c) => {
                         return new TreeItemMaterializedViewItem(c.name, vscode.TreeItemCollapsibleState.None,
-                            clusterIndex, keyspace, "materialized-views_item");
+                            clusterIndex, keyspace, "materialized-views_item", c);
                     });
 
                     resolve(items);
@@ -326,7 +326,7 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
 
         });
     }
-    private getAggregates(clusterIndex: number, keyspace: string): Promise<TreeItemTypeItem[]> {
+    private getAggregates(clusterIndex: number, keyspace: string): Promise<TreeItemAggregateItem[]> {
         return new Promise((resolve, reject) => {
 
             from(this.clusters.getStructure(clusterIndex)).pipe()
@@ -359,7 +359,7 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
 
         });
     }
-    private getFunctions(clusterIndex: number, keyspace: string): Promise<TreeItemTypeItem[]> {
+    private getFunctions(clusterIndex: number, keyspace: string): Promise<TreeItemFunctionItem[]> {
         return new Promise((resolve, reject) => {
 
             from(this.clusters.getStructure(clusterIndex)).pipe()
@@ -414,7 +414,7 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
                     const types = sks.types;
                     const items = types.map((c) => {
                         return new TreeItemTypeItem(c.name, vscode.TreeItemCollapsibleState.None,
-                            clusterIndex, keyspace, "index_item");
+                            clusterIndex, keyspace, "type_item", c);
                     });
 
                     resolve(items);
