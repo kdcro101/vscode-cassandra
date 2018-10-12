@@ -1,17 +1,23 @@
 
 import { CassandraMaterializedView, CassandraTable } from "../../types/index";
-export const materializedViewCreate = (keyspace: string): Promise<string> => {
+export const materializedViewCreate = (keyspace: string, table: CassandraTable): Promise<string> => {
     return new Promise((resolve, reject) => {
 
-        const name = `type_name`;
+        const name = `${table.name}_view`;
 
+        let columns = table.primaryKeys.map((c) => c.name);
+        columns = columns.concat(
+            table.columns.filter((c) => c.kind === "regular").map((c) => c.name),
+        );
+        const restriction = columns.map((c) => `${c} IS NOT NULL`);
         const out: string[] = [
-            `CREATE TYPE ${keyspace}.${name}(`,
-            `   member1 text,`,
-            `   member2 text,`,
-            `   member3 text,`,
-            `   member4 text,`,
-            `)`,
+            `-- change view name and definition`,
+            `CREATE MATERIALIZED VIEW ${keyspace}.${name}`,
+            `AS SELECT`,
+            `${columns.join(", ")}`,
+            `FROM ${keyspace}.${table.name}`,
+            `WHERE ${restriction.join(" AND ")}`,
+            `${primaryKey(table)}`,
         ];
 
         resolve(out.join("\n"));

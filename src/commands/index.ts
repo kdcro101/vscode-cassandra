@@ -152,20 +152,20 @@ export class VsCommands {
                 });
         });
     }
-    private cqlMaterializedViewCreate = (item: TreeItemKeyspace) => {
+    private cqlMaterializedViewCreate = (item: TreeItemTable) => {
         this.stateWorkbench.pipe(
             take(1),
         ).subscribe(() => {
 
-            // const clusterIndex = item.clusterIndex;
-            // const keyspace = item.label;
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.label;
 
-            // this.generator.typeCreate(keyspace)
-            //     .then((result) => {
-            //         this.workbench.editorCreate(clusterIndex, keyspace, result);
-            //     }).catch((e) => {
-            //         console.log(e);
-            //     });
+            this.generator.materializedViewCreate(keyspace, item.tableData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
         });
     }
     private cqlTypeCreate = (item: TreeItemKeyspace) => {

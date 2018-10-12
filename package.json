@@ -152,7 +152,7 @@
                 },
                 {
                     "command": "cassandraWorkbench.cqlMaterializedViewCreate",
-                    "when": "view == cassandraWorkbenchView && viewItem == keyspace",
+                    "when": "view == cassandraWorkbenchView && viewItem == table",
                     "group": "01_common@3"
                 },
                 {
