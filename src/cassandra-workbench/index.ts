@@ -186,8 +186,26 @@ export class CassandraWorkbench {
             case "w2e_getActiveClusterAndKeyspaceRequest":
                 this.getActiveClusterAndKeyspaceRespond(m as ProcMessageStrict<"w2e_getActiveClusterAndKeyspaceRequest">);
                 break;
+            case "w2e_setSplitSizeRequest":
+                this.setSplitSizeRespond(m as ProcMessageStrict<"w2e_setSplitSizeRequest">);
+                break;
 
         }
+    }
+
+    private setSplitSizeRespond(request: ProcMessageStrict<"w2e_setSplitSizeRequest">) {
+        const size = request.data.size;
+        const id = request.data.id;
+        this.workspace.write("splitPosition", size);
+
+        const out: ProcMessageStrict<"e2w_setSplitSizeResponse"> = {
+            name: "e2w_setSplitSizeResponse",
+            data: {
+                id,
+                // succ
+            },
+        };
+        this.panel.emitMessage(out);
     }
     private removeHistoryAllRespond(request: ProcMessageStrict<"w2e_removeAllHistoryRequest">) {
         const id = request.data.id;

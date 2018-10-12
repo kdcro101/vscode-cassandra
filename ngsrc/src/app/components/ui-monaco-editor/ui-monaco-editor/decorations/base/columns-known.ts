@@ -1,5 +1,5 @@
 import { AnalyzedStatement } from "../../../../../../../../src/types/parser";
-export const baseColumnDecorations = (
+export const decoColumnsKnown = (
     model: monaco.editor.ITextModel,
     statement: AnalyzedStatement,
 ): monaco.editor.IModelDeltaDecoration[] => {
@@ -13,7 +13,11 @@ export const baseColumnDecorations = (
         const o: monaco.editor.IModelDeltaDecoration = {
             range: new monaco.Range(ps.lineNumber, ps.column, pe.lineNumber, pe.column + 1),
             options: {
-                inlineClassName: "decoration-base column",
+                // inlineClassName: "decoration-base column",
+                inlineClassName: "",
+                hoverMessage: {
+                    value: `\`\`\`cqlhover\n${c.text} AS ${c.type}\`\`\``,
+                },
             },
         };
 

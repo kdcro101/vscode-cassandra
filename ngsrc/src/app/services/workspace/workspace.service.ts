@@ -19,6 +19,39 @@ export class WorkspaceService {
 
     constructor(private message: MessageService) { }
 
+    public setSplitSize(size: number): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const id = generateId();
+            const m: ProcMessageStrict<"w2e_setSplitSizeRequest"> = {
+                name: "w2e_setSplitSizeRequest",
+                data: {
+                    id,
+                    size,
+                },
+            };
+            this.message.eventMessage.pipe(
+                timeout(30000),
+                filter((e) => e.name === "e2w_setSplitSizeResponse"),
+                filter((mi: ProcMessageStrict<"e2w_setSplitSizeResponse">) => mi.data.id === id),
+                take(1),
+                map((e) => e as ProcMessageStrict<"e2w_setSplitSizeResponse">),
+            ).subscribe((e) => {
+                if (e.data && !e.data.error) {
+                    resolve();
+                    return;
+                }
+                if (e.data && e.data.error) {
+                    reject(e.data.error);
+                    return;
+                }
+                reject("no_response");
+            }, (e) => {
+                reject(e);
+            });
+
+            this.message.emit(m);
+        });
+    }
     public getActiveClusterKeyspace(): Promise<ActiveClusterKeyspace> {
         return new Promise((resolve, reject) => {
             const id = generateId();

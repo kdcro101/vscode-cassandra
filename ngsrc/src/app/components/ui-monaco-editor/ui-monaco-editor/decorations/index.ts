@@ -1,4 +1,6 @@
 import { AnalyzedStatement } from "../../../../../../../src/types/parser";
+import { decoColumnsKeys } from "./base/columns-keys";
+import { decoColumnsKnown } from "./base/columns-known";
 import { insertDecorations, insertMarkers } from "./insert";
 import { selectDecorations, selectMarkers } from "./select";
 export const decorationsForStatement = (model: monaco.editor.ITextModel,
@@ -7,7 +9,9 @@ export const decorationsForStatement = (model: monaco.editor.ITextModel,
     let out: monaco.editor.IModelDeltaDecoration[] = [];
     switch (statement.type) {
         case "select":
-            out = selectDecorations(model, statement);
+            // out = selectDecorations(model, statement);
+            out = decoColumnsKnown(model, statement)
+                .concat(decoColumnsKeys(model, statement));
             break;
         case "insert":
             out = insertDecorations(model, statement);
@@ -17,6 +21,10 @@ export const decorationsForStatement = (model: monaco.editor.ITextModel,
             break;
         case "update":
             out = selectDecorations(model, statement);
+            break;
+        case "createMaterializedView":
+            out = decoColumnsKnown(model, statement)
+                .concat(decoColumnsKeys(model, statement));
             break;
         default:
             out = null;

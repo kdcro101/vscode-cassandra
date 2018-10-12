@@ -2,15 +2,17 @@
 import * as path from "path";
 import * as vscode from "vscode";
 import { WorkbenchCqlStatement } from "../types";
+import { Workspace } from "../workspace";
 
 export const generateHtml = (basePath: string, persistedStatements: WorkbenchCqlStatement[]) => {
 
     const ws = vscode.workspace.getConfiguration(null, null);
+    const workspace = new Workspace();
     const fontFamily = ws.editor.fontFamily;
     const lineHeight = ws.editor.lineHeight;
     const fontSize = ws.editor.fontSize;
     const base64Statements = Buffer.from(JSON.stringify(persistedStatements)).toString("base64");
-
+    const splitPosition = workspace.read("splitPosition");
     return `
     <!doctype html>
      <html lang="en">
@@ -25,6 +27,7 @@ export const generateHtml = (basePath: string, persistedStatements: WorkbenchCql
                 var codeFontSize = "${fontSize}";
                 var codeLineHeight = "${lineHeight}";
                 var persistedStatements = JSON.parse(window.atob("${base64Statements}"));
+                var splitPosition = ${ splitPosition > 0 && splitPosition < 100 ? splitPosition : 50 }
             </script>
         </head>
         <body ondragstart="return false;" ondrop="return false;" class="app-icon">

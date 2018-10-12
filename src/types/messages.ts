@@ -26,6 +26,7 @@ export interface ProcMessageList {
     w2e_getActiveKeyspaceRequest: GetActiveKeyspaceRequest;
     w2e_getActiveClusterAndKeyspaceRequest: MessageWithId;
     w2e_clipboardCopyRequest: ClipboardCopyRequest;
+    w2e_setSplitSizeRequest: SetSplitSizeRequest;
 
     e2w_goState: WebviewStateParams;
     e2w_getClusterStructResponse: ClusterStructureResponse;
@@ -45,6 +46,7 @@ export interface ProcMessageList {
     e2w_clipboardCopyResponse: MessageWithId;
     e2w_removeHistoryItemResponse: MessageWithId;
     e2w_removeAllHistoryResponse: MessageWithId;
+    e2w_setSplitSizeResponse: MessageWithId;
 }
 export type ProcMessageType = keyof ProcMessageList;
 export interface ProcMessage {
@@ -198,4 +200,8 @@ export interface ClipboardCopyRequest extends MessageWithId {
 }
 export interface HistoryRemoveRequest extends MessageWithId {
     item_id: string;
+}
+
+export interface SetSplitSizeRequest extends MessageWithId {
+    size: number;
 }

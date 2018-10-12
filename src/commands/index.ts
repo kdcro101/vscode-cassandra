@@ -158,7 +158,7 @@ export class VsCommands {
         ).subscribe(() => {
 
             const clusterIndex = item.clusterIndex;
-            const keyspace = item.label;
+            const keyspace = item.keyspace;
 
             this.generator.materializedViewCreate(keyspace, item.tableData)
                 .then((result) => {

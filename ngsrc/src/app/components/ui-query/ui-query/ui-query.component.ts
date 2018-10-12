@@ -25,6 +25,8 @@ import { UiDataGridComponent } from "../../ui-data-grid/ui-data-grid/ui-data-gri
 import { UiMonacoEditorComponent } from "../../ui-monaco-editor/ui-monaco-editor/ui-monaco-editor.component";
 import { panelAnimations } from "./animations/panel";
 
+declare var splitPosition: number;
+
 type PanelAnimationState = "active" | "hidden";
 type GutterAction = "minimize" | "maximize" | "center";
 
@@ -203,12 +205,21 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
 
         this.splitInstance = Split([this.top.nativeElement, this.bottom.nativeElement], {
             direction: "vertical",
-            sizes: [50, 50],
+            sizes: [splitPosition, 100 - splitPosition],
             minSize: [200, 72],
             gutterSize: this.gutterSize,
             gutter: (index: number, direction: "horizontal" | "vertical") => {
                 this.gutterElement.className = `gutter gutter-${direction}`;
                 return this.gutterElement;
+            },
+            onDragEnd: () => {
+                const sizes = this.splitInstance.getSizes();
+                const first = sizes[0];
+                console.log(`[split.js] new size = ${first}`);
+                this.workspace.setSplitSize(first)
+                    .then(() => { }).catch((e) => {
+                        console.log(e);
+                    });
             },
         });
 
@@ -487,14 +498,26 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
             case "minimize":
                 calculatedHeightPc = Math.round(72 / pxPerPc);
                 this.splitInstance.setSizes([100 - calculatedHeightPc, calculatedHeightPc]);
+                this.workspace.setSplitSize(100 - calculatedHeightPc)
+                    .then().catch((err) => {
+                        console.log(err);
+                    });
                 break;
             case "maximize":
                 calculatedHeightPc = Math.round(200 / pxPerPc);
                 this.splitInstance.setSizes([calculatedHeightPc, 100 - calculatedHeightPc]);
+                this.workspace.setSplitSize(calculatedHeightPc)
+                    .then().catch((err) => {
+                        console.log(err);
+                    });
                 break;
 
             case "center":
                 this.splitInstance.setSizes([50, 50]);
+                this.workspace.setSplitSize(50)
+                    .then().catch((err) => {
+                        console.log(err);
+                    });
                 break;
 
         }

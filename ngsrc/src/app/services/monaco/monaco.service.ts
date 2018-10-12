@@ -6,6 +6,7 @@ import { ThemeService } from "../theme/theme.service";
 import { cqlCompletitionProvider } from "./lang/completition";
 import { cqlLanguageConfig, cqlTokenProvider } from "./lang/tokens";
 import { cqlHoverTokenProvider } from "./lang/tokens-hover";
+import { cqlKeysHoverTokenProvider } from "./lang/tokens-keys-hover";
 
 @Injectable({
     providedIn: "root",
@@ -43,6 +44,7 @@ export class MonacoService {
     private prepareMonacoEditor() {
         monaco.languages.register({ id: "cql" });
         monaco.languages.register({ id: "cqlhover" });
+        monaco.languages.register({ id: "cql-keys" });
 
         monaco.languages.setLanguageConfiguration("cql", cqlLanguageConfig);
 
@@ -59,6 +61,8 @@ export class MonacoService {
                 { token: "comment", foreground: "7b7f8b", fontStyle: "" },
                 { token: "keyword", foreground: "6495ED", fontStyle: "" },
                 { token: "keyword.primary-key", foreground: "ef5350", fontStyle: "" },
+                { token: "key.partition", foreground: "ef5350", fontStyle: "" },
+                { token: "key.clustering", foreground: "fdd835", fontStyle: "" },
                 { token: "type", foreground: "97e1f1", fontStyle: "" },
                 { token: "type.null", foreground: "00acc1", fontStyle: "" },
                 { token: "type.keyspace", foreground: "B09BDB", fontStyle: "italic" },
@@ -80,6 +84,7 @@ export class MonacoService {
         });
 
         monaco.languages.setMonarchTokensProvider("cqlhover", cqlHoverTokenProvider);
+        monaco.languages.setMonarchTokensProvider("cql-keys", cqlKeysHoverTokenProvider);
         monaco.languages.registerCompletionItemProvider("cql", cqlCompletitionProvider(this.autocomplete));
         const themeName = this.theme.isDark ? "vs-dark-custom" : "vs-light";
         monaco.editor.setTheme(themeName);

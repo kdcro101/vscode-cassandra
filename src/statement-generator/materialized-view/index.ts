@@ -1,4 +1,4 @@
-
+import wrap = require("word-wrap");
 import { CassandraMaterializedView, CassandraTable } from "../../types/index";
 export const materializedViewCreate = (keyspace: string, table: CassandraTable): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -19,8 +19,11 @@ export const materializedViewCreate = (keyspace: string, table: CassandraTable):
             `WHERE ${restriction.join(" AND ")}`,
             `${primaryKey(table)}`,
         ];
-
-        resolve(out.join("\n"));
+        const wrapped = wrap(out.join("\n"), {
+            width: 80,
+            trim: true,
+        });
+        resolve(wrapped);
     });
 };
 export const materializedViewDrop = (keyspace: string, data: CassandraMaterializedView): Promise<string> => {
@@ -74,8 +77,12 @@ export const materializedViewClone = (keyspace: string, data: CassandraMateriali
             `${primaryKey(data)}`,
             `${tableOptions(data)};`,
         ];
+        const wrapped = wrap(out.join("\n"), {
+            width: 80,
+            trim: true,
+        });
+        resolve(wrapped);
 
-        resolve(out.join("\n"));
     });
 };
 function primaryKey(data: CassandraTable | CassandraMaterializedView): string {

@@ -149,7 +149,7 @@ createMaterializedView
       kwAs
       kwSelect columnList kwFrom tableSpec
       materializedViewWhere
-      kwPrimary kwKey syntaxBracketLr columnList syntaxBracketRr
+      primaryKeyElement
       (kwWith materializedViewOptions)?
 
     ;
