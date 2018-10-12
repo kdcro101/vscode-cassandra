@@ -24,7 +24,6 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-
             <div *ngIf="formGroup.controls['clusterName'].errors?.required" class="cluster-loading-error mat-caption mr">Cluster
                 selection is required</div>
             <div *ngIf="clusterLoadingError && !clusterLoading && !formGroup.controls['clusterName'].errors?.required"
@@ -65,10 +64,10 @@
                             <div>Execution took <span class="total-time">{{ item.result.executionTime }}ms</span>.</div>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="center center">
-                        <div class="succeded mat-body-1" *ngIf="item.result.results?.length>0">{{ item.result.results.length }}
-                            &nbsp;succeded.</div>
-                        <div class="failed mat-body-1" *ngIf="item.result.errors?.length>0">{{ item.result.errors.length }}
-                            &nbsp;failed.</div>
+                            <div class="succeded mat-body-1" *ngIf="item.result.results?.length>0">{{ item.result.results.length }}
+                                &nbsp;succeded.</div>
+                            <div class="failed mat-body-1" *ngIf="item.result.errors?.length>0">{{ item.result.errors.length }}
+                                &nbsp;failed.</div>
                         </div>
                     </div>
                     <div class="errors" *ngIf="item.result.errors.length>0">

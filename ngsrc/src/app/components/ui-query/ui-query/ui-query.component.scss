@@ -1,6 +1,7 @@
 @import "../../../../scss/colors";
 :host {
     position: relative;
+    user-select: none;
     .root {
         position: absolute;
         top: 0;
@@ -73,6 +74,7 @@
                 .result-panel {
                     position: relative;
                     overflow: auto;
+                    user-select: none;
                     .result-header {
                         padding: 8px;
 
@@ -83,12 +85,12 @@
                             color: mat-color($yellow, 600);
                         }
                         .succeded {
-                            margin-top:8px;
+                            margin-top: 8px;
                             color: mat-color($green, 600);
                             margin-right: 16px;
                         }
                         .failed {
-                            margin-top:8px;
+                            margin-top: 8px;
                             color: mat-color($warn, 500);
                         }
 
@@ -96,11 +98,16 @@
                     .errors {
                         padding-top: 2px;
                         .item {
-                            margin-bottom: 2px;
-                            background-color: rgba(0, 0, 0, 0.25);
+                            // margin-bottom: 2px;
                             cursor: pointer;
                             user-select: none;
 
+                            &:nth-child(odd) {
+                                background-color: rgba(0, 0, 0, 0.1);
+                            }
+                            &:hover {
+                                background-color: rgba(0, 0, 0, 0.25);
+                            }
                             &:active {
                                 background-color: rgba(0, 0, 0, 0.50);
                             }

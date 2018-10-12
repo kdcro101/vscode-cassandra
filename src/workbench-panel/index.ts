@@ -27,6 +27,7 @@ export class WorkbenchPanel {
 
         this.panel = vscode.window.createWebviewPanel("cassandra-workbench", "Cassandra workbench", vscode.ViewColumn.Active, {
             enableScripts: true,
+            enableFindWidget: false,
             localResourceRoots: [
                 vscode.Uri.file(path.join(this.context.extensionPath, "ng")),
                 vscode.Uri.file(path.join(this.context.extensionPath, "node_modules")),
@@ -35,6 +36,7 @@ export class WorkbenchPanel {
         });
 
         this.panel.iconPath = vscode.Uri.file(path.join(this.context.extensionPath, "icons", "panel.png"));
+        // this.panel.options
 
         fromEventPattern<void>((f: (e: any) => any) => {
             return this.panel.onDidDispose(f, null, this.context.subscriptions);
@@ -48,7 +50,7 @@ export class WorkbenchPanel {
             this.eventDestroy.next();
         });
 
-        this.panel.webview.html = generateHtml(this.context.extensionPath, persistedEditors);
+        // this.panel.webview.html = generateHtml(this.context.extensionPath, persistedEditors);
 
         fromEventPattern<ProcMessage>((f: (e: any) => any) => {
             return this.panel.webview.onDidReceiveMessage(f, null, this.context.subscriptions);

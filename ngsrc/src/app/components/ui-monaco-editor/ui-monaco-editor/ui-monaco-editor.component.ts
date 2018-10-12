@@ -13,8 +13,8 @@ import { MonacoService } from "../../../services/monaco/monaco.service";
 import { ParserService } from "../../../services/parser/parser.service";
 import { ThemeService } from "../../../services/theme/theme.service";
 import { WorkbenchEditor } from "../../../types/index";
-import { UiContextMenuService } from "../../ui-context-menu/service";
-import { decorationsForStatement, markersForStatement } from "./decorations";
+
+import { decorationsForStatement, markersForStatement } from "./indicators";
 
 declare var window: any;
 
@@ -47,6 +47,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
     private currentDeltaDecorations: string[] = [];
 
     private actionFind: monaco.editor.IEditorAction = null;
+    private actionReplace: monaco.editor.IEditorAction = null;
 
     constructor(
         public host: ElementRef<HTMLDivElement>,
@@ -64,6 +65,39 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         styleElement.appendChild(document.createTextNode(style));
         host.nativeElement.appendChild(styleElement);
 
+        // fromEvent<KeyboardEvent>(window, "keydown")
+        //     .subscribe((e) => {
+        //         console.log("Window keydown");
+        //         console.log(`ctrl=${e.ctrlKey} code=${e.keyCode}`);
+        //         console.log(e);
+        //     });
+        fromEvent<KeyboardEvent>(window, "keydown", {
+            capture: true,
+        }).subscribe((e) => {
+            console.log("Window keydown");
+            console.log(`ctrl=${e.ctrlKey} code=${e.keyCode}`);
+            console.log(e);
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            e.stopPropagation();
+        });
+        fromEvent<KeyboardEvent>(window, "keypress", {
+            capture: true,
+        }).pipe(
+            takeUntil(this.eventViewDestroyed),
+            filter(() => this.monacoEditor != null),
+        ).subscribe((e) => {
+            console.log("Window keypress");
+            console.log(`ctrl=${e.ctrlKey} code=${e.key}`);
+            console.log(e);
+            this.onWindowKeypress(e);
+        });
+        // fromEvent<KeyboardEvent>(window, "keyup")
+        //     .subscribe((e) => {
+        //         console.log("Window keyup");
+        //         console.log(`ctrl=${e.ctrlKey} code=${e.keyCode}`);
+        //         console.log(e);
+        //     });
     }
     @Input("editor") public set setEditor(value: WorkbenchEditor) {
         this.stateReady.pipe(
@@ -108,13 +142,14 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             });
 
             this.actionFind = this.monacoEditor.getAction("actions.find");
+            this.actionReplace = this.monacoEditor.getAction("editor.action.startFindReplaceAction");
 
-            this.monacoEditor
-                // tslint:disable-next-line:no-bitwise
-                .addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.F10, () => {
-                    console.log("SAVE");
-                    this.onSave.emit();
-                }, null);
+            // this.monacoEditor
+            //     // tslint:disable-next-line:no-bitwise
+            //     .addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.F10, () => {
+            //         console.log("SAVE");
+            //         this.onSave.emit();
+            //     }, null);
 
             this.monacoEditor
                 // tslint:disable-next-line:no-bitwise
@@ -128,12 +163,8 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 d.dispose();
             }).pipe(
                 takeUntil(this.eventViewDestroyed),
-                filter((e) => e.browserEvent.ctrlKey && e.browserEvent.keyCode === 13),
             ).subscribe((e) => {
-
-                e.preventDefault();
-                e.stopPropagation();
-                this.onExecute.next();
+                this.onEditorKeyDown(e);
             });
 
             fromEventPattern<monaco.editor.IEditorMouseEvent>((f: (e: any) => any) => {
@@ -383,5 +414,46 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
         });
 
+    }
+    public selectAll() {
+        console.log("select all----------");
+        const ss = this.modelCurrent.getPositionAt(0);
+        const se = this.modelCurrent.getPositionAt(this.modelCurrent.getValue().length);
+        const range = new monaco.Range(ss.lineNumber, ss.column, se.lineNumber, se.column);
+        this.monacoEditor.setSelection(range);
+    }
+    public onEditorKeyDown(ev: monaco.IKeyboardEvent) {
+        console.log(ev);
+
+        if (ev.browserEvent.ctrlKey && ev.browserEvent.keyCode === 13) {
+            ev.browserEvent.preventDefault();
+            ev.browserEvent.stopPropagation();
+            this.onExecute.next();
+            return;
+        }
+
+    }
+    public onWindowKeypress(ev: KeyboardEvent) {
+        console.log("keypress");
+        if (ev.ctrlKey && ev.key === "a") {
+            this.selectAll();
+            ev.preventDefault();
+        }
+        if (ev.ctrlKey && ev.key === "s") {
+            this.onSave.emit();
+            ev.preventDefault();
+        }
+        if (ev.ctrlKey && ev.key === "f") {
+            this.actionFind.run();
+            ev.preventDefault();
+        }
+        if (ev.ctrlKey && ev.key === "h") {
+            this.actionReplace.run();
+            ev.preventDefault();
+        }
+
+        ev.preventDefault();
+        ev.stopImmediatePropagation();
+        ev.stopPropagation();
     }
 }

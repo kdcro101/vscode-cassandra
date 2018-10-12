@@ -1,7 +1,7 @@
 @import "../../../../scss/colors";
 :host {
     position: relative;
-
+    user-select: none;
     .root {
         position: absolute;
         top: 0;

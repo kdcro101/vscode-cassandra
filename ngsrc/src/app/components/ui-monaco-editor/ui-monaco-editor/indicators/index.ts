@@ -1,8 +1,10 @@
 import { AnalyzedStatement } from "../../../../../../../src/types/parser";
-import { decoColumnsKeys } from "./base/columns-keys";
-import { decoColumnsKnown } from "./base/columns-known";
-import { insertDecorations, insertMarkers } from "./insert";
+import { decoColumnsKeys } from "./decorations/columns-keys";
+import { decoColumnsKnown } from "./decorations/columns-known";
+import { decoValues } from "./decorations/values";
+import { insertMarkers } from "./insert";
 import { selectDecorations, selectMarkers } from "./select";
+
 export const decorationsForStatement = (model: monaco.editor.ITextModel,
     statement: AnalyzedStatement): monaco.editor.IModelDeltaDecoration[] => {
 
@@ -14,7 +16,10 @@ export const decorationsForStatement = (model: monaco.editor.ITextModel,
                 .concat(decoColumnsKeys(model, statement));
             break;
         case "insert":
-            out = insertDecorations(model, statement);
+            // out = insertDecorations(model, statement);
+            out = decoColumnsKnown(model, statement)
+                .concat(decoColumnsKeys(model, statement))
+                .concat(decoValues(model, statement));
             break;
         case "delete":
             out = selectDecorations(model, statement);
