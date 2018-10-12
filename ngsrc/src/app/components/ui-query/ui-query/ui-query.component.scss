@@ -73,7 +73,32 @@
                 .result-panel {
                     position: relative;
                     overflow: auto;
-                    // .success {}
+                    .result-header {
+                        padding: 8px;
+
+                        .header-item {
+                            line-height: 22px;
+                            height: 22px;
+                            border-radius: 11px;
+                            padding-left: 16px;
+                            padding-right: 16px;
+                            margin-left: 4px;
+                            margin-right: 4px;
+
+                            &.total {
+                                background-color: gray;
+                                color: mat-color($background, 50);
+                            }
+                            &.success {
+                                background-color: mat-color($green, 500);
+                                color: mat-color($background, 50);
+                            }
+                            &.fail {
+                                background-color: mat-color($warn, 500);
+                                color: mat-color($background, 50);
+                            }
+                        }
+                    }
                     .errors {
                         padding-top: 2px;
                         .item {
@@ -88,7 +113,7 @@
                             .index {
                                 padding-top: 4px;
                                 padding-bottom: 4px;
-                                color: mat-color($warn, 300);
+                                color: mat-color($warn, 500);
                                 padding-left: 8px;
                                 padding-right: 8px;
 

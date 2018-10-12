@@ -522,5 +522,17 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
 
         }
     }
-
+    public statementStart = (index: number): string => {
+        if (!this.editorCurrent || !this.editorCurrent.result || !this.editorCurrent.result.analysis) {
+            console.log("-------------------");
+            console.log("## no results no analysis");
+            console.log("-------------------");
+            return;
+        }
+        const statement = this.editorCurrent.result.analysis.statements[index];
+        const editor = this.monacoEditor.monacoEditor;
+        const model = editor.getModel();
+        const ps = model.getPositionAt(statement.charStart);
+        return `${ps.lineNumber},${ps.column}`;
+    }
 }

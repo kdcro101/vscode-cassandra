@@ -42,9 +42,8 @@
                 color="primary" mat-button (click)="executeCql()">EXECUTE</button>
             <mat-progress-bar *ngIf="editorCurrent.stateExecuting | async" class="progress" mode="indeterminate" color="accent"></mat-progress-bar>
         </form>
-        <ui-monaco-editor #monacoEditor [editor]="editorCurrent" (onCodeChange)="onCodeChange($event)"
-         (onExecute)="executeCql()" (onSave)="onStatementSave.emit()"
-            fxFlex></ui-monaco-editor>
+        <ui-monaco-editor #monacoEditor [editor]="editorCurrent" (onCodeChange)="onCodeChange($event)" (onExecute)="executeCql()"
+            (onSave)="onStatementSave.emit()" fxFlex></ui-monaco-editor>
     </div>
     <div #bottom class="bottom" fxLayout="column">
         <div fxFlex class="bottom-client" fxLayout="column">
@@ -52,14 +51,18 @@
                 [@panelAnimation]="panelAnimationState[item.id]" (@panelAnimation.start)="panelAnimationStart($event,ix)"
                 (@panelAnimation.done)="panelAnimationDone($event,ix)" fxLayout="column">
                 <ui-data-grid #dataGrid fxFlex [editor]="item" *ngIf="!(item.stateExecuting | async) && item.result && item.result.analysis.selectData"></ui-data-grid>
-                <div class="result-panel" *ngIf="item.result && !item.result.analysis.selectData" fxFlex>
-                    <div class="success" *ngIf="item.result.errors==null || item.result.errors.length===0">
-                        Success
+                <div class="result-panel" *ngIf="editor.id===item.id && item.result && !item.result.analysis.selectData"
+                    fxFlex>
+                    <div class="result-header mat-caption" fxLayout="row" fxLayoutAlign="center center">
+                        <!-- Success [{{ item.result.results.length }}] / Failed [{{item.result.errors.length}}] -->
+                        <div class="header-item total">Statements {{item.result.analysis.statements.length}}</div>
+                        <div class="header-item success">Succeded {{item.result.results.length}}</div>
+                        <div class="header-item fail">Failed {{item.result.errors.length}}</div>
                     </div>
                     <div class="errors" *ngIf="item.result.errors.length>0">
                         <div *ngFor="let ei of item.result.errors;index as eix;" class="item mat-body-1" fxLayout="row"
-                            fxLayoutAlign="start start" (click)="onErrorClick($event,eix)">
-                            <div class="index">{{ ei.statementIndex}}</div>
+                            fxLayoutAlign="start start" (click)="onErrorClick($event,ei.statementIndex)">
+                            <div class="index">{{ statementStart(ei.statementIndex)}}</div>
                             <div class="desc">{{ ei.error.message}}</div>
                         </div>
                     </div>
