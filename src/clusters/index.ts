@@ -31,6 +31,7 @@ export interface ClusterExecuteResults {
     analysis: CqlAnalysis;
     errors: ClusterExecuteStatementError[];
     columns: ClusterExecuteStatementColumns[];
+    executionTime: number; // miliseconds
 }
 
 export class Clusters {
@@ -205,16 +206,14 @@ export class Clusters {
 
                     return Promise.resolve();
                 }),
-                concatMap(() => {
-                    return this.getClientByClusterName(clusterName)
-                        .then((client) => {
-                            return Promise.all([
-                                client, this.initializeKeyspace(client, keyspaceInitial),
-                            ]);
-                        }).then((result) => {
-                            const client = result[0];
-                            return Promise.resolve(client);
-                        });
+                concatMap(async () => {
+                    const client = await this.getClientByClusterName(clusterName);
+                    const result = await Promise.all([
+                        client,
+                        this.initializeKeyspace(client, keyspaceInitial),
+                    ]);
+                    const client_2 = result[0];
+                    return Promise.resolve(client_2);
                 }),
                 concatMap((client) => this.executeCqlAnalysis(client, analysis)),
             ).subscribe((result) => {
@@ -232,6 +231,7 @@ export class Clusters {
     private async executeCqlAnalysis(client: CassandraClient, analysis: CqlAnalysis): Promise<ClusterExecuteResults> {
 
         const statements = analysis.statements;
+        const timeStart = Date.now();
 
         const out: ClusterExecuteResults = {
             results: [],
@@ -239,6 +239,7 @@ export class Clusters {
             errors: [],
             columns: [],
             clusterName: client.clusterName,
+            executionTime: 0,
         };
 
         for (let i = 0; i < statements.length; i++) {
@@ -270,6 +271,9 @@ export class Clusters {
             }
 
         }
+        const timeEnd = Date.now();
+
+        out.executionTime = timeEnd - timeStart;
 
         return out;
         // return Promise.resolve(out);

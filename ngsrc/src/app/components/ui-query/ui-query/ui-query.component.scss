@@ -76,28 +76,22 @@
                     .result-header {
                         padding: 8px;
 
-                        .header-item {
-                            line-height: 22px;
-                            height: 22px;
-                            border-radius: 11px;
-                            padding-left: 16px;
-                            padding-right: 16px;
-                            margin-left: 4px;
-                            margin-right: 4px;
-
-                            &.total {
-                                background-color: gray;
-                                color: mat-color($background, 50);
-                            }
-                            &.success {
-                                background-color: mat-color($green, 500);
-                                color: mat-color($background, 50);
-                            }
-                            &.fail {
-                                background-color: mat-color($warn, 500);
-                                color: mat-color($background, 50);
-                            }
+                        .total-statements {
+                            color: mat-color($cyan, 500);
                         }
+                        .total-time {
+                            color: mat-color($yellow, 600);
+                        }
+                        .succeded {
+                            margin-top:8px;
+                            color: mat-color($green, 600);
+                            margin-right: 16px;
+                        }
+                        .failed {
+                            margin-top:8px;
+                            color: mat-color($warn, 500);
+                        }
+
                     }
                     .errors {
                         padding-top: 2px;

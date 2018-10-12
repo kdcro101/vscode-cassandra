@@ -53,11 +53,23 @@
                 <ui-data-grid #dataGrid fxFlex [editor]="item" *ngIf="!(item.stateExecuting | async) && item.result && item.result.analysis.selectData"></ui-data-grid>
                 <div class="result-panel" *ngIf="editor.id===item.id && item.result && !item.result.analysis.selectData"
                     fxFlex>
-                    <div class="result-header mat-caption" fxLayout="row" fxLayoutAlign="center center">
-                        <!-- Success [{{ item.result.results.length }}] / Failed [{{item.result.errors.length}}] -->
-                        <div class="header-item total">Statements {{item.result.analysis.statements.length}}</div>
-                        <div class="header-item success">Succeded {{item.result.results.length}}</div>
-                        <div class="header-item fail">Failed {{item.result.errors.length}}</div>
+                    <div class="result-header mat-caption" fxLayout="column">
+                        <div fxLayout="row" fxLayoutAlign="center center">
+                            <div *ngIf="item.result.analysis.statements.length===1">Total <span class="total-statements">1</span>
+                                command. </div>
+                            <div *ngIf="item.result.analysis.statements.length>1">
+                                Total <span class="total-statements">{{item.result.analysis.statements.length}}</span>
+                                commands.
+                            </div>
+                            <div>&nbsp;</div>
+                            <div>Execution took <span class="total-time">{{ item.result.executionTime }}ms</span>.</div>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="center center">
+                        <div class="succeded mat-body-1" *ngIf="item.result.results?.length>0">{{ item.result.results.length }}
+                            &nbsp;succeded.</div>
+                        <div class="failed mat-body-1" *ngIf="item.result.errors?.length>0">{{ item.result.errors.length }}
+                            &nbsp;failed.</div>
+                        </div>
                     </div>
                     <div class="errors" *ngIf="item.result.errors.length>0">
                         <div *ngFor="let ei of item.result.errors;index as eix;" class="item mat-body-1" fxLayout="row"

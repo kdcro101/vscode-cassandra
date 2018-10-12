@@ -642,6 +642,7 @@ export class CassandraWorkbench {
                 this.persistence.history.append(clusterName, keyspaceInitial, cql);
             }),
             tap((result) => {
+
                 const message: ProcMessageStrict<"e2w_executeQueryResponse"> = {
                     name: "e2w_executeQueryResponse",
                     data: {
@@ -661,7 +662,7 @@ export class CassandraWorkbench {
 
                     this.clusters.invalidateStructure(clusterIndex);
                     this.treeProvider.onDidChangeTreeDataEmmiter.fire();
-                    resolve();
+                    resolve(result);
 
                 });
             }),
