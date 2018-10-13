@@ -6,7 +6,8 @@ import {
 } from "../../antlr/CqlParser";
 import { CqlParserListener } from "../../antlr/CqlParserListener";
 import { CassandraClusterData } from "../../types";
-import { AnalyzedStatementRange, AnalyzedStatementToken, ParserTokenFamily } from "../../types/parser";
+import { CassandraKeyspace } from "../../types/index";
+import { AnalyzedStatementRange, AnalyzedStatementRules, AnalyzedStatementToken, ParserTokenFamily } from "../../types/parser";
 import {
     AnalyzedStatement, CqlAnalysis, CqlAnalysisError, CqlStatementColumn,
     CqlStatementExpression, CqlStatementType,
@@ -159,7 +160,7 @@ export class CqlAnalyzerListener implements CqlParserListener {
             type: null,
             columns: [],
             expressions: [],
-            tokens: {} as any,
+            rules: {},
         };
 
     }
@@ -218,16 +219,36 @@ export class CqlAnalyzerListener implements CqlParserListener {
 
     }
     exitTableSpec = (ctx: TableSpecContext) => {
-        const ksc = ctx.children.find((c: ParserRuleContext) => this.ruleNames[c.ruleIndex] === KEYSPACE_RULE);
-        const tbc = ctx.children.find((c: ParserRuleContext) => this.ruleNames[c.ruleIndex] === TABLE_RULE);
+        const ksc = ctx.children.find((c: ParserRuleContext) => this.ruleNames[c.ruleIndex] === KEYSPACE_RULE) as ParserRuleContext;
+        const tbc = ctx.children.find((c: ParserRuleContext) => this.ruleNames[c.ruleIndex] === TABLE_RULE) as ParserRuleContext;
 
-        if (ksc) {
-            this.pushTokenToStatement(ksc as ParserRuleContext, "keyspace");
-            this.setCurrentStatementValue("keyspace", ksc.text);
-        }
-        if (tbc) {
-            this.pushTokenToStatement(tbc as ParserRuleContext, "table");
-            this.setCurrentStatementValue("table", tbc.text);
+        const keyspaceName = !ksc ? this.keyspaceAmbiental : ksc.text;
+        let ksd: CassandraKeyspace = null;
+        try {
+
+            if (keyspaceName) {
+                ksd = this.structure.keyspaces.find((k) => k.name === keyspaceName);
+                this.pushRuleValue("tableSpec", "keyspaceData", ksd);
+            }
+
+            if (ksc) {
+                const kt = this.contextToToken(ksc);
+                this.pushRuleValue("tableSpec", "keyspaceToken", kt);
+                this.setCurrentStatementValue("keyspace", keyspaceName);
+
+            } else {
+                this.pushRuleValue("tableSpec", "keyspaceAmbiental", this.keyspaceAmbiental);
+            }
+
+            if (tbc) {
+                const tt = this.contextToToken(tbc);
+                const tbd = ksd ? ksd.tables.find((t) => t.name === tt.text) : null;
+                this.pushRuleValue("tableSpec", "tableToken", tt);
+                this.pushRuleValue("tableSpec", "tableData", tbd);
+                this.setCurrentStatementValue("table", tbc.text);
+            }
+        } catch (e) {
+            console.log(e);
         }
 
     }
@@ -417,22 +438,24 @@ export class CqlAnalyzerListener implements CqlParserListener {
         this.result.statementRanges.push(item);
         this.separators.push(endPosition);
     }
-    private contextToToken(ctx: ParserRuleContext): AnalyzedStatementToken {
+    private contextToToken(ctx: ParserRuleContext | ParseTree): AnalyzedStatementToken {
+        const inCtx = ctx as ParserRuleContext;
         const out: AnalyzedStatementToken = {
-            charStart: ctx.start.startIndex,
-            charStop: ctx.stop.stopIndex,
-            text: ctx.text,
+            charStart: inCtx.start.startIndex,
+            charStop: inCtx.stop.stopIndex,
+            text: inCtx.text,
         };
         return out;
     }
-    private pushTokenToStatement(ctx: ParserRuleContext, family: ParserTokenFamily) {
-        const t = this.contextToToken(ctx as ParserRuleContext);
+    private pushRuleValue<R extends keyof AnalyzedStatementRules, V extends keyof AnalyzedStatementRules[R]>(
+        rule: R, prop: V, value: AnalyzedStatementRules[R][V]) {
 
         const s = this.result.statements[this.statementCurrent];
-        if (s.tokens[family] == null) {
-            s.tokens[family] = [];
+        if (s.rules[rule] == null) {
+            s.rules[rule] = {};
         }
 
-        s.tokens[family].push(t);
+        s.rules[rule][prop] = value;
+
     }
 }

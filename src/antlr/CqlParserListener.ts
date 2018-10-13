@@ -164,9 +164,9 @@ import { ConstantHexadecimalContext } from './CqlParser';
 import { KeyspaceContext } from './CqlParser';
 import { TableContext } from './CqlParser';
 import { KeyspaceObjectContext } from './CqlParser';
-import { KeyspaceObjectUnknownContext } from './CqlParser';
+import { ObjectUnknownContext } from './CqlParser';
 import { TableSpecContext } from './CqlParser';
-import { KeyspaceObjectUnknownSpecContext } from './CqlParser';
+import { ObjectUnknownSpecContext } from './CqlParser';
 import { ColumnContext } from './CqlParser';
 import { ColumnUnknownContext } from './CqlParser';
 import { DataTypeContext } from './CqlParser';
@@ -2117,15 +2117,15 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitKeyspaceObject?: (ctx: KeyspaceObjectContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.keyspaceObjectUnknown`.
+	 * Enter a parse tree produced by `CqlParser.objectUnknown`.
 	 * @param ctx the parse tree
 	 */
-	enterKeyspaceObjectUnknown?: (ctx: KeyspaceObjectUnknownContext) => void;
+	enterObjectUnknown?: (ctx: ObjectUnknownContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.keyspaceObjectUnknown`.
+	 * Exit a parse tree produced by `CqlParser.objectUnknown`.
 	 * @param ctx the parse tree
 	 */
-	exitKeyspaceObjectUnknown?: (ctx: KeyspaceObjectUnknownContext) => void;
+	exitObjectUnknown?: (ctx: ObjectUnknownContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.tableSpec`.
@@ -2139,15 +2139,15 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitTableSpec?: (ctx: TableSpecContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.keyspaceObjectUnknownSpec`.
+	 * Enter a parse tree produced by `CqlParser.objectUnknownSpec`.
 	 * @param ctx the parse tree
 	 */
-	enterKeyspaceObjectUnknownSpec?: (ctx: KeyspaceObjectUnknownSpecContext) => void;
+	enterObjectUnknownSpec?: (ctx: ObjectUnknownSpecContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.keyspaceObjectUnknownSpec`.
+	 * Exit a parse tree produced by `CqlParser.objectUnknownSpec`.
 	 * @param ctx the parse tree
 	 */
-	exitKeyspaceObjectUnknownSpec?: (ctx: KeyspaceObjectUnknownSpecContext) => void;
+	exitObjectUnknownSpec?: (ctx: ObjectUnknownSpecContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.column`.

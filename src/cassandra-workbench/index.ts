@@ -561,6 +561,8 @@ export class CassandraWorkbench {
         const keyspaceInitial = req.keyspaceInitial;
         const clusterIndex = this.clusters.getClusterIndex(clusterName);
 
+        console.time("parseInputRespond");
+
         if (clusterIndex === -1) {
             const er: ProcMessageStrict<"e2w_checkInputResponse"> = {
                 name: "e2w_checkInputResponse",
@@ -583,6 +585,7 @@ export class CassandraWorkbench {
                 },
             };
             this.panel.emitMessage(mo);
+            console.timeEnd("parseInputRespond");
         }, (e) => {
             const er: ProcMessageStrict<"e2w_checkInputResponse"> = {
                 name: "e2w_checkInputResponse",

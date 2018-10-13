@@ -4,12 +4,16 @@ export const markTableReferenceError = (model: monaco.editor.ITextModel,
     statement: AnalyzedStatement): monaco.editor.IMarkerData[] => {
 
     const out: monaco.editor.IMarkerData[] = [];
+    const spec = statement.rules.tableSpec;
 
-    const tableName = statement.table;
-    const token = statement.tokens["table"] == null ? null : statement.tokens["table"].find((t) => t.text === tableName);
+    if (!spec || !spec.keyspaceData || !spec.tableToken ) {
+        // no keyspace no table no error
+        return [];
+    }
 
-    if (statement.tableData != null) {
-        // console.log("TABLE OK");
+    const token = spec.tableToken;
+
+    if (spec.tableData) {
         return [];
     }
 

@@ -13,8 +13,8 @@
         </div>
         <ui-content-horizontal #tabScroll class="tabs" fxFlex>
             <div class="tabs-wrap" #tabList fxLayout="row" fxLayoutAlign="start center">
-                <div [@tabAnimation] #tabItems *ngFor="let i of editorService.list;index as ix;trackBy: trackById" class="item"
-                    [class.active]="ix===editorIndex" (mousedown)="onTabMousedown($event,ix)" (mouseup)="onTabMouseup($event,ix)"
+                <div [@tabAnimation] #tabItems *ngFor="let i of editorService.list;index as ix;trackBy: trackById"
+                    class="item" [class.active]="ix===editorIndex" (mousedown)="onTabMousedown($event,ix)" (mouseup)="onTabMouseup($event,ix)"
                     fxLayout="row" fxLayoutAlign="start center">
                     <div #triggerWrapper class="menu-trigger" [matMenuTriggerFor]="menu"></div>
                     <div fxFlex class="title dhandle" matTooltip="{{ i.statement.filename }}" matTooltipClass="filename"
@@ -54,8 +54,5 @@
     <div fxFlex class="client" fxLayout="column">
         <ui-query (onStatementChange)="onActiveStatementChange($event)" (onStatementSave)="doSave.next([editor.id,false])"
             *ngIf="editorService.list.length>0 && editor" #queryEditor [editor]="editor" fxFlex></ui-query>
-        <div *ngIf="!editorActive" #container>
-
-        </div>
     </div>
 </div>

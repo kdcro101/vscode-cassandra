@@ -365,9 +365,9 @@ export class CqlParser extends Parser {
 	public static readonly RULE_keyspace = 158;
 	public static readonly RULE_table = 159;
 	public static readonly RULE_keyspaceObject = 160;
-	public static readonly RULE_keyspaceObjectUnknown = 161;
+	public static readonly RULE_objectUnknown = 161;
 	public static readonly RULE_tableSpec = 162;
-	public static readonly RULE_keyspaceObjectUnknownSpec = 163;
+	public static readonly RULE_objectUnknownSpec = 163;
 	public static readonly RULE_column = 164;
 	public static readonly RULE_columnUnknown = 165;
 	public static readonly RULE_dataType = 166;
@@ -575,16 +575,16 @@ export class CqlParser extends Parser {
 		"relationElementTokenSpec", "relationOperator", "functionCall", "functionArgs", 
 		"constant", "constantUuid", "constantDecimal", "constantFloat", "constantString", 
 		"constantBoolean", "constantHexadecimal", "keyspace", "table", "keyspaceObject", 
-		"keyspaceObjectUnknown", "tableSpec", "keyspaceObjectUnknownSpec", "column", 
-		"columnUnknown", "dataType", "dataTypeCollection", "dataTypeFundamental", 
-		"orderDirection", "role", "trigger", "triggerClass", "materializedView", 
-		"type", "aggregate", "function", "language", "user", "password", "hashKey", 
-		"param", "paramName", "kwAdd", "kwAggregate", "kwAll", "kwAllFunctions", 
-		"kwAllKeyspaces", "kwAllRoles", "kwAllPermissions", "kwAllow", "kwAllowFiltering", 
-		"kwAlter", "kwAnd", "kwApply", "kwAs", "kwAsc", "kwAuthorize", "kwBatch", 
-		"kwBegin", "kwBy", "kwCalled", "kwClustering", "kwCompact", "kwContains", 
-		"kwContainsKey", "kwCreate", "kwDelete", "kwDesc", "kwDescibe", "kwDistinct", 
-		"kwDrop", "kwDurableWrites", "kwEntries", "kwExecute", "kwExists", "kwFiltering", 
+		"objectUnknown", "tableSpec", "objectUnknownSpec", "column", "columnUnknown", 
+		"dataType", "dataTypeCollection", "dataTypeFundamental", "orderDirection", 
+		"role", "trigger", "triggerClass", "materializedView", "type", "aggregate", 
+		"function", "language", "user", "password", "hashKey", "param", "paramName", 
+		"kwAdd", "kwAggregate", "kwAll", "kwAllFunctions", "kwAllKeyspaces", "kwAllRoles", 
+		"kwAllPermissions", "kwAllow", "kwAllowFiltering", "kwAlter", "kwAnd", 
+		"kwApply", "kwAs", "kwAsc", "kwAuthorize", "kwBatch", "kwBegin", "kwBy", 
+		"kwCalled", "kwClustering", "kwCompact", "kwContains", "kwContainsKey", 
+		"kwCreate", "kwDelete", "kwDesc", "kwDescibe", "kwDistinct", "kwDrop", 
+		"kwDurableWrites", "kwEntries", "kwExecute", "kwExists", "kwFiltering", 
 		"kwFinalfunc", "kwFrom", "kwFull", "kwFunction", "kwGrant", "kwIf", "kwIn", 
 		"kwIndex", "kwInitcond", "kwInput", "kwInsert", "kwInto", "kwIs", "kwKey", 
 		"kwKeys", "kwKeyspace", "kwLanguage", "kwLimit", "kwList", "kwListRoles", 
@@ -1786,7 +1786,7 @@ export class CqlParser extends Parser {
 			}
 
 			this.state = 851;
-			this.keyspaceObjectUnknownSpec();
+			this.objectUnknownSpec();
 			this.state = 852;
 			this.syntaxBracketLr();
 			this.state = 853;
@@ -1878,7 +1878,7 @@ export class CqlParser extends Parser {
 			}
 
 			this.state = 872;
-			this.keyspaceObjectUnknownSpec();
+			this.objectUnknownSpec();
 			this.state = 873;
 			this.kwUsing();
 			this.state = 874;
@@ -1924,7 +1924,7 @@ export class CqlParser extends Parser {
 			}
 
 			this.state = 882;
-			this.keyspaceObjectUnknownSpec();
+			this.objectUnknownSpec();
 			this.state = 883;
 			this.kwAs();
 			this.state = 884;
@@ -2156,7 +2156,7 @@ export class CqlParser extends Parser {
 			}
 
 			this.state = 929;
-			this.keyspaceObjectUnknown();
+			this.objectUnknown();
 			this.state = 930;
 			this.kwWith();
 			this.state = 931;
@@ -2230,7 +2230,7 @@ export class CqlParser extends Parser {
 			}
 
 			this.state = 949;
-			this.keyspaceObjectUnknownSpec();
+			this.objectUnknownSpec();
 			this.state = 950;
 			this.syntaxBracketLr();
 			this.state = 952;
@@ -2424,7 +2424,7 @@ export class CqlParser extends Parser {
 			}
 
 			this.state = 992;
-			this.keyspaceObjectUnknownSpec();
+			this.objectUnknownSpec();
 			this.state = 993;
 			this.syntaxBracketLr();
 			this.state = 994;
@@ -4149,7 +4149,7 @@ export class CqlParser extends Parser {
 			}
 
 			this.state = 1325;
-			this.keyspaceObjectUnknownSpec();
+			this.objectUnknownSpec();
 			this.state = 1326;
 			this.createTableDef();
 			this.state = 1328;
@@ -9093,9 +9093,9 @@ export class CqlParser extends Parser {
 		return _localctx;
 	}
 	@RuleVersion(0)
-	public keyspaceObjectUnknown(): KeyspaceObjectUnknownContext {
-		let _localctx: KeyspaceObjectUnknownContext = new KeyspaceObjectUnknownContext(this._ctx, this.state);
-		this.enterRule(_localctx, 322, CqlParser.RULE_keyspaceObjectUnknown);
+	public objectUnknown(): ObjectUnknownContext {
+		let _localctx: ObjectUnknownContext = new ObjectUnknownContext(this._ctx, this.state);
+		this.enterRule(_localctx, 322, CqlParser.RULE_objectUnknown);
 		try {
 			this.state = 2157;
 			this._errHandler.sync(this);
@@ -9271,9 +9271,9 @@ export class CqlParser extends Parser {
 		return _localctx;
 	}
 	@RuleVersion(0)
-	public keyspaceObjectUnknownSpec(): KeyspaceObjectUnknownSpecContext {
-		let _localctx: KeyspaceObjectUnknownSpecContext = new KeyspaceObjectUnknownSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 326, CqlParser.RULE_keyspaceObjectUnknownSpec);
+	public objectUnknownSpec(): ObjectUnknownSpecContext {
+		let _localctx: ObjectUnknownSpecContext = new ObjectUnknownSpecContext(this._ctx, this.state);
+		this.enterRule(_localctx, 326, CqlParser.RULE_objectUnknownSpec);
 		try {
 			this.state = 2173;
 			this._errHandler.sync(this);
@@ -9282,7 +9282,7 @@ export class CqlParser extends Parser {
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 2167;
-				this.keyspaceObjectUnknown();
+				this.objectUnknown();
 				}
 				break;
 
@@ -9294,14 +9294,14 @@ export class CqlParser extends Parser {
 				this.state = 2169;
 				this.specialDot();
 				this.state = 2170;
-				this.keyspaceObjectUnknown();
+				this.objectUnknown();
 				}
 				break;
 
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				 this.notifyErrorListeners("rule.keyspaceObjectUnknownSpec"); 
+				 this.notifyErrorListeners("rule.objectUnknownSpec"); 
 				}
 				break;
 			}
@@ -16273,8 +16273,8 @@ export class CreateTypeContext extends ParserRuleContext {
 	public kwType(): KwTypeContext {
 		return this.getRuleContext(0, KwTypeContext);
 	}
-	public keyspaceObjectUnknownSpec(): KeyspaceObjectUnknownSpecContext {
-		return this.getRuleContext(0, KeyspaceObjectUnknownSpecContext);
+	public objectUnknownSpec(): ObjectUnknownSpecContext {
+		return this.getRuleContext(0, ObjectUnknownSpecContext);
 	}
 	public syntaxBracketLr(): SyntaxBracketLrContext {
 		return this.getRuleContext(0, SyntaxBracketLrContext);
@@ -16367,8 +16367,8 @@ export class CreateTriggerContext extends ParserRuleContext {
 	public kwTrigger(): KwTriggerContext {
 		return this.getRuleContext(0, KwTriggerContext);
 	}
-	public keyspaceObjectUnknownSpec(): KeyspaceObjectUnknownSpecContext {
-		return this.getRuleContext(0, KeyspaceObjectUnknownSpecContext);
+	public objectUnknownSpec(): ObjectUnknownSpecContext {
+		return this.getRuleContext(0, ObjectUnknownSpecContext);
 	}
 	public kwUsing(): KwUsingContext {
 		return this.getRuleContext(0, KwUsingContext);
@@ -16411,8 +16411,8 @@ export class CreateMaterializedViewContext extends ParserRuleContext {
 	public kwView(): KwViewContext {
 		return this.getRuleContext(0, KwViewContext);
 	}
-	public keyspaceObjectUnknownSpec(): KeyspaceObjectUnknownSpecContext {
-		return this.getRuleContext(0, KeyspaceObjectUnknownSpecContext);
+	public objectUnknownSpec(): ObjectUnknownSpecContext {
+		return this.getRuleContext(0, ObjectUnknownSpecContext);
 	}
 	public kwAs(): KwAsContext {
 		return this.getRuleContext(0, KwAsContext);
@@ -16616,8 +16616,8 @@ export class CreateKeyspaceContext extends ParserRuleContext {
 	public kwKeyspace(): KwKeyspaceContext {
 		return this.getRuleContext(0, KwKeyspaceContext);
 	}
-	public keyspaceObjectUnknown(): KeyspaceObjectUnknownContext {
-		return this.getRuleContext(0, KeyspaceObjectUnknownContext);
+	public objectUnknown(): ObjectUnknownContext {
+		return this.getRuleContext(0, ObjectUnknownContext);
 	}
 	public kwWith(): KwWithContext {
 		return this.getRuleContext(0, KwWithContext);
@@ -16673,8 +16673,8 @@ export class CreateFunctionContext extends ParserRuleContext {
 	public kwFunction(): KwFunctionContext {
 		return this.getRuleContext(0, KwFunctionContext);
 	}
-	public keyspaceObjectUnknownSpec(): KeyspaceObjectUnknownSpecContext {
-		return this.getRuleContext(0, KeyspaceObjectUnknownSpecContext);
+	public objectUnknownSpec(): ObjectUnknownSpecContext {
+		return this.getRuleContext(0, ObjectUnknownSpecContext);
 	}
 	public syntaxBracketLr(): SyntaxBracketLrContext {
 		return this.getRuleContext(0, SyntaxBracketLrContext);
@@ -16850,8 +16850,8 @@ export class CreateAggregateContext extends ParserRuleContext {
 	public kwAggregate(): KwAggregateContext {
 		return this.getRuleContext(0, KwAggregateContext);
 	}
-	public keyspaceObjectUnknownSpec(): KeyspaceObjectUnknownSpecContext {
-		return this.getRuleContext(0, KeyspaceObjectUnknownSpecContext);
+	public objectUnknownSpec(): ObjectUnknownSpecContext {
+		return this.getRuleContext(0, ObjectUnknownSpecContext);
 	}
 	public syntaxBracketLr(): SyntaxBracketLrContext {
 		return this.getRuleContext(0, SyntaxBracketLrContext);
@@ -18403,8 +18403,8 @@ export class CreateTableContext extends ParserRuleContext {
 	public kwTable(): KwTableContext {
 		return this.getRuleContext(0, KwTableContext);
 	}
-	public keyspaceObjectUnknownSpec(): KeyspaceObjectUnknownSpecContext {
-		return this.getRuleContext(0, KeyspaceObjectUnknownSpecContext);
+	public objectUnknownSpec(): ObjectUnknownSpecContext {
+		return this.getRuleContext(0, ObjectUnknownSpecContext);
 	}
 	public createTableDef(): CreateTableDefContext {
 		return this.getRuleContext(0, CreateTableDefContext);
@@ -21712,7 +21712,7 @@ export class KeyspaceObjectContext extends ParserRuleContext {
 }
 
 
-export class KeyspaceObjectUnknownContext extends ParserRuleContext {
+export class ObjectUnknownContext extends ParserRuleContext {
 	public OBJECT_NAME(): TerminalNode | undefined { return this.tryGetToken(CqlParser.OBJECT_NAME, 0); }
 	public DQUOTE(): TerminalNode[];
 	public DQUOTE(i: number): TerminalNode;
@@ -21740,18 +21740,18 @@ export class KeyspaceObjectUnknownContext extends ParserRuleContext {
 		super(parent, invokingState);
 
 	}
-	@Override public get ruleIndex(): number { return CqlParser.RULE_keyspaceObjectUnknown; }
+	@Override public get ruleIndex(): number { return CqlParser.RULE_objectUnknown; }
 	@Override
 	public enterRule(listener: CqlParserListener): void {
-		if (listener.enterKeyspaceObjectUnknown) listener.enterKeyspaceObjectUnknown(this);
+		if (listener.enterObjectUnknown) listener.enterObjectUnknown(this);
 	}
 	@Override
 	public exitRule(listener: CqlParserListener): void {
-		if (listener.exitKeyspaceObjectUnknown) listener.exitKeyspaceObjectUnknown(this);
+		if (listener.exitObjectUnknown) listener.exitObjectUnknown(this);
 	}
 	@Override
 	public accept<Result>(visitor: CqlParserVisitor<Result>): Result {
-		if (visitor.visitKeyspaceObjectUnknown) return visitor.visitKeyspaceObjectUnknown(this);
+		if (visitor.visitObjectUnknown) return visitor.visitObjectUnknown(this);
 		else return visitor.visitChildren(this);
 	}
 }
@@ -21789,9 +21789,9 @@ export class TableSpecContext extends ParserRuleContext {
 }
 
 
-export class KeyspaceObjectUnknownSpecContext extends ParserRuleContext {
-	public keyspaceObjectUnknown(): KeyspaceObjectUnknownContext | undefined {
-		return this.tryGetRuleContext(0, KeyspaceObjectUnknownContext);
+export class ObjectUnknownSpecContext extends ParserRuleContext {
+	public objectUnknown(): ObjectUnknownContext | undefined {
+		return this.tryGetRuleContext(0, ObjectUnknownContext);
 	}
 	public keyspace(): KeyspaceContext | undefined {
 		return this.tryGetRuleContext(0, KeyspaceContext);
@@ -21804,18 +21804,18 @@ export class KeyspaceObjectUnknownSpecContext extends ParserRuleContext {
 		super(parent, invokingState);
 
 	}
-	@Override public get ruleIndex(): number { return CqlParser.RULE_keyspaceObjectUnknownSpec; }
+	@Override public get ruleIndex(): number { return CqlParser.RULE_objectUnknownSpec; }
 	@Override
 	public enterRule(listener: CqlParserListener): void {
-		if (listener.enterKeyspaceObjectUnknownSpec) listener.enterKeyspaceObjectUnknownSpec(this);
+		if (listener.enterObjectUnknownSpec) listener.enterObjectUnknownSpec(this);
 	}
 	@Override
 	public exitRule(listener: CqlParserListener): void {
-		if (listener.exitKeyspaceObjectUnknownSpec) listener.exitKeyspaceObjectUnknownSpec(this);
+		if (listener.exitObjectUnknownSpec) listener.exitObjectUnknownSpec(this);
 	}
 	@Override
 	public accept<Result>(visitor: CqlParserVisitor<Result>): Result {
-		if (visitor.visitKeyspaceObjectUnknownSpec) return visitor.visitKeyspaceObjectUnknownSpec(this);
+		if (visitor.visitObjectUnknownSpec) return visitor.visitObjectUnknownSpec(this);
 		else return visitor.visitChildren(this);
 	}
 }

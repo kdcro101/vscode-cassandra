@@ -164,9 +164,9 @@ import { ConstantHexadecimalContext } from './CqlParser';
 import { KeyspaceContext } from './CqlParser';
 import { TableContext } from './CqlParser';
 import { KeyspaceObjectContext } from './CqlParser';
-import { KeyspaceObjectUnknownContext } from './CqlParser';
+import { ObjectUnknownContext } from './CqlParser';
 import { TableSpecContext } from './CqlParser';
-import { KeyspaceObjectUnknownSpecContext } from './CqlParser';
+import { ObjectUnknownSpecContext } from './CqlParser';
 import { ColumnContext } from './CqlParser';
 import { ColumnUnknownContext } from './CqlParser';
 import { DataTypeContext } from './CqlParser';
@@ -1476,11 +1476,11 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitKeyspaceObject?: (ctx: KeyspaceObjectContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.keyspaceObjectUnknown`.
+	 * Visit a parse tree produced by `CqlParser.objectUnknown`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitKeyspaceObjectUnknown?: (ctx: KeyspaceObjectUnknownContext) => Result;
+	visitObjectUnknown?: (ctx: ObjectUnknownContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.tableSpec`.
@@ -1490,11 +1490,11 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitTableSpec?: (ctx: TableSpecContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.keyspaceObjectUnknownSpec`.
+	 * Visit a parse tree produced by `CqlParser.objectUnknownSpec`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitKeyspaceObjectUnknownSpec?: (ctx: KeyspaceObjectUnknownSpecContext) => Result;
+	visitObjectUnknownSpec?: (ctx: ObjectUnknownSpecContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.column`.

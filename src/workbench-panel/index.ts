@@ -7,6 +7,9 @@ import { WorkbenchCqlStatement } from "../types/editor";
 import { Workspace } from "../workspace";
 import { generateHtml } from "./html";
 
+import * as connect from "connect";
+import * as serveStatic from "serve-static";
+
 declare var extensionContextBundle: ExtensionContextBundle;
 
 export class WorkbenchPanel {
@@ -24,12 +27,20 @@ export class WorkbenchPanel {
         private persistedEditors: WorkbenchCqlStatement[],
 
     ) {
+        const dir = path.join(extensionContextBundle.context.extensionPath, "worker");
+
+        // const s = connect()
+        //     .use(serveStatic(dir, {
+        //         // index: true,
+        //     }))
+        //     .listen(8000, "127.0.0.1");
 
         this.panel = vscode.window.createWebviewPanel("cassandra-workbench", "Cassandra workbench", vscode.ViewColumn.Active, {
             enableScripts: true,
             enableFindWidget: false,
             localResourceRoots: [
                 vscode.Uri.file(path.join(this.context.extensionPath, "ng")),
+                vscode.Uri.file(path.join(this.context.extensionPath, "worker")),
                 vscode.Uri.file(path.join(this.context.extensionPath, "node_modules")),
             ],
             retainContextWhenHidden: true,

@@ -22,6 +22,7 @@ export const generateHtml = (basePath: string, persistedStatements: WorkbenchCql
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link rel="stylesheet" href="${path.join("vscode-resource:", basePath, "ng", "styles.css")}">
             <script>
+                // var myWorker = new Worker('http://127.0.0.1/index.js');
                 const vscode = acquireVsCodeApi();
                 var codeFontFamily = "${fontFamily}";
                 var codeFontSize = "${fontSize}";

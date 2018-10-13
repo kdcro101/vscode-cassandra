@@ -5,15 +5,14 @@ export const markKeyspaceReferenceError = (model: monaco.editor.ITextModel,
 
     const out: monaco.editor.IMarkerData[] = [];
 
-    const keyspace = statement.keyspace;
-    const token = statement.tokens["keyspace"] == null ? null : statement.tokens["keyspace"].find((t) => t.text === keyspace);
+    const spec = statement.rules.tableSpec;
 
-    if (statement.keyspaceData != null) {
+    if (!spec || !spec.keyspaceToken || spec.keyspaceData) {
+        // no keyspace no error
         return [];
     }
-    if (token == null) {
-        return;
-    }
+
+    const token = spec.keyspaceToken;
 
     const ps = model.getPositionAt(token.charStart);
     const pe = model.getPositionAt(token.charStop);

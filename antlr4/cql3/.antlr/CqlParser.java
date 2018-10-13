@@ -99,8 +99,8 @@ public class CqlParser extends Parser {
 		RULE_constant = 151, RULE_constantUuid = 152, RULE_constantDecimal = 153, 
 		RULE_constantFloat = 154, RULE_constantString = 155, RULE_constantBoolean = 156, 
 		RULE_constantHexadecimal = 157, RULE_keyspace = 158, RULE_table = 159, 
-		RULE_keyspaceObject = 160, RULE_keyspaceObjectUnknown = 161, RULE_tableSpec = 162, 
-		RULE_keyspaceObjectUnknownSpec = 163, RULE_column = 164, RULE_columnUnknown = 165, 
+		RULE_keyspaceObject = 160, RULE_objectUnknown = 161, RULE_tableSpec = 162, 
+		RULE_objectUnknownSpec = 163, RULE_column = 164, RULE_columnUnknown = 165, 
 		RULE_dataType = 166, RULE_dataTypeCollection = 167, RULE_dataTypeFundamental = 168, 
 		RULE_orderDirection = 169, RULE_role = 170, RULE_trigger = 171, RULE_triggerClass = 172, 
 		RULE_materializedView = 173, RULE_type = 174, RULE_aggregate = 175, RULE_function = 176, 
@@ -185,16 +185,16 @@ public class CqlParser extends Parser {
 		"relationElementTokenSpec", "relationOperator", "functionCall", "functionArgs", 
 		"constant", "constantUuid", "constantDecimal", "constantFloat", "constantString", 
 		"constantBoolean", "constantHexadecimal", "keyspace", "table", "keyspaceObject", 
-		"keyspaceObjectUnknown", "tableSpec", "keyspaceObjectUnknownSpec", "column", 
-		"columnUnknown", "dataType", "dataTypeCollection", "dataTypeFundamental", 
-		"orderDirection", "role", "trigger", "triggerClass", "materializedView", 
-		"type", "aggregate", "function", "language", "user", "password", "hashKey", 
-		"param", "paramName", "kwAdd", "kwAggregate", "kwAll", "kwAllFunctions", 
-		"kwAllKeyspaces", "kwAllRoles", "kwAllPermissions", "kwAllow", "kwAllowFiltering", 
-		"kwAlter", "kwAnd", "kwApply", "kwAs", "kwAsc", "kwAuthorize", "kwBatch", 
-		"kwBegin", "kwBy", "kwCalled", "kwClustering", "kwCompact", "kwContains", 
-		"kwContainsKey", "kwCreate", "kwDelete", "kwDesc", "kwDescibe", "kwDistinct", 
-		"kwDrop", "kwDurableWrites", "kwEntries", "kwExecute", "kwExists", "kwFiltering", 
+		"objectUnknown", "tableSpec", "objectUnknownSpec", "column", "columnUnknown", 
+		"dataType", "dataTypeCollection", "dataTypeFundamental", "orderDirection", 
+		"role", "trigger", "triggerClass", "materializedView", "type", "aggregate", 
+		"function", "language", "user", "password", "hashKey", "param", "paramName", 
+		"kwAdd", "kwAggregate", "kwAll", "kwAllFunctions", "kwAllKeyspaces", "kwAllRoles", 
+		"kwAllPermissions", "kwAllow", "kwAllowFiltering", "kwAlter", "kwAnd", 
+		"kwApply", "kwAs", "kwAsc", "kwAuthorize", "kwBatch", "kwBegin", "kwBy", 
+		"kwCalled", "kwClustering", "kwCompact", "kwContains", "kwContainsKey", 
+		"kwCreate", "kwDelete", "kwDesc", "kwDescibe", "kwDistinct", "kwDrop", 
+		"kwDurableWrites", "kwEntries", "kwExecute", "kwExists", "kwFiltering", 
 		"kwFinalfunc", "kwFrom", "kwFull", "kwFunction", "kwGrant", "kwIf", "kwIn", 
 		"kwIndex", "kwInitcond", "kwInput", "kwInsert", "kwInto", "kwIs", "kwKey", 
 		"kwKeys", "kwKeyspace", "kwLanguage", "kwLimit", "kwList", "kwListRoles", 
@@ -1733,8 +1733,8 @@ public class CqlParser extends Parser {
 		public KwTypeContext kwType() {
 			return getRuleContext(KwTypeContext.class,0);
 		}
-		public KeyspaceObjectUnknownSpecContext keyspaceObjectUnknownSpec() {
-			return getRuleContext(KeyspaceObjectUnknownSpecContext.class,0);
+		public ObjectUnknownSpecContext objectUnknownSpec() {
+			return getRuleContext(ObjectUnknownSpecContext.class,0);
 		}
 		public SyntaxBracketLrContext syntaxBracketLr() {
 			return getRuleContext(SyntaxBracketLrContext.class,0);
@@ -1776,7 +1776,7 @@ public class CqlParser extends Parser {
 			}
 
 			setState(851);
-			keyspaceObjectUnknownSpec();
+			objectUnknownSpec();
 			setState(852);
 			syntaxBracketLr();
 			setState(853);
@@ -1870,8 +1870,8 @@ public class CqlParser extends Parser {
 		public KwTriggerContext kwTrigger() {
 			return getRuleContext(KwTriggerContext.class,0);
 		}
-		public KeyspaceObjectUnknownSpecContext keyspaceObjectUnknownSpec() {
-			return getRuleContext(KeyspaceObjectUnknownSpecContext.class,0);
+		public ObjectUnknownSpecContext objectUnknownSpec() {
+			return getRuleContext(ObjectUnknownSpecContext.class,0);
 		}
 		public KwUsingContext kwUsing() {
 			return getRuleContext(KwUsingContext.class,0);
@@ -1910,7 +1910,7 @@ public class CqlParser extends Parser {
 			}
 
 			setState(872);
-			keyspaceObjectUnknownSpec();
+			objectUnknownSpec();
 			setState(873);
 			kwUsing();
 			setState(874);
@@ -1938,8 +1938,8 @@ public class CqlParser extends Parser {
 		public KwViewContext kwView() {
 			return getRuleContext(KwViewContext.class,0);
 		}
-		public KeyspaceObjectUnknownSpecContext keyspaceObjectUnknownSpec() {
-			return getRuleContext(KeyspaceObjectUnknownSpecContext.class,0);
+		public ObjectUnknownSpecContext objectUnknownSpec() {
+			return getRuleContext(ObjectUnknownSpecContext.class,0);
 		}
 		public KwAsContext kwAs() {
 			return getRuleContext(KwAsContext.class,0);
@@ -2001,7 +2001,7 @@ public class CqlParser extends Parser {
 			}
 
 			setState(882);
-			keyspaceObjectUnknownSpec();
+			objectUnknownSpec();
 			setState(883);
 			kwAs();
 			setState(884);
@@ -2269,8 +2269,8 @@ public class CqlParser extends Parser {
 		public KwKeyspaceContext kwKeyspace() {
 			return getRuleContext(KwKeyspaceContext.class,0);
 		}
-		public KeyspaceObjectUnknownContext keyspaceObjectUnknown() {
-			return getRuleContext(KeyspaceObjectUnknownContext.class,0);
+		public ObjectUnknownContext objectUnknown() {
+			return getRuleContext(ObjectUnknownContext.class,0);
 		}
 		public KwWithContext kwWith() {
 			return getRuleContext(KwWithContext.class,0);
@@ -2325,7 +2325,7 @@ public class CqlParser extends Parser {
 			}
 
 			setState(929);
-			keyspaceObjectUnknown();
+			objectUnknown();
 			setState(930);
 			kwWith();
 			setState(931);
@@ -2370,8 +2370,8 @@ public class CqlParser extends Parser {
 		public KwFunctionContext kwFunction() {
 			return getRuleContext(KwFunctionContext.class,0);
 		}
-		public KeyspaceObjectUnknownSpecContext keyspaceObjectUnknownSpec() {
-			return getRuleContext(KeyspaceObjectUnknownSpecContext.class,0);
+		public ObjectUnknownSpecContext objectUnknownSpec() {
+			return getRuleContext(ObjectUnknownSpecContext.class,0);
 		}
 		public SyntaxBracketLrContext syntaxBracketLr() {
 			return getRuleContext(SyntaxBracketLrContext.class,0);
@@ -2447,7 +2447,7 @@ public class CqlParser extends Parser {
 			}
 
 			setState(949);
-			keyspaceObjectUnknownSpec();
+			objectUnknownSpec();
 			setState(950);
 			syntaxBracketLr();
 			setState(952);
@@ -2652,8 +2652,8 @@ public class CqlParser extends Parser {
 		public KwAggregateContext kwAggregate() {
 			return getRuleContext(KwAggregateContext.class,0);
 		}
-		public KeyspaceObjectUnknownSpecContext keyspaceObjectUnknownSpec() {
-			return getRuleContext(KeyspaceObjectUnknownSpecContext.class,0);
+		public ObjectUnknownSpecContext objectUnknownSpec() {
+			return getRuleContext(ObjectUnknownSpecContext.class,0);
 		}
 		public SyntaxBracketLrContext syntaxBracketLr() {
 			return getRuleContext(SyntaxBracketLrContext.class,0);
@@ -2732,7 +2732,7 @@ public class CqlParser extends Parser {
 			}
 
 			setState(992);
-			keyspaceObjectUnknownSpec();
+			objectUnknownSpec();
 			setState(993);
 			syntaxBracketLr();
 			setState(994);
@@ -5063,8 +5063,8 @@ public class CqlParser extends Parser {
 		public KwTableContext kwTable() {
 			return getRuleContext(KwTableContext.class,0);
 		}
-		public KeyspaceObjectUnknownSpecContext keyspaceObjectUnknownSpec() {
-			return getRuleContext(KeyspaceObjectUnknownSpecContext.class,0);
+		public ObjectUnknownSpecContext objectUnknownSpec() {
+			return getRuleContext(ObjectUnknownSpecContext.class,0);
 		}
 		public CreateTableDefContext createTableDef() {
 			return getRuleContext(CreateTableDefContext.class,0);
@@ -5103,7 +5103,7 @@ public class CqlParser extends Parser {
 			}
 
 			setState(1325);
-			keyspaceObjectUnknownSpec();
+			objectUnknownSpec();
 			setState(1326);
 			createTableDef();
 			setState(1328);
@@ -11236,7 +11236,7 @@ public class CqlParser extends Parser {
 		return _localctx;
 	}
 
-	public static class KeyspaceObjectUnknownContext extends ParserRuleContext {
+	public static class ObjectUnknownContext extends ParserRuleContext {
 		public TerminalNode OBJECT_NAME() { return getToken(CqlParser.OBJECT_NAME, 0); }
 		public List<TerminalNode> DQUOTE() { return getTokens(CqlParser.DQUOTE); }
 		public TerminalNode DQUOTE(int i) {
@@ -11254,15 +11254,15 @@ public class CqlParser extends Parser {
 		public TerminalNode K_PARTITION() { return getToken(CqlParser.K_PARTITION, 0); }
 		public TerminalNode K_KEY() { return getToken(CqlParser.K_KEY, 0); }
 		public TerminalNode K_LEVEL() { return getToken(CqlParser.K_LEVEL, 0); }
-		public KeyspaceObjectUnknownContext(ParserRuleContext parent, int invokingState) {
+		public ObjectUnknownContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_keyspaceObjectUnknown; }
+		@Override public int getRuleIndex() { return RULE_objectUnknown; }
 	}
 
-	public final KeyspaceObjectUnknownContext keyspaceObjectUnknown() throws RecognitionException {
-		KeyspaceObjectUnknownContext _localctx = new KeyspaceObjectUnknownContext(_ctx, getState());
-		enterRule(_localctx, 322, RULE_keyspaceObjectUnknown);
+	public final ObjectUnknownContext objectUnknown() throws RecognitionException {
+		ObjectUnknownContext _localctx = new ObjectUnknownContext(_ctx, getState());
+		enterRule(_localctx, 322, RULE_objectUnknown);
 		try {
 			setState(2157);
 			_errHandler.sync(this);
@@ -11444,9 +11444,9 @@ public class CqlParser extends Parser {
 		return _localctx;
 	}
 
-	public static class KeyspaceObjectUnknownSpecContext extends ParserRuleContext {
-		public KeyspaceObjectUnknownContext keyspaceObjectUnknown() {
-			return getRuleContext(KeyspaceObjectUnknownContext.class,0);
+	public static class ObjectUnknownSpecContext extends ParserRuleContext {
+		public ObjectUnknownContext objectUnknown() {
+			return getRuleContext(ObjectUnknownContext.class,0);
 		}
 		public KeyspaceContext keyspace() {
 			return getRuleContext(KeyspaceContext.class,0);
@@ -11454,15 +11454,15 @@ public class CqlParser extends Parser {
 		public SpecialDotContext specialDot() {
 			return getRuleContext(SpecialDotContext.class,0);
 		}
-		public KeyspaceObjectUnknownSpecContext(ParserRuleContext parent, int invokingState) {
+		public ObjectUnknownSpecContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_keyspaceObjectUnknownSpec; }
+		@Override public int getRuleIndex() { return RULE_objectUnknownSpec; }
 	}
 
-	public final KeyspaceObjectUnknownSpecContext keyspaceObjectUnknownSpec() throws RecognitionException {
-		KeyspaceObjectUnknownSpecContext _localctx = new KeyspaceObjectUnknownSpecContext(_ctx, getState());
-		enterRule(_localctx, 326, RULE_keyspaceObjectUnknownSpec);
+	public final ObjectUnknownSpecContext objectUnknownSpec() throws RecognitionException {
+		ObjectUnknownSpecContext _localctx = new ObjectUnknownSpecContext(_ctx, getState());
+		enterRule(_localctx, 326, RULE_objectUnknownSpec);
 		try {
 			setState(2173);
 			_errHandler.sync(this);
@@ -11471,7 +11471,7 @@ public class CqlParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(2167);
-				keyspaceObjectUnknown();
+				objectUnknown();
 				}
 				break;
 			case 2:
@@ -11482,13 +11482,13 @@ public class CqlParser extends Parser {
 				setState(2169);
 				specialDot();
 				setState(2170);
-				keyspaceObjectUnknown();
+				objectUnknown();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				 this.notifyErrorListeners("rule.keyspaceObjectUnknownSpec"); 
+				 this.notifyErrorListeners("rule.objectUnknownSpec"); 
 				}
 				break;
 			}

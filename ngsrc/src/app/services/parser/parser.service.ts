@@ -22,7 +22,7 @@ export class ParserService {
     public parseInput(input: string, clusterName: string, keyspaceInitial: string): Subject<InputParseResult> {
         const out = new Subject<InputParseResult>();
         const id = generateId();
-
+        console.time(`parseInput_${id}`);
         const message: ProcMessageStrict<"w2e_checkInputRequest"> = {
             name: "w2e_checkInputRequest",
             data: {
@@ -40,6 +40,7 @@ export class ParserService {
             take(1),
             map((e) => e as ProcMessageStrict<"e2w_checkInputResponse">),
         ).subscribe((e) => {
+            console.timeEnd(`parseInput_${id}`);
             out.next(e.data.result);
         }, (e) => {
             out.error(e);

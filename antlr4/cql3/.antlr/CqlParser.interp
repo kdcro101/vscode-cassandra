@@ -518,9 +518,9 @@ constantHexadecimal
 keyspace
 table
 keyspaceObject
-keyspaceObjectUnknown
+objectUnknown
 tableSpec
-keyspaceObjectUnknownSpec
+objectUnknownSpec
 column
 columnUnknown
 dataType

@@ -133,7 +133,7 @@ createRole
     ;
 
 createType
-    : kwCreate kwType ifNotExist? keyspaceObjectUnknownSpec
+    : kwCreate kwType ifNotExist? objectUnknownSpec
       syntaxBracketLr typeMemberColumnList syntaxBracketRr
     ;
 typeMemberColumnList
@@ -141,11 +141,11 @@ typeMemberColumnList
     ;
 
 createTrigger
-    : kwCreate kwTrigger ifNotExist? keyspaceObjectUnknownSpec kwUsing triggerClass
+    : kwCreate kwTrigger ifNotExist? objectUnknownSpec kwUsing triggerClass
     ;
 
 createMaterializedView
-    : kwCreate kwMaterialized kwView ifNotExist? keyspaceObjectUnknownSpec
+    : kwCreate kwMaterialized kwView ifNotExist? objectUnknownSpec
       kwAs
       kwSelect columnList kwFrom tableSpec
       materializedViewWhere
@@ -181,14 +181,14 @@ materializedViewOptions
 
 
 createKeyspace
-    : kwCreate kwKeyspace ifNotExist? keyspaceObjectUnknown
+    : kwCreate kwKeyspace ifNotExist? objectUnknown
       kwWith kwReplication OPERATOR_EQ syntaxBracketLc replicationList syntaxBracketRc
       (kwAnd durableWrites)?
     ;
 
 createFunction
     : kwCreate orReplace? kwFunction  ifNotExist?
-      keyspaceObjectUnknownSpec syntaxBracketLr paramList? syntaxBracketRr
+      objectUnknownSpec syntaxBracketLr paramList? syntaxBracketRr
       returnMode
       kwReturns dataType
       kwLanguage language kwAs
@@ -207,7 +207,7 @@ returnMode
     ;
 createAggregate
     : kwCreate orReplace? kwAggregate ifNotExist?
-      keyspaceObjectUnknownSpec syntaxBracketLr dataType syntaxBracketRr
+      objectUnknownSpec syntaxBracketLr dataType syntaxBracketRr
       kwSfunc function
       kwStype dataType
       kwFinalfunc function
@@ -367,7 +367,7 @@ dropIndex
     : kwDrop kwIndex ifExist? (keyspace DOT)? indexName
     ;
 createTable
-    : kwCreate kwTable ifNotExist? keyspaceObjectUnknownSpec createTableDef withElement?
+    : kwCreate kwTable ifNotExist? objectUnknownSpec createTableDef withElement?
     ;
 
 createTableDef
@@ -811,7 +811,7 @@ keyspaceObject
     | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
       K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL
     ;
-keyspaceObjectUnknown
+objectUnknown
     : OBJECT_NAME
     | DQUOTE OBJECT_NAME DQUOTE
     | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
@@ -824,10 +824,10 @@ tableSpec
     | { this.notifyErrorListeners("rule.tableSpec"); }
     ;
 
-keyspaceObjectUnknownSpec
-    : keyspaceObjectUnknown
-    | keyspace specialDot keyspaceObjectUnknown
-    | { this.notifyErrorListeners("rule.keyspaceObjectUnknownSpec"); }
+objectUnknownSpec
+    : objectUnknown
+    | keyspace specialDot objectUnknown
+    | { this.notifyErrorListeners("rule.objectUnknownSpec"); }
     ;
 
 column

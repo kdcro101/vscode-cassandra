@@ -47,6 +47,7 @@ export class InputParser {
         return analysis;
     }
     public parse(input: string, structure: CassandraClusterData, keyspaceInitial: string): InputParseResult {
+        console.time("parse");
         const inputStream = new ANTLRInputStream(input);
         const cqlLexer = new CqlLexer(inputStream);
         const tokenStream = new CommonTokenStream(cqlLexer);
@@ -82,6 +83,7 @@ export class InputParser {
             errors,
             analysis,
         };
+        console.timeEnd("parse");
         return out;
     }
     private extractTokenData(token: Token): TokenData {

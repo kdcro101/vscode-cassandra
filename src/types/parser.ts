@@ -43,9 +43,27 @@ export interface AnalyzedStatement {
     keyspaceData?: CassandraKeyspace;
     columns: CqlStatementColumn[];
     expressions: CqlStatementExpression[];
-    tokens?: { [key in ParserTokenFamily]: AnalyzedStatementToken[] };
+    // tokens?: { [key in ParserTokenFamily]: AnalyzedStatementToken[] };
+    rules?: AnalyzedStatementRules;
+}
+
+export interface AnalyzedStatementRules {
+    tableSpec?: RuleTableSpec;
+    objectUnknownSpec?: RuleObjectUnknownSpec;
 
 }
+export interface RuleTableSpec {
+    keyspaceToken?: AnalyzedStatementToken;
+    tableToken?: AnalyzedStatementToken;
+    tableData?: CassandraTable;
+    keyspaceData?: CassandraKeyspace;
+    keyspaceAmbiental?: string;
+}
+export interface RuleObjectUnknownSpec {
+    keyspace?: AnalyzedStatementToken;
+    objectUnknown?: AnalyzedStatementToken;
+}
+
 export interface CqlAnalysis {
     statements: AnalyzedStatement[];
     statementRanges: AnalyzedStatementRange[];
