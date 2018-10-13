@@ -50,7 +50,7 @@ export class WorkbenchPanel {
             this.eventDestroy.next();
         });
 
-        // this.panel.webview.html = generateHtml(this.context.extensionPath, persistedEditors);
+        this.panel.webview.html = generateHtml(this.context.extensionPath, persistedEditors);
 
         fromEventPattern<ProcMessage>((f: (e: any) => any) => {
             return this.panel.webview.onDidReceiveMessage(f, null, this.context.subscriptions);

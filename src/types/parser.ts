@@ -1,4 +1,7 @@
-import { CassandraColumnType, CassandraTable } from "./index";
+import { CqlAnalyzerListener } from "../parser/listeners/cql-analyzer";
+import { CassandraColumnType, CassandraKeyspace, CassandraTable } from "./index";
+
+export type ParserTokenFamily = "keyspace" | "table";
 
 export type CqlStatementColumnType = CassandraColumnType | "not_found" | null;
 
@@ -36,9 +39,11 @@ export interface AnalyzedStatement {
     keyspace?: string;
     table?: string;
     text?: string;
-    tableStruct?: CassandraTable;
+    tableData?: CassandraTable;
+    keyspaceData?: CassandraKeyspace;
     columns: CqlStatementColumn[];
     expressions: CqlStatementExpression[];
+    tokens?: { [key in ParserTokenFamily]: AnalyzedStatementToken[] };
 
 }
 export interface CqlAnalysis {
@@ -80,4 +85,10 @@ export interface TokenData {
     tokenIndex: number;
     startIndex: number;
     stopIndex: number;
+}
+
+export interface AnalyzedStatementToken {
+    charStart: number;
+    charStop: number;
+    text: string;
 }

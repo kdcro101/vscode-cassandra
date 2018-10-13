@@ -1,11 +1,12 @@
-import { ParserRuleContext } from "antlr4ts";
+import { Parser, ParserRuleContext } from "antlr4ts";
+import { ParseTree } from "antlr4ts/tree/ParseTree";
 import {
     ColumnContext, CqlContext, ExpressionContext,
     KeyspaceContext, RootContext, StatementSeparatorContext, TableSpecContext, UseContext,
 } from "../../antlr/CqlParser";
 import { CqlParserListener } from "../../antlr/CqlParserListener";
 import { CassandraClusterData } from "../../types";
-import { AnalyzedStatementRange } from "../../types/parser";
+import { AnalyzedStatementRange, AnalyzedStatementToken, ParserTokenFamily } from "../../types/parser";
 import {
     AnalyzedStatement, CqlAnalysis, CqlAnalysisError, CqlStatementColumn,
     CqlStatementExpression, CqlStatementType,
@@ -102,13 +103,15 @@ export class CqlAnalyzerListener implements CqlParserListener {
         }
 
         this.result.statements.forEach((s, i) => {
-            if (s.type === "select" && s.keyspace && s.table) {
+            // if (s.type === "select" && s.keyspace && s.table) {
+            if (s.keyspace && s.table) {
                 const ksi = this.structure.keyspaces.findIndex((k) => k.name === s.keyspace);
                 if (ksi > -1) {
                     const ks = this.structure.keyspaces[ksi];
+                    this.result.statements[i].keyspaceData = ks;
                     const tbi = ks.tables.findIndex((t) => t.name === s.table);
                     if (tbi > -1) {
-                        this.result.statements[i].tableStruct = ks.tables[tbi];
+                        this.result.statements[i].tableData = ks.tables[tbi];
                     }
                 }
             }
@@ -156,6 +159,7 @@ export class CqlAnalyzerListener implements CqlParserListener {
             type: null,
             columns: [],
             expressions: [],
+            tokens: {} as any,
         };
 
     }
@@ -218,9 +222,11 @@ export class CqlAnalyzerListener implements CqlParserListener {
         const tbc = ctx.children.find((c: ParserRuleContext) => this.ruleNames[c.ruleIndex] === TABLE_RULE);
 
         if (ksc) {
+            this.pushTokenToStatement(ksc as ParserRuleContext, "keyspace");
             this.setCurrentStatementValue("keyspace", ksc.text);
         }
         if (tbc) {
+            this.pushTokenToStatement(tbc as ParserRuleContext, "table");
             this.setCurrentStatementValue("table", tbc.text);
         }
 
@@ -411,5 +417,22 @@ export class CqlAnalyzerListener implements CqlParserListener {
         this.result.statementRanges.push(item);
         this.separators.push(endPosition);
     }
+    private contextToToken(ctx: ParserRuleContext): AnalyzedStatementToken {
+        const out: AnalyzedStatementToken = {
+            charStart: ctx.start.startIndex,
+            charStop: ctx.stop.stopIndex,
+            text: ctx.text,
+        };
+        return out;
+    }
+    private pushTokenToStatement(ctx: ParserRuleContext, family: ParserTokenFamily) {
+        const t = this.contextToToken(ctx as ParserRuleContext);
 
+        const s = this.result.statements[this.statementCurrent];
+        if (s.tokens[family] == null) {
+            s.tokens[family] = [];
+        }
+
+        s.tokens[family].push(t);
+    }
 }

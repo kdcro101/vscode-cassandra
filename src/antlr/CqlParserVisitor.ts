@@ -163,8 +163,12 @@ import { ConstantBooleanContext } from './CqlParser';
 import { ConstantHexadecimalContext } from './CqlParser';
 import { KeyspaceContext } from './CqlParser';
 import { TableContext } from './CqlParser';
+import { KeyspaceObjectContext } from './CqlParser';
+import { KeyspaceObjectUnknownContext } from './CqlParser';
 import { TableSpecContext } from './CqlParser';
+import { KeyspaceObjectUnknownSpecContext } from './CqlParser';
 import { ColumnContext } from './CqlParser';
+import { ColumnUnknownContext } from './CqlParser';
 import { DataTypeContext } from './CqlParser';
 import { DataTypeCollectionContext } from './CqlParser';
 import { DataTypeFundamentalContext } from './CqlParser';
@@ -1465,6 +1469,20 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitTable?: (ctx: TableContext) => Result;
 
 	/**
+	 * Visit a parse tree produced by `CqlParser.keyspaceObject`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitKeyspaceObject?: (ctx: KeyspaceObjectContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.keyspaceObjectUnknown`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitKeyspaceObjectUnknown?: (ctx: KeyspaceObjectUnknownContext) => Result;
+
+	/**
 	 * Visit a parse tree produced by `CqlParser.tableSpec`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -1472,11 +1490,25 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitTableSpec?: (ctx: TableSpecContext) => Result;
 
 	/**
+	 * Visit a parse tree produced by `CqlParser.keyspaceObjectUnknownSpec`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitKeyspaceObjectUnknownSpec?: (ctx: KeyspaceObjectUnknownSpecContext) => Result;
+
+	/**
 	 * Visit a parse tree produced by `CqlParser.column`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	visitColumn?: (ctx: ColumnContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.columnUnknown`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitColumnUnknown?: (ctx: ColumnUnknownContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.dataType`.

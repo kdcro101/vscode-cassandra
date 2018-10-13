@@ -4,11 +4,15 @@ export const decoColumnsKnown = (
     statement: AnalyzedStatement,
 ): monaco.editor.IModelDeltaDecoration[] => {
 
-    const out: monaco.editor.IModelDeltaDecoration[] = [];
+    // const out: monaco.editor.IModelDeltaDecoration[] = [];
 
-    statement.columns.forEach((c) => {
+    const out = statement.columns.reduce<monaco.editor.IModelDeltaDecoration[]>((acc, c) => {
         const ps = model.getPositionAt(c.charStart);
         const pe = model.getPositionAt(c.charStop);
+
+        if (c.kind === "not_found") {
+            return acc;
+        }
 
         const o: monaco.editor.IModelDeltaDecoration = {
             range: new monaco.Range(ps.lineNumber, ps.column, pe.lineNumber, pe.column + 1),
@@ -21,9 +25,10 @@ export const decoColumnsKnown = (
             },
         };
 
-        out.push(o);
+        acc.push(o);
+        return acc;
 
-    });
+    }, []);
 
     return out;
 };

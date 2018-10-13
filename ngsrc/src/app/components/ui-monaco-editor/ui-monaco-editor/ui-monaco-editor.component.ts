@@ -65,23 +65,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         styleElement.appendChild(document.createTextNode(style));
         host.nativeElement.appendChild(styleElement);
 
-        // fromEvent<KeyboardEvent>(window, "keydown")
-        //     .subscribe((e) => {
-        //         console.log("Window keydown");
-        //         console.log(`ctrl=${e.ctrlKey} code=${e.keyCode}`);
-        //         console.log(e);
-        //     });
-        fromEvent<KeyboardEvent>(window, "keydown", {
-            capture: true,
-        }).subscribe((e) => {
-            console.log("Window keydown");
-            console.log(`ctrl=${e.ctrlKey} code=${e.keyCode}`);
-            console.log(e);
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            e.stopPropagation();
-        });
-        fromEvent<KeyboardEvent>(window, "keypress", {
+        fromEvent<KeyboardEvent>(window, "keyup", {
             capture: true,
         }).pipe(
             takeUntil(this.eventViewDestroyed),
@@ -92,12 +76,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             console.log(e);
             this.onWindowKeypress(e);
         });
-        // fromEvent<KeyboardEvent>(window, "keyup")
-        //     .subscribe((e) => {
-        //         console.log("Window keyup");
-        //         console.log(`ctrl=${e.ctrlKey} code=${e.keyCode}`);
-        //         console.log(e);
-        //     });
+
     }
     @Input("editor") public set setEditor(value: WorkbenchEditor) {
         this.stateReady.pipe(
@@ -437,23 +416,17 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         console.log("keypress");
         if (ev.ctrlKey && ev.key === "a") {
             this.selectAll();
-            ev.preventDefault();
         }
         if (ev.ctrlKey && ev.key === "s") {
             this.onSave.emit();
-            ev.preventDefault();
         }
-        if (ev.ctrlKey && ev.key === "f") {
+        if (ev.ctrlKey && ev.altKey && ev.key === "f") {
             this.actionFind.run();
-            ev.preventDefault();
         }
-        if (ev.ctrlKey && ev.key === "h") {
+        if (ev.ctrlKey && ev.altKey && ev.key === "h") {
+            console.log("replace action");
             this.actionReplace.run();
-            ev.preventDefault();
         }
 
-        ev.preventDefault();
-        ev.stopImmediatePropagation();
-        ev.stopPropagation();
     }
 }

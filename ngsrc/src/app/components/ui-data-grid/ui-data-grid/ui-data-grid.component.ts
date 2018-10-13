@@ -291,7 +291,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
             this.gridScrollContentObserver = new ResizeObserver(() => {
                 console.log("content ResizeObserver");
-                setTimeout(this.fixContentWidth());
+                setTimeout(() => this.fixContentWidth());
             });
             this.gridScrollContentObserver.observe(this.gridScrollContent);
 
@@ -347,7 +347,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             this.currentColumns = columns;
             this.currentAnalysis = analysis;
             this.currentStatement = analysis.statements[this.currentStatementIndex];
-            this.currentTableStruct = this.currentStatement.tableStruct;
+            this.currentTableStruct = this.currentStatement.tableData;
             this.currentPrimaryKeyAvailable = this.primaryKeyAvailable();
             this.currentClusterName = analysis.cluserName;
             this.currentKeyspace = this.currentStatement.keyspace;
