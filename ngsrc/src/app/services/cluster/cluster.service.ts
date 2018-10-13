@@ -30,14 +30,14 @@ export class ClusterService {
             map((m) => m as ProcMessageStrict<"e2w_getClustersResponse">),
         ).subscribe((m) => {
             this.list = m.data;
-            console.log("Cluster list change");
-            console.log(JSON.stringify(this.list));
+            // console.log("Cluster list change");
+            // console.log(JSON.stringify(this.list));
             this.eventChange.next();
         });
 
     }
     private clusterListRequest() {
-        console.log("Requesting cluster list");
+        // console.log("Requesting cluster list");
         const m: ProcMessageStrict<"w2e_getClustersRequest"> = {
             name: "w2e_getClustersRequest",
             data: true,
@@ -47,7 +47,7 @@ export class ClusterService {
     public getStructure(clusterName: string): Subject<CassandraClusterData> {
         const out = new Subject<CassandraClusterData>();
 
-        console.log(`getStructure: [${clusterName}]`);
+        // console.log(`getStructure: [${clusterName}]`);
 
         const id = generateId();
 
@@ -75,7 +75,7 @@ export class ClusterService {
             }
 
         }, (e) => {
-            console.log(e);
+            // console.log(e);
             out.error("response_error");
         });
 

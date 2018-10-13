@@ -157,7 +157,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     }
     @Input("editor") set setData(data: WorkbenchEditor) {
         if (data == null) {
-            console.log("UiDataGridComponent -> ̣No data");
+            // console.log("UiDataGridComponent -> ̣No data");
             return;
         }
         this.currentEditor = data;
@@ -168,7 +168,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         this.gridWrapRect = this.host.nativeElement.getBoundingClientRect();
 
         this.gridWrapResizeObservable = new ResizeObserver(() => {
-            console.log("gridWrap Resize");
+            // console.log("gridWrap Resize");
             this.gridWrapRect = this.gridWrap.nativeElement.getBoundingClientRect();
             this.eventGridWrapResize.next();
         });
@@ -187,9 +187,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         ChangeManager.eventChange.pipe(
             takeUntil(this.eventViewDestroyed),
         ).subscribe(() => {
-            console.log("###################");
-            console.log("ChangeManager changed");
-            console.log("###################");
+
             this.currentResultState.showChanges = this.changeManager.list.length === 0 ? false : true;
             this.detectChanges();
         });
@@ -207,7 +205,6 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 takeUntil(this.eventViewDestroyed),
                 debounceTime(300),
             ).subscribe((item) => {
-                console.log(">>> change or remove debounced");
                 this.gridInstance.render();
                 this.detectChanges();
             });
@@ -217,7 +214,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         super.ngOnDestroy();
     }
     private onDataChangeAdded(item: DataChangeItem) {
-        console.log(`onDataChangeAdded`);
+        // console.log(`onDataChangeAdded`);
 
         switch (item.type) {
             case "cellUpdate":
@@ -234,7 +231,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
     }
     private onDataChangeRemoved(item: DataChangeItem) {
-        console.log(`onDataChangeRemoved`);
+        // console.log(`onDataChangeRemoved`);
         switch (item.type) {
             case "cellUpdate":
                 const colName = item.column;
@@ -262,9 +259,6 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
 
         this.detectChanges();
 
-        console.log("createGridInstance: ClusterExecuteResults");
-        console.log("------------------------------------------");
-
         this.eventRender.pipe(
             takeUntil(this.eventViewDestroyed),
             debounceTime(300),
@@ -290,7 +284,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             this.scrollAssist = new ScrollAssist(this);
 
             this.gridScrollContentObserver = new ResizeObserver(() => {
-                console.log("content ResizeObserver");
+                // console.log("content ResizeObserver");
                 setTimeout(() => this.fixContentWidth());
             });
             this.gridScrollContentObserver.observe(this.gridScrollContent);
@@ -312,7 +306,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 }
             }),
         ).subscribe(() => {
-            console.log("createGridInstance");
+            // console.log("createGridInstance");
             const data = this.currentEditor.result;
 
             this.currentStatementIndex = data.analysis.statements.findIndex((s) => s.type === "select");
@@ -324,8 +318,8 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             const error = data.errors[this.currentStatementIndex];
 
             if (error) {
-                console.log("Statement resulted in error");
-                console.log(error.error);
+                // console.log("Statement resulted in error");
+                // console.log(error.error);
                 this.currentError = error.error;
                 this.renderingProgress = false;
                 this.currentResultState = { showError: true };
@@ -401,23 +395,23 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 outsideClickDeselects: false,
                 undo: true,
                 afterRender: (isForced: boolean) => {
-                    console.log(`afterRender ${isForced}`);
+                    // console.log(`afterRender ${isForced}`);
                     this.eventRender.next();
                 },
                 afterDestroy: () => { this.eventDestroy.next(); },
-                afterUpdateSettings: () => { console.log("afterUpdateSettings"); },
+                // afterUpdateSettings: () => { console.log("afterUpdateSettings"); },
                 afterScrollHorizontally: () => this.eventScroll.next(),
                 afterScrollVertically: () => this.eventScroll.next(),
                 afterCopy: (changes) => {
-                    console.log("afterCopy");
+                    // console.log("afterCopy");
                     this.clipboardCache = this.sheetclip.stringify(changes);
                 },
                 afterCut: (changes) => {
-                    console.log("afterCut");
+                    // console.log("afterCut");
                     this.clipboardCache = this.sheetclip.stringify(changes);
                 },
                 afterPaste: (changes) => {
-                    console.log("afterPaste");
+                    // console.log("afterPaste");
                     this.clipboardCache = this.sheetclip.stringify(changes);
                 },
 
@@ -472,7 +466,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 }),
                 filter((e) => e.button === 2),
             ).subscribe((e) => {
-                console.log("mousedown on gridwrapper");
+                // console.log("mousedown on gridwrapper");
                 this.menuOpen(e);
             });
 
@@ -642,14 +636,14 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     public onAfterSelectionEnd = (r: number, c: number, r2: number, c2: number, selectionLayerLevel: number): void => {
         this.selectionActive = false;
         this.currentSelectedRows = this.selectionHelper.getRows(this.gridInstance.getSelected());
-        console.log(JSON.stringify(this.currentSelectedRows));
+        // console.log(JSON.stringify(this.currentSelectedRows));
     }
 
     private fixContentWidth() {
         if (!this.gridScrollContent) {
             return;
         }
-        console.log("fixContentWidth");
+        // console.log("fixContentWidth");
         let added = Math.round(this.gridWrapRect.width / 4);
         added = added >= 100 ? added : 100;
 
@@ -666,7 +660,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         if (!this.gridScroll) {
             return;
         }
-        console.log("scrollDisable");
+        // console.log("scrollDisable");
         this.gridScroll.style.overflow = "hidden";
         this.gridScroll.style["willChange"] = "transform";
     }
@@ -674,7 +668,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         if (!this.gridScroll) {
             return;
         }
-        console.log("scrollEnable");
+        // console.log("scrollEnable");
         this.gridScroll.style.overflow = "auto";
         this.gridScroll.style["willChange"] = "unset";
     }

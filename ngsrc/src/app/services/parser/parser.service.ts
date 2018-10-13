@@ -17,7 +17,7 @@ export class ParserService {
     private isVscode: boolean = vscode == null ? false : true;
     private eventMessage = fromEvent<MessageEvent>(window, "message").pipe(map<MessageEvent, ProcMessage>((event) => event.data));
     constructor() {
-        console.log(`starting ParserService isVscode=${this.isVscode}`);
+        // console.log(`starting ParserService isVscode=${this.isVscode}`);
     }
     public parseInput(input: string, clusterName: string, keyspaceInitial: string): Subject<InputParseResult> {
         const out = new Subject<InputParseResult>();
@@ -41,7 +41,9 @@ export class ParserService {
             map((e) => e as ProcMessageStrict<"e2w_checkInputResponse">),
         ).subscribe((e) => {
             console.timeEnd(`parseInput_${id}`);
-            out.next(e.data.result);
+            const d = JSON.parse(e.data.stringified);
+            out.next(d);
+            // out.next(e.data.result);
         }, (e) => {
             out.error(e);
         });

@@ -93,6 +93,7 @@ export interface CheckInputRequest {
 export interface CheckInputResponse {
     id: string;
     result?: InputParseResult;
+    stringified?: string;
     error?: any;
 }
 export interface ExecuteQueryRequest {

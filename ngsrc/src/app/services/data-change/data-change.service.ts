@@ -60,7 +60,7 @@ export class DataChangeService {
             let success = false;
             const item = changes[i];
             try {
-                console.log(`COMMITING [${i}]`);
+                // console.log(`COMMITING [${i}]`);
                 const res = await this.commitItem(item);
                 if (res.success) {
                     out.successCount += 1;
@@ -112,7 +112,7 @@ export class DataChangeService {
                 map((e) => e as ProcMessageStrict<"e2w_executeDataChangeResponse">),
             ).subscribe((e) => {
 
-                console.log(`GOT COMMIT RESULT`);
+                // console.log(`GOT COMMIT RESULT`);
 
                 if (e && e.data.result) {
                     resolve(e.data.result);

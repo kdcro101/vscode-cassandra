@@ -151,7 +151,7 @@ export class WorkspaceService {
                 console.log(e);
                 reject(e);
             });
-            console.log(`setActiveClusterName [${clusterName}]`);
+            // console.log(`setActiveClusterName [${clusterName}]`);
             this.message.emit(m);
         });
 

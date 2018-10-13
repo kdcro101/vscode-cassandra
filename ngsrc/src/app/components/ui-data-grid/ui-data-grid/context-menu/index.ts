@@ -6,7 +6,7 @@ export const gridContextMenu = (dataGrid: UiDataGridComponent): Handsontable.con
 
         callback: function (key, selection, clickEvent) {
             // Common callback for all options
-            console.log(clickEvent);
+            // console.log(clickEvent);
         },
         items: {
             // "row_above": {
@@ -31,7 +31,7 @@ export const gridContextMenu = (dataGrid: UiDataGridComponent): Handsontable.con
                     return true;
                 },
                 callback: () => { // Callback for specific option
-                    console.log("Reverting changes");
+                    // console.log("Reverting changes");
                     const cell = dataGrid.cellActive;
                     if (cell.row < 0 || cell.col < 0) {
                         return true;
@@ -60,7 +60,7 @@ export const gridContextMenu = (dataGrid: UiDataGridComponent): Handsontable.con
                     return true;
                 },
                 callback: () => { // Callback for specific option
-                    console.log("cancelRowDelete");
+                    // console.log("cancelRowDelete");
                     const cell = dataGrid.cellActive;
                     if (cell.row < 0) {
                         return true;
@@ -93,7 +93,7 @@ export const gridContextMenu = (dataGrid: UiDataGridComponent): Handsontable.con
                     return !dataGrid.currentPrimaryKeyAvailable || dataGrid.currentSelectedRows.length === 0;
                 },
                 callback: () => { // Callback for specific option
-                    console.log("row_delete");
+                    // console.log("row_delete");
                     const rows = dataGrid.currentSelectedRows;
                     rows.forEach((r) => {
                         dataGrid.changeManager.addRowDelete(r);

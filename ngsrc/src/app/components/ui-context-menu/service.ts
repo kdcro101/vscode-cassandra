@@ -19,7 +19,7 @@ export class UiContextMenuService {
         this.terminate.pipe(
             concatMap(() => this.close()),
         ).subscribe(() => {
-            console.info("UiContextMenuService terminate.done");
+
         });
     }
     public show(x: number, y: number, clientRect: ClientRect) {
@@ -68,7 +68,7 @@ export class UiContextMenuService {
                     takeUntil(this.eventClosed),
                     filter((e) => e.button === 2),
                 ).subscribe((e) => {
-                    console.log("button===2");
+                    // console.log("button===2");
 
                     const inside = this.isInside(e.clientX, e.clientY, clientRect);
                     if (inside) {
@@ -80,7 +80,7 @@ export class UiContextMenuService {
                 });
             });
         }).catch((e) => {
-            console.log(e);
+            // console.log(e);
         });
     }
     public close() {
@@ -100,13 +100,13 @@ export class UiContextMenuService {
         });
     }
     private isInside(x: number, y: number, rect: ClientRect): boolean {
-        console.log("isInside");
-        console.log(arguments);
+        // console.log("isInside");
+        // console.log(arguments);
         if (x < rect.left || y < rect.top || x > (rect.left + rect.width) || y > (rect.top + rect.height)) {
-            console.log("isInside=false");
+            // console.log("isInside=false");
             return false;
         }
-        console.log("isInside=true");
+        // console.log("isInside=true");
         return true;
     }
 }

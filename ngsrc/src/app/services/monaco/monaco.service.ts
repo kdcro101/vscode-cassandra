@@ -26,7 +26,7 @@ export class MonacoService {
                     }
 
                 } catch (e) {
-                    console.log("no Monaco yet");
+                    // console.log("no Monaco yet");
                 }
 
                 return res;

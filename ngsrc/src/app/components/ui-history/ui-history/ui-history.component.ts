@@ -208,7 +208,7 @@ export class UiHistoryComponent extends ViewDestroyable implements OnInit, OnDes
             }),
             // delay(500),
         ).subscribe(() => {
-            console.log("initialize done!");
+            // console.log("initialize done!");
 
             this.loading = false;
             this.detectChanges();

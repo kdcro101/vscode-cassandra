@@ -45,15 +45,15 @@ export class AutocompleteService {
 
             this.stateKeypace.next(keyspace);
         } catch (e) {
-            console.log("ERROR EMITING stateKeypace");
+            // console.log("ERROR EMITING stateKeypace");
             console.log(e);
-            console.log(this);
+            // console.log(this);
         }
     }
 
     public getCandidates(partialInput: string): Subject<CompletitionOutput> {
 
-        console.log(`AUTOCOMPLETE: [${partialInput}]`);
+        // console.log(`AUTOCOMPLETE: [${partialInput}]`);
 
         const o = new Subject<CompletitionOutput>();
         const id = generateId();

@@ -214,7 +214,7 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
         ev.preventDefault();
         ev.stopImmediatePropagation();
         ev.stopPropagation();
-        console.log("Right button");
+        // console.log("Right button");
         const e = this.tabItems.toArray()[index].nativeElement;
         const r = e.getBoundingClientRect();
         const w = this.triggerWrapper.toArray()[index].nativeElement;

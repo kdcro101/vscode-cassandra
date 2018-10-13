@@ -9,7 +9,7 @@ export const markColumnNotFound = (model: monaco.editor.ITextModel,
         const pe = model.getPositionAt(c.charStop);
 
         if (c.kind === "not_found") {
-            console.log("not_found item");
+            // console.log("not_found item");
             const o: monaco.editor.IMarkerData = {
                 severity: monaco.MarkerSeverity.Error,
                 message: `column '${c.text}' not found in ${statement.keyspace}.${statement.table}`,

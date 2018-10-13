@@ -577,11 +577,15 @@ export class CassandraWorkbench {
         from(this.clusters.getStructure(clusterIndex)).pipe(
             map((data) => this.parser.parse(input, data, keyspaceInitial)),
         ).subscribe((result) => {
+
+            const s = JSON.stringify(result);
+            console.log(`stringified len=${s.length}`);
             const mo: ProcMessageStrict<"e2w_checkInputResponse"> = {
                 name: "e2w_checkInputResponse",
                 data: {
                     id,
-                    result,
+                    // result,
+                    stringified: s,
                 },
             };
             this.panel.emitMessage(mo);

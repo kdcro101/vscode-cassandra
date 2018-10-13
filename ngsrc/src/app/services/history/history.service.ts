@@ -108,7 +108,7 @@ export class HistoryService {
                 width: "320px",
             });
             dialogRef.afterClosed().subscribe(result => {
-                console.log("The dialog was closed");
+                // console.log("The dialog was closed");
                 const out = result === true ? true : false;
                 if (out) {
                     executeRemoveAll();

@@ -56,7 +56,7 @@ export class TabDraggable {
 
     }
     public dragStart(index: number, e: MouseEvent) {
-        console.log("dragStart");
+        // console.log("dragStart");
 
         this.element = this.tabItems.toArray()[index].nativeElement;
         this.elementIndex = index;
@@ -72,7 +72,7 @@ export class TabDraggable {
 
     }
     public dragEnd() {
-        console.log("dragEnd");
+        // console.log("dragEnd");
         this.active = false;
 
         this.element.classList.remove("dragged");

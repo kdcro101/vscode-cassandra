@@ -13,7 +13,7 @@ export class CqlTokenizer implements monaco.languages.TokensProvider {
      */
     public tokenize(line: string, state: TokenizerState): monaco.languages.ILineTokens {
         const lineNumber = state.lineNumber;
-        console.log(`line [${line}] @ ${lineNumber}`);
+        // console.log(`line [${line}] @ ${lineNumber}`);
 
         return {
             tokens: [],

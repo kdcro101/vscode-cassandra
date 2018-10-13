@@ -25,7 +25,7 @@ export class UiHistoryService {
             concatMap(() => this.component.hide()),
             concatMap(() => this.close()),
         ).subscribe(() => {
-            console.info("UiHistoryService terminate.done");
+            // console.info("UiHistoryService terminate.done");
         });
     }
     public show(editor: WorkbenchEditor) {

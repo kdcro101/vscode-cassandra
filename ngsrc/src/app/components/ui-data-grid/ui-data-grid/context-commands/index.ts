@@ -4,7 +4,7 @@ export type ContextMenuCommand = "undo" | "copy" | "paste" | "cut" | "cancelChan
 
 export const contexMenuHandler = (grid: UiDataGridComponent, command: ContextMenuCommand) => {
 
-    console.log(`contexMenuHandler=${command}`);
+    // console.log(`contexMenuHandler=${command}`);
 
     switch (command) {
         case "undo":
@@ -31,25 +31,25 @@ export const contexMenuHandler = (grid: UiDataGridComponent, command: ContextMen
 };
 
 function onUndo(grid: UiDataGridComponent) {
-    console.log("command.undo");
+    // console.log("command.undo");
 
     // const p = grid.gridInstance.getPlugin("");
     // p.copy();
     // grid.gridInstance.undo();
 }
 function onCopy(grid: UiDataGridComponent) {
-    console.log("command.copy");
+    // console.log("command.copy");
 
     const p = grid.gridInstance.getPlugin("copyPaste");
     p.copy();
 }
 function onPaste(grid: UiDataGridComponent) {
-    console.log("command.paste");
+    // console.log("command.paste");
     const p = grid.gridInstance.getPlugin("copyPaste");
     p.paste(grid.clipboardCache as any);
 }
 function onCut(grid: UiDataGridComponent) {
-    console.log("command.cut");
+    // console.log("command.cut");
     const p = grid.gridInstance.getPlugin("copyPaste");
     p.cut();
 }

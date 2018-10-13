@@ -2,7 +2,7 @@ import { UiDataGridComponent } from "../ui-data-grid.component";
 export const onBeforeChange = (dataGrid: UiDataGridComponent):
     (changes: [number, string | number, any, any][], source: string) => void | boolean => {
     return (changes: [number, string | number, any, any][], source: string): void | boolean => {
-        console.log(`onBeforeChange ${JSON.stringify(changes)} -> ${source}`);
+        // console.log(`onBeforeChange ${JSON.stringify(changes)} -> ${source}`);
 
         if (!changes || changes.length === 0 || source !== "edit") {
             return;

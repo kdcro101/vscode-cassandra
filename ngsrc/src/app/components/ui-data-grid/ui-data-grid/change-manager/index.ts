@@ -186,7 +186,7 @@ export class ChangeManager {
 
     public remove(id: string): void {
         const index = this.list.findIndex((i) => i.id === id);
-        console.log(`ChangeManager.REMOVE [${index}]`);
+        // console.log(`ChangeManager.REMOVE [${index}]`);
         const item = this.list[index];
 
         if (!item) {

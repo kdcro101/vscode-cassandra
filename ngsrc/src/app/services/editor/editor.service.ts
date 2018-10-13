@@ -140,7 +140,7 @@ export class EditorService {
                 from(Promise.all(
                     this.list.filter((i) => statement.fsPath != null && i.statement.fsPath === statement.fsPath)
                         .map((i) => {
-                            console.log(`REMOVING EDITOR WITH fsPath=${statement.fsPath}`);
+                            // console.log(`REMOVING EDITOR WITH fsPath=${statement.fsPath}`);
                             return this.remove(i.id);
                         }))).subscribe(() => {
 
@@ -167,7 +167,7 @@ export class EditorService {
         const list = this.list.filter((i) => i.statement.filename.search(rx) === 0);
 
         if (list.length === 0) {
-            console.log("que len zero");
+            // console.log("que len zero");
             return `${this.filenamePrefix}1.${this.filenameExt}`;
         }
 
@@ -332,7 +332,7 @@ export class EditorService {
     }
     public save(editorId: string, saveAsMode: boolean = false): Promise<SaveStatementResultType> {
         return new Promise((resolve, reject) => {
-            console.log(`saving editor=${editorId}`);
+            // console.log(`saving editor=${editorId}`);
             const editorIndex = this.list.findIndex((e) => e.id === editorId);
 
             if (editorIndex < 0) {
@@ -489,11 +489,11 @@ export class EditorService {
             });
 
             dialogRef.afterClosed().subscribe(result => {
-                console.log("The dialog was closed");
+                // console.log("The dialog was closed");
                 const out = result === true ? true : false;
                 resolve(out);
             }, (e) => {
-                console.log(e);
+                // console.log(e);
                 resolve(false);
             });
         });

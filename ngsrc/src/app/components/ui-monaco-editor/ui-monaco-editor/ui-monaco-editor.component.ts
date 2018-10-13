@@ -71,9 +71,6 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             takeUntil(this.eventViewDestroyed),
             filter(() => this.monacoEditor != null),
         ).subscribe((e) => {
-            console.log("Window keypress");
-            console.log(`ctrl=${e.ctrlKey} code=${e.key}`);
-            console.log(e);
             this.onWindowKeypress(e);
         });
 
@@ -83,8 +80,6 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             take(1),
             filter(() => value != null),
         ).subscribe(() => {
-            console.log("UiMonacoEditorComponent.setEditor");
-            console.log(value);
 
             if (this.editorCurrent) {
                 this.editorCurrent.viewState = this.monacoEditor.saveViewState();
@@ -168,7 +163,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                     }
                 }),
             ).subscribe((e) => {
-                console.log("mousedown for menu close");
+                // console.log("mousedown for menu close");
             });
 
             this.stateReady.next();
@@ -182,7 +177,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
         this.eventCodeChange.pipe(
             tap(() => {
-                console.log("autocomplete.reset");
+                // console.log("autocomplete.reset");
                 this.autocomplete.reset();
             }),
             takeUntil(this.eventViewDestroyed),
@@ -225,7 +220,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 ).subscribe(() => {
 
                     const v = this.monacoEditor.getValue();
-                    console.log(`--> onDidChangeModelContent`);
+                    // console.log(`--> onDidChangeModelContent`);
 
                     setTimeout(() => {
                         this.eventCodeChange.next(v);
@@ -280,7 +275,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         monaco.editor.setModelMarkers(this.monacoEditor.getModel(), "markersOwnerId", []);
 
         const errorDecs: monaco.editor.IMarkerData[] = errors.map((e) => {
-            console.log(`Message is : <${e.name}>`);
+            // console.log(`Message is : <${e.name}>`);
             const o: monaco.editor.IMarkerData = {
                 severity: monaco.MarkerSeverity.Error,
                 message: e.name,
@@ -305,7 +300,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
     public doCopy = (e: MouseEvent) => {
 
-        console.log("doCopy");
+        // console.log("doCopy");
 
         // e.preventDefault();
         // e.stopImmediatePropagation();
@@ -317,7 +312,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         // this.menuTrigger.closeMenu();
     }
     public doPaste = (e: MouseEvent) => {
-        console.log("doPaste");
+        // console.log("doPaste");
 
         // e.preventDefault();
         // e.stopImmediatePropagation();
@@ -329,7 +324,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         // this.menuTrigger.closeMenu();
     }
     public doCut = (e: MouseEvent) => {
-        console.log("doCut");
+        // console.log("doCut");
 
         // e.preventDefault();
         // e.stopImmediatePropagation();
@@ -342,7 +337,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
     }
     public doFind(e: MouseEvent) {
-        console.log("doFind");
+        // console.log("doFind");
 
         // e.preventDefault();
         // e.stopImmediatePropagation();
@@ -355,7 +350,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
     public updateExecuteParams() {
         this.clusterName = this.editorCurrent.statement.clusterName;
         this.keyspace = this.editorCurrent.statement.keyspace;
-        console.log(`updateExecuteParams [${this.clusterName}] [${this.keyspace}]`);
+        // console.log(`updateExecuteParams [${this.clusterName}] [${this.keyspace}]`);
     }
 
     public menuOpen(ev: MouseEvent) {
@@ -395,14 +390,14 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
     }
     public selectAll() {
-        console.log("select all----------");
+        // console.log("select all----------");
         const ss = this.modelCurrent.getPositionAt(0);
         const se = this.modelCurrent.getPositionAt(this.modelCurrent.getValue().length);
         const range = new monaco.Range(ss.lineNumber, ss.column, se.lineNumber, se.column);
         this.monacoEditor.setSelection(range);
     }
     public onEditorKeyDown(ev: monaco.IKeyboardEvent) {
-        console.log(ev);
+        // console.log(ev);
 
         if (ev.browserEvent.ctrlKey && ev.browserEvent.keyCode === 13) {
             ev.browserEvent.preventDefault();
@@ -413,7 +408,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
     }
     public onWindowKeypress(ev: KeyboardEvent) {
-        console.log("keypress");
+        // console.log("keypress");
         if (ev.ctrlKey && ev.key === "a") {
             this.selectAll();
         }
@@ -424,7 +419,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             this.actionFind.run();
         }
         if (ev.ctrlKey && ev.altKey && ev.key === "h") {
-            console.log("replace action");
+            // console.log("replace action");
             this.actionReplace.run();
         }
 
