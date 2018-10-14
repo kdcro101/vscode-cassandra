@@ -110,5 +110,22 @@
                 }
             }
         }
+        .client {
+            .empty {
+                .logo {
+                    width: 256px;
+                    height: 216px;
+                    margin-bottom: 16px;
+                }
+                .action {
+                    margin-bottom: 8px;
+                    .sep {
+                        width: 16px;
+                    }
+                }
+
+            }
+
+        }
     }
 }

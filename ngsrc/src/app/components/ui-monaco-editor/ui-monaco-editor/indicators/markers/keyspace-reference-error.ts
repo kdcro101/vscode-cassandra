@@ -13,8 +13,9 @@ export const markKeyspaceReferenceError = (model: monaco.editor.ITextModel,
         return [];
     }
     const keyspace = spec.keyspaceToken.text;
-    if (refs[keyspace]) {
-        return[];
+
+    if (refs.keyspaces.find((k) => k === keyspace)) {
+        return [];
     }
 
     const token = spec.keyspaceToken;

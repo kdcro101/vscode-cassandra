@@ -13,6 +13,7 @@ import { ThemeService } from "./services/theme/theme.service";
 import { UiContentHorizontalModule } from "./components/ui-content-horizontal";
 
 import { UiHistoryModule } from "./components/ui-history/ui-history.module";
+import { UiOverlayCloseConfirmationModule } from "./components/ui-overlay-close-confirmation/index";
 import { UiQueryModule } from "./components/ui-query";
 import { UiDialogModule } from "./dialogs";
 import { QueryBuilderComponent } from "./query-builder/query-builder.component";
@@ -36,6 +37,7 @@ export const rootRoutes = [
         MatDialogModule,
         UiHistoryModule,
         UiContentHorizontalModule,
+        UiOverlayCloseConfirmationModule,
         UiQueryModule,
         UiDialogModule,
         UIRouterModule.forRoot({ states: rootRoutes, useHash: true, otherwise: { state: "query-builder" }, config: routerConfig }),

@@ -54,5 +54,19 @@
     <div fxFlex class="client" fxLayout="column">
         <ui-query (onStatementChange)="onActiveStatementChange($event)" (onStatementSave)="doSave.next([editor.id,false])"
             *ngIf="editorService.list.length>0 && editor" #queryEditor [editor]="editor" fxFlex></ui-query>
+        <div class="empty" *ngIf="editorService.list.length===0" fxLayout="column" fxFlex>
+            <div fxFlex></div>
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <div class="logo app-logo"></div>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="center center" class="action">
+                <button mat-button color="accent" (click)="doTabCreate()">NEW FILE</button>
+                <div class="sep"></div>
+                <button mat-button color="primary" (click)="doTabOpen()">OPEN FILE</button>
+                <div class="sep"></div>
+                <button mat-button color="primary" (click)="doShowHistory()">HISTORY</button>
+            </div>
+            <div fxFlex></div>
+        </div>
     </div>
 </div>

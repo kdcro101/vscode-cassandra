@@ -24,7 +24,10 @@ export class CqlAnalyzerListener implements CqlParserListener {
         cluserName: null,
         statements: [],
         statementRanges: [],
-        references: {},
+        references: {
+            keyspaces: [],
+            objects: {},
+        },
         alterData: false,
         alterStructure: false,
         selectData: false,
@@ -43,6 +46,7 @@ export class CqlAnalyzerListener implements CqlParserListener {
 
         this.keyspaceAmbiental = this.keyspaceInitial;
         this.result.cluserName = structure.name;
+        this.result.references.keyspaces = structure.keyspaces.map((k) => k.name);
 
     }
     public getResult() {
@@ -467,12 +471,12 @@ export class CqlAnalyzerListener implements CqlParserListener {
         keyspace: string, set: R, name: string, value: AnalysisKeyspaceReferenceType[R]) {
 
         const r = this.result.references;
-        if (!r[keyspace]) {
-            r[keyspace] = {};
+        if (!r.objects[keyspace]) {
+            r.objects[keyspace] = {};
         }
-        if (!r[keyspace][set]) {
-            r[keyspace][set] = {};
+        if (!r.objects[keyspace][set]) {
+            r.objects[keyspace][set] = {};
         }
-        r[keyspace][set][name] = value;
+        r.objects[keyspace][set][name] = value;
     }
 }

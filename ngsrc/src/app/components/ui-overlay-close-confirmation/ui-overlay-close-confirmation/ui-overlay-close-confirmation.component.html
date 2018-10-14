@@ -1,0 +1,15 @@
+<div #root class="root mat-app-background mat-elevation-z3" fxLayout="column">
+    <h1 mat-dialog-title fxLayout="row" fxLayoutAlign="start center" class="title">
+        <mat-icon>warning</mat-icon>
+        <div>Unsaved changes</div>
+    </h1>
+    <div class="content" fxFlex>
+        <p>You have unsaved changes in file <b>{{filename}}</b>.</p>
+        <p>Do you want to close without saving?</p>
+    </div>
+    <div fxLayout="row" cdkTrapFocus>
+        <button cdkFocusRegionStart #buttonCancel mat-button color="primary" (click)="closeWithValue(false)">CANCEL</button>
+        <div fxFlex></div>
+        <button cdkFocusRegionEnd mat-raised-button color="accent" (click)="closeWithValue(true)">CLOSE EDITOR</button>
+    </div>
+</div>

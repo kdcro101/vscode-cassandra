@@ -6,10 +6,8 @@ import { UiDialogChangesCancelComponent } from "./ui-dialog-changes-cancel/ui-di
 import {
     UiDialogHistoryClearConfirmationComponent,
 } from "./ui-dialog-history-clear-confirmation/ui-dialog-history-clear-confirmation.component";
-import { UiDialogUnsavedComponent } from "./ui-dialog-unsaved/ui-dialog-unsaved.component";
 
 export { UiDialogChangesCancelComponent } from "./ui-dialog-changes-cancel/ui-dialog-changes-cancel.component";
-export { UiDialogUnsavedComponent } from "./ui-dialog-unsaved/ui-dialog-unsaved.component";
 
 @NgModule({
     imports: [
@@ -21,18 +19,18 @@ export { UiDialogUnsavedComponent } from "./ui-dialog-unsaved/ui-dialog-unsaved.
     ],
     declarations: [
         UiDialogChangesCancelComponent,
-        UiDialogUnsavedComponent,
+
         UiDialogHistoryClearConfirmationComponent,
 
     ],
     exports: [
-        UiDialogUnsavedComponent,
+
         UiDialogChangesCancelComponent,
         UiDialogHistoryClearConfirmationComponent,
 
     ],
     entryComponents: [
-        UiDialogUnsavedComponent,
+
         UiDialogChangesCancelComponent,
         UiDialogHistoryClearConfirmationComponent,
         UiDialogHistoryClearConfirmationComponent,

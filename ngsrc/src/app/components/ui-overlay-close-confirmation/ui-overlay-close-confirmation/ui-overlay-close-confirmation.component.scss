@@ -1,0 +1,35 @@
+@import "../../../../scss/colors";
+
+:host {
+    position: relative;
+    width: 300px;
+    height: 300px;
+
+    .root {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 16px;
+        border-radius: 2px;
+        overflow: hidden;
+
+        &.mat-app-background{
+            background-color: mat-color($background,800);
+        }
+
+        .title {
+            mat-icon {
+                margin-right: 16px;
+            }
+        }
+
+        .content {
+            p {
+                white-space: normal;
+                word-break: normal;
+            }
+        }
+    }
+}

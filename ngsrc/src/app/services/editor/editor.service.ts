@@ -4,6 +4,7 @@ import { cloneDeep } from "lodash";
 import { BehaviorSubject, from, ReplaySubject, Subject, zip } from "rxjs";
 import { timeout } from "rxjs/operators";
 import { concatMap, filter, map, take } from "rxjs/operators";
+import { UiOverlayCloseConfirmationService } from "src/app/components/ui-overlay-close-confirmation/service";
 import { OpenStatementResultType, SaveStatementResultType } from "../../../../../src/persistence";
 import { WorkbenchCqlStatement } from "../../../../../src/types/editor";
 import { ProcMessage, ProcMessageStrict } from "../../../../../src/types/messages";
@@ -36,7 +37,9 @@ export class EditorService {
         private messages: MessageService,
         private monaco: MonacoService,
         private workspace: WorkspaceService,
-        public dialog: MatDialog) {
+        public dialog: MatDialog,
+        public confirmClose: UiOverlayCloseConfirmationService,
+    ) {
 
         this.messages.eventMessage.pipe()
             .subscribe((d) => {
@@ -483,19 +486,12 @@ export class EditorService {
     private dialogCloseUnsaved(filename: string): Promise<boolean> {
         return new Promise((resolve, reject) => {
 
-            const dialogRef = this.dialog.open(UiDialogUnsavedComponent, {
-                width: "320px",
-                data: filename,
-            });
+            this.confirmClose.show(filename)
+                .subscribe((res) => {
+                    const out = res === true ? true : false;
+                    resolve(out);
+                });
 
-            dialogRef.afterClosed().subscribe(result => {
-                // console.log("The dialog was closed");
-                const out = result === true ? true : false;
-                resolve(out);
-            }, (e) => {
-                // console.log(e);
-                resolve(false);
-            });
         });
     }
     private onStatementCreate(s: ProcMessageStrict<"e2w_editorCreate">) {

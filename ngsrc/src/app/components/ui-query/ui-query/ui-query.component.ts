@@ -241,10 +241,6 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
             });
         });
 
-        // this.cqlClient.stateExecuting.pipe(
-        //     takeUntil(this.eventViewDestroyed),
-        // ).subscribe(() => this.detectChanges());
-
         const gutterButtonMax = document.createElement("div");
         gutterButtonMax.className = "gutter-button maximize";
         gutterButtonMax.style.right = `0px`;
@@ -333,7 +329,9 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         // this.editorService.keyspace = keyspace;
         this.workspace.setActiveKeyspace(this.editor.statement.clusterName, keyspace)
             .then((result) => {
+                // this.p
                 console.log("workspace.setActiveKeyspace OK");
+                this.monacoEditor.parseModel();
             }).catch((e) => {
                 console.log(e);
             });

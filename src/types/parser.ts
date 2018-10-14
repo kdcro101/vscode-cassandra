@@ -65,7 +65,8 @@ export interface RuleObjectUnknownSpec {
 }
 
 export interface AnalysisReferences {
-    [keyspace: string]: AnalysisKeyspaceReferences;
+    objects: { [keyspace: string]: AnalysisKeyspaceReferences };
+    keyspaces: string[];
 }
 export interface AnalysisKeyspaceReferences {
     tables?: { [name: string]: CassandraTable };

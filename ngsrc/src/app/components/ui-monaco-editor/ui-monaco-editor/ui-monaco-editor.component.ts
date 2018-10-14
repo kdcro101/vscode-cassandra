@@ -183,7 +183,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             takeUntil(this.eventViewDestroyed),
             debounceTime(250),
         ).subscribe((code) => {
-            this.parseCode(code);
+            this.parseModel();
         });
 
     }
@@ -203,7 +203,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 this.monacoEditor.setModel(model);
 
                 this.autocomplete.reset();
-                this.parseCode(model.getValue());
+                this.parseModel();
 
                 fromEventPattern<monaco.editor.IModelContentChangedEvent>((f: (e: any) => any) => {
                     return this.monacoEditor.onDidChangeModelContent(f);
@@ -241,7 +241,12 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
             });
     }
 
-    private parseCode(code: string) {
+    public parseModel() {
+        if (!this.modelCurrent) {
+            console.log("no model...");
+            return;
+        }
+        const code = this.modelCurrent.getValue();
         this.parser.parseInput(code, this.clusterName, this.keyspace).pipe(take(1))
             .subscribe((result) => {
                 this.autocomplete.setParseResult(result);
@@ -350,7 +355,8 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
     public updateExecuteParams() {
         this.clusterName = this.editorCurrent.statement.clusterName;
         this.keyspace = this.editorCurrent.statement.keyspace;
-        // console.log(`updateExecuteParams [${this.clusterName}] [${this.keyspace}]`);
+
+        this.parseModel();
     }
 
     public menuOpen(ev: MouseEvent) {

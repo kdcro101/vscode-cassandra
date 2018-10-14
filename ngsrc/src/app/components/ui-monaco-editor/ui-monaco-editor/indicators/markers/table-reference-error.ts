@@ -15,7 +15,11 @@ export const markTableReferenceError = (model: monaco.editor.ITextModel,
     const token = spec.tableToken;
     const keyspace = spec.keyspaceToken ? spec.keyspaceToken.text : spec.keyspaceAmbiental;
 
-    if (refs && refs[keyspace] && refs[keyspace]["tables"] && refs[keyspace]["tables"][token.text]) {
+    if (!refs.keyspaces.find((k) => k === keyspace)) {
+        return [];
+    }
+
+    if (refs.objects && refs.objects[keyspace] && refs.objects[keyspace]["tables"] && refs.objects[keyspace]["tables"][token.text]) {
         return [];
     }
 
