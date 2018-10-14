@@ -348,7 +348,7 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
                     const aggregates = sks.aggregates;
                     const items = aggregates.map((c) => {
                         return new TreeItemAggregateItem(c.name, vscode.TreeItemCollapsibleState.None,
-                            clusterIndex, keyspace, "function_item");
+                            clusterIndex, keyspace, "aggregate_item", c);
                     });
 
                     resolve(items);

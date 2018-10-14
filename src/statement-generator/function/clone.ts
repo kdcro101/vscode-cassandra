@@ -8,7 +8,7 @@ export const functionClone = (keyspace: string, data: CassandraFunction, replace
 
         const out: string[] = [
             !replace ?
-                `CREATE FUNCTION${keyspace}.${data.name}_clone(${params})`
+                `CREATE FUNCTION ${keyspace}.${data.name}_clone(${params})`
                 :
                 `CREATE OR REPLACE FUNCTION ${keyspace}.${data.name}(${params})`,
             fd.called_on_null_input ? `CALLED ON NULL INPUT` : `RETURNS NULL ON NULL INPUT`,

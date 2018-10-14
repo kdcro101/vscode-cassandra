@@ -51,7 +51,7 @@ export const materializedViewAlter = (keyspace: string, data: CassandraMateriali
         const out: string[] = [
             `-- change table options`,
             `ALTER MATERIALIZED VIEW ${keyspace}.${name}`,
-            `${tableOptions(data)};`,
+            `${tableOptions(data, false)};`,
         ];
 
         resolve(out.join("\n"));
@@ -101,7 +101,7 @@ function primaryKey(data: CassandraTable | CassandraMaterializedView): string {
     return `PRIMARY KEY(${partPartition}, ${partClustering})`;
 
 }
-function tableOptions(data: CassandraTable | CassandraMaterializedView): string {
+function tableOptions(data: CassandraTable | CassandraMaterializedView, outputClusteringOrder: boolean = true): string {
 
     const clustering = data.primaryKeys.filter((c) => c.kind === "clustering");
     const isDesc = clustering.filter((c) => c.clustering_order === "desc").length > 0 ? true : false;
@@ -112,7 +112,7 @@ function tableOptions(data: CassandraTable | CassandraMaterializedView): string 
 
     let out: string[] = [];
 
-    if (isDesc) {
+    if (isDesc && outputClusteringOrder) {
         out.push(clusteringOption);
     }
 

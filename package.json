@@ -16,18 +16,16 @@
     ],
     "main": "./out/extension",
     "contributes": {
-        "languages": [
-            {
-                "id": "cql",
-                "aliases": [
-                    "CQL",
-                    "Apache Cassandra CQL"
-                ],
-                "extensions": [
-                    ".cql"
-                ]
-            }
-        ],
+        "languages": [{
+            "id": "cql",
+            "aliases": [
+                "CQL",
+                "Apache Cassandra CQL"
+            ],
+            "extensions": [
+                ".cql"
+            ]
+        }],
         "configuration": {
             "type": "object",
             "title": "Cassandra workbench configuration",
@@ -49,8 +47,7 @@
                         "type": "array",
                         "title": "inner objects",
                         "description": "Cluster name, keypace",
-                        "items": [
-                            {
+                        "items": [{
                                 "type": "string",
                                 "description": "Cluster name"
                             },
@@ -69,32 +66,25 @@
             }
         },
         "viewsContainers": {
-            "activitybar": [
-                {
-                    "id": "object-explorer",
-                    "title": "Casssandra workbench",
-                    "icon": "icons/activity.svg"
-                }
-            ]
+            "activitybar": [{
+                "id": "object-explorer",
+                "title": "Casssandra workbench",
+                "icon": "icons/activity.svg"
+            }]
         },
         "views": {
-            "object-explorer": [
-                {
-                    "id": "cassandraWorkbenchView",
-                    "name": "Explorer"
-                }
-            ]
+            "object-explorer": [{
+                "id": "cassandraWorkbenchView",
+                "name": "Explorer"
+            }]
         },
         "menus": {
-            "explorer/context": [
-                {
-                    "when": "resourceLangId == cql",
-                    "command": "cassandraWorkbench.openFileInWorkbench",
-                    "group": "vscode-cassandra"
-                }
-            ],
-            "view/title": [
-                {
+            "explorer/context": [{
+                "when": "resourceLangId == cql",
+                "command": "cassandraWorkbench.openFileInWorkbench",
+                "group": "vscode-cassandra"
+            }],
+            "view/title": [{
                     "when": "view == cassandraWorkbenchView",
                     "command": "cassandraWorkbench.refresh",
                     "group": "navigation"
@@ -110,8 +100,7 @@
                     "group": "navigation"
                 }
             ],
-            "view/item/context": [
-                {
+            "view/item/context": [{
                     "command": "cassandraWorkbench.cqlKeyspaceCreate",
                     "when": "view == cassandraWorkbenchView && viewItem == cluster",
                     "group": "02_alter@1"
@@ -165,6 +154,11 @@
                     "command": "cassandraWorkbench.cqlTypeCreate",
                     "when": "view == cassandraWorkbenchView && viewItem == keyspace",
                     "group": "01_common@2"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlAggregateCreate",
+                    "when": "view == cassandraWorkbenchView && viewItem == keyspace",
+                    "group": "01_common@3"
                 },
                 {
                     "command": "cassandraWorkbench.cqlMaterializedViewCreate",
@@ -240,17 +234,45 @@
                     "command": "cassandraWorkbench.cqlMaterializedViewClone",
                     "when": "view == cassandraWorkbenchView && viewItem == materialized-views_item",
                     "group": "20_special@1"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlAggregateReplace",
+                    "when": "view == cassandraWorkbenchView && viewItem == aggregate_item",
+                    "group": "02_alter@1"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlAggregateDrop",
+                    "when": "view == cassandraWorkbenchView && viewItem == aggregate_item",
+                    "group": "10_operations@1"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlAggregateClone",
+                    "when": "view == cassandraWorkbenchView && viewItem == aggregate_item",
+                    "group": "20_special@1"
                 }
             ],
-            "editor/title": [
-                {
-                    "when": "resourceLangId == cql",
-                    "command": "cassandraWorkbench.openEditorInWorkbench",
-                    "group": "navigation"
-                }
-            ]
+            "editor/title": [{
+                "when": "resourceLangId == cql",
+                "command": "cassandraWorkbench.openEditorInWorkbench",
+                "group": "navigation"
+            }]
         },
-        "commands": [
+        "commands": [{
+                "command": "cassandraWorkbench.cqlAggregateDrop",
+                "title": "DROP AGGREGATE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlAggregateReplace",
+                "title": "REPLACE AGGREGATE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlAggregateClone",
+                "title": "Clone AGGREGATE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlAggregateCreate",
+                "title": "CREATE AGGREGATE"
+            },
             {
                 "command": "cassandraWorkbench.cqlMaterializedViewClone",
                 "title": "Clone MATERIALIZED VIEW"

@@ -3,6 +3,7 @@ import { ReplaySubject } from "rxjs";
 import { take } from "rxjs/operators";
 import * as vscode from "vscode";
 import { CassandraWorkbench } from "../cassandra-workbench";
+import { TreeItemAggregateItem } from "../cassandra-workbench/treeview-provider/tree-item-aggregate-item";
 import { TreeItemCluster } from "../cassandra-workbench/treeview-provider/tree-item-cluster";
 import { TreeItemColumnItem } from "../cassandra-workbench/treeview-provider/tree-item-column-item/index";
 import { TreeItemFunctionItem } from "../cassandra-workbench/treeview-provider/tree-item-function-item";
@@ -103,7 +104,80 @@ export class VsCommands {
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlMaterializedViewClone", this.cqlMaterializedViewClone));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlMaterializedViewCreate", this.cqlMaterializedViewCreate));
+
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlAggregateDrop", this.cqlAggregateDrop));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlAggregateReplace", this.cqlAggregateReplace));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlAggregateClone", this.cqlAggregateClone));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlAggregateCreate", this.cqlAggregateCreate));
     }
+
+    private cqlAggregateReplace = (item: TreeItemAggregateItem) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.aggregateReplace(keyspace, item.aggregateData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlAggregateDrop = (item: TreeItemAggregateItem) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.aggregateDrop(keyspace, item.aggregateData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlAggregateClone = (item: TreeItemAggregateItem) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.aggregateClone(keyspace, item.aggregateData, false)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlAggregateCreate = (item: TreeItemKeyspace) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.label;
+
+            this.generator.aggregateCreate(keyspace)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+
     private cqlMaterializedViewDrop = (item: TreeItemMaterializedViewItem) => {
         this.stateWorkbench.pipe(
             take(1),
@@ -112,7 +186,7 @@ export class VsCommands {
             const clusterIndex = item.clusterIndex;
             const keyspace = item.label;
 
-            this.generator.typeCreate(keyspace)
+            this.generator.materializedViewDrop(keyspace, item.viewData)
                 .then((result) => {
                     this.workbench.editorCreate(clusterIndex, keyspace, result);
                 }).catch((e) => {

@@ -1,4 +1,5 @@
 import wrap = require("word-wrap");
+import { aggregateClone, aggregateCreate, aggregateDrop, aggregateReplace } from "./aggregate";
 import { functionClone } from "./function/clone";
 import { functionCreate } from "./function/create";
 import { functionDrop } from "./function/drop";
@@ -26,12 +27,15 @@ export class StatementGenerator {
     public tableTruncate = tableTruncate;
     public tableAlterAdd = tableAlterAdd;
     public tableAlterDrop = tableAlterDrop;
+
     public keyspaceDrop = keyspaceDrop;
     public keyspaceAlter = keyspaceAlter;
     public keyspaceClone = keyspaceClone;
     public keyspaceCreate = keyspaceCreate;
+
     public indexCreate = indexCreate;
     public indexDrop = indexDrop;
+
     public functionCreate = functionCreate;
     public functionClone = functionClone;
     public functionDrop = functionDrop;
@@ -40,6 +44,11 @@ export class StatementGenerator {
     public typeAlter = typeAlter;
     public typeClone = typeClone;
     public typeDrop = typeDrop;
+
+    public aggregateCreate = aggregateCreate;
+    public aggregateReplace = aggregateReplace;
+    public aggregateClone = aggregateClone;
+    public aggregateDrop = aggregateDrop;
 
     public materializedViewCreate = materializedViewCreate;
     public materializedViewAlter = materializedViewAlter;
