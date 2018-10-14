@@ -1,15 +1,16 @@
-import { Parser, ParserRuleContext } from "antlr4ts";
+import { ParserRuleContext } from "antlr4ts";
 import { ParseTree } from "antlr4ts/tree/ParseTree";
 import {
-    ColumnContext, CqlContext, ExpressionContext,
-    KeyspaceContext, RootContext, StatementSeparatorContext, TableSpecContext, UseContext,
+    ColumnContext, CqlContext, ExpressionContext, KeyspaceContext, RootContext,
+    StatementSeparatorContext, TableSpecContext, UseContext,
 } from "../../antlr/CqlParser";
 import { CqlParserListener } from "../../antlr/CqlParserListener";
 import { CassandraClusterData } from "../../types";
 import { CassandraKeyspace } from "../../types/index";
-import { AnalyzedStatementRange, AnalyzedStatementRules, AnalyzedStatementToken, ParserTokenFamily } from "../../types/parser";
 import {
-    AnalyzedStatement, CqlAnalysis, CqlAnalysisError, CqlStatementColumn,
+    AnalysisKeyspaceReferences, AnalysisKeyspaceReferenceType, AnalyzedStatement, AnalyzedStatementRange,
+    AnalyzedStatementRules,
+    AnalyzedStatementToken, CqlAnalysis, CqlAnalysisError, CqlStatementColumn,
     CqlStatementExpression, CqlStatementType,
 } from "../../types/parser";
 
@@ -20,13 +21,13 @@ const STATEMENT_ROOT_RULE = "cql";
 export class CqlAnalyzerListener implements CqlParserListener {
     private statementCurrent: number = -1;
     private result: CqlAnalysis = {
+        cluserName: null,
         statements: [],
         statementRanges: [],
+        references: {},
         alterData: false,
         alterStructure: false,
         selectData: false,
-        cluserName: null,
-
     };
 
     private rulePrevious: string;
@@ -103,8 +104,8 @@ export class CqlAnalyzerListener implements CqlParserListener {
             this.result.error = CqlAnalysisError.MULTIPLE_SELECT;
         }
 
+        /* remove
         this.result.statements.forEach((s, i) => {
-            // if (s.type === "select" && s.keyspace && s.table) {
             if (s.keyspace && s.table) {
                 const ksi = this.structure.keyspaces.findIndex((k) => k.name === s.keyspace);
                 if (ksi > -1) {
@@ -117,6 +118,7 @@ export class CqlAnalyzerListener implements CqlParserListener {
                 }
             }
         });
+        */
 
         // if (this.result.statementRanges.length < this.result.statements.length && this.result.statementRanges.length > 0) {
         if (this.separators && this.separators[this.separators.length - 1] < this.cql.length) {
@@ -228,7 +230,6 @@ export class CqlAnalyzerListener implements CqlParserListener {
 
             if (keyspaceName) {
                 ksd = this.structure.keyspaces.find((k) => k.name === keyspaceName);
-                this.pushRuleValue("tableSpec", "keyspaceData", ksd);
             }
 
             if (ksc) {
@@ -244,8 +245,12 @@ export class CqlAnalyzerListener implements CqlParserListener {
                 const tt = this.contextToToken(tbc);
                 const tbd = ksd ? ksd.tables.find((t) => t.name === tt.text) : null;
                 this.pushRuleValue("tableSpec", "tableToken", tt);
-                this.pushRuleValue("tableSpec", "tableData", tbd);
                 this.setCurrentStatementValue("table", tbc.text);
+
+                if (tbd) {
+                    this.pushReference(keyspaceName, "tables", tt.text, tbd);
+                }
+
             }
         } catch (e) {
             console.log(e);
@@ -457,5 +462,17 @@ export class CqlAnalyzerListener implements CqlParserListener {
 
         s.rules[rule][prop] = value;
 
+    }
+    private pushReference<R extends keyof AnalysisKeyspaceReferences>(
+        keyspace: string, set: R, name: string, value: AnalysisKeyspaceReferenceType[R]) {
+
+        const r = this.result.references;
+        if (!r[keyspace]) {
+            r[keyspace] = {};
+        }
+        if (!r[keyspace][set]) {
+            r[keyspace][set] = {};
+        }
+        r[keyspace][set][name] = value;
     }
 }

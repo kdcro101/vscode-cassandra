@@ -42,6 +42,10 @@ export class ParserService {
         ).subscribe((e) => {
             console.timeEnd(`parseInput_${id}`);
             const d = JSON.parse(e.data.stringified);
+            console.log("------------------");
+            console.log("PARSER");
+            console.log(d);
+            console.log("------------------");
             out.next(d);
             // out.next(e.data.result);
         }, (e) => {

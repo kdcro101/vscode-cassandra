@@ -1,19 +1,21 @@
-import { AnalyzedStatement } from "../../../../../../../../src/types/parser";
+import { AnalyzedStatement, CqlAnalysis } from "../../../../../../../../src/types/parser";
 
 export const markTableReferenceError = (model: monaco.editor.ITextModel,
-    statement: AnalyzedStatement): monaco.editor.IMarkerData[] => {
+    statement: AnalyzedStatement, analysis: CqlAnalysis): monaco.editor.IMarkerData[] => {
 
     const out: monaco.editor.IMarkerData[] = [];
     const spec = statement.rules.tableSpec;
+    const refs = analysis.references;
 
-    if (!spec || !spec.keyspaceData || !spec.tableToken ) {
+    if (!spec || !spec.tableToken) {
         // no keyspace no table no error
         return [];
     }
 
     const token = spec.tableToken;
+    const keyspace = spec.keyspaceToken ? spec.keyspaceToken.text : spec.keyspaceAmbiental;
 
-    if (spec.tableData) {
+    if (refs && refs[keyspace] && refs[keyspace]["tables"] && refs[keyspace]["tables"][token.text]) {
         return [];
     }
 

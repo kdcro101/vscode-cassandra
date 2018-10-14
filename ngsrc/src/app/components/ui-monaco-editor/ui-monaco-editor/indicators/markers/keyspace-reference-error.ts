@@ -1,15 +1,20 @@
-import { AnalyzedStatement } from "../../../../../../../../src/types/parser";
+import { AnalyzedStatement, CqlAnalysis } from "../../../../../../../../src/types/parser";
 
 export const markKeyspaceReferenceError = (model: monaco.editor.ITextModel,
-    statement: AnalyzedStatement): monaco.editor.IMarkerData[] => {
+    statement: AnalyzedStatement, analysis: CqlAnalysis): monaco.editor.IMarkerData[] => {
 
     const out: monaco.editor.IMarkerData[] = [];
 
     const spec = statement.rules.tableSpec;
+    const refs = analysis.references;
 
-    if (!spec || !spec.keyspaceToken || spec.keyspaceData) {
+    if (!spec || !spec.keyspaceToken) {
         // no keyspace no error
         return [];
+    }
+    const keyspace = spec.keyspaceToken.text;
+    if (refs[keyspace]) {
+        return[];
     }
 
     const token = spec.keyspaceToken;

@@ -1,5 +1,5 @@
 import { CqlAnalyzerListener } from "../parser/listeners/cql-analyzer";
-import { CassandraColumnType, CassandraKeyspace, CassandraTable } from "./index";
+import { CassandraColumnType, CassandraKeyspace, CassandraTable, CassandraType } from "./index";
 
 export type ParserTokenFamily = "keyspace" | "table";
 
@@ -39,8 +39,8 @@ export interface AnalyzedStatement {
     keyspace?: string;
     table?: string;
     text?: string;
-    tableData?: CassandraTable;
-    keyspaceData?: CassandraKeyspace;
+    // tableData?: CassandraTable;
+    // keyspaceData?: CassandraKeyspace;
     columns: CqlStatementColumn[];
     expressions: CqlStatementExpression[];
     // tokens?: { [key in ParserTokenFamily]: AnalyzedStatementToken[] };
@@ -55,8 +55,8 @@ export interface AnalyzedStatementRules {
 export interface RuleTableSpec {
     keyspaceToken?: AnalyzedStatementToken;
     tableToken?: AnalyzedStatementToken;
-    tableData?: CassandraTable;
-    keyspaceData?: CassandraKeyspace;
+    // tableData?: CassandraTable;
+    // keyspaceData?: CassandraKeyspace;
     keyspaceAmbiental?: string;
 }
 export interface RuleObjectUnknownSpec {
@@ -64,9 +64,22 @@ export interface RuleObjectUnknownSpec {
     objectUnknown?: AnalyzedStatementToken;
 }
 
+export interface AnalysisReferences {
+    [keyspace: string]: AnalysisKeyspaceReferences;
+}
+export interface AnalysisKeyspaceReferences {
+    tables?: { [name: string]: CassandraTable };
+    types?: { [name: string]: CassandraType };
+}
+export interface AnalysisKeyspaceReferenceType {
+    tables: CassandraTable;
+    types: CassandraType;
+}
+
 export interface CqlAnalysis {
     statements: AnalyzedStatement[];
     statementRanges: AnalyzedStatementRange[];
+    references?: AnalysisReferences;
     alterData: boolean;
     alterStructure: boolean;
     selectData: boolean;

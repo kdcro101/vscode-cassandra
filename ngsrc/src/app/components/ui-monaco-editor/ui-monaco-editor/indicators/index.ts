@@ -1,4 +1,4 @@
-import { AnalyzedStatement } from "../../../../../../../src/types/parser";
+import { AnalyzedStatement, CqlAnalysis } from "../../../../../../../src/types/parser";
 import { decoColumnsKeys } from "./decorations/columns-keys";
 import { decoColumnsKnown } from "./decorations/columns-known";
 import { decoValues } from "./decorations/values";
@@ -9,7 +9,7 @@ import { markTableReferenceError } from "./markers/table-reference-error";
 import { markValueNotDefined } from "./markers/value-no-destination";
 
 export const decorationsForStatement = (model: monaco.editor.ITextModel,
-    statement: AnalyzedStatement): monaco.editor.IModelDeltaDecoration[] => {
+    statement: AnalyzedStatement, analysis: CqlAnalysis): monaco.editor.IModelDeltaDecoration[] => {
 
     let out: monaco.editor.IModelDeltaDecoration[] = [];
     switch (statement.type) {
@@ -42,7 +42,7 @@ export const decorationsForStatement = (model: monaco.editor.ITextModel,
     return out;
 };
 export const markersForStatement = (model: monaco.editor.ITextModel,
-    statement: AnalyzedStatement): monaco.editor.IMarkerData[] => {
+    statement: AnalyzedStatement, analysis: CqlAnalysis): monaco.editor.IMarkerData[] => {
 
     let out: monaco.editor.IMarkerData[] = [];
     switch (statement.type) {
@@ -53,8 +53,8 @@ export const markersForStatement = (model: monaco.editor.ITextModel,
             out = markColumnNotFound(model, statement)
                 .concat(markColunNoValue(model, statement))
                 .concat(markValueNotDefined(model, statement))
-                .concat(markTableReferenceError(model, statement))
-                .concat(markKeyspaceReferenceError(model, statement));
+                .concat(markTableReferenceError(model, statement, analysis))
+                .concat(markKeyspaceReferenceError(model, statement, analysis));
             break;
         case "delete":
             out = markColumnNotFound(model, statement);

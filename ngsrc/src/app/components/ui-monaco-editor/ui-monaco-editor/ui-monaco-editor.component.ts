@@ -256,7 +256,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
         analysis.statements.forEach((s) => {
             const base = []; // baseColumnDecorations(this.modelCurrent, s);
-            const sd = decorationsForStatement(this.modelCurrent, s);
+            const sd = decorationsForStatement(this.modelCurrent, s, analysis);
 
             deltas = deltas.concat(base);
 
@@ -289,7 +289,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
         let statementErrors: monaco.editor.IMarkerData[] = [];
         analysis.statements.forEach((s) => {
-            const l = markersForStatement(this.modelCurrent, s);
+            const l = markersForStatement(this.modelCurrent, s, analysis);
             if (l) {
                 statementErrors = statementErrors.concat(l);
             }
