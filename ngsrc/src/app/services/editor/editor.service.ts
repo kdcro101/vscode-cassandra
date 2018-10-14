@@ -9,7 +9,6 @@ import { OpenStatementResultType, SaveStatementResultType } from "../../../../..
 import { WorkbenchCqlStatement } from "../../../../../src/types/editor";
 import { ProcMessage, ProcMessageStrict } from "../../../../../src/types/messages";
 import { generateId } from "../../const/id";
-import { UiDialogUnsavedComponent } from "../../dialogs/ui-dialog-unsaved/ui-dialog-unsaved.component";
 import { WorkbenchEditor } from "../../types/index";
 import { MessageService } from "../message/message.service";
 import { MonacoService } from "../monaco/monaco.service";

@@ -342,7 +342,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             this.currentAnalysis = analysis;
             this.currentStatement = analysis.statements[this.currentStatementIndex];
             // this.currentTableStruct = this.currentStatement.tableData;
-            this.currentTableStruct = analysis.references[this.currentStatement.keyspace]["tables"][this.currentStatement.table];
+            this.currentTableStruct = analysis.references.objects[this.currentStatement.keyspace]["tables"][this.currentStatement.table];
             this.currentPrimaryKeyAvailable = this.primaryKeyAvailable();
             this.currentClusterName = analysis.cluserName;
             this.currentKeyspace = this.currentStatement.keyspace;
