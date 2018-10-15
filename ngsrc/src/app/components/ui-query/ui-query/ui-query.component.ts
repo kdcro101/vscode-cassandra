@@ -85,7 +85,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
 
     private splitInstance: Split.Instance;
     private gutterElement: HTMLDivElement;
-    private gutterSize = 12;
+    private gutterSize = 14;
 
     constructor(
         public change: ChangeDetectorRef,

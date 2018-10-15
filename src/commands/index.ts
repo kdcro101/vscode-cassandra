@@ -184,7 +184,7 @@ export class VsCommands {
         ).subscribe(() => {
 
             const clusterIndex = item.clusterIndex;
-            const keyspace = item.label;
+            const keyspace = item.keyspace;
 
             this.generator.materializedViewDrop(keyspace, item.viewData)
                 .then((result) => {

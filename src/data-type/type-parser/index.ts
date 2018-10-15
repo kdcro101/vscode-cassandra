@@ -34,6 +34,18 @@ export const rootColumnType = (input: string, ignoreRootFrozen: boolean = true):
         return res.frozenAs as CassandraDataType;
     }
 
-    return res.name  as CassandraDataType;
+    return res.name as CassandraDataType;
+
+};
+
+export const typeRender = (input: DataTypeAnalysis) => {
+    const hasChildren = input.contains && input.contains.length > 0;
+    if (!hasChildren) {
+        return `${input.name}`;
+    }
+
+    const children = input.contains.map((c) => typeRender(c));
+
+    return `${input.name}<${children.join(", ")}>`;
 
 };

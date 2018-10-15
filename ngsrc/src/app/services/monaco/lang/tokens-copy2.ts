@@ -60,7 +60,7 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
         "double", "float", "inet", "int",
         "smallint", "text", "time", "timestamp", "timeuuid", "tinyint",
         "uuid", "varchar", "varint",
-        "list", "map", "set", "tuple", "frozen",
+        // "list", "map", "set","tuple","frozen"
     ],
     operators: [
         "=", "<", ">", ">=", "<=",
@@ -81,9 +81,10 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
             { include: "@numbers" },
 
             [/PRIMARY/, "keyword.primary-key", "@primary_key"],
-            // [/(list|map|set|frozen|tuple)(\s*<)(?![^>]+>\s*(?:\(|$))/,
-            //     ["type.identifier", { token: "delimiter.type.definition", next: "@type" }],
-            // ],
+            [/(list|map|set|frozen|tuple)(\s*<)(?![^>]+>\s*(?:\(|$))/,
+                ["type.identifier", { token: "delimiter.type.definition", next: "@type" }],
+            ],
+
             [/[a-zA-z][a-z0-9A-z]*(?=\.)/, "type.keyspace"],
             [/[{}()\[\]]/, "@brackets"],
             [/@symbols/, {
@@ -96,7 +97,7 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
             [/[a-zA-Z0-9_]\w*/, {
                 cases: {
                     "@keywords": { token: "keyword" },
-                    "@typeKeywords": { token: "type", next: "@type" },
+                    "@typeKeywords": { token: "type" },
                     "@null": { token: "type.null" },
                     "@default": { token: "identifier" },
                 },
@@ -160,23 +161,23 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
         type: [
             // [/[A-Z]\w*/, "type.identifier"],
             // identifiers and keywords
-            { include: "@whitespace" },
             [/[a-zA-Z_]\w*/, {
                 cases: {
                     "@typeKeywords": "type.identifier",
                     // "@keywords": { token: "@rematch", next: "@popall" },
-                    "@keywords": { token: "keyword", next: "@pop", log: "found keyword $0 in state $S0" },
-                    // "@default": "type.identifier",
-                    "@default": { token: "", next: "@popall" },
+                    "@keywords": { token: "keyword", next: "@pop" },
+                    "@default": "type.identifier",
                 },
             }],
             [/[<]/, "delimiter.type.definition", "@type_nested"],
             [/[>]/, "delimiter.type.definition", "@pop"],
-            [/[,]/, {
+            [/[\.,:]/, {
                 cases: {
+                    "@keywords": "keyword",
                     "@default": "delimiter",
                 },
             }],
+            { include: "@whitespace" },
             // ["", "", "@popall"], // catch all
         ],
         type_nested: [

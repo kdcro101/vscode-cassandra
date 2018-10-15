@@ -1,4 +1,5 @@
 import { TreeItemAggregateItem } from "../../cassandra-workbench/treeview-provider/tree-item-aggregate-item";
+import { typeParser, typeRender } from "../../data-type/type-parser";
 import { CassandraAggregate } from "../../types";
 
 export const aggregateCreate = (keyspace: string): Promise<string> => {
@@ -32,13 +33,17 @@ export const aggregateClone = (keyspace: string, data: CassandraAggregate, repla
     return new Promise((resolve, reject) => {
 
         const all = data.all;
+
+        const pt = typeParser(all.state_type);
+        const rt =  pt.isFrozen ? typeRender(pt.contains[0]) : typeRender(pt);
+
         const out: string[] = [
             !replace ?
                 `CREATE AGGREGATE ${keyspace}.${data.name}_clone(${all.argument_types.join(", ")})`
                 :
                 `CREATE OR REPLACE AGGREGATE ${keyspace}.${data.name}(${all.argument_types.join(", ")})`,
             `SFUNC ${all.state_func}`,
-            `STYPE ${all.state_type}`,
+            `STYPE ${rt}`,
             `FINALFUNC ${all.final_func}`,
             `INITCOND ${all.initcond};`,
 

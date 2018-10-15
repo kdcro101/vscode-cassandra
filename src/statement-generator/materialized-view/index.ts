@@ -20,7 +20,7 @@ export const materializedViewCreate = (keyspace: string, table: CassandraTable):
             `${primaryKey(table)}`,
         ];
         const wrapped = wrap(out.join("\n"), {
-            width: 80,
+            width: 140,
             trim: true,
         });
         resolve(wrapped);
@@ -33,7 +33,7 @@ export const materializedViewDrop = (keyspace: string, data: CassandraMaterializ
         const name = `${td.type_name}`;
 
         const out: string[] = [
-            `DROP TYPE ${keyspace}.${name};`,
+            `DROP MATERIALIZED VIEW ${keyspace}.${data.name};`,
         ];
 
         resolve(out.join("\n"));
@@ -78,10 +78,11 @@ export const materializedViewClone = (keyspace: string, data: CassandraMateriali
             `${tableOptions(data)};`,
         ];
         const wrapped = wrap(out.join("\n"), {
-            width: 80,
+            width: 140,
             trim: true,
         });
-        resolve(wrapped);
+        // resolve(wrapped);
+        resolve(out.join("\n"));
 
     });
 };

@@ -167,6 +167,7 @@ materializedViewOptions
     : tableOptions
     | tableOptions kwAnd clusteringOrder
     | clusteringOrder
+    | clusteringOrder kwAnd tableOptions
     ;
 
 // CREATE MATERIALIZED VIEW [IF NOT EXISTS] [keyspace_name.] view_name
