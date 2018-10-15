@@ -9,8 +9,8 @@ export const typeCreate = (keyspace: string): Promise<string> => {
             `   member1 text,`,
             `   member2 text,`,
             `   member3 text,`,
-            `   member4 text,`,
-            `)`,
+            `   member4 text`,
+            `);`,
         ];
 
         resolve(out.join("\n"));
@@ -43,9 +43,6 @@ export const typeAlter = (keyspace: string, data: CassandraType): Promise<string
         }).join(" AND \n");
 
         const out: string[] = [
-            `-- Current members:`,
-            `${commentList}`,
-            `--`,
             `ALTER TYPE ${keyspace}.${name}`,
             `ADD`,
             `\tnew_member text`,
@@ -57,18 +54,17 @@ export const typeAlter = (keyspace: string, data: CassandraType): Promise<string
         resolve(out.join("\n"));
     });
 };
-export const typeClone = (keyspace: string, data: CassandraType): Promise<string> => {
+export const typeClone = (keyspace: string, data: CassandraType, cloneName?: string): Promise<string> => {
     return new Promise((resolve, reject) => {
-
+        const name = !cloneName ? `${data.name}` : cloneName;
         const td = data.all;
-        const name = `${td.type_name}_clone`;
+
         const list = td.field_names.map((n, i) => {
             const t = td.field_types[i];
             return `\t${n} ${t}`;
         }).join(",\n");
 
         const out: string[] = [
-            `-- change type name and definition`,
             `CREATE TYPE ${keyspace}.${name}(`,
             `${list}`,
             `);`,

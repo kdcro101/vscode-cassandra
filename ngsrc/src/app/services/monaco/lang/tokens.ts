@@ -1,8 +1,3 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-
 "use strict";
 
 export const cqlLanguageConfig: monaco.languages.LanguageConfiguration = {
@@ -81,15 +76,11 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
             { include: "@numbers" },
 
             [/PRIMARY/, "keyword.primary-key", "@primary_key"],
-            // [/(list|map|set|frozen|tuple)(\s*<)(?![^>]+>\s*(?:\(|$))/,
-            //     ["type.identifier", { token: "delimiter.type.definition", next: "@type" }],
-            // ],
             [/[a-zA-z][a-z0-9A-z]*(?=\.)/, "type.keyspace"],
             [/[{}()\[\]]/, "@brackets"],
             [/@symbols/, {
                 cases: {
                     "@operators": "operator",
-
                 },
             }],
             // identifiers and keywords
@@ -146,27 +137,12 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
         whitespace: [
             [/[ \t\r\n]+/, "white"],
         ],
-        qualified: [
-            [/[a-zA-Z_][\w]*/, {
-                cases: {
-                    // '@typeFollows': { token: 'keyword', next: '@type' },
-                    // '@typeKeywords': 'type.identifier',
-                    // '@keywords': 'keyword',
-                    "@default": "identifier",
-                },
-            }],
-            ["", "", "@pop"],
-        ],
         type: [
-            // [/[A-Z]\w*/, "type.identifier"],
-            // identifiers and keywords
             { include: "@whitespace" },
             [/[a-zA-Z_]\w*/, {
                 cases: {
                     "@typeKeywords": "type.identifier",
-                    // "@keywords": { token: "@rematch", next: "@popall" },
                     "@keywords": { token: "keyword", next: "@pop", log: "found keyword $0 in state $S0" },
-                    // "@default": "type.identifier",
                     "@default": { token: "", next: "@popall" },
                 },
             }],
@@ -177,7 +153,6 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
                     "@default": "delimiter",
                 },
             }],
-            // ["", "", "@popall"], // catch all
         ],
         type_nested: [
             { include: "@whitespace" },
@@ -190,23 +165,13 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
         ],
         comment: [
             [/[^*/]+/, "comment"],
-            // Not supporting nested comments, as nested comments seem to not be standard?
-            // i.e. http://stackoverflow.com/questions/728172/are-there-multiline-comment-delimiters-in-sql-that-are-vendor-agnostic
-            // [/\/\*/, { token: 'comment.quote', next: '@push' }],    // nested comment not allowed :-(
             [/\*\//, { token: "comment.quote", next: "@pop" }],
             [/./, "comment"],
         ],
         numbers: [
-            // [/0[xX][0-9a-fA-F]*/, "number"],
             [/[\-]?\d+(\.\d+)?/, "number"],
             [/((\d+(\.\d*)?)|(\.\d+))([eE][\-+]?\d+)?/, "number"],
         ],
-        // numbers: [
-        //     [/0[xX][0-9a-fA-F]*/, "number"],
-        //     [/[$][+-]*\d*(\.\d*)?/, "number"],
-        //     // [/[+-]*\d*(\.\d*)?/, "number"],
-        //     [/((\d+(\.\d*)?)|(\.\d+))([eE][\-+]?\d+)?/, "number"],
-        // ],
         doubleQuotedString: [
             [/[^\\"]+/, "string"],
             [/@escapes/, "string.escape"],

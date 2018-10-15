@@ -29,19 +29,21 @@ export const aggregateDrop = (keyspace: string, data: CassandraAggregate): Promi
 export const aggregateReplace = (keyspace: string, data: CassandraAggregate): Promise<string> => {
     return aggregateClone(keyspace, data, true);
 };
-export const aggregateClone = (keyspace: string, data: CassandraAggregate, replace: boolean = false): Promise<string> => {
+export const aggregateClone = (
+    keyspace: string,
+    data: CassandraAggregate, replace: boolean = false, cloneName?: string): Promise<string> => {
     return new Promise((resolve, reject) => {
-
+        const name = !cloneName ? `${data.name}` : cloneName;
         const all = data.all;
 
         const pt = typeParser(all.state_type);
-        const rt =  pt.isFrozen ? typeRender(pt.contains[0]) : typeRender(pt);
+        const rt = pt.isFrozen ? typeRender(pt.contains[0]) : typeRender(pt);
 
         const out: string[] = [
             !replace ?
-                `CREATE AGGREGATE ${keyspace}.${data.name}_clone(${all.argument_types.join(", ")})`
+                `CREATE AGGREGATE ${keyspace}.${name}(${all.argument_types.join(", ")})`
                 :
-                `CREATE OR REPLACE AGGREGATE ${keyspace}.${data.name}(${all.argument_types.join(", ")})`,
+                `CREATE OR REPLACE AGGREGATE ${keyspace}.${name}(${all.argument_types.join(", ")})`,
             `SFUNC ${all.state_func}`,
             `STYPE ${rt}`,
             `FINALFUNC ${all.final_func}`,

@@ -1,7 +1,70 @@
 import { CassandraTable } from "../../types/index";
-export const tableClone = (keyspace: string, data: CassandraTable): Promise<string> => {
+export const tableTruncate = (keyspace: string, data: CassandraTable): Promise<string> => {
     return new Promise((resolve, reject) => {
-        const name = `${data.name}_clone`;
+        const name = `${data.name}`;
+
+        resolve(`TRUNCATE TABLE ${keyspace}.${name};`);
+
+    });
+};
+
+export const tableCreate = (keyspace: string): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        const name = `table_name`;
+
+        const out: string[] = [
+            `-- change table name and structure`,
+            `CREATE TABLE ${keyspace}.${name}(`,
+            `\tpk text,`,
+            `\tcck text,`,
+            `\tdata text,`,
+            `\tPRIMARY KEY(pk,cck)`,
+            `);`,
+        ];
+
+        resolve(out.join("\n"));
+
+    });
+};
+export const tableAlterAdd = (keyspace: string, data: CassandraTable): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        const name = `${data.name}`;
+
+        const out: string[] = [
+            `-- change column name and type`,
+            `ALTER TABLE ${keyspace}.${name} ADD new_column_name TEXT;`,
+        ];
+
+        resolve(out.join("\n"));
+
+    });
+};
+export const tableAlterDrop = (keyspace: string, data: CassandraTable, columnToDrop?: string): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        const name = `${data.name}`;
+        const columnName = columnToDrop || "column_to_drop";
+
+        const out: string[] = [
+            `-- change column name`,
+            `ALTER TABLE ${keyspace}.${name} DROP ${columnName};`,
+        ];
+
+        resolve(out.join("\n"));
+
+    });
+};
+
+export const tableDrop = (keyspace: string, data: CassandraTable): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        const name = `${data.name}`;
+
+        resolve(`DROP TABLE ${keyspace}.${name};`);
+
+    });
+};
+export const tableClone = (keyspace: string, data: CassandraTable, cloneName?: string): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        const name = !cloneName ? `${data.name}` : cloneName;
         const lines: string[] = [
             `-- change table name`,
             `CREATE TABLE ${keyspace}.${name} (`,

@@ -1,12 +1,13 @@
 import { CassandraKeyspace } from "../../types/index";
-export const keyspaceClone = (keyspace: string, data: CassandraKeyspace): Promise<string> => {
+export const keyspaceClone = (keyspace: string, data: CassandraKeyspace, cloneName?: string): Promise<string> => {
     return new Promise((resolve, reject) => {
 
+        const name = !cloneName ? `${data.name}` : cloneName;
         const replication = replicationOptions(data);
 
         const out: string[] = [
             `-- change keyspace name`,
-            `CREATE KEYSPACE ${keyspace}_clone`,
+            `CREATE KEYSPACE ${name}`,
             `\tWITH REPLICATION = {`,
             `${replication}`,
             `\t}`,
@@ -19,7 +20,6 @@ export const keyspaceClone = (keyspace: string, data: CassandraKeyspace): Promis
 };
 
 function replicationOptions(data: CassandraKeyspace): string {
-
     const out = Object.keys(data.replication).map((k) => `\t\t'${k}': '${data.replication[k]}'`);
     return out.join(",\n");
 }

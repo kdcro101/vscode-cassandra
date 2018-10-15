@@ -10,6 +10,7 @@ export class TreeItemKeyspace extends TreeItemBase {
         public label: string,
         public collapsibleState: vscode.TreeItemCollapsibleState,
         public clusterIndex: number,
+        public keyspace: string,
         public contextValue: string,
         public keyspaceData: CassandraKeyspace,
         public tooltipText?: string,

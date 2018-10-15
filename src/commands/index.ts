@@ -59,6 +59,8 @@ export class VsCommands {
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableDrop", this.cqlTableDrop));
         this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableCreate", this.cqlTableCreate));
+        this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableTruncate", this.cqlTableTruncate));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableAlterAdd", this.cqlTableAlterAdd));
@@ -72,6 +74,8 @@ export class VsCommands {
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlKeyspaceClone", this.cqlKeyspaceClone));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlKeyspaceCreate", this.cqlKeyspaceCreate));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlKeyspaceExport", this.cqlKeyspaceExport));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlColumnDrop", this.cqlColumnDrop));
         this.context.subscriptions
@@ -114,7 +118,21 @@ export class VsCommands {
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlAggregateCreate", this.cqlAggregateCreate));
     }
+    private cqlKeyspaceExport = (item: TreeItemKeyspace) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
 
+            // this.generator.aggregateReplace(keyspace, item.aggregateData)
+            //     .then((result) => {
+            //         this.workbench.editorCreate(clusterIndex, keyspace, result);
+            //     }).catch((e) => {
+            //         console.log(e);
+            //     });
+        });
+    }
     private cqlAggregateReplace = (item: TreeItemAggregateItem) => {
         this.stateWorkbench.pipe(
             take(1),
@@ -153,7 +171,7 @@ export class VsCommands {
             const clusterIndex = item.clusterIndex;
             const keyspace = item.keyspace;
 
-            this.generator.aggregateClone(keyspace, item.aggregateData, false)
+            this.generator.aggregateClone(keyspace, item.aggregateData, false, `${item.aggregateData.name}_clone`)
                 .then((result) => {
                     this.workbench.editorCreate(clusterIndex, keyspace, result);
                 }).catch((e) => {
@@ -167,7 +185,7 @@ export class VsCommands {
         ).subscribe(() => {
 
             const clusterIndex = item.clusterIndex;
-            const keyspace = item.label;
+            const keyspace = item.keyspace;
 
             this.generator.aggregateCreate(keyspace)
                 .then((result) => {
@@ -218,7 +236,7 @@ export class VsCommands {
             const clusterIndex = item.clusterIndex;
             const keyspace = item.keyspace;
 
-            this.generator.materializedViewClone(keyspace, item.viewData)
+            this.generator.materializedViewClone(keyspace, item.viewData, `${item.viewData.name}_clone`)
                 .then((result) => {
                     this.workbench.editorCreate(clusterIndex, keyspace, result);
                 }).catch((e) => {
@@ -248,7 +266,7 @@ export class VsCommands {
         ).subscribe(() => {
 
             const clusterIndex = item.clusterIndex;
-            const keyspace = item.label;
+            const keyspace = item.keyspace;
 
             this.generator.typeCreate(keyspace)
                 .then((result) => {
@@ -266,7 +284,7 @@ export class VsCommands {
             const clusterIndex = item.clusterIndex;
             const keyspace = item.keyspace;
 
-            this.generator.typeClone(keyspace, item.typeData)
+            this.generator.typeClone(keyspace, item.typeData, `${item.typeData.name}_clone`)
                 .then((result) => {
                     this.workbench.editorCreate(clusterIndex, keyspace, result);
                 }).catch((e) => {
@@ -346,7 +364,7 @@ export class VsCommands {
             const clusterIndex = item.clusterIndex;
             const keyspace = item.keyspace;
 
-            this.generator.functionClone(keyspace, item.functionData, false)
+            this.generator.functionClone(keyspace, item.functionData, false, `${item.functionData.name}_clone`)
                 .then((result) => {
                     this.workbench.editorCreate(clusterIndex, keyspace, result);
                 }).catch((e) => {
@@ -360,7 +378,7 @@ export class VsCommands {
         ).subscribe(() => {
 
             const clusterIndex = item.clusterIndex;
-            const keyspace = item.label;
+            const keyspace = item.keyspace;
 
             this.generator.functionCreate(keyspace)
                 .then((result) => {
@@ -471,9 +489,9 @@ export class VsCommands {
         ).subscribe(() => {
 
             const clusterIndex = item.clusterIndex;
-            const keyspace = item.label;
+            const keyspace = item.keyspace;
 
-            this.generator.keyspaceClone(keyspace, item.keyspaceData)
+            this.generator.keyspaceClone(keyspace, item.keyspaceData, `${keyspace}_clone`)
                 .then((result) => {
                     this.workbench.editorCreate(clusterIndex, keyspace, result);
                 }).catch((e) => {
@@ -487,7 +505,7 @@ export class VsCommands {
         ).subscribe(() => {
 
             const clusterIndex = item.clusterIndex;
-            const keyspace = item.label;
+            const keyspace = item.keyspace;
 
             this.generator.keyspaceAlter(keyspace, item.keyspaceData)
                 .then((result) => {
@@ -503,7 +521,7 @@ export class VsCommands {
         ).subscribe(() => {
 
             const clusterIndex = item.clusterIndex;
-            const keyspace = item.label;
+            const keyspace = item.keyspace;
 
             this.generator.keyspaceDrop(keyspace, item.keyspaceData)
                 .then((result) => {
@@ -577,6 +595,23 @@ export class VsCommands {
                 });
         });
     }
+    private cqlTableCreate = (item: TreeItemKeyspace) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.tableCreate(keyspace)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
     private cqlTableClone = (item: TreeItemTable) => {
         this.stateWorkbench.pipe(
             take(1),
@@ -585,7 +620,7 @@ export class VsCommands {
             const clusterIndex = item.clusterIndex;
             const keyspace = item.keyspace;
 
-            this.generator.tableClone(keyspace, item.tableData)
+            this.generator.tableClone(keyspace, item.tableData, `${item.tableData.name}_clone`)
                 .then((result) => {
                     this.workbench.editorCreate(clusterIndex, keyspace, result);
 

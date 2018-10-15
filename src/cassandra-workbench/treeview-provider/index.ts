@@ -160,7 +160,7 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
                         const name = this.clusters.getClusterName(clusterIndex);
                         const tooltip = `${k.name}@${name}`;
                         return new TreeItemKeyspace(k.name, vscode.TreeItemCollapsibleState.Collapsed,
-                            clusterIndex, "keyspace", k, tooltip);
+                            clusterIndex, k.name, "keyspace", k, tooltip);
                     });
                     resolve(items);
 

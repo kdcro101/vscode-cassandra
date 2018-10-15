@@ -57,18 +57,17 @@ export const materializedViewAlter = (keyspace: string, data: CassandraMateriali
         resolve(out.join("\n"));
     });
 };
-export const materializedViewClone = (keyspace: string, data: CassandraMaterializedView): Promise<string> => {
+export const materializedViewClone = (keyspace: string, data: CassandraMaterializedView, cloneName?: string): Promise<string> => {
     return new Promise((resolve, reject) => {
-
+        const name = !cloneName ? `${data.name}` : cloneName;
         const td = data.all;
         const columns = data.columns;
-        const name = `${td.view_name}_clone`;
+
         const list = columns.map((n, i) => {
             return `${n.name}`;
         }).join(", ");
 
         const out: string[] = [
-            `-- change type name and definition`,
             `CREATE MATERIALIZED VIEW ${keyspace}.${name}`,
             `AS SELECT`,
             `${list}`,

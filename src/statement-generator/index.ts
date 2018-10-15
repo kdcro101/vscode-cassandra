@@ -10,12 +10,8 @@ import { keyspaceClone } from "./keyspace/clone";
 import { keyspaceCreate } from "./keyspace/create";
 import { keyspaceDrop } from "./keyspace/drop";
 import { materializedViewAlter, materializedViewClone, materializedViewCreate, materializedViewDrop } from "./materialized-view/index";
-import { tableAlterAdd } from "./table/alter-add";
-import { tableAlterDrop } from "./table/alter-drop";
-import { tableClone } from "./table/clone";
-import { tableDrop } from "./table/drop";
+import { tableAlterAdd, tableAlterDrop, tableClone, tableCreate, tableDrop, tableTruncate } from "./table";
 import { tableSelect, tableSelectAll } from "./table/select";
-import { tableTruncate } from "./table/truncate";
 import { typeAlter, typeClone, typeCreate, typeDrop } from "./type/index";
 
 export class StatementGenerator {
@@ -23,6 +19,7 @@ export class StatementGenerator {
     public tableSelectAll = tableSelectAll;
     public tableSelect = tableSelect;
     public tableClone = tableClone;
+    public tableCreate = tableCreate;
     public tableDrop = tableDrop;
     public tableTruncate = tableTruncate;
     public tableAlterAdd = tableAlterAdd;

@@ -146,19 +146,39 @@
                     "group": "10_operations@1"
                 },
                 {
+                    "command": "cassandraWorkbench.cqlTableCreate",
+                    "when": "view == cassandraWorkbenchView && viewItem == keyspace",
+                    "group": "01_common@1"
+                },
+                {
                     "command": "cassandraWorkbench.cqlFunctionCreate",
                     "when": "view == cassandraWorkbenchView && viewItem == keyspace",
+                    "group": "01_common@2"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlFunctionCreate",
+                    "when": "view == cassandraWorkbenchView && viewItem == functions",
                     "group": "01_common@1"
                 },
                 {
                     "command": "cassandraWorkbench.cqlTypeCreate",
                     "when": "view == cassandraWorkbenchView && viewItem == keyspace",
+                    "group": "01_common@3"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlTypeCreate",
+                    "when": "view == cassandraWorkbenchView && viewItem == types",
                     "group": "01_common@2"
                 },
                 {
                     "command": "cassandraWorkbench.cqlAggregateCreate",
                     "when": "view == cassandraWorkbenchView && viewItem == keyspace",
-                    "group": "01_common@3"
+                    "group": "01_common@4"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlAggregateCreate",
+                    "when": "view == cassandraWorkbenchView && viewItem == aggregates",
+                    "group": "01_common@2"
                 },
                 {
                     "command": "cassandraWorkbench.cqlMaterializedViewCreate",
@@ -174,6 +194,11 @@
                     "command": "cassandraWorkbench.cqlKeyspaceClone",
                     "when": "view == cassandraWorkbenchView && viewItem == keyspace",
                     "group": "20_special@1"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlKeyspaceExport",
+                    "when": "view == cassandraWorkbenchView && viewItem == keyspace",
+                    "group": "20_special@2"
                 },
                 {
                     "command": "cassandraWorkbench.cqlIndexCreate",
@@ -350,6 +375,10 @@
                 "title": "DROP TABLE"
             },
             {
+                "command": "cassandraWorkbench.cqlTableCreate",
+                "title": "CREATE TABLE"
+            },
+            {
                 "command": "cassandraWorkbench.cqlTableAlterAdd",
                 "title": "ALTER TABLE ADD"
             },
@@ -376,6 +405,10 @@
             {
                 "command": "cassandraWorkbench.cqlKeyspaceClone",
                 "title": "Clone KEYSPACE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlKeyspaceExport",
+                "title": "Export structure"
             },
             {
                 "command": "cassandraWorkbench.generateConfiguration",
