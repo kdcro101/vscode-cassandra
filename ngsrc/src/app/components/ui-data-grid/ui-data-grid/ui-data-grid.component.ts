@@ -471,6 +471,15 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 this.menuOpen(e);
             });
 
+            fromEvent<KeyboardEvent>(this.gridHost.nativeElement, "keypress", {capture: true}).pipe(
+                takeUntil(this.eventViewDestroyed),
+                filter((e) => e.ctrlKey && e.key === "a"),
+            ).subscribe(() => {
+                    console.log("grid select all");
+                    this.gridInstance.selectCell(0, 0, this.gridInstance.countRows() - 1, this.gridInstance.countCols() - 1);
+
+            });
+
         });
 
     }

@@ -65,15 +65,6 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         styleElement.appendChild(document.createTextNode(style));
         host.nativeElement.appendChild(styleElement);
 
-        fromEvent<KeyboardEvent>(window, "keyup", {
-            capture: true,
-        }).pipe(
-            takeUntil(this.eventViewDestroyed),
-            filter(() => this.monacoEditor != null),
-        ).subscribe((e) => {
-            this.onWindowKeypress(e);
-        });
-
     }
     @Input("editor") public set setEditor(value: WorkbenchEditor) {
         this.stateReady.pipe(
@@ -185,7 +176,14 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         ).subscribe((code) => {
             this.parseModel();
         });
-
+        fromEvent<KeyboardEvent>(this.root.nativeElement, "keyup", {
+            capture: true,
+        }).pipe(
+            takeUntil(this.eventViewDestroyed),
+            filter(() => this.monacoEditor != null),
+        ).subscribe((e) => {
+            this.onWindowKeypress(e);
+        });
     }
     ngOnDestroy() {
         super.ngOnDestroy();

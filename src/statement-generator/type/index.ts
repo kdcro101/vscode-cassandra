@@ -33,10 +33,7 @@ export const typeAlter = (keyspace: string, data: CassandraType): Promise<string
     return new Promise((resolve, reject) => {
         const td = data.all;
         const name = `${td.type_name}`;
-        const commentList = td.field_names.map((n, i) => {
-            const t = td.field_types[i];
-            return `--        ${n} ${t}`;
-        }).join(",\n");
+
         const renameList = td.field_names.map((n, i) => {
             const t = td.field_types[i];
             return `\t${n} TO ${n}`;
