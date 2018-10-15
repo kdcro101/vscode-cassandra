@@ -766,6 +766,7 @@ constant
     : constantUuid
     | constantString
     | constantDecimal
+    | constantFloat
     | constantHexadecimal
     | constantBoolean
     | kwNull
