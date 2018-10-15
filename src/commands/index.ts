@@ -60,6 +60,8 @@ export class VsCommands {
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableSelectAll", this.cqlTableSelectAll));
         this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableUpdate", this.cqlTableUpdate));
+        this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableClone", this.cqlTableClone));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableDrop", this.cqlTableDrop));
@@ -71,6 +73,7 @@ export class VsCommands {
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableAlterAdd", this.cqlTableAlterAdd));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableAlterDrop", this.cqlTableAlterDrop));
+
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlKeyspaceDrop", this.cqlKeyspaceDrop));
         this.context.subscriptions
@@ -81,12 +84,15 @@ export class VsCommands {
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlKeyspaceCreate", this.cqlKeyspaceCreate));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlKeyspaceExport", this.cqlKeyspaceExport));
+
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlColumnDrop", this.cqlColumnDrop));
+
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlIndexCreate", this.cqlIndexCreate));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlIndexDrop", this.cqlIndexDrop));
+
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlFunctionCreate", this.cqlFunctionCreate));
         this.context.subscriptions
@@ -469,6 +475,22 @@ export class VsCommands {
             const keyspace = item.keyspace;
 
             this.generator.tableSelect(keyspace, item.tableData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlTableUpdate = (item: TreeItemTable) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.tableUpdate(keyspace, item.tableData)
                 .then((result) => {
                     this.workbench.editorCreate(clusterIndex, keyspace, result);
                 }).catch((e) => {

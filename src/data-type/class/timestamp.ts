@@ -24,7 +24,7 @@ export class TimestampDataTypeValue extends DataTypeValueBase<Date> {
     }
     public get stringPlaceholder(): string {
         const s = moment().format("YYYY-MM-DD HH:mm:ss");
-        return `'${s}`;
+        return `'${s}'`;
     }
     private parseDateString(dateString: string): moment.Moment {
         const m = moment(dateString, [

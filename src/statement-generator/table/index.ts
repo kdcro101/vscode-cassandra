@@ -71,7 +71,6 @@ export const tableClone = (keyspace: string, data: CassandraTable, cloneName?: s
         const indexes = data.indexes;
 
         const lines: string[] = [
-            `-- change table name`,
             `CREATE TABLE ${keyspace}.${name} (`,
             `${columns(data)},`,
             `\t${primaryKey(data)}`,

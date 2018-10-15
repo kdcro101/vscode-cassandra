@@ -127,6 +127,12 @@
                     "group": "01_common@2"
                 },
                 {
+                    "command": "cassandraWorkbench.cqlTableUpdate",
+                    "when": "view == cassandraWorkbenchView && viewItem == table",
+                    "group": "01_common@3"
+                },
+
+                {
                     "command": "cassandraWorkbench.cqlTableAlterAdd",
                     "when": "view == cassandraWorkbenchView && viewItem == table",
                     "group": "02_alter@1"
@@ -384,6 +390,10 @@
             {
                 "command": "cassandraWorkbench.cqlTableSelectAll",
                 "title": "SELECT ALL"
+            },
+            {
+                "command": "cassandraWorkbench.cqlTableUpdate",
+                "title": "UPDATE"
             },
             {
                 "command": "cassandraWorkbench.cqlTableClone",

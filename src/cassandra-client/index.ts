@@ -5,31 +5,11 @@ import { CassandraKeyspace, ValidatedConfigClusterItem } from "../types";
 import { CassandraClientEvents, CassandraClusterData } from "../types/index";
 import { collectKeyspaces } from "./collectors/index";
 export type ColumnType = "custom" |
-    "ascii" |
-    "bigint" |
-    "blob" |
-    "boolean" |
-    "counter" |
-    "decimal" |
-    "double" |
-    "float" |
-    "int" |
-    "text" |
-    "timestamp" |
-    "uuid" |
-    "varchar" |
-    "varint" |
-    "timeuuid" |
-    "inet" |
-    "date" |
-    "time" |
-    "smallint" |
-    "tinyint" |
-    "list" |
-    "map" |
-    "set" |
-    "udt" |
-    "tuple";
+    "ascii" | "bigint" | "blob" | "boolean" | "counter" |
+    "decimal" | "double" | "float" | "int" | "text" |
+    "timestamp" | "uuid" | "varchar" | "varint" | "timeuuid" |
+    "inet" | "date" | "time" | "smallint" | "tinyint" |
+    "list" | "map" | "set" | "udt" | "tuple";
 
 export interface ColumnInfo {
     name: string;
