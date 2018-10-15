@@ -14,7 +14,10 @@ import { TreeItemTable } from "../cassandra-workbench/treeview-provider/tree-ite
 import { TreeItemTypeItem } from "../cassandra-workbench/treeview-provider/tree-item-type-item";
 import { ConfigurationManager } from "../configuration-manager";
 import { StatementGenerator } from "../statement-generator";
-import { ExtensionContextBundle, TreeItemType } from "../types";
+import { ExtensionContextBundle } from "../types";
+
+import * as  clipboardy  from "clipboardy";
+import { TreeItemBase } from "../cassandra-workbench/treeview-provider/tree-item-base";
 
 declare var extensionContextBundle: ExtensionContextBundle;
 
@@ -36,6 +39,8 @@ export class VsCommands {
     }
     public register() {
 
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.copyName", this.copyName));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.generateConfiguration", this.onConfigurationGenerate));
         this.context.subscriptions
@@ -117,6 +122,9 @@ export class VsCommands {
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlAggregateClone", this.cqlAggregateClone));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlAggregateCreate", this.cqlAggregateCreate));
+    }
+    private copyName = (item: TreeItemBase) => {
+        clipboardy.writeSync(item.label);
     }
     private cqlKeyspaceExport = (item: TreeItemKeyspace) => {
         this.stateWorkbench.pipe(
