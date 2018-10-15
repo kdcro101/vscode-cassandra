@@ -26,6 +26,8 @@ export type TreeItemType = "cluster" | "cluster-error" | "keyspace" | "table" | 
 export type CassandraConsistency = "ANY" | "ONE" | "TWO" | "THREE" | "QUORUM" | "ALL" |
     "LOCAL_QUORUM" | "EACH_QUORUM" | "SERIAL" | "LOCAL_SERIAL" | "LOCAL_ONE";
 
+export type CassandraIndexCollectionType = "full" | "values" | "keys";
+
 export interface WorkbenchConfigAuthProvider {
     class: "PlainTextAuthProvider";
     username?: string;
@@ -70,6 +72,8 @@ export interface CassandraIndex {
     name: string;
     kind: string;
     options: { [key: string]: string };
+    columnName: string;
+    indexType: CassandraIndexCollectionType;
     all: RowIndex;
 }
 

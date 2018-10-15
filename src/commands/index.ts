@@ -125,12 +125,12 @@ export class VsCommands {
             const clusterIndex = item.clusterIndex;
             const keyspace = item.keyspace;
 
-            // this.generator.aggregateReplace(keyspace, item.aggregateData)
-            //     .then((result) => {
-            //         this.workbench.editorCreate(clusterIndex, keyspace, result);
-            //     }).catch((e) => {
-            //         console.log(e);
-            //     });
+            this.generator.exportStructure(keyspace, item.keyspaceData)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
         });
     }
     private cqlAggregateReplace = (item: TreeItemAggregateItem) => {

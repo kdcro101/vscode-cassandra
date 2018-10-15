@@ -1,4 +1,7 @@
+import { from } from "rxjs";
+import { concatMap } from "rxjs/operators";
 import { CassandraTable } from "../../types/index";
+import { indexClone } from "../index/index";
 export const tableTruncate = (keyspace: string, data: CassandraTable): Promise<string> => {
     return new Promise((resolve, reject) => {
         const name = `${data.name}`;
@@ -65,6 +68,8 @@ export const tableDrop = (keyspace: string, data: CassandraTable): Promise<strin
 export const tableClone = (keyspace: string, data: CassandraTable, cloneName?: string): Promise<string> => {
     return new Promise((resolve, reject) => {
         const name = !cloneName ? `${data.name}` : cloneName;
+        const indexes = data.indexes;
+
         const lines: string[] = [
             `-- change table name`,
             `CREATE TABLE ${keyspace}.${name} (`,
@@ -73,7 +78,25 @@ export const tableClone = (keyspace: string, data: CassandraTable, cloneName?: s
             `)${tableOptions(data)};`,
         ];
 
-        resolve(lines.join("\n"));
+        if (!indexes || indexes.length === 0) {
+            resolve(lines.join("\n"));
+            return;
+        }
+
+        lines.push("\n");
+
+        from(indexes).pipe(
+            concatMap((ix) => {
+                const ixName = !cloneName ? null : `${name}_${ix.columnName}_idx`;
+                return indexClone(keyspace, data, ix.name, ixName, name);
+            }),
+        ).subscribe((idxString) => {
+            lines.push(idxString);
+        }, (e) => {
+            reject(e);
+        }, () => {
+            resolve(lines.join("\n"));
+        });
 
     });
 };

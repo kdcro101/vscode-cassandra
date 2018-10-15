@@ -6,7 +6,7 @@ export const functionCreate = (keyspace: string): Promise<string> => {
             `RETURNS double LANGUAGE java AS`,
             `$$`,
             `\treturn Double.valueOf(Math.log(param1.doubleValue()));`,
-            `$$`,
+            `$$;`,
 
         ];
 

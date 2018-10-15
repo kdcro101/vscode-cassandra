@@ -5,9 +5,9 @@ import { concatMap, map } from "rxjs/operators";
 import {
     CassandraAggregate,
     CassandraColumn, CassandraColumnType,
-    CassandraFunction, CassandraIndex, CassandraKeyspace,
-    CassandraMaterializedView, CassandraTable, CassandraType,
-    RowAggregate, RowColumn, RowFunction, RowIndex, RowKeyspace, RowMaterializedView, RowTable, RowType,
+    CassandraFunction, CassandraIndex, CassandraIndexCollectionType,
+    CassandraKeyspace, CassandraMaterializedView, CassandraTable,
+    CassandraType, RowAggregate, RowColumn, RowFunction, RowIndex, RowKeyspace, RowMaterializedView, RowTable, RowType,
 } from "../../types";
 import { CassandraClusteringOrder } from "../../types/index";
 
@@ -283,6 +283,7 @@ export function collectPrimaryKeys(client: cassandra.Client, keyspace: string, t
 export function collectIndexes(client: cassandra.Client, keyspace: string, table: string): Promise<CassandraIndex[]> {
     return new Promise((resolve, reject) => {
         // system_schema.columns
+        const rxExtract = new RegExp(/([a-z]+)\(([a-z][_\w]*)\)/i);
         from<cassandra.types.ResultSet>(client.execute("select * from system_schema.indexes \
          where keyspace_name=? AND table_name=?", [keyspace, table])).pipe(
             map((data) => {
@@ -290,11 +291,15 @@ export function collectIndexes(client: cassandra.Client, keyspace: string, table
 
                 return rows.map((row, i) => {
 
+                    const column_name = rxExtract.test(row.options.target) ? rxExtract.exec(row.options.target)[2] : row.options.target;
+                    const index_type = rxExtract.test(row.options.target) ? rxExtract.exec(row.options.target)[1] : null;
                     const out: CassandraIndex = {
                         name: row.index_name,
                         kind: row.kind,
                         options: row.options,
                         all: row,
+                        columnName: column_name,
+                        indexType: index_type as CassandraIndexCollectionType,
                     };
                     return out;
                 });

@@ -13,16 +13,19 @@ export const functionClone = (
 
         }).join(", ");
 
+        const retType = typeParser(fd.return_type);
+        const retTypeFixed = retType.isFrozen ? typeRender(retType.contains[0]) : typeRender(retType);
+
         const out: string[] = [
             !replace ?
                 `CREATE FUNCTION ${keyspace}.${name}_clone(${params})`
                 :
                 `CREATE OR REPLACE FUNCTION ${keyspace}.${name}(${params})`,
             fd.called_on_null_input ? `CALLED ON NULL INPUT` : `RETURNS NULL ON NULL INPUT`,
-            `RETURNS ${fd.return_type} LANGUAGE ${fd.language} AS`,
+            `RETURNS ${retTypeFixed} LANGUAGE ${fd.language} AS`,
             `$$`,
             `${fd.body}`,
-            `$$`,
+            `$$;`,
 
         ];
 

@@ -3,12 +3,14 @@ import { aggregateClone, aggregateCreate, aggregateDrop, aggregateReplace } from
 import { functionClone } from "./function/clone";
 import { functionCreate } from "./function/create";
 import { functionDrop } from "./function/drop";
-import { indexCreate } from "./index/create";
-import { indexDrop } from "./index/drop";
+
+import { indexDrop } from "./index/index";
+import { indexCreate } from "./index/index";
 import { keyspaceAlter } from "./keyspace/alter";
 import { keyspaceClone } from "./keyspace/clone";
 import { keyspaceCreate } from "./keyspace/create";
 import { keyspaceDrop } from "./keyspace/drop";
+import { exportStructure } from "./keyspace/export";
 import { materializedViewAlter, materializedViewClone, materializedViewCreate, materializedViewDrop } from "./materialized-view/index";
 import { tableAlterAdd, tableAlterDrop, tableClone, tableCreate, tableDrop, tableTruncate } from "./table";
 import { tableSelect, tableSelectAll } from "./table/select";
@@ -51,6 +53,8 @@ export class StatementGenerator {
     public materializedViewAlter = materializedViewAlter;
     public materializedViewClone = materializedViewClone;
     public materializedViewDrop = materializedViewDrop;
+
+    public exportStructure = exportStructure;
 
     constructor(private limit: number = 1000) {
 
