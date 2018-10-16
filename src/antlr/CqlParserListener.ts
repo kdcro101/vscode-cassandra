@@ -155,6 +155,13 @@ import { RelationOperatorContext } from './CqlParser';
 import { FunctionCallContext } from './CqlParser';
 import { FunctionArgsContext } from './CqlParser';
 import { ConstantContext } from './CqlParser';
+import { CollectionElementContext } from './CqlParser';
+import { CollectionMapElementContext } from './CqlParser';
+import { ConstantCollectionContext } from './CqlParser';
+import { ConstantMapContext } from './CqlParser';
+import { ConstantSetContext } from './CqlParser';
+import { ConstantListContext } from './CqlParser';
+import { ConstantTupleContext } from './CqlParser';
 import { ConstantUuidContext } from './CqlParser';
 import { ConstantDecimalContext } from './CqlParser';
 import { ConstantFloatContext } from './CqlParser';
@@ -2016,6 +2023,83 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitConstant?: (ctx: ConstantContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.collectionElement`.
+	 * @param ctx the parse tree
+	 */
+	enterCollectionElement?: (ctx: CollectionElementContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.collectionElement`.
+	 * @param ctx the parse tree
+	 */
+	exitCollectionElement?: (ctx: CollectionElementContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.collectionMapElement`.
+	 * @param ctx the parse tree
+	 */
+	enterCollectionMapElement?: (ctx: CollectionMapElementContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.collectionMapElement`.
+	 * @param ctx the parse tree
+	 */
+	exitCollectionMapElement?: (ctx: CollectionMapElementContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.constantCollection`.
+	 * @param ctx the parse tree
+	 */
+	enterConstantCollection?: (ctx: ConstantCollectionContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.constantCollection`.
+	 * @param ctx the parse tree
+	 */
+	exitConstantCollection?: (ctx: ConstantCollectionContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.constantMap`.
+	 * @param ctx the parse tree
+	 */
+	enterConstantMap?: (ctx: ConstantMapContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.constantMap`.
+	 * @param ctx the parse tree
+	 */
+	exitConstantMap?: (ctx: ConstantMapContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.constantSet`.
+	 * @param ctx the parse tree
+	 */
+	enterConstantSet?: (ctx: ConstantSetContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.constantSet`.
+	 * @param ctx the parse tree
+	 */
+	exitConstantSet?: (ctx: ConstantSetContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.constantList`.
+	 * @param ctx the parse tree
+	 */
+	enterConstantList?: (ctx: ConstantListContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.constantList`.
+	 * @param ctx the parse tree
+	 */
+	exitConstantList?: (ctx: ConstantListContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.constantTuple`.
+	 * @param ctx the parse tree
+	 */
+	enterConstantTuple?: (ctx: ConstantTupleContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.constantTuple`.
+	 * @param ctx the parse tree
+	 */
+	exitConstantTuple?: (ctx: ConstantTupleContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.constantUuid`.

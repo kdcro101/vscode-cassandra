@@ -155,6 +155,13 @@ import { RelationOperatorContext } from './CqlParser';
 import { FunctionCallContext } from './CqlParser';
 import { FunctionArgsContext } from './CqlParser';
 import { ConstantContext } from './CqlParser';
+import { CollectionElementContext } from './CqlParser';
+import { CollectionMapElementContext } from './CqlParser';
+import { ConstantCollectionContext } from './CqlParser';
+import { ConstantMapContext } from './CqlParser';
+import { ConstantSetContext } from './CqlParser';
+import { ConstantListContext } from './CqlParser';
+import { ConstantTupleContext } from './CqlParser';
 import { ConstantUuidContext } from './CqlParser';
 import { ConstantDecimalContext } from './CqlParser';
 import { ConstantFloatContext } from './CqlParser';
@@ -1411,6 +1418,55 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitConstant?: (ctx: ConstantContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.collectionElement`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitCollectionElement?: (ctx: CollectionElementContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.collectionMapElement`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitCollectionMapElement?: (ctx: CollectionMapElementContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.constantCollection`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitConstantCollection?: (ctx: ConstantCollectionContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.constantMap`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitConstantMap?: (ctx: ConstantMapContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.constantSet`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitConstantSet?: (ctx: ConstantSetContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.constantList`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitConstantList?: (ctx: ConstantListContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.constantTuple`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitConstantTuple?: (ctx: ConstantTupleContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.constantUuid`.

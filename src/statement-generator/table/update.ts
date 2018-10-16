@@ -24,6 +24,7 @@ export const tableUpdate = (keyspace: string, data: CassandraTable): Promise<str
                 return `\t${c.name}=${val}`;
             } catch (e) {
                 console.log(`ERROR generatingh data for ${c.name}/${c.type}`);
+                console.log(e);
             }
         });
 

@@ -7,14 +7,11 @@ import { DataTypeAnalysis } from "./types";
 import { DataTypeParserVisitor } from "./visitor/data-type-visitor";
 
 export const typeParser = (input: string): DataTypeAnalysis => {
-    console.log(`PARSE: ${input}`);
+
     const inputStream = new ANTLRInputStream(input);
     const cqlLexer = new CqlLexer(inputStream);
     const tokenStream = new CommonTokenStream(cqlLexer);
     const cqlParser = new CqlParser(tokenStream);
-
-    // const listener = new DataTypeParserListener(cqlParser.ruleNames);
-    // cqlParser.addParseListener(listener);
 
     const visitor = new DataTypeParserVisitor(cqlParser.ruleNames);
     const result = visitor.visitDataType(cqlParser.dataType());
@@ -61,13 +58,13 @@ export const typeValueExampleRender = (input: DataTypeAnalysis) => {
 
     if (!hasChildren) {
         const dt = dtm.get(input.name as CassandraDataType, null);
-        return `${dt.stringPlaceholder}`;
+        return dt ? `${dt.stringPlaceholder}` : "NULL";
     }
 
     const children = input.contains.map((c) => typeValueExampleRender(c));
 
     if (input.name === "map") {
-        return `{${children.join(", ")}}`;
+        return `{${children.join(": ")}}`;
     }
     if (input.name === "list") {
         return `[${children.join(", ")}]`;
@@ -79,6 +76,6 @@ export const typeValueExampleRender = (input: DataTypeAnalysis) => {
         return `(${children.join(", ")})`;
     }
 
-    return `null`;
+    return `NULL`;
 
 };

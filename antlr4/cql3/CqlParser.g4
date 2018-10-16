@@ -587,7 +587,8 @@ updateAssignments
     ;
 
 updateAssignmentElement
-    : column syntaxOperatorEq (constant | assignmentMap | assignmentSet | assignmentList)
+    // : column syntaxOperatorEq (constant | assignmentMap | assignmentSet | assignmentList)
+    : column syntaxOperatorEq (constant | constantCollection)
     | column syntaxOperatorEq column (syntaxPlus | syntaxMinus) constantDecimal
     | column syntaxOperatorEq column (syntaxPlus | syntaxMinus) assignmentMap
     | column syntaxOperatorEq column (syntaxPlus | syntaxMinus) assignmentSet
@@ -770,6 +771,34 @@ constant
     | constantHexadecimal
     | constantBoolean
     | kwNull
+    ;
+
+collectionElement
+    : constant | constantMap | constantSet | constantList | constantTuple
+    ;
+
+collectionMapElement
+    : collectionElement syntaxColon collectionElement
+    ;
+
+constantCollection
+    : constantMap | constantTuple | constantList | constantSet
+    ;
+
+constantMap
+    : syntaxBracketLc collectionMapElement (syntaxComma collectionMapElement)* syntaxBracketRc
+    ;
+
+constantSet
+    : syntaxBracketLc collectionElement (syntaxComma collectionElement)* syntaxBracketRc
+    ;
+
+constantList
+    : syntaxBracketLs collectionElement (syntaxComma collectionElement)* syntaxBracketRs
+    ;
+
+constantTuple
+    : syntaxBracketLr collectionElement (syntaxComma collectionElement)* syntaxBracketRr
     ;
 
 constantUuid
