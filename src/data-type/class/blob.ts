@@ -12,6 +12,6 @@ export class BlobDataTypeValue extends DataTypeValueBase<Buffer> {
         return `${value.toString()}`;
     }
     public get stringPlaceholder(): string {
-        return `typeAsBlob('')`;
+        return `NULL`;
     }
 }

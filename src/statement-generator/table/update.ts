@@ -1,5 +1,5 @@
 import { DataTypeManager } from "../../data-type";
-import { rootColumnType } from "../../data-type/type-parser";
+import { rootColumnType, typeParser, typeValueExampleRender } from "../../data-type/type-parser";
 import { CassandraTable } from "../../types";
 
 export const tableUpdate = (keyspace: string, data: CassandraTable): Promise<string> => {
@@ -19,9 +19,9 @@ export const tableUpdate = (keyspace: string, data: CassandraTable): Promise<str
         const columns = updatables.map((c) => {
             try {
 
-                const ctype = rootColumnType(c.type);
-                const dt = dtm.get(ctype, null);
-                return `\t${c.name}=${dt.stringPlaceholder}`;
+                const dataAnalysis = typeParser(c.type);
+                const val = typeValueExampleRender(dataAnalysis);
+                return `\t${c.name}=${val}`;
             } catch (e) {
                 console.log(`ERROR generatingh data for ${c.name}/${c.type}`);
             }

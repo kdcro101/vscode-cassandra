@@ -2,6 +2,7 @@ import { ANTLRInputStream, CommonTokenStream } from "antlr4ts";
 import { CqlLexer } from "../../antlr/CqlLexer";
 import { CqlParser } from "../../antlr/CqlParser";
 import { CassandraDataType } from "../../types/index";
+import { DataTypeManager } from "../index";
 import { DataTypeAnalysis } from "./types";
 import { DataTypeParserVisitor } from "./visitor/data-type-visitor";
 
@@ -47,5 +48,37 @@ export const typeRender = (input: DataTypeAnalysis) => {
     const children = input.contains.map((c) => typeRender(c));
 
     return `${input.name}<${children.join(", ")}>`;
+
+};
+
+export const typeValueExampleRender = (input: DataTypeAnalysis) => {
+    const hasChildren = input.contains && input.contains.length > 0;
+    const dtm = new DataTypeManager();
+
+    if (input.isFrozen) {
+        return input.contains && input.contains.length === 1 ? typeValueExampleRender(input.contains[0]) : "'null'";
+    }
+
+    if (!hasChildren) {
+        const dt = dtm.get(input.name as CassandraDataType, null);
+        return `${dt.stringPlaceholder}`;
+    }
+
+    const children = input.contains.map((c) => typeValueExampleRender(c));
+
+    if (input.name === "map") {
+        return `{${children.join(", ")}}`;
+    }
+    if (input.name === "list") {
+        return `[${children.join(", ")}]`;
+    }
+    if (input.name === "set") {
+        return `{${children.join(", ")}}`;
+    }
+    if (input.name === "tuple") {
+        return `(${children.join(", ")})`;
+    }
+
+    return `null`;
 
 };

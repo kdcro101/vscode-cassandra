@@ -11,6 +11,6 @@ export class DoubleDataTypeValue extends DataTypeValueBase<number> {
         return `${value.toString()}`;
     }
     public get stringPlaceholder(): string {
-        return `000.00`;
+        return `0.0`;
     }
 }

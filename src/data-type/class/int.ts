@@ -11,6 +11,6 @@ export class IntDataTypeValue extends DataTypeValueBase<number> {
         return `${value.toString()}`;
     }
     public get stringPlaceholder(): string {
-        return `000`;
+        return `0`;
     }
 }

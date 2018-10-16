@@ -29,6 +29,6 @@ export class BigIntDataTypeValue extends DataTypeValueBase<Long> {
         return `${value.toString()}`;
     }
     public get stringPlaceholder(): string {
-        return `000`;
+        return `0`;
     }
 }

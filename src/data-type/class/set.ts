@@ -33,6 +33,6 @@ export class SetDataTypeValue extends DataTypeValueBase<any[]> {
         return `${set}`;
     }
     public get stringPlaceholder(): string {
-        return `[]`;
+        return `{}`;
     }
 }
