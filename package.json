@@ -129,7 +129,12 @@
                 {
                     "command": "cassandraWorkbench.cqlTableUpdate",
                     "when": "view == cassandraWorkbenchView && viewItem == table",
-                    "group": "01_common@3"
+                    "group": "012_common@1"
+                },
+                {
+                    "command": "cassandraWorkbench.cqlTableInsert",
+                    "when": "view == cassandraWorkbenchView && viewItem == table",
+                    "group": "012_common@2"
                 },
 
                 {
@@ -394,6 +399,10 @@
             {
                 "command": "cassandraWorkbench.cqlTableUpdate",
                 "title": "UPDATE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlTableInsert",
+                "title": "INSERT INTO"
             },
             {
                 "command": "cassandraWorkbench.cqlTableClone",

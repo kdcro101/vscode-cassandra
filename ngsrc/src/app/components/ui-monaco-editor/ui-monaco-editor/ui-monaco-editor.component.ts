@@ -10,7 +10,7 @@ import { CqlAnalysis, InputParseResult } from "../../../../../../src/types/parse
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { AutocompleteService } from "../../../services/autocomplete/autocomplete.service";
 import { MonacoService } from "../../../services/monaco/monaco.service";
-import { ParserService } from "../../../services/parser/parser.service";
+import { parserErrors, ParserService } from "../../../services/parser/parser.service";
 import { ThemeService } from "../../../services/theme/theme.service";
 import { WorkbenchEditor } from "../../../types/index";
 
@@ -278,10 +278,10 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
         monaco.editor.setModelMarkers(this.monacoEditor.getModel(), "markersOwnerId", []);
 
         const errorDecs: monaco.editor.IMarkerData[] = errors.map((e) => {
-            // console.log(`Message is : <${e.name}>`);
+            const pe = parserErrors[e.name];
             const o: monaco.editor.IMarkerData = {
                 severity: monaco.MarkerSeverity.Error,
-                message: e.name,
+                message: pe ? pe.desc : e.name,
                 startLineNumber: e.line,
                 startColumn: e.linePos,
                 endLineNumber: e.line,

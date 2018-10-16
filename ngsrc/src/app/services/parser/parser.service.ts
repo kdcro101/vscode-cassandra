@@ -7,6 +7,7 @@ import { ProcMessage, ProcMessageStrict } from "../../../../../src/types/message
 import { InputParseResult } from "../../../../../src/types/parser";
 import { generateId } from "../../const/id";
 import { VscodeWebviewInterface } from "../../types/index";
+export * from "./parser-errors";
 
 declare var vscode: VscodeWebviewInterface;
 

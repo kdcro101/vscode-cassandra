@@ -661,7 +661,7 @@ expressionList
     ;
 
 expression
-    : (constant| assignmentMap | assignmentSet | assignmentList)
+    : ( constant| constantCollection )
     | { this.notifyErrorListeners("rule.expression"); }
     ;
 
@@ -675,7 +675,7 @@ limitSpec
 
 fromSpec
     : kwFrom tableSpec
-    | { this.notifyErrorListeners("rule.select.fromSpec"); }
+    | { this.notifyErrorListeners("rule.fromSpec"); }
     ;
 
 orderSpec
@@ -693,14 +693,14 @@ whereSpec
 selectElements
     : specialStar
     | selectElement (syntaxComma selectElement)*
-    | { this.notifyErrorListeners("rule.select.selectElements"); }
+    | { this.notifyErrorListeners("rule.selectElements"); }
     ;
 
 selectElement
     : column
     | column (kwAs OBJECT_NAME)?
     | functionCall (kwAs OBJECT_NAME)?
-    | { this.notifyErrorListeners("rule.select.selectElement"); }
+    | { this.notifyErrorListeners("rule.selectElement"); }
     ;
 
 relationElements

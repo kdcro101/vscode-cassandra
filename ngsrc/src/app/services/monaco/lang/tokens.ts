@@ -73,6 +73,7 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
         root: [
             { include: "@comments" },
             { include: "@whitespace" },
+            { include: "@uuid" },
             { include: "@numbers" },
 
             [/PRIMARY/, "keyword.primary-key", "@primary_key"],
@@ -168,8 +169,10 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
             [/\*\//, { token: "comment.quote", next: "@pop" }],
             [/./, "comment"],
         ],
+        uuid: [
+            [/[a-fA-F0-9]{8}\-[a-fA-F0-9]{4}\-[a-fA-F0-9]{4}\-[a-fA-F0-9]{4}\-[a-fA-F0-9]{12}/, "uuid"],
+        ],
         numbers: [
-            [/[\-]?\d+(\.\d+)?/, "number"],
             [/((\d+(\.\d*)?)|(\.\d+))([eE][\-+]?\d+)?/, "number"],
         ],
         doubleQuotedString: [
