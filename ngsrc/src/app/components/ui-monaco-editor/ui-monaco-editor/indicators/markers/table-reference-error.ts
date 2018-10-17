@@ -8,7 +8,7 @@ export const markTableReferenceError = (model: monaco.editor.ITextModel,
     const refs = analysis.references;
 
     if (!spec || !spec.tableToken) {
-        // no keyspace no table no error
+        console.log(`[markTableReferenceError] no spec or no tableToken`);
         return [];
     }
 
@@ -16,10 +16,12 @@ export const markTableReferenceError = (model: monaco.editor.ITextModel,
     const keyspace = spec.keyspaceToken ? spec.keyspaceToken.text : spec.keyspaceAmbiental;
 
     if (!refs.keyspaces.find((k) => k === keyspace)) {
+        console.log(`[markTableReferenceError] no keyspace -> ${keyspace}`);
         return [];
     }
 
     if (refs.objects && refs.objects[keyspace] && refs.objects[keyspace]["tables"] && refs.objects[keyspace]["tables"][token.text]) {
+        console.log(`[markTableReferenceError] everything ok with TABLE`);
         return [];
     }
 

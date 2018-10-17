@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-
 import { fromEvent, Subject } from "rxjs";
-import { ProcMessage, ProcMessageStrict } from "../../../../../src/types";
+import { tap } from "rxjs/operators";
+import { ProcMessage } from "../../../../../src/types";
 import { VscodeWebviewInterface } from "../../types/index";
 
 declare var vscode: VscodeWebviewInterface;
@@ -14,15 +14,14 @@ export class MessageService {
     public eventMessage = new Subject<ProcMessage>();
     constructor() {
 
-        fromEvent<MessageEvent>(window, "message").pipe()
-            .subscribe((message) => {
-                this.eventMessage.next(message.data);
-            });
+        fromEvent<MessageEvent>(window, "message").pipe(
+            tap((m) => console.log(`[MessageEvent] ${m.data.name}`)),
+        ).subscribe((message) => {
+            this.eventMessage.next(message.data);
+        });
 
     }
     public emit(message: ProcMessage) {
-        // console.log("EMITTING");
-
         vscode.postMessage(message);
     }
 

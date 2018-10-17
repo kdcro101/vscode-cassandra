@@ -251,6 +251,9 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
                 // console.log(`Parse done for [${code}]`);
                 this.addErrorDecorations(result);
                 this.addDeltaDecorations(result.analysis);
+            }, (e) => {
+                console.log("--- parseInput Error");
+
             });
     }
     private addDeltaDecorations(analysis: CqlAnalysis) {

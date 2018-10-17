@@ -1,30 +1,33 @@
+import * as clipboardy from "clipboardy";
 import * as path from "path";
-import { from, merge, Subject } from "rxjs";
-import { concatMap, map, takeUntil, tap } from "rxjs/operators";
+import { from, fromEventPattern, merge, ReplaySubject, Subject, zip } from "rxjs";
+import { concatMap, filter, map, takeUntil, tap } from "rxjs/operators";
 import * as vscode from "vscode";
 import { ClusterExecuteResults, Clusters } from "../clusters";
 import { Completition } from "../completition";
+import { ConfigurationManager } from "../configuration-manager";
 import { generateId } from "../const/id";
 import { DataChangeProcessor } from "../data-change";
 import { InputParser } from "../parser";
 import { Persistence } from "../persistence";
-import { ExtensionContextBundle, ValidatedConfigClusterItem, WorkbenchCqlStatement } from "../types";
+import { ExtensionContextBundle, WorkbenchCqlStatement } from "../types";
 import { ProcMessage, ProcMessageStrict } from "../types/messages";
 import { WorkbenchPanel } from "../workbench-panel";
 import { Workspace } from "../workspace";
 import { TreeviewProvider } from "./treeview-provider";
 
-import * as clipboardy from "clipboardy";
-
 declare var extensionContextBundle: ExtensionContextBundle;
 
 export class CassandraWorkbench {
-
     public panel: WorkbenchPanel;
     public treeProvider: TreeviewProvider = null;
-    private context: vscode.ExtensionContext = extensionContextBundle.context;
+    private configManager: ConfigurationManager;
+    // private context: vscode.ExtensionContext = extensionContextBundle.context;
 
     private eventPanelReset = new Subject<void>();
+    private eventConfigLoad = new Subject<void>();
+    private stateInitialized: ReplaySubject<void>;
+
     private clusters: Clusters = null;
     private persistence: Persistence;
     private changeProcessor: DataChangeProcessor;
@@ -32,17 +35,63 @@ export class CassandraWorkbench {
 
     private completition = new Completition();
     constructor(
+        private context: vscode.ExtensionContext,
         private workspace: Workspace,
-        private config: ValidatedConfigClusterItem[],
     ) {
-        this.clusters = new Clusters(config);
-        this.persistence = new Persistence(workspace);
-        this.changeProcessor = new DataChangeProcessor(this.clusters);
+        this.configManager = new ConfigurationManager(context, workspace);
+        this.persistence = new Persistence(this.workspace);
+
+        this.loadConfig(false);
+
+        this.stateInitialized.pipe(
+            filter(() => this.panel != null),
+        ).subscribe(() => {
+            this.requestInvalidateClusterData();
+        });
+
+        (global as any).cassandraworkbench = this;
+    }
+    public loadConfig(notifyWebview: boolean) {
+        this.stateInitialized = new ReplaySubject<void>(1);
+        this.eventConfigLoad.next();
+
+        from(this.configManager.loadConfig()).pipe(
+            tap((clusterItems) => {
+                this.clusters = new Clusters(clusterItems);
+                this.changeProcessor = new DataChangeProcessor(this.clusters);
+                this.stateInitialized.next();
+                this.treeProvider = new TreeviewProvider(this.clusters);
+                this.context.subscriptions.push(vscode.window.registerTreeDataProvider("cassandraWorkbenchView", this.treeProvider));
+
+                if (notifyWebview) {
+                    this.requestInvalidateClusterData();
+                }
+            }),
+        ).subscribe((list) => {
+            console.log(`Cassandra workbench initialized: ${list.length}`);
+            list.forEach((item, i) => {
+                console.log(`\t[${i}] '${item.name}'`);
+            });
+        });
+
+        const confPath = this.configManager.confPath;
+
+        zip(fromEventPattern<vscode.TextDocument>((f: (e: any) => any) => {
+            return vscode.workspace.onDidSaveTextDocument(f);
+        }, (f: any, d: vscode.Disposable) => {
+            d.dispose();
+        }).pipe(
+            filter((td) => td.uri.fsPath === confPath),
+        ), this.stateInitialized).pipe(
+            takeUntil(this.eventConfigLoad),
+        ).subscribe((e) => {
+            this.loadConfig(true);
+        });
 
     }
     public start() {
-        this.treeProvider = new TreeviewProvider(this.clusters);
-        this.context.subscriptions.push(vscode.window.registerTreeDataProvider("cassandraWorkbenchView", this.treeProvider));
+        // this.treeProvider = new TreeviewProvider(this.clusters);
+        // this.context.subscriptions.push(vscode.window.registerTreeDataProvider("cassandraWorkbenchView", this.treeProvider));
     }
     public refreshClusterTree() {
         if (this.treeProvider == null) {
@@ -58,29 +107,30 @@ export class CassandraWorkbench {
                 return;
             }
 
-            from(this.persistence.loadEditorStatements()).pipe()
-                .subscribe((list) => {
+            from(this.stateInitialized).pipe(
+                concatMap(() => this.persistence.loadEditorStatements()),
+            ).subscribe((list) => {
 
-                    this.panel = new WorkbenchPanel(this.workspace, list);
-                    this.panel.eventDestroy.pipe(
-                        takeUntil(merge(extensionContextBundle.eventDestroy, this.eventPanelReset)),
-                    ).subscribe(() => {
-                        this.resetPanel();
-                    });
-                    this.panel.eventMessage.pipe(
-                        takeUntil(merge(extensionContextBundle.eventDestroy, this.eventPanelReset)),
-                    ).subscribe((m) => {
-                        this.onPanelMessage(m);
-                    });
-
-                    this.panel.start()
-                        .then((result) => {
-                            resolve();
-                        }).catch((e) => {
-                            reject(e);
-                        });
-
+                this.panel = new WorkbenchPanel(this.workspace, list);
+                this.panel.eventDestroy.pipe(
+                    takeUntil(merge(extensionContextBundle.eventDestroy, this.eventPanelReset)),
+                ).subscribe(() => {
+                    this.resetPanel();
                 });
+                this.panel.eventMessage.pipe(
+                    takeUntil(merge(extensionContextBundle.eventDestroy, this.eventPanelReset)),
+                ).subscribe((m) => {
+                    this.onPanelMessage(m);
+                });
+
+                this.panel.start()
+                    .then((result) => {
+                        resolve();
+                    }).catch((e) => {
+                        reject(e);
+                    });
+
+            });
         });
     }
     public editorCreate(clusterIndex: number, keyspace: string, statementBody?: string, fsPath?: string): Promise<void> {
@@ -277,14 +327,11 @@ export class CassandraWorkbench {
             let clusterName: string = this.workspace.read("activeClusterName") || null;
             let keyspace: string = null;
 
-            if (!clusterName) {
+            if (!clusterName || !this.clusters.isValidName(clusterName)) {
                 clusterName = null;
                 keyspace = null;
             } else {
 
-                if (!this.clusters.isValidName(clusterName)) {
-                    throw new Error("invalid_cluster_name");
-                }
                 const pairs = this.workspace.read("activeKeyspace") || [];
                 const clusterIndex = pairs.findIndex((i) => i[0] === clusterName);
 
@@ -723,5 +770,14 @@ export class CassandraWorkbench {
                 this.panel.emitMessage(out);
             });
     }
-
+    private requestInvalidateClusterData() {
+        const id = generateId();
+        const out: ProcMessageStrict<"e2w_invalidateClusterDataRequest"> = {
+            name: "e2w_invalidateClusterDataRequest",
+            data: {
+                id,
+            },
+        };
+        this.panel.emitMessage(out);
+    }
 }

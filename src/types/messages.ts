@@ -47,6 +47,8 @@ export interface ProcMessageList {
     e2w_removeHistoryItemResponse: MessageWithId;
     e2w_removeAllHistoryResponse: MessageWithId;
     e2w_setSplitSizeResponse: MessageWithId;
+
+    e2w_invalidateClusterDataRequest: MessageWithId;
 }
 export type ProcMessageType = keyof ProcMessageList;
 export interface ProcMessage {

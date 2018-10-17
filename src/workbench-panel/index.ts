@@ -7,9 +7,6 @@ import { WorkbenchCqlStatement } from "../types/editor";
 import { Workspace } from "../workspace";
 import { generateHtml } from "./html";
 
-import * as connect from "connect";
-import * as serveStatic from "serve-static";
-
 declare var extensionContextBundle: ExtensionContextBundle;
 
 export class WorkbenchPanel {
@@ -28,12 +25,6 @@ export class WorkbenchPanel {
 
     ) {
         const dir = path.join(extensionContextBundle.context.extensionPath, "worker");
-
-        // const s = connect()
-        //     .use(serveStatic(dir, {
-        //         // index: true,
-        //     }))
-        //     .listen(8000, "127.0.0.1");
 
         this.panel = vscode.window.createWebviewPanel("cassandra-workbench", "Cassandra workbench", vscode.ViewColumn.Active, {
             enableScripts: true,
@@ -98,32 +89,19 @@ export class WorkbenchPanel {
             take(1),
             takeUntil(this.eventDestroy),
         ).subscribe(() => {
+            console.log(`[panel.emitMessage] ${message.name}`);
             this.panel.webview.postMessage(message);
         });
     }
     private onMessage(e: ProcMessage) {
         const name: keyof ProcMessageList = e.name;
         switch (name) {
-            // case "w2e_parseInput":
-            //     this.respondParseInput(e as ProcMessageStrict<"w2e_parseInput">);
-            //     break;
-            // case "w2e_parseInput":
-            //     this.respondParseInput(e as ProcMessageStrict<"w2e_parseInput">);
-            //     break;
+
             case "w2e_onReady":
                 console.log("webview panel ready");
                 this.stateWebviewReady.next();
                 break;
         }
     }
-
-    // private respondParseInput(e: ProcMessageStrict<"w2e_parseInput">) {
-    //     const o = this.parser.parse(e.data);
-    //     const message: ProcMessageStrict<"e2w_parseOutput"> = {
-    //         name: "e2w_parseOutput",
-    //         data: o,
-    //     };
-    //     this.panel.webview.postMessage(message);
-    // }
 
 }

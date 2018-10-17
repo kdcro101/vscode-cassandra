@@ -718,7 +718,8 @@ export class VsCommands {
         this.stateWorkbench.pipe(
             take(1),
         ).subscribe(() => {
-            this.workbench.refreshClusterTree();
+            // this.workbench.refreshClusterTree();
+            this.workbench.loadConfig(true);
         });
     }
     private onEditConfig = () => {

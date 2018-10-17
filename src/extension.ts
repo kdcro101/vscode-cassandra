@@ -28,14 +28,14 @@ export function activate(context: vscode.ExtensionContext) {
 
     let workbench: CassandraWorkbench = null;
 
-    from(config.loadConfig()).pipe()
-        .subscribe((clusterItems) => {
+    // from(config.loadConfig()).pipe()
+    // .subscribe((clusterItems) => {
 
-            workbench = new CassandraWorkbench(workspace, clusterItems);
-            workbench.start();
-            commands.setWorkbench(workbench);
-            workbench.revealCqlPanel();
-        });
+    workbench = new CassandraWorkbench(context, workspace);
+    // workbench.start();
+    commands.setWorkbench(workbench);
+    workbench.revealCqlPanel();
+    // });
 
 }
 

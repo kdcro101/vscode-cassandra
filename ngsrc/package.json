@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build-watch-dev": "ng build  --output-hashing none  --watch --extract-css --vendor-chunk false",
+    "build-watch-dev": "ng build  --output-hashing none  --watch --extract-css --vendor-chunk false --eval-source-map",
     "build-watch-prod": "ng build --prod --aot false --build-optimizer false --output-hashing none  --watch",
     "build": "ng build --prod --aot --output-hashing none --watch",
     "test": "ng test",

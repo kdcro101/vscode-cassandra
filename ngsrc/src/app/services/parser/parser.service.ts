@@ -42,6 +42,12 @@ export class ParserService {
             map((e) => e as ProcMessageStrict<"e2w_checkInputResponse">),
         ).subscribe((e) => {
             console.timeEnd(`parseInput_${id}`);
+
+            if (e.data.error) {
+                out.error("unsuccessful");
+                return;
+            }
+
             const d = JSON.parse(e.data.stringified);
             console.log("------------------");
             console.log("PARSER");

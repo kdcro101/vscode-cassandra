@@ -1,10 +1,19 @@
-import { AnalyzedStatement } from "../../../../../../../../src/types/parser";
+import { AnalyzedStatement, CqlAnalysis } from "../../../../../../../../src/types/parser";
+import { isKeyspaceTableValid } from "../helpers";
 export const decoColumnsKnown = (
     model: monaco.editor.ITextModel,
-    statement: AnalyzedStatement,
+    statement: AnalyzedStatement, analysis: CqlAnalysis,
 ): monaco.editor.IModelDeltaDecoration[] => {
 
-    // const out: monaco.editor.IModelDeltaDecoration[] = [];
+    const spec = statement.rules.tableSpec;
+    const keyspace = spec.keyspaceToken ? spec.keyspaceToken.text : spec.keyspaceAmbiental;
+    const table = spec.tableToken ? spec.tableToken.text : null;
+
+    const tableValid = isKeyspaceTableValid(keyspace, table, analysis);
+
+    if (!tableValid) {
+        return [];
+    }
 
     const out = statement.columns.reduce<monaco.editor.IModelDeltaDecoration[]>((acc, c) => {
         const ps = model.getPositionAt(c.charStart);

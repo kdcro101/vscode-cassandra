@@ -3,7 +3,8 @@
     "compilerOptions": {
         "baseUrl": "./",
         "outDir": "./dist/out-tsc",
-        "sourceMap": true,
+        // "sourceMap": true,
+        "inlineSourceMap": true,
         "declaration": false,
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,

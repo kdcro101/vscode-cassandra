@@ -15,6 +15,7 @@ import { SystemService } from "../system/system.service";
 export class ClusterService {
     public stateReady = new ReplaySubject<void>(1);
     public eventChange = new Subject<void>();
+    public eventInvalidate = new Subject<void>();
     public list: CassandraCluster[] = [];
 
     constructor(private system: SystemService, private message: MessageService) {
@@ -30,14 +31,21 @@ export class ClusterService {
             map((m) => m as ProcMessageStrict<"e2w_getClustersResponse">),
         ).subscribe((m) => {
             this.list = m.data;
-            // console.log("Cluster list change");
-            // console.log(JSON.stringify(this.list));
             this.eventChange.next();
+        });
+
+        this.message.eventMessage.pipe(
+            filter((m) => m.name === "e2w_invalidateClusterDataRequest"),
+            map((m) => m as ProcMessageStrict<"e2w_invalidateClusterDataRequest">),
+        ).subscribe((m) => {
+            console.log("[ClusterService] invalidate cluster data");
+            this.eventInvalidate.next();
+            this.clusterListRequest();
         });
 
     }
     private clusterListRequest() {
-        // console.log("Requesting cluster list");
+        console.log("[ClusterService] clusterListRequest");
         const m: ProcMessageStrict<"w2e_getClustersRequest"> = {
             name: "w2e_getClustersRequest",
             data: true,

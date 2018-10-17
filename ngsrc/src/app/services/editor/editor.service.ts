@@ -153,6 +153,9 @@ export class EditorService {
                             reject(e);
                         });
 
+            }, (e) => {
+                console.log("in editorCreate");
+                console.log(e);
             });
         });
     }

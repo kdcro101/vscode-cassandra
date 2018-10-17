@@ -1,6 +1,6 @@
 import { AnalyzedStatement } from "../../../../../../../../src/types/parser";
 
-export const markColunNoValue = (model: monaco.editor.ITextModel,
+export const markColumnNoValue = (model: monaco.editor.ITextModel,
     statement: AnalyzedStatement): monaco.editor.IMarkerData[] => {
 
     const noValue = statement.columns.reduce((acc, cur, i) => {
