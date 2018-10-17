@@ -1,14 +1,9 @@
 
-import { ANTLRInputStream, CommonTokenStream } from "antlr4ts";
 import { from, Subject } from "rxjs";
 import * as vscode from "vscode";
-import { CqlLexer } from "./antlr/CqlLexer";
-import { CqlParser } from "./antlr/CqlParser";
 import { CassandraWorkbench } from "./cassandra-workbench";
 import { VsCommands } from "./commands";
 import { ConfigurationManager } from "./configuration-manager";
-import { TupleDataTypeValue } from "./data-type/class/tuple";
-import { typeParser } from "./data-type/type-parser";
 import { Icons } from "./icons";
 import { StatementGenerator } from "./statement-generator";
 import { ExtensionContextBundle, VscodeCassandraGlobal } from "./types";

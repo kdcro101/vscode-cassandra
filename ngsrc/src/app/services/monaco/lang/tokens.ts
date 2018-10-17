@@ -9,11 +9,13 @@ export const cqlLanguageConfig: monaco.languages.LanguageConfiguration = {
         ["{", "}"],
         ["[", "]"],
         ["(", ")"],
+        ["<", ">"],
     ],
     autoClosingPairs: [
         { open: "{", close: "}" },
         { open: "[", close: "]" },
         { open: "(", close: ")" },
+        { open: "<", close: ">" },
         { open: "\"", close: "\"" },
         { open: "'", close: "'" },
         { open: "/*", close: "*/" },
@@ -44,12 +46,14 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
         "LEVEL", "LIMIT", "LOCAL_ONE", "LOCAL_QUORUM", "MATERIALIZED", "MODIFY", "NAN",
         "NORECURSIVE", "NOSUPERUSER", "NOT", "OF", "ON", "ONE", "ORDER", "OR",
         "PASSWORD", "PER", "PERMISSION", "PERMISSIONS",
-        "PRIMARY", "QUORUM", "RENAME", "RETURNS", "REVOKE", "REPLACE", "ROLES", "SCHEMA", "SELECT",
+        "PRIMARY",
+        "QUORUM", "RENAME", "RETURNS", "REVOKE", "REPLACE", "ROLES", "SCHEMA", "SELECT",
         "SFUNC", "SET", "STATIC", "STYPE",
         "STORAGE", "SUPERUSER", "TABLE", "THREE", "TO", "TOKEN", "TRUNCATE", "TTL",
         "TWO", "TYPE", "UNLOGGED", "UPDATE", "USE", "USER", "USERS", "USING", "VALUES",
         "VIEW", "WHERE", "WITH", "WRITETIME",
     ],
+    primaryKeyStart: ["PRIMARY"],
     typeKeywords: [
         "ascii", "bigint", "blob", "boolean", "counter", "date", "decimal",
         "double", "float", "inet", "int",
@@ -76,7 +80,6 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
             { include: "@uuid" },
             { include: "@numbers" },
 
-            [/PRIMARY/, "keyword.primary-key", "@primary_key"],
             [/[a-zA-z][a-z0-9A-z]*(?=\.)/, "type.keyspace"],
             [/[{}()\[\]]/, "@brackets"],
             [/@symbols/, {
@@ -84,9 +87,9 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
                     "@operators": "operator",
                 },
             }],
-            // identifiers and keywords
             [/[a-zA-Z0-9_]\w*/, {
                 cases: {
+                    "@primaryKeyStart": { token: "keyword.primary-key", next: "@primary_key" },
                     "@keywords": { token: "keyword" },
                     "@typeKeywords": { token: "type", next: "@type" },
                     "@null": { token: "type.null" },
@@ -101,49 +104,12 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
             [/[;]/, "delimiter.statement"],
             [/[\.]/, "delimiter.dot"],
         ],
-        primary_key: [
-            { include: "@whitespace" },
-            [/[a-zA-Z0-9]*/, {
-                cases: {
-                    "[kK][eE][yY]": {
-                        token: "keyword.primary-key", next: "@pop",
-                    },
-                    "@default": { token: "invalid", next: "@pop" },
-                },
-            }],
-        ],
-        called_on_null_input: [
-            { include: "@whitespace" },
-            [/[a-zA-Z0-9]*/, {
-                cases: {
-                    "@keywords": { token: "keyword" },
-                    "@null": { token: "type.null" },
-                    "[Ii][Nn][Pp][Uu][Tt]": { token: "keyword", next: "@pop" },
-                    "@default": { token: "invalid", next: "@pop" },
-                },
-            }],
-        ],
-        returns_null_on_null_input: [
-            { include: "@whitespace" },
-            [/[a-zA-Z0-9]*/, {
-                cases: {
-                    "@keywords": { token: "keyword" },
-                    "@typeKeywords": { token: "type" },
-                    "@null": { token: "type.null" },
-                    "[Ii][Nn][Pp][Uu][Tt]": { token: "keyword", next: "@pop" },
-                    "@default": { token: "invalid", next: "@pop" },
-                },
-            }],
-        ],
-        whitespace: [
-            [/[ \t\r\n]+/, "white"],
-        ],
         type: [
             { include: "@whitespace" },
             [/[a-zA-Z_]\w*/, {
                 cases: {
                     "@typeKeywords": "type.identifier",
-                    "@keywords": { token: "keyword", next: "@pop", log: "found keyword $0 in state $S0" },
+                    "@keywords": { token: "@rematch", next: "@popall" },
                     "@default": { token: "", next: "@popall" },
                 },
             }],
@@ -154,11 +120,23 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
                     "@default": "delimiter",
                 },
             }],
+            ["", "", "@popall"], // catch all
         ],
         type_nested: [
             { include: "@whitespace" },
             [/[<]/, "delimiter.type.definition", "@type_nested"],
             { include: "type" },
+        ],
+        primary_key: [
+            { include: "@whitespace" },
+            [/[a-zA-Z]+/, {
+                cases: {
+                    "[kK][eE][yY]": {
+                        token: "keyword.primary-key", next: "@pop",
+                    },
+                    "@default": { token: "invalid", next: "@pop" },
+                },
+            }],
         ],
         comments: [
             [/--+.*/, "comment"],
@@ -193,6 +171,32 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
             [/@escapes/, "string.escape"],
             [/\\./, "string.escape.invalid"],
             [/\$\$/, "code.delimiter", "@pop"],
+        ],
+        called_on_null_input: [
+            { include: "@whitespace" },
+            [/[a-zA-Z0-9]*/, {
+                cases: {
+                    "@keywords": { token: "keyword" },
+                    "@null": { token: "type.null" },
+                    "[Ii][Nn][Pp][Uu][Tt]": { token: "keyword", next: "@pop" },
+                    "@default": { token: "invalid", next: "@pop" },
+                },
+            }],
+        ],
+        returns_null_on_null_input: [
+            { include: "@whitespace" },
+            [/[a-zA-Z0-9]*/, {
+                cases: {
+                    "@keywords": { token: "keyword" },
+                    "@typeKeywords": { token: "type" },
+                    "@null": { token: "type.null" },
+                    "[Ii][Nn][Pp][Uu][Tt]": { token: "keyword", next: "@pop" },
+                    "@default": { token: "invalid", next: "@pop" },
+                },
+            }],
+        ],
+        whitespace: [
+            [/[ \t\r\n]+/, "white"],
         ],
     },
 };
