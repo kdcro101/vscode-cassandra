@@ -10,6 +10,7 @@ import { ViewDestroyable } from "../base/view-destroyable";
 import { UiContentHorizontalComponent } from "../components/ui-content-horizontal/ui-content-horizontal.component";
 import { UiHistoryService } from "../components/ui-history/service";
 import { StatementChangeEvent, UiQueryComponent } from "../components/ui-query/ui-query/ui-query.component";
+import { ClusterService } from "../services/cluster/cluster.service";
 import { EditorService } from "../services/editor/editor.service";
 import { SystemService } from "../services/system/system.service";
 import { WorkbenchEditor } from "../types/index";
@@ -71,6 +72,7 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
         public editorService: EditorService,
         public snackBar: MatSnackBar,
         public history: UiHistoryService,
+        public cluster: ClusterService,
     ) {
         super(change);
 
@@ -125,6 +127,12 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
             takeUntil(this.eventViewDestroyed),
         ).subscribe((data: [number, number]) => {
             this.replaceTabs(data[0], data[1]);
+        });
+
+        this.cluster.eventChange.pipe(
+            takeUntil(this.eventViewDestroyed),
+        ).subscribe(() => {
+
         });
 
     }
@@ -227,5 +235,7 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
 
         t.openMenu(); // Open your custom context menu instead
     }
+    private checkEditorClusterKeyspace() {
 
+    }
 }

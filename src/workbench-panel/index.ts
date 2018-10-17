@@ -1,6 +1,6 @@
 import * as path from "path";
-import { fromEventPattern, ReplaySubject, Subject } from "rxjs";
-import { take, takeUntil } from "rxjs/operators";
+import { BehaviorSubject, fromEventPattern, ReplaySubject, Subject, zip } from "rxjs";
+import { filter, take, takeUntil } from "rxjs/operators";
 import * as vscode from "vscode";
 import { ExtensionContextBundle, ProcMessage, ProcMessageList } from "../types";
 import { WorkbenchCqlStatement } from "../types/editor";
@@ -16,6 +16,7 @@ export class WorkbenchPanel {
     public eventDestroy = new Subject<void>();
     public eventMessage = new Subject<ProcMessage>();
     public stateWebviewReady = new ReplaySubject<void>(1);
+    public stateVisible = new BehaviorSubject<boolean>(true);
 
     private context: vscode.ExtensionContext = extensionContextBundle.context;
 
@@ -66,6 +67,16 @@ export class WorkbenchPanel {
 
         });
 
+        fromEventPattern<vscode.WebviewPanelOnDidChangeViewStateEvent>((f: (e: any) => any) => {
+            return this.panel.onDidChangeViewState(f, null, this.context.subscriptions);
+        }, (f: any, d: vscode.Disposable) => {
+            d.dispose();
+        }).pipe(
+            takeUntil(this.eventDestroy),
+        ).subscribe((m) => {
+            this.stateVisible.next(m.webviewPanel.visible);
+        });
+
     }
     public start(): Promise<void> {
         return new Promise((resolve, reject) => {
@@ -85,7 +96,10 @@ export class WorkbenchPanel {
         });
     }
     public emitMessage(message: ProcMessage) {
-        this.stateWebviewReady.pipe(
+        zip(
+            this.stateWebviewReady,
+            this.stateVisible.pipe(filter((s) => s === true)),
+        ).pipe(
             take(1),
             takeUntil(this.eventDestroy),
         ).subscribe(() => {

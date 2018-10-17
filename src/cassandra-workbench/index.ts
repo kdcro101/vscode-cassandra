@@ -22,7 +22,6 @@ export class CassandraWorkbench {
     public panel: WorkbenchPanel;
     public treeProvider: TreeviewProvider = null;
     private configManager: ConfigurationManager;
-    // private context: vscode.ExtensionContext = extensionContextBundle.context;
 
     private eventPanelReset = new Subject<void>();
     private eventConfigLoad = new Subject<void>();
@@ -42,12 +41,6 @@ export class CassandraWorkbench {
         this.persistence = new Persistence(this.workspace);
 
         this.loadConfig(false);
-
-        this.stateInitialized.pipe(
-            filter(() => this.panel != null),
-        ).subscribe(() => {
-            this.requestInvalidateClusterData();
-        });
 
         (global as any).cassandraworkbench = this;
     }

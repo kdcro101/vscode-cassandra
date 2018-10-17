@@ -1,0 +1,25 @@
+[
+    {
+        "type": "Directory",
+        "name": "/exec/vscode-cassandra/src",
+        "parent_id": null,
+        "id": "7qVzKs4hJFfCpAOk",
+        "workspacePath": "src",
+        "label": "extension"
+    },
+    {
+        "type": "Directory",
+        "name": "/exec/vscode-cassandra/ngsrc/src",
+        "parent_id": null,
+        "workspacePath": "ngsrc/src",
+        "id": "lSw9uKcXriqvBRIx",
+        "label": "angular"
+    },
+    {
+        "type": "File",
+        "name": "/exec/vscode-cassandra/ngsrc/node_modules/@angular/material/_theming.scss",
+        "parent_id": null,
+        "workspacePath": "ngsrc/node_modules/@angular/material/_theming.scss",
+        "id": "bX5g31ikR9xozhwZ"
+    }
+]
