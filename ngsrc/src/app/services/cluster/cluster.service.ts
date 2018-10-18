@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
-import { ReplaySubject, Subject } from "rxjs";
+import { MatSnackBar } from "@angular/material";
 import { of } from "rxjs";
+import { ReplaySubject, Subject } from "rxjs";
 import { concatMap, filter, map, take, tap } from "rxjs/operators";
 import { timeout } from "rxjs/operators";
 import { CassandraCluster, CassandraClusterData } from "../../../../../src/types/index";
@@ -18,7 +19,11 @@ export class ClusterService {
     public eventInvalidate = new Subject<void>();
     public list: CassandraCluster[] = [];
 
-    constructor(private system: SystemService, private message: MessageService) {
+    constructor(
+        private system: SystemService,
+        private message: MessageService,
+        public snackBar: MatSnackBar,
+    ) {
 
         of(true).pipe(
             concatMap(() => this.system.stateReady.pipe(take(1))),
@@ -41,6 +46,12 @@ export class ClusterService {
             console.log("[ClusterService] invalidate cluster data");
             this.eventInvalidate.next();
             this.clusterListRequest();
+        });
+
+        this.eventInvalidate.pipe().subscribe(() => {
+            this.snackBar.open("Cluster list reloaded", "OK", {
+                duration: 5000,
+            });
         });
 
     }

@@ -59,6 +59,8 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
         "double", "float", "inet", "int",
         "smallint", "text", "time", "timestamp", "timeuuid", "tinyint",
         "uuid", "varchar", "varint",
+    ],
+    typeCollectionKeywords: [
         "list", "map", "set", "tuple", "frozen",
     ],
     operators: [
@@ -87,11 +89,16 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
                     "@operators": "operator",
                 },
             }],
+            [/[a-zA-z]\w+(?=<)/, {
+                cases: {
+                    "@typeCollectionKeywords": { token: "type", next: "@type" },
+                },
+            }],
             [/[a-zA-Z0-9_]\w*/, {
                 cases: {
                     "@primaryKeyStart": { token: "keyword.primary-key", next: "@primary_key" },
                     "@keywords": { token: "keyword" },
-                    "@typeKeywords": { token: "type", next: "@type" },
+                    "@typeKeywords": { token: "type" },
                     "@null": { token: "type.null" },
                     "@default": { token: "identifier" },
                 },
@@ -109,6 +116,7 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
             [/[a-zA-Z_]\w*/, {
                 cases: {
                     "@typeKeywords": "type.identifier",
+                    "@typeCollectionKeywords": "type.identifier",
                     "@keywords": { token: "@rematch", next: "@popall" },
                     "@default": { token: "", next: "@popall" },
                 },

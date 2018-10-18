@@ -224,14 +224,14 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
         ev.preventDefault();
         ev.stopImmediatePropagation();
         ev.stopPropagation();
-        // console.log("Right button");
+
         const e = this.tabItems.toArray()[index].nativeElement;
         const r = e.getBoundingClientRect();
         const w = this.triggerWrapper.toArray()[index].nativeElement;
         const t = this.menuTriggers.toArray()[index];
         const x = ev.clientX - r.left;
         const y = ev.clientY - r.top;
-        // console.log(`${x}:${y} [px=${ev.clientX},py=${ev.clientY}] ofL=${r.left} ofT=${r.top}`);
+
         w.style.left = `${x + 1}px`;
         w.style.top = `${y + 1}px`;
 
@@ -253,8 +253,6 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
         });
 
         this.detectChanges();
-        this.snackBar.open("Configuration change detected", "OK", {
-            duration: 5000,
-        });
+
     }
 }

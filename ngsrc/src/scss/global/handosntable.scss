@@ -110,6 +110,7 @@
                 border-right: 1px solid darken(mat-color($background, 800), 3%);
                 border-bottom: 1px solid mat-color($background, 800);
                 border-top: 1px solid mat-color($background, 800);
+                vertical-align: middle;
             }
         }
     }
