@@ -15,14 +15,16 @@ export const markTableReferenceError = (model: monaco.editor.ITextModel,
     const token = spec.tableToken;
     const keyspace = spec.keyspaceToken ? spec.keyspaceToken.text : spec.keyspaceAmbiental;
 
-    if (!refs.keyspaces.find((k) => k === keyspace)) {
-        console.log(`[markTableReferenceError] no keyspace -> ${keyspace}`);
-        return [];
-    }
-
     if (refs.objects && refs.objects[keyspace] && refs.objects[keyspace]["tables"] && refs.objects[keyspace]["tables"][token.text]) {
         console.log(`[markTableReferenceError] everything ok with TABLE`);
         return [];
+    }
+    let message = "";
+    if (!refs.keyspaces.find((k) => k === keyspace)) {
+        console.log(`[markTableReferenceError] no keyspace -> ${keyspace}`);
+        message = `No keyspace selected. Select keyspace from dropdown or define it in query`;
+    } else {
+        message = `table ${statement.table} not exists in ${statement.keyspace}`;
     }
 
     const ps = model.getPositionAt(token.charStart);
@@ -30,7 +32,7 @@ export const markTableReferenceError = (model: monaco.editor.ITextModel,
 
     const o: monaco.editor.IMarkerData = {
         severity: monaco.MarkerSeverity.Error,
-        message: `table ${statement.table} not exists in ${statement.keyspace}`,
+        message,
         startLineNumber: ps.lineNumber,
         startColumn: ps.column,
         endLineNumber: pe.lineNumber,

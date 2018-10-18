@@ -6,6 +6,8 @@ import {
 import { MatMenuTrigger, MatSnackBar } from "@angular/material";
 import { Subject } from "rxjs";
 import { concatMap, take, takeUntil } from "rxjs/operators";
+import { keyspaceAlter } from "../../../../src/statement-generator/keyspace/alter";
+import { CassandraCluster } from "../../../../src/types/index";
 import { ViewDestroyable } from "../base/view-destroyable";
 import { UiContentHorizontalComponent } from "../components/ui-content-horizontal/ui-content-horizontal.component";
 import { UiHistoryService } from "../components/ui-history/service";
@@ -131,8 +133,8 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
 
         this.cluster.eventChange.pipe(
             takeUntil(this.eventViewDestroyed),
-        ).subscribe(() => {
-
+        ).subscribe((list) => {
+            this.checkEditorClusterKeyspace(list);
         });
 
     }
@@ -235,7 +237,24 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
 
         t.openMenu(); // Open your custom context menu instead
     }
-    private checkEditorClusterKeyspace() {
+    private checkEditorClusterKeyspace(list: CassandraCluster[]) {
 
+        this.editorService.list.forEach((item, i) => {
+            const c = item.statement.clusterName;
+            // const k = item.statement.keyspace;
+            const clusterItem = list.find((cluster) => cluster.name === c);
+
+            if (!clusterItem) {
+                console.log(`NULLIFYING editor [${i}]`);
+                item.statement.clusterName = null;
+                item.statement.keyspace = null;
+            }
+
+        });
+
+        this.detectChanges();
+        this.snackBar.open("Configuration change detected", "OK", {
+            duration: 5000,
+        });
     }
 }

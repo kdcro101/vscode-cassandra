@@ -14,7 +14,7 @@ import { SystemService } from "../system/system.service";
 })
 export class ClusterService {
     public stateReady = new ReplaySubject<void>(1);
-    public eventChange = new Subject<void>();
+    public eventChange = new Subject<CassandraCluster[]>();
     public eventInvalidate = new Subject<void>();
     public list: CassandraCluster[] = [];
 
@@ -31,7 +31,7 @@ export class ClusterService {
             map((m) => m as ProcMessageStrict<"e2w_getClustersResponse">),
         ).subscribe((m) => {
             this.list = m.data;
-            this.eventChange.next();
+            this.eventChange.next(this.list);
         });
 
         this.message.eventMessage.pipe(
