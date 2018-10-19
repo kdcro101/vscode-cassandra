@@ -44,19 +44,22 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
 
                         const keyspaceData = clusterData && keyspace ?
                             clusterData.keyspaces.find((k) => k.name === keyspace) : null;
-                        const tableData = keyspaceData ? keyspaceData.tables.find((t) => t.name === table) : null;
+                        const tableData = keyspaceData ?
+                            keyspaceData.tables.find((t) => t.name === table) ||
+                            keyspaceData.materializedViews.find((t) => t.name === table)
+                            : null;
 
-                        console.log(`autocompleteProvide OFF:${offset}`);
-                        console.log("state");
-                        console.log(state);
-                        console.log("analysis");
-                        console.log(analysis);
-                        console.log("statement");
-                        console.log(statement);
-                        console.log(`completeInput: [${completeInput}]`);
+                        // console.log(`autocompleteProvide OFF:${offset}`);
+                        // console.log("state");
+                        // console.log(state);
+                        // console.log("analysis");
+                        // console.log(analysis);
+                        // console.log("statement");
+                        // console.log(statement);
+                        // console.log(`completeInput: [${completeInput}]`);
 
-                        console.log("tableData");
-                        console.log(tableData);
+                        // console.log("tableData");
+                        // console.log(tableData);
 
                         autocomplete.getCandidates(completeInput).pipe()
                             .subscribe((result) => {
@@ -98,7 +101,8 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                                     all = all.concat(keyspaces.filter((k) => k.label.search(partial) === 0));
                                 }
                                 if (listTables && keyspaceData) {
-                                    const tables: monaco.languages.CompletionItem[] = keyspaceData.tables.map((t) => {
+                                    const tableViews = keyspaceData.tables.concat(keyspaceData.materializedViews as any);
+                                    const tables: monaco.languages.CompletionItem[] = tableViews.map((t) => {
                                         const o: monaco.languages.CompletionItem = {
                                             label: t.name,
                                             kind: monaco.languages.CompletionItemKind.Method,

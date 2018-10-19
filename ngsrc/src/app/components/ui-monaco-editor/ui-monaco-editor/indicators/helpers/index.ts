@@ -1,4 +1,3 @@
-import { CassandraTable } from "../../../../../../../../src/types";
 import { CqlAnalysis } from "../../../../../../../../src/types/parser";
 export const isKeyspaceTableValid = (keyspace: string, table: string, analysis: CqlAnalysis): boolean => {
 
@@ -7,17 +6,20 @@ export const isKeyspaceTableValid = (keyspace: string, table: string, analysis: 
     }
 
     const refs = analysis.references;
-    let tableData: CassandraTable = null;
 
+    if (!refs.objects[keyspace]) {
+        return false;
+    }
     try {
-        tableData = refs.objects[keyspace]["tables"][table];
-    } catch (e) {
-        return false;
-    }
+        if (refs.objects[keyspace]["tables"][table]) {
+            return true;
+        }
+    } catch { }
+    try {
+        if (refs.objects[keyspace]["views"][table]) {
+            return true;
+        }
+    } catch { }
 
-    if (!tableData) {
-        return false;
-    }
-
-    return true;
+    return false;
 };

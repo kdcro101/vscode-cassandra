@@ -9,7 +9,7 @@ import ResizeObserver from "resize-observer-polyfill";
 import { fromEvent, merge, of, ReplaySubject, Subject } from "rxjs";
 import { concatMap, debounceTime, filter, take, takeUntil, tap } from "rxjs/operators";
 import { ColumnInfo } from "../../../../../../src/cassandra-client/index";
-import { CassandraColumn, CassandraTable, DataChangeItem } from "../../../../../../src/types/index";
+import { CassandraColumn, CassandraMaterializedView, CassandraTable, DataChangeItem } from "../../../../../../src/types/index";
 import { AnalyzedStatement, CqlAnalysis } from "../../../../../../src/types/parser";
 import { ViewDestroyable } from "../../../base/view-destroyable";
 import { generateId } from "../../../const/id";
@@ -102,7 +102,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
     public currentColumns: ColumnInfo[] = null;
     public currentStatementIndex: number = -1;
     public currentStatement: AnalyzedStatement = null;
-    public currentTableStruct: CassandraTable = null;
+    public currentTableStruct: CassandraTable | CassandraMaterializedView = null;
     public currentError: Error = null;
     public currentPrimaryKeyAvailable: boolean = false;
     public currentResultState: ResultState = {};
@@ -247,7 +247,24 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
         }
 
     }
+    private tableData(keyspace: string, tableOrView: string, analysis: CqlAnalysis): CassandraTable | CassandraMaterializedView {
+        const refs = analysis.references;
 
+        try {
+            const data = refs.objects[keyspace]["tables"][tableOrView];
+            if (data) {
+                return data;
+            }
+        } catch (e) { }
+        try {
+            const data = refs.objects[keyspace]["views"][tableOrView];
+            if (data) {
+                return data;
+            }
+        } catch (e) { }
+
+        return null;
+    }
     private createGridInstance() {
 
         this.currentError = null;
@@ -341,8 +358,11 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             this.currentColumns = columns;
             this.currentAnalysis = analysis;
             this.currentStatement = analysis.statements[this.currentStatementIndex];
-            // this.currentTableStruct = this.currentStatement.tableData;
-            this.currentTableStruct = analysis.references.objects[this.currentStatement.keyspace]["tables"][this.currentStatement.table];
+
+            // TODO
+            // this.currentTableStruct = analysis.references.objects[this.currentStatement.keyspace]["tables"][this.currentStatement.table];
+            this.currentTableStruct = this.tableData(this.currentStatement.keyspace, this.currentStatement.table, analysis);
+
             this.currentPrimaryKeyAvailable = this.primaryKeyAvailable();
             this.currentClusterName = analysis.cluserName;
             this.currentKeyspace = this.currentStatement.keyspace;
@@ -471,12 +491,12 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 this.menuOpen(e);
             });
 
-            fromEvent<KeyboardEvent>(this.gridHost.nativeElement, "keypress", {capture: true}).pipe(
+            fromEvent<KeyboardEvent>(this.gridHost.nativeElement, "keypress", { capture: true }).pipe(
                 takeUntil(this.eventViewDestroyed),
                 filter((e) => e.ctrlKey && e.key === "a"),
             ).subscribe(() => {
-                    console.log("grid select all");
-                    this.gridInstance.selectCell(0, 0, this.gridInstance.countRows() - 1, this.gridInstance.countCols() - 1);
+                console.log("grid select all");
+                this.gridInstance.selectCell(0, 0, this.gridInstance.countRows() - 1, this.gridInstance.countCols() - 1);
 
             });
 

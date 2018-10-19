@@ -1,5 +1,5 @@
 import { CqlAnalyzerListener } from "../parser/listeners/cql-analyzer";
-import { CassandraColumnType, CassandraKeyspace, CassandraTable, CassandraType } from "./index";
+import { CassandraColumnType, CassandraKeyspace, CassandraMaterializedView, CassandraTable, CassandraType } from "./index";
 
 export type ParserTokenFamily = "keyspace" | "table";
 
@@ -71,10 +71,12 @@ export interface AnalysisReferences {
 export interface AnalysisKeyspaceReferences {
     tables?: { [name: string]: CassandraTable };
     types?: { [name: string]: CassandraType };
+    views?: { [name: string]: CassandraMaterializedView };
 }
 export interface AnalysisKeyspaceReferenceType {
     tables: CassandraTable;
     types: CassandraType;
+    views: CassandraMaterializedView;
 }
 
 export interface CqlAnalysis {

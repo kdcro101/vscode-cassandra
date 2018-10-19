@@ -15,9 +15,6 @@ export class InputParser {
         const tokenStream = new CommonTokenStream(cqlLexer);
         const cqlParser = new CqlParser(tokenStream);
 
-        // cqlLexer.addErrorListener(errorLexer);
-        // cqlParser.addErrorListener(errorParser);
-
         cqlParser.removeErrorListener(ConsoleErrorListener.INSTANCE);
         const errors: CqlParserError[] = [];
 

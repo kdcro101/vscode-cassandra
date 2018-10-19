@@ -6,7 +6,7 @@ import {
 } from "../../antlr/CqlParser";
 import { CqlParserListener } from "../../antlr/CqlParserListener";
 import { CassandraClusterData } from "../../types";
-import { CassandraKeyspace } from "../../types/index";
+import { CassandraKeyspace, CassandraTable } from "../../types/index";
 import {
     AnalysisKeyspaceReferences, AnalysisKeyspaceReferenceType, AnalyzedStatement, AnalyzedStatementRange,
     AnalyzedStatementRules,
@@ -248,11 +248,16 @@ export class CqlAnalyzerListener implements CqlParserListener {
             if (tbc) {
                 const tt = this.contextToToken(tbc);
                 const tbd = ksd ? ksd.tables.find((t) => t.name === tt.text) : null;
+                const mvd = ksd ? ksd.materializedViews.find((t) => t.name === tt.text) : null;
+
                 this.pushRuleValue("tableSpec", "tableToken", tt);
                 this.setCurrentStatementValue("table", tbc.text);
 
                 if (tbd) {
-                    this.pushReference(keyspaceName, "tables", tt.text, tbd);
+                    this.pushReference(keyspaceName, "tables", tt.text, tbd as CassandraTable);
+                }
+                if (mvd) {
+                    this.pushReference(keyspaceName, "views", tt.text, mvd);
                 }
 
             }
@@ -397,7 +402,7 @@ export class CqlAnalyzerListener implements CqlParserListener {
     private columnsRecognize(currentStatementIndex: number) {
         const s = this.result.statements[currentStatementIndex];
         const k = s.keyspace;
-        const t = s.table;
+        const t = s.table; // token
         if (!k || !t) {
             return;
         }
@@ -409,15 +414,18 @@ export class CqlAnalyzerListener implements CqlParserListener {
 
         const ksd = this.structure.keyspaces[ksi];
         const tbi = ksd.tables.findIndex((i) => i.name === t);
+        const mvi = ksd.materializedViews.findIndex((i) => i.name === t);
 
-        if (tbi < 0) {
+        // if both -1 do nothing
+        if (tbi < 0 && mvi < 0) {
             return;
         }
-        const tbd = ksd.tables[tbi];
+
+        const objectData = tbi >= 0 ? ksd.tables[tbi] : ksd.materializedViews[mvi];
 
         const columns = s.columns.map((i) => {
 
-            const tc = tbd.columns.find((z) => z.name === i.text);
+            const tc = objectData.columns.find((z) => z.name === i.text);
             if (!tc) {
                 i.kind = "not_found";
                 return i;
@@ -425,7 +433,7 @@ export class CqlAnalyzerListener implements CqlParserListener {
             i.kind = tc.kind;
             i.type = tc.type;
             i.kindIndex = tc.position;
-            i.kindCount = tbd.columns.filter((c) => c.kind === tc.kind).length;
+            i.kindCount = objectData.columns.filter((c) => c.kind === tc.kind).length;
             i.clustering_order = tc.clustering_order;
             return i;
         });

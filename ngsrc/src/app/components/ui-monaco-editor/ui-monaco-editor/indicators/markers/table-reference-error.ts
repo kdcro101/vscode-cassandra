@@ -1,4 +1,5 @@
 import { AnalyzedStatement, CqlAnalysis } from "../../../../../../../../src/types/parser";
+import { isKeyspaceTableValid } from "../helpers";
 
 export const markTableReferenceError = (model: monaco.editor.ITextModel,
     statement: AnalyzedStatement, analysis: CqlAnalysis): monaco.editor.IMarkerData[] => {
@@ -15,10 +16,14 @@ export const markTableReferenceError = (model: monaco.editor.ITextModel,
     const token = spec.tableToken;
     const keyspace = spec.keyspaceToken ? spec.keyspaceToken.text : spec.keyspaceAmbiental;
 
-    if (refs.objects && refs.objects[keyspace] && refs.objects[keyspace]["tables"] && refs.objects[keyspace]["tables"][token.text]) {
+    if (isKeyspaceTableValid(keyspace, token.text, analysis)) {
         console.log(`[markTableReferenceError] everything ok with TABLE`);
         return [];
     }
+    // if (refs.objects && refs.objects[keyspace] && refs.objects[keyspace]["tables"] && refs.objects[keyspace]["tables"][token.text]) {
+    //     console.log(`[markTableReferenceError] everything ok with TABLE`);
+    //     return [];
+    // }
     let message = "";
     if (!refs.keyspaces.find((k) => k === keyspace)) {
         console.log(`[markTableReferenceError] no keyspace -> ${keyspace}`);

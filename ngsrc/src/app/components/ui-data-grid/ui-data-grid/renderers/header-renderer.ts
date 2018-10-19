@@ -1,7 +1,8 @@
 import { ColumnInfo } from "../../../../../../../src/cassandra-client/index";
-import { CassandraTable } from "../../../../../../../src/types/index";
+import { CassandraMaterializedView, CassandraTable } from "../../../../../../../src/types/index";
 
-export const headerRenderer = (columns: ColumnInfo[], tableStruct: CassandraTable): (index?: number) => string => {
+export const headerRenderer = (columns: ColumnInfo[],
+    tableStruct: CassandraTable | CassandraMaterializedView): (index?: number) => string => {
     return (index: number): string => {
 
         const name = columns[index].name;

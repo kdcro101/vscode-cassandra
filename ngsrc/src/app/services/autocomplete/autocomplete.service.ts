@@ -45,9 +45,7 @@ export class AutocompleteService {
 
             this.stateKeypace.next(keyspace);
         } catch (e) {
-            // console.log("ERROR EMITING stateKeypace");
             console.log(e);
-            // console.log(this);
         }
     }
 

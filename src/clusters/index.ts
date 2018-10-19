@@ -196,10 +196,6 @@ export class Clusters {
                     clusterStruct = d;
                     analysis = this.parser.analyze(cql, clusterStruct, keyspaceInitial);
 
-                    // if (analysis.selectData && (analysis.alterData || analysis.alterStructure)) {
-                    //     return Promise.reject("select_only");
-                    // }
-
                     if (analysis.error) {
                         return Promise.reject(analysis.error);
                     }
