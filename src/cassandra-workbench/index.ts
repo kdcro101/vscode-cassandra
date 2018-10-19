@@ -57,7 +57,7 @@ export class CassandraWorkbench {
                 this.context.subscriptions.push(vscode.window.registerTreeDataProvider("cassandraWorkbenchView", this.treeProvider));
 
                 if (notifyWebview) {
-                    this.requestInvalidateClusterData();
+                    this.requestInvalidateClusterList();
                 }
             }),
         ).subscribe((list) => {
@@ -763,14 +763,24 @@ export class CassandraWorkbench {
                 this.panel.emitMessage(out);
             });
     }
-    private requestInvalidateClusterData() {
+    private requestInvalidateClusterList() {
         const id = generateId();
-        const out: ProcMessageStrict<"e2w_invalidateClusterDataRequest"> = {
-            name: "e2w_invalidateClusterDataRequest",
+        const out: ProcMessageStrict<"e2w_invalidateClusterListRequest"> = {
+            name: "e2w_invalidateClusterListRequest",
             data: {
                 id,
             },
         };
         this.panel.emitMessage(out);
+    }
+    private requestInvalidateClusterData1(clusterIndex: number) {
+        // const id = generateId();
+        // const out: ProcMessageStrict<"e2w_invalidateClusterListRequest"> = {
+        //     name: "e2w_invalidateClusterListRequest",
+        //     data: {
+        //         id,
+        //     },
+        // };
+        // this.panel.emitMessage(out);
     }
 }

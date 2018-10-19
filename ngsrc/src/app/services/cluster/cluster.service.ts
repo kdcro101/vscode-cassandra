@@ -40,8 +40,8 @@ export class ClusterService {
         });
 
         this.message.eventMessage.pipe(
-            filter((m) => m.name === "e2w_invalidateClusterDataRequest"),
-            map((m) => m as ProcMessageStrict<"e2w_invalidateClusterDataRequest">),
+            filter((m) => m.name === "e2w_invalidateClusterListRequest"),
+            map((m) => m as ProcMessageStrict<"e2w_invalidateClusterListRequest">),
         ).subscribe((m) => {
             console.log("[ClusterService] invalidate cluster data");
             this.eventInvalidate.next();
