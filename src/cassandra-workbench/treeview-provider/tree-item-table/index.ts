@@ -12,7 +12,7 @@ export class TreeItemTable extends TreeItemBase {
         public clusterName: string,
         public keyspace: string,
         public contextValue: string,
-        public tableData: CassandraTable,
+        public data: CassandraTable,
         public tooltipText?: string,
     ) {
         super(label, collapsibleState);

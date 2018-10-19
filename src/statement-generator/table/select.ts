@@ -1,9 +1,9 @@
 import wrap = require("word-wrap");
 import { DataTypeManager } from "../../data-type";
 import { rootColumnType } from "../../data-type/type-parser";
-import { CassandraTable } from "../../types/index";
+import { CassandraMaterializedView, CassandraTable } from "../../types/index";
 import { Workspace } from "../../workspace/index";
-export const tableSelect = (keyspace: string, data: CassandraTable): Promise<string> => {
+export const tableSelect = (keyspace: string, data: CassandraTable | CassandraMaterializedView): Promise<string> => {
     return new Promise((resolve, reject) => {
 
         const workspace = new Workspace();
@@ -38,7 +38,7 @@ export const tableSelect = (keyspace: string, data: CassandraTable): Promise<str
 
     });
 };
-export const tableSelectAll = (keyspace: string, data: CassandraTable): Promise<string> => {
+export const tableSelectAll = (keyspace: string, data: CassandraTable | CassandraMaterializedView): Promise<string> => {
     return new Promise((resolve, reject) => {
 
         const workspace = new Workspace();

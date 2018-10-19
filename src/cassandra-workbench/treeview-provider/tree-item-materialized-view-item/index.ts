@@ -12,7 +12,7 @@ export class TreeItemMaterializedViewItem extends TreeItemBase {
         public clusterIndex: number,
         public keyspace: string,
         public contextValue: string,
-        public viewData: CassandraMaterializedView,
+        public data: CassandraMaterializedView,
         public tooltipText?: string,
     ) {
         super(label, collapsibleState);
