@@ -26,10 +26,8 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
 
                 zip(autocomplete.stateCluster,
                     autocomplete.stateKeypace,
-                    autocomplete.stateAnalysis).pipe(
-                        take(1),
-                    )
-                    .subscribe((args) => {
+                    autocomplete.stateAnalysis).pipe(take(1),
+                    ).subscribe((args) => {
 
                         const clusterData = args[0];
                         const keyspaceInitial = args[1];
@@ -37,29 +35,19 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
 
                         const state = locateCursor(offset, analysis, textToOffset);
                         const statement = state.statement;
-                        const keyspace = statement && statement.keyspace ? statement.keyspace : keyspaceInitial;
+                        // const keyspace = statement && statement.keyspace ? statement.keyspace : keyspaceInitial;
+                        const keyspaceAmbiental = statement ? statement.keyspace : keyspaceInitial;
+                        const keyspace = statement && statement.keyspace ? statement.keyspace : keyspaceAmbiental;
                         const table = statement && statement.table ? statement.table : null;
 
                         const completeInput = state.autocompleteInput;
 
                         const keyspaceData = clusterData && keyspace ?
                             clusterData.keyspaces.find((k) => k.name === keyspace) : null;
-                        const tableData = keyspaceData ?
+                        const columnSource = keyspaceData ?
                             keyspaceData.tables.find((t) => t.name === table) ||
                             keyspaceData.materializedViews.find((t) => t.name === table)
                             : null;
-
-                        // console.log(`autocompleteProvide OFF:${offset}`);
-                        // console.log("state");
-                        // console.log(state);
-                        // console.log("analysis");
-                        // console.log(analysis);
-                        // console.log("statement");
-                        // console.log(statement);
-                        // console.log(`completeInput: [${completeInput}]`);
-
-                        // console.log("tableData");
-                        // console.log(tableData);
 
                         autocomplete.getCandidates(completeInput).pipe()
                             .subscribe((result) => {
@@ -68,14 +56,13 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                                 console.log(result);
 
                                 let all: monaco.languages.CompletionItem[] = [];
+
                                 const list = result.list;
                                 const partial = result.partial == null ? "" : result.partial;
                                 const listKeyspaces = list.find((i) => i.type === "inputKeyspace") ? true : false;
                                 const listTables = list.find((i) => i.type === "inputTable") ? true : false;
                                 const listColumns = list.find((i) => i.type === "inputColumn") ? true : false;
-                                // const listSynOperators = list.find((i) => i.type === "syntaxOperator") ? true : false;
-
-                                console.log(`listKs:${listKeyspaces} listTb: ${listTables} listCol: ${listColumns}`);
+                                const listViews = list.find((i) => i.type === "inputMaterializedView") ? true : false;
 
                                 const keywords: monaco.languages.CompletionItem[] = list
                                     .filter((i) => i.type === "keyword" || i.type === "dataType" || i.type === "syntaxOperator")
@@ -93,7 +80,7 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                                     const keyspaces: monaco.languages.CompletionItem[] = clusterData.keyspaces.map((ks) => {
                                         const o: monaco.languages.CompletionItem = {
                                             label: ks.name,
-                                            kind: monaco.languages.CompletionItemKind.Class,
+                                            kind: monaco.languages.CompletionItemKind.Method,
                                         };
                                         return o;
                                     });
@@ -101,18 +88,27 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                                     all = all.concat(keyspaces.filter((k) => k.label.search(partial) === 0));
                                 }
                                 if (listTables && keyspaceData) {
-                                    const tableViews = keyspaceData.tables.concat(keyspaceData.materializedViews as any);
-                                    const tables: monaco.languages.CompletionItem[] = tableViews.map((t) => {
+                                    const tables: monaco.languages.CompletionItem[] = keyspaceData.tables.map((t) => {
                                         const o: monaco.languages.CompletionItem = {
                                             label: t.name,
-                                            kind: monaco.languages.CompletionItemKind.Method,
+                                            kind: monaco.languages.CompletionItemKind.Class,
                                         };
                                         return o;
                                     });
                                     all = all.concat(tables.filter((t) => t.label.search(partial) === 0));
                                 }
-                                if (listColumns && tableData) {
-                                    const columns: monaco.languages.CompletionItem[] = tableData.columns.map((t) => {
+                                if (listViews && keyspaceData) {
+                                    const views = keyspaceData.materializedViews.map((v) => {
+                                        const o: monaco.languages.CompletionItem = {
+                                            label: v.name,
+                                            kind: monaco.languages.CompletionItemKind.Class,
+                                        };
+                                        return o;
+                                    });
+                                    all = all.concat(views.filter((c) => c.label.search(partial) === 0));
+                                }
+                                if (listColumns && columnSource) {
+                                    const columns: monaco.languages.CompletionItem[] = columnSource.columns.map((t) => {
                                         const o: monaco.languages.CompletionItem = {
                                             label: t.name,
                                             kind: monaco.languages.CompletionItemKind.Field,

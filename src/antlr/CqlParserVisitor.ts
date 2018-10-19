@@ -170,9 +170,12 @@ import { ConstantBooleanContext } from './CqlParser';
 import { ConstantHexadecimalContext } from './CqlParser';
 import { KeyspaceContext } from './CqlParser';
 import { TableContext } from './CqlParser';
+import { MaterializedViewContext } from './CqlParser';
 import { KeyspaceObjectContext } from './CqlParser';
 import { ObjectUnknownContext } from './CqlParser';
 import { TableSpecContext } from './CqlParser';
+import { MaterializedViewSpecContext } from './CqlParser';
+import { TableOrMaterializedViewSpecContext } from './CqlParser';
 import { ObjectUnknownSpecContext } from './CqlParser';
 import { ColumnContext } from './CqlParser';
 import { ColumnUnknownContext } from './CqlParser';
@@ -183,7 +186,6 @@ import { OrderDirectionContext } from './CqlParser';
 import { RoleContext } from './CqlParser';
 import { TriggerContext } from './CqlParser';
 import { TriggerClassContext } from './CqlParser';
-import { MaterializedViewContext } from './CqlParser';
 import { TypeContext } from './CqlParser';
 import { AggregateContext } from './CqlParser';
 import { FunctionContext } from './CqlParser';
@@ -249,7 +251,7 @@ import { KwListContext } from './CqlParser';
 import { KwListRolesContext } from './CqlParser';
 import { KwLoggedContext } from './CqlParser';
 import { KwLoginContext } from './CqlParser';
-import { KwMaterializedContext } from './CqlParser';
+import { KwMaterializedViewContext } from './CqlParser';
 import { KwModifyContext } from './CqlParser';
 import { KwNosuperuserContext } from './CqlParser';
 import { KwNorecursiveContext } from './CqlParser';
@@ -292,7 +294,6 @@ import { KwUserContext } from './CqlParser';
 import { KwUsersContext } from './CqlParser';
 import { KwUsingContext } from './CqlParser';
 import { KwValuesContext } from './CqlParser';
-import { KwViewContext } from './CqlParser';
 import { KwWhereContext } from './CqlParser';
 import { KwWithContext } from './CqlParser';
 import { KwRevokeContext } from './CqlParser';
@@ -1525,6 +1526,13 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitTable?: (ctx: TableContext) => Result;
 
 	/**
+	 * Visit a parse tree produced by `CqlParser.materializedView`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitMaterializedView?: (ctx: MaterializedViewContext) => Result;
+
+	/**
 	 * Visit a parse tree produced by `CqlParser.keyspaceObject`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -1544,6 +1552,20 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitTableSpec?: (ctx: TableSpecContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.materializedViewSpec`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitMaterializedViewSpec?: (ctx: MaterializedViewSpecContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.tableOrMaterializedViewSpec`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitTableOrMaterializedViewSpec?: (ctx: TableOrMaterializedViewSpecContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.objectUnknownSpec`.
@@ -1614,13 +1636,6 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitTriggerClass?: (ctx: TriggerClassContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `CqlParser.materializedView`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitMaterializedView?: (ctx: MaterializedViewContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.type`.
@@ -2078,11 +2093,11 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitKwLogin?: (ctx: KwLoginContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.kwMaterialized`.
+	 * Visit a parse tree produced by `CqlParser.kwMaterializedView`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitKwMaterialized?: (ctx: KwMaterializedContext) => Result;
+	visitKwMaterializedView?: (ctx: KwMaterializedViewContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.kwModify`.
@@ -2377,13 +2392,6 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitKwValues?: (ctx: KwValuesContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `CqlParser.kwView`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitKwView?: (ctx: KwViewContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.kwWhere`.

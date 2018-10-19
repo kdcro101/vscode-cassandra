@@ -37,6 +37,7 @@ export interface AnalyzedStatement {
     charStop?: number;
     limit?: number;
     keyspace?: string;
+    keyspaceAmbiental?: string;
     table?: string;
     text?: string;
     // tableData?: CassandraTable;
@@ -49,14 +50,18 @@ export interface AnalyzedStatement {
 
 export interface AnalyzedStatementRules {
     tableSpec?: RuleTableSpec;
+    ViewSpec?: RuleViewSpec;
     objectUnknownSpec?: RuleObjectUnknownSpec;
 
 }
 export interface RuleTableSpec {
     keyspaceToken?: AnalyzedStatementToken;
     tableToken?: AnalyzedStatementToken;
-    // tableData?: CassandraTable;
-    // keyspaceData?: CassandraKeyspace;
+    keyspaceAmbiental?: string;
+}
+export interface RuleViewSpec {
+    keyspaceToken?: AnalyzedStatementToken;
+    viewToken?: AnalyzedStatementToken;
     keyspaceAmbiental?: string;
 }
 export interface RuleObjectUnknownSpec {

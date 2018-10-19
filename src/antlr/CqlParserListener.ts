@@ -170,9 +170,12 @@ import { ConstantBooleanContext } from './CqlParser';
 import { ConstantHexadecimalContext } from './CqlParser';
 import { KeyspaceContext } from './CqlParser';
 import { TableContext } from './CqlParser';
+import { MaterializedViewContext } from './CqlParser';
 import { KeyspaceObjectContext } from './CqlParser';
 import { ObjectUnknownContext } from './CqlParser';
 import { TableSpecContext } from './CqlParser';
+import { MaterializedViewSpecContext } from './CqlParser';
+import { TableOrMaterializedViewSpecContext } from './CqlParser';
 import { ObjectUnknownSpecContext } from './CqlParser';
 import { ColumnContext } from './CqlParser';
 import { ColumnUnknownContext } from './CqlParser';
@@ -183,7 +186,6 @@ import { OrderDirectionContext } from './CqlParser';
 import { RoleContext } from './CqlParser';
 import { TriggerContext } from './CqlParser';
 import { TriggerClassContext } from './CqlParser';
-import { MaterializedViewContext } from './CqlParser';
 import { TypeContext } from './CqlParser';
 import { AggregateContext } from './CqlParser';
 import { FunctionContext } from './CqlParser';
@@ -249,7 +251,7 @@ import { KwListContext } from './CqlParser';
 import { KwListRolesContext } from './CqlParser';
 import { KwLoggedContext } from './CqlParser';
 import { KwLoginContext } from './CqlParser';
-import { KwMaterializedContext } from './CqlParser';
+import { KwMaterializedViewContext } from './CqlParser';
 import { KwModifyContext } from './CqlParser';
 import { KwNosuperuserContext } from './CqlParser';
 import { KwNorecursiveContext } from './CqlParser';
@@ -292,7 +294,6 @@ import { KwUserContext } from './CqlParser';
 import { KwUsersContext } from './CqlParser';
 import { KwUsingContext } from './CqlParser';
 import { KwValuesContext } from './CqlParser';
-import { KwViewContext } from './CqlParser';
 import { KwWhereContext } from './CqlParser';
 import { KwWithContext } from './CqlParser';
 import { KwRevokeContext } from './CqlParser';
@@ -2190,6 +2191,17 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitTable?: (ctx: TableContext) => void;
 
 	/**
+	 * Enter a parse tree produced by `CqlParser.materializedView`.
+	 * @param ctx the parse tree
+	 */
+	enterMaterializedView?: (ctx: MaterializedViewContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.materializedView`.
+	 * @param ctx the parse tree
+	 */
+	exitMaterializedView?: (ctx: MaterializedViewContext) => void;
+
+	/**
 	 * Enter a parse tree produced by `CqlParser.keyspaceObject`.
 	 * @param ctx the parse tree
 	 */
@@ -2221,6 +2233,28 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitTableSpec?: (ctx: TableSpecContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.materializedViewSpec`.
+	 * @param ctx the parse tree
+	 */
+	enterMaterializedViewSpec?: (ctx: MaterializedViewSpecContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.materializedViewSpec`.
+	 * @param ctx the parse tree
+	 */
+	exitMaterializedViewSpec?: (ctx: MaterializedViewSpecContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.tableOrMaterializedViewSpec`.
+	 * @param ctx the parse tree
+	 */
+	enterTableOrMaterializedViewSpec?: (ctx: TableOrMaterializedViewSpecContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.tableOrMaterializedViewSpec`.
+	 * @param ctx the parse tree
+	 */
+	exitTableOrMaterializedViewSpec?: (ctx: TableOrMaterializedViewSpecContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.objectUnknownSpec`.
@@ -2331,17 +2365,6 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitTriggerClass?: (ctx: TriggerClassContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `CqlParser.materializedView`.
-	 * @param ctx the parse tree
-	 */
-	enterMaterializedView?: (ctx: MaterializedViewContext) => void;
-	/**
-	 * Exit a parse tree produced by `CqlParser.materializedView`.
-	 * @param ctx the parse tree
-	 */
-	exitMaterializedView?: (ctx: MaterializedViewContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.type`.
@@ -3059,15 +3082,15 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitKwLogin?: (ctx: KwLoginContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.kwMaterialized`.
+	 * Enter a parse tree produced by `CqlParser.kwMaterializedView`.
 	 * @param ctx the parse tree
 	 */
-	enterKwMaterialized?: (ctx: KwMaterializedContext) => void;
+	enterKwMaterializedView?: (ctx: KwMaterializedViewContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.kwMaterialized`.
+	 * Exit a parse tree produced by `CqlParser.kwMaterializedView`.
 	 * @param ctx the parse tree
 	 */
-	exitKwMaterialized?: (ctx: KwMaterializedContext) => void;
+	exitKwMaterializedView?: (ctx: KwMaterializedViewContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.kwModify`.
@@ -3530,17 +3553,6 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitKwValues?: (ctx: KwValuesContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `CqlParser.kwView`.
-	 * @param ctx the parse tree
-	 */
-	enterKwView?: (ctx: KwViewContext) => void;
-	/**
-	 * Exit a parse tree produced by `CqlParser.kwView`.
-	 * @param ctx the parse tree
-	 */
-	exitKwView?: (ctx: KwViewContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.kwWhere`.

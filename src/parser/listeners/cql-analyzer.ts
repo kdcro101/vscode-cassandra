@@ -1,8 +1,8 @@
 import { ParserRuleContext } from "antlr4ts";
 import { ParseTree } from "antlr4ts/tree/ParseTree";
 import {
-    ColumnContext, CqlContext, ExpressionContext, KeyspaceContext, RootContext,
-    StatementSeparatorContext, TableSpecContext, UseContext,
+    ColumnContext, CqlContext, ExpressionContext, KeyspaceContext, MaterializedViewSpecContext,
+    RootContext, StatementSeparatorContext, TableSpecContext, UseContext,
 } from "../../antlr/CqlParser";
 import { CqlParserListener } from "../../antlr/CqlParserListener";
 import { CassandraClusterData } from "../../types";
@@ -177,6 +177,7 @@ export class CqlAnalyzerListener implements CqlParserListener {
         }
         this.setCurrentStatementValue("charStart", ctx.start.startIndex);
         this.setCurrentStatementValue("charStop", ctx.stop.stopIndex);
+        this.setCurrentStatementValue("keyspaceAmbiental", this.keyspaceAmbiental);
 
         // check column types! After cql keyspace + table needed
         this.columnsRecognize(this.statementCurrent);
@@ -265,6 +266,44 @@ export class CqlAnalyzerListener implements CqlParserListener {
             console.log(e);
         }
 
+    }
+    exitMaterializedViewSpec = (ctx: MaterializedViewSpecContext) => {
+        const ksc = ctx.children.find((c: ParserRuleContext) => this.ruleNames[c.ruleIndex] === KEYSPACE_RULE) as ParserRuleContext;
+        const mvc = ctx.children.find((c: ParserRuleContext) => this.ruleNames[c.ruleIndex] === TABLE_RULE) as ParserRuleContext;
+
+        const keyspaceName = !ksc ? this.keyspaceAmbiental : ksc.text;
+        let ksd: CassandraKeyspace = null;
+
+        try {
+
+            if (keyspaceName) {
+                ksd = this.structure.keyspaces.find((k) => k.name === keyspaceName);
+            }
+
+            if (ksc) {
+                const kt = this.contextToToken(ksc);
+                this.pushRuleValue("ViewSpec", "keyspaceToken", kt);
+                this.setCurrentStatementValue("keyspace", keyspaceName);
+
+            } else {
+                this.pushRuleValue("ViewSpec", "keyspaceAmbiental", this.keyspaceAmbiental);
+            }
+
+            if (mvc) {
+                const tt = this.contextToToken(mvc);
+                const mvd = ksd ? ksd.materializedViews.find((t) => t.name === tt.text) : null;
+
+                this.pushRuleValue("ViewSpec", "viewToken", tt);
+                this.setCurrentStatementValue("table", mvc.text);
+
+                if (mvd) {
+                    this.pushReference(keyspaceName, "views", tt.text, mvd);
+                }
+
+            }
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     // ------------------------------------------------------------------------------------

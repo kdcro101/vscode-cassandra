@@ -1,0 +1,22 @@
+export const autocompleteList: monaco.languages.CompletionItem[] = [
+
+    { label: "Text = 0", kind: monaco.languages.CompletionItemKind.Text },
+    { label: "Method = 1", kind: monaco.languages.CompletionItemKind.Method },
+    { label: "Function = 2", kind: monaco.languages.CompletionItemKind.Function },
+    { label: "Constructor = 3", kind: monaco.languages.CompletionItemKind.Constructor },
+    { label: "Field = 4", kind: monaco.languages.CompletionItemKind.Field },
+    { label: "Variable = 5", kind: monaco.languages.CompletionItemKind.Variable },
+    { label: "Class = 6", kind: monaco.languages.CompletionItemKind.Class },
+    { label: "Interface = 7", kind: monaco.languages.CompletionItemKind.Interface },
+    { label: "Module = 8", kind: monaco.languages.CompletionItemKind.Module },
+    { label: "Property = 9", kind: monaco.languages.CompletionItemKind.Property },
+    { label: "Unit = 10", kind: monaco.languages.CompletionItemKind.Unit },
+    { label: "Value = 11", kind: monaco.languages.CompletionItemKind.Value },
+    { label: "Enum = 12", kind: monaco.languages.CompletionItemKind.Enum },
+    { label: "Keyword = 13", kind: monaco.languages.CompletionItemKind.Keyword },
+    { label: "Snippet = 14", kind: monaco.languages.CompletionItemKind.Snippet },
+    { label: "Color = 15", kind: monaco.languages.CompletionItemKind.Color },
+    { label: "File = 16", kind: monaco.languages.CompletionItemKind.File },
+    { label: "Reference = 17", kind: monaco.languages.CompletionItemKind.Reference },
+    { label: "Folder = 18", kind: monaco.languages.CompletionItemKind.Folder },
+];

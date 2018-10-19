@@ -7,6 +7,7 @@ export type RuleType =
     "dataType" |
     "inputKeyspace" |
     "inputTable" |
+    "inputMaterializedView" |
     "inputColumn" |
     "inputConstant";
 
@@ -27,6 +28,7 @@ export const preferredRules: PreferredRules = {
     "column": { text: "", type: "inputColumn" },
     "keyspace": { text: "", type: "inputKeyspace" },
     "table": { text: "", type: "inputTable" },
+    "materializedView": { text: "", type: "inputMaterializedView" },
     "constant": { text: "", type: "inputConstant" },
 
     "syntaxBracketLr": { text: "(", type: "syntaxBracket" },
@@ -105,7 +107,8 @@ export const preferredRules: PreferredRules = {
     "kwListRoles": { text: "LIST ROLES", type: "keyword" },
     "kwLogged": { text: "LOGGED", type: "keyword" },
     "kwLogin": { text: "LOGIN", type: "keyword" },
-    "kwMaterialized": { text: "MATERIALIZED", type: "keyword" },
+    // "kwMaterialized": { text: "MATERIALIZED", type: "keyword" },
+    "kwMaterializedView": { text: "MATERIALIZED VIEW", type: "keyword" },
     "kwModify": { text: "MODIFY", type: "keyword" },
     "kwNosuperuser": { text: "NOSUPERUSER", type: "keyword" },
     "kwNorecursive": { text: "NORECURSIVE", type: "keyword" },
@@ -147,7 +150,7 @@ export const preferredRules: PreferredRules = {
     "kwUsers": { text: "USERS", type: "keyword" },
     "kwUsing": { text: "USING", type: "keyword" },
     "kwValues": { text: "VALUES", type: "keyword" },
-    "kwView": { text: "VIEW", type: "keyword" },
+    // "kwView": { text: "VIEW", type: "keyword" },
     "kwWhere": { text: "WHERE", type: "keyword" },
     "kwWith": { text: "WITH", type: "keyword" },
     "kwRevoke": { text: "REVOKE", type: "keyword" },

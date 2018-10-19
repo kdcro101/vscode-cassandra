@@ -145,7 +145,7 @@ createTrigger
     ;
 
 createMaterializedView
-    : kwCreate kwMaterialized kwView ifNotExist? objectUnknownSpec
+    : kwCreate kwMaterializedView ifNotExist? objectUnknownSpec
       kwAs
       kwSelect columnList kwFrom tableSpec
       materializedViewWhere
@@ -330,7 +330,7 @@ roleWithOptions
     ;
 
 alterMaterializedView
-    : kwAlter kwMaterialized kwView (keyspace DOT)? materializedView
+    : kwAlter kwMaterializedView materializedViewSpec
      (kwWith tableOptions)?
     ;
 
@@ -342,7 +342,7 @@ dropType
     : kwDrop kwType ifExist? (keyspace DOT)? type
     ;
 dropMaterializedView
-    : kwDrop kwMaterialized kwView ifExist? (keyspace DOT)? materializedView
+    : kwDrop kwMaterializedView ifExist? materializedViewSpec
 
     ;
 dropAggregate
@@ -567,7 +567,7 @@ deleteColumnItem
 
 
 update
-    : kwUpdate tableSpec  usingTtlTimestamp?  updateAssignments
+    : kwUpdate tableOrMaterializedViewSpec  usingTtlTimestamp?  updateAssignments
       (whereSpec | { this.notifyErrorListeners("rule.whereSpec"); }) (ifExist | ifSpec)?
     ;
 
@@ -614,7 +614,7 @@ assignmentList
 
 
 insert
-    : kwInsert kwInto tableSpec insertColumnSpec insertValuesSpec (ifNotExist|) usingTtlTimestamp?
+    : kwInsert kwInto tableOrMaterializedViewSpec insertColumnSpec insertValuesSpec (ifNotExist|) usingTtlTimestamp?
     ;
 usingTtlTimestamp
     : kwUsing ttl
@@ -674,7 +674,7 @@ limitSpec
     ;
 
 fromSpec
-    : kwFrom tableSpec
+    : kwFrom tableOrMaterializedViewSpec
     | { this.notifyErrorListeners("rule.fromSpec"); }
     ;
 
@@ -837,6 +837,13 @@ table
       K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL | K_USER
     | { this.notifyErrorListeners("rule.table"); }
     ;
+materializedView
+    : OBJECT_NAME
+    | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL | K_USER
+    | { this.notifyErrorListeners("rule.materializedView"); }
+    ;
 
 keyspaceObject
     : OBJECT_NAME
@@ -856,6 +863,19 @@ tableSpec
     | keyspace specialDot table
     | { this.notifyErrorListeners("rule.tableSpec"); }
     ;
+materializedViewSpec
+    : materializedView
+    | keyspace specialDot materializedView
+    | { this.notifyErrorListeners("rule.materializedViewSpec"); }
+    ;
+
+tableOrMaterializedViewSpec
+    : tableSpec
+    | materializedViewSpec
+    | { this.notifyErrorListeners("rule.tableOrMaterializedViewSpec"); }
+    ;
+
+
 
 objectUnknownSpec
     : objectUnknown
@@ -930,9 +950,6 @@ triggerClass
     : constantString
     ;
 
-materializedView
-    : OBJECT_NAME
-    ;
 type
     : OBJECT_NAME
     ;
@@ -1016,7 +1033,8 @@ kwList: K_LIST;
 kwListRoles: K_LIST_ROLES;
 kwLogged: K_LOGGED;
 kwLogin: K_LOGIN;
-kwMaterialized: K_MATERIALIZED;
+// kwMaterialized: K_MATERIALIZED;
+kwMaterializedView: K_MATERIALIZED K_VIEW;
 kwModify: K_MODIFY;
 kwNosuperuser: K_NOSUPERUSER;
 kwNorecursive: K_NORECURSIVE;
@@ -1059,7 +1077,7 @@ kwUser: K_USER;
 kwUsers: K_USERS;
 kwUsing: K_USING;
 kwValues: K_VALUES;
-kwView: K_VIEW;
+// kwView: K_VIEW;
 kwWhere: K_WHERE;
 kwWith: K_WITH;
 kwRevoke: K_REVOKE;
