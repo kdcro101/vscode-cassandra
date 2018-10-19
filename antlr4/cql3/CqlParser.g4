@@ -147,7 +147,7 @@ createTrigger
 createMaterializedView
     : kwCreate kwMaterializedView ifNotExist? objectUnknownSpec
       kwAs
-      kwSelect columnList kwFrom tableSpec
+      kwSelect baseColumnList kwFrom baseTableSpec
       materializedViewWhere
       primaryKeyElement
       (kwWith materializedViewOptions)?
@@ -169,17 +169,6 @@ materializedViewOptions
     | clusteringOrder
     | clusteringOrder kwAnd tableOptions
     ;
-
-// CREATE MATERIALIZED VIEW [IF NOT EXISTS] [keyspace_name.] view_name
-// AS SELECT column_list
-// FROM [keyspace_name.] base_table_name
-// WHERE column_name IS NOT NULL [AND column_name IS NOT NULL ...]
-//       [AND relation...]
-// PRIMARY KEY ( column_list )
-// [WITH [table_properties]
-//       [AND CLUSTERING ORDER BY (cluster_column_name order_option )]]
-
-
 
 createKeyspace
     : kwCreate kwKeyspace ifNotExist? objectUnknown
@@ -253,7 +242,7 @@ userSuperUser
     ;
 
 alterType
-    : kwAlter kwType (keyspace DOT)? type alterTypeOperation
+    : kwAlter kwType typeSpec alterTypeOperation
     ;
 alterTypeOperation
     : alterTypeAlterType? alterTypeAdd? alterTypeRename?
@@ -339,17 +328,17 @@ dropUser
     ;
 
 dropType
-    : kwDrop kwType ifExist? (keyspace DOT)? type
+    : kwDrop kwType ifExist? typeSpec
     ;
 dropMaterializedView
     : kwDrop kwMaterializedView ifExist? materializedViewSpec
 
     ;
 dropAggregate
-    : kwDrop kwAggregate ifExist? (keyspace DOT)? aggregate
+    : kwDrop kwAggregate ifExist? aggregateSpec
     ;
 dropFunction
-    : kwDrop kwFunction ifExist? (keyspace DOT)? function
+    : kwDrop kwFunction ifExist? functionSpec
     ;
 dropTrigger
     : kwDrop kwTrigger ifExist? trigger kwOn tableSpec
@@ -365,7 +354,7 @@ dropKeyspace
     : kwDrop kwKeyspace ifExist? keyspace
     ;
 dropIndex
-    : kwDrop kwIndex ifExist? (keyspace DOT)? indexName
+    : kwDrop kwIndex ifExist? indexSpec
     ;
 createTable
     : kwCreate kwTable ifNotExist? objectUnknownSpec createTableDef withElement?
@@ -517,7 +506,7 @@ truncate
     ;
 
 createIndex
-    : kwCreate kwIndex ifNotExist? indexName? createIndexSubject createIndexDef
+    : kwCreate kwIndex ifNotExist? objectUnknown? createIndexSubject createIndexDef
     ;
 
 createIndexSubject
@@ -525,7 +514,7 @@ createIndexSubject
     | { this.notifyErrorListeners("rule.createIndexSubject"); }
     ;
 
-indexName
+index
     : OBJECT_NAME
     | constantString
     ;
@@ -614,7 +603,7 @@ assignmentList
 
 
 insert
-    : kwInsert kwInto tableOrMaterializedViewSpec insertColumnSpec insertValuesSpec (ifNotExist|) usingTtlTimestamp?
+    : kwInsertInto tableOrMaterializedViewSpec insertColumnSpec insertValuesSpec (ifNotExist|) usingTtlTimestamp?
     ;
 usingTtlTimestamp
     : kwUsing ttl
@@ -654,8 +643,14 @@ insertColumnSpec
 
 columnList
     : column (syntaxComma (column | { this.notifyErrorListeners("rule.column"); }))*
-    | { this.notifyErrorListeners("rule.column_list"); }
+    | { this.notifyErrorListeners("rule.columnList"); }
     ;
+baseColumnList
+    : baseColumn (syntaxComma (baseColumn | { this.notifyErrorListeners("rule.baseColumn"); }))*
+    | { this.notifyErrorListeners("rule.baseColumnList"); }
+    ;
+
+
 expressionList
     : expression (syntaxComma expression)*
     ;
@@ -826,46 +821,78 @@ constantHexadecimal
     ;
 
 keyspace
-    : OBJECT_NAME
-    | DQUOTE OBJECT_NAME DQUOTE
+    : qualifiedObjectName
+    ;
+
+baseKeyspace
+    : qualifiedObjectName
     ;
 
 table
-    : OBJECT_NAME
-    | DQUOTE OBJECT_NAME DQUOTE
-    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
-      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL | K_USER
-    | { this.notifyErrorListeners("rule.table"); }
+    : qualifiedObjectName
     ;
+
+baseTable
+    : qualifiedObjectName
+    ;
+
+
 materializedView
-    : OBJECT_NAME
-    | DQUOTE OBJECT_NAME DQUOTE
-    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
-      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL | K_USER
-    | { this.notifyErrorListeners("rule.materializedView"); }
+    : qualifiedObjectName
+    // | { this.notifyErrorListeners("rule.materializedView"); }
     ;
 
 keyspaceObject
-    : OBJECT_NAME
-    | DQUOTE OBJECT_NAME DQUOTE
-    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
-      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL
+    : qualifiedObjectName
     ;
 objectUnknown
-    : OBJECT_NAME
-    | DQUOTE OBJECT_NAME DQUOTE
-    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
-      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL | K_USER
+    : qualifiedObjectName
+    ;
+aggregateSpec
+    : aggregate
+    | keyspace specialDot aggregate
+    | keyspace specialDot { this.notifyErrorListeners("rule.aggregate"); }
+    | { this.notifyErrorListeners("rule.aggregateSpec"); }
+    ;
+
+typeSpec
+    : type
+    | keyspace specialDot type
+    | keyspace specialDot { this.notifyErrorListeners("rule.type"); }
+    | { this.notifyErrorListeners("rule.typeSpec"); }
+    ;
+
+functionSpec
+    : function
+    | keyspace specialDot function
+    | keyspace specialDot { this.notifyErrorListeners("rule.function"); }
+    | { this.notifyErrorListeners("rule.functionSpec"); }
     ;
 
 tableSpec
     : table
     | keyspace specialDot table
+    | keyspace specialDot { this.notifyErrorListeners("rule.table"); }
     | { this.notifyErrorListeners("rule.tableSpec"); }
     ;
+baseTableSpec
+    : baseTable
+    | baseKeyspace specialDot baseTable
+    | baseKeyspace specialDot { this.notifyErrorListeners("rule.baseTable"); }
+    | { this.notifyErrorListeners("rule.baseTableSpec"); }
+    ;
+
+indexSpec
+    : index
+    | keyspace specialDot index
+    | keyspace specialDot { this.notifyErrorListeners("rule.index"); }
+    | { this.notifyErrorListeners("rule.indexSpec"); }
+    ;
+
 materializedViewSpec
     : materializedView
     | keyspace specialDot materializedView
+    | keyspace specialDot { this.notifyErrorListeners("rule.materializedView"); }
     | { this.notifyErrorListeners("rule.materializedViewSpec"); }
     ;
 
@@ -884,10 +911,11 @@ objectUnknownSpec
     ;
 
 column
-    : OBJECT_NAME
-    | DQUOTE OBJECT_NAME DQUOTE
-    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
-      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL | K_USER
+    : qualifiedObjectName
+    ;
+
+baseColumn
+    : qualifiedObjectName
     ;
 
 columnUnknown
@@ -954,7 +982,7 @@ type
     : OBJECT_NAME
     ;
 aggregate
-    : OBJECT_NAME
+    : qualifiedObjectName
     ;
 function
     : OBJECT_NAME
@@ -975,6 +1003,13 @@ param
     ;
 paramName
     : OBJECT_NAME
+    ;
+
+qualifiedObjectName
+    : OBJECT_NAME
+    | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL
     ;
 
 kwAdd: K_ADD;
@@ -1021,8 +1056,9 @@ kwIn: K_IN;
 kwIndex: K_INDEX;
 kwInitcond: K_INITCOND;
 kwInput: K_INPUT;
-kwInsert: K_INSERT;
-kwInto: K_INTO;
+// kwInsert: K_INSERT;
+kwInsertInto: K_INSERT K_INTO;
+// kwInto: K_INTO;
 kwIs: K_IS;
 kwKey: K_KEY;
 kwKeys: K_KEYS;

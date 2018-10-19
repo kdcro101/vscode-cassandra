@@ -4,6 +4,7 @@ import {
     ColumnContext, CqlContext, ExpressionContext, KeyspaceContext, MaterializedViewSpecContext,
     RootContext, StatementSeparatorContext, TableSpecContext, UseContext,
 } from "../../antlr/CqlParser";
+import { BaseTableSpecContext } from "../../antlr/CqlParser";
 import { CqlParserListener } from "../../antlr/CqlParserListener";
 import { CassandraClusterData } from "../../types";
 import { CassandraKeyspace, CassandraTable } from "../../types/index";
@@ -16,6 +17,8 @@ import {
 
 const KEYSPACE_RULE = "keyspace";
 const TABLE_RULE = "table";
+const BASE_KEYSPACE_RULE = "baseKeyspace";
+const BASE_TABLE_RULE = "baseTable";
 const STATEMENT_ROOT_RULE = "cql";
 
 export class CqlAnalyzerListener implements CqlParserListener {
@@ -225,9 +228,17 @@ export class CqlAnalyzerListener implements CqlParserListener {
         }
 
     }
-    exitTableSpec = (ctx: TableSpecContext) => {
-        const ksc = ctx.children.find((c: ParserRuleContext) => this.ruleNames[c.ruleIndex] === KEYSPACE_RULE) as ParserRuleContext;
-        const tbc = ctx.children.find((c: ParserRuleContext) => this.ruleNames[c.ruleIndex] === TABLE_RULE) as ParserRuleContext;
+    exitKeyspace = (ctx: KeyspaceContext) => {
+        const ksc = ctx as ParserRuleContext;
+
+        const keyspaceName = !ksc ? this.keyspaceAmbiental : ksc.text;
+
+        this.setCurrentStatementValue("keyspace", keyspaceName);
+    }
+    exitBaseTableSpec = (ctx: BaseTableSpecContext) => {
+        const children = (ctx.children || []);
+        const ksc = children.find((c: ParserRuleContext) => this.ruleNames[c.ruleIndex] === BASE_KEYSPACE_RULE) as ParserRuleContext;
+        const tbc = children.find((c: ParserRuleContext) => this.ruleNames[c.ruleIndex] === BASE_KEYSPACE_RULE) as ParserRuleContext;
 
         const keyspaceName = !ksc ? this.keyspaceAmbiental : ksc.text;
         let ksd: CassandraKeyspace = null;
@@ -237,13 +248,50 @@ export class CqlAnalyzerListener implements CqlParserListener {
                 ksd = this.structure.keyspaces.find((k) => k.name === keyspaceName);
             }
 
+            this.pushRuleValue("baseTableSpec", "keyspaceAmbiental", this.keyspaceAmbiental);
+
+            if (ksc) {
+                const kt = this.contextToToken(ksc);
+                this.pushRuleValue("baseTableSpec", "keyspaceToken", kt);
+            }
+
+            if (tbc) {
+                const tt = this.contextToToken(tbc);
+                const tbd = ksd ? ksd.tables.find((t) => t.name === tt.text) : null;
+
+                this.pushRuleValue("baseTableSpec", "tableToken", tt);
+
+                if (tbd) {
+                    this.pushReference(keyspaceName, "tables", tt.text, tbd as CassandraTable);
+                }
+
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    exitTableSpec = (ctx: TableSpecContext) => {
+
+        const children = (ctx.children || []);
+
+        const ksc = children.find((c: ParserRuleContext) => this.ruleNames[c.ruleIndex] === KEYSPACE_RULE) as ParserRuleContext;
+        const tbc = children.find((c: ParserRuleContext) => this.ruleNames[c.ruleIndex] === TABLE_RULE) as ParserRuleContext;
+
+        const keyspaceName = !ksc ? this.keyspaceAmbiental : ksc.text;
+        let ksd: CassandraKeyspace = null;
+        try {
+
+            if (keyspaceName) {
+                ksd = this.structure.keyspaces.find((k) => k.name === keyspaceName);
+            }
+
+            this.pushRuleValue("tableSpec", "keyspaceAmbiental", this.keyspaceAmbiental);
+
             if (ksc) {
                 const kt = this.contextToToken(ksc);
                 this.pushRuleValue("tableSpec", "keyspaceToken", kt);
                 this.setCurrentStatementValue("keyspace", keyspaceName);
 
-            } else {
-                this.pushRuleValue("tableSpec", "keyspaceAmbiental", this.keyspaceAmbiental);
             }
 
             if (tbc) {

@@ -50,38 +50,43 @@ export class InputParser {
         const tokenStream = new CommonTokenStream(cqlLexer);
         const cqlParser = new CqlParser(tokenStream);
 
-        cqlParser.removeErrorListener(ConsoleErrorListener.INSTANCE);
-        const errors: CqlParserError[] = [];
+        try {
 
-        const errorHandler: ANTLRErrorListener<Token> = {
-            syntaxError: (
-                recognizer: Recognizer<any, any>,
-                offendingSymbol: any | undefined,
-                line: number, charPositionInLine: number, msg: string, e?: RecognitionException) => {
-                const error: CqlParserError = {
-                    name: msg,
-                    token: this.extractTokenData(offendingSymbol),
-                    line,
-                    linePos: charPositionInLine,
+            cqlParser.removeErrorListener(ConsoleErrorListener.INSTANCE);
+            const errors: CqlParserError[] = [];
 
-                };
-                errors.push(error);
-            },
-        };
-        cqlParser.addErrorListener(errorHandler);
+            const errorHandler: ANTLRErrorListener<Token> = {
+                syntaxError: (
+                    recognizer: Recognizer<any, any>,
+                    offendingSymbol: any | undefined,
+                    line: number, charPositionInLine: number, msg: string, e?: RecognitionException) => {
+                    const error: CqlParserError = {
+                        name: msg,
+                        token: this.extractTokenData(offendingSymbol),
+                        line,
+                        linePos: charPositionInLine,
 
-        const analyzerListener = new CqlAnalyzerListener(cqlParser.ruleNames, input, structure, keyspaceInitial);
-        cqlParser.addParseListener(analyzerListener);
+                    };
+                    errors.push(error);
+                },
+            };
+            cqlParser.addErrorListener(errorHandler);
 
-        const root = cqlParser.root();
-        const analysis = analyzerListener.getResult();
+            const analyzerListener = new CqlAnalyzerListener(cqlParser.ruleNames, input, structure, keyspaceInitial);
+            cqlParser.addParseListener(analyzerListener);
 
-        const out: InputParseResult = {
-            errors,
-            analysis,
-        };
+            const root = cqlParser.root();
+            const analysis = analyzerListener.getResult();
 
-        return out;
+            const out: InputParseResult = {
+                errors,
+                analysis,
+            };
+            return out;
+
+        } catch (e) {
+            console.log(e);
+        }
     }
     private extractTokenData(token: Token): TokenData {
         if (token == null) {

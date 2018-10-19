@@ -107,7 +107,7 @@ import { UseContext } from './CqlParser';
 import { TruncateContext } from './CqlParser';
 import { CreateIndexContext } from './CqlParser';
 import { CreateIndexSubjectContext } from './CqlParser';
-import { IndexNameContext } from './CqlParser';
+import { IndexContext } from './CqlParser';
 import { CreateIndexDefContext } from './CqlParser';
 import { CreateIndexTargetContext } from './CqlParser';
 import { IndexKeysSpecContext } from './CqlParser';
@@ -135,6 +135,7 @@ import { IfExistContext } from './CqlParser';
 import { InsertValuesSpecContext } from './CqlParser';
 import { InsertColumnSpecContext } from './CqlParser';
 import { ColumnListContext } from './CqlParser';
+import { BaseColumnListContext } from './CqlParser';
 import { ExpressionListContext } from './CqlParser';
 import { ExpressionContext } from './CqlParser';
 import { SelectContext } from './CqlParser';
@@ -169,15 +170,23 @@ import { ConstantStringContext } from './CqlParser';
 import { ConstantBooleanContext } from './CqlParser';
 import { ConstantHexadecimalContext } from './CqlParser';
 import { KeyspaceContext } from './CqlParser';
+import { BaseKeyspaceContext } from './CqlParser';
 import { TableContext } from './CqlParser';
+import { BaseTableContext } from './CqlParser';
 import { MaterializedViewContext } from './CqlParser';
 import { KeyspaceObjectContext } from './CqlParser';
 import { ObjectUnknownContext } from './CqlParser';
+import { AggregateSpecContext } from './CqlParser';
+import { TypeSpecContext } from './CqlParser';
+import { FunctionSpecContext } from './CqlParser';
 import { TableSpecContext } from './CqlParser';
+import { BaseTableSpecContext } from './CqlParser';
+import { IndexSpecContext } from './CqlParser';
 import { MaterializedViewSpecContext } from './CqlParser';
 import { TableOrMaterializedViewSpecContext } from './CqlParser';
 import { ObjectUnknownSpecContext } from './CqlParser';
 import { ColumnContext } from './CqlParser';
+import { BaseColumnContext } from './CqlParser';
 import { ColumnUnknownContext } from './CqlParser';
 import { DataTypeContext } from './CqlParser';
 import { DataTypeCollectionContext } from './CqlParser';
@@ -195,6 +204,7 @@ import { PasswordContext } from './CqlParser';
 import { HashKeyContext } from './CqlParser';
 import { ParamContext } from './CqlParser';
 import { ParamNameContext } from './CqlParser';
+import { QualifiedObjectNameContext } from './CqlParser';
 import { KwAddContext } from './CqlParser';
 import { KwAggregateContext } from './CqlParser';
 import { KwAllContext } from './CqlParser';
@@ -239,8 +249,7 @@ import { KwInContext } from './CqlParser';
 import { KwIndexContext } from './CqlParser';
 import { KwInitcondContext } from './CqlParser';
 import { KwInputContext } from './CqlParser';
-import { KwInsertContext } from './CqlParser';
-import { KwIntoContext } from './CqlParser';
+import { KwInsertIntoContext } from './CqlParser';
 import { KwIsContext } from './CqlParser';
 import { KwKeyContext } from './CqlParser';
 import { KwKeysContext } from './CqlParser';
@@ -1498,15 +1507,15 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitCreateIndexSubject?: (ctx: CreateIndexSubjectContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.indexName`.
+	 * Enter a parse tree produced by `CqlParser.index`.
 	 * @param ctx the parse tree
 	 */
-	enterIndexName?: (ctx: IndexNameContext) => void;
+	enterIndex?: (ctx: IndexContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.indexName`.
+	 * Exit a parse tree produced by `CqlParser.index`.
 	 * @param ctx the parse tree
 	 */
-	exitIndexName?: (ctx: IndexNameContext) => void;
+	exitIndex?: (ctx: IndexContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.createIndexDef`.
@@ -1804,6 +1813,17 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitColumnList?: (ctx: ColumnListContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.baseColumnList`.
+	 * @param ctx the parse tree
+	 */
+	enterBaseColumnList?: (ctx: BaseColumnListContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.baseColumnList`.
+	 * @param ctx the parse tree
+	 */
+	exitBaseColumnList?: (ctx: BaseColumnListContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.expressionList`.
@@ -2180,6 +2200,17 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitKeyspace?: (ctx: KeyspaceContext) => void;
 
 	/**
+	 * Enter a parse tree produced by `CqlParser.baseKeyspace`.
+	 * @param ctx the parse tree
+	 */
+	enterBaseKeyspace?: (ctx: BaseKeyspaceContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.baseKeyspace`.
+	 * @param ctx the parse tree
+	 */
+	exitBaseKeyspace?: (ctx: BaseKeyspaceContext) => void;
+
+	/**
 	 * Enter a parse tree produced by `CqlParser.table`.
 	 * @param ctx the parse tree
 	 */
@@ -2189,6 +2220,17 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitTable?: (ctx: TableContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.baseTable`.
+	 * @param ctx the parse tree
+	 */
+	enterBaseTable?: (ctx: BaseTableContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.baseTable`.
+	 * @param ctx the parse tree
+	 */
+	exitBaseTable?: (ctx: BaseTableContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.materializedView`.
@@ -2224,6 +2266,39 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitObjectUnknown?: (ctx: ObjectUnknownContext) => void;
 
 	/**
+	 * Enter a parse tree produced by `CqlParser.aggregateSpec`.
+	 * @param ctx the parse tree
+	 */
+	enterAggregateSpec?: (ctx: AggregateSpecContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.aggregateSpec`.
+	 * @param ctx the parse tree
+	 */
+	exitAggregateSpec?: (ctx: AggregateSpecContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.typeSpec`.
+	 * @param ctx the parse tree
+	 */
+	enterTypeSpec?: (ctx: TypeSpecContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.typeSpec`.
+	 * @param ctx the parse tree
+	 */
+	exitTypeSpec?: (ctx: TypeSpecContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.functionSpec`.
+	 * @param ctx the parse tree
+	 */
+	enterFunctionSpec?: (ctx: FunctionSpecContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.functionSpec`.
+	 * @param ctx the parse tree
+	 */
+	exitFunctionSpec?: (ctx: FunctionSpecContext) => void;
+
+	/**
 	 * Enter a parse tree produced by `CqlParser.tableSpec`.
 	 * @param ctx the parse tree
 	 */
@@ -2233,6 +2308,28 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitTableSpec?: (ctx: TableSpecContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.baseTableSpec`.
+	 * @param ctx the parse tree
+	 */
+	enterBaseTableSpec?: (ctx: BaseTableSpecContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.baseTableSpec`.
+	 * @param ctx the parse tree
+	 */
+	exitBaseTableSpec?: (ctx: BaseTableSpecContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.indexSpec`.
+	 * @param ctx the parse tree
+	 */
+	enterIndexSpec?: (ctx: IndexSpecContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.indexSpec`.
+	 * @param ctx the parse tree
+	 */
+	exitIndexSpec?: (ctx: IndexSpecContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.materializedViewSpec`.
@@ -2277,6 +2374,17 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitColumn?: (ctx: ColumnContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.baseColumn`.
+	 * @param ctx the parse tree
+	 */
+	enterBaseColumn?: (ctx: BaseColumnContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.baseColumn`.
+	 * @param ctx the parse tree
+	 */
+	exitBaseColumn?: (ctx: BaseColumnContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.columnUnknown`.
@@ -2464,6 +2572,17 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitParamName?: (ctx: ParamNameContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.qualifiedObjectName`.
+	 * @param ctx the parse tree
+	 */
+	enterQualifiedObjectName?: (ctx: QualifiedObjectNameContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.qualifiedObjectName`.
+	 * @param ctx the parse tree
+	 */
+	exitQualifiedObjectName?: (ctx: QualifiedObjectNameContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.kwAdd`.
@@ -2950,26 +3069,15 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitKwInput?: (ctx: KwInputContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.kwInsert`.
+	 * Enter a parse tree produced by `CqlParser.kwInsertInto`.
 	 * @param ctx the parse tree
 	 */
-	enterKwInsert?: (ctx: KwInsertContext) => void;
+	enterKwInsertInto?: (ctx: KwInsertIntoContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.kwInsert`.
+	 * Exit a parse tree produced by `CqlParser.kwInsertInto`.
 	 * @param ctx the parse tree
 	 */
-	exitKwInsert?: (ctx: KwInsertContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `CqlParser.kwInto`.
-	 * @param ctx the parse tree
-	 */
-	enterKwInto?: (ctx: KwIntoContext) => void;
-	/**
-	 * Exit a parse tree produced by `CqlParser.kwInto`.
-	 * @param ctx the parse tree
-	 */
-	exitKwInto?: (ctx: KwIntoContext) => void;
+	exitKwInsertInto?: (ctx: KwInsertIntoContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.kwIs`.

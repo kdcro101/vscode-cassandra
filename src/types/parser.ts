@@ -49,6 +49,7 @@ export interface AnalyzedStatement {
 }
 
 export interface AnalyzedStatementRules {
+    baseTableSpec?: RuleTableSpec;
     tableSpec?: RuleTableSpec;
     ViewSpec?: RuleViewSpec;
     objectUnknownSpec?: RuleObjectUnknownSpec;

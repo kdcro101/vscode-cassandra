@@ -35,7 +35,7 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
 
                         const state = locateCursor(offset, analysis, textToOffset);
                         const statement = state.statement;
-                        // const keyspace = statement && statement.keyspace ? statement.keyspace : keyspaceInitial;
+
                         const keyspaceAmbiental = statement ? statement.keyspace : keyspaceInitial;
                         const keyspace = statement && statement.keyspace ? statement.keyspace : keyspaceAmbiental;
                         const table = statement && statement.table ? statement.table : null;
@@ -44,6 +44,14 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
 
                         const keyspaceData = clusterData && keyspace ?
                             clusterData.keyspaces.find((k) => k.name === keyspace) : null;
+
+                        const baseKeyspace: string = (statement && statement.rules &&
+                            statement.rules.baseTableSpec && statement.rules.baseTableSpec.keyspaceToken)
+                            ? statement.rules.baseTableSpec.keyspaceToken.text : keyspaceAmbiental;
+
+                        const baseKeyspaceData = clusterData && baseKeyspace ?
+                            clusterData.keyspaces.find((k) => k.name === keyspace) : null;
+
                         const columnSource = keyspaceData ?
                             keyspaceData.tables.find((t) => t.name === table) ||
                             keyspaceData.materializedViews.find((t) => t.name === table)
@@ -56,6 +64,7 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                                 console.log(result);
 
                                 let all: monaco.languages.CompletionItem[] = [];
+                                // let all: monaco.languages.CompletionItem[] = autocompleteList;
 
                                 const list = result.list;
                                 const partial = result.partial == null ? "" : result.partial;
@@ -63,6 +72,12 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                                 const listTables = list.find((i) => i.type === "inputTable") ? true : false;
                                 const listColumns = list.find((i) => i.type === "inputColumn") ? true : false;
                                 const listViews = list.find((i) => i.type === "inputMaterializedView") ? true : false;
+                                const listTypes = list.find((i) => i.type === "inputType") ? true : false;
+                                const listAggregates = list.find((i) => i.type === "inputAggregate") ? true : false;
+                                const listFunctions = list.find((i) => i.type === "inputFunction") ? true : false;
+                                const listIndices = list.find((i) => i.type === "inputIndex") ? true : false;
+                                const listBaseKeyspaces = list.find((i) => i.type === "inputBaseKeyspace") ? true : false;
+                                const listBaseTables = list.find((i) => i.type === "inputBaseTable") ? true : false;
 
                                 const keywords: monaco.languages.CompletionItem[] = list
                                     .filter((i) => i.type === "keyword" || i.type === "dataType" || i.type === "syntaxOperator")
@@ -87,6 +102,19 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
 
                                     all = all.concat(keyspaces.filter((k) => k.label.search(partial) === 0));
                                 }
+
+                                if (listBaseKeyspaces && clusterData) {
+                                    const keyspaces: monaco.languages.CompletionItem[] = clusterData.keyspaces.map((ks) => {
+                                        const o: monaco.languages.CompletionItem = {
+                                            label: ks.name,
+                                            kind: monaco.languages.CompletionItemKind.Method,
+                                        };
+                                        return o;
+                                    });
+
+                                    all = all.concat(keyspaces.filter((k) => k.label.search(partial) === 0));
+                                }
+
                                 if (listTables && keyspaceData) {
                                     const tables: monaco.languages.CompletionItem[] = keyspaceData.tables.map((t) => {
                                         const o: monaco.languages.CompletionItem = {
@@ -97,6 +125,17 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                                     });
                                     all = all.concat(tables.filter((t) => t.label.search(partial) === 0));
                                 }
+                                if (listBaseTables && baseKeyspaceData) {
+                                    const baseTables: monaco.languages.CompletionItem[] = baseKeyspaceData.tables.map((t) => {
+                                        const o: monaco.languages.CompletionItem = {
+                                            label: t.name,
+                                            kind: monaco.languages.CompletionItemKind.Class,
+                                        };
+                                        return o;
+                                    });
+                                    all = all.concat(baseTables.filter((t) => t.label.search(partial) === 0));
+                                }
+
                                 if (listViews && keyspaceData) {
                                     const views = keyspaceData.materializedViews.map((v) => {
                                         const o: monaco.languages.CompletionItem = {
@@ -118,7 +157,55 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                                     });
                                     all = all.concat(columns.filter((c) => c.label.search(partial) === 0));
                                 }
+                                if (listTypes && keyspaceData) {
+                                    const types = keyspaceData.types.map((v) => {
+                                        const o: monaco.languages.CompletionItem = {
+                                            label: v.name,
+                                            kind: monaco.languages.CompletionItemKind.Interface,
+                                        };
+                                        return o;
+                                    });
+                                    all = all.concat(types.filter((c) => c.label.search(partial) === 0));
+                                }
+                                if (listAggregates && keyspaceData) {
+                                    const aggregates = keyspaceData.aggregates.map((v) => {
+                                        const o: monaco.languages.CompletionItem = {
+                                            label: v.name,
+                                            kind: monaco.languages.CompletionItemKind.Field,
+                                        };
+                                        return o;
+                                    });
+                                    all = all.concat(aggregates.filter((c) => c.label.search(partial) === 0));
+                                }
+                                if (listFunctions && keyspaceData) {
+                                    const functions = keyspaceData.functions.map((v) => {
+                                        const o: monaco.languages.CompletionItem = {
+                                            label: v.name,
+                                            kind: monaco.languages.CompletionItemKind.Field,
+                                        };
+                                        return o;
+                                    });
+                                    all = all.concat(functions.filter((c) => c.label.search(partial) === 0));
+                                }
+                                if (listIndices && keyspaceData) {
+                                    const indices = keyspaceData.tables.reduce((acc, cur) => {
 
+                                        if (cur.indexes && cur.indexes.length > 0) {
+                                            acc = acc.concat(cur.indexes);
+                                            return acc;
+                                        }
+                                        return acc;
+
+                                    }, [])
+                                        .map((v) => {
+                                            const o: monaco.languages.CompletionItem = {
+                                                label: v.name,
+                                                kind: monaco.languages.CompletionItemKind.Value,
+                                            };
+                                            return o;
+                                        });
+                                    all = all.concat(indices.filter((c) => c.label.search(partial) === 0));
+                                }
                                 resolve(all);
                             });
 

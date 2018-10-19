@@ -107,7 +107,7 @@ import { UseContext } from './CqlParser';
 import { TruncateContext } from './CqlParser';
 import { CreateIndexContext } from './CqlParser';
 import { CreateIndexSubjectContext } from './CqlParser';
-import { IndexNameContext } from './CqlParser';
+import { IndexContext } from './CqlParser';
 import { CreateIndexDefContext } from './CqlParser';
 import { CreateIndexTargetContext } from './CqlParser';
 import { IndexKeysSpecContext } from './CqlParser';
@@ -135,6 +135,7 @@ import { IfExistContext } from './CqlParser';
 import { InsertValuesSpecContext } from './CqlParser';
 import { InsertColumnSpecContext } from './CqlParser';
 import { ColumnListContext } from './CqlParser';
+import { BaseColumnListContext } from './CqlParser';
 import { ExpressionListContext } from './CqlParser';
 import { ExpressionContext } from './CqlParser';
 import { SelectContext } from './CqlParser';
@@ -169,15 +170,23 @@ import { ConstantStringContext } from './CqlParser';
 import { ConstantBooleanContext } from './CqlParser';
 import { ConstantHexadecimalContext } from './CqlParser';
 import { KeyspaceContext } from './CqlParser';
+import { BaseKeyspaceContext } from './CqlParser';
 import { TableContext } from './CqlParser';
+import { BaseTableContext } from './CqlParser';
 import { MaterializedViewContext } from './CqlParser';
 import { KeyspaceObjectContext } from './CqlParser';
 import { ObjectUnknownContext } from './CqlParser';
+import { AggregateSpecContext } from './CqlParser';
+import { TypeSpecContext } from './CqlParser';
+import { FunctionSpecContext } from './CqlParser';
 import { TableSpecContext } from './CqlParser';
+import { BaseTableSpecContext } from './CqlParser';
+import { IndexSpecContext } from './CqlParser';
 import { MaterializedViewSpecContext } from './CqlParser';
 import { TableOrMaterializedViewSpecContext } from './CqlParser';
 import { ObjectUnknownSpecContext } from './CqlParser';
 import { ColumnContext } from './CqlParser';
+import { BaseColumnContext } from './CqlParser';
 import { ColumnUnknownContext } from './CqlParser';
 import { DataTypeContext } from './CqlParser';
 import { DataTypeCollectionContext } from './CqlParser';
@@ -195,6 +204,7 @@ import { PasswordContext } from './CqlParser';
 import { HashKeyContext } from './CqlParser';
 import { ParamContext } from './CqlParser';
 import { ParamNameContext } from './CqlParser';
+import { QualifiedObjectNameContext } from './CqlParser';
 import { KwAddContext } from './CqlParser';
 import { KwAggregateContext } from './CqlParser';
 import { KwAllContext } from './CqlParser';
@@ -239,8 +249,7 @@ import { KwInContext } from './CqlParser';
 import { KwIndexContext } from './CqlParser';
 import { KwInitcondContext } from './CqlParser';
 import { KwInputContext } from './CqlParser';
-import { KwInsertContext } from './CqlParser';
-import { KwIntoContext } from './CqlParser';
+import { KwInsertIntoContext } from './CqlParser';
 import { KwIsContext } from './CqlParser';
 import { KwKeyContext } from './CqlParser';
 import { KwKeysContext } from './CqlParser';
@@ -1085,11 +1094,11 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitCreateIndexSubject?: (ctx: CreateIndexSubjectContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.indexName`.
+	 * Visit a parse tree produced by `CqlParser.index`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitIndexName?: (ctx: IndexNameContext) => Result;
+	visitIndex?: (ctx: IndexContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.createIndexDef`.
@@ -1279,6 +1288,13 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitColumnList?: (ctx: ColumnListContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.baseColumnList`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitBaseColumnList?: (ctx: BaseColumnListContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.expressionList`.
@@ -1519,11 +1535,25 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitKeyspace?: (ctx: KeyspaceContext) => Result;
 
 	/**
+	 * Visit a parse tree produced by `CqlParser.baseKeyspace`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitBaseKeyspace?: (ctx: BaseKeyspaceContext) => Result;
+
+	/**
 	 * Visit a parse tree produced by `CqlParser.table`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	visitTable?: (ctx: TableContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.baseTable`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitBaseTable?: (ctx: BaseTableContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.materializedView`.
@@ -1547,11 +1577,46 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitObjectUnknown?: (ctx: ObjectUnknownContext) => Result;
 
 	/**
+	 * Visit a parse tree produced by `CqlParser.aggregateSpec`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitAggregateSpec?: (ctx: AggregateSpecContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.typeSpec`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitTypeSpec?: (ctx: TypeSpecContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.functionSpec`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitFunctionSpec?: (ctx: FunctionSpecContext) => Result;
+
+	/**
 	 * Visit a parse tree produced by `CqlParser.tableSpec`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	visitTableSpec?: (ctx: TableSpecContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.baseTableSpec`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitBaseTableSpec?: (ctx: BaseTableSpecContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.indexSpec`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitIndexSpec?: (ctx: IndexSpecContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.materializedViewSpec`.
@@ -1580,6 +1645,13 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitColumn?: (ctx: ColumnContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.baseColumn`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitBaseColumn?: (ctx: BaseColumnContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.columnUnknown`.
@@ -1699,6 +1771,13 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitParamName?: (ctx: ParamNameContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.qualifiedObjectName`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitQualifiedObjectName?: (ctx: QualifiedObjectNameContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.kwAdd`.
@@ -2009,18 +2088,11 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitKwInput?: (ctx: KwInputContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.kwInsert`.
+	 * Visit a parse tree produced by `CqlParser.kwInsertInto`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitKwInsert?: (ctx: KwInsertContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `CqlParser.kwInto`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitKwInto?: (ctx: KwIntoContext) => Result;
+	visitKwInsertInto?: (ctx: KwInsertIntoContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.kwIs`.

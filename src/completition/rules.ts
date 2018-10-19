@@ -9,6 +9,13 @@ export type RuleType =
     "inputTable" |
     "inputMaterializedView" |
     "inputColumn" |
+    "inputType" |
+    "inputAggregate" |
+    "inputFunction" |
+    "inputIndex" |
+    "inputBaseColumn" |
+    "inputBaseKeyspace" |
+    "inputBaseTable" |
     "inputConstant";
 
 export interface RuleData {
@@ -28,7 +35,14 @@ export const preferredRules: PreferredRules = {
     "column": { text: "", type: "inputColumn" },
     "keyspace": { text: "", type: "inputKeyspace" },
     "table": { text: "", type: "inputTable" },
+    "type": { text: "", type: "inputType" },
     "materializedView": { text: "", type: "inputMaterializedView" },
+    "aggregate": { text: "", type: "inputAggregate" },
+    "function": { text: "", type: "inputFunction" },
+    "index": { text: "", type: "inputIndex" },
+    "baseColumn": { text: "", type: "inputBaseColumn" },
+    "baseKeyspace": { text: "", type: "inputBaseKeyspace" },
+    "baseTable": { text: "", type: "inputBaseTable" },
     "constant": { text: "", type: "inputConstant" },
 
     "syntaxBracketLr": { text: "(", type: "syntaxBracket" },
@@ -94,8 +108,9 @@ export const preferredRules: PreferredRules = {
     "kwIndex": { text: "INDEX", type: "keyword" },
     "kwInitcond": { text: "INITCOND", type: "keyword" },
     "kwInput": { text: "INPUT", type: "keyword" },
-    "kwInsert": { text: "INSERT", type: "keyword" },
-    "kwInto": { text: "INTO", type: "keyword" },
+    "kwInsertInto": { text: "INSERT INTO", type: "keyword" },
+    // "kwInsert": { text: "INSERT", type: "keyword" },
+    // "kwInto": { text: "INTO", type: "keyword" },
     "kwIs": { text: "IS", type: "keyword" },
     "kwKey": { text: "KEY", type: "keyword" },
     "kwKeys": { text: "KEYS", type: "keyword" },
