@@ -13,6 +13,7 @@ export class TimeUuidDataTypeValue extends DataTypeValueBase<cassandra.types.Tim
         return `${value.toString()}`;
     }
     public get stringPlaceholder(): string {
-        return `00000000-0000-0000-0000-000000000000`;
+        const tuuid = cassandra.types.TimeUuid.now();
+        return `${tuuid.toString()}`;
     }
 }
