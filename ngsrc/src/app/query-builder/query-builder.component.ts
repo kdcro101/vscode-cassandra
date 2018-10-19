@@ -131,7 +131,7 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
             this.replaceTabs(data[0], data[1]);
         });
 
-        this.cluster.eventChange.pipe(
+        this.cluster.eventChangeList.pipe(
             takeUntil(this.eventViewDestroyed),
         ).subscribe((list) => {
             this.checkEditorClusterKeyspace(list);

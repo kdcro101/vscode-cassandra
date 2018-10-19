@@ -7,7 +7,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 import { MatDialog, MatSnackBar } from "@angular/material";
 import { from, merge, ReplaySubject, Subject } from "rxjs";
 import { fromEvent } from "rxjs";
-import { concatMap, debounceTime, map, take, takeUntil } from "rxjs/operators";
+import { concatMap, debounceTime, filter, map, take, takeUntil } from "rxjs/operators";
 import * as Split from "split.js";
 import { WorkbenchCqlStatement } from "../../../../../../src/types/editor";
 import { CassandraCluster, CassandraClusterData, CassandraKeyspace, ExecuteQueryResponse } from "../../../../../../src/types/index";
@@ -159,7 +159,10 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
             this.eventEditorChange.next();
 
             if (this.editorCurrent.statement.clusterName !== this.clusterLast) {
-                this.prepareCluster(this.editorCurrent.statement.clusterName);
+                this.prepareCluster(this.editorCurrent.statement.clusterName)
+                    .then(() => { }).catch((e) => {
+                        console.log("Error preparing cluster@set editor");
+                    });
             }
             this.activateEditorPanel(editor);
             this.detectChanges();
@@ -196,6 +199,19 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
                 this.activateEditorPanel(this.editor);
                 this.detectChanges();
             });
+
+            this.cluster.eventChangeItem.pipe(
+                takeUntil(merge(this.eventViewDestroyed, this.eventEditorChange)),
+                filter((data) => data.name === this.clusterLast),
+                concatMap((data) => this.prepareCluster(data.name)),
+            ).subscribe((data) => {
+                console.log("###################################");
+                console.log("### CLUSTER DATA INVALIDATED");
+                console.log("###################################");
+            }, (e) => {
+                console.log("Error handling cluster.eventChangeItem");
+                console.log(e);
+            });
         });
 
     }
@@ -223,7 +239,7 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
             },
         });
 
-        this.cluster.eventChange.pipe()
+        this.cluster.eventChangeList.pipe()
             .subscribe(() => {
                 this.clusterList = this.cluster.list;
                 this.detectChanges();
@@ -310,7 +326,12 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
 
         this.keyspaceList = [];
         this.detectChanges();
-        this.prepareCluster(clusterName);
+        this.prepareCluster(clusterName)
+            .then(() => {
+
+            }).catch((e) => {
+                console.log("Error preparing cluster");
+            });
 
         if (this.monacoEditor) {
             this.monacoEditor.updateExecuteParams();
@@ -440,29 +461,34 @@ export class UiQueryComponent extends ViewDestroyable implements OnInit, OnDestr
         }, 1000);
 
     }
-    private prepareCluster(clusterName: string) {
+    private prepareCluster(clusterName: string): Promise<void> {
+        return new Promise((resolve, reject) => {
 
-        this.clusterLoading = true;
+            this.clusterLoading = true;
+            this.autocomplete.reset();
 
-        from(this.workspace.setActiveClusterName(clusterName)).pipe(
-            concatMap(() => this.cluster.getStructure(clusterName)),
-        ).pipe()
-            .subscribe((data) => {
-                this.clusterLast = clusterName;
-                this.clusterData = data;
-                this.keyspaceList = data.keyspaces;
-                this.autocomplete.setCluster(clusterName, data);
-                // this.editorService.clusterName = clusterName;
+            from(this.workspace.setActiveClusterName(clusterName)).pipe(
+                concatMap(() => this.cluster.getStructure(clusterName)),
+            ).pipe()
+                .subscribe((data) => {
+                    this.clusterLast = clusterName;
+                    this.clusterData = data;
+                    this.keyspaceList = data.keyspaces;
+                    this.autocomplete.setCluster(clusterName, data);
 
-                this.clusterLoading = false;
-                this.clusterLoadingError = false;
-                this.detectChanges();
-            }, (e) => {
-                this.clusterLoading = false;
-                this.clusterLoadingError = true;
-                this.detectChanges();
-            });
+                    this.clusterLoading = false;
+                    this.clusterLoadingError = false;
+                    this.detectChanges();
+                    resolve();
+                }, (e) => {
+                    this.clusterLoading = false;
+                    this.clusterLoadingError = true;
+                    this.detectChanges();
+                    console.log(e);
+                    reject(e);
+                });
 
+        });
     }
     private showDialogChangesWarning(): Promise<boolean> {
         // true continue

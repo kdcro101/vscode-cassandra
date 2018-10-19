@@ -709,6 +709,7 @@ export class CassandraWorkbench {
 
                     this.clusters.invalidateStructure(clusterIndex);
                     this.treeProvider.onDidChangeTreeDataEmmiter.fire();
+                    this.requestInvalidateClusterData(clusterIndex);
                     resolve(result);
 
                 });
@@ -773,14 +774,19 @@ export class CassandraWorkbench {
         };
         this.panel.emitMessage(out);
     }
-    private requestInvalidateClusterData1(clusterIndex: number) {
-        // const id = generateId();
-        // const out: ProcMessageStrict<"e2w_invalidateClusterListRequest"> = {
-        //     name: "e2w_invalidateClusterListRequest",
-        //     data: {
-        //         id,
-        //     },
-        // };
-        // this.panel.emitMessage(out);
+    private requestInvalidateClusterData(clusterIndex: number) {
+        const id = generateId();
+        const clusterName = this.clusters.getClusterName(clusterIndex);
+        const out: ProcMessageStrict<"e2w_invalidateClusterDataRequest"> = {
+            name: "e2w_invalidateClusterDataRequest",
+            data: {
+                id,
+                cluster: {
+                    name: clusterName,
+                    index: clusterIndex,
+                },
+            },
+        };
+        this.panel.emitMessage(out);
     }
 }

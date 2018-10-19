@@ -49,6 +49,7 @@ export interface ProcMessageList {
     e2w_setSplitSizeResponse: MessageWithId;
 
     e2w_invalidateClusterListRequest: MessageWithId;
+    e2w_invalidateClusterDataRequest: InvalidateClusterDataRequest;
 }
 export type ProcMessageType = keyof ProcMessageList;
 export interface ProcMessage {
@@ -207,4 +208,8 @@ export interface HistoryRemoveRequest extends MessageWithId {
 
 export interface SetSplitSizeRequest extends MessageWithId {
     size: number;
+}
+
+export interface InvalidateClusterDataRequest extends MessageWithId {
+    cluster: CassandraCluster;
 }
