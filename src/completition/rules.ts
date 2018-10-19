@@ -29,9 +29,6 @@ export interface PreferredRules {
 
 export const preferredRules: PreferredRules = {
 
-    "specialStar": { text: "*", type: "special" },
-    // "specialDot": { text: ".", type: "special" },
-
     "column": { text: "", type: "inputColumn" },
     "keyspace": { text: "", type: "inputKeyspace" },
     "table": { text: "", type: "inputTable" },
@@ -57,6 +54,8 @@ export const preferredRules: PreferredRules = {
     "syntaxComma": { text: ",", type: "syntax" },
     "syntaxSquote": { text: "'", type: "syntax" },
     "syntaxDquote": { text: "\"", type: "syntax" },
+
+    "specialStar": { text: "*", type: "special" },
 
     "syntaxOperatorEq": { text: "=", type: "syntaxOperator" },
     "syntaxOperatorLt": { text: "<", type: "syntaxOperator" },

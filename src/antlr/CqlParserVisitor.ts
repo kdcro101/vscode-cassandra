@@ -204,7 +204,6 @@ import { PasswordContext } from './CqlParser';
 import { HashKeyContext } from './CqlParser';
 import { ParamContext } from './CqlParser';
 import { ParamNameContext } from './CqlParser';
-import { QualifiedObjectNameContext } from './CqlParser';
 import { KwAddContext } from './CqlParser';
 import { KwAggregateContext } from './CqlParser';
 import { KwAllContext } from './CqlParser';
@@ -1771,13 +1770,6 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitParamName?: (ctx: ParamNameContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `CqlParser.qualifiedObjectName`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitQualifiedObjectName?: (ctx: QualifiedObjectNameContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.kwAdd`.

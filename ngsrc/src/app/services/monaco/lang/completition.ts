@@ -50,7 +50,15 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                             ? statement.rules.baseTableSpec.keyspaceToken.text : keyspaceAmbiental;
 
                         const baseKeyspaceData = clusterData && baseKeyspace ?
-                            clusterData.keyspaces.find((k) => k.name === keyspace) : null;
+                            clusterData.keyspaces.find((k) => k.name === baseKeyspace) : null;
+
+                        const baseTable = (statement && statement.rules &&
+                            statement.rules.baseTableSpec && statement.rules.baseTableSpec.tableToken)
+                            ? statement.rules.baseTableSpec.tableToken.text : null;
+
+                        const baseTableData = baseTable && baseKeyspaceData
+                            ? baseKeyspaceData.tables.find((t) => t.name === baseTable)
+                            : null;
 
                         const columnSource = keyspaceData ?
                             keyspaceData.tables.find((t) => t.name === table) ||
@@ -78,6 +86,7 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                                 const listIndices = list.find((i) => i.type === "inputIndex") ? true : false;
                                 const listBaseKeyspaces = list.find((i) => i.type === "inputBaseKeyspace") ? true : false;
                                 const listBaseTables = list.find((i) => i.type === "inputBaseTable") ? true : false;
+                                const listBaseColumns = list.find((i) => i.type === "inputBaseColumn") ? true : false;
 
                                 const keywords: monaco.languages.CompletionItem[] = list
                                     .filter((i) => i.type === "keyword" || i.type === "dataType" || i.type === "syntaxOperator")
@@ -156,6 +165,17 @@ export const cqlCompletitionProvider = (autocomplete: AutocompleteService): mona
                                         return o;
                                     });
                                     all = all.concat(columns.filter((c) => c.label.search(partial) === 0));
+                                }
+                                if (listBaseColumns && baseTableData) {
+                                    const baseColumns: monaco.languages.CompletionItem[] = baseTableData.columns.map((t) => {
+                                        const o: monaco.languages.CompletionItem = {
+                                            label: t.name,
+                                            kind: monaco.languages.CompletionItemKind.Field,
+                                            detail: t.type,
+                                        };
+                                        return o;
+                                    });
+                                    all = all.concat(baseColumns.filter((c) => c.label.search(partial) === 0));
                                 }
                                 if (listTypes && keyspaceData) {
                                     const types = keyspaceData.types.map((v) => {

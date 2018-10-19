@@ -821,33 +821,53 @@ constantHexadecimal
     ;
 
 keyspace
-    : qualifiedObjectName
+    : OBJECT_NAME
+    | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL
     ;
 
 baseKeyspace
-    : qualifiedObjectName
+    : OBJECT_NAME
+    | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL
     ;
 
 table
-    : qualifiedObjectName
+    : OBJECT_NAME
+    | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL
     ;
 
 baseTable
-    : qualifiedObjectName
+    : OBJECT_NAME
+    | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL
     ;
 
-
 materializedView
-    : qualifiedObjectName
-    // | { this.notifyErrorListeners("rule.materializedView"); }
+    : OBJECT_NAME
+    | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL
     ;
 
 keyspaceObject
-    : qualifiedObjectName
+    : OBJECT_NAME
+    | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL
     ;
 objectUnknown
-    : qualifiedObjectName
+    : OBJECT_NAME
+    | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL
     ;
+
 aggregateSpec
     : aggregate
     | keyspace specialDot aggregate
@@ -875,6 +895,7 @@ tableSpec
     | keyspace specialDot { this.notifyErrorListeners("rule.table"); }
     | { this.notifyErrorListeners("rule.tableSpec"); }
     ;
+
 baseTableSpec
     : baseTable
     | baseKeyspace specialDot baseTable
@@ -911,11 +932,17 @@ objectUnknownSpec
     ;
 
 column
-    : qualifiedObjectName
+    : OBJECT_NAME
+    | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL
     ;
 
 baseColumn
-    : qualifiedObjectName
+    : OBJECT_NAME
+    | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL
     ;
 
 columnUnknown
@@ -982,8 +1009,12 @@ type
     : OBJECT_NAME
     ;
 aggregate
-    : qualifiedObjectName
+    : OBJECT_NAME
+    | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL
     ;
+
 function
     : OBJECT_NAME
     ;
@@ -1005,12 +1036,12 @@ paramName
     : OBJECT_NAME
     ;
 
-qualifiedObjectName
-    : OBJECT_NAME
-    | DQUOTE OBJECT_NAME DQUOTE
-    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
-      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL
-    ;
+// qualifiedObjectName
+//     : OBJECT_NAME
+//     | DQUOTE OBJECT_NAME DQUOTE
+//     | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+//       K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL
+//     ;
 
 kwAdd: K_ADD;
 kwAggregate: K_AGGREGATE;

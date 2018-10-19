@@ -204,7 +204,6 @@ import { PasswordContext } from './CqlParser';
 import { HashKeyContext } from './CqlParser';
 import { ParamContext } from './CqlParser';
 import { ParamNameContext } from './CqlParser';
-import { QualifiedObjectNameContext } from './CqlParser';
 import { KwAddContext } from './CqlParser';
 import { KwAggregateContext } from './CqlParser';
 import { KwAllContext } from './CqlParser';
@@ -2572,17 +2571,6 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitParamName?: (ctx: ParamNameContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `CqlParser.qualifiedObjectName`.
-	 * @param ctx the parse tree
-	 */
-	enterQualifiedObjectName?: (ctx: QualifiedObjectNameContext) => void;
-	/**
-	 * Exit a parse tree produced by `CqlParser.qualifiedObjectName`.
-	 * @param ctx the parse tree
-	 */
-	exitQualifiedObjectName?: (ctx: QualifiedObjectNameContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.kwAdd`.

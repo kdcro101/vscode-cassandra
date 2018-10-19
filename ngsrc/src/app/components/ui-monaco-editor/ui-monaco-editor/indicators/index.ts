@@ -31,8 +31,8 @@ export const decorationsForStatement = (model: monaco.editor.ITextModel,
                 .concat(decoColumnsKeys(model, statement));
             break;
         case "createMaterializedView":
-            out = decoColumnsKnown(model, statement, analysis)
-                .concat(decoColumnsKeys(model, statement));
+            // out = decoColumnsKnown(model, statement, analysis)
+            //     .concat(decoColumnsKeys(model, statement));
             break;
         case "createIndex":
             out = decoColumnsKnown(model, statement, analysis);

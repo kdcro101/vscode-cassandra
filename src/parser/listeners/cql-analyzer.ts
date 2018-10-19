@@ -238,7 +238,7 @@ export class CqlAnalyzerListener implements CqlParserListener {
     exitBaseTableSpec = (ctx: BaseTableSpecContext) => {
         const children = (ctx.children || []);
         const ksc = children.find((c: ParserRuleContext) => this.ruleNames[c.ruleIndex] === BASE_KEYSPACE_RULE) as ParserRuleContext;
-        const tbc = children.find((c: ParserRuleContext) => this.ruleNames[c.ruleIndex] === BASE_KEYSPACE_RULE) as ParserRuleContext;
+        const tbc = children.find((c: ParserRuleContext) => this.ruleNames[c.ruleIndex] === BASE_TABLE_RULE) as ParserRuleContext;
 
         const keyspaceName = !ksc ? this.keyspaceAmbiental : ksc.text;
         let ksd: CassandraKeyspace = null;
