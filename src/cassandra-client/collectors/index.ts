@@ -2,6 +2,7 @@ import * as cassandra from "cassandra-driver";
 import { sortBy } from "lodash";
 import { from } from "rxjs";
 import { concatMap, map } from "rxjs/operators";
+import { rootColumnType } from "../../data-type/type-parser";
 import {
     CassandraAggregate,
     CassandraColumn, CassandraColumnType,
@@ -256,6 +257,7 @@ export function collectPrimaryKeys(client: cassandra.Client, keyspace: string, t
                         kind: row.kind as CassandraColumnType,
                         position: row.position,
                         type: row.type,
+                        typeRoot: rootColumnType(row.type),
                     };
                     return item;
                 });
@@ -327,6 +329,7 @@ export function collectColumns(client: cassandra.Client, keyspace: string, table
                         kind: row.kind as CassandraColumnType,
                         position: row.position,
                         type: row.type,
+                        typeRoot: rootColumnType(row.type),
                     };
                     return out;
                 });

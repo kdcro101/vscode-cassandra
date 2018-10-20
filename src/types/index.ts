@@ -65,6 +65,7 @@ export interface CassandraColumn {
     kind: CassandraColumnType;
     position: number;
     type: string;
+    typeRoot: string;
     all: RowColumn;
 }
 

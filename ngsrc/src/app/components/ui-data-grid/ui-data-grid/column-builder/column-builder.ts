@@ -11,11 +11,10 @@ export const buildColumns = (dataGrid: UiDataGridComponent): any[] => {
 
         const isPartition = keys.find((k) => c.name === k.name && k.kind === "partition_key");
         const isColClustering = keys.find((k) => c.name === k.name && k.kind === "clustering");
-        const type = c.type;
 
         // type ??
 
-        if (c.type === "set" || c.type === "map" || c.type === "custom") {
+        if (c.type === "set" || c.type === "map" || c.type === "custom" || c.type === "tuple") {
             return {
                 data: c.name,
                 renderer: cellRendererJson(dataGrid),

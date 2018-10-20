@@ -369,7 +369,7 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             // handle set/map/custom - stringify
             this.currentDataRows = cloneDeep(result.result.rows).slice(0).map((row) => {
                 Object.keys(row).forEach((k) => {
-                    if (types[k] === "set" || types[k] === "map" || types[k] === "custom") {
+                    if (types[k] === "set" || types[k] === "map" || types[k] === "custom" || types[k] === "tuple") {
                         // row[k] = JSON.stringify(row[k]);
                         row[k] = beautify(row[k], null, 2);
                     }
