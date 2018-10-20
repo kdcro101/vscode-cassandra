@@ -11,14 +11,14 @@ export class DataTypeParserListener implements CqlParserListener {
         private ruleNames: string[],
     ) { }
     enterDataTypeStructure = (ctx: DataTypeStructureContext): void => {
-        console.log(`entering Structure=${this.depth}`);
+        // console.log(`entering Structure=${this.depth}`);
     }
     exitDataTypeStructure = (ctx: DataTypeStructureContext): void => {
-        console.log(`EXIT STRUCTURE`);
+        // console.log(`EXIT STRUCTURE`);
         this.depth += 1;
     }
     exitDataType = (ctx: DataTypeContext) => {
-        console.log("exiting DataType");
+        // console.log("exiting DataType");
     }
     public visitErrorNode = (node: ErrorNode): void => {
 

@@ -30,7 +30,7 @@ export class DataTypeParserVisitor implements CqlParserVisitor<any> {
 
     }
     public visitDataType(ctx: DataTypeContext): DataTypeAnalysis {
-        console.log(`visitDataType  ${ctx.text}`);
+        // console.log(`visitDataType  ${ctx.text}`);
         const root: DataTypeAnalysis = {
             name: null,
             contains: null,

@@ -1,7 +1,7 @@
 import * as clipboardy from "clipboardy";
 import * as path from "path";
 import { from, fromEventPattern, merge, ReplaySubject, Subject, zip } from "rxjs";
-import { concatMap, filter, map, takeUntil, tap } from "rxjs/operators";
+import { concatMap, filter, map, take, takeUntil, tap } from "rxjs/operators";
 import * as vscode from "vscode";
 import { ClusterExecuteResults, Clusters } from "../clusters";
 import { Completition } from "../completition";
@@ -141,6 +141,8 @@ export class CassandraWorkbench {
             from(this.revealCqlPanel()).pipe()
                 .subscribe(() => {
 
+                    const id = generateId();
+
                     const s: WorkbenchCqlStatement = {
                         id: generateId(),
                         body: statementBody,
@@ -152,13 +154,25 @@ export class CassandraWorkbench {
                         modified: fsPath == null ? true : false,
                     };
 
-                    const m: ProcMessageStrict<"e2w_editorCreate"> = {
-                        name: "e2w_editorCreate",
+                    const m: ProcMessageStrict<"e2w_editorCreateRequest"> = {
+                        name: "e2w_editorCreateRequest",
                         data: {
+                            id,
                             execute: false,
                             statement: s,
                         },
                     };
+
+                    this.panel.eventMessage.pipe(
+                        filter((msg: ProcMessageStrict<"w2e_editorCreateResponse">) => {
+                            return msg.name === "w2e_editorCreateResponse" && msg.data.id === id;
+                        }),
+                        take(1),
+                    ).subscribe(() => {
+                        resolve();
+                    }, (e) => {
+                        reject(e);
+                    });
 
                     this.panel.emitMessage(m);
                 });
@@ -516,67 +530,71 @@ export class CassandraWorkbench {
         const req = request.data;
         const id = req.id;
 
-        this.persistence.statementOpen()
-            .then((result) => {
-                const out: ProcMessageStrict<"e2w_statementOpenResponse"> = {
-                    name: "e2w_statementOpenResponse",
-                    data: {
-                        id,
-                        responseType: result.responseType,
-                        fileName: result.fileName,
-                        fsPath: result.fsPath,
-                        body: result.body,
-                    },
-                };
+        from(this.persistence.fileCqlOpen()).pipe(
 
-                this.panel.emitMessage(out);
+        ).subscribe(() => {
 
-            }).catch((e) => {
-                console.error(e);
-                const out: ProcMessageStrict<"e2w_statementSaveResponse"> = {
-                    name: "e2w_statementSaveResponse",
-                    data: {
-                        id,
-                        responseType: "error",
-                        error: e,
-                    },
-                };
-                this.panel.emitMessage(out);
-            });
+        }, (e) => {
+
+            console.error(e);
+            const out: ProcMessageStrict<"e2w_statementSaveResponse"> = {
+                name: "e2w_statementSaveResponse",
+                data: {
+                    id,
+                    responseType: "error",
+                    error: e,
+                },
+            };
+            this.panel.emitMessage(out);
+        });
+
+        // .then((result) => {
+        // const out: ProcMessageStrict<"e2w_statementOpenResponse"> = {
+        //     name: "e2w_statementOpenResponse",
+        //     data: {
+        //         id,
+        //         responseType: result.responseType,
+        //         fileName: result.fileName,
+        //         fsPath: result.fsPath,
+        //         body: result.body,
+        //     },
+        // };
+
+        // this.panel.emitMessage();
 
     }
     private saveStatementRespond(request: ProcMessageStrict<"w2e_statementSaveRequest">) {
-        const req = request.data;
-        const id = req.id;
-        const saveAsMode = req.saveAsMode;
+    const req = request.data;
+    const id = req.id;
+    const saveAsMode = req.saveAsMode;
 
-        this.persistence.statementSave(req.statement, saveAsMode)
-            .then((result) => {
-                const out: ProcMessageStrict<"e2w_statementSaveResponse"> = {
-                    name: "e2w_statementSaveResponse",
-                    data: {
-                        id,
-                        responseType: result.responseType,
-                        fileName: result.fileName,
-                        fsPath: result.fsPath,
-                    },
-                };
+    this.persistence.statementSave(req.statement, saveAsMode)
+        .then((result) => {
+            const out: ProcMessageStrict<"e2w_statementSaveResponse"> = {
+                name: "e2w_statementSaveResponse",
+                data: {
+                    id,
+                    responseType: result.responseType,
+                    fileName: result.fileName,
+                    fsPath: result.fsPath,
+                },
+            };
 
-                this.panel.emitMessage(out);
+            this.panel.emitMessage(out);
 
-            }).catch((e) => {
-                console.error(e);
-                const out: ProcMessageStrict<"e2w_statementSaveResponse"> = {
-                    name: "e2w_statementSaveResponse",
-                    data: {
-                        id,
-                        responseType: "error",
-                        error: e,
-                    },
-                };
-                this.panel.emitMessage(out);
-            });
-    }
+        }).catch((e) => {
+            console.error(e);
+            const out: ProcMessageStrict<"e2w_statementSaveResponse"> = {
+                name: "e2w_statementSaveResponse",
+                data: {
+                    id,
+                    responseType: "error",
+                    error: e,
+                },
+            };
+            this.panel.emitMessage(out);
+        });
+}
     private autocompleteRespond(request: ProcMessageStrict<"w2e_autocompleteRequest">) {
         const req = request.data;
         const res = this.completition.execute(req.partial);
@@ -594,199 +612,199 @@ export class CassandraWorkbench {
 
     }
     private parseInputRespond(request: ProcMessageStrict<"w2e_checkInputRequest">) {
-        const req = request.data;
-        const id = req.id;
-        const input = req.input;
-        const clusterName = req.clusterName;
-        const keyspaceInitial = req.keyspaceInitial;
-        const clusterIndex = this.clusters.getClusterIndex(clusterName);
+    const req = request.data;
+    const id = req.id;
+    const input = req.input;
+    const clusterName = req.clusterName;
+    const keyspaceInitial = req.keyspaceInitial;
+    const clusterIndex = this.clusters.getClusterIndex(clusterName);
 
-        console.time("parseInputRespond");
+    console.time("parseInputRespond");
 
-        if (clusterIndex === -1) {
-            const er: ProcMessageStrict<"e2w_checkInputResponse"> = {
-                name: "e2w_checkInputResponse",
-                data: {
-                    id,
-                    error: true,
-                },
-            };
-            this.panel.emitMessage(er);
-            return;
-        }
-        from(this.clusters.getStructure(clusterIndex)).pipe(
-            map((data) => this.parser.parse(input, data, keyspaceInitial)),
-        ).subscribe((result) => {
+    if (clusterIndex === -1) {
+    const er: ProcMessageStrict<"e2w_checkInputResponse"> = {
+        name: "e2w_checkInputResponse",
+        data: {
+            id,
+            error: true,
+        },
+    };
+    this.panel.emitMessage(er);
+    return;
+}
+    from(this.clusters.getStructure(clusterIndex)).pipe(
+    map((data) => this.parser.parse(input, data, keyspaceInitial)),
+).subscribe((result) => {
 
-            const s = JSON.stringify(result);
-            console.log(`stringified len=${s.length}`);
-            const mo: ProcMessageStrict<"e2w_checkInputResponse"> = {
-                name: "e2w_checkInputResponse",
-                data: {
-                    id,
-                    // result,
-                    stringified: s,
-                },
-            };
-            this.panel.emitMessage(mo);
-            console.timeEnd("parseInputRespond");
-        }, (e) => {
-            const er: ProcMessageStrict<"e2w_checkInputResponse"> = {
-                name: "e2w_checkInputResponse",
-                data: {
-                    id,
-                    error: true,
-                },
-            };
-            this.panel.emitMessage(er);
-        });
+    const s = JSON.stringify(result);
+    console.log(`stringified len=${s.length}`);
+    const mo: ProcMessageStrict<"e2w_checkInputResponse"> = {
+        name: "e2w_checkInputResponse",
+        data: {
+            id,
+            // result,
+            stringified: s,
+        },
+    };
+    this.panel.emitMessage(mo);
+    console.timeEnd("parseInputRespond");
+}, (e) => {
+    const er: ProcMessageStrict<"e2w_checkInputResponse"> = {
+        name: "e2w_checkInputResponse",
+        data: {
+            id,
+            error: true,
+        },
+    };
+    this.panel.emitMessage(er);
+});
 
     }
     private executeDataChangeRespond(m: ProcMessageStrict<"w2e_executeDataChangeRequest">) {
-        const id = m.data.id;
-        const req = m.data;
-        const item = req.change;
+    const id = m.data.id;
+    const req = m.data;
+    const item = req.change;
 
-        from(this.changeProcessor.execute(item)).pipe(
+    from(this.changeProcessor.execute(item)).pipe(
 
-        ).subscribe(() => {
-            const mo: ProcMessageStrict<"e2w_executeDataChangeResponse"> = {
-                name: "e2w_executeDataChangeResponse",
-                data: {
-                    id,
-                    result: {
-                        success: true,
-                    },
+    ).subscribe(() => {
+        const mo: ProcMessageStrict<"e2w_executeDataChangeResponse"> = {
+            name: "e2w_executeDataChangeResponse",
+            data: {
+                id,
+                result: {
+                    success: true,
                 },
-            };
-            this.panel.emitMessage(mo);
+            },
+        };
+        this.panel.emitMessage(mo);
 
-        }, (e) => {
-            const mo: ProcMessageStrict<"e2w_executeDataChangeResponse"> = {
-                name: "e2w_executeDataChangeResponse",
-                data: {
-                    id,
-                    result: {
-                        success: false,
-                        error: e,
-                    },
+    }, (e) => {
+        const mo: ProcMessageStrict<"e2w_executeDataChangeResponse"> = {
+            name: "e2w_executeDataChangeResponse",
+            data: {
+                id,
+                result: {
+                    success: false,
+                    error: e,
                 },
-            };
-            this.panel.emitMessage(mo);
-        });
+            },
+        };
+        this.panel.emitMessage(mo);
+    });
 
     }
     private executeQueryRespond(m: ProcMessageStrict<"w2e_executeQueryRequest">) {
 
-        const id = m.data.id;
-        const clusterName = m.data.clusterName;
-        const keyspaceInitial = m.data.keyspaceInitial;
-        const cql = m.data.cql;
-        const clusterIndex = this.clusters.getClusterIndex(clusterName);
+    const id = m.data.id;
+    const clusterName = m.data.clusterName;
+    const keyspaceInitial = m.data.keyspaceInitial;
+    const cql = m.data.cql;
+    const clusterIndex = this.clusters.getClusterIndex(clusterName);
 
-        from(this.clusters.execute(clusterName, keyspaceInitial, cql)).pipe(
-            tap((result) => {
-                this.persistence.history.append(clusterName, keyspaceInitial, cql);
-            }),
-            tap((result) => {
+    from(this.clusters.execute(clusterName, keyspaceInitial, cql)).pipe(
+        tap((result) => {
+            this.persistence.history.append(clusterName, keyspaceInitial, cql);
+        }),
+        tap((result) => {
 
-                const message: ProcMessageStrict<"e2w_executeQueryResponse"> = {
-                    name: "e2w_executeQueryResponse",
-                    data: {
-                        id,
-                        result,
-                    },
-                };
-                this.panel.emitMessage(message);
-            }),
-            concatMap((result) => {
-                return new Promise((resolve, reject) => {
-
-                    if (!result.analysis.alterStructure) {
-                        resolve(result);
-                        return;
-                    }
-
-                    this.clusters.invalidateStructure(clusterIndex);
-                    this.treeProvider.onDidChangeTreeDataEmmiter.fire();
-                    this.requestInvalidateClusterData(clusterIndex);
-                    resolve(result);
-
-                });
-            }),
-        ).subscribe((result: ClusterExecuteResults) => {
-
-            if (result.analysis.alterStructure) {
-                console.log("ALTER STRUCTURE RESULT!");
-            }
-
-        }, (e) => {
-            const errorMessage: ProcMessageStrict<"e2w_executeQueryResponse"> = {
+            const message: ProcMessageStrict<"e2w_executeQueryResponse"> = {
                 name: "e2w_executeQueryResponse",
                 data: {
                     id,
-                    result: null,
-                    error: e,
+                    result,
                 },
             };
-            this.panel.emitMessage(errorMessage);
-        });
+            this.panel.emitMessage(message);
+        }),
+        concatMap((result) => {
+            return new Promise((resolve, reject) => {
+
+                if (!result.analysis.alterStructure) {
+                    resolve(result);
+                    return;
+                }
+
+                this.clusters.invalidateStructure(clusterIndex);
+                this.treeProvider.onDidChangeTreeDataEmmiter.fire();
+                this.requestInvalidateClusterData(clusterIndex);
+                resolve(result);
+
+            });
+        }),
+    ).subscribe((result: ClusterExecuteResults) => {
+
+        if (result.analysis.alterStructure) {
+            console.log("ALTER STRUCTURE RESULT!");
+        }
+
+    }, (e) => {
+        const errorMessage: ProcMessageStrict<"e2w_executeQueryResponse"> = {
+            name: "e2w_executeQueryResponse",
+            data: {
+                id,
+                result: null,
+                error: e,
+            },
+        };
+        this.panel.emitMessage(errorMessage);
+    });
 
     }
     private getClusterStructureRespond(m: ProcMessageStrict<"w2e_getClusterStructRequest">) {
-        const clusterName = m.data.clusterName;
-        const clusterIndex = this.clusters.getClusterIndex(clusterName);
-        const id = m.data.id;
+    const clusterName = m.data.clusterName;
+    const clusterIndex = this.clusters.getClusterIndex(clusterName);
+    const id = m.data.id;
 
-        this.clusters.getStructure(clusterIndex, false)
-            .then((result) => {
+    this.clusters.getStructure(clusterIndex, false)
+        .then((result) => {
 
-                const out: ProcMessageStrict<"e2w_getClusterStructResponse"> = {
-                    name: "e2w_getClusterStructResponse",
-                    data: {
-                        id,
-                        result,
-                    },
-                };
-                this.panel.emitMessage(out);
+            const out: ProcMessageStrict<"e2w_getClusterStructResponse"> = {
+                name: "e2w_getClusterStructResponse",
+                data: {
+                    id,
+                    result,
+                },
+            };
+            this.panel.emitMessage(out);
 
-            }).catch((e) => {
-                console.log(e);
-                const out: ProcMessageStrict<"e2w_getClusterStructResponse"> = {
-                    name: "e2w_getClusterStructResponse",
-                    data: {
-                        id,
-                        error: true,
-                        result: null,
-                    },
+        }).catch((e) => {
+            console.log(e);
+            const out: ProcMessageStrict<"e2w_getClusterStructResponse"> = {
+                name: "e2w_getClusterStructResponse",
+                data: {
+                    id,
+                    error: true,
+                    result: null,
+                },
 
-                };
-                this.panel.emitMessage(out);
-            });
-    }
+            };
+            this.panel.emitMessage(out);
+        });
+}
     private requestInvalidateClusterList() {
         const id = generateId();
         const out: ProcMessageStrict<"e2w_invalidateClusterListRequest"> = {
-            name: "e2w_invalidateClusterListRequest",
-            data: {
-                id,
-            },
-        };
+        name: "e2w_invalidateClusterListRequest",
+        data: {
+            id,
+        },
+    };
         this.panel.emitMessage(out);
     }
     private requestInvalidateClusterData(clusterIndex: number) {
-        const id = generateId();
-        const clusterName = this.clusters.getClusterName(clusterIndex);
-        const out: ProcMessageStrict<"e2w_invalidateClusterDataRequest"> = {
-            name: "e2w_invalidateClusterDataRequest",
-            data: {
-                id,
-                cluster: {
-                    name: clusterName,
-                    index: clusterIndex,
-                },
+    const id = generateId();
+    const clusterName = this.clusters.getClusterName(clusterIndex);
+    const out: ProcMessageStrict<"e2w_invalidateClusterDataRequest"> = {
+        name: "e2w_invalidateClusterDataRequest",
+        data: {
+            id,
+            cluster: {
+                name: clusterName,
+                index: clusterIndex,
             },
-        };
-        this.panel.emitMessage(out);
-    }
+        },
+    };
+    this.panel.emitMessage(out);
+}
 }

@@ -1,13 +1,13 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 import { from, of, Subject } from "rxjs";
-import { concatMap, map, tap } from "rxjs/operators";
+import { catchError, concatMap, map, reduce, tap } from "rxjs/operators";
 import * as vscode from "vscode";
 import { generateId } from "../const/id";
 import { WorkbenchCqlStatement } from "../types";
-
 import { Workspace } from "../workspace";
 import { HistoryManager } from "./history";
+
 export type SaveStatementResultType = "canceled" | "success" | "error";
 export type OpenStatementResultType = "canceled" | "success" | "error";
 export interface SaveStatementResult {
@@ -60,11 +60,11 @@ export class Persistence {
         });
 
     }
-    public statementOpen(): Promise<OpenStatementResult> {
+    public fileCqlOpen(): Promise<OpenStatementResult[]> {
         return new Promise((resolve, reject) => {
             const options: vscode.OpenDialogOptions = {
                 defaultUri: vscode.Uri.file(this.persistencePathSaved),
-                canSelectMany: false,
+                canSelectMany: true,
                 canSelectFolders: false,
                 filters: { "Apache Cassandra CQL": ["cql"] },
             };
@@ -73,26 +73,34 @@ export class Persistence {
                 .then((result) => {
 
                     if (result == null || result.length === 0) {
-                        const outEmpty: OpenStatementResult = {
-                            responseType: "canceled",
-                        };
-                        resolve(outEmpty);
+                        resolve([]);
                         return;
                     }
 
-                    const fsPath = result[0].fsPath;
-                    fs.readFile(fsPath)
-                        .then((data) => {
+                    from(result).pipe(
+                        concatMap((item) => Promise.all([item, fs.readFile(item.fsPath)])),
+                        map<[vscode.Uri, Buffer], OpenStatementResult>((args) => {
+                            const uri = args[0];
+                            const buffer = args[1];
+
                             const out: OpenStatementResult = {
                                 responseType: "success",
-                                fsPath,
-                                body: data.toString(),
-                                fileName: path.basename(fsPath),
+                                fsPath: uri.fsPath,
+                                body: buffer.toString(),
+                                fileName: path.basename(uri.fsPath),
                             };
-                            resolve(out);
-                        }).catch((e) => {
-                            reject(e);
-                        });
+                            return out;
+                        }),
+                        reduce<OpenStatementResult>((acc, curr, i) => {
+                            acc.push(curr);
+                            return acc;
+                        }, []),
+                        catchError((e, obs) => obs),
+                    ).subscribe((list) => {
+                        resolve(list);
+                    }, (e) => {
+                        reject(e);
+                    });
 
                 }, (e) => {
                     reject(e);

@@ -29,9 +29,6 @@ export class EditorService {
 
     private indexCurrent: number = -1;
 
-    // private activeClusterName: string;
-    // private activeKeyspace: string;
-
     constructor(
         private messages: MessageService,
         private monaco: MonacoService,
@@ -69,8 +66,8 @@ export class EditorService {
         const name = message.name;
 
         switch (name) {
-            case "e2w_editorCreate":
-                this.onStatementCreate(message as ProcMessageStrict<"e2w_editorCreate">);
+            case "e2w_editorCreateRequest":
+                this.onStatementCreate(message as ProcMessageStrict<"e2w_editorCreateRequest">);
                 break;
         }
 
@@ -156,6 +153,7 @@ export class EditorService {
             }, (e) => {
                 console.log("in editorCreate");
                 console.log(e);
+                reject(e);
             });
         });
     }
@@ -496,7 +494,22 @@ export class EditorService {
 
         });
     }
-    private onStatementCreate(s: ProcMessageStrict<"e2w_editorCreate">) {
-        this.editorCreate(s.data.statement);
+    private onStatementCreate(s: ProcMessageStrict<"e2w_editorCreateRequest">) {
+        this.editorCreate(s.data.statement)
+            .then((result) => {
+                console.log("this.editorCreate resolve");
+                const m: ProcMessageStrict<"w2e_editorCreateResponse"> = {
+                    name: "w2e_editorCreateResponse",
+                    data: {
+                        id: s.data.id,
+                    },
+                };
+
+                this.messages.emit(m);
+
+            }).catch((e) => {
+                console.log(e);
+            });
+
     }
 }

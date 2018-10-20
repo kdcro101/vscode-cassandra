@@ -27,11 +27,12 @@ export interface ProcMessageList {
     w2e_getActiveClusterAndKeyspaceRequest: MessageWithId;
     w2e_clipboardCopyRequest: ClipboardCopyRequest;
     w2e_setSplitSizeRequest: SetSplitSizeRequest;
+    w2e_editorCreateResponse: MessageWithId;
 
     e2w_goState: WebviewStateParams;
     e2w_getClusterStructResponse: ClusterStructureResponse;
     e2w_getHistoryResponse: HistoryGetResponse;
-    e2w_editorCreate: EditorCreateParams;
+    e2w_editorCreateRequest: EditorCreateParams;
     e2w_getClustersResponse: CassandraCluster[];
     e2w_autocompleteResponse: AutocompleteResponse;
     e2w_checkInputResponse: CheckInputResponse;
@@ -70,7 +71,7 @@ export interface WebviewStateParams {
     name: string;
     params: { [key: string]: any };
 }
-export interface EditorCreateParams {
+export interface EditorCreateParams extends MessageWithId {
     statement: WorkbenchCqlStatement;
     execute: boolean;
 }

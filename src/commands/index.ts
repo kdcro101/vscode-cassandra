@@ -1,6 +1,6 @@
 import * as fs from "fs-extra";
-import { ReplaySubject } from "rxjs";
-import { take } from "rxjs/operators";
+import { from, ReplaySubject } from "rxjs";
+import { concatMap, take } from "rxjs/operators";
 import * as vscode from "vscode";
 import { CassandraWorkbench } from "../cassandra-workbench";
 import { TreeItemAggregateItem } from "../cassandra-workbench/treeview-provider/tree-item-aggregate-item";
@@ -691,18 +691,30 @@ export class VsCommands {
             }
         });
     }
-    private onOpenFileInWorkbench = (fileUri: vscode.Uri, list: any[]) => {
+    private onOpenFileInWorkbench = (fileUri: vscode.Uri, list: vscode.Uri[]) => {
         this.stateWorkbench.pipe(
             take(1),
         ).subscribe(() => {
 
-            try {
-                const body = fs.readFileSync(fileUri.fsPath).toString();
-                this.workbench.editorCreate(null, null, body, fileUri.fsPath);
+            from(list).pipe(
+                concatMap((uri) => {
+                    return new Promise((resolve, reject) => {
+                        const body = fs.readFileSync(uri.fsPath).toString();
+                        this.workbench.editorCreate(null, null, body, uri.fsPath)
+                            .then((result) => {
+                                resolve(uri);
+                            }).catch((e) => {
+                                reject(e);
+                            });
+                    });
+                }),
+            ).subscribe((uri) => {
 
-            } catch (e) {
-                vscode.window.showErrorMessage(`Unable to read ${fileUri.fsPath}`);
-            }
+            }, (e) => {
+                console.log(e);
+                vscode.window.showErrorMessage(e);
+            });
+
         });
     }
 
