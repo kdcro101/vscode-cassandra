@@ -1,7 +1,7 @@
 import * as clipboardy from "clipboardy";
 import * as path from "path";
 import { from, fromEventPattern, merge, ReplaySubject, Subject, zip } from "rxjs";
-import { concatMap, filter, map, take, takeUntil, tap } from "rxjs/operators";
+import { concatMap, count, filter, flatMap, map, take, takeUntil, tap } from "rxjs/operators";
 import * as vscode from "vscode";
 import { ClusterExecuteResults, Clusters } from "../clusters";
 import { Completition } from "../completition";
@@ -531,9 +531,11 @@ export class CassandraWorkbench {
         const id = req.id;
 
         from(this.persistence.fileCqlOpen()).pipe(
-
-        ).subscribe(() => {
-
+            flatMap((val) => from(val)),
+            concatMap((item) => this.editorCreate(null, null, item.body, item.fsPath)),
+            count(),
+        ).subscribe((c) => {
+            console.log(`Opened ${c} editors`);
         }, (e) => {
 
             console.error(e);
