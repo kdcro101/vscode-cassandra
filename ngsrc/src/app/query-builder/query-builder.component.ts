@@ -4,7 +4,7 @@ import {
     Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren,
 } from "@angular/core";
 import { MatMenuTrigger, MatSnackBar } from "@angular/material";
-import { Subject } from "rxjs";
+import { from, Subject } from "rxjs";
 import { concatMap, take, takeUntil } from "rxjs/operators";
 import { keyspaceAlter } from "../../../../src/statement-generator/keyspace/alter";
 import { CassandraCluster } from "../../../../src/types/index";
@@ -187,6 +187,14 @@ export class QueryBuilderComponent extends ViewDestroyable implements OnInit, On
 
         const editor = this.editorService.list[index];
         this.editorService.removeAfter(editor.id);
+    }
+    public doTabCloseAll = (e: MouseEvent, index: number) => {
+
+        from(this.editorService.list).pipe(
+            concatMap((item) => this.editorService.remove(item.id)),
+        ).subscribe(() => {
+
+        });
     }
     public doTabSave = (e: MouseEvent, index: number) => {
 

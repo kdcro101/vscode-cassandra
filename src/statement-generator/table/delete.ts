@@ -2,7 +2,7 @@ import { DataTypeManager } from "../../data-type";
 import { rootColumnType, typeParser, typeValueExampleRender } from "../../data-type/type-parser";
 import { CassandraTable } from "../../types";
 
-export const tableUpdate = (keyspace: string, data: CassandraTable): Promise<string> => {
+export const tableDelete = (keyspace: string, data: CassandraTable): Promise<string> => {
     return new Promise((resolve, reject) => {
 
         const dtm = new DataTypeManager();
@@ -29,9 +29,7 @@ export const tableUpdate = (keyspace: string, data: CassandraTable): Promise<str
         });
 
         const lines: string[] = [
-            `UPDATE ${keyspace}.${name}`,
-            `SET`,
-            `${columns.join(",\n")}`,
+            `DELETE FROM ${keyspace}.${name}`,
             `WHERE ${pkConditions.join(" AND ")};`,
         ];
 

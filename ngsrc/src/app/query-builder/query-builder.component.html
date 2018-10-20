@@ -34,6 +34,9 @@
                         <button mat-menu-item (click)="doTabCloseAfter($event,ix)" [disabled]="(editorService.list.length-1)===ix">
                             <span class="mat-caption">Close tabs top the right</span>
                         </button>
+                        <button mat-menu-item (click)="doTabCloseAll($event,ix)" [disabled]="(editorService.list.length-1)===ix">
+                            <span class="mat-caption">Close All</span>
+                        </button>
                         <mat-divider></mat-divider>
                         <button mat-menu-item (click)="doTabSave($event,ix)">
                             <span class="mat-caption">Save</span>

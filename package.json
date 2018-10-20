@@ -125,6 +125,11 @@
                     "when": "view == cassandraWorkbenchView && viewItem == table",
                     "group": "012_common@2"
                 },
+                {
+                    "command": "cassandraWorkbench.cqlTableDelete",
+                    "when": "view == cassandraWorkbenchView && viewItem == table",
+                    "group": "012_common@2"
+                },
 
                 {
                     "command": "cassandraWorkbench.cqlTableAlterAdd",
@@ -395,6 +400,10 @@
             {
                 "command": "cassandraWorkbench.cqlTableUpdate",
                 "title": "UPDATE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlTableDelete",
+                "title": "DELETE"
             },
             {
                 "command": "cassandraWorkbench.cqlTableInsert",

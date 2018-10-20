@@ -11,6 +11,7 @@ import { keyspaceDrop } from "./keyspace/drop";
 import { exportStructure } from "./keyspace/export";
 import { materializedViewAlter, materializedViewClone, materializedViewCreate, materializedViewDrop } from "./materialized-view/index";
 import { tableAlterAdd, tableAlterDrop, tableClone, tableCreate, tableDrop, tableTruncate } from "./table";
+import { tableDelete } from "./table/delete";
 import { tableInsert } from "./table/insert";
 import { tableSelect, tableSelectAll } from "./table/select";
 import { tableUpdate } from "./table/update";
@@ -25,6 +26,7 @@ export class StatementGenerator {
     public tableDrop = tableDrop;
     public tableUpdate = tableUpdate;
     public tableInsert = tableInsert;
+    public tableDelete = tableDelete;
 
     public tableTruncate = tableTruncate;
     public tableAlterAdd = tableAlterAdd;

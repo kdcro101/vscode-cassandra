@@ -64,6 +64,8 @@ export class VsCommands {
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableInsert", this.cqlTableInsert));
         this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableDelete", this.cqlTableDelete));
+        this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableClone", this.cqlTableClone));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlTableDrop", this.cqlTableDrop));
@@ -477,6 +479,22 @@ export class VsCommands {
             const keyspace = item.keyspace;
 
             this.generator.tableSelect(keyspace, item.data)
+                .then((result) => {
+                    this.workbench.editorCreate(clusterIndex, keyspace, result);
+                }).catch((e) => {
+                    console.log(e);
+                });
+        });
+    }
+    private cqlTableDelete = (item: TreeItemTable) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+
+            const clusterIndex = item.clusterIndex;
+            const keyspace = item.keyspace;
+
+            this.generator.tableDelete(keyspace, item.data)
                 .then((result) => {
                     this.workbench.editorCreate(clusterIndex, keyspace, result);
                 }).catch((e) => {
