@@ -43,7 +43,7 @@ export const cqlTokenProvider = <monaco.languages.IMonarchLanguage>{
         "EACH_QUORUM", "ENTRIES", "EXISTS", "FINALFUNC", "FILTERING", "FROM", "FULL",
         "FUNCTION", "FUNCTIONS", "GRANT", "IF", "IN", "INITCOND", "IS", "INPUT", "INDEX", "INFINITY",
         "INSERT", "INTO", "KEY", "KEYS", "KEYSPACE", "KEYSPACES", "LANGUAGE",
-        "LEVEL", "LIMIT", "LOCAL_ONE", "LOCAL_QUORUM", "MATERIALIZED", "MODIFY", "NAN",
+        "LEVEL", "LIMIT", "LIST", "LOCAL_ONE", "LOCAL_QUORUM", "MATERIALIZED", "MODIFY", "NAN",
         "NORECURSIVE", "NOSUPERUSER", "NOT", "OF", "ON", "ONE", "ORDER", "OR",
         "PASSWORD", "PER", "PERMISSION", "PERMISSIONS",
         "PRIMARY",

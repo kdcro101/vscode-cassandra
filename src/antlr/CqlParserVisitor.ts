@@ -257,6 +257,7 @@ import { KwLanguageContext } from './CqlParser';
 import { KwLimitContext } from './CqlParser';
 import { KwListContext } from './CqlParser';
 import { KwListRolesContext } from './CqlParser';
+import { KwListUsersContext } from './CqlParser';
 import { KwLoggedContext } from './CqlParser';
 import { KwLoginContext } from './CqlParser';
 import { KwMaterializedViewContext } from './CqlParser';
@@ -2141,6 +2142,13 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitKwListRoles?: (ctx: KwListRolesContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.kwListUsers`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitKwListUsers?: (ctx: KwListUsersContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.kwLogged`.

@@ -257,6 +257,7 @@ import { KwLanguageContext } from './CqlParser';
 import { KwLimitContext } from './CqlParser';
 import { KwListContext } from './CqlParser';
 import { KwListRolesContext } from './CqlParser';
+import { KwListUsersContext } from './CqlParser';
 import { KwLoggedContext } from './CqlParser';
 import { KwLoginContext } from './CqlParser';
 import { KwMaterializedViewContext } from './CqlParser';
@@ -3154,6 +3155,17 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitKwListRoles?: (ctx: KwListRolesContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.kwListUsers`.
+	 * @param ctx the parse tree
+	 */
+	enterKwListUsers?: (ctx: KwListUsersContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.kwListUsers`.
+	 * @param ctx the parse tree
+	 */
+	exitKwListUsers?: (ctx: KwListUsersContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.kwLogged`.

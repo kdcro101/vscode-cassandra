@@ -46,6 +46,7 @@ export interface AnalyzedStatement {
     expressions: CqlStatementExpression[];
     // tokens?: { [key in ParserTokenFamily]: AnalyzedStatementToken[] };
     rules?: AnalyzedStatementRules;
+    hasResultset: boolean;
 }
 
 export interface AnalyzedStatementRules {

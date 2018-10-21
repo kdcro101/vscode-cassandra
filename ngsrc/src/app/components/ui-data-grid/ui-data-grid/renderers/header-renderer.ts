@@ -2,7 +2,10 @@ import { ColumnInfo } from "../../../../../../../src/cassandra-client/index";
 import { CassandraMaterializedView, CassandraTable } from "../../../../../../../src/types/index";
 
 export const headerRenderer = (columns: ColumnInfo[],
-    tableStruct: CassandraTable | CassandraMaterializedView): (index?: number) => string => {
+    tableStruct: CassandraTable | CassandraMaterializedView): boolean | string[] | ((index?: number) => string) => {
+    if (!tableStruct) {
+        return columns.map((c) => c.name);
+    }
     return (index: number): string => {
 
         const name = columns[index].name;

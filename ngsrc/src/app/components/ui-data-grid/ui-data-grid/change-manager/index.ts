@@ -14,11 +14,21 @@ export class ChangeManager {
     public list: DataChangeItem[];
     public keys: CassandraColumn[];
 
+    public disabled: boolean = true;
+
     constructor(private dataGrid: UiDataGridComponent) {
         this.list = dataGrid.currentEditor.dataChanges;
-        this.keys = dataGrid.currentTableStruct.primaryKeys;
+        if (dataGrid.currentTableStruct && dataGrid.currentTableStruct.primaryKeys) {
+            this.keys = dataGrid.currentTableStruct.primaryKeys;
+            this.disabled = false;
+        } else {
+            this.disabled = true;
+        }
     }
     public removeCellUpdate(row: number, column: string): DataChangeItem {
+        if (this.disabled) {
+            return null;
+        }
         const index = this.getCellUpdateItemIndex(row, column);
 
         if (index < 0) {
@@ -27,6 +37,10 @@ export class ChangeManager {
         return this.removeCellUpdateItem(index);
     }
     public removeRowDelete(row: number): DataChangeItem {
+        if (this.disabled) {
+            return null;
+        }
+
         const index = this.getRowDeletedItemIndex(row);
 
         if (index < 0) {
@@ -35,7 +49,9 @@ export class ChangeManager {
         return this.removeRowDeleteItem(index);
     }
     public addCellUpdate(row: number, column: string, valueOld: any, valueNew: any) {
-
+        if (this.disabled) {
+            return;
+        }
         const index = this.getCellUpdateItemIndex(row, column);
         if (index === -1) {
             this.createCellUpdateItem(row, column, valueOld, valueNew);
@@ -44,7 +60,9 @@ export class ChangeManager {
         }
     }
     public addRowDelete(row: number) {
-
+        if (this.disabled) {
+            return;
+        }
         const index = this.getRowDeletedItemIndex(row);
         if (index > -1) {
             return;
@@ -58,7 +76,9 @@ export class ChangeManager {
         this.createRowDeleteItem(row);
     }
     public clear() {
-
+        if (this.disabled) {
+            return;
+        }
         while (this.list.length > 0) {
             const i = this.list[0];
             switch (i.type) {
@@ -73,6 +93,7 @@ export class ChangeManager {
         }
     }
     private getCellUpdateItemIndex(row: number, column: string): number {
+
         const index = this.list.findIndex((i) => {
             return (
                 i.clusterName === this.dataGrid.currentClusterName &&
@@ -86,6 +107,7 @@ export class ChangeManager {
         return index;
     }
     private getRowDeletedItemIndex(row: number): number {
+
         const index = this.list.findIndex((i) => {
             return (
                 i.clusterName === this.dataGrid.currentClusterName &&
@@ -100,6 +122,7 @@ export class ChangeManager {
     }
 
     private createRowDeleteItem(row: number) {
+
         const rowData = this.dataGrid.currentDataRows[row];
         const pks = this.collectPrimaryKey(rowData);
         const item: DataChangeItem = {
@@ -116,6 +139,7 @@ export class ChangeManager {
         ChangeManager.eventAdd.next(item);
     }
     private createCellUpdateItem(row: number, column: string, valueOld: any, valueNew: any) {
+
         const rowData = this.dataGrid.currentDataRows[row];
         const pks = this.collectPrimaryKey(rowData);
         const item: DataChangeItem = {
@@ -135,6 +159,7 @@ export class ChangeManager {
         ChangeManager.eventAdd.next(item);
     }
     private collectPrimaryKey(rowData: any): DataChangeItemPrimaryKey {
+
         const out: DataChangeItemPrimaryKey = {};
         const keyNames = this.keys.map((i) => i.name);
 
@@ -145,11 +170,13 @@ export class ChangeManager {
         return out;
     }
     private updateCellUpdateItem(index: number, value: any) {
+
         const item = this.list[index];
         item.valueNew = value;
         ChangeManager.eventUpdate.next(item);
     }
     private removeCellUpdateItem(index: number): DataChangeItem {
+
         if (index < 0 || index >= this.list.length) {
             return;
         }
@@ -159,6 +186,7 @@ export class ChangeManager {
         return item;
     }
     private removeRowDeleteItem(index: number): DataChangeItem {
+
         if (index < 0 || index >= this.list.length) {
             return;
         }
@@ -168,6 +196,9 @@ export class ChangeManager {
         return item;
     }
     public isCellChanged(row: number, column: string): boolean {
+        if (this.disabled) {
+            return;
+        }
         const index = this.getCellUpdateItemIndex(row, column);
 
         if (index < 0) {
@@ -176,6 +207,10 @@ export class ChangeManager {
         return true;
     }
     public isRowDeleted(row: number): boolean {
+
+        if (this.disabled) {
+            return false;
+        }
         const index = this.getRowDeletedItemIndex(row);
 
         if (index < 0) {
@@ -185,6 +220,9 @@ export class ChangeManager {
     }
 
     public remove(id: string): void {
+        if (this.disabled) {
+            return;
+        }
         const index = this.list.findIndex((i) => i.id === id);
         // console.log(`ChangeManager.REMOVE [${index}]`);
         const item = this.list[index];

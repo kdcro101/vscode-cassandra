@@ -6,7 +6,29 @@ import { UiDataGridComponent } from "../ui-data-grid.component";
 
 export const buildColumns = (dataGrid: UiDataGridComponent): any[] => {
 
+    if (!dataGrid.currentTableStruct) {
+        const except = dataGrid.currentColumns.map((c) => {
+            if (c.type === "set" || c.type === "map" || c.type === "custom" || c.type === "tuple") {
+                return {
+                    data: c.name,
+                    renderer: cellRendererJson(dataGrid),
+                    readOnly: true,
+                };
+            } else {
+                return {
+                    data: c.name,
+                    type: "text",
+                    readOnly: true,
+                };
+            }
+
+        });
+
+        return except;
+    }
+
     const out = dataGrid.currentColumns.map((c) => {
+
         const keys = dataGrid.currentTableStruct.primaryKeys;
 
         const isPartition = keys.find((k) => c.name === k.name && k.kind === "partition_key");

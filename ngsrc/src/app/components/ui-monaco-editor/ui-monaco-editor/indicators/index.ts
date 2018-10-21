@@ -56,6 +56,11 @@ export const markersForStatement = (model: monaco.editor.ITextModel,
                 .concat(markTableReferenceError(model, statement, analysis))
                 .concat(markKeyspaceReferenceError(model, statement, analysis));
             break;
+        case "update":
+            out = markColumnNotFound(model, statement, analysis)
+                .concat(markTableReferenceError(model, statement, analysis))
+                .concat(markKeyspaceReferenceError(model, statement, analysis));
+            break;
         case "insert":
             out = markColumnNotFound(model, statement, analysis)
                 .concat(markColumnNoValue(model, statement))

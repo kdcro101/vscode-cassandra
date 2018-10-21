@@ -86,7 +86,7 @@ revoke
     ;
 
 listUsers
-    : kwList kwUsers
+    : kwListUsers
     ;
 
 listRoles
@@ -1097,7 +1097,10 @@ kwKeyspace: K_KEYSPACE;
 kwLanguage: K_LANGUAGE;
 kwLimit: K_LIMIT;
 kwList: K_LIST;
-kwListRoles: K_LIST_ROLES;
+
+kwListRoles: K_LIST K_ROLES;
+kwListUsers: K_LIST K_USERS;
+
 kwLogged: K_LOGGED;
 kwLogin: K_LOGIN;
 // kwMaterialized: K_MATERIALIZED;

@@ -1,18 +1,24 @@
 import { ParserRuleContext } from "antlr4ts";
 import { ParseTree } from "antlr4ts/tree/ParseTree";
 import {
-    ColumnContext, CqlContext, ExpressionContext, KeyspaceContext, MaterializedViewSpecContext,
-    RootContext, StatementSeparatorContext, TableSpecContext, UseContext,
+    BaseTableSpecContext,
+    ColumnContext, CqlContext,
+    ExpressionContext, KeyspaceContext,
+    MaterializedViewSpecContext,
+    RootContext, StatementSeparatorContext,
+    TableSpecContext,
+    UseContext,
 } from "../../antlr/CqlParser";
-import { BaseColumnContext, BaseTableSpecContext } from "../../antlr/CqlParser";
 import { CqlParserListener } from "../../antlr/CqlParserListener";
 import { CassandraClusterData } from "../../types";
 import { CassandraKeyspace, CassandraTable } from "../../types/index";
 import {
-    AnalysisKeyspaceReferences, AnalysisKeyspaceReferenceType, AnalyzedStatement, AnalyzedStatementRange,
+    AnalysisKeyspaceReferences,
+    AnalysisKeyspaceReferenceType,
+    AnalyzedStatement, AnalyzedStatementRange,
     AnalyzedStatementRules,
-    AnalyzedStatementToken, CqlAnalysis, CqlAnalysisError, CqlStatementColumn,
-    CqlStatementExpression, CqlStatementType,
+    AnalyzedStatementToken, CqlAnalysis, CqlAnalysisError,
+    CqlStatementColumn, CqlStatementExpression, CqlStatementType,
 } from "../../types/parser";
 
 const KEYSPACE_RULE = "keyspace";
@@ -96,10 +102,12 @@ export class CqlAnalyzerListener implements CqlParserListener {
         );
 
         const selectData = this.result.statements.filter((i) => i.type === "select");
+        const listRoles = this.result.statements.filter((i) => i.type === "listRoles");
+        const listPermissions = this.result.statements.filter((i) => i.type === "listPermissions");
 
         this.result.alterData = modData.length > 0 ? true : false;
         this.result.alterStructure = modStruct.length > 0 ? true : false;
-        this.result.selectData = selectData.length > 0 ? true : false;
+        this.result.selectData = (selectData.length > 0 || listRoles.length > 0 || listPermissions.length > 0) ? true : false;
 
         // collect statements
         this.result.statements.forEach((s, i) => {
@@ -113,35 +121,11 @@ export class CqlAnalyzerListener implements CqlParserListener {
             this.result.error = CqlAnalysisError.MULTIPLE_SELECT;
         }
 
-        /* remove
-        this.result.statements.forEach((s, i) => {
-            if (s.keyspace && s.table) {
-                const ksi = this.structure.keyspaces.findIndex((k) => k.name === s.keyspace);
-                if (ksi > -1) {
-                    const ks = this.structure.keyspaces[ksi];
-                    this.result.statements[i].keyspaceData = ks;
-                    const tbi = ks.tables.findIndex((t) => t.name === s.table);
-                    if (tbi > -1) {
-                        this.result.statements[i].tableData = ks.tables[tbi];
-                    }
-                }
-            }
-        });
-        */
-
-        // if (this.result.statementRanges.length < this.result.statements.length && this.result.statementRanges.length > 0) {
         if (this.separators && this.separators[this.separators.length - 1] < this.cql.length) {
             // add last range
             const sp = this.cql.length;
             this.addStatementRange(sp);
 
-            // const last = this.result.statementRanges[this.result.statementRanges.length - 1];
-            // const item: AnalyzedStatementRange = {
-            //     start: last.stop + 2, // to skip last semicolon
-            //     stop: this.cql.length,
-            //     text: this.cql.substring(last.stop + 2, this.cql.length),
-            // };
-            // this.result.statementRanges.push(item);
         }
 
         if (this.result.statements.length === 1 && this.result.statementRanges.length === 0) {
@@ -172,6 +156,7 @@ export class CqlAnalyzerListener implements CqlParserListener {
             columns: [],
             expressions: [],
             rules: {},
+            hasResultset: false,
         };
 
     }
@@ -483,6 +468,10 @@ export class CqlAnalyzerListener implements CqlParserListener {
         }
 
         this.setCurrentStatementValue("type", type);
+
+        if (type === "select" || type === "listPermissions" || type === "listRoles") {
+            this.setCurrentStatementValue("hasResultset", true);
+        }
 
     }
     private setCurrentStatementValue<K extends keyof AnalyzedStatement>(k: K, v: AnalyzedStatement[K]) {

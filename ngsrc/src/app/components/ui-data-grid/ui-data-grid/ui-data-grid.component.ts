@@ -326,7 +326,14 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
             // console.log("createGridInstance");
             const data = this.currentEditor.result;
 
-            this.currentStatementIndex = data.analysis.statements.findIndex((s) => s.type === "select");
+            // this.currentStatementIndex = data.analysis.statements.findIndex((s) => s.type === "select");
+            this.currentStatementIndex = data.analysis.statements.reduce((acc, cur, i) => {
+                if (cur.hasResultset === true) {
+                    acc = i;
+                    return acc;
+                }
+                return acc;
+            }, -1);
 
             if (this.currentStatementIndex < 0) {
                 return;
