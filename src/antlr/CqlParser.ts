@@ -2077,7 +2077,7 @@ export class CqlParser extends Parser {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 942;
-			this.column();
+			this.baseColumn();
 			this.state = 943;
 			this.kwIs();
 			this.state = 944;
@@ -16301,7 +16301,7 @@ export class CqlParser extends Parser {
 		"\x05\u01A8\xD5\x02\u03A9\u03AA\x05*\x16\x02\u03AA\u03AC\x03\x02\x02\x02"+
 		"\u03AB\u03A8\x03\x02\x02\x02\u03AC\u03AF\x03\x02\x02\x02\u03AD\u03AB\x03"+
 		"\x02\x02\x02\u03AD\u03AE\x03\x02\x02\x02\u03AE)\x03\x02\x02\x02\u03AF"+
-		"\u03AD\x03\x02\x02\x02\u03B0\u03B1\x05\u016E\xB8\x02\u03B1\u03B2\x05\u01EE"+
+		"\u03AD\x03\x02\x02\x02\u03B0\u03B1\x05\u0170\xB9\x02\u03B1\u03B2\x05\u01EE"+
 		"\xF8\x02\u03B2\u03B3\x05\u020A\u0106\x02\u03B3\u03B4\x05\u020C\u0107\x02"+
 		"\u03B4+\x03\x02\x02\x02\u03B5\u03C0\x05\x92J\x02\u03B6\u03B7\x05\x92J"+
 		"\x02\u03B7\u03B8\x05\u01A8\xD5\x02\u03B8\u03B9\x05\x8EH\x02\u03B9\u03C0"+
@@ -18207,8 +18207,8 @@ export class ColumnNotNullListContext extends ParserRuleContext {
 
 
 export class ColumnNotNullContext extends ParserRuleContext {
-	public column(): ColumnContext {
-		return this.getRuleContext(0, ColumnContext);
+	public baseColumn(): BaseColumnContext {
+		return this.getRuleContext(0, BaseColumnContext);
 	}
 	public kwIs(): KwIsContext {
 		return this.getRuleContext(0, KwIsContext);

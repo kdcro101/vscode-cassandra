@@ -2160,8 +2160,8 @@ public class CqlParser extends Parser {
 	}
 
 	public static class ColumnNotNullContext extends ParserRuleContext {
-		public ColumnContext column() {
-			return getRuleContext(ColumnContext.class,0);
+		public BaseColumnContext baseColumn() {
+			return getRuleContext(BaseColumnContext.class,0);
 		}
 		public KwIsContext kwIs() {
 			return getRuleContext(KwIsContext.class,0);
@@ -2185,7 +2185,7 @@ public class CqlParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(942);
-			column();
+			baseColumn();
 			setState(943);
 			kwIs();
 			setState(944);
@@ -19450,7 +19450,7 @@ public class CqlParser extends Parser {
 		"\u03a6\3\2\2\2\u03a6\'\3\2\2\2\u03a7\u03ad\5*\26\2\u03a8\u03a9\5\u01a8"+
 		"\u00d5\2\u03a9\u03aa\5*\26\2\u03aa\u03ac\3\2\2\2\u03ab\u03a8\3\2\2\2\u03ac"+
 		"\u03af\3\2\2\2\u03ad\u03ab\3\2\2\2\u03ad\u03ae\3\2\2\2\u03ae)\3\2\2\2"+
-		"\u03af\u03ad\3\2\2\2\u03b0\u03b1\5\u016e\u00b8\2\u03b1\u03b2\5\u01ee\u00f8"+
+		"\u03af\u03ad\3\2\2\2\u03b0\u03b1\5\u0170\u00b9\2\u03b1\u03b2\5\u01ee\u00f8"+
 		"\2\u03b2\u03b3\5\u020a\u0106\2\u03b3\u03b4\5\u020c\u0107\2\u03b4+\3\2"+
 		"\2\2\u03b5\u03c0\5\u0092J\2\u03b6\u03b7\5\u0092J\2\u03b7\u03b8\5\u01a8"+
 		"\u00d5\2\u03b8\u03b9\5\u008eH\2\u03b9\u03c0\3\2\2\2\u03ba\u03c0\5\u008e"+

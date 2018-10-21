@@ -160,7 +160,7 @@ columnNotNullList
     : columnNotNull (kwAnd columnNotNull)*
     ;
 columnNotNull
-    : column kwIs kwNot kwNull
+    : baseColumn kwIs kwNot kwNull
     ;
 
 materializedViewOptions

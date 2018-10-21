@@ -4,7 +4,7 @@ import {
     ColumnContext, CqlContext, ExpressionContext, KeyspaceContext, MaterializedViewSpecContext,
     RootContext, StatementSeparatorContext, TableSpecContext, UseContext,
 } from "../../antlr/CqlParser";
-import { BaseTableSpecContext } from "../../antlr/CqlParser";
+import { BaseColumnContext, BaseTableSpecContext } from "../../antlr/CqlParser";
 import { CqlParserListener } from "../../antlr/CqlParserListener";
 import { CassandraClusterData } from "../../types";
 import { CassandraKeyspace, CassandraTable } from "../../types/index";
@@ -20,6 +20,8 @@ const TABLE_RULE = "table";
 const BASE_KEYSPACE_RULE = "baseKeyspace";
 const BASE_TABLE_RULE = "baseTable";
 const STATEMENT_ROOT_RULE = "cql";
+
+type ArrayElement<T> = T extends Array<infer U> ? U : never;
 
 export class CqlAnalyzerListener implements CqlParserListener {
     private statementCurrent: number = -1;
@@ -214,6 +216,12 @@ export class CqlAnalyzerListener implements CqlParserListener {
         };
 
         this.result.statements[this.statementCurrent].columns.push(column);
+    }
+    exitBaseColumn = (ctx: BaseColumnContext) => {
+        const token = this.contextToToken(ctx);
+
+        this.pushRuleList("baseColumns", token);
+
     }
     exitUse = (ctx: UseContext): void => {
         if (ctx.children.length < 2) {
@@ -560,6 +568,17 @@ export class CqlAnalyzerListener implements CqlParserListener {
         }
 
         s.rules[rule][prop] = value;
+
+    }
+
+    private pushRuleList<R extends keyof AnalyzedStatementRules>(rule: R, item: ArrayElement<AnalyzedStatementRules[R]>) {
+
+        const s = this.result.statements[this.statementCurrent];
+        if (s.rules[rule] == null) {
+            s.rules[rule] = [];
+        }
+
+        (s.rules[rule] as Array<ArrayElement<AnalyzedStatementRules[R]>>).push(item);
 
     }
     private pushReference<R extends keyof AnalysisKeyspaceReferences>(

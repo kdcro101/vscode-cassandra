@@ -49,6 +49,17 @@
         }
         &.expression {
             background-color: rgba(0, 0, 0, 0.2);
+
+            &.partition_key {
+                border: 1px solid mat-color($warn, 700, 0.5);
+                border-radius: 2px;
+                padding: 2px 2px;
+            }
+            &.clustering {
+                border: 1px solid mat-color($yellow, 700, 0.5);
+                border-radius: 2px;
+                padding: 2px 2px;
+            }
         }
     }
 }

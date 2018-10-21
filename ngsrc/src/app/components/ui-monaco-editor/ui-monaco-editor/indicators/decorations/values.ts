@@ -24,7 +24,7 @@ export const decoValues = (
         const pair = statement.columns[i];
 
         if (pair) {
-            o.options.inlineClassName = "decoration expression";
+            o.options.inlineClassName = `decoration expression ${pair.kind}`;
             o.options.hoverMessage = [
                 {
                     value: `\`\`\`cqlhover\nvalue for ${pair.text} AS ${pair.type}\`\`\``,
@@ -33,6 +33,17 @@ export const decoValues = (
         } else {
             o.options.inlineClassName = "decoration expression";
             o.options.hoverMessage = [];
+        }
+
+        if (pair && pair.kind === "partition_key") {
+            o.options.hoverMessage.push({
+                value: `\`\`\`cql-keys\nPARTITION KEY ${pair.kindIndex + 1}/${pair.kindCount}\`\`\``,
+            });
+        }
+        if (pair && pair.kind === "clustering") {
+            o.options.hoverMessage.push({
+                value: `\`\`\`cql-keys\nCOLUMN CLUSTERING KEY ${pair.kindIndex + 1}/${pair.kindCount}\`\`\``,
+            });
         }
 
         out.push(o);

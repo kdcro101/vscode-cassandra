@@ -1,4 +1,5 @@
 import { AnalyzedStatement, CqlAnalysis } from "../../../../../../../src/types/parser";
+import { decoBaseColumnsKnown } from "./decorations/base-columns-known";
 import { decoColumnsKeys } from "./decorations/columns-keys";
 import { decoColumnsKnown } from "./decorations/columns-known";
 import { decoValues } from "./decorations/values";
@@ -31,7 +32,7 @@ export const decorationsForStatement = (model: monaco.editor.ITextModel,
                 .concat(decoColumnsKeys(model, statement));
             break;
         case "createMaterializedView":
-            // out = decoColumnsKnown(model, statement, analysis)
+            out = decoBaseColumnsKnown(model, statement, analysis);
             //     .concat(decoColumnsKeys(model, statement));
             break;
         case "createIndex":

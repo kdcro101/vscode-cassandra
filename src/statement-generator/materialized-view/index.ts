@@ -17,7 +17,7 @@ export const materializedViewCreate = (keyspace: string, table: CassandraTable):
             `${columns.join(", ")}`,
             `FROM ${keyspace}.${table.name}`,
             `WHERE ${restriction.join(" AND ")}`,
-            `${primaryKey(table)}`,
+            `${primaryKey(table)};`,
         ];
         const wrapped = wrap(out.join("\n"), {
             width: 140,
