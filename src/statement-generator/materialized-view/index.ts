@@ -11,7 +11,6 @@ export const materializedViewCreate = (keyspace: string, table: CassandraTable):
         );
         const restriction = columns.map((c) => `${c} IS NOT NULL`);
         const out: string[] = [
-            `-- change view name and definition`,
             `CREATE MATERIALIZED VIEW ${keyspace}.${name}`,
             `AS SELECT`,
             `${columns.join(", ")}`,

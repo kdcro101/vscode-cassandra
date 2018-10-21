@@ -17,14 +17,14 @@ export const decoBaseColumnsKnown = (
     }
 
     const tableData = getBaseTableData(baseKeyspace, baseTable, analysis);
-    const columns = tableData.columns;
-    const baseColumns = statement.rules.baseColumns || [];
+    const tableColumns = tableData.columns;
+    const columns = statement.rules.columns || [];
 
-    const out = baseColumns.reduce<monaco.editor.IModelDeltaDecoration[]>((acc, c) => {
+    const out = columns.reduce<monaco.editor.IModelDeltaDecoration[]>((acc, c) => {
         const ps = model.getPositionAt(c.charStart);
         const pe = model.getPositionAt(c.charStop);
 
-        const pair = columns.find((col) => col.name === c.text);
+        const pair = tableColumns.find((col) => col.name === c.text);
 
         if (!pair) {
             return acc;
@@ -37,7 +37,6 @@ export const decoBaseColumnsKnown = (
             const o: monaco.editor.IModelDeltaDecoration = {
                 range: new monaco.Range(ps.lineNumber, ps.column, pe.lineNumber, pe.column + 1),
                 options: {
-                    // inlineClassName: "decoration-base column",
                     inlineClassName: "",
                     hoverMessage: {
                         value: `\`\`\`cqlhover\n${c.text} AS ${pair.type}\`\`\``,
@@ -46,14 +45,12 @@ export const decoBaseColumnsKnown = (
             };
             acc.push(o);
             return acc;
-
         }
         if (pair && pair.kind === "partition_key") {
             const o: monaco.editor.IModelDeltaDecoration = {
                 range: new monaco.Range(ps.lineNumber, ps.column, pe.lineNumber, pe.column + 1),
                 options: {
-                    // inlineClassName: "decoration-base column",
-                    inlineClassName: "",
+                    inlineClassName: "decoration partition_key",
                     hoverMessage: [
                         {
                             value: `\`\`\`cqlhover\n${c.text} AS ${pair.type}\`\`\``,
@@ -72,8 +69,7 @@ export const decoBaseColumnsKnown = (
             const o: monaco.editor.IModelDeltaDecoration = {
                 range: new monaco.Range(ps.lineNumber, ps.column, pe.lineNumber, pe.column + 1),
                 options: {
-                    // inlineClassName: "decoration-base column",
-                    inlineClassName: "",
+                    inlineClassName: "decoration clustering",
                     hoverMessage: [
                         {
                             value: `\`\`\`cqlhover\n${c.text} AS ${pair.type}\`\`\``,

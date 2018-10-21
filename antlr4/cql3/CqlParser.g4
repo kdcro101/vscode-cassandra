@@ -160,7 +160,7 @@ columnNotNullList
     : columnNotNull (kwAnd columnNotNull)*
     ;
 columnNotNull
-    : baseColumn kwIs kwNot kwNull
+    : column kwIs kwNot kwNull
     ;
 
 materializedViewOptions
@@ -646,7 +646,7 @@ columnList
     | { this.notifyErrorListeners("rule.columnList"); }
     ;
 baseColumnList
-    : baseColumn (syntaxComma (baseColumn | { this.notifyErrorListeners("rule.baseColumn"); }))*
+    : column (syntaxComma (column | { this.notifyErrorListeners("rule.column"); }))*
     | { this.notifyErrorListeners("rule.baseColumnList"); }
     ;
 

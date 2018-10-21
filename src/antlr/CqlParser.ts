@@ -2077,7 +2077,7 @@ export class CqlParser extends Parser {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 942;
-			this.baseColumn();
+			this.column();
 			this.state = 943;
 			this.kwIs();
 			this.state = 944;
@@ -7330,7 +7330,7 @@ export class CqlParser extends Parser {
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 1903;
-				this.baseColumn();
+				this.column();
 				this.state = 1911;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
@@ -7358,13 +7358,13 @@ export class CqlParser extends Parser {
 					case CqlParser.OBJECT_NAME:
 						{
 						this.state = 1905;
-						this.baseColumn();
+						this.column();
 						}
 						break;
 					case CqlParser.COMMA:
 					case CqlParser.K_FROM:
 						{
-						 this.notifyErrorListeners("rule.baseColumn"); 
+						 this.notifyErrorListeners("rule.column"); 
 						}
 						break;
 					default:
@@ -16301,7 +16301,7 @@ export class CqlParser extends Parser {
 		"\x05\u01A8\xD5\x02\u03A9\u03AA\x05*\x16\x02\u03AA\u03AC\x03\x02\x02\x02"+
 		"\u03AB\u03A8\x03\x02\x02\x02\u03AC\u03AF\x03\x02\x02\x02\u03AD\u03AB\x03"+
 		"\x02\x02\x02\u03AD\u03AE\x03\x02\x02\x02\u03AE)\x03\x02\x02\x02\u03AF"+
-		"\u03AD\x03\x02\x02\x02\u03B0\u03B1\x05\u0170\xB9\x02\u03B1\u03B2\x05\u01EE"+
+		"\u03AD\x03\x02\x02\x02\u03B0\u03B1\x05\u016E\xB8\x02\u03B1\u03B2\x05\u01EE"+
 		"\xF8\x02\u03B2\u03B3\x05\u020A\u0106\x02\u03B3\u03B4\x05\u020C\u0107\x02"+
 		"\u03B4+\x03\x02\x02\x02\u03B5\u03C0\x05\x92J\x02\u03B6\u03B7\x05\x92J"+
 		"\x02\u03B7\u03B8\x05\u01A8\xD5\x02\u03B8\u03B9\x05\x8EH\x02\u03B9\u03C0"+
@@ -16739,8 +16739,8 @@ export class CqlParser extends Parser {
 		"\u076B\u0769\x03\x02\x02\x02\u076B\u076C\x03\x02\x02\x02\u076C\u0770\x03"+
 		"\x02\x02\x02\u076D\u076B\x03\x02\x02\x02\u076E\u0770\b\x85\x01\x02\u076F"+
 		"\u0763\x03\x02\x02\x02\u076F\u076E\x03\x02\x02\x02\u0770\u0109\x03\x02"+
-		"\x02\x02\u0771\u0779\x05\u0170\xB9\x02\u0772\u0775\x05\u02AA\u0156\x02"+
-		"\u0773\u0776\x05\u0170\xB9\x02\u0774\u0776\b\x86\x01\x02\u0775\u0773\x03"+
+		"\x02\x02\u0771\u0779\x05\u016E\xB8\x02\u0772\u0775\x05\u02AA\u0156\x02"+
+		"\u0773\u0776\x05\u016E\xB8\x02\u0774\u0776\b\x86\x01\x02\u0775\u0773\x03"+
 		"\x02\x02\x02\u0775\u0774\x03\x02\x02\x02\u0776\u0778\x03\x02\x02\x02\u0777"+
 		"\u0772\x03\x02\x02\x02\u0778\u077B\x03\x02\x02\x02\u0779\u0777\x03\x02"+
 		"\x02\x02\u0779\u077A\x03\x02\x02\x02\u077A\u077E\x03\x02\x02\x02\u077B"+
@@ -18207,8 +18207,8 @@ export class ColumnNotNullListContext extends ParserRuleContext {
 
 
 export class ColumnNotNullContext extends ParserRuleContext {
-	public baseColumn(): BaseColumnContext {
-		return this.getRuleContext(0, BaseColumnContext);
+	public column(): ColumnContext {
+		return this.getRuleContext(0, ColumnContext);
 	}
 	public kwIs(): KwIsContext {
 		return this.getRuleContext(0, KwIsContext);
@@ -22352,13 +22352,13 @@ export class ColumnListContext extends ParserRuleContext {
 
 
 export class BaseColumnListContext extends ParserRuleContext {
-	public baseColumn(): BaseColumnContext[];
-	public baseColumn(i: number): BaseColumnContext;
-	public baseColumn(i?: number): BaseColumnContext | BaseColumnContext[] {
+	public column(): ColumnContext[];
+	public column(i: number): ColumnContext;
+	public column(i?: number): ColumnContext | ColumnContext[] {
 		if (i === undefined) {
-			return this.getRuleContexts(BaseColumnContext);
+			return this.getRuleContexts(ColumnContext);
 		} else {
-			return this.getRuleContext(i, BaseColumnContext);
+			return this.getRuleContext(i, ColumnContext);
 		}
 	}
 	public syntaxComma(): SyntaxCommaContext[];

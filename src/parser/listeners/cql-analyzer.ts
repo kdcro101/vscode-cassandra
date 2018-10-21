@@ -214,15 +214,12 @@ export class CqlAnalyzerListener implements CqlParserListener {
             charStart: ctx.start.startIndex,
             charStop: ctx.stop.stopIndex,
         };
-
         this.result.statements[this.statementCurrent].columns.push(column);
-    }
-    exitBaseColumn = (ctx: BaseColumnContext) => {
         const token = this.contextToToken(ctx);
-
-        this.pushRuleList("baseColumns", token);
+        this.pushRuleList("columns", token);
 
     }
+
     exitUse = (ctx: UseContext): void => {
         if (ctx.children.length < 2) {
             return;

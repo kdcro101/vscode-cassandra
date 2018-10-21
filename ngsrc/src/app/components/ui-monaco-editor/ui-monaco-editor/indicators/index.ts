@@ -3,6 +3,8 @@ import { decoBaseColumnsKnown } from "./decorations/base-columns-known";
 import { decoColumnsKeys } from "./decorations/columns-keys";
 import { decoColumnsKnown } from "./decorations/columns-known";
 import { decoValues } from "./decorations/values";
+import { markBaseKeyspaceReferenceError } from "./markers/base-keyspace-reference-error";
+import { markBaseTableReferenceError } from "./markers/base-table-reference-error";
 import { markColumnNoValue } from "./markers/column-no-value";
 import { markColumnNotFound } from "./markers/column-not-found";
 import { markKeyspaceReferenceError } from "./markers/keyspace-reference-error";
@@ -33,7 +35,6 @@ export const decorationsForStatement = (model: monaco.editor.ITextModel,
             break;
         case "createMaterializedView":
             out = decoBaseColumnsKnown(model, statement, analysis);
-            //     .concat(decoColumnsKeys(model, statement));
             break;
         case "createIndex":
             out = decoColumnsKnown(model, statement, analysis);
@@ -69,6 +70,10 @@ export const markersForStatement = (model: monaco.editor.ITextModel,
             out = markColumnNotFound(model, statement, analysis)
                 .concat(markTableReferenceError(model, statement, analysis))
                 .concat(markKeyspaceReferenceError(model, statement, analysis));
+            break;
+        case "createMaterializedView":
+            out = markBaseKeyspaceReferenceError(model, statement, analysis)
+            .concat(markBaseTableReferenceError(model, statement, analysis));
             break;
         default:
             out = null;

@@ -2160,8 +2160,8 @@ public class CqlParser extends Parser {
 	}
 
 	public static class ColumnNotNullContext extends ParserRuleContext {
-		public BaseColumnContext baseColumn() {
-			return getRuleContext(BaseColumnContext.class,0);
+		public ColumnContext column() {
+			return getRuleContext(ColumnContext.class,0);
 		}
 		public KwIsContext kwIs() {
 			return getRuleContext(KwIsContext.class,0);
@@ -2185,7 +2185,7 @@ public class CqlParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(942);
-			baseColumn();
+			column();
 			setState(943);
 			kwIs();
 			setState(944);
@@ -9094,11 +9094,11 @@ public class CqlParser extends Parser {
 	}
 
 	public static class BaseColumnListContext extends ParserRuleContext {
-		public List<BaseColumnContext> baseColumn() {
-			return getRuleContexts(BaseColumnContext.class);
+		public List<ColumnContext> column() {
+			return getRuleContexts(ColumnContext.class);
 		}
-		public BaseColumnContext baseColumn(int i) {
-			return getRuleContext(BaseColumnContext.class,i);
+		public ColumnContext column(int i) {
+			return getRuleContext(ColumnContext.class,i);
 		}
 		public List<SyntaxCommaContext> syntaxComma() {
 			return getRuleContexts(SyntaxCommaContext.class);
@@ -9137,7 +9137,7 @@ public class CqlParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(1903);
-				baseColumn();
+				column();
 				setState(1911);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
@@ -9165,13 +9165,13 @@ public class CqlParser extends Parser {
 					case OBJECT_NAME:
 						{
 						setState(1905);
-						baseColumn();
+						column();
 						}
 						break;
 					case COMMA:
 					case K_FROM:
 						{
-						 this.notifyErrorListeners("rule.baseColumn"); 
+						 this.notifyErrorListeners("rule.column"); 
 						}
 						break;
 					default:
@@ -19450,7 +19450,7 @@ public class CqlParser extends Parser {
 		"\u03a6\3\2\2\2\u03a6\'\3\2\2\2\u03a7\u03ad\5*\26\2\u03a8\u03a9\5\u01a8"+
 		"\u00d5\2\u03a9\u03aa\5*\26\2\u03aa\u03ac\3\2\2\2\u03ab\u03a8\3\2\2\2\u03ac"+
 		"\u03af\3\2\2\2\u03ad\u03ab\3\2\2\2\u03ad\u03ae\3\2\2\2\u03ae)\3\2\2\2"+
-		"\u03af\u03ad\3\2\2\2\u03b0\u03b1\5\u0170\u00b9\2\u03b1\u03b2\5\u01ee\u00f8"+
+		"\u03af\u03ad\3\2\2\2\u03b0\u03b1\5\u016e\u00b8\2\u03b1\u03b2\5\u01ee\u00f8"+
 		"\2\u03b2\u03b3\5\u020a\u0106\2\u03b3\u03b4\5\u020c\u0107\2\u03b4+\3\2"+
 		"\2\2\u03b5\u03c0\5\u0092J\2\u03b6\u03b7\5\u0092J\2\u03b7\u03b8\5\u01a8"+
 		"\u00d5\2\u03b8\u03b9\5\u008eH\2\u03b9\u03c0\3\2\2\2\u03ba\u03c0\5\u008e"+
@@ -19805,8 +19805,8 @@ public class CqlParser extends Parser {
 		"\3\2\2\2\u0768\u076a\3\2\2\2\u0769\u0764\3\2\2\2\u076a\u076d\3\2\2\2\u076b"+
 		"\u0769\3\2\2\2\u076b\u076c\3\2\2\2\u076c\u0770\3\2\2\2\u076d\u076b\3\2"+
 		"\2\2\u076e\u0770\b\u0085\1\2\u076f\u0763\3\2\2\2\u076f\u076e\3\2\2\2\u0770"+
-		"\u0109\3\2\2\2\u0771\u0779\5\u0170\u00b9\2\u0772\u0775\5\u02aa\u0156\2"+
-		"\u0773\u0776\5\u0170\u00b9\2\u0774\u0776\b\u0086\1\2\u0775\u0773\3\2\2"+
+		"\u0109\3\2\2\2\u0771\u0779\5\u016e\u00b8\2\u0772\u0775\5\u02aa\u0156\2"+
+		"\u0773\u0776\5\u016e\u00b8\2\u0774\u0776\b\u0086\1\2\u0775\u0773\3\2\2"+
 		"\2\u0775\u0774\3\2\2\2\u0776\u0778\3\2\2\2\u0777\u0772\3\2\2\2\u0778\u077b"+
 		"\3\2\2\2\u0779\u0777\3\2\2\2\u0779\u077a\3\2\2\2\u077a\u077e\3\2\2\2\u077b"+
 		"\u0779\3\2\2\2\u077c\u077e\b\u0086\1\2\u077d\u0771\3\2\2\2\u077d\u077c"+
