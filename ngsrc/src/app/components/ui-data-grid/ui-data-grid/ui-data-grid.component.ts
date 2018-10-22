@@ -31,6 +31,7 @@ import { ScrollAssist } from "./scroll-assist/scroll-assist";
 import { SelectionHelper } from "./selection-helper/selection-helper";
 
 import SheetClip from "sheetclip";
+import { plugins } from "src/app/types/handsontable-new";
 
 const ARROW_DOWN = 40;
 const ARROW_UP = 38;
@@ -441,6 +442,12 @@ export class UiDataGridComponent extends ViewDestroyable implements OnInit, OnDe
                 afterPaste: (changes) => {
                     // console.log("afterPaste");
                     this.clipboardCache = this.sheetclip.stringify(changes);
+                },
+                beforeColumnSort: (column: number, order: plugins.SortOrderType) => {
+                    if (this.htmlCache) {
+                         this.htmlCache.clear();
+                    }
+                    return true;
                 },
 
             };

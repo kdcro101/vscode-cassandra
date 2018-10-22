@@ -75,26 +75,7 @@
                     position: relative;
                     overflow: auto;
                     user-select: none;
-                    .result-header {
-                        padding: 8px;
 
-                        .total-statements {
-                            color: mat-color($cyan, 500);
-                        }
-                        .total-time {
-                            color: mat-color($yellow, 600);
-                        }
-                        .succeded {
-                            margin-top: 8px;
-                            color: mat-color($green, 600);
-                            margin-right: 16px;
-                        }
-                        .failed {
-                            margin-top: 8px;
-                            color: mat-color($warn, 500);
-                        }
-
-                    }
                     .errors {
                         padding-top: 2px;
                         .item {
@@ -182,6 +163,57 @@
                 float: left;
                 cursor: ew-resize;
             }
+        }
+    }
+}
+
+.root {
+    .result-panel {
+        .result-header {
+            padding: 8px;
+
+            .total-statements {
+                color: mat-color($cyan, 500);
+            }
+            .total-time {
+                color: mat-color($accent, "A700");
+            }
+            .succeded {
+                margin-top: 8px;
+                color: mat-color($green, 600);
+                margin-right: 16px;
+            }
+            .failed {
+                margin-top: 8px;
+                color: mat-color($warn, 500);
+            }
+
+        }
+    }
+
+    &.dark {
+        .result-panel {
+            .result-header {
+                padding: 8px;
+
+                .total-statements {
+                    color: mat-color($cyan, 500);
+                }
+                .total-time {
+                    color: mat-color($yellow, 600);
+                }
+                .succeded {
+                    margin-top: 8px;
+                    color: mat-color($green, 600);
+                    margin-right: 16px;
+                }
+                .failed {
+                    margin-top: 8px;
+                    color: mat-color($warn, 500);
+                }
+
+            }
+
         }
     }
 }

@@ -13,6 +13,13 @@
 //     display: none;
 // }
 .handsontable {
+    .ht_clone_top {
+        thead {
+            tr:first-child th {
+                vertical-align: middle;
+            }
+        }
+    }
     .triangle {
         width: 0;
         height: 0;
@@ -35,6 +42,60 @@
     }
 }
 
+.handsontable .ht_clone_top th .relative .colHeader {
+    display: block;
+    // padding-left: 24px;
+    // padding-right: 24px;
+    position: relative;
+
+    span.title {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .key-indicator {
+        position: absolute;
+        top: 0;
+        left: 4px;
+        width: 16px;
+        bottom: 0;
+        // background-color: purple;
+        &.key-partition {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmNTI1MiI+ICA8cGF0aCBkPSJNMTEuOTk5NzQxIDEuOTk5ODNhMTAgMTAgMCAwIDAtOS45OTk5MDYgOS45OTk5MSAxMCAxMCAwIDAgMCA5Ljk5OTkwNiAxMC4wMDA0MiAxMCAxMCAwIDAgMCAxMC4wMDA0MjQtMTAuMDAwNDIgMTAgMTAgMCAwIDAtMTAuMDAwNDI0LTkuOTk5OTF6TTguMTMzODI3OSA1Ljg4Nzk3aDQuNTA4NzY4MWMxLjMzNzY4NCAwIDIuMzg0MjY1LjM0MTM5IDMuMTM5ODYgMS4wMjQyMi43NjExOTIuNjgyODQgMS4xNDE1MzMgMS41ODY5OSAxLjE0MTUzMyAyLjcxMTk4IDAgMS4xODY1Ny0uMzcxODEgMi4xMDE0LTEuMTE2MjExIDIuNzQ1MDYtLjczODgwNS42MzgwNS0xLjc5OTc3NS45NTcwNC0zLjE4MjIzNS45NTcwNEg5Ljc0NjEzMTl2NC43ODU3NmgtMS42MTIzMDR6bTEuNjEyMzA0IDEuMzI2NTN2NC43OTQwMmgyLjg5NjQ2NDFjLjg2MTkzOSAwIDEuNTIyMzItLjIwMTYzIDEuOTgxMjc0LS42MDQ2MS40NTg5NTUtLjQwODU4LjY4ODMzMS0uOTk2NDEuNjg4MzMxLTEuNzYzMiAwLS43Mjc2MS0uMjI5Mzc2LTEuMzA5NTgtLjY4ODMzMS0xLjc0NjE1LS40NTg5NTQtLjQzNjU2LTEuMDg4OTE4LS42NjMyNy0xLjg4OTI5LS42ODAwNnoiLz48L3N2Zz4=);
+            background-size: contain;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+        &.key-clustering {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZkZDgzNSI+ICA8cGF0aCBkPSJNMTEuOTk5NzQyIDEuOTk5ODNhMTAgMTAgMCAwIDAtOS45OTk5MDcgOS45OTk5IDEwIDEwIDAgMCAwIDkuOTk5OTA3IDEwLjAwMDQzIDEwIDEwIDAgMCAwIDEwLjAwMDQyMy0xMC4wMDA0MyAxMCAxMCAwIDAgMC0xMC4wMDA0MjMtOS45OTk5em0uMjE0NDU3IDMuNzIwMThjMS4yOTg1MDUgMCAyLjMzOTIyNi4zNjM4IDMuMTIyODA3IDEuMDkxNDEuNzgzNTguNzIyMDEgMS4yMzk2NiAxLjcyMzc5IDEuMzY4MzkyIDMuMDA1NWgtMS42MjAwNTdjLS4xMzk5MjUtLjk3Mzg4LS40NDUwNDEtMS42NzkwNy0uOTE1MTg5LTIuMTE1NjMtLjQ2NDU1Mi0uNDM2NTctMS4xMTY0MDMtLjY1NDc0LTEuOTU1OTUzLS42NTQ3NC0xLjAyOTg0OSAwLTEuODM4NTIzLjM4MDg1LTIuNDI2MjA5IDEuMTQyMDUtLjU4MjA4OC43NjExOS0uODczMzMxIDEuODQ0MDUtLjg3MzMzMSAzLjI0ODg5djEuMTgzOTFjMCAxLjMyNjQ5LjI3Njg1NCAyLjM4MTYuODMwOTU3IDMuMTY1MTguNTU0MTAzLjc4MzU4IDEuMzI5Njg5IDEuMTc1MTMgMi4zMjU5NTYgMS4xNzUxMy44OTU1MiAwIDEuNTgwOTc3LS4yMDE2MyAyLjA1NjcyMi0uNjA0NjIuNDgxMzQyLS40MDg1OC44MDAzMzEtMS4xMTY0NC45NTcwNDctMi4xMjM5aDEuNjIwMDU3Yy0uMTUxMTIgMS4yOTI5MS0uNjI5NjAzIDIuMjkyMDEtMS40MzU1NzIgMi45OTcyMy0uODAwMzcxLjY5OTYzLTEuODY2MTY4IDEuMDQ5NTUtMy4xOTgyNTQgMS4wNDk1NS0xLjQ0NDAyNyAwLTIuNjAyNjI1LS41MTc5NS0zLjQ3NTc1Ny0xLjU1MzM5LS44Njc1MzUtMS4wMzU0NS0xLjMwMTcyOS0yLjQyMDc1LTEuMzAxNzI5LTQuMTU1ODJ2LTEuMTc1MTJjMC0xLjEzNjE5LjIwMTYzLTIuMTM1My42MDQ2MTQtMi45OTcyNC40MDg1ODEtLjg2MTkzLjk4NTIwOS0xLjUyMjMyIDEuNzI5NjEtMS45ODEyNy43NDQ0MDItLjQ2NDU1IDEuNjA2NDEzLS42OTcxMiAyLjU4NTg4OS0uNjk3MTJ6Ii8+PC9zdmc+);
+            background-size: contain;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+    }
+}
+
+.vscode-light {
+    .handsontable {
+        .columnSorting.ascending::after {
+            content: '\25B2';
+            color: inherit;
+            position: absolute;
+            right: 0px;
+        }
+        .columnSorting.descending::after {
+            content: '\25BC';
+            /*  */
+            color: inherit;
+            position: absolute;
+            right: 0px;
+        }
+        th {
+            background-color: mat-color($background, 400);
+        }
+    }
+}
+
 .vscode-dark,
 .vscode-high-contrast {
     .handsontable td {
@@ -47,38 +108,7 @@
     .handsontable tr {
         background-color: transparent;
     }
-    .handsontable .ht_clone_top th .relative .colHeader {
-        display: block;
-        // padding-left: 24px;
-        // padding-right: 24px;
-        position: relative;
 
-        span.title {
-            padding-left: 24px;
-            padding-right: 24px;
-        }
-
-        .key-indicator {
-            position: absolute;
-            top: 0;
-            left: 4px;
-            width: 16px;
-            bottom: 0;
-            // background-color: purple;
-            &.key-partition {
-                background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmNTI1MiI+ICA8cGF0aCBkPSJNMTEuOTk5NzQxIDEuOTk5ODNhMTAgMTAgMCAwIDAtOS45OTk5MDYgOS45OTk5MSAxMCAxMCAwIDAgMCA5Ljk5OTkwNiAxMC4wMDA0MiAxMCAxMCAwIDAgMCAxMC4wMDA0MjQtMTAuMDAwNDIgMTAgMTAgMCAwIDAtMTAuMDAwNDI0LTkuOTk5OTF6TTguMTMzODI3OSA1Ljg4Nzk3aDQuNTA4NzY4MWMxLjMzNzY4NCAwIDIuMzg0MjY1LjM0MTM5IDMuMTM5ODYgMS4wMjQyMi43NjExOTIuNjgyODQgMS4xNDE1MzMgMS41ODY5OSAxLjE0MTUzMyAyLjcxMTk4IDAgMS4xODY1Ny0uMzcxODEgMi4xMDE0LTEuMTE2MjExIDIuNzQ1MDYtLjczODgwNS42MzgwNS0xLjc5OTc3NS45NTcwNC0zLjE4MjIzNS45NTcwNEg5Ljc0NjEzMTl2NC43ODU3NmgtMS42MTIzMDR6bTEuNjEyMzA0IDEuMzI2NTN2NC43OTQwMmgyLjg5NjQ2NDFjLjg2MTkzOSAwIDEuNTIyMzItLjIwMTYzIDEuOTgxMjc0LS42MDQ2MS40NTg5NTUtLjQwODU4LjY4ODMzMS0uOTk2NDEuNjg4MzMxLTEuNzYzMiAwLS43Mjc2MS0uMjI5Mzc2LTEuMzA5NTgtLjY4ODMzMS0xLjc0NjE1LS40NTg5NTQtLjQzNjU2LTEuMDg4OTE4LS42NjMyNy0xLjg4OTI5LS42ODAwNnoiLz48L3N2Zz4=);
-                background-size: contain;
-                background-position: center center;
-                background-repeat: no-repeat;
-            }
-            &.key-clustering {
-                background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZkZDgzNSI+ICA8cGF0aCBkPSJNMTEuOTk5NzQyIDEuOTk5ODNhMTAgMTAgMCAwIDAtOS45OTk5MDcgOS45OTk5IDEwIDEwIDAgMCAwIDkuOTk5OTA3IDEwLjAwMDQzIDEwIDEwIDAgMCAwIDEwLjAwMDQyMy0xMC4wMDA0MyAxMCAxMCAwIDAgMC0xMC4wMDA0MjMtOS45OTk5em0uMjE0NDU3IDMuNzIwMThjMS4yOTg1MDUgMCAyLjMzOTIyNi4zNjM4IDMuMTIyODA3IDEuMDkxNDEuNzgzNTguNzIyMDEgMS4yMzk2NiAxLjcyMzc5IDEuMzY4MzkyIDMuMDA1NWgtMS42MjAwNTdjLS4xMzk5MjUtLjk3Mzg4LS40NDUwNDEtMS42NzkwNy0uOTE1MTg5LTIuMTE1NjMtLjQ2NDU1Mi0uNDM2NTctMS4xMTY0MDMtLjY1NDc0LTEuOTU1OTUzLS42NTQ3NC0xLjAyOTg0OSAwLTEuODM4NTIzLjM4MDg1LTIuNDI2MjA5IDEuMTQyMDUtLjU4MjA4OC43NjExOS0uODczMzMxIDEuODQ0MDUtLjg3MzMzMSAzLjI0ODg5djEuMTgzOTFjMCAxLjMyNjQ5LjI3Njg1NCAyLjM4MTYuODMwOTU3IDMuMTY1MTguNTU0MTAzLjc4MzU4IDEuMzI5Njg5IDEuMTc1MTMgMi4zMjU5NTYgMS4xNzUxMy44OTU1MiAwIDEuNTgwOTc3LS4yMDE2MyAyLjA1NjcyMi0uNjA0NjIuNDgxMzQyLS40MDg1OC44MDAzMzEtMS4xMTY0NC45NTcwNDctMi4xMjM5aDEuNjIwMDU3Yy0uMTUxMTIgMS4yOTI5MS0uNjI5NjAzIDIuMjkyMDEtMS40MzU1NzIgMi45OTcyMy0uODAwMzcxLjY5OTYzLTEuODY2MTY4IDEuMDQ5NTUtMy4xOTgyNTQgMS4wNDk1NS0xLjQ0NDAyNyAwLTIuNjAyNjI1LS41MTc5NS0zLjQ3NTc1Ny0xLjU1MzM5LS44Njc1MzUtMS4wMzU0NS0xLjMwMTcyOS0yLjQyMDc1LTEuMzAxNzI5LTQuMTU1ODJ2LTEuMTc1MTJjMC0xLjEzNjE5LjIwMTYzLTIuMTM1My42MDQ2MTQtMi45OTcyNC40MDg1ODEtLjg2MTkzLjk4NTIwOS0xLjUyMjMyIDEuNzI5NjEtMS45ODEyNy43NDQ0MDItLjQ2NDU1IDEuNjA2NDEzLS42OTcxMiAyLjU4NTg4OS0uNjk3MTJ6Ii8+PC9zdmc+);
-                background-size: contain;
-                background-position: center center;
-                background-repeat: no-repeat;
-            }
-        }
-    }
     .handsontable th {
         background-color: mat-color($background, 800);
         // color: var(--vscode-editorLineNumber-foreground);
@@ -92,11 +122,6 @@
     .handsontable.htRowHeaders thead tr th:nth-child(2) {
         border-left: 1px solid darken(mat-color($background, 800), 3%);
     }
-    // .handsontable th:last-child {
-    //     border-right: 1px solid mat-color($background, 700);
-    //     border-bottom: 1px solid mat-color($background, 700);
-    // }
-    // .handsontable tbody th.ht__highlight,
     .handsontable .ht_clone_top {
         thead {
             tr:first-child th.ht__highlight {
@@ -175,6 +200,7 @@
     }
     .handsontable .columnSorting.descending::after {
         content: '\25BC';
+        /*  */
         color: inherit;
         position: absolute;
         right: 0px;

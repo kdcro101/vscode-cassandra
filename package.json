@@ -1,7 +1,7 @@
 {
     "name": "vscode-cassandra",
-    "displayName": "vscode-cassandra",
-    "description": "Apache Cassandra database workbench",
+    "displayName": "Cassandra Workbench",
+    "description": "Design and query database with help of generated templates, autocomplete and inline code decorations",
     "version": "0.0.1",
     "publisher": "kdcro101",
     "engines": {
@@ -10,10 +10,26 @@
     "categories": [
         "Other", "Programming Languages"
     ],
+    "keywords": [
+        "CQL",
+        "Cassandra",
+        "modeling",
+        "query",
+        "Apache Cassandra"
+    ],
     "activationEvents": [
         "workspaceContains:.cassandraWorkbench.jsonc",
         "onCommand:cassandraWorkbench.generateConfiguration"
     ],
+    "icon": "icons/app.png",
+    "bugs": {
+        "url": "https://github.com/kdcro101/vscode-cassandra/issues"
+    },
+    "homepage": "https://github.com/kdcro101/vscode-cassandra/blob/master/README.md",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kdcro101/vscode-cassandra.git"
+    },
     "main": "./out/extension",
     "contributes": {
         "languages": [{

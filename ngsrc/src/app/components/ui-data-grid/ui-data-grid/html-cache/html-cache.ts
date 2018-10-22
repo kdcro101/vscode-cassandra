@@ -22,7 +22,7 @@ export class HtmlCache {
         keys.forEach((k) => delete this.htmlCache[k]);
     }
     private getKey(row: number, col: number) {
-        return `R${row}C${col}`;
+        return `${col}-${row}`;
     }
 
 }

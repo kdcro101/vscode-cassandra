@@ -754,9 +754,9 @@ export class VsCommands {
             tap((exists) => {
 
                 if (exists) {
-                    vscode.window.showWarningMessage("Configuration already exists", "Edit", "Close")
+                    vscode.window.showWarningMessage("Configuration already exists", "Edit configuration", "Close")
                         .then((result) => {
-                            if (result === "Edit") {
+                            if (result === "Edit configuration") {
                                 this.onEditConfig();
                             }
                         });

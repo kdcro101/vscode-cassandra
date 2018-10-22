@@ -35,9 +35,9 @@ export class ConfigurationManager {
                 map((data) => jsmin(data.toString())),
                 concatMap((contents) => {
                     if (contents.trim().length === 0) {
+                        vscode.window.showInformationMessage("Configuration generated");
                         return fs.copy(this.confDefaultPath, this.confPath);
                     }
-                    vscode.window.showInformationMessage("Configuration generated");
                     return Promise.resolve();
                 }),
 

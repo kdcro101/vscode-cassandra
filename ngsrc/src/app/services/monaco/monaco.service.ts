@@ -50,8 +50,6 @@ export class MonacoService {
 
         monaco.languages.setMonarchTokensProvider("cql", cqlTokenProvider);
 
-        // monaco.languages.setTokensProvider("cql", new CqlTokenizer);
-
         monaco.editor.defineTheme("vs-dark-custom", {
             base: "vs-dark", // can also be vs-dark or hc-black
             inherit: true, // can also be false to completely replace the builtin rules
@@ -84,11 +82,46 @@ export class MonacoService {
             colors: null,
         });
 
+        monaco.editor.defineTheme("vs-light-custom", {
+            base: "vs",
+            inherit: true,
+            rules: [
+                { token: "invalid", foreground: "ff00ff", fontStyle: "" },
+                // { token: "identifier", foreground: "ffffff", fontStyle: "" },
+                { token: "comment", foreground: "7b7f8b", fontStyle: "" },
+                { token: "keyword", foreground: "01579b", fontStyle: "" },
+                { token: "keyword.primary-key", foreground: "b71c1c", fontStyle: "" },
+                { token: "key.partition", foreground: "ef5350", fontStyle: "" },
+                { token: "key.clustering", foreground: "ff8f00", fontStyle: "" },
+                { token: "type", foreground: "00897b", fontStyle: "" },
+                { token: "type.null", foreground: "00acc1", fontStyle: "" },
+                { token: "type.keyspace", foreground: "9472DB", fontStyle: "italic" },
+                { token: "delimiter.parenthesis", foreground: "e65100", fontStyle: "" },
+                { token: "delimiter.angle", foreground: "f57c00", fontStyle: "" },
+                { token: "delimiter.square", foreground: "f57c00", fontStyle: "" },
+                { token: "delimiter.curly", foreground: "ff9800", fontStyle: "" },
+                { token: "delimiter.statement", foreground: "aaaa00", fontStyle: "" },
+                { token: "delimiter.comma", foreground: "01579b", fontStyle: "" },
+                { token: "delimiter.dot", foreground: "01579b", fontStyle: "" },
+                { token: "number", foreground: "6a1b9a", fontStyle: "" },
+                { token: "string", foreground: "46A65E", fontStyle: "" },
+                { token: "uuid", foreground: "6a1b9a", fontStyle: "" },
+                { token: "delimiter.type.definition", foreground: "000000", fontStyle: "" },
+                { token: "operator", foreground: "039be5", fontStyle: "" },
+                { token: "code.delimiter", foreground: "455a64", fontStyle: "" },
+                { token: "code", foreground: "78909c", fontStyle: "" },
+            ],
+            colors: null,
+        });
+
         monaco.languages.setMonarchTokensProvider("cqlhover", cqlHoverTokenProvider);
         monaco.languages.setMonarchTokensProvider("cql-keys", cqlKeysHoverTokenProvider);
         monaco.languages.registerCompletionItemProvider("cql", cqlCompletitionProvider(this.autocomplete));
-        const themeName = this.theme.isDark ? "vs-dark-custom" : "vs-light";
+
+        const themeName = this.theme.isDark ? "vs-dark-custom" : "vs-light-custom";
+
         monaco.editor.setTheme(themeName);
+
         this.theme.monacoTheme = themeName;
 
     }
