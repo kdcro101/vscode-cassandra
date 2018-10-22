@@ -119,6 +119,7 @@ export const preferredRules: PreferredRules = {
     "kwLimit": { text: "LIMIT", type: "keyword" },
     "kwList": { text: "LIST", type: "keyword" },
     "kwListRoles": { text: "LIST ROLES", type: "keyword" },
+    "kwListUsers": { text: "LIST USERS", type: "keyword" },
     "kwLogged": { text: "LOGGED", type: "keyword" },
     "kwLogin": { text: "LOGIN", type: "keyword" },
     // "kwMaterialized": { text: "MATERIALIZED", type: "keyword" },

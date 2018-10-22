@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "/exec/antlr4-cql3"
+		}
+	],
+    "settings": {
+        "favorites.sortDirection": "ASC",
+        "favorites.groupsFirst": true,
+        "redis-console.host": "localhost",
+        "redis-console.port": 6379,
+        "redis-console.password": "",
+        "redis-console.hostIpFamily": 4,
+        "typescript.navigator.showDataTypes": true,
+        "typescript.navigator.showVisibilityLabels": false,
+        "typescript.tsdk": "node_modules/typescript/lib"
+    }
+}

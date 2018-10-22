@@ -16,5 +16,40 @@
         "id": "lSw9uKcXriqvBRIx",
         "label": "angular",
         "workspaceRoot": "/exec/vscode-cassandra"
+    },
+    {
+        "type": "File",
+        "name": "/exec/desktop/node_modules/@angular/material/_theming.scss",
+        "parent_id": null,
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "tbSHe0fGC8X2oKRF",
+        "fsPath": "/exec/desktop/node_modules/@angular/material/_theming.scss"
+    },
+    {
+        "type": "File",
+        "name": "/exec/testts/tsconfig.json",
+        "parent_id": null,
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "PAT7uNaGf0McxVdU",
+        "fsPath": "/exec/testts/tsconfig.json"
+    },
+    {
+        "type": "File",
+        "name": "/exec/testts/node_modules/array-map/readme.markdown",
+        "parent_id": null,
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "N9sF8S1EaZDbdti5",
+        "fsPath": "/exec/testts/node_modules/array-map/readme.markdown"
+    },
+    {
+        "type": "File",
+        "name": "/exec/vscode-cassandra/icons/aggregates/light.svg",
+        "parent_id": null,
+        "workspaceRoot": "/exec/vscode-cassandra",
+        "workspacePath": "icons/aggregates/light.svg",
+        "id": "2u0XWntGUajScsd1"
     }
 ]
