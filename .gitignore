@@ -4,4 +4,3 @@ node_modules
 *.vsix
 ng/**/*.*
 ng/main.js
-antlr4-cql3
