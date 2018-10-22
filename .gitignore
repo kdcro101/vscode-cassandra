@@ -4,3 +4,4 @@ node_modules
 *.vsix
 ng/**/*.*
 ng/main.js
+.favorites.json
