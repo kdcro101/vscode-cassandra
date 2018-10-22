@@ -67,7 +67,7 @@ export class CassandraWorkbench {
             });
         });
 
-        const confPath = this.configManager.confPath;
+        const confPath = this.configManager.configurationPath;
 
         zip(fromEventPattern<vscode.TextDocument>((f: (e: any) => any) => {
             return vscode.workspace.onDidSaveTextDocument(f);

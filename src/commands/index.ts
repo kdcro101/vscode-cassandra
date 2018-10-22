@@ -1,6 +1,6 @@
 import * as fs from "fs-extra";
 import { from, ReplaySubject } from "rxjs";
-import { concatMap, take } from "rxjs/operators";
+import { concatMap, filter, take, tap } from "rxjs/operators";
 import * as vscode from "vscode";
 import { CassandraWorkbench } from "../cassandra-workbench";
 import { TreeItemAggregateItem } from "../cassandra-workbench/treeview-provider/tree-item-aggregate-item";
@@ -749,12 +749,35 @@ export class VsCommands {
     }
 
     private onConfigurationGenerate = () => {
-        this.configuration.loadConfig()
-            .then((result) => {
-                console.log("onConfigurationGenerate OK");
-            }).catch((e) => {
-                console.log("onConfigurationGenerate FAIL");
+
+        from(this.configuration.configExists()).pipe(
+            tap((exists) => {
+
+                if (exists) {
+                    vscode.window.showWarningMessage("Configuration already exists", "Edit", "Close")
+                        .then((result) => {
+                            if (result === "Edit") {
+                                this.onEditConfig();
+                            }
+                        });
+                }
+
+            }),
+            filter((exists) => exists === false),
+            concatMap(() => this.configuration.getConfig()),
+        ).subscribe(() => {
+            console.log("Configuration generation [OK]");
+            this.stateWorkbench.pipe(
+                take(1),
+            ).subscribe(() => {
+                this.workbench.revealCqlPanel();
             });
+
+        }, (e) => {
+            console.log("Configuration generation [FAIL]");
+            console.log(e);
+        });
+
     }
     private onRefresh = () => {
         this.stateWorkbench.pipe(
@@ -765,7 +788,7 @@ export class VsCommands {
         });
     }
     private onEditConfig = () => {
-        const fp = this.configuration.confPath;
+        const fp = this.configuration.configurationPath;
         const uri = vscode.Uri.file(fp);
         vscode.window.showTextDocument(uri, {
             viewColumn: vscode.ViewColumn.Active,

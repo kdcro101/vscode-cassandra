@@ -1,18 +1,18 @@
 {
     "name": "vscode-cassandra",
     "displayName": "vscode-cassandra",
-    "description": "Cassandra database workbench for Visual studio Code",
+    "description": "Apache Cassandra database workbench",
     "version": "0.0.1",
     "publisher": "kdcro101",
     "engines": {
         "vscode": "^1.28.1"
     },
     "categories": [
-        "Other"
+        "Other", "Programming Languages"
     ],
     "activationEvents": [
         "workspaceContains:.cassandraWorkbench.jsonc",
-        "onCommand:generate-configuration"
+        "onCommand:cassandraWorkbench.generateConfiguration"
     ],
     "main": "./out/extension",
     "contributes": {
@@ -20,7 +20,7 @@
             "id": "cql",
             "aliases": [
                 "CQL",
-                "Apache Cassandra CQL"
+                "cql"
             ],
             "extensions": [
                 ".cql"
@@ -100,8 +100,7 @@
                     "group": "navigation"
                 }
             ],
-            "view/item/context": [
-                {
+            "view/item/context": [{
                     "command": "cassandraWorkbench.cqlListRoles",
                     "when": "view == cassandraWorkbenchView && viewItem == cluster",
                     "group": "01_common@1"
@@ -465,7 +464,7 @@
             },
             {
                 "command": "cassandraWorkbench.generateConfiguration",
-                "title": "CASSANDRA WORKBENCH: Generate configuration template"
+                "title": "Cassandra Workbench: Generate configuration template"
             },
             {
                 "command": "cassandraWorkbench.openFileInWorkbench",

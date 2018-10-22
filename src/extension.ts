@@ -1,5 +1,6 @@
 
-import { from, Subject } from "rxjs";
+import { from, merge, Subject } from "rxjs";
+import { filter, take } from "rxjs/operators";
 import * as vscode from "vscode";
 import { CassandraWorkbench } from "./cassandra-workbench";
 import { VsCommands } from "./commands";
@@ -28,20 +29,23 @@ export function activate(context: vscode.ExtensionContext) {
 
     let workbench: CassandraWorkbench = null;
 
-    // from(config.loadConfig()).pipe()
-    // .subscribe((clusterItems) => {
+    merge(
+        from(config.configExists()).pipe(filter((exists) => exists === true)),
+        config.stateConfiguration,
+    ).pipe(
+        take(1),
+    ).subscribe(() => {
 
-    workbench = new CassandraWorkbench(context, workspace);
-    // workbench.start();
-    commands.setWorkbench(workbench);
-    workbench.revealCqlPanel();
-    // });
+        workbench = new CassandraWorkbench(context, workspace);
+        commands.setWorkbench(workbench);
+        // workbench.revealCqlPanel();
+
+    });
 
 }
-
-// this method is called when your extension is deactivated
 export function deactivate() {
     extensionContextBundle.eventDestroy.next();
+    extensionContextBundle = null;
     console.log("vscode-cassandra deactivated");
 
 }

@@ -13,7 +13,7 @@ const jsmin = jsminModule.jsmin;
 
 export class ConfigurationManager {
     public stateConfiguration = new ReplaySubject<ValidatedConfigClusterItem[]>(1);
-    public confPath: string;
+    private confPath: string;
     private confDefaultPath: string;
     constructor(private context: vscode.ExtensionContext, private workspace: Workspace) {
         const root = this.workspace.getRootPath();
@@ -21,7 +21,12 @@ export class ConfigurationManager {
         this.confDefaultPath = path.join(context.extensionPath, "config", "default.jsonc");
 
     }
-
+    public get configurationPath() {
+        return this.confPath;
+    }
+    public configExists(): Promise<boolean> {
+        return fs.pathExists(this.confPath);
+    }
     public generateDefault(): Promise<void> {
         return new Promise((resolve, reject) => {
 
@@ -32,6 +37,7 @@ export class ConfigurationManager {
                     if (contents.trim().length === 0) {
                         return fs.copy(this.confDefaultPath, this.confPath);
                     }
+                    vscode.window.showInformationMessage("Configuration generated");
                     return Promise.resolve();
                 }),
 
@@ -41,12 +47,13 @@ export class ConfigurationManager {
 
         });
     }
-    public getConfig(): Promise<ValidatedConfigClusterItem[]> {
+    public getConfig(warnIfNonexisting: boolean = false): Promise<ValidatedConfigClusterItem[]> {
         return new Promise((resolve, reject) => {
 
-            from(fs.pathExists(this.confPath)).pipe(
+            from(this.configExists()).pipe(
                 concatMap((exist) => {
                     if (!exist) {
+
                         return this.generateDefault();
                     }
                     return Promise.resolve();
