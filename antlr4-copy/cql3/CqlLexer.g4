@@ -32,8 +32,6 @@ PLUS: '+';
 MINUSMINUS: '--';
 MINUS: '-';
 
-
-
 // Keywords
 K_ADD: A D D | 'ADD';
 K_AGGREGATE: A G G R E G A T E | 'AGGREGATE';
@@ -121,7 +119,7 @@ K_REPLACE: R E P L A C E  | 'REPLACE';
 K_REPLICATION: R E P L I C A T I O N  | 'REPLICATION';
 K_RETURNS: R E T U R N S  | 'RETURNS';
 K_REVOKE: R E V O K E  | 'REVOKE';
-K_ROLE: R O L E  | 'ROLE';
+
 K_SCHEMA: S C H E M A  | 'SCHEMA';
 K_SELECT: S E L E C T | 'SELECT';
 K_SET: S E T  | 'SET';
@@ -144,7 +142,6 @@ K_TYPE: T Y P E  | 'TYPE';
 K_UNLOGGED: U N L O G G E D  | 'UNLOGGED';
 K_UPDATE: U P D A T E  | 'UPDATE';
 K_USE: U S E  | 'USE';
-K_USER: U S E R  | 'USER';
 K_USING: U S I N G  | 'USING';
 K_VALUES: V A L U E S  | 'VALUES';
 K_VIEW: V I E W  | 'VIEW';
@@ -164,8 +161,12 @@ K_FLOAT: F L O A T | 'FLOAT';
 K_FROZEN: F R O Z E N | 'FROZEN';
 K_INET: I N E T | 'INET';
 K_INT: I N T | 'INT';
-K_LIST: L I S T | 'LIST';
-K_LIST_ROLES: L I S T   R O L E S| 'LIST ROLES';
+// K_LIST_USERS: L I S T U S E R S;
+// K_LIST_ROLES: L I S T R O L E S;
+K_LIST: L I S T;
+K_ROLES: R O L E S;
+K_ROLE: R O L E;
+
 K_MAP: M A P | 'MAP';
 K_SMALLINT: S M A L L I N T | 'SMALLINT';
 K_TEXT: T E X T | 'TEXT';
@@ -177,7 +178,7 @@ K_UUID: U U I D  | 'UUID';
 K_VARCHAR: V A R C H A R | 'VARCHAR';
 K_VARINT: V A R I N T | 'VARINT';
 
-K_USERS: U S E R S  | 'USERS';
+
 
 fragment A : [aA]; // match either an 'a' or 'A'
 fragment B : [bB];
@@ -248,5 +249,6 @@ OPERATOR_LTE: OPERATOR_LTE_FRAG;
 OPERATOR_GTE: OPERATOR_GTE_FRAG;
 
 
-
+K_USERS: U S E R S  | 'USERS';
+K_USER: U S E R  | 'USER';
 

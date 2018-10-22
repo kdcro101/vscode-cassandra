@@ -48,7 +48,7 @@ export class CassandraWorkbench {
         this.stateInitialized = new ReplaySubject<void>(1);
         this.eventConfigLoad.next();
 
-        from(this.configManager.loadConfig()).pipe(
+        from(this.configManager.getConfig()).pipe(
             tap((clusterItems) => {
                 this.clusters = new Clusters(clusterItems);
                 this.changeProcessor = new DataChangeProcessor(this.clusters);

@@ -158,52 +158,52 @@ export class CqlParser extends Parser {
 	public static readonly K_UNLOGGED=128;
 	public static readonly K_UPDATE=129;
 	public static readonly K_USE=130;
-	public static readonly K_USER=131;
-	public static readonly K_USING=132;
-	public static readonly K_VALUES=133;
-	public static readonly K_VIEW=134;
-	public static readonly K_WHERE=135;
-	public static readonly K_WITH=136;
-	public static readonly K_WRITETIME=137;
-	public static readonly K_ASCII=138;
-	public static readonly K_BIGINT=139;
-	public static readonly K_BLOB=140;
-	public static readonly K_BOOLEAN=141;
-	public static readonly K_COUNTER=142;
-	public static readonly K_DATE=143;
-	public static readonly K_DECIMAL=144;
-	public static readonly K_DOUBLE=145;
-	public static readonly K_FLOAT=146;
-	public static readonly K_FROZEN=147;
-	public static readonly K_INET=148;
-	public static readonly K_INT=149;
-	public static readonly K_LIST=150;
-	public static readonly K_ROLES=151;
-	public static readonly K_ROLE=152;
-	public static readonly K_MAP=153;
-	public static readonly K_SMALLINT=154;
-	public static readonly K_TEXT=155;
-	public static readonly K_TIMEUUID=156;
-	public static readonly K_TIME=157;
-	public static readonly K_TINYINT=158;
-	public static readonly K_TUPLE=159;
-	public static readonly K_UUID=160;
-	public static readonly K_VARCHAR=161;
-	public static readonly K_VARINT=162;
-	public static readonly K_USERS=163;
-	public static readonly CODE_BLOCK=164;
-	public static readonly STRING_LITERAL=165;
-	public static readonly DECIMAL_LITERAL=166;
-	public static readonly FLOAT_LITERAL=167;
-	public static readonly HEXADECIMAL_LITERAL=168;
-	public static readonly REAL_LITERAL=169;
-	public static readonly OBJECT_NAME=170;
-	public static readonly UUID=171;
-	public static readonly OPERATOR_EQ=172;
-	public static readonly OPERATOR_LT=173;
-	public static readonly OPERATOR_GT=174;
-	public static readonly OPERATOR_LTE=175;
-	public static readonly OPERATOR_GTE=176;
+	public static readonly K_USING=131;
+	public static readonly K_VALUES=132;
+	public static readonly K_VIEW=133;
+	public static readonly K_WHERE=134;
+	public static readonly K_WITH=135;
+	public static readonly K_WRITETIME=136;
+	public static readonly K_ASCII=137;
+	public static readonly K_BIGINT=138;
+	public static readonly K_BLOB=139;
+	public static readonly K_BOOLEAN=140;
+	public static readonly K_COUNTER=141;
+	public static readonly K_DATE=142;
+	public static readonly K_DECIMAL=143;
+	public static readonly K_DOUBLE=144;
+	public static readonly K_FLOAT=145;
+	public static readonly K_FROZEN=146;
+	public static readonly K_INET=147;
+	public static readonly K_INT=148;
+	public static readonly K_LIST=149;
+	public static readonly K_ROLES=150;
+	public static readonly K_ROLE=151;
+	public static readonly K_MAP=152;
+	public static readonly K_SMALLINT=153;
+	public static readonly K_TEXT=154;
+	public static readonly K_TIMEUUID=155;
+	public static readonly K_TIME=156;
+	public static readonly K_TINYINT=157;
+	public static readonly K_TUPLE=158;
+	public static readonly K_UUID=159;
+	public static readonly K_VARCHAR=160;
+	public static readonly K_VARINT=161;
+	public static readonly CODE_BLOCK=162;
+	public static readonly STRING_LITERAL=163;
+	public static readonly DECIMAL_LITERAL=164;
+	public static readonly FLOAT_LITERAL=165;
+	public static readonly HEXADECIMAL_LITERAL=166;
+	public static readonly REAL_LITERAL=167;
+	public static readonly OBJECT_NAME=168;
+	public static readonly UUID=169;
+	public static readonly OPERATOR_EQ=170;
+	public static readonly OPERATOR_LT=171;
+	public static readonly OPERATOR_GT=172;
+	public static readonly OPERATOR_LTE=173;
+	public static readonly OPERATOR_GTE=174;
+	public static readonly K_USERS=175;
+	public static readonly K_USER=176;
 	public static readonly RULE_root = 0;
 	public static readonly RULE_cqls = 1;
 	public static readonly RULE_statementSeparator = 2;
@@ -289,273 +289,272 @@ export class CqlParser extends Parser {
 	public static readonly RULE_primaryKeyModifier = 82;
 	public static readonly RULE_primaryKeyElement = 83;
 	public static readonly RULE_primaryKeyDefinition = 84;
-	public static readonly RULE_singlePrimaryKey = 85;
-	public static readonly RULE_compoundKey = 86;
-	public static readonly RULE_compositeKey = 87;
+	public static readonly RULE_primaryKeySimple = 85;
+	public static readonly RULE_primaryKeyComposite = 86;
+	public static readonly RULE_compoundKey = 87;
 	public static readonly RULE_partitionKeyList = 88;
 	public static readonly RULE_clusteringKeyList = 89;
-	public static readonly RULE_partitionKey = 90;
-	public static readonly RULE_clusteringKey = 91;
-	public static readonly RULE_applyBatch = 92;
-	public static readonly RULE_beginBatch = 93;
-	public static readonly RULE_beginBatchSpec = 94;
-	public static readonly RULE_batchType = 95;
-	public static readonly RULE_alterKeyspace = 96;
-	public static readonly RULE_replicationList = 97;
-	public static readonly RULE_replicationListItem = 98;
-	public static readonly RULE_durableWrites = 99;
-	public static readonly RULE_use = 100;
-	public static readonly RULE_truncate = 101;
-	public static readonly RULE_createIndex = 102;
-	public static readonly RULE_createIndexSubject = 103;
-	public static readonly RULE_index = 104;
-	public static readonly RULE_createIndexDef = 105;
-	public static readonly RULE_createIndexTarget = 106;
-	public static readonly RULE_indexKeysSpec = 107;
-	public static readonly RULE_indexEntriesSSpec = 108;
-	public static readonly RULE_indexFullSpec = 109;
-	public static readonly RULE_delete = 110;
-	public static readonly RULE_deleteColumnList = 111;
-	public static readonly RULE_deleteColumnItem = 112;
-	public static readonly RULE_update = 113;
-	public static readonly RULE_ifSpec = 114;
-	public static readonly RULE_ifConditionList = 115;
-	public static readonly RULE_ifCondition = 116;
-	public static readonly RULE_updateAssignments = 117;
-	public static readonly RULE_updateAssignmentElement = 118;
-	public static readonly RULE_assignmentSet = 119;
-	public static readonly RULE_assignmentMap = 120;
-	public static readonly RULE_assignmentList = 121;
-	public static readonly RULE_insert = 122;
-	public static readonly RULE_usingTtlTimestamp = 123;
-	public static readonly RULE_timestamp = 124;
-	public static readonly RULE_ttl = 125;
-	public static readonly RULE_usingTimestampSpec = 126;
-	public static readonly RULE_ifNotExist = 127;
-	public static readonly RULE_ifExist = 128;
-	public static readonly RULE_insertValuesSpec = 129;
-	public static readonly RULE_insertColumnSpec = 130;
-	public static readonly RULE_columnList = 131;
-	public static readonly RULE_baseColumnList = 132;
-	public static readonly RULE_expressionList = 133;
-	public static readonly RULE_expression = 134;
-	public static readonly RULE_select = 135;
-	public static readonly RULE_limitSpec = 136;
-	public static readonly RULE_fromSpec = 137;
-	public static readonly RULE_orderSpec = 138;
-	public static readonly RULE_orderSpecElement = 139;
-	public static readonly RULE_whereSpec = 140;
-	public static readonly RULE_selectElements = 141;
-	public static readonly RULE_selectElement = 142;
-	public static readonly RULE_relationElements = 143;
-	public static readonly RULE_relationElement = 144;
-	public static readonly RULE_relationElementConstant = 145;
-	public static readonly RULE_relationElementIn = 146;
-	public static readonly RULE_relationElementToken = 147;
-	public static readonly RULE_relationElementTokenSpec = 148;
-	public static readonly RULE_relationOperator = 149;
-	public static readonly RULE_functionCall = 150;
-	public static readonly RULE_functionArgs = 151;
-	public static readonly RULE_constant = 152;
-	public static readonly RULE_collectionElement = 153;
-	public static readonly RULE_collectionMapElement = 154;
-	public static readonly RULE_constantCollection = 155;
-	public static readonly RULE_constantMap = 156;
-	public static readonly RULE_constantSet = 157;
-	public static readonly RULE_constantList = 158;
-	public static readonly RULE_constantTuple = 159;
-	public static readonly RULE_constantUuid = 160;
-	public static readonly RULE_constantDecimal = 161;
-	public static readonly RULE_constantFloat = 162;
-	public static readonly RULE_constantString = 163;
-	public static readonly RULE_constantBoolean = 164;
-	public static readonly RULE_constantHexadecimal = 165;
-	public static readonly RULE_keyspace = 166;
-	public static readonly RULE_baseKeyspace = 167;
-	public static readonly RULE_table = 168;
-	public static readonly RULE_baseTable = 169;
-	public static readonly RULE_materializedView = 170;
-	public static readonly RULE_keyspaceObject = 171;
-	public static readonly RULE_objectUnknown = 172;
-	public static readonly RULE_aggregateSpec = 173;
-	public static readonly RULE_typeSpec = 174;
-	public static readonly RULE_functionSpec = 175;
-	public static readonly RULE_tableSpec = 176;
-	public static readonly RULE_baseTableSpec = 177;
-	public static readonly RULE_indexSpec = 178;
-	public static readonly RULE_materializedViewSpec = 179;
-	public static readonly RULE_tableOrMaterializedViewSpec = 180;
-	public static readonly RULE_objectUnknownSpec = 181;
-	public static readonly RULE_column = 182;
-	public static readonly RULE_baseColumn = 183;
-	public static readonly RULE_columnUnknown = 184;
-	public static readonly RULE_dataType = 185;
-	public static readonly RULE_dataTypeCollection = 186;
-	public static readonly RULE_dataTypeFundamental = 187;
-	public static readonly RULE_orderDirection = 188;
-	public static readonly RULE_role = 189;
-	public static readonly RULE_trigger = 190;
-	public static readonly RULE_triggerClass = 191;
-	public static readonly RULE_type = 192;
-	public static readonly RULE_aggregate = 193;
-	public static readonly RULE_function = 194;
-	public static readonly RULE_language = 195;
-	public static readonly RULE_user = 196;
-	public static readonly RULE_password = 197;
-	public static readonly RULE_hashKey = 198;
-	public static readonly RULE_param = 199;
-	public static readonly RULE_paramName = 200;
-	public static readonly RULE_kwAdd = 201;
-	public static readonly RULE_kwAggregate = 202;
-	public static readonly RULE_kwAll = 203;
-	public static readonly RULE_kwAllFunctions = 204;
-	public static readonly RULE_kwAllKeyspaces = 205;
-	public static readonly RULE_kwAllRoles = 206;
-	public static readonly RULE_kwAllPermissions = 207;
-	public static readonly RULE_kwAllow = 208;
-	public static readonly RULE_kwAllowFiltering = 209;
-	public static readonly RULE_kwAlter = 210;
-	public static readonly RULE_kwAnd = 211;
-	public static readonly RULE_kwApply = 212;
-	public static readonly RULE_kwAs = 213;
-	public static readonly RULE_kwAsc = 214;
-	public static readonly RULE_kwAuthorize = 215;
-	public static readonly RULE_kwBatch = 216;
-	public static readonly RULE_kwBegin = 217;
-	public static readonly RULE_kwBy = 218;
-	public static readonly RULE_kwCalled = 219;
-	public static readonly RULE_kwClustering = 220;
-	public static readonly RULE_kwCompact = 221;
-	public static readonly RULE_kwContains = 222;
-	public static readonly RULE_kwContainsKey = 223;
-	public static readonly RULE_kwCreate = 224;
-	public static readonly RULE_kwDelete = 225;
-	public static readonly RULE_kwDesc = 226;
-	public static readonly RULE_kwDescibe = 227;
-	public static readonly RULE_kwDistinct = 228;
-	public static readonly RULE_kwDrop = 229;
-	public static readonly RULE_kwDurableWrites = 230;
-	public static readonly RULE_kwEntries = 231;
-	public static readonly RULE_kwExecute = 232;
-	public static readonly RULE_kwExists = 233;
-	public static readonly RULE_kwFiltering = 234;
-	public static readonly RULE_kwFinalfunc = 235;
-	public static readonly RULE_kwFrom = 236;
-	public static readonly RULE_kwFull = 237;
-	public static readonly RULE_kwFunction = 238;
-	public static readonly RULE_kwGrant = 239;
-	public static readonly RULE_kwIf = 240;
-	public static readonly RULE_kwIn = 241;
-	public static readonly RULE_kwIndex = 242;
-	public static readonly RULE_kwInitcond = 243;
-	public static readonly RULE_kwInput = 244;
-	public static readonly RULE_kwInsertInto = 245;
-	public static readonly RULE_kwIs = 246;
-	public static readonly RULE_kwKey = 247;
-	public static readonly RULE_kwKeys = 248;
-	public static readonly RULE_kwKeyspace = 249;
-	public static readonly RULE_kwLanguage = 250;
-	public static readonly RULE_kwLimit = 251;
-	public static readonly RULE_kwList = 252;
-	public static readonly RULE_kwListRoles = 253;
-	public static readonly RULE_kwListUsers = 254;
-	public static readonly RULE_kwLogged = 255;
-	public static readonly RULE_kwLogin = 256;
-	public static readonly RULE_kwMaterializedView = 257;
-	public static readonly RULE_kwModify = 258;
-	public static readonly RULE_kwNosuperuser = 259;
-	public static readonly RULE_kwNorecursive = 260;
-	public static readonly RULE_kwNot = 261;
-	public static readonly RULE_kwNull = 262;
-	public static readonly RULE_kwOf = 263;
-	public static readonly RULE_kwOn = 264;
-	public static readonly RULE_kwOptions = 265;
-	public static readonly RULE_kwOr = 266;
-	public static readonly RULE_kwOrder = 267;
-	public static readonly RULE_kwOrderBy = 268;
-	public static readonly RULE_kwPartition = 269;
-	public static readonly RULE_kwPassword = 270;
-	public static readonly RULE_kwPermissions = 271;
-	public static readonly RULE_kwPrimary = 272;
-	public static readonly RULE_kwRename = 273;
-	public static readonly RULE_kwReplace = 274;
-	public static readonly RULE_kwReplication = 275;
-	public static readonly RULE_kwReturns = 276;
-	public static readonly RULE_kwRole = 277;
-	public static readonly RULE_kwSelect = 278;
-	public static readonly RULE_kwSet = 279;
-	public static readonly RULE_kwSfunc = 280;
-	public static readonly RULE_kwStatic = 281;
-	public static readonly RULE_kwStorage = 282;
-	public static readonly RULE_kwStype = 283;
-	public static readonly RULE_kwSuperuser = 284;
-	public static readonly RULE_kwTable = 285;
-	public static readonly RULE_kwTimestamp = 286;
-	public static readonly RULE_kwTo = 287;
-	public static readonly RULE_kwToken = 288;
-	public static readonly RULE_kwTrigger = 289;
-	public static readonly RULE_kwTruncate = 290;
-	public static readonly RULE_kwTtl = 291;
-	public static readonly RULE_kwType = 292;
-	public static readonly RULE_kwUnlogged = 293;
-	public static readonly RULE_kwUpdate = 294;
-	public static readonly RULE_kwUse = 295;
-	public static readonly RULE_kwUser = 296;
-	public static readonly RULE_kwUsers = 297;
-	public static readonly RULE_kwUsing = 298;
-	public static readonly RULE_kwValues = 299;
-	public static readonly RULE_kwWhere = 300;
-	public static readonly RULE_kwWith = 301;
-	public static readonly RULE_kwRevoke = 302;
-	public static readonly RULE_dataTypeAscii = 303;
-	public static readonly RULE_dataTypeBigint = 304;
-	public static readonly RULE_dataTypeBlob = 305;
-	public static readonly RULE_dataTypeBoolean = 306;
-	public static readonly RULE_dataTypeCounter = 307;
-	public static readonly RULE_dataTypeDate = 308;
-	public static readonly RULE_dataTypeDecimal = 309;
-	public static readonly RULE_dataTypeDouble = 310;
-	public static readonly RULE_dataTypeFloat = 311;
-	public static readonly RULE_dataTypeFrozen = 312;
-	public static readonly RULE_dataTypeInet = 313;
-	public static readonly RULE_dataTypeInt = 314;
-	public static readonly RULE_dataTypeList = 315;
-	public static readonly RULE_dataTypeMap = 316;
-	public static readonly RULE_dataTypeSmallInt = 317;
-	public static readonly RULE_dataTypeSet = 318;
-	public static readonly RULE_dataTypeText = 319;
-	public static readonly RULE_dataTypeTime = 320;
-	public static readonly RULE_dataTypeTimeUuid = 321;
-	public static readonly RULE_dataTypeTimestamp = 322;
-	public static readonly RULE_dataTypeTinyInt = 323;
-	public static readonly RULE_dataTypeTuple = 324;
-	public static readonly RULE_dataTypeUserDefined = 325;
-	public static readonly RULE_dataTypeUuid = 326;
-	public static readonly RULE_dataTypeVarChar = 327;
-	public static readonly RULE_dataTypeVarInt = 328;
-	public static readonly RULE_dataTypeStructure = 329;
-	public static readonly RULE_specialStar = 330;
-	public static readonly RULE_specialDot = 331;
-	public static readonly RULE_eof = 332;
-	public static readonly RULE_syntaxBracketLr = 333;
-	public static readonly RULE_syntaxBracketRr = 334;
-	public static readonly RULE_syntaxBracketLc = 335;
-	public static readonly RULE_syntaxBracketRc = 336;
-	public static readonly RULE_syntaxBracketLa = 337;
-	public static readonly RULE_syntaxBracketRa = 338;
-	public static readonly RULE_syntaxBracketLs = 339;
-	public static readonly RULE_syntaxBracketRs = 340;
-	public static readonly RULE_syntaxComma = 341;
-	public static readonly RULE_syntaxColon = 342;
-	public static readonly RULE_syntaxPlus = 343;
-	public static readonly RULE_syntaxMinus = 344;
-	public static readonly RULE_syntaxSquote = 345;
-	public static readonly RULE_syntaxDquote = 346;
-	public static readonly RULE_syntaxOperatorEq = 347;
-	public static readonly RULE_syntaxOperatorLt = 348;
-	public static readonly RULE_syntaxOperatorGt = 349;
-	public static readonly RULE_syntaxOperatorLte = 350;
-	public static readonly RULE_syntaxOperatorGte = 351;
+	public static readonly RULE_applyBatch = 90;
+	public static readonly RULE_beginBatch = 91;
+	public static readonly RULE_beginBatchSpec = 92;
+	public static readonly RULE_batchType = 93;
+	public static readonly RULE_alterKeyspace = 94;
+	public static readonly RULE_replicationList = 95;
+	public static readonly RULE_replicationListItem = 96;
+	public static readonly RULE_durableWrites = 97;
+	public static readonly RULE_use = 98;
+	public static readonly RULE_truncate = 99;
+	public static readonly RULE_createIndex = 100;
+	public static readonly RULE_createIndexSubject = 101;
+	public static readonly RULE_index = 102;
+	public static readonly RULE_createIndexDef = 103;
+	public static readonly RULE_createIndexTarget = 104;
+	public static readonly RULE_indexKeysSpec = 105;
+	public static readonly RULE_indexEntriesSSpec = 106;
+	public static readonly RULE_indexFullSpec = 107;
+	public static readonly RULE_delete = 108;
+	public static readonly RULE_deleteColumnList = 109;
+	public static readonly RULE_deleteColumnItem = 110;
+	public static readonly RULE_update = 111;
+	public static readonly RULE_ifSpec = 112;
+	public static readonly RULE_ifConditionList = 113;
+	public static readonly RULE_ifCondition = 114;
+	public static readonly RULE_updateAssignments = 115;
+	public static readonly RULE_updateAssignmentElement = 116;
+	public static readonly RULE_assignmentSet = 117;
+	public static readonly RULE_assignmentMap = 118;
+	public static readonly RULE_assignmentList = 119;
+	public static readonly RULE_insert = 120;
+	public static readonly RULE_usingTtlTimestamp = 121;
+	public static readonly RULE_timestamp = 122;
+	public static readonly RULE_ttl = 123;
+	public static readonly RULE_usingTimestampSpec = 124;
+	public static readonly RULE_ifNotExist = 125;
+	public static readonly RULE_ifExist = 126;
+	public static readonly RULE_insertValuesSpec = 127;
+	public static readonly RULE_insertColumnSpec = 128;
+	public static readonly RULE_columnList = 129;
+	public static readonly RULE_baseColumnList = 130;
+	public static readonly RULE_expressionList = 131;
+	public static readonly RULE_expression = 132;
+	public static readonly RULE_select = 133;
+	public static readonly RULE_limitSpec = 134;
+	public static readonly RULE_fromSpec = 135;
+	public static readonly RULE_orderSpec = 136;
+	public static readonly RULE_orderSpecElement = 137;
+	public static readonly RULE_whereSpec = 138;
+	public static readonly RULE_selectElements = 139;
+	public static readonly RULE_selectElement = 140;
+	public static readonly RULE_relationElements = 141;
+	public static readonly RULE_relationElement = 142;
+	public static readonly RULE_relationElementConstant = 143;
+	public static readonly RULE_relationElementIn = 144;
+	public static readonly RULE_relationElementToken = 145;
+	public static readonly RULE_relationElementTokenSpec = 146;
+	public static readonly RULE_relationOperator = 147;
+	public static readonly RULE_functionCall = 148;
+	public static readonly RULE_functionArgs = 149;
+	public static readonly RULE_constant = 150;
+	public static readonly RULE_collectionElement = 151;
+	public static readonly RULE_collectionMapElement = 152;
+	public static readonly RULE_constantCollection = 153;
+	public static readonly RULE_constantMap = 154;
+	public static readonly RULE_constantSet = 155;
+	public static readonly RULE_constantList = 156;
+	public static readonly RULE_constantTuple = 157;
+	public static readonly RULE_constantUuid = 158;
+	public static readonly RULE_constantDecimal = 159;
+	public static readonly RULE_constantFloat = 160;
+	public static readonly RULE_constantString = 161;
+	public static readonly RULE_constantBoolean = 162;
+	public static readonly RULE_constantHexadecimal = 163;
+	public static readonly RULE_keyspace = 164;
+	public static readonly RULE_baseKeyspace = 165;
+	public static readonly RULE_table = 166;
+	public static readonly RULE_baseTable = 167;
+	public static readonly RULE_materializedView = 168;
+	public static readonly RULE_keyspaceObject = 169;
+	public static readonly RULE_objectUnknown = 170;
+	public static readonly RULE_aggregateSpec = 171;
+	public static readonly RULE_typeSpec = 172;
+	public static readonly RULE_functionSpec = 173;
+	public static readonly RULE_tableSpec = 174;
+	public static readonly RULE_baseTableSpec = 175;
+	public static readonly RULE_indexSpec = 176;
+	public static readonly RULE_materializedViewSpec = 177;
+	public static readonly RULE_tableOrMaterializedViewSpec = 178;
+	public static readonly RULE_objectUnknownSpec = 179;
+	public static readonly RULE_columnSpec = 180;
+	public static readonly RULE_column = 181;
+	public static readonly RULE_columnUnknownSpec = 182;
+	public static readonly RULE_columnUnknown = 183;
+	public static readonly RULE_dataType = 184;
+	public static readonly RULE_dataTypeCollection = 185;
+	public static readonly RULE_dataTypeFundamental = 186;
+	public static readonly RULE_orderDirection = 187;
+	public static readonly RULE_role = 188;
+	public static readonly RULE_trigger = 189;
+	public static readonly RULE_triggerClass = 190;
+	public static readonly RULE_type = 191;
+	public static readonly RULE_aggregate = 192;
+	public static readonly RULE_function = 193;
+	public static readonly RULE_language = 194;
+	public static readonly RULE_user = 195;
+	public static readonly RULE_password = 196;
+	public static readonly RULE_hashKey = 197;
+	public static readonly RULE_param = 198;
+	public static readonly RULE_paramName = 199;
+	public static readonly RULE_kwAdd = 200;
+	public static readonly RULE_kwAggregate = 201;
+	public static readonly RULE_kwAll = 202;
+	public static readonly RULE_kwAllFunctions = 203;
+	public static readonly RULE_kwAllKeyspaces = 204;
+	public static readonly RULE_kwAllRoles = 205;
+	public static readonly RULE_kwAllPermissions = 206;
+	public static readonly RULE_kwAllow = 207;
+	public static readonly RULE_kwAllowFiltering = 208;
+	public static readonly RULE_kwAlter = 209;
+	public static readonly RULE_kwAnd = 210;
+	public static readonly RULE_kwApply = 211;
+	public static readonly RULE_kwAs = 212;
+	public static readonly RULE_kwAsc = 213;
+	public static readonly RULE_kwAuthorize = 214;
+	public static readonly RULE_kwBatch = 215;
+	public static readonly RULE_kwBegin = 216;
+	public static readonly RULE_kwBy = 217;
+	public static readonly RULE_kwCalled = 218;
+	public static readonly RULE_kwClustering = 219;
+	public static readonly RULE_kwCompact = 220;
+	public static readonly RULE_kwContains = 221;
+	public static readonly RULE_kwContainsKey = 222;
+	public static readonly RULE_kwCreate = 223;
+	public static readonly RULE_kwDelete = 224;
+	public static readonly RULE_kwDesc = 225;
+	public static readonly RULE_kwDescibe = 226;
+	public static readonly RULE_kwDistinct = 227;
+	public static readonly RULE_kwDrop = 228;
+	public static readonly RULE_kwDurableWrites = 229;
+	public static readonly RULE_kwEntries = 230;
+	public static readonly RULE_kwExecute = 231;
+	public static readonly RULE_kwExists = 232;
+	public static readonly RULE_kwFiltering = 233;
+	public static readonly RULE_kwFinalfunc = 234;
+	public static readonly RULE_kwFrom = 235;
+	public static readonly RULE_kwFull = 236;
+	public static readonly RULE_kwFunction = 237;
+	public static readonly RULE_kwGrant = 238;
+	public static readonly RULE_kwIf = 239;
+	public static readonly RULE_kwIn = 240;
+	public static readonly RULE_kwIndex = 241;
+	public static readonly RULE_kwInitcond = 242;
+	public static readonly RULE_kwInput = 243;
+	public static readonly RULE_kwInsertInto = 244;
+	public static readonly RULE_kwIs = 245;
+	public static readonly RULE_kwKey = 246;
+	public static readonly RULE_kwKeys = 247;
+	public static readonly RULE_kwKeyspace = 248;
+	public static readonly RULE_kwLanguage = 249;
+	public static readonly RULE_kwLimit = 250;
+	public static readonly RULE_kwList = 251;
+	public static readonly RULE_kwListRoles = 252;
+	public static readonly RULE_kwListUsers = 253;
+	public static readonly RULE_kwLogged = 254;
+	public static readonly RULE_kwLogin = 255;
+	public static readonly RULE_kwMaterializedView = 256;
+	public static readonly RULE_kwModify = 257;
+	public static readonly RULE_kwNosuperuser = 258;
+	public static readonly RULE_kwNorecursive = 259;
+	public static readonly RULE_kwNot = 260;
+	public static readonly RULE_kwNull = 261;
+	public static readonly RULE_kwOf = 262;
+	public static readonly RULE_kwOn = 263;
+	public static readonly RULE_kwOptions = 264;
+	public static readonly RULE_kwOr = 265;
+	public static readonly RULE_kwOrder = 266;
+	public static readonly RULE_kwOrderBy = 267;
+	public static readonly RULE_kwPartition = 268;
+	public static readonly RULE_kwPassword = 269;
+	public static readonly RULE_kwPermissions = 270;
+	public static readonly RULE_kwPrimary = 271;
+	public static readonly RULE_kwRename = 272;
+	public static readonly RULE_kwReplace = 273;
+	public static readonly RULE_kwReplication = 274;
+	public static readonly RULE_kwReturns = 275;
+	public static readonly RULE_kwRole = 276;
+	public static readonly RULE_kwSelect = 277;
+	public static readonly RULE_kwSet = 278;
+	public static readonly RULE_kwSfunc = 279;
+	public static readonly RULE_kwStatic = 280;
+	public static readonly RULE_kwStorage = 281;
+	public static readonly RULE_kwStype = 282;
+	public static readonly RULE_kwSuperuser = 283;
+	public static readonly RULE_kwTable = 284;
+	public static readonly RULE_kwTimestamp = 285;
+	public static readonly RULE_kwTo = 286;
+	public static readonly RULE_kwToken = 287;
+	public static readonly RULE_kwTrigger = 288;
+	public static readonly RULE_kwTruncate = 289;
+	public static readonly RULE_kwTtl = 290;
+	public static readonly RULE_kwType = 291;
+	public static readonly RULE_kwUnlogged = 292;
+	public static readonly RULE_kwUpdate = 293;
+	public static readonly RULE_kwUse = 294;
+	public static readonly RULE_kwUser = 295;
+	public static readonly RULE_kwUsers = 296;
+	public static readonly RULE_kwUsing = 297;
+	public static readonly RULE_kwValues = 298;
+	public static readonly RULE_kwWhere = 299;
+	public static readonly RULE_kwWith = 300;
+	public static readonly RULE_kwRevoke = 301;
+	public static readonly RULE_dataTypeAscii = 302;
+	public static readonly RULE_dataTypeBigint = 303;
+	public static readonly RULE_dataTypeBlob = 304;
+	public static readonly RULE_dataTypeBoolean = 305;
+	public static readonly RULE_dataTypeCounter = 306;
+	public static readonly RULE_dataTypeDate = 307;
+	public static readonly RULE_dataTypeDecimal = 308;
+	public static readonly RULE_dataTypeDouble = 309;
+	public static readonly RULE_dataTypeFloat = 310;
+	public static readonly RULE_dataTypeFrozen = 311;
+	public static readonly RULE_dataTypeInet = 312;
+	public static readonly RULE_dataTypeInt = 313;
+	public static readonly RULE_dataTypeList = 314;
+	public static readonly RULE_dataTypeMap = 315;
+	public static readonly RULE_dataTypeSmallInt = 316;
+	public static readonly RULE_dataTypeSet = 317;
+	public static readonly RULE_dataTypeText = 318;
+	public static readonly RULE_dataTypeTime = 319;
+	public static readonly RULE_dataTypeTimeUuid = 320;
+	public static readonly RULE_dataTypeTimestamp = 321;
+	public static readonly RULE_dataTypeTinyInt = 322;
+	public static readonly RULE_dataTypeTuple = 323;
+	public static readonly RULE_dataTypeUserDefined = 324;
+	public static readonly RULE_dataTypeUuid = 325;
+	public static readonly RULE_dataTypeVarChar = 326;
+	public static readonly RULE_dataTypeVarInt = 327;
+	public static readonly RULE_dataTypeStructure = 328;
+	public static readonly RULE_specialStar = 329;
+	public static readonly RULE_specialDot = 330;
+	public static readonly RULE_eof = 331;
+	public static readonly RULE_syntaxBracketLr = 332;
+	public static readonly RULE_syntaxBracketRr = 333;
+	public static readonly RULE_syntaxBracketLc = 334;
+	public static readonly RULE_syntaxBracketRc = 335;
+	public static readonly RULE_syntaxBracketLa = 336;
+	public static readonly RULE_syntaxBracketRa = 337;
+	public static readonly RULE_syntaxBracketLs = 338;
+	public static readonly RULE_syntaxBracketRs = 339;
+	public static readonly RULE_syntaxComma = 340;
+	public static readonly RULE_syntaxColon = 341;
+	public static readonly RULE_syntaxPlus = 342;
+	public static readonly RULE_syntaxMinus = 343;
+	public static readonly RULE_syntaxSquote = 344;
+	public static readonly RULE_syntaxDquote = 345;
+	public static readonly RULE_syntaxOperatorEq = 346;
+	public static readonly RULE_syntaxOperatorLt = 347;
+	public static readonly RULE_syntaxOperatorGt = 348;
+	public static readonly RULE_syntaxOperatorLte = 349;
+	public static readonly RULE_syntaxOperatorGte = 350;
 	public static readonly ruleNames: string[] = [
 		"root", "cqls", "statementSeparator", "empty", "cql", "revoke", "listUsers", 
 		"listRoles", "listPermissions", "grant", "priviledge", "resource", "createUser", 
@@ -575,59 +574,59 @@ export class CqlParser extends Parser {
 		"clusteringOrder", "clusteringOrderItem", "tableOptions", "tableOptionItem", 
 		"tableOptionName", "tableOptionValue", "optionHash", "optionHashItem", 
 		"optionHashKey", "optionHashValue", "columnDefinitionList", "columnDefinition", 
-		"primaryKeyModifier", "primaryKeyElement", "primaryKeyDefinition", "singlePrimaryKey", 
-		"compoundKey", "compositeKey", "partitionKeyList", "clusteringKeyList", 
-		"partitionKey", "clusteringKey", "applyBatch", "beginBatch", "beginBatchSpec", 
-		"batchType", "alterKeyspace", "replicationList", "replicationListItem", 
-		"durableWrites", "use", "truncate", "createIndex", "createIndexSubject", 
-		"index", "createIndexDef", "createIndexTarget", "indexKeysSpec", "indexEntriesSSpec", 
-		"indexFullSpec", "delete", "deleteColumnList", "deleteColumnItem", "update", 
-		"ifSpec", "ifConditionList", "ifCondition", "updateAssignments", "updateAssignmentElement", 
-		"assignmentSet", "assignmentMap", "assignmentList", "insert", "usingTtlTimestamp", 
-		"timestamp", "ttl", "usingTimestampSpec", "ifNotExist", "ifExist", "insertValuesSpec", 
-		"insertColumnSpec", "columnList", "baseColumnList", "expressionList", 
-		"expression", "select", "limitSpec", "fromSpec", "orderSpec", "orderSpecElement", 
-		"whereSpec", "selectElements", "selectElement", "relationElements", "relationElement", 
-		"relationElementConstant", "relationElementIn", "relationElementToken", 
-		"relationElementTokenSpec", "relationOperator", "functionCall", "functionArgs", 
-		"constant", "collectionElement", "collectionMapElement", "constantCollection", 
-		"constantMap", "constantSet", "constantList", "constantTuple", "constantUuid", 
-		"constantDecimal", "constantFloat", "constantString", "constantBoolean", 
-		"constantHexadecimal", "keyspace", "baseKeyspace", "table", "baseTable", 
-		"materializedView", "keyspaceObject", "objectUnknown", "aggregateSpec", 
-		"typeSpec", "functionSpec", "tableSpec", "baseTableSpec", "indexSpec", 
-		"materializedViewSpec", "tableOrMaterializedViewSpec", "objectUnknownSpec", 
-		"column", "baseColumn", "columnUnknown", "dataType", "dataTypeCollection", 
-		"dataTypeFundamental", "orderDirection", "role", "trigger", "triggerClass", 
-		"type", "aggregate", "function", "language", "user", "password", "hashKey", 
-		"param", "paramName", "kwAdd", "kwAggregate", "kwAll", "kwAllFunctions", 
-		"kwAllKeyspaces", "kwAllRoles", "kwAllPermissions", "kwAllow", "kwAllowFiltering", 
-		"kwAlter", "kwAnd", "kwApply", "kwAs", "kwAsc", "kwAuthorize", "kwBatch", 
-		"kwBegin", "kwBy", "kwCalled", "kwClustering", "kwCompact", "kwContains", 
-		"kwContainsKey", "kwCreate", "kwDelete", "kwDesc", "kwDescibe", "kwDistinct", 
-		"kwDrop", "kwDurableWrites", "kwEntries", "kwExecute", "kwExists", "kwFiltering", 
-		"kwFinalfunc", "kwFrom", "kwFull", "kwFunction", "kwGrant", "kwIf", "kwIn", 
-		"kwIndex", "kwInitcond", "kwInput", "kwInsertInto", "kwIs", "kwKey", "kwKeys", 
-		"kwKeyspace", "kwLanguage", "kwLimit", "kwList", "kwListRoles", "kwListUsers", 
-		"kwLogged", "kwLogin", "kwMaterializedView", "kwModify", "kwNosuperuser", 
-		"kwNorecursive", "kwNot", "kwNull", "kwOf", "kwOn", "kwOptions", "kwOr", 
-		"kwOrder", "kwOrderBy", "kwPartition", "kwPassword", "kwPermissions", 
-		"kwPrimary", "kwRename", "kwReplace", "kwReplication", "kwReturns", "kwRole", 
-		"kwSelect", "kwSet", "kwSfunc", "kwStatic", "kwStorage", "kwStype", "kwSuperuser", 
-		"kwTable", "kwTimestamp", "kwTo", "kwToken", "kwTrigger", "kwTruncate", 
-		"kwTtl", "kwType", "kwUnlogged", "kwUpdate", "kwUse", "kwUser", "kwUsers", 
-		"kwUsing", "kwValues", "kwWhere", "kwWith", "kwRevoke", "dataTypeAscii", 
-		"dataTypeBigint", "dataTypeBlob", "dataTypeBoolean", "dataTypeCounter", 
-		"dataTypeDate", "dataTypeDecimal", "dataTypeDouble", "dataTypeFloat", 
-		"dataTypeFrozen", "dataTypeInet", "dataTypeInt", "dataTypeList", "dataTypeMap", 
-		"dataTypeSmallInt", "dataTypeSet", "dataTypeText", "dataTypeTime", "dataTypeTimeUuid", 
-		"dataTypeTimestamp", "dataTypeTinyInt", "dataTypeTuple", "dataTypeUserDefined", 
-		"dataTypeUuid", "dataTypeVarChar", "dataTypeVarInt", "dataTypeStructure", 
-		"specialStar", "specialDot", "eof", "syntaxBracketLr", "syntaxBracketRr", 
-		"syntaxBracketLc", "syntaxBracketRc", "syntaxBracketLa", "syntaxBracketRa", 
-		"syntaxBracketLs", "syntaxBracketRs", "syntaxComma", "syntaxColon", "syntaxPlus", 
-		"syntaxMinus", "syntaxSquote", "syntaxDquote", "syntaxOperatorEq", "syntaxOperatorLt", 
-		"syntaxOperatorGt", "syntaxOperatorLte", "syntaxOperatorGte"
+		"primaryKeyModifier", "primaryKeyElement", "primaryKeyDefinition", "primaryKeySimple", 
+		"primaryKeyComposite", "compoundKey", "partitionKeyList", "clusteringKeyList", 
+		"applyBatch", "beginBatch", "beginBatchSpec", "batchType", "alterKeyspace", 
+		"replicationList", "replicationListItem", "durableWrites", "use", "truncate", 
+		"createIndex", "createIndexSubject", "index", "createIndexDef", "createIndexTarget", 
+		"indexKeysSpec", "indexEntriesSSpec", "indexFullSpec", "delete", "deleteColumnList", 
+		"deleteColumnItem", "update", "ifSpec", "ifConditionList", "ifCondition", 
+		"updateAssignments", "updateAssignmentElement", "assignmentSet", "assignmentMap", 
+		"assignmentList", "insert", "usingTtlTimestamp", "timestamp", "ttl", "usingTimestampSpec", 
+		"ifNotExist", "ifExist", "insertValuesSpec", "insertColumnSpec", "columnList", 
+		"baseColumnList", "expressionList", "expression", "select", "limitSpec", 
+		"fromSpec", "orderSpec", "orderSpecElement", "whereSpec", "selectElements", 
+		"selectElement", "relationElements", "relationElement", "relationElementConstant", 
+		"relationElementIn", "relationElementToken", "relationElementTokenSpec", 
+		"relationOperator", "functionCall", "functionArgs", "constant", "collectionElement", 
+		"collectionMapElement", "constantCollection", "constantMap", "constantSet", 
+		"constantList", "constantTuple", "constantUuid", "constantDecimal", "constantFloat", 
+		"constantString", "constantBoolean", "constantHexadecimal", "keyspace", 
+		"baseKeyspace", "table", "baseTable", "materializedView", "keyspaceObject", 
+		"objectUnknown", "aggregateSpec", "typeSpec", "functionSpec", "tableSpec", 
+		"baseTableSpec", "indexSpec", "materializedViewSpec", "tableOrMaterializedViewSpec", 
+		"objectUnknownSpec", "columnSpec", "column", "columnUnknownSpec", "columnUnknown", 
+		"dataType", "dataTypeCollection", "dataTypeFundamental", "orderDirection", 
+		"role", "trigger", "triggerClass", "type", "aggregate", "function", "language", 
+		"user", "password", "hashKey", "param", "paramName", "kwAdd", "kwAggregate", 
+		"kwAll", "kwAllFunctions", "kwAllKeyspaces", "kwAllRoles", "kwAllPermissions", 
+		"kwAllow", "kwAllowFiltering", "kwAlter", "kwAnd", "kwApply", "kwAs", 
+		"kwAsc", "kwAuthorize", "kwBatch", "kwBegin", "kwBy", "kwCalled", "kwClustering", 
+		"kwCompact", "kwContains", "kwContainsKey", "kwCreate", "kwDelete", "kwDesc", 
+		"kwDescibe", "kwDistinct", "kwDrop", "kwDurableWrites", "kwEntries", "kwExecute", 
+		"kwExists", "kwFiltering", "kwFinalfunc", "kwFrom", "kwFull", "kwFunction", 
+		"kwGrant", "kwIf", "kwIn", "kwIndex", "kwInitcond", "kwInput", "kwInsertInto", 
+		"kwIs", "kwKey", "kwKeys", "kwKeyspace", "kwLanguage", "kwLimit", "kwList", 
+		"kwListRoles", "kwListUsers", "kwLogged", "kwLogin", "kwMaterializedView", 
+		"kwModify", "kwNosuperuser", "kwNorecursive", "kwNot", "kwNull", "kwOf", 
+		"kwOn", "kwOptions", "kwOr", "kwOrder", "kwOrderBy", "kwPartition", "kwPassword", 
+		"kwPermissions", "kwPrimary", "kwRename", "kwReplace", "kwReplication", 
+		"kwReturns", "kwRole", "kwSelect", "kwSet", "kwSfunc", "kwStatic", "kwStorage", 
+		"kwStype", "kwSuperuser", "kwTable", "kwTimestamp", "kwTo", "kwToken", 
+		"kwTrigger", "kwTruncate", "kwTtl", "kwType", "kwUnlogged", "kwUpdate", 
+		"kwUse", "kwUser", "kwUsers", "kwUsing", "kwValues", "kwWhere", "kwWith", 
+		"kwRevoke", "dataTypeAscii", "dataTypeBigint", "dataTypeBlob", "dataTypeBoolean", 
+		"dataTypeCounter", "dataTypeDate", "dataTypeDecimal", "dataTypeDouble", 
+		"dataTypeFloat", "dataTypeFrozen", "dataTypeInet", "dataTypeInt", "dataTypeList", 
+		"dataTypeMap", "dataTypeSmallInt", "dataTypeSet", "dataTypeText", "dataTypeTime", 
+		"dataTypeTimeUuid", "dataTypeTimestamp", "dataTypeTinyInt", "dataTypeTuple", 
+		"dataTypeUserDefined", "dataTypeUuid", "dataTypeVarChar", "dataTypeVarInt", 
+		"dataTypeStructure", "specialStar", "specialDot", "eof", "syntaxBracketLr", 
+		"syntaxBracketRr", "syntaxBracketLc", "syntaxBracketRc", "syntaxBracketLa", 
+		"syntaxBracketRa", "syntaxBracketLs", "syntaxBracketRs", "syntaxComma", 
+		"syntaxColon", "syntaxPlus", "syntaxMinus", "syntaxSquote", "syntaxDquote", 
+		"syntaxOperatorEq", "syntaxOperatorLt", "syntaxOperatorGt", "syntaxOperatorLte", 
+		"syntaxOperatorGte"
 	];
 
 	private static readonly _LITERAL_NAMES: (string | undefined)[] = [
@@ -656,15 +655,15 @@ export class CqlParser extends Parser {
 		"K_RETURNS", "K_REVOKE", "K_SCHEMA", "K_SELECT", "K_SET", "K_SFUNC", "K_STATIC", 
 		"K_STORAGE", "K_STYPE", "K_SUPERUSER", "K_TABLE", "K_THREE", "K_TIMESTAMP", 
 		"K_TO", "K_TOKEN", "K_TRIGGER", "K_TRUE", "K_TRUNCATE", "K_TTL", "K_TWO", 
-		"K_TYPE", "K_UNLOGGED", "K_UPDATE", "K_USE", "K_USER", "K_USING", "K_VALUES", 
-		"K_VIEW", "K_WHERE", "K_WITH", "K_WRITETIME", "K_ASCII", "K_BIGINT", "K_BLOB", 
-		"K_BOOLEAN", "K_COUNTER", "K_DATE", "K_DECIMAL", "K_DOUBLE", "K_FLOAT", 
-		"K_FROZEN", "K_INET", "K_INT", "K_LIST", "K_ROLES", "K_ROLE", "K_MAP", 
-		"K_SMALLINT", "K_TEXT", "K_TIMEUUID", "K_TIME", "K_TINYINT", "K_TUPLE", 
-		"K_UUID", "K_VARCHAR", "K_VARINT", "K_USERS", "CODE_BLOCK", "STRING_LITERAL", 
-		"DECIMAL_LITERAL", "FLOAT_LITERAL", "HEXADECIMAL_LITERAL", "REAL_LITERAL", 
-		"OBJECT_NAME", "UUID", "OPERATOR_EQ", "OPERATOR_LT", "OPERATOR_GT", "OPERATOR_LTE", 
-		"OPERATOR_GTE"
+		"K_TYPE", "K_UNLOGGED", "K_UPDATE", "K_USE", "K_USING", "K_VALUES", "K_VIEW", 
+		"K_WHERE", "K_WITH", "K_WRITETIME", "K_ASCII", "K_BIGINT", "K_BLOB", "K_BOOLEAN", 
+		"K_COUNTER", "K_DATE", "K_DECIMAL", "K_DOUBLE", "K_FLOAT", "K_FROZEN", 
+		"K_INET", "K_INT", "K_LIST", "K_ROLES", "K_ROLE", "K_MAP", "K_SMALLINT", 
+		"K_TEXT", "K_TIMEUUID", "K_TIME", "K_TINYINT", "K_TUPLE", "K_UUID", "K_VARCHAR", 
+		"K_VARINT", "CODE_BLOCK", "STRING_LITERAL", "DECIMAL_LITERAL", "FLOAT_LITERAL", 
+		"HEXADECIMAL_LITERAL", "REAL_LITERAL", "OBJECT_NAME", "UUID", "OPERATOR_EQ", 
+		"OPERATOR_LT", "OPERATOR_GT", "OPERATOR_LTE", "OPERATOR_GTE", "K_USERS", 
+		"K_USER"
 	];
 	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(CqlParser._LITERAL_NAMES, CqlParser._SYMBOLIC_NAMES, []);
 
@@ -695,27 +694,27 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 705;
+			this.state = 703;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (((((_la - 8)) & ~0x1F) === 0 && ((1 << (_la - 8)) & ((1 << (CqlParser.SEMI - 8)) | (1 << (CqlParser.K_ALTER - 8)) | (1 << (CqlParser.K_APPLY - 8)) | (1 << (CqlParser.K_BEGIN - 8)))) !== 0) || ((((_la - 46)) & ~0x1F) === 0 && ((1 << (_la - 46)) & ((1 << (CqlParser.K_CREATE - 46)) | (1 << (CqlParser.K_DELETE - 46)) | (1 << (CqlParser.K_DROP - 46)) | (1 << (CqlParser.K_GRANT - 46)) | (1 << (CqlParser.K_INSERT - 46)))) !== 0) || ((((_la - 108)) & ~0x1F) === 0 && ((1 << (_la - 108)) & ((1 << (CqlParser.K_REVOKE - 108)) | (1 << (CqlParser.K_SELECT - 108)) | (1 << (CqlParser.K_TRUNCATE - 108)) | (1 << (CqlParser.K_UPDATE - 108)) | (1 << (CqlParser.K_USE - 108)))) !== 0) || _la===CqlParser.K_LIST) {
 				{
-				this.state = 704;
+				this.state = 702;
 				this.cqls();
 				}
 			}
 
-			this.state = 708;
+			this.state = 706;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.MINUSMINUS) {
 				{
-				this.state = 707;
+				this.state = 705;
 				this.match(CqlParser.MINUSMINUS);
 				}
 			}
 
-			this.state = 710;
+			this.state = 708;
 			this.eof();
 			}
 		}
@@ -742,13 +741,13 @@ export class CqlParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 721;
+			this.state = 719;
 			this._errHandler.sync(this);
 			_alt = this.interpreter.adaptivePredict(this._input,4,this._ctx);
 			while ( _alt!==2 && _alt!==ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt===1 ) {
 					{
-					this.state = 719;
+					this.state = 717;
 					this._errHandler.sync(this);
 					switch (this._input.LA(1)) {
 					case CqlParser.K_ALTER:
@@ -766,25 +765,25 @@ export class CqlParser extends Parser {
 					case CqlParser.K_USE:
 					case CqlParser.K_LIST:
 						{
-						this.state = 712;
+						this.state = 710;
 						this.cql();
-						this.state = 714;
+						this.state = 712;
 						this._errHandler.sync(this);
 						_la = this._input.LA(1);
 						if (_la===CqlParser.MINUSMINUS) {
 							{
-							this.state = 713;
+							this.state = 711;
 							this.match(CqlParser.MINUSMINUS);
 							}
 						}
 
-						this.state = 716;
+						this.state = 714;
 						this.statementSeparator();
 						}
 						break;
 					case CqlParser.SEMI:
 						{
-						this.state = 718;
+						this.state = 716;
 						this.empty();
 						}
 						break;
@@ -793,11 +792,11 @@ export class CqlParser extends Parser {
 					}
 					} 
 				}
-				this.state = 723;
+				this.state = 721;
 				this._errHandler.sync(this);
 				_alt = this.interpreter.adaptivePredict(this._input,4,this._ctx);
 			}
-			this.state = 732;
+			this.state = 730;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case CqlParser.K_ALTER:
@@ -815,24 +814,24 @@ export class CqlParser extends Parser {
 			case CqlParser.K_USE:
 			case CqlParser.K_LIST:
 				{
-				this.state = 724;
+				this.state = 722;
 				this.cql();
-				this.state = 729;
+				this.state = 727;
 				this._errHandler.sync(this);
 				switch ( this.interpreter.adaptivePredict(this._input,6,this._ctx) ) {
 				case 1:
 					{
-					this.state = 726;
+					this.state = 724;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
 					if (_la===CqlParser.MINUSMINUS) {
 						{
-						this.state = 725;
+						this.state = 723;
 						this.match(CqlParser.MINUSMINUS);
 						}
 					}
 
-					this.state = 728;
+					this.state = 726;
 					this.statementSeparator();
 					}
 					break;
@@ -841,7 +840,7 @@ export class CqlParser extends Parser {
 				break;
 			case CqlParser.SEMI:
 				{
-				this.state = 731;
+				this.state = 729;
 				this.empty();
 				}
 				break;
@@ -871,7 +870,7 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 734;
+			this.state = 732;
 			this.match(CqlParser.SEMI);
 			}
 		}
@@ -896,7 +895,7 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 736;
+			this.state = 734;
 			this.statementSeparator();
 			}
 		}
@@ -919,13 +918,13 @@ export class CqlParser extends Parser {
 		let _localctx: CqlContext = new CqlContext(this._ctx, this.state);
 		this.enterRule(_localctx, 8, CqlParser.RULE_cql);
 		try {
-			this.state = 776;
+			this.state = 774;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,8,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 738;
+				this.state = 736;
 				this.beginBatch();
 				}
 				break;
@@ -933,7 +932,7 @@ export class CqlParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 739;
+				this.state = 737;
 				this.alterKeyspace();
 				}
 				break;
@@ -941,7 +940,7 @@ export class CqlParser extends Parser {
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 740;
+				this.state = 738;
 				this.alterMaterializedView();
 				}
 				break;
@@ -949,7 +948,7 @@ export class CqlParser extends Parser {
 			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 741;
+				this.state = 739;
 				this.alterRole();
 				}
 				break;
@@ -957,7 +956,7 @@ export class CqlParser extends Parser {
 			case 5:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 742;
+				this.state = 740;
 				this.alterTable();
 				}
 				break;
@@ -965,7 +964,7 @@ export class CqlParser extends Parser {
 			case 6:
 				this.enterOuterAlt(_localctx, 6);
 				{
-				this.state = 743;
+				this.state = 741;
 				this.alterType();
 				}
 				break;
@@ -973,7 +972,7 @@ export class CqlParser extends Parser {
 			case 7:
 				this.enterOuterAlt(_localctx, 7);
 				{
-				this.state = 744;
+				this.state = 742;
 				this.alterUser();
 				}
 				break;
@@ -981,7 +980,7 @@ export class CqlParser extends Parser {
 			case 8:
 				this.enterOuterAlt(_localctx, 8);
 				{
-				this.state = 745;
+				this.state = 743;
 				this.applyBatch();
 				}
 				break;
@@ -989,7 +988,7 @@ export class CqlParser extends Parser {
 			case 9:
 				this.enterOuterAlt(_localctx, 9);
 				{
-				this.state = 746;
+				this.state = 744;
 				this.createAggregate();
 				}
 				break;
@@ -997,7 +996,7 @@ export class CqlParser extends Parser {
 			case 10:
 				this.enterOuterAlt(_localctx, 10);
 				{
-				this.state = 747;
+				this.state = 745;
 				this.createFunction();
 				}
 				break;
@@ -1005,7 +1004,7 @@ export class CqlParser extends Parser {
 			case 11:
 				this.enterOuterAlt(_localctx, 11);
 				{
-				this.state = 748;
+				this.state = 746;
 				this.createIndex();
 				}
 				break;
@@ -1013,7 +1012,7 @@ export class CqlParser extends Parser {
 			case 12:
 				this.enterOuterAlt(_localctx, 12);
 				{
-				this.state = 749;
+				this.state = 747;
 				this.createKeyspace();
 				}
 				break;
@@ -1021,7 +1020,7 @@ export class CqlParser extends Parser {
 			case 13:
 				this.enterOuterAlt(_localctx, 13);
 				{
-				this.state = 750;
+				this.state = 748;
 				this.createMaterializedView();
 				}
 				break;
@@ -1029,7 +1028,7 @@ export class CqlParser extends Parser {
 			case 14:
 				this.enterOuterAlt(_localctx, 14);
 				{
-				this.state = 751;
+				this.state = 749;
 				this.createRole();
 				}
 				break;
@@ -1037,7 +1036,7 @@ export class CqlParser extends Parser {
 			case 15:
 				this.enterOuterAlt(_localctx, 15);
 				{
-				this.state = 752;
+				this.state = 750;
 				this.createTable();
 				}
 				break;
@@ -1045,7 +1044,7 @@ export class CqlParser extends Parser {
 			case 16:
 				this.enterOuterAlt(_localctx, 16);
 				{
-				this.state = 753;
+				this.state = 751;
 				this.createTrigger();
 				}
 				break;
@@ -1053,7 +1052,7 @@ export class CqlParser extends Parser {
 			case 17:
 				this.enterOuterAlt(_localctx, 17);
 				{
-				this.state = 754;
+				this.state = 752;
 				this.createType();
 				}
 				break;
@@ -1061,7 +1060,7 @@ export class CqlParser extends Parser {
 			case 18:
 				this.enterOuterAlt(_localctx, 18);
 				{
-				this.state = 755;
+				this.state = 753;
 				this.createUser();
 				}
 				break;
@@ -1069,7 +1068,7 @@ export class CqlParser extends Parser {
 			case 19:
 				this.enterOuterAlt(_localctx, 19);
 				{
-				this.state = 756;
+				this.state = 754;
 				this.delete();
 				}
 				break;
@@ -1077,7 +1076,7 @@ export class CqlParser extends Parser {
 			case 20:
 				this.enterOuterAlt(_localctx, 20);
 				{
-				this.state = 757;
+				this.state = 755;
 				this.dropAggregate();
 				}
 				break;
@@ -1085,7 +1084,7 @@ export class CqlParser extends Parser {
 			case 21:
 				this.enterOuterAlt(_localctx, 21);
 				{
-				this.state = 758;
+				this.state = 756;
 				this.dropFunction();
 				}
 				break;
@@ -1093,7 +1092,7 @@ export class CqlParser extends Parser {
 			case 22:
 				this.enterOuterAlt(_localctx, 22);
 				{
-				this.state = 759;
+				this.state = 757;
 				this.dropIndex();
 				}
 				break;
@@ -1101,7 +1100,7 @@ export class CqlParser extends Parser {
 			case 23:
 				this.enterOuterAlt(_localctx, 23);
 				{
-				this.state = 760;
+				this.state = 758;
 				this.dropKeyspace();
 				}
 				break;
@@ -1109,7 +1108,7 @@ export class CqlParser extends Parser {
 			case 24:
 				this.enterOuterAlt(_localctx, 24);
 				{
-				this.state = 761;
+				this.state = 759;
 				this.dropMaterializedView();
 				}
 				break;
@@ -1117,7 +1116,7 @@ export class CqlParser extends Parser {
 			case 25:
 				this.enterOuterAlt(_localctx, 25);
 				{
-				this.state = 762;
+				this.state = 760;
 				this.dropRole();
 				}
 				break;
@@ -1125,7 +1124,7 @@ export class CqlParser extends Parser {
 			case 26:
 				this.enterOuterAlt(_localctx, 26);
 				{
-				this.state = 763;
+				this.state = 761;
 				this.dropTable();
 				}
 				break;
@@ -1133,7 +1132,7 @@ export class CqlParser extends Parser {
 			case 27:
 				this.enterOuterAlt(_localctx, 27);
 				{
-				this.state = 764;
+				this.state = 762;
 				this.dropTrigger();
 				}
 				break;
@@ -1141,7 +1140,7 @@ export class CqlParser extends Parser {
 			case 28:
 				this.enterOuterAlt(_localctx, 28);
 				{
-				this.state = 765;
+				this.state = 763;
 				this.dropType();
 				}
 				break;
@@ -1149,7 +1148,7 @@ export class CqlParser extends Parser {
 			case 29:
 				this.enterOuterAlt(_localctx, 29);
 				{
-				this.state = 766;
+				this.state = 764;
 				this.dropUser();
 				}
 				break;
@@ -1157,7 +1156,7 @@ export class CqlParser extends Parser {
 			case 30:
 				this.enterOuterAlt(_localctx, 30);
 				{
-				this.state = 767;
+				this.state = 765;
 				this.grant();
 				}
 				break;
@@ -1165,7 +1164,7 @@ export class CqlParser extends Parser {
 			case 31:
 				this.enterOuterAlt(_localctx, 31);
 				{
-				this.state = 768;
+				this.state = 766;
 				this.insert();
 				}
 				break;
@@ -1173,7 +1172,7 @@ export class CqlParser extends Parser {
 			case 32:
 				this.enterOuterAlt(_localctx, 32);
 				{
-				this.state = 769;
+				this.state = 767;
 				this.listPermissions();
 				}
 				break;
@@ -1181,7 +1180,7 @@ export class CqlParser extends Parser {
 			case 33:
 				this.enterOuterAlt(_localctx, 33);
 				{
-				this.state = 770;
+				this.state = 768;
 				this.listRoles();
 				}
 				break;
@@ -1189,7 +1188,7 @@ export class CqlParser extends Parser {
 			case 34:
 				this.enterOuterAlt(_localctx, 34);
 				{
-				this.state = 771;
+				this.state = 769;
 				this.revoke();
 				}
 				break;
@@ -1197,7 +1196,7 @@ export class CqlParser extends Parser {
 			case 35:
 				this.enterOuterAlt(_localctx, 35);
 				{
-				this.state = 772;
+				this.state = 770;
 				this.select();
 				}
 				break;
@@ -1205,7 +1204,7 @@ export class CqlParser extends Parser {
 			case 36:
 				this.enterOuterAlt(_localctx, 36);
 				{
-				this.state = 773;
+				this.state = 771;
 				this.truncate();
 				}
 				break;
@@ -1213,7 +1212,7 @@ export class CqlParser extends Parser {
 			case 37:
 				this.enterOuterAlt(_localctx, 37);
 				{
-				this.state = 774;
+				this.state = 772;
 				this.update();
 				}
 				break;
@@ -1221,7 +1220,7 @@ export class CqlParser extends Parser {
 			case 38:
 				this.enterOuterAlt(_localctx, 38);
 				{
-				this.state = 775;
+				this.state = 773;
 				this.use();
 				}
 				break;
@@ -1248,17 +1247,17 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 778;
+			this.state = 776;
 			this.kwRevoke();
-			this.state = 779;
+			this.state = 777;
 			this.priviledge();
-			this.state = 780;
+			this.state = 778;
 			this.kwOn();
-			this.state = 781;
+			this.state = 779;
 			this.resource();
-			this.state = 782;
+			this.state = 780;
 			this.kwFrom();
-			this.state = 783;
+			this.state = 781;
 			this.role();
 			}
 		}
@@ -1283,7 +1282,7 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 785;
+			this.state = 783;
 			this.kwListUsers();
 			}
 		}
@@ -1309,26 +1308,26 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 787;
+			this.state = 785;
 			this.kwListRoles();
-			this.state = 791;
+			this.state = 789;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_OF) {
 				{
-				this.state = 788;
+				this.state = 786;
 				this.kwOf();
-				this.state = 789;
+				this.state = 787;
 				this.role();
 				}
 			}
 
-			this.state = 794;
+			this.state = 792;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_NORECURSIVE) {
 				{
-				this.state = 793;
+				this.state = 791;
 				this.kwNorecursive();
 				}
 			}
@@ -1357,30 +1356,30 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 796;
+			this.state = 794;
 			this.kwList();
-			this.state = 797;
+			this.state = 795;
 			this.priviledge();
-			this.state = 801;
+			this.state = 799;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_ON) {
 				{
-				this.state = 798;
+				this.state = 796;
 				this.kwOn();
-				this.state = 799;
+				this.state = 797;
 				this.resource();
 				}
 			}
 
-			this.state = 806;
+			this.state = 804;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_OF) {
 				{
-				this.state = 803;
+				this.state = 801;
 				this.kwOf();
-				this.state = 804;
+				this.state = 802;
 				this.role();
 				}
 			}
@@ -1408,17 +1407,17 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 808;
+			this.state = 806;
 			this.kwGrant();
-			this.state = 809;
+			this.state = 807;
 			this.priviledge();
-			this.state = 810;
+			this.state = 808;
 			this.kwOn();
-			this.state = 811;
+			this.state = 809;
 			this.resource();
-			this.state = 812;
+			this.state = 810;
 			this.kwTo();
-			this.state = 813;
+			this.state = 811;
 			this.role();
 			}
 		}
@@ -1441,25 +1440,25 @@ export class CqlParser extends Parser {
 		let _localctx: PriviledgeContext = new PriviledgeContext(this._ctx, this.state);
 		this.enterRule(_localctx, 20, CqlParser.RULE_priviledge);
 		try {
-			this.state = 827;
+			this.state = 825;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case CqlParser.K_ALL:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 817;
+				this.state = 815;
 				this._errHandler.sync(this);
 				switch ( this.interpreter.adaptivePredict(this._input,13,this._ctx) ) {
 				case 1:
 					{
-					this.state = 815;
+					this.state = 813;
 					this.kwAll();
 					}
 					break;
 
 				case 2:
 					{
-					this.state = 816;
+					this.state = 814;
 					this.kwAllPermissions();
 					}
 					break;
@@ -1469,56 +1468,56 @@ export class CqlParser extends Parser {
 			case CqlParser.K_ALTER:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 819;
+				this.state = 817;
 				this.kwAlter();
 				}
 				break;
 			case CqlParser.K_AUTHORIZE:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 820;
+				this.state = 818;
 				this.kwAuthorize();
 				}
 				break;
 			case CqlParser.K_DESCRIBE:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 821;
+				this.state = 819;
 				this.kwDescibe();
 				}
 				break;
 			case CqlParser.K_EXECUTE:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 822;
+				this.state = 820;
 				this.kwExecute();
 				}
 				break;
 			case CqlParser.K_CREATE:
 				this.enterOuterAlt(_localctx, 6);
 				{
-				this.state = 823;
+				this.state = 821;
 				this.kwCreate();
 				}
 				break;
 			case CqlParser.K_DROP:
 				this.enterOuterAlt(_localctx, 7);
 				{
-				this.state = 824;
+				this.state = 822;
 				this.kwDrop();
 				}
 				break;
 			case CqlParser.K_MODIFY:
 				this.enterOuterAlt(_localctx, 8);
 				{
-				this.state = 825;
+				this.state = 823;
 				this.kwModify();
 				}
 				break;
 			case CqlParser.K_SELECT:
 				this.enterOuterAlt(_localctx, 9);
 				{
-				this.state = 826;
+				this.state = 824;
 				this.kwSelect();
 				}
 				break;
@@ -1546,13 +1545,13 @@ export class CqlParser extends Parser {
 		this.enterRule(_localctx, 22, CqlParser.RULE_resource);
 		let _la: number;
 		try {
-			this.state = 855;
+			this.state = 853;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,17,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 829;
+				this.state = 827;
 				this.kwAllFunctions();
 				}
 				break;
@@ -1560,13 +1559,13 @@ export class CqlParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 830;
+				this.state = 828;
 				this.kwAllFunctions();
-				this.state = 831;
+				this.state = 829;
 				this.kwIn();
-				this.state = 832;
+				this.state = 830;
 				this.kwKeyspace();
-				this.state = 833;
+				this.state = 831;
 				this.keyspace();
 				}
 				break;
@@ -1574,21 +1573,21 @@ export class CqlParser extends Parser {
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 835;
+				this.state = 833;
 				this.kwFunction();
-				this.state = 839;
+				this.state = 837;
 				this._errHandler.sync(this);
 				switch ( this.interpreter.adaptivePredict(this._input,15,this._ctx) ) {
 				case 1:
 					{
-					this.state = 836;
+					this.state = 834;
 					this.keyspace();
-					this.state = 837;
+					this.state = 835;
 					this.match(CqlParser.DOT);
 					}
 					break;
 				}
-				this.state = 841;
+				this.state = 839;
 				this.function();
 				}
 				break;
@@ -1596,7 +1595,7 @@ export class CqlParser extends Parser {
 			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 843;
+				this.state = 841;
 				this.kwAllKeyspaces();
 				}
 				break;
@@ -1604,9 +1603,9 @@ export class CqlParser extends Parser {
 			case 5:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 844;
+				this.state = 842;
 				this.kwKeyspace();
-				this.state = 845;
+				this.state = 843;
 				this.keyspace();
 				}
 				break;
@@ -1614,17 +1613,17 @@ export class CqlParser extends Parser {
 			case 6:
 				this.enterOuterAlt(_localctx, 6);
 				{
-				this.state = 848;
+				this.state = 846;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				if (_la===CqlParser.K_TABLE) {
 					{
-					this.state = 847;
+					this.state = 845;
 					this.kwTable();
 					}
 				}
 
-				this.state = 850;
+				this.state = 848;
 				this.tableSpec();
 				}
 				break;
@@ -1632,7 +1631,7 @@ export class CqlParser extends Parser {
 			case 7:
 				this.enterOuterAlt(_localctx, 7);
 				{
-				this.state = 851;
+				this.state = 849;
 				this.kwAllRoles();
 				}
 				break;
@@ -1640,9 +1639,9 @@ export class CqlParser extends Parser {
 			case 8:
 				this.enterOuterAlt(_localctx, 8);
 				{
-				this.state = 852;
+				this.state = 850;
 				this.kwRole();
-				this.state = 853;
+				this.state = 851;
 				this.role();
 				}
 				break;
@@ -1670,40 +1669,40 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 857;
+			this.state = 855;
 			this.kwCreate();
-			this.state = 858;
+			this.state = 856;
 			this.kwUser();
-			this.state = 860;
+			this.state = 858;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_IF) {
 				{
-				this.state = 859;
+				this.state = 857;
 				this.ifNotExist();
 				}
 			}
 
-			this.state = 862;
+			this.state = 860;
 			this.user();
-			this.state = 863;
+			this.state = 861;
 			this.kwWith();
-			this.state = 864;
+			this.state = 862;
 			this.kwPassword();
-			this.state = 865;
+			this.state = 863;
 			this.constantString();
-			this.state = 868;
+			this.state = 866;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case CqlParser.K_SUPERUSER:
 				{
-				this.state = 866;
+				this.state = 864;
 				this.kwSuperuser();
 				}
 				break;
 			case CqlParser.K_NOSUPERUSER:
 				{
-				this.state = 867;
+				this.state = 865;
 				this.kwNosuperuser();
 				}
 				break;
@@ -1738,28 +1737,28 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 870;
+			this.state = 868;
 			this.kwCreate();
-			this.state = 871;
+			this.state = 869;
 			this.kwRole();
-			this.state = 873;
+			this.state = 871;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_IF) {
 				{
-				this.state = 872;
+				this.state = 870;
 				this.ifNotExist();
 				}
 			}
 
-			this.state = 875;
+			this.state = 873;
 			this.role();
-			this.state = 877;
+			this.state = 875;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_WITH) {
 				{
-				this.state = 876;
+				this.state = 874;
 				this.roleWith();
 				}
 			}
@@ -1788,27 +1787,27 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 879;
+			this.state = 877;
 			this.kwCreate();
-			this.state = 880;
+			this.state = 878;
 			this.kwType();
-			this.state = 882;
+			this.state = 880;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_IF) {
 				{
-				this.state = 881;
+				this.state = 879;
 				this.ifNotExist();
 				}
 			}
 
-			this.state = 884;
+			this.state = 882;
 			this.objectUnknownSpec();
-			this.state = 885;
+			this.state = 883;
 			this.syntaxBracketLr();
-			this.state = 886;
+			this.state = 884;
 			this.typeMemberColumnList();
-			this.state = 887;
+			this.state = 885;
 			this.syntaxBracketRr();
 			}
 		}
@@ -1834,25 +1833,25 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 889;
-			this.column();
-			this.state = 890;
+			this.state = 887;
+			this.columnSpec();
+			this.state = 888;
 			this.dataType();
-			this.state = 897;
+			this.state = 895;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la===CqlParser.COMMA) {
 				{
 				{
-				this.state = 891;
+				this.state = 889;
 				this.syntaxComma();
-				this.state = 892;
-				this.column();
-				this.state = 893;
+				this.state = 890;
+				this.columnSpec();
+				this.state = 891;
 				this.dataType();
 				}
 				}
-				this.state = 899;
+				this.state = 897;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
@@ -1880,25 +1879,25 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 900;
+			this.state = 898;
 			this.kwCreate();
-			this.state = 901;
+			this.state = 899;
 			this.kwTrigger();
-			this.state = 903;
+			this.state = 901;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_IF) {
 				{
-				this.state = 902;
+				this.state = 900;
 				this.ifNotExist();
 				}
 			}
 
-			this.state = 905;
+			this.state = 903;
 			this.objectUnknownSpec();
-			this.state = 906;
+			this.state = 904;
 			this.kwUsing();
-			this.state = 907;
+			this.state = 905;
 			this.triggerClass();
 			}
 		}
@@ -1924,44 +1923,44 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 909;
+			this.state = 907;
 			this.kwCreate();
-			this.state = 910;
+			this.state = 908;
 			this.kwMaterializedView();
-			this.state = 912;
+			this.state = 910;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_IF) {
 				{
-				this.state = 911;
+				this.state = 909;
 				this.ifNotExist();
 				}
 			}
 
-			this.state = 914;
+			this.state = 912;
 			this.objectUnknownSpec();
-			this.state = 915;
+			this.state = 913;
 			this.kwAs();
-			this.state = 916;
+			this.state = 914;
 			this.kwSelect();
-			this.state = 917;
+			this.state = 915;
 			this.baseColumnList();
-			this.state = 918;
+			this.state = 916;
 			this.kwFrom();
-			this.state = 919;
+			this.state = 917;
 			this.baseTableSpec();
-			this.state = 920;
+			this.state = 918;
 			this.materializedViewWhere();
-			this.state = 921;
+			this.state = 919;
 			this.primaryKeyElement();
-			this.state = 925;
+			this.state = 923;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_WITH) {
 				{
-				this.state = 922;
+				this.state = 920;
 				this.kwWith();
-				this.state = 923;
+				this.state = 921;
 				this.materializedViewOptions();
 				}
 			}
@@ -1990,18 +1989,18 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 927;
+			this.state = 925;
 			this.kwWhere();
-			this.state = 928;
+			this.state = 926;
 			this.columnNotNullList();
-			this.state = 932;
+			this.state = 930;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_AND) {
 				{
-				this.state = 929;
+				this.state = 927;
 				this.kwAnd();
-				this.state = 930;
+				this.state = 928;
 				this.relationElements();
 				}
 			}
@@ -2030,23 +2029,23 @@ export class CqlParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 934;
+			this.state = 932;
 			this.columnNotNull();
-			this.state = 940;
+			this.state = 938;
 			this._errHandler.sync(this);
 			_alt = this.interpreter.adaptivePredict(this._input,28,this._ctx);
 			while ( _alt!==2 && _alt!==ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt===1 ) {
 					{
 					{
-					this.state = 935;
+					this.state = 933;
 					this.kwAnd();
-					this.state = 936;
+					this.state = 934;
 					this.columnNotNull();
 					}
 					} 
 				}
-				this.state = 942;
+				this.state = 940;
 				this._errHandler.sync(this);
 				_alt = this.interpreter.adaptivePredict(this._input,28,this._ctx);
 			}
@@ -2073,13 +2072,13 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 943;
-			this.column();
-			this.state = 944;
+			this.state = 941;
+			this.columnSpec();
+			this.state = 942;
 			this.kwIs();
-			this.state = 945;
+			this.state = 943;
 			this.kwNot();
-			this.state = 946;
+			this.state = 944;
 			this.kwNull();
 			}
 		}
@@ -2102,13 +2101,13 @@ export class CqlParser extends Parser {
 		let _localctx: MaterializedViewOptionsContext = new MaterializedViewOptionsContext(this._ctx, this.state);
 		this.enterRule(_localctx, 42, CqlParser.RULE_materializedViewOptions);
 		try {
-			this.state = 958;
+			this.state = 956;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,29,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 948;
+				this.state = 946;
 				this.tableOptions();
 				}
 				break;
@@ -2116,11 +2115,11 @@ export class CqlParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 949;
+				this.state = 947;
 				this.tableOptions();
-				this.state = 950;
+				this.state = 948;
 				this.kwAnd();
-				this.state = 951;
+				this.state = 949;
 				this.clusteringOrder();
 				}
 				break;
@@ -2128,7 +2127,7 @@ export class CqlParser extends Parser {
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 953;
+				this.state = 951;
 				this.clusteringOrder();
 				}
 				break;
@@ -2136,11 +2135,11 @@ export class CqlParser extends Parser {
 			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 954;
+				this.state = 952;
 				this.clusteringOrder();
-				this.state = 955;
+				this.state = 953;
 				this.kwAnd();
-				this.state = 956;
+				this.state = 954;
 				this.tableOptions();
 				}
 				break;
@@ -2168,42 +2167,42 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 960;
+			this.state = 958;
 			this.kwCreate();
-			this.state = 961;
+			this.state = 959;
 			this.kwKeyspace();
-			this.state = 963;
+			this.state = 961;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_IF) {
 				{
-				this.state = 962;
+				this.state = 960;
 				this.ifNotExist();
 				}
 			}
 
-			this.state = 965;
+			this.state = 963;
 			this.objectUnknown();
-			this.state = 966;
+			this.state = 964;
 			this.kwWith();
-			this.state = 967;
+			this.state = 965;
 			this.kwReplication();
-			this.state = 968;
+			this.state = 966;
 			this.match(CqlParser.OPERATOR_EQ);
-			this.state = 969;
+			this.state = 967;
 			this.syntaxBracketLc();
-			this.state = 970;
+			this.state = 968;
 			this.replicationList();
-			this.state = 971;
+			this.state = 969;
 			this.syntaxBracketRc();
-			this.state = 975;
+			this.state = 973;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_AND) {
 				{
-				this.state = 972;
+				this.state = 970;
 				this.kwAnd();
-				this.state = 973;
+				this.state = 971;
 				this.durableWrites();
 				}
 			}
@@ -2232,59 +2231,59 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 977;
+			this.state = 975;
 			this.kwCreate();
-			this.state = 979;
+			this.state = 977;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_OR) {
 				{
-				this.state = 978;
+				this.state = 976;
 				this.orReplace();
 				}
 			}
 
-			this.state = 981;
+			this.state = 979;
 			this.kwFunction();
-			this.state = 983;
+			this.state = 981;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_IF) {
 				{
-				this.state = 982;
+				this.state = 980;
 				this.ifNotExist();
 				}
 			}
 
-			this.state = 985;
+			this.state = 983;
 			this.objectUnknownSpec();
-			this.state = 986;
+			this.state = 984;
 			this.syntaxBracketLr();
-			this.state = 988;
+			this.state = 986;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.OBJECT_NAME) {
 				{
-				this.state = 987;
+				this.state = 985;
 				this.paramList();
 				}
 			}
 
-			this.state = 990;
+			this.state = 988;
 			this.syntaxBracketRr();
-			this.state = 991;
+			this.state = 989;
 			this.returnMode();
-			this.state = 992;
+			this.state = 990;
 			this.kwReturns();
-			this.state = 993;
+			this.state = 991;
 			this.dataType();
-			this.state = 994;
+			this.state = 992;
 			this.kwLanguage();
-			this.state = 995;
+			this.state = 993;
 			this.language();
-			this.state = 996;
+			this.state = 994;
 			this.kwAs();
-			this.state = 997;
+			this.state = 995;
 			this.codeBlock();
 			}
 		}
@@ -2309,7 +2308,7 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 999;
+			this.state = 997;
 			this.match(CqlParser.CODE_BLOCK);
 			}
 		}
@@ -2335,21 +2334,21 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1001;
+			this.state = 999;
 			this.param();
-			this.state = 1007;
+			this.state = 1005;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la===CqlParser.COMMA) {
 				{
 				{
-				this.state = 1002;
+				this.state = 1000;
 				this.syntaxComma();
-				this.state = 1003;
+				this.state = 1001;
 				this.param();
 				}
 				}
-				this.state = 1009;
+				this.state = 1007;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
@@ -2376,31 +2375,31 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1014;
+			this.state = 1012;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case CqlParser.K_CALLED:
 				{
-				this.state = 1010;
+				this.state = 1008;
 				this.kwCalled();
 				}
 				break;
 			case CqlParser.K_RETURNS:
 				{
-				this.state = 1011;
+				this.state = 1009;
 				this.kwReturns();
-				this.state = 1012;
+				this.state = 1010;
 				this.kwNull();
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
-			this.state = 1016;
+			this.state = 1014;
 			this.kwOn();
-			this.state = 1017;
+			this.state = 1015;
 			this.kwNull();
-			this.state = 1018;
+			this.state = 1016;
 			this.kwInput();
 			}
 		}
@@ -2426,53 +2425,53 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1020;
+			this.state = 1018;
 			this.kwCreate();
-			this.state = 1022;
+			this.state = 1020;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_OR) {
 				{
-				this.state = 1021;
+				this.state = 1019;
 				this.orReplace();
 				}
 			}
 
-			this.state = 1024;
+			this.state = 1022;
 			this.kwAggregate();
-			this.state = 1026;
+			this.state = 1024;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_IF) {
 				{
-				this.state = 1025;
+				this.state = 1023;
 				this.ifNotExist();
 				}
 			}
 
-			this.state = 1028;
+			this.state = 1026;
 			this.objectUnknownSpec();
-			this.state = 1029;
+			this.state = 1027;
 			this.syntaxBracketLr();
-			this.state = 1030;
+			this.state = 1028;
 			this.dataType();
-			this.state = 1031;
+			this.state = 1029;
 			this.syntaxBracketRr();
-			this.state = 1032;
+			this.state = 1030;
 			this.kwSfunc();
-			this.state = 1033;
+			this.state = 1031;
 			this.function();
-			this.state = 1034;
+			this.state = 1032;
 			this.kwStype();
-			this.state = 1035;
+			this.state = 1033;
 			this.dataType();
-			this.state = 1036;
+			this.state = 1034;
 			this.kwFinalfunc();
-			this.state = 1037;
+			this.state = 1035;
 			this.function();
-			this.state = 1038;
+			this.state = 1036;
 			this.kwInitcond();
-			this.state = 1039;
+			this.state = 1037;
 			this.initCondDefinition();
 			}
 		}
@@ -2495,13 +2494,13 @@ export class CqlParser extends Parser {
 		let _localctx: InitCondDefinitionContext = new InitCondDefinitionContext(this._ctx, this.state);
 		this.enterRule(_localctx, 56, CqlParser.RULE_initCondDefinition);
 		try {
-			this.state = 1045;
+			this.state = 1043;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,39,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 1041;
+				this.state = 1039;
 				this.constant();
 				}
 				break;
@@ -2509,7 +2508,7 @@ export class CqlParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 1042;
+				this.state = 1040;
 				this.initCondList();
 				}
 				break;
@@ -2517,7 +2516,7 @@ export class CqlParser extends Parser {
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 1043;
+				this.state = 1041;
 				this.initCondListNested();
 				}
 				break;
@@ -2525,7 +2524,7 @@ export class CqlParser extends Parser {
 			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 1044;
+				this.state = 1042;
 				this.initCondHash();
 				}
 				break;
@@ -2553,27 +2552,27 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1047;
+			this.state = 1045;
 			this.syntaxBracketLc();
-			this.state = 1048;
+			this.state = 1046;
 			this.initCondHashItem();
-			this.state = 1054;
+			this.state = 1052;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la===CqlParser.COMMA) {
 				{
 				{
-				this.state = 1049;
+				this.state = 1047;
 				this.syntaxComma();
-				this.state = 1050;
+				this.state = 1048;
 				this.initCondHashItem();
 				}
 				}
-				this.state = 1056;
+				this.state = 1054;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 1057;
+			this.state = 1055;
 			this.syntaxBracketRc();
 			}
 		}
@@ -2598,11 +2597,11 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1059;
+			this.state = 1057;
 			this.hashKey();
-			this.state = 1060;
+			this.state = 1058;
 			this.match(CqlParser.COLON);
-			this.state = 1061;
+			this.state = 1059;
 			this.initCondDefinition();
 			}
 		}
@@ -2628,29 +2627,29 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1063;
+			this.state = 1061;
 			this.syntaxBracketLr();
-			this.state = 1064;
+			this.state = 1062;
 			this.initCondList();
-			this.state = 1071;
+			this.state = 1069;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la===CqlParser.LR_BRACKET || _la===CqlParser.COMMA) {
 				{
-				this.state = 1069;
+				this.state = 1067;
 				this._errHandler.sync(this);
 				switch (this._input.LA(1)) {
 				case CqlParser.COMMA:
 					{
-					this.state = 1065;
+					this.state = 1063;
 					this.syntaxComma();
-					this.state = 1066;
+					this.state = 1064;
 					this.constant();
 					}
 					break;
 				case CqlParser.LR_BRACKET:
 					{
-					this.state = 1068;
+					this.state = 1066;
 					this.initCondList();
 					}
 					break;
@@ -2658,11 +2657,11 @@ export class CqlParser extends Parser {
 					throw new NoViableAltException(this);
 				}
 				}
-				this.state = 1073;
+				this.state = 1071;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 1074;
+			this.state = 1072;
 			this.syntaxBracketRr();
 			}
 		}
@@ -2688,27 +2687,27 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1076;
+			this.state = 1074;
 			this.syntaxBracketLr();
-			this.state = 1077;
+			this.state = 1075;
 			this.constant();
-			this.state = 1083;
+			this.state = 1081;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la===CqlParser.COMMA) {
 				{
 				{
-				this.state = 1078;
+				this.state = 1076;
 				this.syntaxComma();
-				this.state = 1079;
+				this.state = 1077;
 				this.constant();
 				}
 				}
-				this.state = 1085;
+				this.state = 1083;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 1086;
+			this.state = 1084;
 			this.syntaxBracketRr();
 			}
 		}
@@ -2733,9 +2732,9 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1088;
+			this.state = 1086;
 			this.kwOr();
-			this.state = 1089;
+			this.state = 1087;
 			this.kwReplace();
 			}
 		}
@@ -2761,22 +2760,22 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1091;
+			this.state = 1089;
 			this.kwAlter();
-			this.state = 1092;
+			this.state = 1090;
 			this.kwUser();
-			this.state = 1093;
+			this.state = 1091;
 			this.user();
-			this.state = 1094;
+			this.state = 1092;
 			this.kwWith();
-			this.state = 1095;
+			this.state = 1093;
 			this.userPassword();
-			this.state = 1097;
+			this.state = 1095;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_NOSUPERUSER || _la===CqlParser.K_SUPERUSER) {
 				{
-				this.state = 1096;
+				this.state = 1094;
 				this.userSuperUser();
 				}
 			}
@@ -2804,9 +2803,9 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1099;
+			this.state = 1097;
 			this.kwPassword();
-			this.state = 1100;
+			this.state = 1098;
 			this.constantString();
 			}
 		}
@@ -2829,20 +2828,20 @@ export class CqlParser extends Parser {
 		let _localctx: UserSuperUserContext = new UserSuperUserContext(this._ctx, this.state);
 		this.enterRule(_localctx, 72, CqlParser.RULE_userSuperUser);
 		try {
-			this.state = 1104;
+			this.state = 1102;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case CqlParser.K_SUPERUSER:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 1102;
+				this.state = 1100;
 				this.kwSuperuser();
 				}
 				break;
 			case CqlParser.K_NOSUPERUSER:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 1103;
+				this.state = 1101;
 				this.kwNosuperuser();
 				}
 				break;
@@ -2871,13 +2870,13 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1106;
+			this.state = 1104;
 			this.kwAlter();
-			this.state = 1107;
+			this.state = 1105;
 			this.kwType();
-			this.state = 1108;
+			this.state = 1106;
 			this.typeSpec();
-			this.state = 1109;
+			this.state = 1107;
 			this.alterTypeOperation();
 			}
 		}
@@ -2903,32 +2902,32 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1112;
+			this.state = 1110;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_ALTER) {
 				{
-				this.state = 1111;
+				this.state = 1109;
 				this.alterTypeAlterType();
 				}
 			}
 
-			this.state = 1115;
+			this.state = 1113;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_ADD) {
 				{
-				this.state = 1114;
+				this.state = 1112;
 				this.alterTypeAdd();
 				}
 			}
 
-			this.state = 1118;
+			this.state = 1116;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_RENAME) {
 				{
-				this.state = 1117;
+				this.state = 1115;
 				this.alterTypeRename();
 				}
 			}
@@ -2956,9 +2955,9 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1120;
+			this.state = 1118;
 			this.kwRename();
-			this.state = 1121;
+			this.state = 1119;
 			this.alterTypeRenameList();
 			}
 		}
@@ -2984,21 +2983,21 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1123;
+			this.state = 1121;
 			this.alterTypeRenameItem();
-			this.state = 1129;
+			this.state = 1127;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la===CqlParser.K_AND) {
 				{
 				{
-				this.state = 1124;
+				this.state = 1122;
 				this.kwAnd();
-				this.state = 1125;
+				this.state = 1123;
 				this.alterTypeRenameItem();
 				}
 				}
-				this.state = 1131;
+				this.state = 1129;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
@@ -3025,12 +3024,12 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1132;
-			this.column();
-			this.state = 1133;
+			this.state = 1130;
+			this.columnSpec();
+			this.state = 1131;
 			this.kwTo();
-			this.state = 1134;
-			this.column();
+			this.state = 1132;
+			this.columnUnknownSpec();
 			}
 		}
 		catch (re) {
@@ -3055,27 +3054,27 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1136;
+			this.state = 1134;
 			this.kwAdd();
-			this.state = 1137;
-			this.column();
-			this.state = 1138;
+			this.state = 1135;
+			this.columnUnknownSpec();
+			this.state = 1136;
 			this.dataType();
-			this.state = 1145;
+			this.state = 1143;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la===CqlParser.COMMA) {
 				{
 				{
-				this.state = 1139;
+				this.state = 1137;
 				this.syntaxComma();
-				this.state = 1140;
-				this.column();
-				this.state = 1141;
+				this.state = 1138;
+				this.columnUnknownSpec();
+				this.state = 1139;
 				this.dataType();
 				}
 				}
-				this.state = 1147;
+				this.state = 1145;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
@@ -3102,13 +3101,13 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1148;
+			this.state = 1146;
 			this.kwAlter();
-			this.state = 1149;
-			this.column();
-			this.state = 1150;
+			this.state = 1147;
+			this.columnSpec();
+			this.state = 1148;
 			this.kwType();
-			this.state = 1151;
+			this.state = 1149;
 			this.dataType();
 			}
 		}
@@ -3133,13 +3132,13 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1153;
+			this.state = 1151;
 			this.kwAlter();
-			this.state = 1154;
+			this.state = 1152;
 			this.kwTable();
-			this.state = 1155;
+			this.state = 1153;
 			this.tableSpec();
-			this.state = 1156;
+			this.state = 1154;
 			this.alterTableOperation();
 			}
 		}
@@ -3162,13 +3161,13 @@ export class CqlParser extends Parser {
 		let _localctx: AlterTableOperationContext = new AlterTableOperationContext(this._ctx, this.state);
 		this.enterRule(_localctx, 90, CqlParser.RULE_alterTableOperation);
 		try {
-			this.state = 1165;
+			this.state = 1163;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,51,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 1158;
+				this.state = 1156;
 				this.alterTableAdd();
 				}
 				break;
@@ -3176,7 +3175,7 @@ export class CqlParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 1159;
+				this.state = 1157;
 				this.alterTableDropColumns();
 				}
 				break;
@@ -3184,7 +3183,7 @@ export class CqlParser extends Parser {
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 1160;
+				this.state = 1158;
 				this.alterTableDropColumns();
 				}
 				break;
@@ -3192,7 +3191,7 @@ export class CqlParser extends Parser {
 			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 1161;
+				this.state = 1159;
 				this.alterTableDropCompactStorage();
 				}
 				break;
@@ -3200,7 +3199,7 @@ export class CqlParser extends Parser {
 			case 5:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 1162;
+				this.state = 1160;
 				this.alterTableRename();
 				}
 				break;
@@ -3208,7 +3207,7 @@ export class CqlParser extends Parser {
 			case 6:
 				this.enterOuterAlt(_localctx, 6);
 				{
-				this.state = 1163;
+				this.state = 1161;
 				this.alterTableWith();
 				}
 				break;
@@ -3242,9 +3241,9 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1167;
+			this.state = 1165;
 			this.kwWith();
-			this.state = 1168;
+			this.state = 1166;
 			this.tableOptions();
 			}
 		}
@@ -3269,14 +3268,14 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1170;
+			this.state = 1168;
 			this.kwRename();
-			this.state = 1171;
-			this.column();
-			this.state = 1172;
+			this.state = 1169;
+			this.columnSpec();
+			this.state = 1170;
 			this.kwTo();
-			this.state = 1173;
-			this.column();
+			this.state = 1171;
+			this.columnUnknownSpec();
 			}
 		}
 		catch (re) {
@@ -3300,11 +3299,11 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1175;
+			this.state = 1173;
 			this.kwDrop();
-			this.state = 1176;
+			this.state = 1174;
 			this.kwCompact();
-			this.state = 1177;
+			this.state = 1175;
 			this.kwStorage();
 			}
 		}
@@ -3329,9 +3328,9 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1179;
+			this.state = 1177;
 			this.kwDrop();
-			this.state = 1180;
+			this.state = 1178;
 			this.alterTableDropColumnList();
 			}
 		}
@@ -3357,21 +3356,21 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1182;
-			this.column();
-			this.state = 1188;
+			this.state = 1180;
+			this.columnSpec();
+			this.state = 1186;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la===CqlParser.COMMA) {
 				{
 				{
-				this.state = 1183;
+				this.state = 1181;
 				this.syntaxComma();
-				this.state = 1184;
-				this.column();
+				this.state = 1182;
+				this.columnSpec();
 				}
 				}
-				this.state = 1190;
+				this.state = 1188;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
@@ -3398,9 +3397,9 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1191;
+			this.state = 1189;
 			this.kwAdd();
-			this.state = 1192;
+			this.state = 1190;
 			this.alterTableColumnDefinition();
 			}
 		}
@@ -3426,25 +3425,25 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1194;
-			this.column();
-			this.state = 1195;
+			this.state = 1192;
+			this.columnUnknownSpec();
+			this.state = 1193;
 			this.dataType();
-			this.state = 1202;
+			this.state = 1200;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la===CqlParser.COMMA) {
 				{
 				{
-				this.state = 1196;
+				this.state = 1194;
 				this.syntaxComma();
-				this.state = 1197;
-				this.column();
-				this.state = 1198;
+				this.state = 1195;
+				this.columnUnknownSpec();
+				this.state = 1196;
 				this.dataType();
 				}
 				}
-				this.state = 1204;
+				this.state = 1202;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
@@ -3472,18 +3471,18 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1205;
+			this.state = 1203;
 			this.kwAlter();
-			this.state = 1206;
+			this.state = 1204;
 			this.kwRole();
-			this.state = 1207;
+			this.state = 1205;
 			this.role();
-			this.state = 1209;
+			this.state = 1207;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_WITH) {
 				{
-				this.state = 1208;
+				this.state = 1206;
 				this.roleWith();
 				}
 			}
@@ -3512,24 +3511,24 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1211;
+			this.state = 1209;
 			this.kwWith();
 			{
-			this.state = 1212;
+			this.state = 1210;
 			this.roleWithOptions();
-			this.state = 1218;
+			this.state = 1216;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la===CqlParser.K_AND) {
 				{
 				{
-				this.state = 1213;
+				this.state = 1211;
 				this.kwAnd();
-				this.state = 1214;
+				this.state = 1212;
 				this.roleWithOptions();
 				}
 				}
-				this.state = 1220;
+				this.state = 1218;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
@@ -3555,50 +3554,50 @@ export class CqlParser extends Parser {
 		let _localctx: RoleWithOptionsContext = new RoleWithOptionsContext(this._ctx, this.state);
 		this.enterRule(_localctx, 110, CqlParser.RULE_roleWithOptions);
 		try {
-			this.state = 1237;
+			this.state = 1235;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case CqlParser.K_PASSWORD:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 1221;
+				this.state = 1219;
 				this.kwPassword();
-				this.state = 1222;
+				this.state = 1220;
 				this.match(CqlParser.OPERATOR_EQ);
-				this.state = 1223;
+				this.state = 1221;
 				this.constantString();
 				}
 				break;
 			case CqlParser.K_LOGIN:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 1225;
+				this.state = 1223;
 				this.kwLogin();
-				this.state = 1226;
+				this.state = 1224;
 				this.match(CqlParser.OPERATOR_EQ);
-				this.state = 1227;
+				this.state = 1225;
 				this.constantBoolean();
 				}
 				break;
 			case CqlParser.K_SUPERUSER:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 1229;
+				this.state = 1227;
 				this.kwSuperuser();
-				this.state = 1230;
+				this.state = 1228;
 				this.match(CqlParser.OPERATOR_EQ);
-				this.state = 1231;
+				this.state = 1229;
 				this.constantBoolean();
 				}
 				break;
 			case CqlParser.K_OPTIONS:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 1233;
+				this.state = 1231;
 				this.kwOptions();
-				this.state = 1234;
+				this.state = 1232;
 				this.match(CqlParser.OPERATOR_EQ);
-				this.state = 1235;
+				this.state = 1233;
 				this.optionHash();
 				}
 				break;
@@ -3628,20 +3627,20 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1239;
+			this.state = 1237;
 			this.kwAlter();
-			this.state = 1240;
+			this.state = 1238;
 			this.kwMaterializedView();
-			this.state = 1241;
+			this.state = 1239;
 			this.materializedViewSpec();
-			this.state = 1245;
+			this.state = 1243;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_WITH) {
 				{
-				this.state = 1242;
+				this.state = 1240;
 				this.kwWith();
-				this.state = 1243;
+				this.state = 1241;
 				this.tableOptions();
 				}
 			}
@@ -3670,21 +3669,21 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1247;
+			this.state = 1245;
 			this.kwDrop();
-			this.state = 1248;
+			this.state = 1246;
 			this.kwUser();
-			this.state = 1250;
+			this.state = 1248;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_IF) {
 				{
-				this.state = 1249;
+				this.state = 1247;
 				this.ifExist();
 				}
 			}
 
-			this.state = 1252;
+			this.state = 1250;
 			this.user();
 			}
 		}
@@ -3710,21 +3709,21 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1254;
+			this.state = 1252;
 			this.kwDrop();
-			this.state = 1255;
+			this.state = 1253;
 			this.kwType();
-			this.state = 1257;
+			this.state = 1255;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_IF) {
 				{
-				this.state = 1256;
+				this.state = 1254;
 				this.ifExist();
 				}
 			}
 
-			this.state = 1259;
+			this.state = 1257;
 			this.typeSpec();
 			}
 		}
@@ -3749,21 +3748,21 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1261;
+			this.state = 1259;
 			this.kwDrop();
-			this.state = 1262;
+			this.state = 1260;
 			this.kwMaterializedView();
-			this.state = 1264;
+			this.state = 1262;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,60,this._ctx) ) {
 			case 1:
 				{
-				this.state = 1263;
+				this.state = 1261;
 				this.ifExist();
 				}
 				break;
 			}
-			this.state = 1266;
+			this.state = 1264;
 			this.materializedViewSpec();
 			}
 		}
@@ -3789,21 +3788,21 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1268;
+			this.state = 1266;
 			this.kwDrop();
-			this.state = 1269;
+			this.state = 1267;
 			this.kwAggregate();
-			this.state = 1271;
+			this.state = 1269;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_IF) {
 				{
-				this.state = 1270;
+				this.state = 1268;
 				this.ifExist();
 				}
 			}
 
-			this.state = 1273;
+			this.state = 1271;
 			this.aggregateSpec();
 			}
 		}
@@ -3829,21 +3828,21 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1275;
+			this.state = 1273;
 			this.kwDrop();
-			this.state = 1276;
+			this.state = 1274;
 			this.kwFunction();
-			this.state = 1278;
+			this.state = 1276;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_IF) {
 				{
-				this.state = 1277;
+				this.state = 1275;
 				this.ifExist();
 				}
 			}
 
-			this.state = 1280;
+			this.state = 1278;
 			this.functionSpec();
 			}
 		}
@@ -3869,25 +3868,25 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1282;
+			this.state = 1280;
 			this.kwDrop();
-			this.state = 1283;
+			this.state = 1281;
 			this.kwTrigger();
-			this.state = 1285;
+			this.state = 1283;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_IF) {
 				{
-				this.state = 1284;
+				this.state = 1282;
 				this.ifExist();
 				}
 			}
 
-			this.state = 1287;
+			this.state = 1285;
 			this.trigger();
-			this.state = 1288;
+			this.state = 1286;
 			this.kwOn();
-			this.state = 1289;
+			this.state = 1287;
 			this.tableSpec();
 			}
 		}
@@ -3913,21 +3912,21 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1291;
+			this.state = 1289;
 			this.kwDrop();
-			this.state = 1292;
+			this.state = 1290;
 			this.kwRole();
-			this.state = 1294;
+			this.state = 1292;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_IF) {
 				{
-				this.state = 1293;
+				this.state = 1291;
 				this.ifExist();
 				}
 			}
 
-			this.state = 1296;
+			this.state = 1294;
 			this.role();
 			}
 		}
@@ -3952,21 +3951,21 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1298;
+			this.state = 1296;
 			this.kwDrop();
-			this.state = 1299;
+			this.state = 1297;
 			this.kwTable();
-			this.state = 1301;
+			this.state = 1299;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,65,this._ctx) ) {
 			case 1:
 				{
-				this.state = 1300;
+				this.state = 1298;
 				this.ifExist();
 				}
 				break;
 			}
-			this.state = 1303;
+			this.state = 1301;
 			this.tableSpec();
 			}
 		}
@@ -3992,21 +3991,21 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1305;
+			this.state = 1303;
 			this.kwDrop();
-			this.state = 1306;
+			this.state = 1304;
 			this.kwKeyspace();
-			this.state = 1308;
+			this.state = 1306;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_IF) {
 				{
-				this.state = 1307;
+				this.state = 1305;
 				this.ifExist();
 				}
 			}
 
-			this.state = 1310;
+			this.state = 1308;
 			this.keyspace();
 			}
 		}
@@ -4032,21 +4031,21 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1312;
+			this.state = 1310;
 			this.kwDrop();
-			this.state = 1313;
+			this.state = 1311;
 			this.kwIndex();
-			this.state = 1315;
+			this.state = 1313;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_IF) {
 				{
-				this.state = 1314;
+				this.state = 1312;
 				this.ifExist();
 				}
 			}
 
-			this.state = 1317;
+			this.state = 1315;
 			this.indexSpec();
 			}
 		}
@@ -4072,30 +4071,30 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1319;
+			this.state = 1317;
 			this.kwCreate();
-			this.state = 1320;
+			this.state = 1318;
 			this.kwTable();
-			this.state = 1322;
+			this.state = 1320;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_IF) {
 				{
-				this.state = 1321;
+				this.state = 1319;
 				this.ifNotExist();
 				}
 			}
 
-			this.state = 1324;
+			this.state = 1322;
 			this.objectUnknownSpec();
-			this.state = 1325;
+			this.state = 1323;
 			this.createTableDef();
-			this.state = 1327;
+			this.state = 1325;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_WITH) {
 				{
-				this.state = 1326;
+				this.state = 1324;
 				this.withElement();
 				}
 			}
@@ -4121,17 +4120,17 @@ export class CqlParser extends Parser {
 		let _localctx: CreateTableDefContext = new CreateTableDefContext(this._ctx, this.state);
 		this.enterRule(_localctx, 136, CqlParser.RULE_createTableDef);
 		try {
-			this.state = 1334;
+			this.state = 1332;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case CqlParser.LR_BRACKET:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 1329;
+				this.state = 1327;
 				this.syntaxBracketLr();
-				this.state = 1330;
+				this.state = 1328;
 				this.columnDefinitionList();
-				this.state = 1331;
+				this.state = 1329;
 				this.syntaxBracketRr();
 				}
 				break;
@@ -4168,24 +4167,24 @@ export class CqlParser extends Parser {
 		this.enterRule(_localctx, 138, CqlParser.RULE_withElement);
 		let _la: number;
 		try {
-			this.state = 1352;
+			this.state = 1350;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,74,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 1336;
+				this.state = 1334;
 				this.kwWith();
-				this.state = 1337;
+				this.state = 1335;
 				this.tableOptions();
-				this.state = 1341;
+				this.state = 1339;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				if (_la===CqlParser.K_AND) {
 					{
-					this.state = 1338;
+					this.state = 1336;
 					this.kwAnd();
-					this.state = 1339;
+					this.state = 1337;
 					this.clusteringOrder();
 					}
 				}
@@ -4196,26 +4195,26 @@ export class CqlParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 1343;
+				this.state = 1341;
 				this.kwWith();
-				this.state = 1345;
+				this.state = 1343;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				if (_la===CqlParser.K_CLUSTERING) {
 					{
-					this.state = 1344;
+					this.state = 1342;
 					this.clusteringOrder();
 					}
 				}
 
-				this.state = 1350;
+				this.state = 1348;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				if (_la===CqlParser.K_AND) {
 					{
-					this.state = 1347;
+					this.state = 1345;
 					this.kwAnd();
-					this.state = 1348;
+					this.state = 1346;
 					this.tableOptions();
 					}
 				}
@@ -4246,33 +4245,33 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1354;
+			this.state = 1352;
 			this.kwClustering();
-			this.state = 1355;
+			this.state = 1353;
 			this.kwOrder();
-			this.state = 1356;
+			this.state = 1354;
 			this.kwBy();
-			this.state = 1357;
+			this.state = 1355;
 			this.syntaxBracketLr();
-			this.state = 1358;
+			this.state = 1356;
 			this.clusteringOrderItem();
-			this.state = 1364;
+			this.state = 1362;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la===CqlParser.COMMA) {
 				{
 				{
-				this.state = 1359;
+				this.state = 1357;
 				this.syntaxComma();
-				this.state = 1360;
+				this.state = 1358;
 				this.clusteringOrderItem();
 				}
 				}
-				this.state = 1366;
+				this.state = 1364;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 1367;
+			this.state = 1365;
 			this.syntaxBracketRr();
 			}
 		}
@@ -4298,14 +4297,14 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
+			this.state = 1367;
+			this.columnSpec();
 			this.state = 1369;
-			this.column();
-			this.state = 1371;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.K_ASC || _la===CqlParser.K_DESC) {
 				{
-				this.state = 1370;
+				this.state = 1368;
 				this.orderDirection();
 				}
 			}
@@ -4334,23 +4333,23 @@ export class CqlParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1373;
+			this.state = 1371;
 			this.tableOptionItem();
-			this.state = 1379;
+			this.state = 1377;
 			this._errHandler.sync(this);
 			_alt = this.interpreter.adaptivePredict(this._input,77,this._ctx);
 			while ( _alt!==2 && _alt!==ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt===1 ) {
 					{
 					{
-					this.state = 1374;
+					this.state = 1372;
 					this.kwAnd();
-					this.state = 1375;
+					this.state = 1373;
 					this.tableOptionItem();
 					}
 					} 
 				}
-				this.state = 1381;
+				this.state = 1379;
 				this._errHandler.sync(this);
 				_alt = this.interpreter.adaptivePredict(this._input,77,this._ctx);
 			}
@@ -4375,17 +4374,17 @@ export class CqlParser extends Parser {
 		let _localctx: TableOptionItemContext = new TableOptionItemContext(this._ctx, this.state);
 		this.enterRule(_localctx, 146, CqlParser.RULE_tableOptionItem);
 		try {
-			this.state = 1390;
+			this.state = 1388;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,78,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 1382;
+				this.state = 1380;
 				this.tableOptionName();
-				this.state = 1383;
+				this.state = 1381;
 				this.match(CqlParser.OPERATOR_EQ);
-				this.state = 1384;
+				this.state = 1382;
 				this.tableOptionValue();
 				}
 				break;
@@ -4393,11 +4392,11 @@ export class CqlParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 1386;
+				this.state = 1384;
 				this.tableOptionName();
-				this.state = 1387;
+				this.state = 1385;
 				this.match(CqlParser.OPERATOR_EQ);
-				this.state = 1388;
+				this.state = 1386;
 				this.optionHash();
 				}
 				break;
@@ -4424,7 +4423,7 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1392;
+			this.state = 1390;
 			this.match(CqlParser.OBJECT_NAME);
 			}
 		}
@@ -4447,13 +4446,13 @@ export class CqlParser extends Parser {
 		let _localctx: TableOptionValueContext = new TableOptionValueContext(this._ctx, this.state);
 		this.enterRule(_localctx, 150, CqlParser.RULE_tableOptionValue);
 		try {
-			this.state = 1396;
+			this.state = 1394;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case CqlParser.STRING_LITERAL:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 1394;
+				this.state = 1392;
 				this.constantString();
 				}
 				break;
@@ -4461,7 +4460,7 @@ export class CqlParser extends Parser {
 			case CqlParser.FLOAT_LITERAL:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 1395;
+				this.state = 1393;
 				this.constantFloat();
 				}
 				break;
@@ -4491,27 +4490,27 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1398;
+			this.state = 1396;
 			this.syntaxBracketLc();
-			this.state = 1399;
+			this.state = 1397;
 			this.optionHashItem();
-			this.state = 1405;
+			this.state = 1403;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la===CqlParser.COMMA) {
 				{
 				{
-				this.state = 1400;
+				this.state = 1398;
 				this.syntaxComma();
-				this.state = 1401;
+				this.state = 1399;
 				this.optionHashItem();
 				}
 				}
-				this.state = 1407;
+				this.state = 1405;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 1408;
+			this.state = 1406;
 			this.syntaxBracketRc();
 			}
 		}
@@ -4536,11 +4535,11 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1410;
+			this.state = 1408;
 			this.optionHashKey();
-			this.state = 1411;
+			this.state = 1409;
 			this.match(CqlParser.COLON);
-			this.state = 1412;
+			this.state = 1410;
 			this.optionHashValue();
 			}
 		}
@@ -4565,7 +4564,7 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1414;
+			this.state = 1412;
 			this.constantString();
 			}
 		}
@@ -4588,13 +4587,13 @@ export class CqlParser extends Parser {
 		let _localctx: OptionHashValueContext = new OptionHashValueContext(this._ctx, this.state);
 		this.enterRule(_localctx, 158, CqlParser.RULE_optionHashValue);
 		try {
-			this.state = 1418;
+			this.state = 1416;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case CqlParser.STRING_LITERAL:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 1416;
+				this.state = 1414;
 				this.constantString();
 				}
 				break;
@@ -4602,7 +4601,7 @@ export class CqlParser extends Parser {
 			case CqlParser.FLOAT_LITERAL:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 1417;
+				this.state = 1415;
 				this.constantFloat();
 				}
 				break;
@@ -4633,34 +4632,34 @@ export class CqlParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1420;
+			this.state = 1418;
 			this.columnDefinition();
-			this.state = 1426;
+			this.state = 1424;
 			this._errHandler.sync(this);
 			_alt = this.interpreter.adaptivePredict(this._input,82,this._ctx);
 			while ( _alt!==2 && _alt!==ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt===1 ) {
 					{
 					{
-					this.state = 1421;
+					this.state = 1419;
 					this.syntaxComma();
-					this.state = 1422;
+					this.state = 1420;
 					this.columnDefinition();
 					}
 					} 
 				}
-				this.state = 1428;
+				this.state = 1426;
 				this._errHandler.sync(this);
 				_alt = this.interpreter.adaptivePredict(this._input,82,this._ctx);
 			}
-			this.state = 1432;
+			this.state = 1430;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===CqlParser.COMMA) {
 				{
-				this.state = 1429;
+				this.state = 1427;
 				this.syntaxComma();
-				this.state = 1430;
+				this.state = 1428;
 				this.primaryKeyElement();
 				}
 			}
@@ -4686,17 +4685,17 @@ export class CqlParser extends Parser {
 		let _localctx: ColumnDefinitionContext = new ColumnDefinitionContext(this._ctx, this.state);
 		this.enterRule(_localctx, 162, CqlParser.RULE_columnDefinition);
 		try {
-			this.state = 1446;
+			this.state = 1444;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,84,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 1434;
+				this.state = 1432;
 				this.columnUnknown();
-				this.state = 1435;
+				this.state = 1433;
 				this.dataType();
-				this.state = 1436;
+				this.state = 1434;
 				this.primaryKeyModifier();
 				}
 				break;
@@ -4704,11 +4703,11 @@ export class CqlParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 1438;
+				this.state = 1436;
 				this.columnUnknown();
-				this.state = 1439;
+				this.state = 1437;
 				this.dataType();
-				this.state = 1440;
+				this.state = 1438;
 				this.kwStatic();
 				}
 				break;
@@ -4716,9 +4715,9 @@ export class CqlParser extends Parser {
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 1442;
+				this.state = 1440;
 				this.columnUnknown();
-				this.state = 1443;
+				this.state = 1441;
 				this.dataType();
 				}
 				break;
@@ -4750,15 +4749,15 @@ export class CqlParser extends Parser {
 		let _localctx: PrimaryKeyModifierContext = new PrimaryKeyModifierContext(this._ctx, this.state);
 		this.enterRule(_localctx, 164, CqlParser.RULE_primaryKeyModifier);
 		try {
-			this.state = 1454;
+			this.state = 1452;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,85,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 1448;
+				this.state = 1446;
 				this.kwPrimary();
-				this.state = 1449;
+				this.state = 1447;
 				this.kwKey();
 				}
 				break;
@@ -4766,7 +4765,7 @@ export class CqlParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 1451;
+				this.state = 1449;
 				this.kwPrimary();
 				 this.notifyErrorListeners("rule.primaryKeyModifier"); 
 				}
@@ -4794,15 +4793,15 @@ export class CqlParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 1456;
+			this.state = 1454;
 			this.kwPrimary();
-			this.state = 1457;
+			this.state = 1455;
 			this.kwKey();
-			this.state = 1458;
+			this.state = 1456;
 			this.syntaxBracketLr();
-			this.state = 1459;
+			this.state = 1457;
 			this.primaryKeyDefinition();
-			this.state = 1460;
+			this.state = 1458;
 			this.syntaxBracketRr();
 			}
 		}
@@ -4825,30 +4824,30 @@ export class CqlParser extends Parser {
 		let _localctx: PrimaryKeyDefinitionContext = new PrimaryKeyDefinitionContext(this._ctx, this.state);
 		this.enterRule(_localctx, 168, CqlParser.RULE_primaryKeyDefinition);
 		try {
-			this.state = 1465;
+			this.state = 1463;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,86,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 1462;
-				this.singlePrimaryKey();
+				this.state = 1460;
+				this.primaryKeySimple();
 				}
 				break;
 
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 1463;
-				this.compoundKey();
+				this.state = 1461;
+				this.primaryKeyComposite();
 				}
 				break;
 
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 1464;
-				this.compositeKey();
+				this.state = 1462;
+				this.compoundKey();
 				}
 				break;
 			}
@@ -4868,14 +4867,43 @@ export class CqlParser extends Parser {
 		return _localctx;
 	}
 	@RuleVersion(0)
-	public singlePrimaryKey(): SinglePrimaryKeyContext {
-		let _localctx: SinglePrimaryKeyContext = new SinglePrimaryKeyContext(this._ctx, this.state);
-		this.enterRule(_localctx, 170, CqlParser.RULE_singlePrimaryKey);
+	public primaryKeySimple(): PrimaryKeySimpleContext {
+		let _localctx: PrimaryKeySimpleContext = new PrimaryKeySimpleContext(this._ctx, this.state);
+		this.enterRule(_localctx, 170, CqlParser.RULE_primaryKeySimple);
+		try {
+			this.enterOuterAlt(_localctx, 1);
+			{
+			this.state = 1465;
+			this.columnSpec();
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				_localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return _localctx;
+	}
+	@RuleVersion(0)
+	public primaryKeyComposite(): PrimaryKeyCompositeContext {
+		let _localctx: PrimaryKeyCompositeContext = new PrimaryKeyCompositeContext(this._ctx, this.state);
+		this.enterRule(_localctx, 172, CqlParser.RULE_primaryKeyComposite);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 1467;
-			this.column();
+			this.syntaxBracketLr();
+			this.state = 1468;
+			this.partitionKeyList();
+			this.state = 1469;
+			this.syntaxBracketRr();
 			}
 		}
 		catch (re) {
@@ -4895,53 +4923,59 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public compoundKey(): CompoundKeyContext {
 		let _localctx: CompoundKeyContext = new CompoundKeyContext(this._ctx, this.state);
-		this.enterRule(_localctx, 172, CqlParser.RULE_compoundKey);
+		this.enterRule(_localctx, 174, CqlParser.RULE_compoundKey);
 		try {
-			this.enterOuterAlt(_localctx, 1);
-			{
-			this.state = 1469;
-			this.partitionKey();
-			{
-			this.state = 1470;
-			this.syntaxComma();
-			this.state = 1471;
-			this.clusteringKeyList();
-			}
-			}
-		}
-		catch (re) {
-			if (re instanceof RecognitionException) {
-				_localctx.exception = re;
-				this._errHandler.reportError(this, re);
-				this._errHandler.recover(this, re);
-			} else {
-				throw re;
-			}
-		}
-		finally {
-			this.exitRule();
-		}
-		return _localctx;
-	}
-	@RuleVersion(0)
-	public compositeKey(): CompositeKeyContext {
-		let _localctx: CompositeKeyContext = new CompositeKeyContext(this._ctx, this.state);
-		this.enterRule(_localctx, 174, CqlParser.RULE_compositeKey);
-		try {
-			this.enterOuterAlt(_localctx, 1);
-			{
-			this.state = 1473;
-			this.syntaxBracketLr();
-			this.state = 1474;
-			this.partitionKeyList();
-			this.state = 1475;
-			this.syntaxBracketRr();
-			{
-			this.state = 1476;
-			this.syntaxComma();
-			this.state = 1477;
-			this.clusteringKeyList();
-			}
+			this.state = 1481;
+			this._errHandler.sync(this);
+			switch (this._input.LA(1)) {
+			case CqlParser.DQUOTE:
+			case CqlParser.K_DURABLE_WRITES:
+			case CqlParser.K_INITCOND:
+			case CqlParser.K_KEY:
+			case CqlParser.K_LANGUAGE:
+			case CqlParser.K_LEVEL:
+			case CqlParser.K_OPTIONS:
+			case CqlParser.K_PARTITION:
+			case CqlParser.K_PERMISSIONS:
+			case CqlParser.K_REPLICATION:
+			case CqlParser.K_TTL:
+			case CqlParser.K_TYPE:
+			case CqlParser.K_ROLES:
+			case CqlParser.K_ROLE:
+			case CqlParser.OBJECT_NAME:
+			case CqlParser.K_USERS:
+			case CqlParser.K_USER:
+				this.enterOuterAlt(_localctx, 1);
+				{
+				this.state = 1471;
+				this.columnSpec();
+				{
+				this.state = 1472;
+				this.syntaxComma();
+				this.state = 1473;
+				this.clusteringKeyList();
+				}
+				}
+				break;
+			case CqlParser.LR_BRACKET:
+				this.enterOuterAlt(_localctx, 2);
+				{
+				this.state = 1475;
+				this.syntaxBracketLr();
+				this.state = 1476;
+				this.partitionKeyList();
+				this.state = 1477;
+				this.syntaxBracketRr();
+				{
+				this.state = 1478;
+				this.syntaxComma();
+				this.state = 1479;
+				this.clusteringKeyList();
+				}
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 		}
 		catch (re) {
@@ -4967,22 +5001,22 @@ export class CqlParser extends Parser {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			{
-			this.state = 1479;
-			this.partitionKey();
+			this.state = 1483;
+			this.columnSpec();
 			}
-			this.state = 1485;
+			this.state = 1489;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la===CqlParser.COMMA) {
 				{
 				{
-				this.state = 1480;
+				this.state = 1484;
 				this.syntaxComma();
-				this.state = 1481;
-				this.partitionKey();
+				this.state = 1485;
+				this.columnSpec();
 				}
 				}
-				this.state = 1487;
+				this.state = 1491;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
@@ -5011,22 +5045,22 @@ export class CqlParser extends Parser {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			{
-			this.state = 1488;
-			this.clusteringKey();
+			this.state = 1492;
+			this.columnSpec();
 			}
-			this.state = 1494;
+			this.state = 1498;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la===CqlParser.COMMA) {
 				{
 				{
-				this.state = 1489;
+				this.state = 1493;
 				this.syntaxComma();
-				this.state = 1490;
-				this.clusteringKey();
+				this.state = 1494;
+				this.columnSpec();
 				}
 				}
-				this.state = 1496;
+				this.state = 1500;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
@@ -5047,59 +5081,9 @@ export class CqlParser extends Parser {
 		return _localctx;
 	}
 	@RuleVersion(0)
-	public partitionKey(): PartitionKeyContext {
-		let _localctx: PartitionKeyContext = new PartitionKeyContext(this._ctx, this.state);
-		this.enterRule(_localctx, 180, CqlParser.RULE_partitionKey);
-		try {
-			this.enterOuterAlt(_localctx, 1);
-			{
-			this.state = 1497;
-			this.column();
-			}
-		}
-		catch (re) {
-			if (re instanceof RecognitionException) {
-				_localctx.exception = re;
-				this._errHandler.reportError(this, re);
-				this._errHandler.recover(this, re);
-			} else {
-				throw re;
-			}
-		}
-		finally {
-			this.exitRule();
-		}
-		return _localctx;
-	}
-	@RuleVersion(0)
-	public clusteringKey(): ClusteringKeyContext {
-		let _localctx: ClusteringKeyContext = new ClusteringKeyContext(this._ctx, this.state);
-		this.enterRule(_localctx, 182, CqlParser.RULE_clusteringKey);
-		try {
-			this.enterOuterAlt(_localctx, 1);
-			{
-			this.state = 1499;
-			this.column();
-			}
-		}
-		catch (re) {
-			if (re instanceof RecognitionException) {
-				_localctx.exception = re;
-				this._errHandler.reportError(this, re);
-				this._errHandler.recover(this, re);
-			} else {
-				throw re;
-			}
-		}
-		finally {
-			this.exitRule();
-		}
-		return _localctx;
-	}
-	@RuleVersion(0)
 	public applyBatch(): ApplyBatchContext {
 		let _localctx: ApplyBatchContext = new ApplyBatchContext(this._ctx, this.state);
-		this.enterRule(_localctx, 184, CqlParser.RULE_applyBatch);
+		this.enterRule(_localctx, 180, CqlParser.RULE_applyBatch);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -5126,11 +5110,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public beginBatch(): BeginBatchContext {
 		let _localctx: BeginBatchContext = new BeginBatchContext(this._ctx, this.state);
-		this.enterRule(_localctx, 186, CqlParser.RULE_beginBatch);
+		this.enterRule(_localctx, 182, CqlParser.RULE_beginBatch);
 		try {
 			this.state = 1513;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input,89,this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input,90,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
@@ -5179,7 +5163,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public beginBatchSpec(): BeginBatchSpecContext {
 		let _localctx: BeginBatchSpecContext = new BeginBatchSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 188, CqlParser.RULE_beginBatchSpec);
+		this.enterRule(_localctx, 184, CqlParser.RULE_beginBatchSpec);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -5227,7 +5211,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public batchType(): BatchTypeContext {
 		let _localctx: BatchTypeContext = new BatchTypeContext(this._ctx, this.state);
-		this.enterRule(_localctx, 190, CqlParser.RULE_batchType);
+		this.enterRule(_localctx, 186, CqlParser.RULE_batchType);
 		try {
 			this.state = 1525;
 			this._errHandler.sync(this);
@@ -5267,7 +5251,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public alterKeyspace(): AlterKeyspaceContext {
 		let _localctx: AlterKeyspaceContext = new AlterKeyspaceContext(this._ctx, this.state);
-		this.enterRule(_localctx, 192, CqlParser.RULE_alterKeyspace);
+		this.enterRule(_localctx, 188, CqlParser.RULE_alterKeyspace);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -5321,7 +5305,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public replicationList(): ReplicationListContext {
 		let _localctx: ReplicationListContext = new ReplicationListContext(this._ctx, this.state);
-		this.enterRule(_localctx, 194, CqlParser.RULE_replicationList);
+		this.enterRule(_localctx, 190, CqlParser.RULE_replicationList);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -5363,11 +5347,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public replicationListItem(): ReplicationListItemContext {
 		let _localctx: ReplicationListItemContext = new ReplicationListItemContext(this._ctx, this.state);
-		this.enterRule(_localctx, 196, CqlParser.RULE_replicationListItem);
+		this.enterRule(_localctx, 192, CqlParser.RULE_replicationListItem);
 		try {
 			this.state = 1556;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input,95,this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input,96,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
@@ -5410,7 +5394,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public durableWrites(): DurableWritesContext {
 		let _localctx: DurableWritesContext = new DurableWritesContext(this._ctx, this.state);
-		this.enterRule(_localctx, 198, CqlParser.RULE_durableWrites);
+		this.enterRule(_localctx, 194, CqlParser.RULE_durableWrites);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -5439,7 +5423,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public use(): UseContext {
 		let _localctx: UseContext = new UseContext(this._ctx, this.state);
-		this.enterRule(_localctx, 200, CqlParser.RULE_use);
+		this.enterRule(_localctx, 196, CqlParser.RULE_use);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -5466,7 +5450,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public truncate(): TruncateContext {
 		let _localctx: TruncateContext = new TruncateContext(this._ctx, this.state);
-		this.enterRule(_localctx, 202, CqlParser.RULE_truncate);
+		this.enterRule(_localctx, 198, CqlParser.RULE_truncate);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -5504,7 +5488,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public createIndex(): CreateIndexContext {
 		let _localctx: CreateIndexContext = new CreateIndexContext(this._ctx, this.state);
-		this.enterRule(_localctx, 204, CqlParser.RULE_createIndex);
+		this.enterRule(_localctx, 200, CqlParser.RULE_createIndex);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -5526,7 +5510,7 @@ export class CqlParser extends Parser {
 			this.state = 1577;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la===CqlParser.DQUOTE || ((((_la - 53)) & ~0x1F) === 0 && ((1 << (_la - 53)) & ((1 << (CqlParser.K_DURABLE_WRITES - 53)) | (1 << (CqlParser.K_INITCOND - 53)) | (1 << (CqlParser.K_KEY - 53)) | (1 << (CqlParser.K_LANGUAGE - 53)) | (1 << (CqlParser.K_LEVEL - 53)))) !== 0) || ((((_la - 94)) & ~0x1F) === 0 && ((1 << (_la - 94)) & ((1 << (CqlParser.K_OPTIONS - 94)) | (1 << (CqlParser.K_PARTITION - 94)) | (1 << (CqlParser.K_PERMISSIONS - 94)) | (1 << (CqlParser.K_REPLICATION - 94)) | (1 << (CqlParser.K_TTL - 94)))) !== 0) || _la===CqlParser.K_TYPE || _la===CqlParser.K_ROLE || _la===CqlParser.OBJECT_NAME) {
+			if (_la===CqlParser.DQUOTE || ((((_la - 53)) & ~0x1F) === 0 && ((1 << (_la - 53)) & ((1 << (CqlParser.K_DURABLE_WRITES - 53)) | (1 << (CqlParser.K_INITCOND - 53)) | (1 << (CqlParser.K_KEY - 53)) | (1 << (CqlParser.K_LANGUAGE - 53)) | (1 << (CqlParser.K_LEVEL - 53)))) !== 0) || ((((_la - 94)) & ~0x1F) === 0 && ((1 << (_la - 94)) & ((1 << (CqlParser.K_OPTIONS - 94)) | (1 << (CqlParser.K_PARTITION - 94)) | (1 << (CqlParser.K_PERMISSIONS - 94)) | (1 << (CqlParser.K_REPLICATION - 94)) | (1 << (CqlParser.K_TTL - 94)))) !== 0) || ((((_la - 127)) & ~0x1F) === 0 && ((1 << (_la - 127)) & ((1 << (CqlParser.K_TYPE - 127)) | (1 << (CqlParser.K_ROLES - 127)) | (1 << (CqlParser.K_ROLE - 127)))) !== 0) || ((((_la - 168)) & ~0x1F) === 0 && ((1 << (_la - 168)) & ((1 << (CqlParser.OBJECT_NAME - 168)) | (1 << (CqlParser.K_USERS - 168)) | (1 << (CqlParser.K_USER - 168)))) !== 0)) {
 				{
 				this.state = 1576;
 				this.objectUnknown();
@@ -5556,7 +5540,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public createIndexSubject(): CreateIndexSubjectContext {
 		let _localctx: CreateIndexSubjectContext = new CreateIndexSubjectContext(this._ctx, this.state);
-		this.enterRule(_localctx, 206, CqlParser.RULE_createIndexSubject);
+		this.enterRule(_localctx, 202, CqlParser.RULE_createIndexSubject);
 		try {
 			this.state = 1586;
 			this._errHandler.sync(this);
@@ -5600,7 +5584,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public index(): IndexContext {
 		let _localctx: IndexContext = new IndexContext(this._ctx, this.state);
-		this.enterRule(_localctx, 208, CqlParser.RULE_index);
+		this.enterRule(_localctx, 204, CqlParser.RULE_index);
 		try {
 			this.state = 1590;
 			this._errHandler.sync(this);
@@ -5640,7 +5624,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public createIndexDef(): CreateIndexDefContext {
 		let _localctx: CreateIndexDefContext = new CreateIndexDefContext(this._ctx, this.state);
-		this.enterRule(_localctx, 210, CqlParser.RULE_createIndexDef);
+		this.enterRule(_localctx, 206, CqlParser.RULE_createIndexDef);
 		try {
 			this.state = 1597;
 			this._errHandler.sync(this);
@@ -5685,7 +5669,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public createIndexTarget(): CreateIndexTargetContext {
 		let _localctx: CreateIndexTargetContext = new CreateIndexTargetContext(this._ctx, this.state);
-		this.enterRule(_localctx, 212, CqlParser.RULE_createIndexTarget);
+		this.enterRule(_localctx, 208, CqlParser.RULE_createIndexTarget);
 		try {
 			this.state = 1604;
 			this._errHandler.sync(this);
@@ -5702,12 +5686,15 @@ export class CqlParser extends Parser {
 			case CqlParser.K_REPLICATION:
 			case CqlParser.K_TTL:
 			case CqlParser.K_TYPE:
+			case CqlParser.K_ROLES:
 			case CqlParser.K_ROLE:
 			case CqlParser.OBJECT_NAME:
+			case CqlParser.K_USERS:
+			case CqlParser.K_USER:
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 1599;
-				this.column();
+				this.columnSpec();
 				}
 				break;
 			case CqlParser.K_KEYS:
@@ -5758,7 +5745,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public indexKeysSpec(): IndexKeysSpecContext {
 		let _localctx: IndexKeysSpecContext = new IndexKeysSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 214, CqlParser.RULE_indexKeysSpec);
+		this.enterRule(_localctx, 210, CqlParser.RULE_indexKeysSpec);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -5781,11 +5768,14 @@ export class CqlParser extends Parser {
 			case CqlParser.K_REPLICATION:
 			case CqlParser.K_TTL:
 			case CqlParser.K_TYPE:
+			case CqlParser.K_ROLES:
 			case CqlParser.K_ROLE:
 			case CqlParser.OBJECT_NAME:
+			case CqlParser.K_USERS:
+			case CqlParser.K_USER:
 				{
 				this.state = 1608;
-				this.column();
+				this.columnSpec();
 				}
 				break;
 			case CqlParser.RR_BRACKET:
@@ -5817,7 +5807,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public indexEntriesSSpec(): IndexEntriesSSpecContext {
 		let _localctx: IndexEntriesSSpecContext = new IndexEntriesSSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 216, CqlParser.RULE_indexEntriesSSpec);
+		this.enterRule(_localctx, 212, CqlParser.RULE_indexEntriesSSpec);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -5840,11 +5830,14 @@ export class CqlParser extends Parser {
 			case CqlParser.K_REPLICATION:
 			case CqlParser.K_TTL:
 			case CqlParser.K_TYPE:
+			case CqlParser.K_ROLES:
 			case CqlParser.K_ROLE:
 			case CqlParser.OBJECT_NAME:
+			case CqlParser.K_USERS:
+			case CqlParser.K_USER:
 				{
 				this.state = 1616;
-				this.column();
+				this.columnSpec();
 				}
 				break;
 			case CqlParser.RR_BRACKET:
@@ -5876,7 +5869,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public indexFullSpec(): IndexFullSpecContext {
 		let _localctx: IndexFullSpecContext = new IndexFullSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 218, CqlParser.RULE_indexFullSpec);
+		this.enterRule(_localctx, 214, CqlParser.RULE_indexFullSpec);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -5899,11 +5892,14 @@ export class CqlParser extends Parser {
 			case CqlParser.K_REPLICATION:
 			case CqlParser.K_TTL:
 			case CqlParser.K_TYPE:
+			case CqlParser.K_ROLES:
 			case CqlParser.K_ROLE:
 			case CqlParser.OBJECT_NAME:
+			case CqlParser.K_USERS:
+			case CqlParser.K_USER:
 				{
 				this.state = 1624;
-				this.column();
+				this.columnSpec();
 				}
 				break;
 			case CqlParser.RR_BRACKET:
@@ -5935,7 +5931,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public delete(): DeleteContext {
 		let _localctx: DeleteContext = new DeleteContext(this._ctx, this.state);
-		this.enterRule(_localctx, 220, CqlParser.RULE_delete);
+		this.enterRule(_localctx, 216, CqlParser.RULE_delete);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -5945,7 +5941,7 @@ export class CqlParser extends Parser {
 			this.state = 1632;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la===CqlParser.DQUOTE || ((((_la - 53)) & ~0x1F) === 0 && ((1 << (_la - 53)) & ((1 << (CqlParser.K_DURABLE_WRITES - 53)) | (1 << (CqlParser.K_INITCOND - 53)) | (1 << (CqlParser.K_KEY - 53)) | (1 << (CqlParser.K_LANGUAGE - 53)) | (1 << (CqlParser.K_LEVEL - 53)))) !== 0) || ((((_la - 94)) & ~0x1F) === 0 && ((1 << (_la - 94)) & ((1 << (CqlParser.K_OPTIONS - 94)) | (1 << (CqlParser.K_PARTITION - 94)) | (1 << (CqlParser.K_PERMISSIONS - 94)) | (1 << (CqlParser.K_REPLICATION - 94)) | (1 << (CqlParser.K_TTL - 94)))) !== 0) || _la===CqlParser.K_TYPE || _la===CqlParser.K_ROLE || _la===CqlParser.OBJECT_NAME) {
+			if (_la===CqlParser.DQUOTE || ((((_la - 53)) & ~0x1F) === 0 && ((1 << (_la - 53)) & ((1 << (CqlParser.K_DURABLE_WRITES - 53)) | (1 << (CqlParser.K_INITCOND - 53)) | (1 << (CqlParser.K_KEY - 53)) | (1 << (CqlParser.K_LANGUAGE - 53)) | (1 << (CqlParser.K_LEVEL - 53)))) !== 0) || ((((_la - 94)) & ~0x1F) === 0 && ((1 << (_la - 94)) & ((1 << (CqlParser.K_OPTIONS - 94)) | (1 << (CqlParser.K_PARTITION - 94)) | (1 << (CqlParser.K_PERMISSIONS - 94)) | (1 << (CqlParser.K_REPLICATION - 94)) | (1 << (CqlParser.K_TTL - 94)))) !== 0) || ((((_la - 127)) & ~0x1F) === 0 && ((1 << (_la - 127)) & ((1 << (CqlParser.K_TYPE - 127)) | (1 << (CqlParser.K_ROLES - 127)) | (1 << (CqlParser.K_ROLE - 127)))) !== 0) || ((((_la - 168)) & ~0x1F) === 0 && ((1 << (_la - 168)) & ((1 << (CqlParser.OBJECT_NAME - 168)) | (1 << (CqlParser.K_USERS - 168)) | (1 << (CqlParser.K_USER - 168)))) !== 0)) {
 				{
 				this.state = 1631;
 				this.deleteColumnList();
@@ -5986,7 +5982,7 @@ export class CqlParser extends Parser {
 			}
 			this.state = 1644;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input,109,this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input,110,this._ctx) ) {
 			case 1:
 				{
 				this.state = 1642;
@@ -6020,7 +6016,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public deleteColumnList(): DeleteColumnListContext {
 		let _localctx: DeleteColumnListContext = new DeleteColumnListContext(this._ctx, this.state);
-		this.enterRule(_localctx, 222, CqlParser.RULE_deleteColumnList);
+		this.enterRule(_localctx, 218, CqlParser.RULE_deleteColumnList);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -6064,16 +6060,16 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public deleteColumnItem(): DeleteColumnItemContext {
 		let _localctx: DeleteColumnItemContext = new DeleteColumnItemContext(this._ctx, this.state);
-		this.enterRule(_localctx, 224, CqlParser.RULE_deleteColumnItem);
+		this.enterRule(_localctx, 220, CqlParser.RULE_deleteColumnItem);
 		try {
 			this.state = 1664;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input,112,this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input,113,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 1655;
-				this.column();
+				this.columnSpec();
 				}
 				break;
 
@@ -6081,7 +6077,7 @@ export class CqlParser extends Parser {
 				this.enterOuterAlt(_localctx, 2);
 				{
 				this.state = 1656;
-				this.column();
+				this.columnSpec();
 				this.state = 1657;
 				this.syntaxBracketLs();
 				this.state = 1660;
@@ -6125,7 +6121,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public update(): UpdateContext {
 		let _localctx: UpdateContext = new UpdateContext(this._ctx, this.state);
-		this.enterRule(_localctx, 226, CqlParser.RULE_update);
+		this.enterRule(_localctx, 222, CqlParser.RULE_update);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -6168,7 +6164,7 @@ export class CqlParser extends Parser {
 			}
 			this.state = 1678;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input,115,this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input,116,this._ctx) ) {
 			case 1:
 				{
 				this.state = 1676;
@@ -6202,7 +6198,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public ifSpec(): IfSpecContext {
 		let _localctx: IfSpecContext = new IfSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 228, CqlParser.RULE_ifSpec);
+		this.enterRule(_localctx, 224, CqlParser.RULE_ifSpec);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -6229,7 +6225,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public ifConditionList(): IfConditionListContext {
 		let _localctx: IfConditionListContext = new IfConditionListContext(this._ctx, this.state);
-		this.enterRule(_localctx, 230, CqlParser.RULE_ifConditionList);
+		this.enterRule(_localctx, 226, CqlParser.RULE_ifConditionList);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -6273,7 +6269,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public ifCondition(): IfConditionContext {
 		let _localctx: IfConditionContext = new IfConditionContext(this._ctx, this.state);
-		this.enterRule(_localctx, 232, CqlParser.RULE_ifCondition);
+		this.enterRule(_localctx, 228, CqlParser.RULE_ifCondition);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -6302,7 +6298,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public updateAssignments(): UpdateAssignmentsContext {
 		let _localctx: UpdateAssignmentsContext = new UpdateAssignmentsContext(this._ctx, this.state);
-		this.enterRule(_localctx, 234, CqlParser.RULE_updateAssignments);
+		this.enterRule(_localctx, 230, CqlParser.RULE_updateAssignments);
 		let _la: number;
 		try {
 			this.state = 1707;
@@ -6366,16 +6362,16 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public updateAssignmentElement(): UpdateAssignmentElementContext {
 		let _localctx: UpdateAssignmentElementContext = new UpdateAssignmentElementContext(this._ctx, this.state);
-		this.enterRule(_localctx, 236, CqlParser.RULE_updateAssignmentElement);
+		this.enterRule(_localctx, 232, CqlParser.RULE_updateAssignmentElement);
 		try {
 			this.state = 1786;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input,127,this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input,128,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 1709;
-				this.column();
+				this.columnSpec();
 				this.state = 1710;
 				this.syntaxOperatorEq();
 				this.state = 1713;
@@ -6412,11 +6408,11 @@ export class CqlParser extends Parser {
 				this.enterOuterAlt(_localctx, 2);
 				{
 				this.state = 1715;
-				this.column();
+				this.columnSpec();
 				this.state = 1716;
 				this.syntaxOperatorEq();
 				this.state = 1717;
-				this.column();
+				this.columnSpec();
 				this.state = 1720;
 				this._errHandler.sync(this);
 				switch (this._input.LA(1)) {
@@ -6444,11 +6440,11 @@ export class CqlParser extends Parser {
 				this.enterOuterAlt(_localctx, 3);
 				{
 				this.state = 1724;
-				this.column();
+				this.columnSpec();
 				this.state = 1725;
 				this.syntaxOperatorEq();
 				this.state = 1726;
-				this.column();
+				this.columnSpec();
 				this.state = 1729;
 				this._errHandler.sync(this);
 				switch (this._input.LA(1)) {
@@ -6476,11 +6472,11 @@ export class CqlParser extends Parser {
 				this.enterOuterAlt(_localctx, 4);
 				{
 				this.state = 1733;
-				this.column();
+				this.columnSpec();
 				this.state = 1734;
 				this.syntaxOperatorEq();
 				this.state = 1735;
-				this.column();
+				this.columnSpec();
 				this.state = 1738;
 				this._errHandler.sync(this);
 				switch (this._input.LA(1)) {
@@ -6508,11 +6504,11 @@ export class CqlParser extends Parser {
 				this.enterOuterAlt(_localctx, 5);
 				{
 				this.state = 1742;
-				this.column();
+				this.columnSpec();
 				this.state = 1743;
 				this.syntaxOperatorEq();
 				this.state = 1744;
-				this.column();
+				this.columnSpec();
 				this.state = 1747;
 				this._errHandler.sync(this);
 				switch (this._input.LA(1)) {
@@ -6540,7 +6536,7 @@ export class CqlParser extends Parser {
 				this.enterOuterAlt(_localctx, 6);
 				{
 				this.state = 1751;
-				this.column();
+				this.columnSpec();
 				this.state = 1752;
 				this.syntaxOperatorEq();
 				this.state = 1753;
@@ -6572,7 +6568,7 @@ export class CqlParser extends Parser {
 				this.enterOuterAlt(_localctx, 7);
 				{
 				this.state = 1760;
-				this.column();
+				this.columnSpec();
 				this.state = 1761;
 				this.syntaxOperatorEq();
 				this.state = 1762;
@@ -6604,7 +6600,7 @@ export class CqlParser extends Parser {
 				this.enterOuterAlt(_localctx, 8);
 				{
 				this.state = 1769;
-				this.column();
+				this.columnSpec();
 				this.state = 1770;
 				this.syntaxOperatorEq();
 				this.state = 1771;
@@ -6636,7 +6632,7 @@ export class CqlParser extends Parser {
 				this.enterOuterAlt(_localctx, 9);
 				{
 				this.state = 1778;
-				this.column();
+				this.columnSpec();
 				this.state = 1779;
 				this.syntaxBracketLs();
 				this.state = 1780;
@@ -6675,7 +6671,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public assignmentSet(): AssignmentSetContext {
 		let _localctx: AssignmentSetContext = new AssignmentSetContext(this._ctx, this.state);
-		this.enterRule(_localctx, 238, CqlParser.RULE_assignmentSet);
+		this.enterRule(_localctx, 234, CqlParser.RULE_assignmentSet);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -6721,7 +6717,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public assignmentMap(): AssignmentMapContext {
 		let _localctx: AssignmentMapContext = new AssignmentMapContext(this._ctx, this.state);
-		this.enterRule(_localctx, 240, CqlParser.RULE_assignmentMap);
+		this.enterRule(_localctx, 236, CqlParser.RULE_assignmentMap);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -6739,7 +6735,7 @@ export class CqlParser extends Parser {
 			this.state = 1811;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (_la===CqlParser.K_FALSE || _la===CqlParser.K_NULL || _la===CqlParser.K_TRUE || ((((_la - 165)) & ~0x1F) === 0 && ((1 << (_la - 165)) & ((1 << (CqlParser.STRING_LITERAL - 165)) | (1 << (CqlParser.DECIMAL_LITERAL - 165)) | (1 << (CqlParser.FLOAT_LITERAL - 165)) | (1 << (CqlParser.HEXADECIMAL_LITERAL - 165)) | (1 << (CqlParser.UUID - 165)))) !== 0)) {
+			while (_la===CqlParser.K_FALSE || _la===CqlParser.K_NULL || _la===CqlParser.K_TRUE || ((((_la - 163)) & ~0x1F) === 0 && ((1 << (_la - 163)) & ((1 << (CqlParser.STRING_LITERAL - 163)) | (1 << (CqlParser.DECIMAL_LITERAL - 163)) | (1 << (CqlParser.FLOAT_LITERAL - 163)) | (1 << (CqlParser.HEXADECIMAL_LITERAL - 163)) | (1 << (CqlParser.UUID - 163)))) !== 0)) {
 				{
 				{
 				this.state = 1805;
@@ -6775,7 +6771,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public assignmentList(): AssignmentListContext {
 		let _localctx: AssignmentListContext = new AssignmentListContext(this._ctx, this.state);
-		this.enterRule(_localctx, 242, CqlParser.RULE_assignmentList);
+		this.enterRule(_localctx, 238, CqlParser.RULE_assignmentList);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -6821,7 +6817,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public insert(): InsertContext {
 		let _localctx: InsertContext = new InsertContext(this._ctx, this.state);
-		this.enterRule(_localctx, 244, CqlParser.RULE_insert);
+		this.enterRule(_localctx, 240, CqlParser.RULE_insert);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -6882,11 +6878,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public usingTtlTimestamp(): UsingTtlTimestampContext {
 		let _localctx: UsingTtlTimestampContext = new UsingTtlTimestampContext(this._ctx, this.state);
-		this.enterRule(_localctx, 246, CqlParser.RULE_usingTtlTimestamp);
+		this.enterRule(_localctx, 242, CqlParser.RULE_usingTtlTimestamp);
 		try {
 			this.state = 1855;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input,133,this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input,134,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
@@ -6953,7 +6949,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public timestamp(): TimestampContext {
 		let _localctx: TimestampContext = new TimestampContext(this._ctx, this.state);
-		this.enterRule(_localctx, 248, CqlParser.RULE_timestamp);
+		this.enterRule(_localctx, 244, CqlParser.RULE_timestamp);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -6980,7 +6976,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public ttl(): TtlContext {
 		let _localctx: TtlContext = new TtlContext(this._ctx, this.state);
-		this.enterRule(_localctx, 250, CqlParser.RULE_ttl);
+		this.enterRule(_localctx, 246, CqlParser.RULE_ttl);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -7007,7 +7003,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public usingTimestampSpec(): UsingTimestampSpecContext {
 		let _localctx: UsingTimestampSpecContext = new UsingTimestampSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 252, CqlParser.RULE_usingTimestampSpec);
+		this.enterRule(_localctx, 248, CqlParser.RULE_usingTimestampSpec);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -7034,7 +7030,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public ifNotExist(): IfNotExistContext {
 		let _localctx: IfNotExistContext = new IfNotExistContext(this._ctx, this.state);
-		this.enterRule(_localctx, 254, CqlParser.RULE_ifNotExist);
+		this.enterRule(_localctx, 250, CqlParser.RULE_ifNotExist);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -7063,7 +7059,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public ifExist(): IfExistContext {
 		let _localctx: IfExistContext = new IfExistContext(this._ctx, this.state);
-		this.enterRule(_localctx, 256, CqlParser.RULE_ifExist);
+		this.enterRule(_localctx, 252, CqlParser.RULE_ifExist);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -7090,7 +7086,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public insertValuesSpec(): InsertValuesSpecContext {
 		let _localctx: InsertValuesSpecContext = new InsertValuesSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 258, CqlParser.RULE_insertValuesSpec);
+		this.enterRule(_localctx, 254, CqlParser.RULE_insertValuesSpec);
 		try {
 			this.state = 1881;
 			this._errHandler.sync(this);
@@ -7158,7 +7154,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public insertColumnSpec(): InsertColumnSpecContext {
 		let _localctx: InsertColumnSpecContext = new InsertColumnSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 260, CqlParser.RULE_insertColumnSpec);
+		this.enterRule(_localctx, 256, CqlParser.RULE_insertColumnSpec);
 		try {
 			this.state = 1888;
 			this._errHandler.sync(this);
@@ -7206,7 +7202,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public columnList(): ColumnListContext {
 		let _localctx: ColumnListContext = new ColumnListContext(this._ctx, this.state);
-		this.enterRule(_localctx, 262, CqlParser.RULE_columnList);
+		this.enterRule(_localctx, 258, CqlParser.RULE_columnList);
 		let _la: number;
 		try {
 			this.state = 1902;
@@ -7224,12 +7220,15 @@ export class CqlParser extends Parser {
 			case CqlParser.K_REPLICATION:
 			case CqlParser.K_TTL:
 			case CqlParser.K_TYPE:
+			case CqlParser.K_ROLES:
 			case CqlParser.K_ROLE:
 			case CqlParser.OBJECT_NAME:
+			case CqlParser.K_USERS:
+			case CqlParser.K_USER:
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 1890;
-				this.column();
+				this.columnSpec();
 				this.state = 1898;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
@@ -7253,11 +7252,14 @@ export class CqlParser extends Parser {
 					case CqlParser.K_REPLICATION:
 					case CqlParser.K_TTL:
 					case CqlParser.K_TYPE:
+					case CqlParser.K_ROLES:
 					case CqlParser.K_ROLE:
 					case CqlParser.OBJECT_NAME:
+					case CqlParser.K_USERS:
+					case CqlParser.K_USER:
 						{
 						this.state = 1892;
-						this.column();
+						this.columnSpec();
 						}
 						break;
 					case CqlParser.RR_BRACKET:
@@ -7304,7 +7306,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public baseColumnList(): BaseColumnListContext {
 		let _localctx: BaseColumnListContext = new BaseColumnListContext(this._ctx, this.state);
-		this.enterRule(_localctx, 264, CqlParser.RULE_baseColumnList);
+		this.enterRule(_localctx, 260, CqlParser.RULE_baseColumnList);
 		let _la: number;
 		try {
 			this.state = 1916;
@@ -7322,12 +7324,15 @@ export class CqlParser extends Parser {
 			case CqlParser.K_REPLICATION:
 			case CqlParser.K_TTL:
 			case CqlParser.K_TYPE:
+			case CqlParser.K_ROLES:
 			case CqlParser.K_ROLE:
 			case CqlParser.OBJECT_NAME:
+			case CqlParser.K_USERS:
+			case CqlParser.K_USER:
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 1904;
-				this.column();
+				this.columnSpec();
 				this.state = 1912;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
@@ -7351,11 +7356,14 @@ export class CqlParser extends Parser {
 					case CqlParser.K_REPLICATION:
 					case CqlParser.K_TTL:
 					case CqlParser.K_TYPE:
+					case CqlParser.K_ROLES:
 					case CqlParser.K_ROLE:
 					case CqlParser.OBJECT_NAME:
+					case CqlParser.K_USERS:
+					case CqlParser.K_USER:
 						{
 						this.state = 1906;
-						this.column();
+						this.columnSpec();
 						}
 						break;
 					case CqlParser.COMMA:
@@ -7402,7 +7410,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public expressionList(): ExpressionListContext {
 		let _localctx: ExpressionListContext = new ExpressionListContext(this._ctx, this.state);
-		this.enterRule(_localctx, 266, CqlParser.RULE_expressionList);
+		this.enterRule(_localctx, 262, CqlParser.RULE_expressionList);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -7444,7 +7452,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public expression(): ExpressionContext {
 		let _localctx: ExpressionContext = new ExpressionContext(this._ctx, this.state);
-		this.enterRule(_localctx, 268, CqlParser.RULE_expression);
+		this.enterRule(_localctx, 264, CqlParser.RULE_expression);
 		try {
 			this.state = 1932;
 			this._errHandler.sync(this);
@@ -7524,7 +7532,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public select(): SelectContext {
 		let _localctx: SelectContext = new SelectContext(this._ctx, this.state);
-		this.enterRule(_localctx, 270, CqlParser.RULE_select);
+		this.enterRule(_localctx, 266, CqlParser.RULE_select);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -7604,7 +7612,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public limitSpec(): LimitSpecContext {
 		let _localctx: LimitSpecContext = new LimitSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 272, CqlParser.RULE_limitSpec);
+		this.enterRule(_localctx, 268, CqlParser.RULE_limitSpec);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -7649,7 +7657,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public fromSpec(): FromSpecContext {
 		let _localctx: FromSpecContext = new FromSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 274, CqlParser.RULE_fromSpec);
+		this.enterRule(_localctx, 270, CqlParser.RULE_fromSpec);
 		try {
 			this.state = 1961;
 			this._errHandler.sync(this);
@@ -7698,7 +7706,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public orderSpec(): OrderSpecContext {
 		let _localctx: OrderSpecContext = new OrderSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 276, CqlParser.RULE_orderSpec);
+		this.enterRule(_localctx, 272, CqlParser.RULE_orderSpec);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -7725,7 +7733,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public orderSpecElement(): OrderSpecElementContext {
 		let _localctx: OrderSpecElementContext = new OrderSpecElementContext(this._ctx, this.state);
-		this.enterRule(_localctx, 278, CqlParser.RULE_orderSpecElement);
+		this.enterRule(_localctx, 274, CqlParser.RULE_orderSpecElement);
 		try {
 			this.state = 1972;
 			this._errHandler.sync(this);
@@ -7742,12 +7750,15 @@ export class CqlParser extends Parser {
 			case CqlParser.K_REPLICATION:
 			case CqlParser.K_TTL:
 			case CqlParser.K_TYPE:
+			case CqlParser.K_ROLES:
 			case CqlParser.K_ROLE:
 			case CqlParser.OBJECT_NAME:
+			case CqlParser.K_USERS:
+			case CqlParser.K_USER:
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 1966;
-				this.column();
+				this.columnSpec();
 				this.state = 1969;
 				this._errHandler.sync(this);
 				switch (this._input.LA(1)) {
@@ -7805,7 +7816,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public whereSpec(): WhereSpecContext {
 		let _localctx: WhereSpecContext = new WhereSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 280, CqlParser.RULE_whereSpec);
+		this.enterRule(_localctx, 276, CqlParser.RULE_whereSpec);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -7832,12 +7843,12 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public selectElements(): SelectElementsContext {
 		let _localctx: SelectElementsContext = new SelectElementsContext(this._ctx, this.state);
-		this.enterRule(_localctx, 282, CqlParser.RULE_selectElements);
+		this.enterRule(_localctx, 278, CqlParser.RULE_selectElements);
 		let _la: number;
 		try {
 			this.state = 1988;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input,156,this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input,157,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
@@ -7895,17 +7906,17 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public selectElement(): SelectElementContext {
 		let _localctx: SelectElementContext = new SelectElementContext(this._ctx, this.state);
-		this.enterRule(_localctx, 284, CqlParser.RULE_selectElement);
+		this.enterRule(_localctx, 280, CqlParser.RULE_selectElement);
 		let _la: number;
 		try {
 			this.state = 2004;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input,159,this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input,160,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 1990;
-				this.column();
+				this.columnSpec();
 				}
 				break;
 
@@ -7913,7 +7924,7 @@ export class CqlParser extends Parser {
 				this.enterOuterAlt(_localctx, 2);
 				{
 				this.state = 1991;
-				this.column();
+				this.columnSpec();
 				this.state = 1995;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
@@ -7974,7 +7985,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public relationElements(): RelationElementsContext {
 		let _localctx: RelationElementsContext = new RelationElementsContext(this._ctx, this.state);
-		this.enterRule(_localctx, 286, CqlParser.RULE_relationElements);
+		this.enterRule(_localctx, 282, CqlParser.RULE_relationElements);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -8018,11 +8029,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public relationElement(): RelationElementContext {
 		let _localctx: RelationElementContext = new RelationElementContext(this._ctx, this.state);
-		this.enterRule(_localctx, 288, CqlParser.RULE_relationElement);
+		this.enterRule(_localctx, 284, CqlParser.RULE_relationElement);
 		try {
 			this.state = 2021;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input,161,this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input,162,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
@@ -8081,12 +8092,12 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public relationElementConstant(): RelationElementConstantContext {
 		let _localctx: RelationElementConstantContext = new RelationElementConstantContext(this._ctx, this.state);
-		this.enterRule(_localctx, 290, CqlParser.RULE_relationElementConstant);
+		this.enterRule(_localctx, 286, CqlParser.RULE_relationElementConstant);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 2023;
-			this.column();
+			this.columnSpec();
 			this.state = 2024;
 			this.relationOperator();
 			this.state = 2027;
@@ -8140,13 +8151,13 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public relationElementIn(): RelationElementInContext {
 		let _localctx: RelationElementInContext = new RelationElementInContext(this._ctx, this.state);
-		this.enterRule(_localctx, 292, CqlParser.RULE_relationElementIn);
+		this.enterRule(_localctx, 288, CqlParser.RULE_relationElementIn);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 2029;
-			this.column();
+			this.columnSpec();
 			this.state = 2030;
 			this.kwIn();
 			this.state = 2031;
@@ -8154,7 +8165,7 @@ export class CqlParser extends Parser {
 			this.state = 2033;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la===CqlParser.K_FALSE || _la===CqlParser.K_NULL || _la===CqlParser.K_TRUE || ((((_la - 165)) & ~0x1F) === 0 && ((1 << (_la - 165)) & ((1 << (CqlParser.STRING_LITERAL - 165)) | (1 << (CqlParser.DECIMAL_LITERAL - 165)) | (1 << (CqlParser.FLOAT_LITERAL - 165)) | (1 << (CqlParser.HEXADECIMAL_LITERAL - 165)) | (1 << (CqlParser.OBJECT_NAME - 165)) | (1 << (CqlParser.UUID - 165)))) !== 0)) {
+			if (_la===CqlParser.K_FALSE || _la===CqlParser.K_NULL || _la===CqlParser.K_TRUE || ((((_la - 163)) & ~0x1F) === 0 && ((1 << (_la - 163)) & ((1 << (CqlParser.STRING_LITERAL - 163)) | (1 << (CqlParser.DECIMAL_LITERAL - 163)) | (1 << (CqlParser.FLOAT_LITERAL - 163)) | (1 << (CqlParser.HEXADECIMAL_LITERAL - 163)) | (1 << (CqlParser.OBJECT_NAME - 163)) | (1 << (CqlParser.UUID - 163)))) !== 0)) {
 				{
 				this.state = 2032;
 				this.functionArgs();
@@ -8182,7 +8193,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public relationElementToken(): RelationElementTokenContext {
 		let _localctx: RelationElementTokenContext = new RelationElementTokenContext(this._ctx, this.state);
-		this.enterRule(_localctx, 294, CqlParser.RULE_relationElementToken);
+		this.enterRule(_localctx, 290, CqlParser.RULE_relationElementToken);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -8190,7 +8201,7 @@ export class CqlParser extends Parser {
 			this.relationElementTokenSpec();
 			this.state = 2040;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input,164,this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input,165,this._ctx) ) {
 			case 1:
 				{
 				this.state = 2038;
@@ -8225,11 +8236,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public relationElementTokenSpec(): RelationElementTokenSpecContext {
 		let _localctx: RelationElementTokenSpecContext = new RelationElementTokenSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 296, CqlParser.RULE_relationElementTokenSpec);
+		this.enterRule(_localctx, 292, CqlParser.RULE_relationElementTokenSpec);
 		try {
 			this.state = 2058;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input,168,this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input,169,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
@@ -8271,6 +8282,7 @@ export class CqlParser extends Parser {
 				case CqlParser.K_TRUE:
 				case CqlParser.K_TTL:
 				case CqlParser.K_TYPE:
+				case CqlParser.K_ROLES:
 				case CqlParser.K_ROLE:
 				case CqlParser.STRING_LITERAL:
 				case CqlParser.DECIMAL_LITERAL:
@@ -8283,6 +8295,8 @@ export class CqlParser extends Parser {
 				case CqlParser.OPERATOR_GT:
 				case CqlParser.OPERATOR_LTE:
 				case CqlParser.OPERATOR_GTE:
+				case CqlParser.K_USERS:
+				case CqlParser.K_USER:
 					{
 					 this.notifyErrorListeners("rule.syntaxBracketLr"); 
 					}
@@ -8305,11 +8319,14 @@ export class CqlParser extends Parser {
 				case CqlParser.K_REPLICATION:
 				case CqlParser.K_TTL:
 				case CqlParser.K_TYPE:
+				case CqlParser.K_ROLES:
 				case CqlParser.K_ROLE:
 				case CqlParser.OBJECT_NAME:
+				case CqlParser.K_USERS:
+				case CqlParser.K_USER:
 					{
 					this.state = 2049;
-					this.column();
+					this.columnSpec();
 					}
 					break;
 				case CqlParser.EOF:
@@ -8412,11 +8429,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public relationOperator(): RelationOperatorContext {
 		let _localctx: RelationOperatorContext = new RelationOperatorContext(this._ctx, this.state);
-		this.enterRule(_localctx, 298, CqlParser.RULE_relationOperator);
+		this.enterRule(_localctx, 294, CqlParser.RULE_relationOperator);
 		try {
 			this.state = 2068;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input,169,this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input,170,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
@@ -8498,12 +8515,12 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public functionCall(): FunctionCallContext {
 		let _localctx: FunctionCallContext = new FunctionCallContext(this._ctx, this.state);
-		this.enterRule(_localctx, 300, CqlParser.RULE_functionCall);
+		this.enterRule(_localctx, 296, CqlParser.RULE_functionCall);
 		let _la: number;
 		try {
 			this.state = 2080;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input,171,this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input,172,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
@@ -8528,7 +8545,7 @@ export class CqlParser extends Parser {
 				this.state = 2077;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				if (_la===CqlParser.K_FALSE || _la===CqlParser.K_NULL || _la===CqlParser.K_TRUE || ((((_la - 165)) & ~0x1F) === 0 && ((1 << (_la - 165)) & ((1 << (CqlParser.STRING_LITERAL - 165)) | (1 << (CqlParser.DECIMAL_LITERAL - 165)) | (1 << (CqlParser.FLOAT_LITERAL - 165)) | (1 << (CqlParser.HEXADECIMAL_LITERAL - 165)) | (1 << (CqlParser.OBJECT_NAME - 165)) | (1 << (CqlParser.UUID - 165)))) !== 0)) {
+				if (_la===CqlParser.K_FALSE || _la===CqlParser.K_NULL || _la===CqlParser.K_TRUE || ((((_la - 163)) & ~0x1F) === 0 && ((1 << (_la - 163)) & ((1 << (CqlParser.STRING_LITERAL - 163)) | (1 << (CqlParser.DECIMAL_LITERAL - 163)) | (1 << (CqlParser.FLOAT_LITERAL - 163)) | (1 << (CqlParser.HEXADECIMAL_LITERAL - 163)) | (1 << (CqlParser.OBJECT_NAME - 163)) | (1 << (CqlParser.UUID - 163)))) !== 0)) {
 					{
 					this.state = 2076;
 					this.functionArgs();
@@ -8558,14 +8575,14 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public functionArgs(): FunctionArgsContext {
 		let _localctx: FunctionArgsContext = new FunctionArgsContext(this._ctx, this.state);
-		this.enterRule(_localctx, 302, CqlParser.RULE_functionArgs);
+		this.enterRule(_localctx, 298, CqlParser.RULE_functionArgs);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 2085;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input,172,this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input,173,this._ctx) ) {
 			case 1:
 				{
 				this.state = 2082;
@@ -8597,7 +8614,7 @@ export class CqlParser extends Parser {
 				this.syntaxComma();
 				this.state = 2091;
 				this._errHandler.sync(this);
-				switch ( this.interpreter.adaptivePredict(this._input,173,this._ctx) ) {
+				switch ( this.interpreter.adaptivePredict(this._input,174,this._ctx) ) {
 				case 1:
 					{
 					this.state = 2088;
@@ -8644,11 +8661,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public constant(): ConstantContext {
 		let _localctx: ConstantContext = new ConstantContext(this._ctx, this.state);
-		this.enterRule(_localctx, 304, CqlParser.RULE_constant);
+		this.enterRule(_localctx, 300, CqlParser.RULE_constant);
 		try {
 			this.state = 2105;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input,175,this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input,176,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
@@ -8723,11 +8740,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public collectionElement(): CollectionElementContext {
 		let _localctx: CollectionElementContext = new CollectionElementContext(this._ctx, this.state);
-		this.enterRule(_localctx, 306, CqlParser.RULE_collectionElement);
+		this.enterRule(_localctx, 302, CqlParser.RULE_collectionElement);
 		try {
 			this.state = 2112;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input,176,this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input,177,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
@@ -8786,7 +8803,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public collectionMapElement(): CollectionMapElementContext {
 		let _localctx: CollectionMapElementContext = new CollectionMapElementContext(this._ctx, this.state);
-		this.enterRule(_localctx, 308, CqlParser.RULE_collectionMapElement);
+		this.enterRule(_localctx, 304, CqlParser.RULE_collectionMapElement);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -8815,11 +8832,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public constantCollection(): ConstantCollectionContext {
 		let _localctx: ConstantCollectionContext = new ConstantCollectionContext(this._ctx, this.state);
-		this.enterRule(_localctx, 310, CqlParser.RULE_constantCollection);
+		this.enterRule(_localctx, 306, CqlParser.RULE_constantCollection);
 		try {
 			this.state = 2122;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input,177,this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input,178,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
@@ -8870,7 +8887,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public constantMap(): ConstantMapContext {
 		let _localctx: ConstantMapContext = new ConstantMapContext(this._ctx, this.state);
-		this.enterRule(_localctx, 312, CqlParser.RULE_constantMap);
+		this.enterRule(_localctx, 308, CqlParser.RULE_constantMap);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -8916,7 +8933,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public constantSet(): ConstantSetContext {
 		let _localctx: ConstantSetContext = new ConstantSetContext(this._ctx, this.state);
-		this.enterRule(_localctx, 314, CqlParser.RULE_constantSet);
+		this.enterRule(_localctx, 310, CqlParser.RULE_constantSet);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -8962,7 +8979,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public constantList(): ConstantListContext {
 		let _localctx: ConstantListContext = new ConstantListContext(this._ctx, this.state);
-		this.enterRule(_localctx, 316, CqlParser.RULE_constantList);
+		this.enterRule(_localctx, 312, CqlParser.RULE_constantList);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -9008,7 +9025,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public constantTuple(): ConstantTupleContext {
 		let _localctx: ConstantTupleContext = new ConstantTupleContext(this._ctx, this.state);
-		this.enterRule(_localctx, 318, CqlParser.RULE_constantTuple);
+		this.enterRule(_localctx, 314, CqlParser.RULE_constantTuple);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -9054,7 +9071,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public constantUuid(): ConstantUuidContext {
 		let _localctx: ConstantUuidContext = new ConstantUuidContext(this._ctx, this.state);
-		this.enterRule(_localctx, 320, CqlParser.RULE_constantUuid);
+		this.enterRule(_localctx, 316, CqlParser.RULE_constantUuid);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -9079,7 +9096,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public constantDecimal(): ConstantDecimalContext {
 		let _localctx: ConstantDecimalContext = new ConstantDecimalContext(this._ctx, this.state);
-		this.enterRule(_localctx, 322, CqlParser.RULE_constantDecimal);
+		this.enterRule(_localctx, 318, CqlParser.RULE_constantDecimal);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -9104,7 +9121,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public constantFloat(): ConstantFloatContext {
 		let _localctx: ConstantFloatContext = new ConstantFloatContext(this._ctx, this.state);
-		this.enterRule(_localctx, 324, CqlParser.RULE_constantFloat);
+		this.enterRule(_localctx, 320, CqlParser.RULE_constantFloat);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -9140,7 +9157,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public constantString(): ConstantStringContext {
 		let _localctx: ConstantStringContext = new ConstantStringContext(this._ctx, this.state);
-		this.enterRule(_localctx, 326, CqlParser.RULE_constantString);
+		this.enterRule(_localctx, 322, CqlParser.RULE_constantString);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -9165,7 +9182,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public constantBoolean(): ConstantBooleanContext {
 		let _localctx: ConstantBooleanContext = new ConstantBooleanContext(this._ctx, this.state);
-		this.enterRule(_localctx, 328, CqlParser.RULE_constantBoolean);
+		this.enterRule(_localctx, 324, CqlParser.RULE_constantBoolean);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -9201,7 +9218,7 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public constantHexadecimal(): ConstantHexadecimalContext {
 		let _localctx: ConstantHexadecimalContext = new ConstantHexadecimalContext(this._ctx, this.state);
-		this.enterRule(_localctx, 330, CqlParser.RULE_constantHexadecimal);
+		this.enterRule(_localctx, 326, CqlParser.RULE_constantHexadecimal);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -9226,19 +9243,20 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public keyspace(): KeyspaceContext {
 		let _localctx: KeyspaceContext = new KeyspaceContext(this._ctx, this.state);
-		this.enterRule(_localctx, 332, CqlParser.RULE_keyspace);
+		this.enterRule(_localctx, 328, CqlParser.RULE_keyspace);
 		try {
-			this.state = 2200;
+			this.state = 2204;
 			this._errHandler.sync(this);
-			switch (this._input.LA(1)) {
-			case CqlParser.OBJECT_NAME:
+			switch ( this.interpreter.adaptivePredict(this._input,183,this._ctx) ) {
+			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 2184;
 				this.match(CqlParser.OBJECT_NAME);
 				}
 				break;
-			case CqlParser.DQUOTE:
+
+			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
 				this.state = 2185;
@@ -9249,92 +9267,134 @@ export class CqlParser extends Parser {
 				this.match(CqlParser.DQUOTE);
 				}
 				break;
-			case CqlParser.K_ROLE:
+
+			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
 				this.state = 2188;
 				this.match(CqlParser.K_ROLE);
 				}
 				break;
-			case CqlParser.K_PERMISSIONS:
+
+			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
 				this.state = 2189;
 				this.match(CqlParser.K_PERMISSIONS);
 				}
 				break;
-			case CqlParser.K_OPTIONS:
+
+			case 5:
 				this.enterOuterAlt(_localctx, 5);
 				{
 				this.state = 2190;
 				this.match(CqlParser.K_OPTIONS);
 				}
 				break;
-			case CqlParser.K_DURABLE_WRITES:
+
+			case 6:
 				this.enterOuterAlt(_localctx, 6);
 				{
 				this.state = 2191;
 				this.match(CqlParser.K_DURABLE_WRITES);
 				}
 				break;
-			case CqlParser.K_LANGUAGE:
+
+			case 7:
 				this.enterOuterAlt(_localctx, 7);
 				{
 				this.state = 2192;
 				this.match(CqlParser.K_LANGUAGE);
 				}
 				break;
-			case CqlParser.K_TYPE:
+
+			case 8:
 				this.enterOuterAlt(_localctx, 8);
 				{
 				this.state = 2193;
 				this.match(CqlParser.K_TYPE);
 				}
 				break;
-			case CqlParser.K_INITCOND:
+
+			case 9:
 				this.enterOuterAlt(_localctx, 9);
 				{
 				this.state = 2194;
 				this.match(CqlParser.K_INITCOND);
 				}
 				break;
-			case CqlParser.K_REPLICATION:
+
+			case 10:
 				this.enterOuterAlt(_localctx, 10);
 				{
 				this.state = 2195;
 				this.match(CqlParser.K_REPLICATION);
 				}
 				break;
-			case CqlParser.K_TTL:
+
+			case 11:
 				this.enterOuterAlt(_localctx, 11);
 				{
 				this.state = 2196;
 				this.match(CqlParser.K_TTL);
 				}
 				break;
-			case CqlParser.K_PARTITION:
+
+			case 12:
 				this.enterOuterAlt(_localctx, 12);
 				{
 				this.state = 2197;
 				this.match(CqlParser.K_PARTITION);
 				}
 				break;
-			case CqlParser.K_KEY:
+
+			case 13:
 				this.enterOuterAlt(_localctx, 13);
 				{
 				this.state = 2198;
 				this.match(CqlParser.K_KEY);
 				}
 				break;
-			case CqlParser.K_LEVEL:
+
+			case 14:
 				this.enterOuterAlt(_localctx, 14);
 				{
 				this.state = 2199;
 				this.match(CqlParser.K_LEVEL);
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
+
+			case 15:
+				this.enterOuterAlt(_localctx, 15);
+				{
+				this.state = 2200;
+				this.match(CqlParser.K_USERS);
+				}
+				break;
+
+			case 16:
+				this.enterOuterAlt(_localctx, 16);
+				{
+				this.state = 2201;
+				this.match(CqlParser.K_USER);
+				}
+				break;
+
+			case 17:
+				this.enterOuterAlt(_localctx, 17);
+				{
+				this.state = 2202;
+				this.match(CqlParser.K_ROLE);
+				}
+				break;
+
+			case 18:
+				this.enterOuterAlt(_localctx, 18);
+				{
+				this.state = 2203;
+				this.match(CqlParser.K_ROLES);
+				}
+				break;
 			}
 		}
 		catch (re) {
@@ -9354,115 +9414,158 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public baseKeyspace(): BaseKeyspaceContext {
 		let _localctx: BaseKeyspaceContext = new BaseKeyspaceContext(this._ctx, this.state);
-		this.enterRule(_localctx, 334, CqlParser.RULE_baseKeyspace);
+		this.enterRule(_localctx, 330, CqlParser.RULE_baseKeyspace);
 		try {
-			this.state = 2218;
+			this.state = 2226;
 			this._errHandler.sync(this);
-			switch (this._input.LA(1)) {
-			case CqlParser.OBJECT_NAME:
+			switch ( this.interpreter.adaptivePredict(this._input,184,this._ctx) ) {
+			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2202;
+				this.state = 2206;
 				this.match(CqlParser.OBJECT_NAME);
 				}
 				break;
-			case CqlParser.DQUOTE:
+
+			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2203;
+				this.state = 2207;
 				this.match(CqlParser.DQUOTE);
-				this.state = 2204;
+				this.state = 2208;
 				this.match(CqlParser.OBJECT_NAME);
-				this.state = 2205;
+				this.state = 2209;
 				this.match(CqlParser.DQUOTE);
 				}
 				break;
-			case CqlParser.K_ROLE:
+
+			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 2206;
+				this.state = 2210;
 				this.match(CqlParser.K_ROLE);
 				}
 				break;
-			case CqlParser.K_PERMISSIONS:
+
+			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 2207;
+				this.state = 2211;
 				this.match(CqlParser.K_PERMISSIONS);
 				}
 				break;
-			case CqlParser.K_OPTIONS:
+
+			case 5:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 2208;
+				this.state = 2212;
 				this.match(CqlParser.K_OPTIONS);
 				}
 				break;
-			case CqlParser.K_DURABLE_WRITES:
+
+			case 6:
 				this.enterOuterAlt(_localctx, 6);
 				{
-				this.state = 2209;
+				this.state = 2213;
 				this.match(CqlParser.K_DURABLE_WRITES);
 				}
 				break;
-			case CqlParser.K_LANGUAGE:
+
+			case 7:
 				this.enterOuterAlt(_localctx, 7);
 				{
-				this.state = 2210;
+				this.state = 2214;
 				this.match(CqlParser.K_LANGUAGE);
 				}
 				break;
-			case CqlParser.K_TYPE:
+
+			case 8:
 				this.enterOuterAlt(_localctx, 8);
 				{
-				this.state = 2211;
+				this.state = 2215;
 				this.match(CqlParser.K_TYPE);
 				}
 				break;
-			case CqlParser.K_INITCOND:
+
+			case 9:
 				this.enterOuterAlt(_localctx, 9);
 				{
-				this.state = 2212;
+				this.state = 2216;
 				this.match(CqlParser.K_INITCOND);
 				}
 				break;
-			case CqlParser.K_REPLICATION:
+
+			case 10:
 				this.enterOuterAlt(_localctx, 10);
 				{
-				this.state = 2213;
+				this.state = 2217;
 				this.match(CqlParser.K_REPLICATION);
 				}
 				break;
-			case CqlParser.K_TTL:
+
+			case 11:
 				this.enterOuterAlt(_localctx, 11);
 				{
-				this.state = 2214;
+				this.state = 2218;
 				this.match(CqlParser.K_TTL);
 				}
 				break;
-			case CqlParser.K_PARTITION:
+
+			case 12:
 				this.enterOuterAlt(_localctx, 12);
 				{
-				this.state = 2215;
+				this.state = 2219;
 				this.match(CqlParser.K_PARTITION);
 				}
 				break;
-			case CqlParser.K_KEY:
+
+			case 13:
 				this.enterOuterAlt(_localctx, 13);
 				{
-				this.state = 2216;
+				this.state = 2220;
 				this.match(CqlParser.K_KEY);
 				}
 				break;
-			case CqlParser.K_LEVEL:
+
+			case 14:
 				this.enterOuterAlt(_localctx, 14);
 				{
-				this.state = 2217;
+				this.state = 2221;
 				this.match(CqlParser.K_LEVEL);
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
+
+			case 15:
+				this.enterOuterAlt(_localctx, 15);
+				{
+				this.state = 2222;
+				this.match(CqlParser.K_USERS);
+				}
+				break;
+
+			case 16:
+				this.enterOuterAlt(_localctx, 16);
+				{
+				this.state = 2223;
+				this.match(CqlParser.K_USER);
+				}
+				break;
+
+			case 17:
+				this.enterOuterAlt(_localctx, 17);
+				{
+				this.state = 2224;
+				this.match(CqlParser.K_ROLE);
+				}
+				break;
+
+			case 18:
+				this.enterOuterAlt(_localctx, 18);
+				{
+				this.state = 2225;
+				this.match(CqlParser.K_ROLES);
+				}
+				break;
 			}
 		}
 		catch (re) {
@@ -9482,115 +9585,23 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public table(): TableContext {
 		let _localctx: TableContext = new TableContext(this._ctx, this.state);
-		this.enterRule(_localctx, 336, CqlParser.RULE_table);
+		this.enterRule(_localctx, 332, CqlParser.RULE_table);
+		let _la: number;
 		try {
-			this.state = 2236;
-			this._errHandler.sync(this);
-			switch (this._input.LA(1)) {
-			case CqlParser.OBJECT_NAME:
-				this.enterOuterAlt(_localctx, 1);
-				{
-				this.state = 2220;
-				this.match(CqlParser.OBJECT_NAME);
+			this.enterOuterAlt(_localctx, 1);
+			{
+			this.state = 2228;
+			_la = this._input.LA(1);
+			if ( !(((((_la - 53)) & ~0x1F) === 0 && ((1 << (_la - 53)) & ((1 << (CqlParser.K_DURABLE_WRITES - 53)) | (1 << (CqlParser.K_INITCOND - 53)) | (1 << (CqlParser.K_KEY - 53)) | (1 << (CqlParser.K_LANGUAGE - 53)) | (1 << (CqlParser.K_LEVEL - 53)))) !== 0) || ((((_la - 94)) & ~0x1F) === 0 && ((1 << (_la - 94)) & ((1 << (CqlParser.K_OPTIONS - 94)) | (1 << (CqlParser.K_PARTITION - 94)) | (1 << (CqlParser.K_PERMISSIONS - 94)) | (1 << (CqlParser.K_REPLICATION - 94)) | (1 << (CqlParser.K_TTL - 94)))) !== 0) || ((((_la - 127)) & ~0x1F) === 0 && ((1 << (_la - 127)) & ((1 << (CqlParser.K_TYPE - 127)) | (1 << (CqlParser.K_ROLES - 127)) | (1 << (CqlParser.K_ROLE - 127)))) !== 0) || ((((_la - 168)) & ~0x1F) === 0 && ((1 << (_la - 168)) & ((1 << (CqlParser.OBJECT_NAME - 168)) | (1 << (CqlParser.K_USERS - 168)) | (1 << (CqlParser.K_USER - 168)))) !== 0)) ) {
+			this._errHandler.recoverInline(this);
+			} else {
+				if (this._input.LA(1) === Token.EOF) {
+					this.matchedEOF = true;
 				}
-				break;
-			case CqlParser.DQUOTE:
-				this.enterOuterAlt(_localctx, 2);
-				{
-				this.state = 2221;
-				this.match(CqlParser.DQUOTE);
-				this.state = 2222;
-				this.match(CqlParser.OBJECT_NAME);
-				this.state = 2223;
-				this.match(CqlParser.DQUOTE);
-				}
-				break;
-			case CqlParser.K_ROLE:
-				this.enterOuterAlt(_localctx, 3);
-				{
-				this.state = 2224;
-				this.match(CqlParser.K_ROLE);
-				}
-				break;
-			case CqlParser.K_PERMISSIONS:
-				this.enterOuterAlt(_localctx, 4);
-				{
-				this.state = 2225;
-				this.match(CqlParser.K_PERMISSIONS);
-				}
-				break;
-			case CqlParser.K_OPTIONS:
-				this.enterOuterAlt(_localctx, 5);
-				{
-				this.state = 2226;
-				this.match(CqlParser.K_OPTIONS);
-				}
-				break;
-			case CqlParser.K_DURABLE_WRITES:
-				this.enterOuterAlt(_localctx, 6);
-				{
-				this.state = 2227;
-				this.match(CqlParser.K_DURABLE_WRITES);
-				}
-				break;
-			case CqlParser.K_LANGUAGE:
-				this.enterOuterAlt(_localctx, 7);
-				{
-				this.state = 2228;
-				this.match(CqlParser.K_LANGUAGE);
-				}
-				break;
-			case CqlParser.K_TYPE:
-				this.enterOuterAlt(_localctx, 8);
-				{
-				this.state = 2229;
-				this.match(CqlParser.K_TYPE);
-				}
-				break;
-			case CqlParser.K_INITCOND:
-				this.enterOuterAlt(_localctx, 9);
-				{
-				this.state = 2230;
-				this.match(CqlParser.K_INITCOND);
-				}
-				break;
-			case CqlParser.K_REPLICATION:
-				this.enterOuterAlt(_localctx, 10);
-				{
-				this.state = 2231;
-				this.match(CqlParser.K_REPLICATION);
-				}
-				break;
-			case CqlParser.K_TTL:
-				this.enterOuterAlt(_localctx, 11);
-				{
-				this.state = 2232;
-				this.match(CqlParser.K_TTL);
-				}
-				break;
-			case CqlParser.K_PARTITION:
-				this.enterOuterAlt(_localctx, 12);
-				{
-				this.state = 2233;
-				this.match(CqlParser.K_PARTITION);
-				}
-				break;
-			case CqlParser.K_KEY:
-				this.enterOuterAlt(_localctx, 13);
-				{
-				this.state = 2234;
-				this.match(CqlParser.K_KEY);
-				}
-				break;
-			case CqlParser.K_LEVEL:
-				this.enterOuterAlt(_localctx, 14);
-				{
-				this.state = 2235;
-				this.match(CqlParser.K_LEVEL);
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
+
+				this._errHandler.reportMatch(this);
+				this.consume();
+			}
 			}
 		}
 		catch (re) {
@@ -9610,115 +9621,158 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public baseTable(): BaseTableContext {
 		let _localctx: BaseTableContext = new BaseTableContext(this._ctx, this.state);
-		this.enterRule(_localctx, 338, CqlParser.RULE_baseTable);
+		this.enterRule(_localctx, 334, CqlParser.RULE_baseTable);
 		try {
-			this.state = 2254;
+			this.state = 2250;
 			this._errHandler.sync(this);
-			switch (this._input.LA(1)) {
-			case CqlParser.OBJECT_NAME:
+			switch ( this.interpreter.adaptivePredict(this._input,185,this._ctx) ) {
+			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2238;
+				this.state = 2230;
 				this.match(CqlParser.OBJECT_NAME);
 				}
 				break;
-			case CqlParser.DQUOTE:
+
+			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2239;
+				this.state = 2231;
 				this.match(CqlParser.DQUOTE);
-				this.state = 2240;
+				this.state = 2232;
 				this.match(CqlParser.OBJECT_NAME);
-				this.state = 2241;
+				this.state = 2233;
 				this.match(CqlParser.DQUOTE);
 				}
 				break;
-			case CqlParser.K_ROLE:
+
+			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 2242;
+				this.state = 2234;
 				this.match(CqlParser.K_ROLE);
 				}
 				break;
-			case CqlParser.K_PERMISSIONS:
+
+			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 2243;
+				this.state = 2235;
 				this.match(CqlParser.K_PERMISSIONS);
 				}
 				break;
-			case CqlParser.K_OPTIONS:
+
+			case 5:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 2244;
+				this.state = 2236;
 				this.match(CqlParser.K_OPTIONS);
 				}
 				break;
-			case CqlParser.K_DURABLE_WRITES:
+
+			case 6:
 				this.enterOuterAlt(_localctx, 6);
 				{
-				this.state = 2245;
+				this.state = 2237;
 				this.match(CqlParser.K_DURABLE_WRITES);
 				}
 				break;
-			case CqlParser.K_LANGUAGE:
+
+			case 7:
 				this.enterOuterAlt(_localctx, 7);
 				{
-				this.state = 2246;
+				this.state = 2238;
 				this.match(CqlParser.K_LANGUAGE);
 				}
 				break;
-			case CqlParser.K_TYPE:
+
+			case 8:
 				this.enterOuterAlt(_localctx, 8);
 				{
-				this.state = 2247;
+				this.state = 2239;
 				this.match(CqlParser.K_TYPE);
 				}
 				break;
-			case CqlParser.K_INITCOND:
+
+			case 9:
 				this.enterOuterAlt(_localctx, 9);
 				{
-				this.state = 2248;
+				this.state = 2240;
 				this.match(CqlParser.K_INITCOND);
 				}
 				break;
-			case CqlParser.K_REPLICATION:
+
+			case 10:
 				this.enterOuterAlt(_localctx, 10);
 				{
-				this.state = 2249;
+				this.state = 2241;
 				this.match(CqlParser.K_REPLICATION);
 				}
 				break;
-			case CqlParser.K_TTL:
+
+			case 11:
 				this.enterOuterAlt(_localctx, 11);
 				{
-				this.state = 2250;
+				this.state = 2242;
 				this.match(CqlParser.K_TTL);
 				}
 				break;
-			case CqlParser.K_PARTITION:
+
+			case 12:
 				this.enterOuterAlt(_localctx, 12);
 				{
-				this.state = 2251;
+				this.state = 2243;
 				this.match(CqlParser.K_PARTITION);
 				}
 				break;
-			case CqlParser.K_KEY:
+
+			case 13:
 				this.enterOuterAlt(_localctx, 13);
 				{
-				this.state = 2252;
+				this.state = 2244;
 				this.match(CqlParser.K_KEY);
 				}
 				break;
-			case CqlParser.K_LEVEL:
+
+			case 14:
 				this.enterOuterAlt(_localctx, 14);
 				{
-				this.state = 2253;
+				this.state = 2245;
 				this.match(CqlParser.K_LEVEL);
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
+
+			case 15:
+				this.enterOuterAlt(_localctx, 15);
+				{
+				this.state = 2246;
+				this.match(CqlParser.K_USERS);
+				}
+				break;
+
+			case 16:
+				this.enterOuterAlt(_localctx, 16);
+				{
+				this.state = 2247;
+				this.match(CqlParser.K_USER);
+				}
+				break;
+
+			case 17:
+				this.enterOuterAlt(_localctx, 17);
+				{
+				this.state = 2248;
+				this.match(CqlParser.K_ROLE);
+				}
+				break;
+
+			case 18:
+				this.enterOuterAlt(_localctx, 18);
+				{
+				this.state = 2249;
+				this.match(CqlParser.K_ROLES);
+				}
+				break;
 			}
 		}
 		catch (re) {
@@ -9738,115 +9792,158 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public materializedView(): MaterializedViewContext {
 		let _localctx: MaterializedViewContext = new MaterializedViewContext(this._ctx, this.state);
-		this.enterRule(_localctx, 340, CqlParser.RULE_materializedView);
+		this.enterRule(_localctx, 336, CqlParser.RULE_materializedView);
 		try {
 			this.state = 2272;
 			this._errHandler.sync(this);
-			switch (this._input.LA(1)) {
-			case CqlParser.OBJECT_NAME:
+			switch ( this.interpreter.adaptivePredict(this._input,186,this._ctx) ) {
+			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2256;
+				this.state = 2252;
 				this.match(CqlParser.OBJECT_NAME);
 				}
 				break;
-			case CqlParser.DQUOTE:
+
+			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2257;
+				this.state = 2253;
 				this.match(CqlParser.DQUOTE);
-				this.state = 2258;
+				this.state = 2254;
 				this.match(CqlParser.OBJECT_NAME);
-				this.state = 2259;
+				this.state = 2255;
 				this.match(CqlParser.DQUOTE);
 				}
 				break;
-			case CqlParser.K_ROLE:
+
+			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 2260;
+				this.state = 2256;
 				this.match(CqlParser.K_ROLE);
 				}
 				break;
-			case CqlParser.K_PERMISSIONS:
+
+			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 2261;
+				this.state = 2257;
 				this.match(CqlParser.K_PERMISSIONS);
 				}
 				break;
-			case CqlParser.K_OPTIONS:
+
+			case 5:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 2262;
+				this.state = 2258;
 				this.match(CqlParser.K_OPTIONS);
 				}
 				break;
-			case CqlParser.K_DURABLE_WRITES:
+
+			case 6:
 				this.enterOuterAlt(_localctx, 6);
 				{
-				this.state = 2263;
+				this.state = 2259;
 				this.match(CqlParser.K_DURABLE_WRITES);
 				}
 				break;
-			case CqlParser.K_LANGUAGE:
+
+			case 7:
 				this.enterOuterAlt(_localctx, 7);
 				{
-				this.state = 2264;
+				this.state = 2260;
 				this.match(CqlParser.K_LANGUAGE);
 				}
 				break;
-			case CqlParser.K_TYPE:
+
+			case 8:
 				this.enterOuterAlt(_localctx, 8);
 				{
-				this.state = 2265;
+				this.state = 2261;
 				this.match(CqlParser.K_TYPE);
 				}
 				break;
-			case CqlParser.K_INITCOND:
+
+			case 9:
 				this.enterOuterAlt(_localctx, 9);
 				{
-				this.state = 2266;
+				this.state = 2262;
 				this.match(CqlParser.K_INITCOND);
 				}
 				break;
-			case CqlParser.K_REPLICATION:
+
+			case 10:
 				this.enterOuterAlt(_localctx, 10);
 				{
-				this.state = 2267;
+				this.state = 2263;
 				this.match(CqlParser.K_REPLICATION);
 				}
 				break;
-			case CqlParser.K_TTL:
+
+			case 11:
 				this.enterOuterAlt(_localctx, 11);
 				{
-				this.state = 2268;
+				this.state = 2264;
 				this.match(CqlParser.K_TTL);
 				}
 				break;
-			case CqlParser.K_PARTITION:
+
+			case 12:
 				this.enterOuterAlt(_localctx, 12);
 				{
-				this.state = 2269;
+				this.state = 2265;
 				this.match(CqlParser.K_PARTITION);
 				}
 				break;
-			case CqlParser.K_KEY:
+
+			case 13:
 				this.enterOuterAlt(_localctx, 13);
 				{
-				this.state = 2270;
+				this.state = 2266;
 				this.match(CqlParser.K_KEY);
 				}
 				break;
-			case CqlParser.K_LEVEL:
+
+			case 14:
 				this.enterOuterAlt(_localctx, 14);
 				{
-				this.state = 2271;
+				this.state = 2267;
 				this.match(CqlParser.K_LEVEL);
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
+
+			case 15:
+				this.enterOuterAlt(_localctx, 15);
+				{
+				this.state = 2268;
+				this.match(CqlParser.K_USERS);
+				}
+				break;
+
+			case 16:
+				this.enterOuterAlt(_localctx, 16);
+				{
+				this.state = 2269;
+				this.match(CqlParser.K_USER);
+				}
+				break;
+
+			case 17:
+				this.enterOuterAlt(_localctx, 17);
+				{
+				this.state = 2270;
+				this.match(CqlParser.K_ROLE);
+				}
+				break;
+
+			case 18:
+				this.enterOuterAlt(_localctx, 18);
+				{
+				this.state = 2271;
+				this.match(CqlParser.K_ROLES);
+				}
+				break;
 			}
 		}
 		catch (re) {
@@ -9866,19 +9963,20 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public keyspaceObject(): KeyspaceObjectContext {
 		let _localctx: KeyspaceObjectContext = new KeyspaceObjectContext(this._ctx, this.state);
-		this.enterRule(_localctx, 342, CqlParser.RULE_keyspaceObject);
+		this.enterRule(_localctx, 338, CqlParser.RULE_keyspaceObject);
 		try {
-			this.state = 2290;
+			this.state = 2294;
 			this._errHandler.sync(this);
-			switch (this._input.LA(1)) {
-			case CqlParser.OBJECT_NAME:
+			switch ( this.interpreter.adaptivePredict(this._input,187,this._ctx) ) {
+			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 2274;
 				this.match(CqlParser.OBJECT_NAME);
 				}
 				break;
-			case CqlParser.DQUOTE:
+
+			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
 				this.state = 2275;
@@ -9889,92 +9987,134 @@ export class CqlParser extends Parser {
 				this.match(CqlParser.DQUOTE);
 				}
 				break;
-			case CqlParser.K_ROLE:
+
+			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
 				this.state = 2278;
 				this.match(CqlParser.K_ROLE);
 				}
 				break;
-			case CqlParser.K_PERMISSIONS:
+
+			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
 				this.state = 2279;
 				this.match(CqlParser.K_PERMISSIONS);
 				}
 				break;
-			case CqlParser.K_OPTIONS:
+
+			case 5:
 				this.enterOuterAlt(_localctx, 5);
 				{
 				this.state = 2280;
 				this.match(CqlParser.K_OPTIONS);
 				}
 				break;
-			case CqlParser.K_DURABLE_WRITES:
+
+			case 6:
 				this.enterOuterAlt(_localctx, 6);
 				{
 				this.state = 2281;
 				this.match(CqlParser.K_DURABLE_WRITES);
 				}
 				break;
-			case CqlParser.K_LANGUAGE:
+
+			case 7:
 				this.enterOuterAlt(_localctx, 7);
 				{
 				this.state = 2282;
 				this.match(CqlParser.K_LANGUAGE);
 				}
 				break;
-			case CqlParser.K_TYPE:
+
+			case 8:
 				this.enterOuterAlt(_localctx, 8);
 				{
 				this.state = 2283;
 				this.match(CqlParser.K_TYPE);
 				}
 				break;
-			case CqlParser.K_INITCOND:
+
+			case 9:
 				this.enterOuterAlt(_localctx, 9);
 				{
 				this.state = 2284;
 				this.match(CqlParser.K_INITCOND);
 				}
 				break;
-			case CqlParser.K_REPLICATION:
+
+			case 10:
 				this.enterOuterAlt(_localctx, 10);
 				{
 				this.state = 2285;
 				this.match(CqlParser.K_REPLICATION);
 				}
 				break;
-			case CqlParser.K_TTL:
+
+			case 11:
 				this.enterOuterAlt(_localctx, 11);
 				{
 				this.state = 2286;
 				this.match(CqlParser.K_TTL);
 				}
 				break;
-			case CqlParser.K_PARTITION:
+
+			case 12:
 				this.enterOuterAlt(_localctx, 12);
 				{
 				this.state = 2287;
 				this.match(CqlParser.K_PARTITION);
 				}
 				break;
-			case CqlParser.K_KEY:
+
+			case 13:
 				this.enterOuterAlt(_localctx, 13);
 				{
 				this.state = 2288;
 				this.match(CqlParser.K_KEY);
 				}
 				break;
-			case CqlParser.K_LEVEL:
+
+			case 14:
 				this.enterOuterAlt(_localctx, 14);
 				{
 				this.state = 2289;
 				this.match(CqlParser.K_LEVEL);
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
+
+			case 15:
+				this.enterOuterAlt(_localctx, 15);
+				{
+				this.state = 2290;
+				this.match(CqlParser.K_USERS);
+				}
+				break;
+
+			case 16:
+				this.enterOuterAlt(_localctx, 16);
+				{
+				this.state = 2291;
+				this.match(CqlParser.K_USER);
+				}
+				break;
+
+			case 17:
+				this.enterOuterAlt(_localctx, 17);
+				{
+				this.state = 2292;
+				this.match(CqlParser.K_ROLE);
+				}
+				break;
+
+			case 18:
+				this.enterOuterAlt(_localctx, 18);
+				{
+				this.state = 2293;
+				this.match(CqlParser.K_ROLES);
+				}
+				break;
 			}
 		}
 		catch (re) {
@@ -9994,115 +10134,158 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public objectUnknown(): ObjectUnknownContext {
 		let _localctx: ObjectUnknownContext = new ObjectUnknownContext(this._ctx, this.state);
-		this.enterRule(_localctx, 344, CqlParser.RULE_objectUnknown);
+		this.enterRule(_localctx, 340, CqlParser.RULE_objectUnknown);
 		try {
-			this.state = 2308;
+			this.state = 2316;
 			this._errHandler.sync(this);
-			switch (this._input.LA(1)) {
-			case CqlParser.OBJECT_NAME:
+			switch ( this.interpreter.adaptivePredict(this._input,188,this._ctx) ) {
+			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2292;
+				this.state = 2296;
 				this.match(CqlParser.OBJECT_NAME);
 				}
 				break;
-			case CqlParser.DQUOTE:
+
+			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2293;
+				this.state = 2297;
 				this.match(CqlParser.DQUOTE);
-				this.state = 2294;
+				this.state = 2298;
 				this.match(CqlParser.OBJECT_NAME);
-				this.state = 2295;
+				this.state = 2299;
 				this.match(CqlParser.DQUOTE);
 				}
 				break;
-			case CqlParser.K_ROLE:
+
+			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 2296;
+				this.state = 2300;
 				this.match(CqlParser.K_ROLE);
 				}
 				break;
-			case CqlParser.K_PERMISSIONS:
+
+			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 2297;
+				this.state = 2301;
 				this.match(CqlParser.K_PERMISSIONS);
 				}
 				break;
-			case CqlParser.K_OPTIONS:
+
+			case 5:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 2298;
+				this.state = 2302;
 				this.match(CqlParser.K_OPTIONS);
 				}
 				break;
-			case CqlParser.K_DURABLE_WRITES:
+
+			case 6:
 				this.enterOuterAlt(_localctx, 6);
 				{
-				this.state = 2299;
+				this.state = 2303;
 				this.match(CqlParser.K_DURABLE_WRITES);
 				}
 				break;
-			case CqlParser.K_LANGUAGE:
+
+			case 7:
 				this.enterOuterAlt(_localctx, 7);
 				{
-				this.state = 2300;
+				this.state = 2304;
 				this.match(CqlParser.K_LANGUAGE);
 				}
 				break;
-			case CqlParser.K_TYPE:
+
+			case 8:
 				this.enterOuterAlt(_localctx, 8);
 				{
-				this.state = 2301;
+				this.state = 2305;
 				this.match(CqlParser.K_TYPE);
 				}
 				break;
-			case CqlParser.K_INITCOND:
+
+			case 9:
 				this.enterOuterAlt(_localctx, 9);
 				{
-				this.state = 2302;
+				this.state = 2306;
 				this.match(CqlParser.K_INITCOND);
 				}
 				break;
-			case CqlParser.K_REPLICATION:
+
+			case 10:
 				this.enterOuterAlt(_localctx, 10);
 				{
-				this.state = 2303;
+				this.state = 2307;
 				this.match(CqlParser.K_REPLICATION);
 				}
 				break;
-			case CqlParser.K_TTL:
+
+			case 11:
 				this.enterOuterAlt(_localctx, 11);
 				{
-				this.state = 2304;
+				this.state = 2308;
 				this.match(CqlParser.K_TTL);
 				}
 				break;
-			case CqlParser.K_PARTITION:
+
+			case 12:
 				this.enterOuterAlt(_localctx, 12);
 				{
-				this.state = 2305;
+				this.state = 2309;
 				this.match(CqlParser.K_PARTITION);
 				}
 				break;
-			case CqlParser.K_KEY:
+
+			case 13:
 				this.enterOuterAlt(_localctx, 13);
 				{
-				this.state = 2306;
+				this.state = 2310;
 				this.match(CqlParser.K_KEY);
 				}
 				break;
-			case CqlParser.K_LEVEL:
+
+			case 14:
 				this.enterOuterAlt(_localctx, 14);
 				{
-				this.state = 2307;
+				this.state = 2311;
 				this.match(CqlParser.K_LEVEL);
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
+
+			case 15:
+				this.enterOuterAlt(_localctx, 15);
+				{
+				this.state = 2312;
+				this.match(CqlParser.K_USERS);
+				}
+				break;
+
+			case 16:
+				this.enterOuterAlt(_localctx, 16);
+				{
+				this.state = 2313;
+				this.match(CqlParser.K_USER);
+				}
+				break;
+
+			case 17:
+				this.enterOuterAlt(_localctx, 17);
+				{
+				this.state = 2314;
+				this.match(CqlParser.K_ROLE);
+				}
+				break;
+
+			case 18:
+				this.enterOuterAlt(_localctx, 18);
+				{
+				this.state = 2315;
+				this.match(CqlParser.K_ROLES);
+				}
+				break;
 			}
 		}
 		catch (re) {
@@ -10122,15 +10305,15 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public aggregateSpec(): AggregateSpecContext {
 		let _localctx: AggregateSpecContext = new AggregateSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 346, CqlParser.RULE_aggregateSpec);
+		this.enterRule(_localctx, 342, CqlParser.RULE_aggregateSpec);
 		try {
-			this.state = 2320;
+			this.state = 2328;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,189,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2310;
+				this.state = 2318;
 				this.aggregate();
 				}
 				break;
@@ -10138,11 +10321,11 @@ export class CqlParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2311;
+				this.state = 2319;
 				this.keyspace();
-				this.state = 2312;
+				this.state = 2320;
 				this.specialDot();
-				this.state = 2313;
+				this.state = 2321;
 				this.aggregate();
 				}
 				break;
@@ -10150,9 +10333,9 @@ export class CqlParser extends Parser {
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 2315;
+				this.state = 2323;
 				this.keyspace();
-				this.state = 2316;
+				this.state = 2324;
 				this.specialDot();
 				 this.notifyErrorListeners("rule.aggregate"); 
 				}
@@ -10183,15 +10366,15 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public typeSpec(): TypeSpecContext {
 		let _localctx: TypeSpecContext = new TypeSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 348, CqlParser.RULE_typeSpec);
+		this.enterRule(_localctx, 344, CqlParser.RULE_typeSpec);
 		try {
-			this.state = 2332;
+			this.state = 2340;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,190,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2322;
+				this.state = 2330;
 				this.type();
 				}
 				break;
@@ -10199,11 +10382,11 @@ export class CqlParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2323;
+				this.state = 2331;
 				this.keyspace();
-				this.state = 2324;
+				this.state = 2332;
 				this.specialDot();
-				this.state = 2325;
+				this.state = 2333;
 				this.type();
 				}
 				break;
@@ -10211,9 +10394,9 @@ export class CqlParser extends Parser {
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 2327;
+				this.state = 2335;
 				this.keyspace();
-				this.state = 2328;
+				this.state = 2336;
 				this.specialDot();
 				 this.notifyErrorListeners("rule.type"); 
 				}
@@ -10244,15 +10427,15 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public functionSpec(): FunctionSpecContext {
 		let _localctx: FunctionSpecContext = new FunctionSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 350, CqlParser.RULE_functionSpec);
+		this.enterRule(_localctx, 346, CqlParser.RULE_functionSpec);
 		try {
-			this.state = 2344;
+			this.state = 2352;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,191,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2334;
+				this.state = 2342;
 				this.function();
 				}
 				break;
@@ -10260,11 +10443,11 @@ export class CqlParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2335;
+				this.state = 2343;
 				this.keyspace();
-				this.state = 2336;
+				this.state = 2344;
 				this.specialDot();
-				this.state = 2337;
+				this.state = 2345;
 				this.function();
 				}
 				break;
@@ -10272,9 +10455,9 @@ export class CqlParser extends Parser {
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 2339;
+				this.state = 2347;
 				this.keyspace();
-				this.state = 2340;
+				this.state = 2348;
 				this.specialDot();
 				 this.notifyErrorListeners("rule.function"); 
 				}
@@ -10305,15 +10488,15 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public tableSpec(): TableSpecContext {
 		let _localctx: TableSpecContext = new TableSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 352, CqlParser.RULE_tableSpec);
+		this.enterRule(_localctx, 348, CqlParser.RULE_tableSpec);
 		try {
-			this.state = 2356;
+			this.state = 2374;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,192,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2346;
+				this.state = 2354;
 				this.table();
 				}
 				break;
@@ -10321,28 +10504,56 @@ export class CqlParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2347;
-				this.keyspace();
-				this.state = 2348;
-				this.specialDot();
-				this.state = 2349;
+				this.state = 2355;
+				this.syntaxDquote();
+				this.state = 2356;
 				this.table();
+				this.state = 2357;
+				this.syntaxDquote();
 				}
 				break;
 
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 2351;
+				this.state = 2359;
 				this.keyspace();
-				this.state = 2352;
+				this.state = 2360;
 				this.specialDot();
-				 this.notifyErrorListeners("rule.table"); 
+				this.state = 2361;
+				this.table();
 				}
 				break;
 
 			case 4:
 				this.enterOuterAlt(_localctx, 4);
+				{
+				this.state = 2363;
+				this.keyspace();
+				this.state = 2364;
+				this.specialDot();
+				this.state = 2365;
+				this.syntaxDquote();
+				this.state = 2366;
+				this.table();
+				this.state = 2367;
+				this.syntaxDquote();
+				}
+				break;
+
+			case 5:
+				this.enterOuterAlt(_localctx, 5);
+				{
+				this.state = 2369;
+				this.keyspace();
+				this.state = 2370;
+				this.specialDot();
+				 this.notifyErrorListeners("rule.table"); 
+				}
+				break;
+
+			case 6:
+				this.enterOuterAlt(_localctx, 6);
 				{
 				 this.notifyErrorListeners("rule.tableSpec"); 
 				}
@@ -10366,15 +10577,15 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public baseTableSpec(): BaseTableSpecContext {
 		let _localctx: BaseTableSpecContext = new BaseTableSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 354, CqlParser.RULE_baseTableSpec);
+		this.enterRule(_localctx, 350, CqlParser.RULE_baseTableSpec);
 		try {
-			this.state = 2368;
+			this.state = 2396;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,193,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2358;
+				this.state = 2376;
 				this.baseTable();
 				}
 				break;
@@ -10382,28 +10593,56 @@ export class CqlParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2359;
-				this.baseKeyspace();
-				this.state = 2360;
-				this.specialDot();
-				this.state = 2361;
+				this.state = 2377;
+				this.syntaxDquote();
+				this.state = 2378;
 				this.baseTable();
+				this.state = 2379;
+				this.syntaxDquote();
 				}
 				break;
 
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 2363;
+				this.state = 2381;
 				this.baseKeyspace();
-				this.state = 2364;
+				this.state = 2382;
 				this.specialDot();
-				 this.notifyErrorListeners("rule.baseTable"); 
+				this.state = 2383;
+				this.baseTable();
 				}
 				break;
 
 			case 4:
 				this.enterOuterAlt(_localctx, 4);
+				{
+				this.state = 2385;
+				this.baseKeyspace();
+				this.state = 2386;
+				this.specialDot();
+				this.state = 2387;
+				this.syntaxDquote();
+				this.state = 2388;
+				this.baseTable();
+				this.state = 2389;
+				this.syntaxDquote();
+				}
+				break;
+
+			case 5:
+				this.enterOuterAlt(_localctx, 5);
+				{
+				this.state = 2391;
+				this.baseKeyspace();
+				this.state = 2392;
+				this.specialDot();
+				 this.notifyErrorListeners("rule.baseTable"); 
+				}
+				break;
+
+			case 6:
+				this.enterOuterAlt(_localctx, 6);
 				{
 				 this.notifyErrorListeners("rule.baseTableSpec"); 
 				}
@@ -10427,15 +10666,15 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public indexSpec(): IndexSpecContext {
 		let _localctx: IndexSpecContext = new IndexSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 356, CqlParser.RULE_indexSpec);
+		this.enterRule(_localctx, 352, CqlParser.RULE_indexSpec);
 		try {
-			this.state = 2380;
+			this.state = 2408;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,194,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2370;
+				this.state = 2398;
 				this.index();
 				}
 				break;
@@ -10443,11 +10682,11 @@ export class CqlParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2371;
+				this.state = 2399;
 				this.keyspace();
-				this.state = 2372;
+				this.state = 2400;
 				this.specialDot();
-				this.state = 2373;
+				this.state = 2401;
 				this.index();
 				}
 				break;
@@ -10455,9 +10694,9 @@ export class CqlParser extends Parser {
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 2375;
+				this.state = 2403;
 				this.keyspace();
-				this.state = 2376;
+				this.state = 2404;
 				this.specialDot();
 				 this.notifyErrorListeners("rule.index"); 
 				}
@@ -10488,15 +10727,15 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public materializedViewSpec(): MaterializedViewSpecContext {
 		let _localctx: MaterializedViewSpecContext = new MaterializedViewSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 358, CqlParser.RULE_materializedViewSpec);
+		this.enterRule(_localctx, 354, CqlParser.RULE_materializedViewSpec);
 		try {
-			this.state = 2392;
+			this.state = 2420;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,195,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2382;
+				this.state = 2410;
 				this.materializedView();
 				}
 				break;
@@ -10504,11 +10743,11 @@ export class CqlParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2383;
+				this.state = 2411;
 				this.keyspace();
-				this.state = 2384;
+				this.state = 2412;
 				this.specialDot();
-				this.state = 2385;
+				this.state = 2413;
 				this.materializedView();
 				}
 				break;
@@ -10516,9 +10755,9 @@ export class CqlParser extends Parser {
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 2387;
+				this.state = 2415;
 				this.keyspace();
-				this.state = 2388;
+				this.state = 2416;
 				this.specialDot();
 				 this.notifyErrorListeners("rule.materializedView"); 
 				}
@@ -10549,15 +10788,15 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public tableOrMaterializedViewSpec(): TableOrMaterializedViewSpecContext {
 		let _localctx: TableOrMaterializedViewSpecContext = new TableOrMaterializedViewSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 360, CqlParser.RULE_tableOrMaterializedViewSpec);
+		this.enterRule(_localctx, 356, CqlParser.RULE_tableOrMaterializedViewSpec);
 		try {
-			this.state = 2397;
+			this.state = 2425;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,196,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2394;
+				this.state = 2422;
 				this.tableSpec();
 				}
 				break;
@@ -10565,7 +10804,7 @@ export class CqlParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2395;
+				this.state = 2423;
 				this.materializedViewSpec();
 				}
 				break;
@@ -10595,15 +10834,15 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public objectUnknownSpec(): ObjectUnknownSpecContext {
 		let _localctx: ObjectUnknownSpecContext = new ObjectUnknownSpecContext(this._ctx, this.state);
-		this.enterRule(_localctx, 362, CqlParser.RULE_objectUnknownSpec);
+		this.enterRule(_localctx, 358, CqlParser.RULE_objectUnknownSpec);
 		try {
-			this.state = 2405;
+			this.state = 2433;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input,197,this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2399;
+				this.state = 2427;
 				this.objectUnknown();
 				}
 				break;
@@ -10611,11 +10850,11 @@ export class CqlParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2400;
+				this.state = 2428;
 				this.keyspace();
-				this.state = 2401;
+				this.state = 2429;
 				this.specialDot();
-				this.state = 2402;
+				this.state = 2430;
 				this.objectUnknown();
 				}
 				break;
@@ -10643,113 +10882,44 @@ export class CqlParser extends Parser {
 		return _localctx;
 	}
 	@RuleVersion(0)
-	public column(): ColumnContext {
-		let _localctx: ColumnContext = new ColumnContext(this._ctx, this.state);
-		this.enterRule(_localctx, 364, CqlParser.RULE_column);
+	public columnSpec(): ColumnSpecContext {
+		let _localctx: ColumnSpecContext = new ColumnSpecContext(this._ctx, this.state);
+		this.enterRule(_localctx, 360, CqlParser.RULE_columnSpec);
 		try {
-			this.state = 2423;
+			this.state = 2440;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
+			case CqlParser.K_DURABLE_WRITES:
+			case CqlParser.K_INITCOND:
+			case CqlParser.K_KEY:
+			case CqlParser.K_LANGUAGE:
+			case CqlParser.K_LEVEL:
+			case CqlParser.K_OPTIONS:
+			case CqlParser.K_PARTITION:
+			case CqlParser.K_PERMISSIONS:
+			case CqlParser.K_REPLICATION:
+			case CqlParser.K_TTL:
+			case CqlParser.K_TYPE:
+			case CqlParser.K_ROLES:
+			case CqlParser.K_ROLE:
 			case CqlParser.OBJECT_NAME:
+			case CqlParser.K_USERS:
+			case CqlParser.K_USER:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2407;
-				this.match(CqlParser.OBJECT_NAME);
+				this.state = 2435;
+				this.column();
 				}
 				break;
 			case CqlParser.DQUOTE:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2408;
-				this.match(CqlParser.DQUOTE);
-				this.state = 2409;
-				this.match(CqlParser.OBJECT_NAME);
-				this.state = 2410;
-				this.match(CqlParser.DQUOTE);
-				}
-				break;
-			case CqlParser.K_ROLE:
-				this.enterOuterAlt(_localctx, 3);
-				{
-				this.state = 2411;
-				this.match(CqlParser.K_ROLE);
-				}
-				break;
-			case CqlParser.K_PERMISSIONS:
-				this.enterOuterAlt(_localctx, 4);
-				{
-				this.state = 2412;
-				this.match(CqlParser.K_PERMISSIONS);
-				}
-				break;
-			case CqlParser.K_OPTIONS:
-				this.enterOuterAlt(_localctx, 5);
-				{
-				this.state = 2413;
-				this.match(CqlParser.K_OPTIONS);
-				}
-				break;
-			case CqlParser.K_DURABLE_WRITES:
-				this.enterOuterAlt(_localctx, 6);
-				{
-				this.state = 2414;
-				this.match(CqlParser.K_DURABLE_WRITES);
-				}
-				break;
-			case CqlParser.K_LANGUAGE:
-				this.enterOuterAlt(_localctx, 7);
-				{
-				this.state = 2415;
-				this.match(CqlParser.K_LANGUAGE);
-				}
-				break;
-			case CqlParser.K_TYPE:
-				this.enterOuterAlt(_localctx, 8);
-				{
-				this.state = 2416;
-				this.match(CqlParser.K_TYPE);
-				}
-				break;
-			case CqlParser.K_INITCOND:
-				this.enterOuterAlt(_localctx, 9);
-				{
-				this.state = 2417;
-				this.match(CqlParser.K_INITCOND);
-				}
-				break;
-			case CqlParser.K_REPLICATION:
-				this.enterOuterAlt(_localctx, 10);
-				{
-				this.state = 2418;
-				this.match(CqlParser.K_REPLICATION);
-				}
-				break;
-			case CqlParser.K_TTL:
-				this.enterOuterAlt(_localctx, 11);
-				{
-				this.state = 2419;
-				this.match(CqlParser.K_TTL);
-				}
-				break;
-			case CqlParser.K_PARTITION:
-				this.enterOuterAlt(_localctx, 12);
-				{
-				this.state = 2420;
-				this.match(CqlParser.K_PARTITION);
-				}
-				break;
-			case CqlParser.K_KEY:
-				this.enterOuterAlt(_localctx, 13);
-				{
-				this.state = 2421;
-				this.match(CqlParser.K_KEY);
-				}
-				break;
-			case CqlParser.K_LEVEL:
-				this.enterOuterAlt(_localctx, 14);
-				{
-				this.state = 2422;
-				this.match(CqlParser.K_LEVEL);
+				this.state = 2436;
+				this.syntaxDquote();
+				this.state = 2437;
+				this.column();
+				this.state = 2438;
+				this.syntaxDquote();
 				}
 				break;
 			default:
@@ -10771,113 +10941,80 @@ export class CqlParser extends Parser {
 		return _localctx;
 	}
 	@RuleVersion(0)
-	public baseColumn(): BaseColumnContext {
-		let _localctx: BaseColumnContext = new BaseColumnContext(this._ctx, this.state);
-		this.enterRule(_localctx, 366, CqlParser.RULE_baseColumn);
+	public column(): ColumnContext {
+		let _localctx: ColumnContext = new ColumnContext(this._ctx, this.state);
+		this.enterRule(_localctx, 362, CqlParser.RULE_column);
+		let _la: number;
 		try {
-			this.state = 2441;
+			this.enterOuterAlt(_localctx, 1);
+			{
+			this.state = 2442;
+			_la = this._input.LA(1);
+			if ( !(((((_la - 53)) & ~0x1F) === 0 && ((1 << (_la - 53)) & ((1 << (CqlParser.K_DURABLE_WRITES - 53)) | (1 << (CqlParser.K_INITCOND - 53)) | (1 << (CqlParser.K_KEY - 53)) | (1 << (CqlParser.K_LANGUAGE - 53)) | (1 << (CqlParser.K_LEVEL - 53)))) !== 0) || ((((_la - 94)) & ~0x1F) === 0 && ((1 << (_la - 94)) & ((1 << (CqlParser.K_OPTIONS - 94)) | (1 << (CqlParser.K_PARTITION - 94)) | (1 << (CqlParser.K_PERMISSIONS - 94)) | (1 << (CqlParser.K_REPLICATION - 94)) | (1 << (CqlParser.K_TTL - 94)))) !== 0) || ((((_la - 127)) & ~0x1F) === 0 && ((1 << (_la - 127)) & ((1 << (CqlParser.K_TYPE - 127)) | (1 << (CqlParser.K_ROLES - 127)) | (1 << (CqlParser.K_ROLE - 127)))) !== 0) || ((((_la - 168)) & ~0x1F) === 0 && ((1 << (_la - 168)) & ((1 << (CqlParser.OBJECT_NAME - 168)) | (1 << (CqlParser.K_USERS - 168)) | (1 << (CqlParser.K_USER - 168)))) !== 0)) ) {
+			this._errHandler.recoverInline(this);
+			} else {
+				if (this._input.LA(1) === Token.EOF) {
+					this.matchedEOF = true;
+				}
+
+				this._errHandler.reportMatch(this);
+				this.consume();
+			}
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				_localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return _localctx;
+	}
+	@RuleVersion(0)
+	public columnUnknownSpec(): ColumnUnknownSpecContext {
+		let _localctx: ColumnUnknownSpecContext = new ColumnUnknownSpecContext(this._ctx, this.state);
+		this.enterRule(_localctx, 364, CqlParser.RULE_columnUnknownSpec);
+		try {
+			this.state = 2449;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
+			case CqlParser.K_DURABLE_WRITES:
+			case CqlParser.K_INITCOND:
+			case CqlParser.K_KEY:
+			case CqlParser.K_LANGUAGE:
+			case CqlParser.K_LEVEL:
+			case CqlParser.K_OPTIONS:
+			case CqlParser.K_PARTITION:
+			case CqlParser.K_PERMISSIONS:
+			case CqlParser.K_REPLICATION:
+			case CqlParser.K_TTL:
+			case CqlParser.K_TYPE:
+			case CqlParser.K_ROLES:
+			case CqlParser.K_ROLE:
 			case CqlParser.OBJECT_NAME:
+			case CqlParser.K_USERS:
+			case CqlParser.K_USER:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2425;
-				this.match(CqlParser.OBJECT_NAME);
+				this.state = 2444;
+				this.columnUnknown();
 				}
 				break;
 			case CqlParser.DQUOTE:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2426;
-				this.match(CqlParser.DQUOTE);
-				this.state = 2427;
-				this.match(CqlParser.OBJECT_NAME);
-				this.state = 2428;
-				this.match(CqlParser.DQUOTE);
-				}
-				break;
-			case CqlParser.K_ROLE:
-				this.enterOuterAlt(_localctx, 3);
-				{
-				this.state = 2429;
-				this.match(CqlParser.K_ROLE);
-				}
-				break;
-			case CqlParser.K_PERMISSIONS:
-				this.enterOuterAlt(_localctx, 4);
-				{
-				this.state = 2430;
-				this.match(CqlParser.K_PERMISSIONS);
-				}
-				break;
-			case CqlParser.K_OPTIONS:
-				this.enterOuterAlt(_localctx, 5);
-				{
-				this.state = 2431;
-				this.match(CqlParser.K_OPTIONS);
-				}
-				break;
-			case CqlParser.K_DURABLE_WRITES:
-				this.enterOuterAlt(_localctx, 6);
-				{
-				this.state = 2432;
-				this.match(CqlParser.K_DURABLE_WRITES);
-				}
-				break;
-			case CqlParser.K_LANGUAGE:
-				this.enterOuterAlt(_localctx, 7);
-				{
-				this.state = 2433;
-				this.match(CqlParser.K_LANGUAGE);
-				}
-				break;
-			case CqlParser.K_TYPE:
-				this.enterOuterAlt(_localctx, 8);
-				{
-				this.state = 2434;
-				this.match(CqlParser.K_TYPE);
-				}
-				break;
-			case CqlParser.K_INITCOND:
-				this.enterOuterAlt(_localctx, 9);
-				{
-				this.state = 2435;
-				this.match(CqlParser.K_INITCOND);
-				}
-				break;
-			case CqlParser.K_REPLICATION:
-				this.enterOuterAlt(_localctx, 10);
-				{
-				this.state = 2436;
-				this.match(CqlParser.K_REPLICATION);
-				}
-				break;
-			case CqlParser.K_TTL:
-				this.enterOuterAlt(_localctx, 11);
-				{
-				this.state = 2437;
-				this.match(CqlParser.K_TTL);
-				}
-				break;
-			case CqlParser.K_PARTITION:
-				this.enterOuterAlt(_localctx, 12);
-				{
-				this.state = 2438;
-				this.match(CqlParser.K_PARTITION);
-				}
-				break;
-			case CqlParser.K_KEY:
-				this.enterOuterAlt(_localctx, 13);
-				{
-				this.state = 2439;
-				this.match(CqlParser.K_KEY);
-				}
-				break;
-			case CqlParser.K_LEVEL:
-				this.enterOuterAlt(_localctx, 14);
-				{
-				this.state = 2440;
-				this.match(CqlParser.K_LEVEL);
+				this.state = 2445;
+				this.syntaxDquote();
+				this.state = 2446;
+				this.columnUnknown();
+				this.state = 2447;
+				this.syntaxDquote();
 				}
 				break;
 			default:
@@ -10901,115 +11038,23 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public columnUnknown(): ColumnUnknownContext {
 		let _localctx: ColumnUnknownContext = new ColumnUnknownContext(this._ctx, this.state);
-		this.enterRule(_localctx, 368, CqlParser.RULE_columnUnknown);
+		this.enterRule(_localctx, 366, CqlParser.RULE_columnUnknown);
+		let _la: number;
 		try {
-			this.state = 2459;
-			this._errHandler.sync(this);
-			switch (this._input.LA(1)) {
-			case CqlParser.OBJECT_NAME:
-				this.enterOuterAlt(_localctx, 1);
-				{
-				this.state = 2443;
-				this.match(CqlParser.OBJECT_NAME);
+			this.enterOuterAlt(_localctx, 1);
+			{
+			this.state = 2451;
+			_la = this._input.LA(1);
+			if ( !(((((_la - 53)) & ~0x1F) === 0 && ((1 << (_la - 53)) & ((1 << (CqlParser.K_DURABLE_WRITES - 53)) | (1 << (CqlParser.K_INITCOND - 53)) | (1 << (CqlParser.K_KEY - 53)) | (1 << (CqlParser.K_LANGUAGE - 53)) | (1 << (CqlParser.K_LEVEL - 53)))) !== 0) || ((((_la - 94)) & ~0x1F) === 0 && ((1 << (_la - 94)) & ((1 << (CqlParser.K_OPTIONS - 94)) | (1 << (CqlParser.K_PARTITION - 94)) | (1 << (CqlParser.K_PERMISSIONS - 94)) | (1 << (CqlParser.K_REPLICATION - 94)) | (1 << (CqlParser.K_TTL - 94)))) !== 0) || ((((_la - 127)) & ~0x1F) === 0 && ((1 << (_la - 127)) & ((1 << (CqlParser.K_TYPE - 127)) | (1 << (CqlParser.K_ROLES - 127)) | (1 << (CqlParser.K_ROLE - 127)))) !== 0) || ((((_la - 168)) & ~0x1F) === 0 && ((1 << (_la - 168)) & ((1 << (CqlParser.OBJECT_NAME - 168)) | (1 << (CqlParser.K_USERS - 168)) | (1 << (CqlParser.K_USER - 168)))) !== 0)) ) {
+			this._errHandler.recoverInline(this);
+			} else {
+				if (this._input.LA(1) === Token.EOF) {
+					this.matchedEOF = true;
 				}
-				break;
-			case CqlParser.DQUOTE:
-				this.enterOuterAlt(_localctx, 2);
-				{
-				this.state = 2444;
-				this.match(CqlParser.DQUOTE);
-				this.state = 2445;
-				this.match(CqlParser.OBJECT_NAME);
-				this.state = 2446;
-				this.match(CqlParser.DQUOTE);
-				}
-				break;
-			case CqlParser.K_ROLE:
-				this.enterOuterAlt(_localctx, 3);
-				{
-				this.state = 2447;
-				this.match(CqlParser.K_ROLE);
-				}
-				break;
-			case CqlParser.K_PERMISSIONS:
-				this.enterOuterAlt(_localctx, 4);
-				{
-				this.state = 2448;
-				this.match(CqlParser.K_PERMISSIONS);
-				}
-				break;
-			case CqlParser.K_OPTIONS:
-				this.enterOuterAlt(_localctx, 5);
-				{
-				this.state = 2449;
-				this.match(CqlParser.K_OPTIONS);
-				}
-				break;
-			case CqlParser.K_DURABLE_WRITES:
-				this.enterOuterAlt(_localctx, 6);
-				{
-				this.state = 2450;
-				this.match(CqlParser.K_DURABLE_WRITES);
-				}
-				break;
-			case CqlParser.K_LANGUAGE:
-				this.enterOuterAlt(_localctx, 7);
-				{
-				this.state = 2451;
-				this.match(CqlParser.K_LANGUAGE);
-				}
-				break;
-			case CqlParser.K_TYPE:
-				this.enterOuterAlt(_localctx, 8);
-				{
-				this.state = 2452;
-				this.match(CqlParser.K_TYPE);
-				}
-				break;
-			case CqlParser.K_INITCOND:
-				this.enterOuterAlt(_localctx, 9);
-				{
-				this.state = 2453;
-				this.match(CqlParser.K_INITCOND);
-				}
-				break;
-			case CqlParser.K_REPLICATION:
-				this.enterOuterAlt(_localctx, 10);
-				{
-				this.state = 2454;
-				this.match(CqlParser.K_REPLICATION);
-				}
-				break;
-			case CqlParser.K_TTL:
-				this.enterOuterAlt(_localctx, 11);
-				{
-				this.state = 2455;
-				this.match(CqlParser.K_TTL);
-				}
-				break;
-			case CqlParser.K_PARTITION:
-				this.enterOuterAlt(_localctx, 12);
-				{
-				this.state = 2456;
-				this.match(CqlParser.K_PARTITION);
-				}
-				break;
-			case CqlParser.K_KEY:
-				this.enterOuterAlt(_localctx, 13);
-				{
-				this.state = 2457;
-				this.match(CqlParser.K_KEY);
-				}
-				break;
-			case CqlParser.K_LEVEL:
-				this.enterOuterAlt(_localctx, 14);
-				{
-				this.state = 2458;
-				this.match(CqlParser.K_LEVEL);
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
+
+				this._errHandler.reportMatch(this);
+				this.consume();
+			}
 			}
 		}
 		catch (re) {
@@ -11029,9 +11074,9 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataType(): DataTypeContext {
 		let _localctx: DataTypeContext = new DataTypeContext(this._ctx, this.state);
-		this.enterRule(_localctx, 370, CqlParser.RULE_dataType);
+		this.enterRule(_localctx, 368, CqlParser.RULE_dataType);
 		try {
-			this.state = 2463;
+			this.state = 2455;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case CqlParser.K_TIMESTAMP:
@@ -11057,7 +11102,7 @@ export class CqlParser extends Parser {
 			case CqlParser.OBJECT_NAME:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2461;
+				this.state = 2453;
 				this.dataTypeFundamental();
 				}
 				break;
@@ -11068,7 +11113,7 @@ export class CqlParser extends Parser {
 			case CqlParser.K_TUPLE:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2462;
+				this.state = 2454;
 				this.dataTypeCollection();
 				}
 				break;
@@ -11093,22 +11138,22 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeCollection(): DataTypeCollectionContext {
 		let _localctx: DataTypeCollectionContext = new DataTypeCollectionContext(this._ctx, this.state);
-		this.enterRule(_localctx, 372, CqlParser.RULE_dataTypeCollection);
+		this.enterRule(_localctx, 370, CqlParser.RULE_dataTypeCollection);
 		try {
-			this.state = 2490;
+			this.state = 2482;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case CqlParser.K_FROZEN:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2465;
+				this.state = 2457;
 				this.dataTypeFrozen();
-				this.state = 2468;
+				this.state = 2460;
 				this._errHandler.sync(this);
 				switch (this._input.LA(1)) {
 				case CqlParser.OPERATOR_LT:
 					{
-					this.state = 2466;
+					this.state = 2458;
 					this.dataTypeStructure();
 					}
 					break;
@@ -11136,14 +11181,14 @@ export class CqlParser extends Parser {
 			case CqlParser.K_SET:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2470;
+				this.state = 2462;
 				this.dataTypeSet();
-				this.state = 2473;
+				this.state = 2465;
 				this._errHandler.sync(this);
 				switch (this._input.LA(1)) {
 				case CqlParser.OPERATOR_LT:
 					{
-					this.state = 2471;
+					this.state = 2463;
 					this.dataTypeStructure();
 					}
 					break;
@@ -11171,14 +11216,14 @@ export class CqlParser extends Parser {
 			case CqlParser.K_LIST:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 2475;
+				this.state = 2467;
 				this.dataTypeList();
-				this.state = 2478;
+				this.state = 2470;
 				this._errHandler.sync(this);
 				switch (this._input.LA(1)) {
 				case CqlParser.OPERATOR_LT:
 					{
-					this.state = 2476;
+					this.state = 2468;
 					this.dataTypeStructure();
 					}
 					break;
@@ -11206,14 +11251,14 @@ export class CqlParser extends Parser {
 			case CqlParser.K_MAP:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 2480;
+				this.state = 2472;
 				this.dataTypeMap();
-				this.state = 2483;
+				this.state = 2475;
 				this._errHandler.sync(this);
 				switch (this._input.LA(1)) {
 				case CqlParser.OPERATOR_LT:
 					{
-					this.state = 2481;
+					this.state = 2473;
 					this.dataTypeStructure();
 					}
 					break;
@@ -11241,14 +11286,14 @@ export class CqlParser extends Parser {
 			case CqlParser.K_TUPLE:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 2485;
+				this.state = 2477;
 				this.dataTypeTuple();
-				this.state = 2488;
+				this.state = 2480;
 				this._errHandler.sync(this);
 				switch (this._input.LA(1)) {
 				case CqlParser.OPERATOR_LT:
 					{
-					this.state = 2486;
+					this.state = 2478;
 					this.dataTypeStructure();
 					}
 					break;
@@ -11294,155 +11339,155 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeFundamental(): DataTypeFundamentalContext {
 		let _localctx: DataTypeFundamentalContext = new DataTypeFundamentalContext(this._ctx, this.state);
-		this.enterRule(_localctx, 374, CqlParser.RULE_dataTypeFundamental);
+		this.enterRule(_localctx, 372, CqlParser.RULE_dataTypeFundamental);
 		try {
-			this.state = 2513;
+			this.state = 2505;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case CqlParser.K_ASCII:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2492;
+				this.state = 2484;
 				this.dataTypeAscii();
 				}
 				break;
 			case CqlParser.K_BIGINT:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2493;
+				this.state = 2485;
 				this.dataTypeBigint();
 				}
 				break;
 			case CqlParser.K_BLOB:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 2494;
+				this.state = 2486;
 				this.dataTypeBlob();
 				}
 				break;
 			case CqlParser.K_BOOLEAN:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 2495;
+				this.state = 2487;
 				this.dataTypeBoolean();
 				}
 				break;
 			case CqlParser.K_COUNTER:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 2496;
+				this.state = 2488;
 				this.dataTypeCounter();
 				}
 				break;
 			case CqlParser.K_DATE:
 				this.enterOuterAlt(_localctx, 6);
 				{
-				this.state = 2497;
+				this.state = 2489;
 				this.dataTypeDate();
 				}
 				break;
 			case CqlParser.K_DECIMAL:
 				this.enterOuterAlt(_localctx, 7);
 				{
-				this.state = 2498;
+				this.state = 2490;
 				this.dataTypeDecimal();
 				}
 				break;
 			case CqlParser.K_DOUBLE:
 				this.enterOuterAlt(_localctx, 8);
 				{
-				this.state = 2499;
+				this.state = 2491;
 				this.dataTypeDouble();
 				}
 				break;
 			case CqlParser.K_FLOAT:
 				this.enterOuterAlt(_localctx, 9);
 				{
-				this.state = 2500;
+				this.state = 2492;
 				this.dataTypeFloat();
 				}
 				break;
 			case CqlParser.K_INET:
 				this.enterOuterAlt(_localctx, 10);
 				{
-				this.state = 2501;
+				this.state = 2493;
 				this.dataTypeInet();
 				}
 				break;
 			case CqlParser.K_INT:
 				this.enterOuterAlt(_localctx, 11);
 				{
-				this.state = 2502;
+				this.state = 2494;
 				this.dataTypeInt();
 				}
 				break;
 			case CqlParser.K_SMALLINT:
 				this.enterOuterAlt(_localctx, 12);
 				{
-				this.state = 2503;
+				this.state = 2495;
 				this.dataTypeSmallInt();
 				}
 				break;
 			case CqlParser.K_TEXT:
 				this.enterOuterAlt(_localctx, 13);
 				{
-				this.state = 2504;
+				this.state = 2496;
 				this.dataTypeText();
 				}
 				break;
 			case CqlParser.K_TIME:
 				this.enterOuterAlt(_localctx, 14);
 				{
-				this.state = 2505;
+				this.state = 2497;
 				this.dataTypeTime();
 				}
 				break;
 			case CqlParser.K_TIMEUUID:
 				this.enterOuterAlt(_localctx, 15);
 				{
-				this.state = 2506;
+				this.state = 2498;
 				this.dataTypeTimeUuid();
 				}
 				break;
 			case CqlParser.K_TIMESTAMP:
 				this.enterOuterAlt(_localctx, 16);
 				{
-				this.state = 2507;
+				this.state = 2499;
 				this.dataTypeTimestamp();
 				}
 				break;
 			case CqlParser.K_TINYINT:
 				this.enterOuterAlt(_localctx, 17);
 				{
-				this.state = 2508;
+				this.state = 2500;
 				this.dataTypeTinyInt();
 				}
 				break;
 			case CqlParser.K_UUID:
 				this.enterOuterAlt(_localctx, 18);
 				{
-				this.state = 2509;
+				this.state = 2501;
 				this.dataTypeUuid();
 				}
 				break;
 			case CqlParser.K_VARCHAR:
 				this.enterOuterAlt(_localctx, 19);
 				{
-				this.state = 2510;
+				this.state = 2502;
 				this.dataTypeVarChar();
 				}
 				break;
 			case CqlParser.K_VARINT:
 				this.enterOuterAlt(_localctx, 20);
 				{
-				this.state = 2511;
+				this.state = 2503;
 				this.dataTypeVarInt();
 				}
 				break;
 			case CqlParser.OBJECT_NAME:
 				this.enterOuterAlt(_localctx, 21);
 				{
-				this.state = 2512;
+				this.state = 2504;
 				this.dataTypeUserDefined();
 				}
 				break;
@@ -11467,22 +11512,22 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public orderDirection(): OrderDirectionContext {
 		let _localctx: OrderDirectionContext = new OrderDirectionContext(this._ctx, this.state);
-		this.enterRule(_localctx, 376, CqlParser.RULE_orderDirection);
+		this.enterRule(_localctx, 374, CqlParser.RULE_orderDirection);
 		try {
-			this.state = 2517;
+			this.state = 2509;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case CqlParser.K_ASC:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2515;
+				this.state = 2507;
 				this.kwAsc();
 				}
 				break;
 			case CqlParser.K_DESC:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2516;
+				this.state = 2508;
 				this.kwDesc();
 				}
 				break;
@@ -11507,11 +11552,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public role(): RoleContext {
 		let _localctx: RoleContext = new RoleContext(this._ctx, this.state);
-		this.enterRule(_localctx, 378, CqlParser.RULE_role);
+		this.enterRule(_localctx, 376, CqlParser.RULE_role);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2519;
+			this.state = 2511;
 			this.match(CqlParser.OBJECT_NAME);
 			}
 		}
@@ -11532,11 +11577,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public trigger(): TriggerContext {
 		let _localctx: TriggerContext = new TriggerContext(this._ctx, this.state);
-		this.enterRule(_localctx, 380, CqlParser.RULE_trigger);
+		this.enterRule(_localctx, 378, CqlParser.RULE_trigger);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2521;
+			this.state = 2513;
 			this.match(CqlParser.OBJECT_NAME);
 			}
 		}
@@ -11557,11 +11602,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public triggerClass(): TriggerClassContext {
 		let _localctx: TriggerClassContext = new TriggerClassContext(this._ctx, this.state);
-		this.enterRule(_localctx, 382, CqlParser.RULE_triggerClass);
+		this.enterRule(_localctx, 380, CqlParser.RULE_triggerClass);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2523;
+			this.state = 2515;
 			this.constantString();
 			}
 		}
@@ -11582,11 +11627,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public type(): TypeContext {
 		let _localctx: TypeContext = new TypeContext(this._ctx, this.state);
-		this.enterRule(_localctx, 384, CqlParser.RULE_type);
+		this.enterRule(_localctx, 382, CqlParser.RULE_type);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2525;
+			this.state = 2517;
 			this.match(CqlParser.OBJECT_NAME);
 			}
 		}
@@ -11607,115 +11652,158 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public aggregate(): AggregateContext {
 		let _localctx: AggregateContext = new AggregateContext(this._ctx, this.state);
-		this.enterRule(_localctx, 386, CqlParser.RULE_aggregate);
+		this.enterRule(_localctx, 384, CqlParser.RULE_aggregate);
 		try {
-			this.state = 2543;
+			this.state = 2539;
 			this._errHandler.sync(this);
-			switch (this._input.LA(1)) {
-			case CqlParser.OBJECT_NAME:
+			switch ( this.interpreter.adaptivePredict(this._input,209,this._ctx) ) {
+			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 2527;
+				this.state = 2519;
 				this.match(CqlParser.OBJECT_NAME);
 				}
 				break;
-			case CqlParser.DQUOTE:
+
+			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 2528;
+				this.state = 2520;
 				this.match(CqlParser.DQUOTE);
-				this.state = 2529;
+				this.state = 2521;
 				this.match(CqlParser.OBJECT_NAME);
-				this.state = 2530;
+				this.state = 2522;
 				this.match(CqlParser.DQUOTE);
 				}
 				break;
-			case CqlParser.K_ROLE:
+
+			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 2531;
+				this.state = 2523;
 				this.match(CqlParser.K_ROLE);
 				}
 				break;
-			case CqlParser.K_PERMISSIONS:
+
+			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 2532;
+				this.state = 2524;
 				this.match(CqlParser.K_PERMISSIONS);
 				}
 				break;
-			case CqlParser.K_OPTIONS:
+
+			case 5:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 2533;
+				this.state = 2525;
 				this.match(CqlParser.K_OPTIONS);
 				}
 				break;
-			case CqlParser.K_DURABLE_WRITES:
+
+			case 6:
 				this.enterOuterAlt(_localctx, 6);
 				{
-				this.state = 2534;
+				this.state = 2526;
 				this.match(CqlParser.K_DURABLE_WRITES);
 				}
 				break;
-			case CqlParser.K_LANGUAGE:
+
+			case 7:
 				this.enterOuterAlt(_localctx, 7);
 				{
-				this.state = 2535;
+				this.state = 2527;
 				this.match(CqlParser.K_LANGUAGE);
 				}
 				break;
-			case CqlParser.K_TYPE:
+
+			case 8:
 				this.enterOuterAlt(_localctx, 8);
 				{
-				this.state = 2536;
+				this.state = 2528;
 				this.match(CqlParser.K_TYPE);
 				}
 				break;
-			case CqlParser.K_INITCOND:
+
+			case 9:
 				this.enterOuterAlt(_localctx, 9);
 				{
-				this.state = 2537;
+				this.state = 2529;
 				this.match(CqlParser.K_INITCOND);
 				}
 				break;
-			case CqlParser.K_REPLICATION:
+
+			case 10:
 				this.enterOuterAlt(_localctx, 10);
 				{
-				this.state = 2538;
+				this.state = 2530;
 				this.match(CqlParser.K_REPLICATION);
 				}
 				break;
-			case CqlParser.K_TTL:
+
+			case 11:
 				this.enterOuterAlt(_localctx, 11);
 				{
-				this.state = 2539;
+				this.state = 2531;
 				this.match(CqlParser.K_TTL);
 				}
 				break;
-			case CqlParser.K_PARTITION:
+
+			case 12:
 				this.enterOuterAlt(_localctx, 12);
 				{
-				this.state = 2540;
+				this.state = 2532;
 				this.match(CqlParser.K_PARTITION);
 				}
 				break;
-			case CqlParser.K_KEY:
+
+			case 13:
 				this.enterOuterAlt(_localctx, 13);
 				{
-				this.state = 2541;
+				this.state = 2533;
 				this.match(CqlParser.K_KEY);
 				}
 				break;
-			case CqlParser.K_LEVEL:
+
+			case 14:
 				this.enterOuterAlt(_localctx, 14);
 				{
-				this.state = 2542;
+				this.state = 2534;
 				this.match(CqlParser.K_LEVEL);
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
+
+			case 15:
+				this.enterOuterAlt(_localctx, 15);
+				{
+				this.state = 2535;
+				this.match(CqlParser.K_USERS);
+				}
+				break;
+
+			case 16:
+				this.enterOuterAlt(_localctx, 16);
+				{
+				this.state = 2536;
+				this.match(CqlParser.K_USER);
+				}
+				break;
+
+			case 17:
+				this.enterOuterAlt(_localctx, 17);
+				{
+				this.state = 2537;
+				this.match(CqlParser.K_ROLE);
+				}
+				break;
+
+			case 18:
+				this.enterOuterAlt(_localctx, 18);
+				{
+				this.state = 2538;
+				this.match(CqlParser.K_ROLES);
+				}
+				break;
 			}
 		}
 		catch (re) {
@@ -11735,7 +11823,57 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public function(): FunctionContext {
 		let _localctx: FunctionContext = new FunctionContext(this._ctx, this.state);
-		this.enterRule(_localctx, 388, CqlParser.RULE_function);
+		this.enterRule(_localctx, 386, CqlParser.RULE_function);
+		try {
+			this.enterOuterAlt(_localctx, 1);
+			{
+			this.state = 2541;
+			this.match(CqlParser.OBJECT_NAME);
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				_localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return _localctx;
+	}
+	@RuleVersion(0)
+	public language(): LanguageContext {
+		let _localctx: LanguageContext = new LanguageContext(this._ctx, this.state);
+		this.enterRule(_localctx, 388, CqlParser.RULE_language);
+		try {
+			this.enterOuterAlt(_localctx, 1);
+			{
+			this.state = 2543;
+			this.match(CqlParser.OBJECT_NAME);
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				_localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return _localctx;
+	}
+	@RuleVersion(0)
+	public user(): UserContext {
+		let _localctx: UserContext = new UserContext(this._ctx, this.state);
+		this.enterRule(_localctx, 390, CqlParser.RULE_user);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -11758,14 +11896,14 @@ export class CqlParser extends Parser {
 		return _localctx;
 	}
 	@RuleVersion(0)
-	public language(): LanguageContext {
-		let _localctx: LanguageContext = new LanguageContext(this._ctx, this.state);
-		this.enterRule(_localctx, 390, CqlParser.RULE_language);
+	public password(): PasswordContext {
+		let _localctx: PasswordContext = new PasswordContext(this._ctx, this.state);
+		this.enterRule(_localctx, 392, CqlParser.RULE_password);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 2547;
-			this.match(CqlParser.OBJECT_NAME);
+			this.constantString();
 			}
 		}
 		catch (re) {
@@ -11783,9 +11921,9 @@ export class CqlParser extends Parser {
 		return _localctx;
 	}
 	@RuleVersion(0)
-	public user(): UserContext {
-		let _localctx: UserContext = new UserContext(this._ctx, this.state);
-		this.enterRule(_localctx, 392, CqlParser.RULE_user);
+	public hashKey(): HashKeyContext {
+		let _localctx: HashKeyContext = new HashKeyContext(this._ctx, this.state);
+		this.enterRule(_localctx, 394, CqlParser.RULE_hashKey);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -11808,65 +11946,15 @@ export class CqlParser extends Parser {
 		return _localctx;
 	}
 	@RuleVersion(0)
-	public password(): PasswordContext {
-		let _localctx: PasswordContext = new PasswordContext(this._ctx, this.state);
-		this.enterRule(_localctx, 394, CqlParser.RULE_password);
+	public param(): ParamContext {
+		let _localctx: ParamContext = new ParamContext(this._ctx, this.state);
+		this.enterRule(_localctx, 396, CqlParser.RULE_param);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 2551;
-			this.constantString();
-			}
-		}
-		catch (re) {
-			if (re instanceof RecognitionException) {
-				_localctx.exception = re;
-				this._errHandler.reportError(this, re);
-				this._errHandler.recover(this, re);
-			} else {
-				throw re;
-			}
-		}
-		finally {
-			this.exitRule();
-		}
-		return _localctx;
-	}
-	@RuleVersion(0)
-	public hashKey(): HashKeyContext {
-		let _localctx: HashKeyContext = new HashKeyContext(this._ctx, this.state);
-		this.enterRule(_localctx, 396, CqlParser.RULE_hashKey);
-		try {
-			this.enterOuterAlt(_localctx, 1);
-			{
-			this.state = 2553;
-			this.match(CqlParser.OBJECT_NAME);
-			}
-		}
-		catch (re) {
-			if (re instanceof RecognitionException) {
-				_localctx.exception = re;
-				this._errHandler.reportError(this, re);
-				this._errHandler.recover(this, re);
-			} else {
-				throw re;
-			}
-		}
-		finally {
-			this.exitRule();
-		}
-		return _localctx;
-	}
-	@RuleVersion(0)
-	public param(): ParamContext {
-		let _localctx: ParamContext = new ParamContext(this._ctx, this.state);
-		this.enterRule(_localctx, 398, CqlParser.RULE_param);
-		try {
-			this.enterOuterAlt(_localctx, 1);
-			{
-			this.state = 2555;
 			this.paramName();
-			this.state = 2556;
+			this.state = 2552;
 			this.dataType();
 			}
 		}
@@ -11887,11 +11975,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public paramName(): ParamNameContext {
 		let _localctx: ParamNameContext = new ParamNameContext(this._ctx, this.state);
-		this.enterRule(_localctx, 400, CqlParser.RULE_paramName);
+		this.enterRule(_localctx, 398, CqlParser.RULE_paramName);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2558;
+			this.state = 2554;
 			this.match(CqlParser.OBJECT_NAME);
 			}
 		}
@@ -11912,11 +12000,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwAdd(): KwAddContext {
 		let _localctx: KwAddContext = new KwAddContext(this._ctx, this.state);
-		this.enterRule(_localctx, 402, CqlParser.RULE_kwAdd);
+		this.enterRule(_localctx, 400, CqlParser.RULE_kwAdd);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2560;
+			this.state = 2556;
 			this.match(CqlParser.K_ADD);
 			}
 		}
@@ -11937,11 +12025,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwAggregate(): KwAggregateContext {
 		let _localctx: KwAggregateContext = new KwAggregateContext(this._ctx, this.state);
-		this.enterRule(_localctx, 404, CqlParser.RULE_kwAggregate);
+		this.enterRule(_localctx, 402, CqlParser.RULE_kwAggregate);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2562;
+			this.state = 2558;
 			this.match(CqlParser.K_AGGREGATE);
 			}
 		}
@@ -11962,11 +12050,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwAll(): KwAllContext {
 		let _localctx: KwAllContext = new KwAllContext(this._ctx, this.state);
-		this.enterRule(_localctx, 406, CqlParser.RULE_kwAll);
+		this.enterRule(_localctx, 404, CqlParser.RULE_kwAll);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2564;
+			this.state = 2560;
 			this.match(CqlParser.K_ALL);
 			}
 		}
@@ -11987,11 +12075,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwAllFunctions(): KwAllFunctionsContext {
 		let _localctx: KwAllFunctionsContext = new KwAllFunctionsContext(this._ctx, this.state);
-		this.enterRule(_localctx, 408, CqlParser.RULE_kwAllFunctions);
+		this.enterRule(_localctx, 406, CqlParser.RULE_kwAllFunctions);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2566;
+			this.state = 2562;
 			this.match(CqlParser.K_ALL_FUNCTIONS);
 			}
 		}
@@ -12012,11 +12100,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwAllKeyspaces(): KwAllKeyspacesContext {
 		let _localctx: KwAllKeyspacesContext = new KwAllKeyspacesContext(this._ctx, this.state);
-		this.enterRule(_localctx, 410, CqlParser.RULE_kwAllKeyspaces);
+		this.enterRule(_localctx, 408, CqlParser.RULE_kwAllKeyspaces);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2568;
+			this.state = 2564;
 			this.match(CqlParser.K_ALL_KEYSPACES);
 			}
 		}
@@ -12037,11 +12125,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwAllRoles(): KwAllRolesContext {
 		let _localctx: KwAllRolesContext = new KwAllRolesContext(this._ctx, this.state);
-		this.enterRule(_localctx, 412, CqlParser.RULE_kwAllRoles);
+		this.enterRule(_localctx, 410, CqlParser.RULE_kwAllRoles);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2570;
+			this.state = 2566;
 			this.match(CqlParser.K_ALL_ROLES);
 			}
 		}
@@ -12062,13 +12150,13 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwAllPermissions(): KwAllPermissionsContext {
 		let _localctx: KwAllPermissionsContext = new KwAllPermissionsContext(this._ctx, this.state);
-		this.enterRule(_localctx, 414, CqlParser.RULE_kwAllPermissions);
+		this.enterRule(_localctx, 412, CqlParser.RULE_kwAllPermissions);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2572;
+			this.state = 2568;
 			this.match(CqlParser.K_ALL);
-			this.state = 2573;
+			this.state = 2569;
 			this.match(CqlParser.K_PERMISSIONS);
 			}
 		}
@@ -12089,11 +12177,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwAllow(): KwAllowContext {
 		let _localctx: KwAllowContext = new KwAllowContext(this._ctx, this.state);
-		this.enterRule(_localctx, 416, CqlParser.RULE_kwAllow);
+		this.enterRule(_localctx, 414, CqlParser.RULE_kwAllow);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2575;
+			this.state = 2571;
 			this.match(CqlParser.K_ALLOW);
 			}
 		}
@@ -12114,13 +12202,13 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwAllowFiltering(): KwAllowFilteringContext {
 		let _localctx: KwAllowFilteringContext = new KwAllowFilteringContext(this._ctx, this.state);
-		this.enterRule(_localctx, 418, CqlParser.RULE_kwAllowFiltering);
+		this.enterRule(_localctx, 416, CqlParser.RULE_kwAllowFiltering);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2577;
+			this.state = 2573;
 			this.match(CqlParser.K_ALLOW);
-			this.state = 2578;
+			this.state = 2574;
 			this.match(CqlParser.K_FILTERING);
 			}
 		}
@@ -12141,11 +12229,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwAlter(): KwAlterContext {
 		let _localctx: KwAlterContext = new KwAlterContext(this._ctx, this.state);
-		this.enterRule(_localctx, 420, CqlParser.RULE_kwAlter);
+		this.enterRule(_localctx, 418, CqlParser.RULE_kwAlter);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2580;
+			this.state = 2576;
 			this.match(CqlParser.K_ALTER);
 			}
 		}
@@ -12166,11 +12254,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwAnd(): KwAndContext {
 		let _localctx: KwAndContext = new KwAndContext(this._ctx, this.state);
-		this.enterRule(_localctx, 422, CqlParser.RULE_kwAnd);
+		this.enterRule(_localctx, 420, CqlParser.RULE_kwAnd);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2582;
+			this.state = 2578;
 			this.match(CqlParser.K_AND);
 			}
 		}
@@ -12191,11 +12279,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwApply(): KwApplyContext {
 		let _localctx: KwApplyContext = new KwApplyContext(this._ctx, this.state);
-		this.enterRule(_localctx, 424, CqlParser.RULE_kwApply);
+		this.enterRule(_localctx, 422, CqlParser.RULE_kwApply);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2584;
+			this.state = 2580;
 			this.match(CqlParser.K_APPLY);
 			}
 		}
@@ -12216,11 +12304,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwAs(): KwAsContext {
 		let _localctx: KwAsContext = new KwAsContext(this._ctx, this.state);
-		this.enterRule(_localctx, 426, CqlParser.RULE_kwAs);
+		this.enterRule(_localctx, 424, CqlParser.RULE_kwAs);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2586;
+			this.state = 2582;
 			this.match(CqlParser.K_AS);
 			}
 		}
@@ -12241,11 +12329,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwAsc(): KwAscContext {
 		let _localctx: KwAscContext = new KwAscContext(this._ctx, this.state);
-		this.enterRule(_localctx, 428, CqlParser.RULE_kwAsc);
+		this.enterRule(_localctx, 426, CqlParser.RULE_kwAsc);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2588;
+			this.state = 2584;
 			this.match(CqlParser.K_ASC);
 			}
 		}
@@ -12266,11 +12354,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwAuthorize(): KwAuthorizeContext {
 		let _localctx: KwAuthorizeContext = new KwAuthorizeContext(this._ctx, this.state);
-		this.enterRule(_localctx, 430, CqlParser.RULE_kwAuthorize);
+		this.enterRule(_localctx, 428, CqlParser.RULE_kwAuthorize);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2590;
+			this.state = 2586;
 			this.match(CqlParser.K_AUTHORIZE);
 			}
 		}
@@ -12291,11 +12379,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwBatch(): KwBatchContext {
 		let _localctx: KwBatchContext = new KwBatchContext(this._ctx, this.state);
-		this.enterRule(_localctx, 432, CqlParser.RULE_kwBatch);
+		this.enterRule(_localctx, 430, CqlParser.RULE_kwBatch);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2592;
+			this.state = 2588;
 			this.match(CqlParser.K_BATCH);
 			}
 		}
@@ -12316,11 +12404,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwBegin(): KwBeginContext {
 		let _localctx: KwBeginContext = new KwBeginContext(this._ctx, this.state);
-		this.enterRule(_localctx, 434, CqlParser.RULE_kwBegin);
+		this.enterRule(_localctx, 432, CqlParser.RULE_kwBegin);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2594;
+			this.state = 2590;
 			this.match(CqlParser.K_BEGIN);
 			}
 		}
@@ -12341,11 +12429,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwBy(): KwByContext {
 		let _localctx: KwByContext = new KwByContext(this._ctx, this.state);
-		this.enterRule(_localctx, 436, CqlParser.RULE_kwBy);
+		this.enterRule(_localctx, 434, CqlParser.RULE_kwBy);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2596;
+			this.state = 2592;
 			this.match(CqlParser.K_BY);
 			}
 		}
@@ -12366,11 +12454,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwCalled(): KwCalledContext {
 		let _localctx: KwCalledContext = new KwCalledContext(this._ctx, this.state);
-		this.enterRule(_localctx, 438, CqlParser.RULE_kwCalled);
+		this.enterRule(_localctx, 436, CqlParser.RULE_kwCalled);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2598;
+			this.state = 2594;
 			this.match(CqlParser.K_CALLED);
 			}
 		}
@@ -12391,11 +12479,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwClustering(): KwClusteringContext {
 		let _localctx: KwClusteringContext = new KwClusteringContext(this._ctx, this.state);
-		this.enterRule(_localctx, 440, CqlParser.RULE_kwClustering);
+		this.enterRule(_localctx, 438, CqlParser.RULE_kwClustering);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2600;
+			this.state = 2596;
 			this.match(CqlParser.K_CLUSTERING);
 			}
 		}
@@ -12416,11 +12504,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwCompact(): KwCompactContext {
 		let _localctx: KwCompactContext = new KwCompactContext(this._ctx, this.state);
-		this.enterRule(_localctx, 442, CqlParser.RULE_kwCompact);
+		this.enterRule(_localctx, 440, CqlParser.RULE_kwCompact);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2602;
+			this.state = 2598;
 			this.match(CqlParser.K_COMPACT);
 			}
 		}
@@ -12441,11 +12529,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwContains(): KwContainsContext {
 		let _localctx: KwContainsContext = new KwContainsContext(this._ctx, this.state);
-		this.enterRule(_localctx, 444, CqlParser.RULE_kwContains);
+		this.enterRule(_localctx, 442, CqlParser.RULE_kwContains);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2604;
+			this.state = 2600;
 			this.match(CqlParser.K_CONTAINS);
 			}
 		}
@@ -12466,13 +12554,13 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwContainsKey(): KwContainsKeyContext {
 		let _localctx: KwContainsKeyContext = new KwContainsKeyContext(this._ctx, this.state);
-		this.enterRule(_localctx, 446, CqlParser.RULE_kwContainsKey);
+		this.enterRule(_localctx, 444, CqlParser.RULE_kwContainsKey);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2606;
+			this.state = 2602;
 			this.match(CqlParser.K_CONTAINS);
-			this.state = 2607;
+			this.state = 2603;
 			this.match(CqlParser.K_KEY);
 			}
 		}
@@ -12493,11 +12581,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwCreate(): KwCreateContext {
 		let _localctx: KwCreateContext = new KwCreateContext(this._ctx, this.state);
-		this.enterRule(_localctx, 448, CqlParser.RULE_kwCreate);
+		this.enterRule(_localctx, 446, CqlParser.RULE_kwCreate);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2609;
+			this.state = 2605;
 			this.match(CqlParser.K_CREATE);
 			}
 		}
@@ -12518,11 +12606,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwDelete(): KwDeleteContext {
 		let _localctx: KwDeleteContext = new KwDeleteContext(this._ctx, this.state);
-		this.enterRule(_localctx, 450, CqlParser.RULE_kwDelete);
+		this.enterRule(_localctx, 448, CqlParser.RULE_kwDelete);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2611;
+			this.state = 2607;
 			this.match(CqlParser.K_DELETE);
 			}
 		}
@@ -12543,11 +12631,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwDesc(): KwDescContext {
 		let _localctx: KwDescContext = new KwDescContext(this._ctx, this.state);
-		this.enterRule(_localctx, 452, CqlParser.RULE_kwDesc);
+		this.enterRule(_localctx, 450, CqlParser.RULE_kwDesc);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2613;
+			this.state = 2609;
 			this.match(CqlParser.K_DESC);
 			}
 		}
@@ -12568,11 +12656,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwDescibe(): KwDescibeContext {
 		let _localctx: KwDescibeContext = new KwDescibeContext(this._ctx, this.state);
-		this.enterRule(_localctx, 454, CqlParser.RULE_kwDescibe);
+		this.enterRule(_localctx, 452, CqlParser.RULE_kwDescibe);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2615;
+			this.state = 2611;
 			this.match(CqlParser.K_DESCRIBE);
 			}
 		}
@@ -12593,11 +12681,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwDistinct(): KwDistinctContext {
 		let _localctx: KwDistinctContext = new KwDistinctContext(this._ctx, this.state);
-		this.enterRule(_localctx, 456, CqlParser.RULE_kwDistinct);
+		this.enterRule(_localctx, 454, CqlParser.RULE_kwDistinct);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2617;
+			this.state = 2613;
 			this.match(CqlParser.K_DISTINCT);
 			}
 		}
@@ -12618,11 +12706,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwDrop(): KwDropContext {
 		let _localctx: KwDropContext = new KwDropContext(this._ctx, this.state);
-		this.enterRule(_localctx, 458, CqlParser.RULE_kwDrop);
+		this.enterRule(_localctx, 456, CqlParser.RULE_kwDrop);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2619;
+			this.state = 2615;
 			this.match(CqlParser.K_DROP);
 			}
 		}
@@ -12643,11 +12731,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwDurableWrites(): KwDurableWritesContext {
 		let _localctx: KwDurableWritesContext = new KwDurableWritesContext(this._ctx, this.state);
-		this.enterRule(_localctx, 460, CqlParser.RULE_kwDurableWrites);
+		this.enterRule(_localctx, 458, CqlParser.RULE_kwDurableWrites);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2621;
+			this.state = 2617;
 			this.match(CqlParser.K_DURABLE_WRITES);
 			}
 		}
@@ -12668,11 +12756,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwEntries(): KwEntriesContext {
 		let _localctx: KwEntriesContext = new KwEntriesContext(this._ctx, this.state);
-		this.enterRule(_localctx, 462, CqlParser.RULE_kwEntries);
+		this.enterRule(_localctx, 460, CqlParser.RULE_kwEntries);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2623;
+			this.state = 2619;
 			this.match(CqlParser.K_ENTRIES);
 			}
 		}
@@ -12693,11 +12781,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwExecute(): KwExecuteContext {
 		let _localctx: KwExecuteContext = new KwExecuteContext(this._ctx, this.state);
-		this.enterRule(_localctx, 464, CqlParser.RULE_kwExecute);
+		this.enterRule(_localctx, 462, CqlParser.RULE_kwExecute);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2625;
+			this.state = 2621;
 			this.match(CqlParser.K_EXECUTE);
 			}
 		}
@@ -12718,11 +12806,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwExists(): KwExistsContext {
 		let _localctx: KwExistsContext = new KwExistsContext(this._ctx, this.state);
-		this.enterRule(_localctx, 466, CqlParser.RULE_kwExists);
+		this.enterRule(_localctx, 464, CqlParser.RULE_kwExists);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2627;
+			this.state = 2623;
 			this.match(CqlParser.K_EXISTS);
 			}
 		}
@@ -12743,11 +12831,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwFiltering(): KwFilteringContext {
 		let _localctx: KwFilteringContext = new KwFilteringContext(this._ctx, this.state);
-		this.enterRule(_localctx, 468, CqlParser.RULE_kwFiltering);
+		this.enterRule(_localctx, 466, CqlParser.RULE_kwFiltering);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2629;
+			this.state = 2625;
 			this.match(CqlParser.K_FILTERING);
 			}
 		}
@@ -12768,11 +12856,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwFinalfunc(): KwFinalfuncContext {
 		let _localctx: KwFinalfuncContext = new KwFinalfuncContext(this._ctx, this.state);
-		this.enterRule(_localctx, 470, CqlParser.RULE_kwFinalfunc);
+		this.enterRule(_localctx, 468, CqlParser.RULE_kwFinalfunc);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2631;
+			this.state = 2627;
 			this.match(CqlParser.K_FINALFUNC);
 			}
 		}
@@ -12793,11 +12881,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwFrom(): KwFromContext {
 		let _localctx: KwFromContext = new KwFromContext(this._ctx, this.state);
-		this.enterRule(_localctx, 472, CqlParser.RULE_kwFrom);
+		this.enterRule(_localctx, 470, CqlParser.RULE_kwFrom);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2633;
+			this.state = 2629;
 			this.match(CqlParser.K_FROM);
 			}
 		}
@@ -12818,11 +12906,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwFull(): KwFullContext {
 		let _localctx: KwFullContext = new KwFullContext(this._ctx, this.state);
-		this.enterRule(_localctx, 474, CqlParser.RULE_kwFull);
+		this.enterRule(_localctx, 472, CqlParser.RULE_kwFull);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2635;
+			this.state = 2631;
 			this.match(CqlParser.K_FULL);
 			}
 		}
@@ -12843,11 +12931,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwFunction(): KwFunctionContext {
 		let _localctx: KwFunctionContext = new KwFunctionContext(this._ctx, this.state);
-		this.enterRule(_localctx, 476, CqlParser.RULE_kwFunction);
+		this.enterRule(_localctx, 474, CqlParser.RULE_kwFunction);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2637;
+			this.state = 2633;
 			this.match(CqlParser.K_FUNCTION);
 			}
 		}
@@ -12868,11 +12956,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwGrant(): KwGrantContext {
 		let _localctx: KwGrantContext = new KwGrantContext(this._ctx, this.state);
-		this.enterRule(_localctx, 478, CqlParser.RULE_kwGrant);
+		this.enterRule(_localctx, 476, CqlParser.RULE_kwGrant);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2639;
+			this.state = 2635;
 			this.match(CqlParser.K_GRANT);
 			}
 		}
@@ -12893,11 +12981,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwIf(): KwIfContext {
 		let _localctx: KwIfContext = new KwIfContext(this._ctx, this.state);
-		this.enterRule(_localctx, 480, CqlParser.RULE_kwIf);
+		this.enterRule(_localctx, 478, CqlParser.RULE_kwIf);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2641;
+			this.state = 2637;
 			this.match(CqlParser.K_IF);
 			}
 		}
@@ -12918,11 +13006,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwIn(): KwInContext {
 		let _localctx: KwInContext = new KwInContext(this._ctx, this.state);
-		this.enterRule(_localctx, 482, CqlParser.RULE_kwIn);
+		this.enterRule(_localctx, 480, CqlParser.RULE_kwIn);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2643;
+			this.state = 2639;
 			this.match(CqlParser.K_IN);
 			}
 		}
@@ -12943,11 +13031,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwIndex(): KwIndexContext {
 		let _localctx: KwIndexContext = new KwIndexContext(this._ctx, this.state);
-		this.enterRule(_localctx, 484, CqlParser.RULE_kwIndex);
+		this.enterRule(_localctx, 482, CqlParser.RULE_kwIndex);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2645;
+			this.state = 2641;
 			this.match(CqlParser.K_INDEX);
 			}
 		}
@@ -12968,11 +13056,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwInitcond(): KwInitcondContext {
 		let _localctx: KwInitcondContext = new KwInitcondContext(this._ctx, this.state);
-		this.enterRule(_localctx, 486, CqlParser.RULE_kwInitcond);
+		this.enterRule(_localctx, 484, CqlParser.RULE_kwInitcond);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2647;
+			this.state = 2643;
 			this.match(CqlParser.K_INITCOND);
 			}
 		}
@@ -12993,11 +13081,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwInput(): KwInputContext {
 		let _localctx: KwInputContext = new KwInputContext(this._ctx, this.state);
-		this.enterRule(_localctx, 488, CqlParser.RULE_kwInput);
+		this.enterRule(_localctx, 486, CqlParser.RULE_kwInput);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2649;
+			this.state = 2645;
 			this.match(CqlParser.K_INPUT);
 			}
 		}
@@ -13018,13 +13106,13 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwInsertInto(): KwInsertIntoContext {
 		let _localctx: KwInsertIntoContext = new KwInsertIntoContext(this._ctx, this.state);
-		this.enterRule(_localctx, 490, CqlParser.RULE_kwInsertInto);
+		this.enterRule(_localctx, 488, CqlParser.RULE_kwInsertInto);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2651;
+			this.state = 2647;
 			this.match(CqlParser.K_INSERT);
-			this.state = 2652;
+			this.state = 2648;
 			this.match(CqlParser.K_INTO);
 			}
 		}
@@ -13045,11 +13133,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwIs(): KwIsContext {
 		let _localctx: KwIsContext = new KwIsContext(this._ctx, this.state);
-		this.enterRule(_localctx, 492, CqlParser.RULE_kwIs);
+		this.enterRule(_localctx, 490, CqlParser.RULE_kwIs);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2654;
+			this.state = 2650;
 			this.match(CqlParser.K_IS);
 			}
 		}
@@ -13070,11 +13158,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwKey(): KwKeyContext {
 		let _localctx: KwKeyContext = new KwKeyContext(this._ctx, this.state);
-		this.enterRule(_localctx, 494, CqlParser.RULE_kwKey);
+		this.enterRule(_localctx, 492, CqlParser.RULE_kwKey);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2656;
+			this.state = 2652;
 			this.match(CqlParser.K_KEY);
 			}
 		}
@@ -13095,11 +13183,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwKeys(): KwKeysContext {
 		let _localctx: KwKeysContext = new KwKeysContext(this._ctx, this.state);
-		this.enterRule(_localctx, 496, CqlParser.RULE_kwKeys);
+		this.enterRule(_localctx, 494, CqlParser.RULE_kwKeys);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2658;
+			this.state = 2654;
 			this.match(CqlParser.K_KEYS);
 			}
 		}
@@ -13120,11 +13208,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwKeyspace(): KwKeyspaceContext {
 		let _localctx: KwKeyspaceContext = new KwKeyspaceContext(this._ctx, this.state);
-		this.enterRule(_localctx, 498, CqlParser.RULE_kwKeyspace);
+		this.enterRule(_localctx, 496, CqlParser.RULE_kwKeyspace);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2660;
+			this.state = 2656;
 			this.match(CqlParser.K_KEYSPACE);
 			}
 		}
@@ -13145,11 +13233,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwLanguage(): KwLanguageContext {
 		let _localctx: KwLanguageContext = new KwLanguageContext(this._ctx, this.state);
-		this.enterRule(_localctx, 500, CqlParser.RULE_kwLanguage);
+		this.enterRule(_localctx, 498, CqlParser.RULE_kwLanguage);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2662;
+			this.state = 2658;
 			this.match(CqlParser.K_LANGUAGE);
 			}
 		}
@@ -13170,11 +13258,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwLimit(): KwLimitContext {
 		let _localctx: KwLimitContext = new KwLimitContext(this._ctx, this.state);
-		this.enterRule(_localctx, 502, CqlParser.RULE_kwLimit);
+		this.enterRule(_localctx, 500, CqlParser.RULE_kwLimit);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2664;
+			this.state = 2660;
 			this.match(CqlParser.K_LIMIT);
 			}
 		}
@@ -13195,11 +13283,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwList(): KwListContext {
 		let _localctx: KwListContext = new KwListContext(this._ctx, this.state);
-		this.enterRule(_localctx, 504, CqlParser.RULE_kwList);
+		this.enterRule(_localctx, 502, CqlParser.RULE_kwList);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2666;
+			this.state = 2662;
 			this.match(CqlParser.K_LIST);
 			}
 		}
@@ -13220,13 +13308,13 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwListRoles(): KwListRolesContext {
 		let _localctx: KwListRolesContext = new KwListRolesContext(this._ctx, this.state);
-		this.enterRule(_localctx, 506, CqlParser.RULE_kwListRoles);
+		this.enterRule(_localctx, 504, CqlParser.RULE_kwListRoles);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2668;
+			this.state = 2664;
 			this.match(CqlParser.K_LIST);
-			this.state = 2669;
+			this.state = 2665;
 			this.match(CqlParser.K_ROLES);
 			}
 		}
@@ -13247,13 +13335,13 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwListUsers(): KwListUsersContext {
 		let _localctx: KwListUsersContext = new KwListUsersContext(this._ctx, this.state);
-		this.enterRule(_localctx, 508, CqlParser.RULE_kwListUsers);
+		this.enterRule(_localctx, 506, CqlParser.RULE_kwListUsers);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2671;
+			this.state = 2667;
 			this.match(CqlParser.K_LIST);
-			this.state = 2672;
+			this.state = 2668;
 			this.match(CqlParser.K_USERS);
 			}
 		}
@@ -13274,11 +13362,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwLogged(): KwLoggedContext {
 		let _localctx: KwLoggedContext = new KwLoggedContext(this._ctx, this.state);
-		this.enterRule(_localctx, 510, CqlParser.RULE_kwLogged);
+		this.enterRule(_localctx, 508, CqlParser.RULE_kwLogged);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2674;
+			this.state = 2670;
 			this.match(CqlParser.K_LOGGED);
 			}
 		}
@@ -13299,11 +13387,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwLogin(): KwLoginContext {
 		let _localctx: KwLoginContext = new KwLoginContext(this._ctx, this.state);
-		this.enterRule(_localctx, 512, CqlParser.RULE_kwLogin);
+		this.enterRule(_localctx, 510, CqlParser.RULE_kwLogin);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2676;
+			this.state = 2672;
 			this.match(CqlParser.K_LOGIN);
 			}
 		}
@@ -13324,13 +13412,13 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwMaterializedView(): KwMaterializedViewContext {
 		let _localctx: KwMaterializedViewContext = new KwMaterializedViewContext(this._ctx, this.state);
-		this.enterRule(_localctx, 514, CqlParser.RULE_kwMaterializedView);
+		this.enterRule(_localctx, 512, CqlParser.RULE_kwMaterializedView);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2678;
+			this.state = 2674;
 			this.match(CqlParser.K_MATERIALIZED);
-			this.state = 2679;
+			this.state = 2675;
 			this.match(CqlParser.K_VIEW);
 			}
 		}
@@ -13351,11 +13439,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwModify(): KwModifyContext {
 		let _localctx: KwModifyContext = new KwModifyContext(this._ctx, this.state);
-		this.enterRule(_localctx, 516, CqlParser.RULE_kwModify);
+		this.enterRule(_localctx, 514, CqlParser.RULE_kwModify);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2681;
+			this.state = 2677;
 			this.match(CqlParser.K_MODIFY);
 			}
 		}
@@ -13376,11 +13464,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwNosuperuser(): KwNosuperuserContext {
 		let _localctx: KwNosuperuserContext = new KwNosuperuserContext(this._ctx, this.state);
-		this.enterRule(_localctx, 518, CqlParser.RULE_kwNosuperuser);
+		this.enterRule(_localctx, 516, CqlParser.RULE_kwNosuperuser);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2683;
+			this.state = 2679;
 			this.match(CqlParser.K_NOSUPERUSER);
 			}
 		}
@@ -13401,11 +13489,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwNorecursive(): KwNorecursiveContext {
 		let _localctx: KwNorecursiveContext = new KwNorecursiveContext(this._ctx, this.state);
-		this.enterRule(_localctx, 520, CqlParser.RULE_kwNorecursive);
+		this.enterRule(_localctx, 518, CqlParser.RULE_kwNorecursive);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2685;
+			this.state = 2681;
 			this.match(CqlParser.K_NORECURSIVE);
 			}
 		}
@@ -13426,11 +13514,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwNot(): KwNotContext {
 		let _localctx: KwNotContext = new KwNotContext(this._ctx, this.state);
-		this.enterRule(_localctx, 522, CqlParser.RULE_kwNot);
+		this.enterRule(_localctx, 520, CqlParser.RULE_kwNot);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2687;
+			this.state = 2683;
 			this.match(CqlParser.K_NOT);
 			}
 		}
@@ -13451,11 +13539,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwNull(): KwNullContext {
 		let _localctx: KwNullContext = new KwNullContext(this._ctx, this.state);
-		this.enterRule(_localctx, 524, CqlParser.RULE_kwNull);
+		this.enterRule(_localctx, 522, CqlParser.RULE_kwNull);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2689;
+			this.state = 2685;
 			this.match(CqlParser.K_NULL);
 			}
 		}
@@ -13476,11 +13564,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwOf(): KwOfContext {
 		let _localctx: KwOfContext = new KwOfContext(this._ctx, this.state);
-		this.enterRule(_localctx, 526, CqlParser.RULE_kwOf);
+		this.enterRule(_localctx, 524, CqlParser.RULE_kwOf);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2691;
+			this.state = 2687;
 			this.match(CqlParser.K_OF);
 			}
 		}
@@ -13501,11 +13589,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwOn(): KwOnContext {
 		let _localctx: KwOnContext = new KwOnContext(this._ctx, this.state);
-		this.enterRule(_localctx, 528, CqlParser.RULE_kwOn);
+		this.enterRule(_localctx, 526, CqlParser.RULE_kwOn);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2693;
+			this.state = 2689;
 			this.match(CqlParser.K_ON);
 			}
 		}
@@ -13526,11 +13614,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwOptions(): KwOptionsContext {
 		let _localctx: KwOptionsContext = new KwOptionsContext(this._ctx, this.state);
-		this.enterRule(_localctx, 530, CqlParser.RULE_kwOptions);
+		this.enterRule(_localctx, 528, CqlParser.RULE_kwOptions);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2695;
+			this.state = 2691;
 			this.match(CqlParser.K_OPTIONS);
 			}
 		}
@@ -13551,11 +13639,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwOr(): KwOrContext {
 		let _localctx: KwOrContext = new KwOrContext(this._ctx, this.state);
-		this.enterRule(_localctx, 532, CqlParser.RULE_kwOr);
+		this.enterRule(_localctx, 530, CqlParser.RULE_kwOr);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2697;
+			this.state = 2693;
 			this.match(CqlParser.K_OR);
 			}
 		}
@@ -13576,11 +13664,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwOrder(): KwOrderContext {
 		let _localctx: KwOrderContext = new KwOrderContext(this._ctx, this.state);
-		this.enterRule(_localctx, 534, CqlParser.RULE_kwOrder);
+		this.enterRule(_localctx, 532, CqlParser.RULE_kwOrder);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2699;
+			this.state = 2695;
 			this.match(CqlParser.K_ORDER);
 			}
 		}
@@ -13601,13 +13689,13 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwOrderBy(): KwOrderByContext {
 		let _localctx: KwOrderByContext = new KwOrderByContext(this._ctx, this.state);
-		this.enterRule(_localctx, 536, CqlParser.RULE_kwOrderBy);
+		this.enterRule(_localctx, 534, CqlParser.RULE_kwOrderBy);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2701;
+			this.state = 2697;
 			this.match(CqlParser.K_ORDER);
-			this.state = 2702;
+			this.state = 2698;
 			this.match(CqlParser.K_BY);
 			}
 		}
@@ -13628,11 +13716,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwPartition(): KwPartitionContext {
 		let _localctx: KwPartitionContext = new KwPartitionContext(this._ctx, this.state);
-		this.enterRule(_localctx, 538, CqlParser.RULE_kwPartition);
+		this.enterRule(_localctx, 536, CqlParser.RULE_kwPartition);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2704;
+			this.state = 2700;
 			this.match(CqlParser.K_PARTITION);
 			}
 		}
@@ -13653,11 +13741,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwPassword(): KwPasswordContext {
 		let _localctx: KwPasswordContext = new KwPasswordContext(this._ctx, this.state);
-		this.enterRule(_localctx, 540, CqlParser.RULE_kwPassword);
+		this.enterRule(_localctx, 538, CqlParser.RULE_kwPassword);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2706;
+			this.state = 2702;
 			this.match(CqlParser.K_PASSWORD);
 			}
 		}
@@ -13678,11 +13766,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwPermissions(): KwPermissionsContext {
 		let _localctx: KwPermissionsContext = new KwPermissionsContext(this._ctx, this.state);
-		this.enterRule(_localctx, 542, CqlParser.RULE_kwPermissions);
+		this.enterRule(_localctx, 540, CqlParser.RULE_kwPermissions);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2708;
+			this.state = 2704;
 			this.match(CqlParser.K_PERMISSIONS);
 			}
 		}
@@ -13703,11 +13791,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwPrimary(): KwPrimaryContext {
 		let _localctx: KwPrimaryContext = new KwPrimaryContext(this._ctx, this.state);
-		this.enterRule(_localctx, 544, CqlParser.RULE_kwPrimary);
+		this.enterRule(_localctx, 542, CqlParser.RULE_kwPrimary);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2710;
+			this.state = 2706;
 			this.match(CqlParser.K_PRIMARY);
 			}
 		}
@@ -13728,11 +13816,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwRename(): KwRenameContext {
 		let _localctx: KwRenameContext = new KwRenameContext(this._ctx, this.state);
-		this.enterRule(_localctx, 546, CqlParser.RULE_kwRename);
+		this.enterRule(_localctx, 544, CqlParser.RULE_kwRename);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2712;
+			this.state = 2708;
 			this.match(CqlParser.K_RENAME);
 			}
 		}
@@ -13753,11 +13841,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwReplace(): KwReplaceContext {
 		let _localctx: KwReplaceContext = new KwReplaceContext(this._ctx, this.state);
-		this.enterRule(_localctx, 548, CqlParser.RULE_kwReplace);
+		this.enterRule(_localctx, 546, CqlParser.RULE_kwReplace);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2714;
+			this.state = 2710;
 			this.match(CqlParser.K_REPLACE);
 			}
 		}
@@ -13778,11 +13866,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwReplication(): KwReplicationContext {
 		let _localctx: KwReplicationContext = new KwReplicationContext(this._ctx, this.state);
-		this.enterRule(_localctx, 550, CqlParser.RULE_kwReplication);
+		this.enterRule(_localctx, 548, CqlParser.RULE_kwReplication);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2716;
+			this.state = 2712;
 			this.match(CqlParser.K_REPLICATION);
 			}
 		}
@@ -13803,11 +13891,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwReturns(): KwReturnsContext {
 		let _localctx: KwReturnsContext = new KwReturnsContext(this._ctx, this.state);
-		this.enterRule(_localctx, 552, CqlParser.RULE_kwReturns);
+		this.enterRule(_localctx, 550, CqlParser.RULE_kwReturns);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2718;
+			this.state = 2714;
 			this.match(CqlParser.K_RETURNS);
 			}
 		}
@@ -13828,11 +13916,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwRole(): KwRoleContext {
 		let _localctx: KwRoleContext = new KwRoleContext(this._ctx, this.state);
-		this.enterRule(_localctx, 554, CqlParser.RULE_kwRole);
+		this.enterRule(_localctx, 552, CqlParser.RULE_kwRole);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2720;
+			this.state = 2716;
 			this.match(CqlParser.K_ROLE);
 			}
 		}
@@ -13853,11 +13941,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwSelect(): KwSelectContext {
 		let _localctx: KwSelectContext = new KwSelectContext(this._ctx, this.state);
-		this.enterRule(_localctx, 556, CqlParser.RULE_kwSelect);
+		this.enterRule(_localctx, 554, CqlParser.RULE_kwSelect);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2722;
+			this.state = 2718;
 			this.match(CqlParser.K_SELECT);
 			}
 		}
@@ -13878,11 +13966,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwSet(): KwSetContext {
 		let _localctx: KwSetContext = new KwSetContext(this._ctx, this.state);
-		this.enterRule(_localctx, 558, CqlParser.RULE_kwSet);
+		this.enterRule(_localctx, 556, CqlParser.RULE_kwSet);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2724;
+			this.state = 2720;
 			this.match(CqlParser.K_SET);
 			}
 		}
@@ -13903,11 +13991,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwSfunc(): KwSfuncContext {
 		let _localctx: KwSfuncContext = new KwSfuncContext(this._ctx, this.state);
-		this.enterRule(_localctx, 560, CqlParser.RULE_kwSfunc);
+		this.enterRule(_localctx, 558, CqlParser.RULE_kwSfunc);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2726;
+			this.state = 2722;
 			this.match(CqlParser.K_SFUNC);
 			}
 		}
@@ -13928,11 +14016,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwStatic(): KwStaticContext {
 		let _localctx: KwStaticContext = new KwStaticContext(this._ctx, this.state);
-		this.enterRule(_localctx, 562, CqlParser.RULE_kwStatic);
+		this.enterRule(_localctx, 560, CqlParser.RULE_kwStatic);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2728;
+			this.state = 2724;
 			this.match(CqlParser.K_STATIC);
 			}
 		}
@@ -13953,11 +14041,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwStorage(): KwStorageContext {
 		let _localctx: KwStorageContext = new KwStorageContext(this._ctx, this.state);
-		this.enterRule(_localctx, 564, CqlParser.RULE_kwStorage);
+		this.enterRule(_localctx, 562, CqlParser.RULE_kwStorage);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2730;
+			this.state = 2726;
 			this.match(CqlParser.K_STORAGE);
 			}
 		}
@@ -13978,11 +14066,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwStype(): KwStypeContext {
 		let _localctx: KwStypeContext = new KwStypeContext(this._ctx, this.state);
-		this.enterRule(_localctx, 566, CqlParser.RULE_kwStype);
+		this.enterRule(_localctx, 564, CqlParser.RULE_kwStype);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2732;
+			this.state = 2728;
 			this.match(CqlParser.K_STYPE);
 			}
 		}
@@ -14003,11 +14091,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwSuperuser(): KwSuperuserContext {
 		let _localctx: KwSuperuserContext = new KwSuperuserContext(this._ctx, this.state);
-		this.enterRule(_localctx, 568, CqlParser.RULE_kwSuperuser);
+		this.enterRule(_localctx, 566, CqlParser.RULE_kwSuperuser);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2734;
+			this.state = 2730;
 			this.match(CqlParser.K_SUPERUSER);
 			}
 		}
@@ -14028,11 +14116,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwTable(): KwTableContext {
 		let _localctx: KwTableContext = new KwTableContext(this._ctx, this.state);
-		this.enterRule(_localctx, 570, CqlParser.RULE_kwTable);
+		this.enterRule(_localctx, 568, CqlParser.RULE_kwTable);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2736;
+			this.state = 2732;
 			this.match(CqlParser.K_TABLE);
 			}
 		}
@@ -14053,11 +14141,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwTimestamp(): KwTimestampContext {
 		let _localctx: KwTimestampContext = new KwTimestampContext(this._ctx, this.state);
-		this.enterRule(_localctx, 572, CqlParser.RULE_kwTimestamp);
+		this.enterRule(_localctx, 570, CqlParser.RULE_kwTimestamp);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2738;
+			this.state = 2734;
 			this.match(CqlParser.K_TIMESTAMP);
 			}
 		}
@@ -14078,11 +14166,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwTo(): KwToContext {
 		let _localctx: KwToContext = new KwToContext(this._ctx, this.state);
-		this.enterRule(_localctx, 574, CqlParser.RULE_kwTo);
+		this.enterRule(_localctx, 572, CqlParser.RULE_kwTo);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2740;
+			this.state = 2736;
 			this.match(CqlParser.K_TO);
 			}
 		}
@@ -14103,11 +14191,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwToken(): KwTokenContext {
 		let _localctx: KwTokenContext = new KwTokenContext(this._ctx, this.state);
-		this.enterRule(_localctx, 576, CqlParser.RULE_kwToken);
+		this.enterRule(_localctx, 574, CqlParser.RULE_kwToken);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2742;
+			this.state = 2738;
 			this.match(CqlParser.K_TOKEN);
 			}
 		}
@@ -14128,11 +14216,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwTrigger(): KwTriggerContext {
 		let _localctx: KwTriggerContext = new KwTriggerContext(this._ctx, this.state);
-		this.enterRule(_localctx, 578, CqlParser.RULE_kwTrigger);
+		this.enterRule(_localctx, 576, CqlParser.RULE_kwTrigger);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2744;
+			this.state = 2740;
 			this.match(CqlParser.K_TRIGGER);
 			}
 		}
@@ -14153,11 +14241,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwTruncate(): KwTruncateContext {
 		let _localctx: KwTruncateContext = new KwTruncateContext(this._ctx, this.state);
-		this.enterRule(_localctx, 580, CqlParser.RULE_kwTruncate);
+		this.enterRule(_localctx, 578, CqlParser.RULE_kwTruncate);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2746;
+			this.state = 2742;
 			this.match(CqlParser.K_TRUNCATE);
 			}
 		}
@@ -14178,11 +14266,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwTtl(): KwTtlContext {
 		let _localctx: KwTtlContext = new KwTtlContext(this._ctx, this.state);
-		this.enterRule(_localctx, 582, CqlParser.RULE_kwTtl);
+		this.enterRule(_localctx, 580, CqlParser.RULE_kwTtl);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2748;
+			this.state = 2744;
 			this.match(CqlParser.K_TTL);
 			}
 		}
@@ -14203,11 +14291,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwType(): KwTypeContext {
 		let _localctx: KwTypeContext = new KwTypeContext(this._ctx, this.state);
-		this.enterRule(_localctx, 584, CqlParser.RULE_kwType);
+		this.enterRule(_localctx, 582, CqlParser.RULE_kwType);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2750;
+			this.state = 2746;
 			this.match(CqlParser.K_TYPE);
 			}
 		}
@@ -14228,11 +14316,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwUnlogged(): KwUnloggedContext {
 		let _localctx: KwUnloggedContext = new KwUnloggedContext(this._ctx, this.state);
-		this.enterRule(_localctx, 586, CqlParser.RULE_kwUnlogged);
+		this.enterRule(_localctx, 584, CqlParser.RULE_kwUnlogged);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2752;
+			this.state = 2748;
 			this.match(CqlParser.K_UNLOGGED);
 			}
 		}
@@ -14253,11 +14341,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwUpdate(): KwUpdateContext {
 		let _localctx: KwUpdateContext = new KwUpdateContext(this._ctx, this.state);
-		this.enterRule(_localctx, 588, CqlParser.RULE_kwUpdate);
+		this.enterRule(_localctx, 586, CqlParser.RULE_kwUpdate);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2754;
+			this.state = 2750;
 			this.match(CqlParser.K_UPDATE);
 			}
 		}
@@ -14278,11 +14366,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwUse(): KwUseContext {
 		let _localctx: KwUseContext = new KwUseContext(this._ctx, this.state);
-		this.enterRule(_localctx, 590, CqlParser.RULE_kwUse);
+		this.enterRule(_localctx, 588, CqlParser.RULE_kwUse);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2756;
+			this.state = 2752;
 			this.match(CqlParser.K_USE);
 			}
 		}
@@ -14303,11 +14391,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwUser(): KwUserContext {
 		let _localctx: KwUserContext = new KwUserContext(this._ctx, this.state);
-		this.enterRule(_localctx, 592, CqlParser.RULE_kwUser);
+		this.enterRule(_localctx, 590, CqlParser.RULE_kwUser);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2758;
+			this.state = 2754;
 			this.match(CqlParser.K_USER);
 			}
 		}
@@ -14328,11 +14416,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwUsers(): KwUsersContext {
 		let _localctx: KwUsersContext = new KwUsersContext(this._ctx, this.state);
-		this.enterRule(_localctx, 594, CqlParser.RULE_kwUsers);
+		this.enterRule(_localctx, 592, CqlParser.RULE_kwUsers);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2760;
+			this.state = 2756;
 			this.match(CqlParser.K_USERS);
 			}
 		}
@@ -14353,11 +14441,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwUsing(): KwUsingContext {
 		let _localctx: KwUsingContext = new KwUsingContext(this._ctx, this.state);
-		this.enterRule(_localctx, 596, CqlParser.RULE_kwUsing);
+		this.enterRule(_localctx, 594, CqlParser.RULE_kwUsing);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2762;
+			this.state = 2758;
 			this.match(CqlParser.K_USING);
 			}
 		}
@@ -14378,11 +14466,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwValues(): KwValuesContext {
 		let _localctx: KwValuesContext = new KwValuesContext(this._ctx, this.state);
-		this.enterRule(_localctx, 598, CqlParser.RULE_kwValues);
+		this.enterRule(_localctx, 596, CqlParser.RULE_kwValues);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2764;
+			this.state = 2760;
 			this.match(CqlParser.K_VALUES);
 			}
 		}
@@ -14403,11 +14491,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwWhere(): KwWhereContext {
 		let _localctx: KwWhereContext = new KwWhereContext(this._ctx, this.state);
-		this.enterRule(_localctx, 600, CqlParser.RULE_kwWhere);
+		this.enterRule(_localctx, 598, CqlParser.RULE_kwWhere);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2766;
+			this.state = 2762;
 			this.match(CqlParser.K_WHERE);
 			}
 		}
@@ -14428,11 +14516,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwWith(): KwWithContext {
 		let _localctx: KwWithContext = new KwWithContext(this._ctx, this.state);
-		this.enterRule(_localctx, 602, CqlParser.RULE_kwWith);
+		this.enterRule(_localctx, 600, CqlParser.RULE_kwWith);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2768;
+			this.state = 2764;
 			this.match(CqlParser.K_WITH);
 			}
 		}
@@ -14453,11 +14541,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public kwRevoke(): KwRevokeContext {
 		let _localctx: KwRevokeContext = new KwRevokeContext(this._ctx, this.state);
-		this.enterRule(_localctx, 604, CqlParser.RULE_kwRevoke);
+		this.enterRule(_localctx, 602, CqlParser.RULE_kwRevoke);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2770;
+			this.state = 2766;
 			this.match(CqlParser.K_REVOKE);
 			}
 		}
@@ -14478,11 +14566,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeAscii(): DataTypeAsciiContext {
 		let _localctx: DataTypeAsciiContext = new DataTypeAsciiContext(this._ctx, this.state);
-		this.enterRule(_localctx, 606, CqlParser.RULE_dataTypeAscii);
+		this.enterRule(_localctx, 604, CqlParser.RULE_dataTypeAscii);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2772;
+			this.state = 2768;
 			this.match(CqlParser.K_ASCII);
 			}
 		}
@@ -14503,11 +14591,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeBigint(): DataTypeBigintContext {
 		let _localctx: DataTypeBigintContext = new DataTypeBigintContext(this._ctx, this.state);
-		this.enterRule(_localctx, 608, CqlParser.RULE_dataTypeBigint);
+		this.enterRule(_localctx, 606, CqlParser.RULE_dataTypeBigint);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2774;
+			this.state = 2770;
 			this.match(CqlParser.K_BIGINT);
 			}
 		}
@@ -14528,11 +14616,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeBlob(): DataTypeBlobContext {
 		let _localctx: DataTypeBlobContext = new DataTypeBlobContext(this._ctx, this.state);
-		this.enterRule(_localctx, 610, CqlParser.RULE_dataTypeBlob);
+		this.enterRule(_localctx, 608, CqlParser.RULE_dataTypeBlob);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2776;
+			this.state = 2772;
 			this.match(CqlParser.K_BLOB);
 			}
 		}
@@ -14553,11 +14641,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeBoolean(): DataTypeBooleanContext {
 		let _localctx: DataTypeBooleanContext = new DataTypeBooleanContext(this._ctx, this.state);
-		this.enterRule(_localctx, 612, CqlParser.RULE_dataTypeBoolean);
+		this.enterRule(_localctx, 610, CqlParser.RULE_dataTypeBoolean);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2778;
+			this.state = 2774;
 			this.match(CqlParser.K_BOOLEAN);
 			}
 		}
@@ -14578,11 +14666,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeCounter(): DataTypeCounterContext {
 		let _localctx: DataTypeCounterContext = new DataTypeCounterContext(this._ctx, this.state);
-		this.enterRule(_localctx, 614, CqlParser.RULE_dataTypeCounter);
+		this.enterRule(_localctx, 612, CqlParser.RULE_dataTypeCounter);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2780;
+			this.state = 2776;
 			this.match(CqlParser.K_COUNTER);
 			}
 		}
@@ -14603,11 +14691,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeDate(): DataTypeDateContext {
 		let _localctx: DataTypeDateContext = new DataTypeDateContext(this._ctx, this.state);
-		this.enterRule(_localctx, 616, CqlParser.RULE_dataTypeDate);
+		this.enterRule(_localctx, 614, CqlParser.RULE_dataTypeDate);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2782;
+			this.state = 2778;
 			this.match(CqlParser.K_DATE);
 			}
 		}
@@ -14628,11 +14716,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeDecimal(): DataTypeDecimalContext {
 		let _localctx: DataTypeDecimalContext = new DataTypeDecimalContext(this._ctx, this.state);
-		this.enterRule(_localctx, 618, CqlParser.RULE_dataTypeDecimal);
+		this.enterRule(_localctx, 616, CqlParser.RULE_dataTypeDecimal);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2784;
+			this.state = 2780;
 			this.match(CqlParser.K_DECIMAL);
 			}
 		}
@@ -14653,11 +14741,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeDouble(): DataTypeDoubleContext {
 		let _localctx: DataTypeDoubleContext = new DataTypeDoubleContext(this._ctx, this.state);
-		this.enterRule(_localctx, 620, CqlParser.RULE_dataTypeDouble);
+		this.enterRule(_localctx, 618, CqlParser.RULE_dataTypeDouble);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2786;
+			this.state = 2782;
 			this.match(CqlParser.K_DOUBLE);
 			}
 		}
@@ -14678,11 +14766,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeFloat(): DataTypeFloatContext {
 		let _localctx: DataTypeFloatContext = new DataTypeFloatContext(this._ctx, this.state);
-		this.enterRule(_localctx, 622, CqlParser.RULE_dataTypeFloat);
+		this.enterRule(_localctx, 620, CqlParser.RULE_dataTypeFloat);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2788;
+			this.state = 2784;
 			this.match(CqlParser.K_FLOAT);
 			}
 		}
@@ -14703,11 +14791,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeFrozen(): DataTypeFrozenContext {
 		let _localctx: DataTypeFrozenContext = new DataTypeFrozenContext(this._ctx, this.state);
-		this.enterRule(_localctx, 624, CqlParser.RULE_dataTypeFrozen);
+		this.enterRule(_localctx, 622, CqlParser.RULE_dataTypeFrozen);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2790;
+			this.state = 2786;
 			this.match(CqlParser.K_FROZEN);
 			}
 		}
@@ -14728,11 +14816,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeInet(): DataTypeInetContext {
 		let _localctx: DataTypeInetContext = new DataTypeInetContext(this._ctx, this.state);
-		this.enterRule(_localctx, 626, CqlParser.RULE_dataTypeInet);
+		this.enterRule(_localctx, 624, CqlParser.RULE_dataTypeInet);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2792;
+			this.state = 2788;
 			this.match(CqlParser.K_INET);
 			}
 		}
@@ -14753,11 +14841,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeInt(): DataTypeIntContext {
 		let _localctx: DataTypeIntContext = new DataTypeIntContext(this._ctx, this.state);
-		this.enterRule(_localctx, 628, CqlParser.RULE_dataTypeInt);
+		this.enterRule(_localctx, 626, CqlParser.RULE_dataTypeInt);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2794;
+			this.state = 2790;
 			this.match(CqlParser.K_INT);
 			}
 		}
@@ -14778,11 +14866,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeList(): DataTypeListContext {
 		let _localctx: DataTypeListContext = new DataTypeListContext(this._ctx, this.state);
-		this.enterRule(_localctx, 630, CqlParser.RULE_dataTypeList);
+		this.enterRule(_localctx, 628, CqlParser.RULE_dataTypeList);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2796;
+			this.state = 2792;
 			this.match(CqlParser.K_LIST);
 			}
 		}
@@ -14803,11 +14891,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeMap(): DataTypeMapContext {
 		let _localctx: DataTypeMapContext = new DataTypeMapContext(this._ctx, this.state);
-		this.enterRule(_localctx, 632, CqlParser.RULE_dataTypeMap);
+		this.enterRule(_localctx, 630, CqlParser.RULE_dataTypeMap);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2798;
+			this.state = 2794;
 			this.match(CqlParser.K_MAP);
 			}
 		}
@@ -14828,11 +14916,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeSmallInt(): DataTypeSmallIntContext {
 		let _localctx: DataTypeSmallIntContext = new DataTypeSmallIntContext(this._ctx, this.state);
-		this.enterRule(_localctx, 634, CqlParser.RULE_dataTypeSmallInt);
+		this.enterRule(_localctx, 632, CqlParser.RULE_dataTypeSmallInt);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2800;
+			this.state = 2796;
 			this.match(CqlParser.K_SMALLINT);
 			}
 		}
@@ -14853,11 +14941,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeSet(): DataTypeSetContext {
 		let _localctx: DataTypeSetContext = new DataTypeSetContext(this._ctx, this.state);
-		this.enterRule(_localctx, 636, CqlParser.RULE_dataTypeSet);
+		this.enterRule(_localctx, 634, CqlParser.RULE_dataTypeSet);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2802;
+			this.state = 2798;
 			this.match(CqlParser.K_SET);
 			}
 		}
@@ -14878,11 +14966,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeText(): DataTypeTextContext {
 		let _localctx: DataTypeTextContext = new DataTypeTextContext(this._ctx, this.state);
-		this.enterRule(_localctx, 638, CqlParser.RULE_dataTypeText);
+		this.enterRule(_localctx, 636, CqlParser.RULE_dataTypeText);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2804;
+			this.state = 2800;
 			this.match(CqlParser.K_TEXT);
 			}
 		}
@@ -14903,11 +14991,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeTime(): DataTypeTimeContext {
 		let _localctx: DataTypeTimeContext = new DataTypeTimeContext(this._ctx, this.state);
-		this.enterRule(_localctx, 640, CqlParser.RULE_dataTypeTime);
+		this.enterRule(_localctx, 638, CqlParser.RULE_dataTypeTime);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2806;
+			this.state = 2802;
 			this.match(CqlParser.K_TIME);
 			}
 		}
@@ -14928,11 +15016,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeTimeUuid(): DataTypeTimeUuidContext {
 		let _localctx: DataTypeTimeUuidContext = new DataTypeTimeUuidContext(this._ctx, this.state);
-		this.enterRule(_localctx, 642, CqlParser.RULE_dataTypeTimeUuid);
+		this.enterRule(_localctx, 640, CqlParser.RULE_dataTypeTimeUuid);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2808;
+			this.state = 2804;
 			this.match(CqlParser.K_TIMEUUID);
 			}
 		}
@@ -14953,11 +15041,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeTimestamp(): DataTypeTimestampContext {
 		let _localctx: DataTypeTimestampContext = new DataTypeTimestampContext(this._ctx, this.state);
-		this.enterRule(_localctx, 644, CqlParser.RULE_dataTypeTimestamp);
+		this.enterRule(_localctx, 642, CqlParser.RULE_dataTypeTimestamp);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2810;
+			this.state = 2806;
 			this.match(CqlParser.K_TIMESTAMP);
 			}
 		}
@@ -14978,11 +15066,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeTinyInt(): DataTypeTinyIntContext {
 		let _localctx: DataTypeTinyIntContext = new DataTypeTinyIntContext(this._ctx, this.state);
-		this.enterRule(_localctx, 646, CqlParser.RULE_dataTypeTinyInt);
+		this.enterRule(_localctx, 644, CqlParser.RULE_dataTypeTinyInt);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2812;
+			this.state = 2808;
 			this.match(CqlParser.K_TINYINT);
 			}
 		}
@@ -15003,11 +15091,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeTuple(): DataTypeTupleContext {
 		let _localctx: DataTypeTupleContext = new DataTypeTupleContext(this._ctx, this.state);
-		this.enterRule(_localctx, 648, CqlParser.RULE_dataTypeTuple);
+		this.enterRule(_localctx, 646, CqlParser.RULE_dataTypeTuple);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2814;
+			this.state = 2810;
 			this.match(CqlParser.K_TUPLE);
 			}
 		}
@@ -15028,11 +15116,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeUserDefined(): DataTypeUserDefinedContext {
 		let _localctx: DataTypeUserDefinedContext = new DataTypeUserDefinedContext(this._ctx, this.state);
-		this.enterRule(_localctx, 650, CqlParser.RULE_dataTypeUserDefined);
+		this.enterRule(_localctx, 648, CqlParser.RULE_dataTypeUserDefined);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2816;
+			this.state = 2812;
 			this.match(CqlParser.OBJECT_NAME);
 			}
 		}
@@ -15053,11 +15141,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeUuid(): DataTypeUuidContext {
 		let _localctx: DataTypeUuidContext = new DataTypeUuidContext(this._ctx, this.state);
-		this.enterRule(_localctx, 652, CqlParser.RULE_dataTypeUuid);
+		this.enterRule(_localctx, 650, CqlParser.RULE_dataTypeUuid);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2818;
+			this.state = 2814;
 			this.match(CqlParser.K_UUID);
 			}
 		}
@@ -15078,11 +15166,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeVarChar(): DataTypeVarCharContext {
 		let _localctx: DataTypeVarCharContext = new DataTypeVarCharContext(this._ctx, this.state);
-		this.enterRule(_localctx, 654, CqlParser.RULE_dataTypeVarChar);
+		this.enterRule(_localctx, 652, CqlParser.RULE_dataTypeVarChar);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2820;
+			this.state = 2816;
 			this.match(CqlParser.K_VARCHAR);
 			}
 		}
@@ -15103,11 +15191,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeVarInt(): DataTypeVarIntContext {
 		let _localctx: DataTypeVarIntContext = new DataTypeVarIntContext(this._ctx, this.state);
-		this.enterRule(_localctx, 656, CqlParser.RULE_dataTypeVarInt);
+		this.enterRule(_localctx, 654, CqlParser.RULE_dataTypeVarInt);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2822;
+			this.state = 2818;
 			this.match(CqlParser.K_VARINT);
 			}
 		}
@@ -15128,32 +15216,32 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public dataTypeStructure(): DataTypeStructureContext {
 		let _localctx: DataTypeStructureContext = new DataTypeStructureContext(this._ctx, this.state);
-		this.enterRule(_localctx, 658, CqlParser.RULE_dataTypeStructure);
+		this.enterRule(_localctx, 656, CqlParser.RULE_dataTypeStructure);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2824;
+			this.state = 2820;
 			this.syntaxBracketLa();
-			this.state = 2825;
+			this.state = 2821;
 			this.dataType();
-			this.state = 2831;
+			this.state = 2827;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la===CqlParser.COMMA) {
 				{
 				{
-				this.state = 2826;
+				this.state = 2822;
 				this.syntaxComma();
-				this.state = 2827;
+				this.state = 2823;
 				this.dataType();
 				}
 				}
-				this.state = 2833;
+				this.state = 2829;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 2834;
+			this.state = 2830;
 			this.syntaxBracketRa();
 			}
 		}
@@ -15174,11 +15262,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public specialStar(): SpecialStarContext {
 		let _localctx: SpecialStarContext = new SpecialStarContext(this._ctx, this.state);
-		this.enterRule(_localctx, 660, CqlParser.RULE_specialStar);
+		this.enterRule(_localctx, 658, CqlParser.RULE_specialStar);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2836;
+			this.state = 2832;
 			this.match(CqlParser.STAR);
 			}
 		}
@@ -15199,11 +15287,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public specialDot(): SpecialDotContext {
 		let _localctx: SpecialDotContext = new SpecialDotContext(this._ctx, this.state);
-		this.enterRule(_localctx, 662, CqlParser.RULE_specialDot);
+		this.enterRule(_localctx, 660, CqlParser.RULE_specialDot);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2838;
+			this.state = 2834;
 			this.match(CqlParser.DOT);
 			}
 		}
@@ -15224,11 +15312,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public eof(): EofContext {
 		let _localctx: EofContext = new EofContext(this._ctx, this.state);
-		this.enterRule(_localctx, 664, CqlParser.RULE_eof);
+		this.enterRule(_localctx, 662, CqlParser.RULE_eof);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2840;
+			this.state = 2836;
 			this.match(CqlParser.EOF);
 			}
 		}
@@ -15249,11 +15337,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public syntaxBracketLr(): SyntaxBracketLrContext {
 		let _localctx: SyntaxBracketLrContext = new SyntaxBracketLrContext(this._ctx, this.state);
-		this.enterRule(_localctx, 666, CqlParser.RULE_syntaxBracketLr);
+		this.enterRule(_localctx, 664, CqlParser.RULE_syntaxBracketLr);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2842;
+			this.state = 2838;
 			this.match(CqlParser.LR_BRACKET);
 			}
 		}
@@ -15274,11 +15362,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public syntaxBracketRr(): SyntaxBracketRrContext {
 		let _localctx: SyntaxBracketRrContext = new SyntaxBracketRrContext(this._ctx, this.state);
-		this.enterRule(_localctx, 668, CqlParser.RULE_syntaxBracketRr);
+		this.enterRule(_localctx, 666, CqlParser.RULE_syntaxBracketRr);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2844;
+			this.state = 2840;
 			this.match(CqlParser.RR_BRACKET);
 			}
 		}
@@ -15299,11 +15387,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public syntaxBracketLc(): SyntaxBracketLcContext {
 		let _localctx: SyntaxBracketLcContext = new SyntaxBracketLcContext(this._ctx, this.state);
-		this.enterRule(_localctx, 670, CqlParser.RULE_syntaxBracketLc);
+		this.enterRule(_localctx, 668, CqlParser.RULE_syntaxBracketLc);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2846;
+			this.state = 2842;
 			this.match(CqlParser.LC_BRACKET);
 			}
 		}
@@ -15324,11 +15412,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public syntaxBracketRc(): SyntaxBracketRcContext {
 		let _localctx: SyntaxBracketRcContext = new SyntaxBracketRcContext(this._ctx, this.state);
-		this.enterRule(_localctx, 672, CqlParser.RULE_syntaxBracketRc);
+		this.enterRule(_localctx, 670, CqlParser.RULE_syntaxBracketRc);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2848;
+			this.state = 2844;
 			this.match(CqlParser.RC_BRACKET);
 			}
 		}
@@ -15349,11 +15437,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public syntaxBracketLa(): SyntaxBracketLaContext {
 		let _localctx: SyntaxBracketLaContext = new SyntaxBracketLaContext(this._ctx, this.state);
-		this.enterRule(_localctx, 674, CqlParser.RULE_syntaxBracketLa);
+		this.enterRule(_localctx, 672, CqlParser.RULE_syntaxBracketLa);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2850;
+			this.state = 2846;
 			this.match(CqlParser.OPERATOR_LT);
 			}
 		}
@@ -15374,11 +15462,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public syntaxBracketRa(): SyntaxBracketRaContext {
 		let _localctx: SyntaxBracketRaContext = new SyntaxBracketRaContext(this._ctx, this.state);
-		this.enterRule(_localctx, 676, CqlParser.RULE_syntaxBracketRa);
+		this.enterRule(_localctx, 674, CqlParser.RULE_syntaxBracketRa);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2852;
+			this.state = 2848;
 			this.match(CqlParser.OPERATOR_GT);
 			}
 		}
@@ -15399,11 +15487,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public syntaxBracketLs(): SyntaxBracketLsContext {
 		let _localctx: SyntaxBracketLsContext = new SyntaxBracketLsContext(this._ctx, this.state);
-		this.enterRule(_localctx, 678, CqlParser.RULE_syntaxBracketLs);
+		this.enterRule(_localctx, 676, CqlParser.RULE_syntaxBracketLs);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2854;
+			this.state = 2850;
 			this.match(CqlParser.LS_BRACKET);
 			}
 		}
@@ -15424,11 +15512,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public syntaxBracketRs(): SyntaxBracketRsContext {
 		let _localctx: SyntaxBracketRsContext = new SyntaxBracketRsContext(this._ctx, this.state);
-		this.enterRule(_localctx, 680, CqlParser.RULE_syntaxBracketRs);
+		this.enterRule(_localctx, 678, CqlParser.RULE_syntaxBracketRs);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2856;
+			this.state = 2852;
 			this.match(CqlParser.RS_BRACKET);
 			}
 		}
@@ -15449,11 +15537,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public syntaxComma(): SyntaxCommaContext {
 		let _localctx: SyntaxCommaContext = new SyntaxCommaContext(this._ctx, this.state);
-		this.enterRule(_localctx, 682, CqlParser.RULE_syntaxComma);
+		this.enterRule(_localctx, 680, CqlParser.RULE_syntaxComma);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2858;
+			this.state = 2854;
 			this.match(CqlParser.COMMA);
 			}
 		}
@@ -15474,11 +15562,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public syntaxColon(): SyntaxColonContext {
 		let _localctx: SyntaxColonContext = new SyntaxColonContext(this._ctx, this.state);
-		this.enterRule(_localctx, 684, CqlParser.RULE_syntaxColon);
+		this.enterRule(_localctx, 682, CqlParser.RULE_syntaxColon);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2860;
+			this.state = 2856;
 			this.match(CqlParser.COLON);
 			}
 		}
@@ -15499,11 +15587,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public syntaxPlus(): SyntaxPlusContext {
 		let _localctx: SyntaxPlusContext = new SyntaxPlusContext(this._ctx, this.state);
-		this.enterRule(_localctx, 686, CqlParser.RULE_syntaxPlus);
+		this.enterRule(_localctx, 684, CqlParser.RULE_syntaxPlus);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2862;
+			this.state = 2858;
 			this.match(CqlParser.PLUS);
 			}
 		}
@@ -15524,11 +15612,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public syntaxMinus(): SyntaxMinusContext {
 		let _localctx: SyntaxMinusContext = new SyntaxMinusContext(this._ctx, this.state);
-		this.enterRule(_localctx, 688, CqlParser.RULE_syntaxMinus);
+		this.enterRule(_localctx, 686, CqlParser.RULE_syntaxMinus);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2864;
+			this.state = 2860;
 			this.match(CqlParser.MINUS);
 			}
 		}
@@ -15549,11 +15637,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public syntaxSquote(): SyntaxSquoteContext {
 		let _localctx: SyntaxSquoteContext = new SyntaxSquoteContext(this._ctx, this.state);
-		this.enterRule(_localctx, 690, CqlParser.RULE_syntaxSquote);
+		this.enterRule(_localctx, 688, CqlParser.RULE_syntaxSquote);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2866;
+			this.state = 2862;
 			this.match(CqlParser.SQUOTE);
 			}
 		}
@@ -15574,11 +15662,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public syntaxDquote(): SyntaxDquoteContext {
 		let _localctx: SyntaxDquoteContext = new SyntaxDquoteContext(this._ctx, this.state);
-		this.enterRule(_localctx, 692, CqlParser.RULE_syntaxDquote);
+		this.enterRule(_localctx, 690, CqlParser.RULE_syntaxDquote);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2868;
+			this.state = 2864;
 			this.match(CqlParser.DQUOTE);
 			}
 		}
@@ -15599,11 +15687,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public syntaxOperatorEq(): SyntaxOperatorEqContext {
 		let _localctx: SyntaxOperatorEqContext = new SyntaxOperatorEqContext(this._ctx, this.state);
-		this.enterRule(_localctx, 694, CqlParser.RULE_syntaxOperatorEq);
+		this.enterRule(_localctx, 692, CqlParser.RULE_syntaxOperatorEq);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2870;
+			this.state = 2866;
 			this.match(CqlParser.OPERATOR_EQ);
 			}
 		}
@@ -15624,11 +15712,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public syntaxOperatorLt(): SyntaxOperatorLtContext {
 		let _localctx: SyntaxOperatorLtContext = new SyntaxOperatorLtContext(this._ctx, this.state);
-		this.enterRule(_localctx, 696, CqlParser.RULE_syntaxOperatorLt);
+		this.enterRule(_localctx, 694, CqlParser.RULE_syntaxOperatorLt);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2872;
+			this.state = 2868;
 			this.match(CqlParser.OPERATOR_LT);
 			}
 		}
@@ -15649,11 +15737,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public syntaxOperatorGt(): SyntaxOperatorGtContext {
 		let _localctx: SyntaxOperatorGtContext = new SyntaxOperatorGtContext(this._ctx, this.state);
-		this.enterRule(_localctx, 698, CqlParser.RULE_syntaxOperatorGt);
+		this.enterRule(_localctx, 696, CqlParser.RULE_syntaxOperatorGt);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2874;
+			this.state = 2870;
 			this.match(CqlParser.OPERATOR_GT);
 			}
 		}
@@ -15674,11 +15762,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public syntaxOperatorLte(): SyntaxOperatorLteContext {
 		let _localctx: SyntaxOperatorLteContext = new SyntaxOperatorLteContext(this._ctx, this.state);
-		this.enterRule(_localctx, 700, CqlParser.RULE_syntaxOperatorLte);
+		this.enterRule(_localctx, 698, CqlParser.RULE_syntaxOperatorLte);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2876;
+			this.state = 2872;
 			this.match(CqlParser.OPERATOR_LTE);
 			}
 		}
@@ -15699,11 +15787,11 @@ export class CqlParser extends Parser {
 	@RuleVersion(0)
 	public syntaxOperatorGte(): SyntaxOperatorGteContext {
 		let _localctx: SyntaxOperatorGteContext = new SyntaxOperatorGteContext(this._ctx, this.state);
-		this.enterRule(_localctx, 702, CqlParser.RULE_syntaxOperatorGte);
+		this.enterRule(_localctx, 700, CqlParser.RULE_syntaxOperatorGte);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 2878;
+			this.state = 2874;
 			this.match(CqlParser.OPERATOR_GTE);
 			}
 		}
@@ -15722,9 +15810,9 @@ export class CqlParser extends Parser {
 		return _localctx;
 	}
 
-	private static readonly _serializedATNSegments: number = 6;
+	private static readonly _serializedATNSegments: number = 5;
 	private static readonly _serializedATNSegment0: string =
-		"\x03\uAF6F\u8320\u479D\uB75C\u4880\u1605\u191C\uAB37\x03\xB2\u0B43\x04"+
+		"\x03\uAF6F\u8320\u479D\uB75C\u4880\u1605\u191C\uAB37\x03\xB2\u0B3F\x04"+
 		"\x02\t\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04"+
 		"\x07\t\x07\x04\b\t\b\x04\t\t\t\x04\n\t\n\x04\v\t\v\x04\f\t\f\x04\r\t\r"+
 		"\x04\x0E\t\x0E\x04\x0F\t\x0F\x04\x10\t\x10\x04\x11\t\x11\x04\x12\t\x12"+
@@ -15791,1496 +15879,1488 @@ export class CqlParser extends Parser {
 		"\u0153\t\u0153\x04\u0154\t\u0154\x04\u0155\t\u0155\x04\u0156\t\u0156\x04"+
 		"\u0157\t\u0157\x04\u0158\t\u0158\x04\u0159\t\u0159\x04\u015A\t\u015A\x04"+
 		"\u015B\t\u015B\x04\u015C\t\u015C\x04\u015D\t\u015D\x04\u015E\t\u015E\x04"+
-		"\u015F\t\u015F\x04\u0160\t\u0160\x04\u0161\t\u0161\x03\x02\x05\x02\u02C4"+
-		"\n\x02\x03\x02\x05\x02\u02C7\n\x02\x03\x02\x03\x02\x03\x03\x03\x03\x05"+
-		"\x03\u02CD\n\x03\x03\x03\x03\x03\x03\x03\x07\x03\u02D2\n\x03\f\x03\x0E"+
-		"\x03\u02D5\v\x03\x03\x03\x03\x03\x05\x03\u02D9\n\x03\x03\x03\x05\x03\u02DC"+
-		"\n\x03\x03\x03\x05\x03\u02DF\n\x03\x03\x04\x03\x04\x03\x05\x03\x05\x03"+
-		"\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03"+
-		"\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03"+
-		"\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03"+
-		"\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03"+
-		"\x06\x03\x06\x05\x06\u030B\n\x06\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07"+
-		"\x03\x07\x03\x07\x03\b\x03\b\x03\t\x03\t\x03\t\x03\t\x05\t\u031A\n\t\x03"+
-		"\t\x05\t\u031D\n\t\x03\n\x03\n\x03\n\x03\n\x03\n\x05\n\u0324\n\n\x03\n"+
-		"\x03\n\x03\n\x05\n\u0329\n\n\x03\v\x03\v\x03\v\x03\v\x03\v\x03\v\x03\v"+
-		"\x03\f\x03\f\x05\f\u0334\n\f\x03\f\x03\f\x03\f\x03\f\x03\f\x03\f\x03\f"+
-		"\x03\f\x05\f\u033E\n\f\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r"+
-		"\x03\r\x03\r\x05\r\u034A\n\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r"+
-		"\x05\r\u0353\n\r\x03\r\x03\r\x03\r\x03\r\x03\r\x05\r\u035A\n\r\x03\x0E"+
-		"\x03\x0E\x03\x0E\x05\x0E\u035F\n\x0E\x03\x0E\x03\x0E\x03\x0E\x03\x0E\x03"+
-		"\x0E\x03\x0E\x05\x0E\u0367\n\x0E\x03\x0F\x03\x0F\x03\x0F\x05\x0F\u036C"+
-		"\n\x0F\x03\x0F\x03\x0F\x05\x0F\u0370\n\x0F\x03\x10\x03\x10\x03\x10\x05"+
-		"\x10\u0375\n\x10\x03\x10\x03\x10\x03\x10\x03\x10\x03\x10\x03\x11\x03\x11"+
-		"\x03\x11\x03\x11\x03\x11\x03\x11\x07\x11\u0382\n\x11\f\x11\x0E\x11\u0385"+
-		"\v\x11\x03\x12\x03\x12\x03\x12\x05\x12\u038A\n\x12\x03\x12\x03\x12\x03"+
-		"\x12\x03\x12\x03\x13\x03\x13\x03\x13\x05\x13\u0393\n\x13\x03\x13\x03\x13"+
-		"\x03\x13\x03\x13\x03\x13\x03\x13\x03\x13\x03\x13\x03\x13\x03\x13\x03\x13"+
-		"\x05\x13\u03A0\n\x13\x03\x14\x03\x14\x03\x14\x03\x14\x03\x14\x05\x14\u03A7"+
-		"\n\x14\x03\x15\x03\x15\x03\x15\x03\x15\x07\x15\u03AD\n\x15\f\x15\x0E\x15"+
-		"\u03B0\v\x15\x03\x16\x03\x16\x03\x16\x03\x16\x03\x16\x03\x17\x03\x17\x03"+
-		"\x17\x03\x17\x03\x17\x03\x17\x03\x17\x03\x17\x03\x17\x03\x17\x05\x17\u03C1"+
-		"\n\x17\x03\x18\x03\x18\x03\x18\x05\x18\u03C6\n\x18\x03\x18\x03\x18\x03"+
-		"\x18\x03\x18\x03\x18\x03\x18\x03\x18\x03\x18\x03\x18\x03\x18\x05\x18\u03D2"+
-		"\n\x18\x03\x19\x03\x19\x05\x19\u03D6\n\x19\x03\x19\x03\x19\x05\x19\u03DA"+
-		"\n\x19\x03\x19\x03\x19\x03\x19\x05\x19\u03DF\n\x19\x03\x19\x03\x19\x03"+
-		"\x19\x03\x19\x03\x19\x03\x19\x03\x19\x03\x19\x03\x19\x03\x1A\x03\x1A\x03"+
-		"\x1B\x03\x1B\x03\x1B\x03\x1B\x07\x1B\u03F0\n\x1B\f\x1B\x0E\x1B\u03F3\v"+
-		"\x1B\x03\x1C\x03\x1C\x03\x1C\x03\x1C\x05\x1C\u03F9\n\x1C\x03\x1C\x03\x1C"+
-		"\x03\x1C\x03\x1C\x03\x1D\x03\x1D\x05\x1D\u0401\n\x1D\x03\x1D\x03\x1D\x05"+
-		"\x1D\u0405\n\x1D\x03\x1D\x03\x1D\x03\x1D\x03\x1D\x03\x1D\x03\x1D\x03\x1D"+
-		"\x03\x1D\x03\x1D\x03\x1D\x03\x1D\x03\x1D\x03\x1D\x03\x1E\x03\x1E\x03\x1E"+
-		"\x03\x1E\x05\x1E\u0418\n\x1E\x03\x1F\x03\x1F\x03\x1F\x03\x1F\x03\x1F\x07"+
-		"\x1F\u041F\n\x1F\f\x1F\x0E\x1F\u0422\v\x1F\x03\x1F\x03\x1F\x03 \x03 \x03"+
-		" \x03 \x03!\x03!\x03!\x03!\x03!\x03!\x07!\u0430\n!\f!\x0E!\u0433\v!\x03"+
-		"!\x03!\x03\"\x03\"\x03\"\x03\"\x03\"\x07\"\u043C\n\"\f\"\x0E\"\u043F\v"+
-		"\"\x03\"\x03\"\x03#\x03#\x03#\x03$\x03$\x03$\x03$\x03$\x03$\x05$\u044C"+
-		"\n$\x03%\x03%\x03%\x03&\x03&\x05&\u0453\n&\x03\'\x03\'\x03\'\x03\'\x03"+
-		"\'\x03(\x05(\u045B\n(\x03(\x05(\u045E\n(\x03(\x05(\u0461\n(\x03)\x03)"+
-		"\x03)\x03*\x03*\x03*\x03*\x07*\u046A\n*\f*\x0E*\u046D\v*\x03+\x03+\x03"+
-		"+\x03+\x03,\x03,\x03,\x03,\x03,\x03,\x03,\x07,\u047A\n,\f,\x0E,\u047D"+
-		"\v,\x03-\x03-\x03-\x03-\x03-\x03.\x03.\x03.\x03.\x03.\x03/\x03/\x03/\x03"+
-		"/\x03/\x03/\x03/\x05/\u0490\n/\x030\x030\x030\x031\x031\x031\x031\x03"+
-		"1\x032\x032\x032\x032\x033\x033\x033\x034\x034\x034\x034\x074\u04A5\n"+
-		"4\f4\x0E4\u04A8\v4\x035\x035\x035\x036\x036\x036\x036\x036\x036\x076\u04B3"+
-		"\n6\f6\x0E6\u04B6\v6\x037\x037\x037\x037\x057\u04BC\n7\x038\x038\x038"+
-		"\x038\x038\x078\u04C3\n8\f8\x0E8\u04C6\v8\x039\x039\x039\x039\x039\x03"+
-		"9\x039\x039\x039\x039\x039\x039\x039\x039\x039\x039\x059\u04D8\n9\x03"+
-		":\x03:\x03:\x03:\x03:\x03:\x05:\u04E0\n:\x03;\x03;\x03;\x05;\u04E5\n;"+
-		"\x03;\x03;\x03<\x03<\x03<\x05<\u04EC\n<\x03<\x03<\x03=\x03=\x03=\x05="+
-		"\u04F3\n=\x03=\x03=\x03>\x03>\x03>\x05>\u04FA\n>\x03>\x03>\x03?\x03?\x03"+
-		"?\x05?\u0501\n?\x03?\x03?\x03@\x03@\x03@\x05@\u0508\n@\x03@\x03@\x03@"+
-		"\x03@\x03A\x03A\x03A\x05A\u0511\nA\x03A\x03A\x03B\x03B\x03B\x05B\u0518"+
-		"\nB\x03B\x03B\x03C\x03C\x03C\x05C\u051F\nC\x03C\x03C\x03D\x03D\x03D\x05"+
-		"D\u0526\nD\x03D\x03D\x03E\x03E\x03E\x05E\u052D\nE\x03E\x03E\x03E\x05E"+
-		"\u0532\nE\x03F\x03F\x03F\x03F\x03F\x05F\u0539\nF\x03G\x03G\x03G\x03G\x03"+
-		"G\x05G\u0540\nG\x03G\x03G\x05G\u0544\nG\x03G\x03G\x03G\x05G\u0549\nG\x05"+
-		"G\u054B\nG\x03H\x03H\x03H\x03H\x03H\x03H\x03H\x03H\x07H\u0555\nH\fH\x0E"+
-		"H\u0558\vH\x03H\x03H\x03I\x03I\x05I\u055E\nI\x03J\x03J\x03J\x03J\x07J"+
-		"\u0564\nJ\fJ\x0EJ\u0567\vJ\x03K\x03K\x03K\x03K\x03K\x03K\x03K\x03K\x05"+
-		"K\u0571\nK\x03L\x03L\x03M\x03M\x05M\u0577\nM\x03N\x03N\x03N\x03N\x03N"+
-		"\x07N\u057E\nN\fN\x0EN\u0581\vN\x03N\x03N\x03O\x03O\x03O\x03O\x03P\x03"+
-		"P\x03Q\x03Q\x05Q\u058D\nQ\x03R\x03R\x03R\x03R\x07R\u0593\nR\fR\x0ER\u0596"+
-		"\vR\x03R\x03R\x03R\x05R\u059B\nR\x03S\x03S\x03S\x03S\x03S\x03S\x03S\x03"+
-		"S\x03S\x03S\x03S\x03S\x05S\u05A9\nS\x03T\x03T\x03T\x03T\x03T\x03T\x05"+
-		"T\u05B1\nT\x03U\x03U\x03U\x03U\x03U\x03U\x03V\x03V\x03V\x05V\u05BC\nV"+
-		"\x03W\x03W\x03X\x03X\x03X\x03X\x03Y\x03Y\x03Y\x03Y\x03Y\x03Y\x03Z\x03"+
-		"Z\x03Z\x03Z\x07Z\u05CE\nZ\fZ\x0EZ\u05D1\vZ\x03[\x03[\x03[\x03[\x07[\u05D7"+
-		"\n[\f[\x0E[\u05DA\v[\x03\\\x03\\\x03]\x03]\x03^\x03^\x03^\x03_\x03_\x03"+
-		"_\x03_\x03_\x03_\x03_\x03_\x03_\x05_\u05EC\n_\x03`\x03`\x05`\u05F0\n`"+
-		"\x03`\x03`\x05`\u05F4\n`\x03a\x03a\x05a\u05F8\na\x03b\x03b\x03b\x03b\x03"+
-		"b\x03b\x03b\x03b\x03b\x03b\x03b\x03b\x05b\u0606\nb\x03c\x03c\x03c\x03"+
-		"c\x07c\u060C\nc\fc\x0Ec\u060F\vc\x03d\x03d\x03d\x03d\x03d\x03d\x05d\u0617"+
-		"\nd\x03e\x03e\x03e\x03e\x03f\x03f\x03f\x03g\x03g\x05g\u0622\ng\x03g\x03"+
-		"g\x03h\x03h\x03h\x05h\u0629\nh\x03h\x05h\u062C\nh\x03h\x03h\x03h\x03i"+
-		"\x03i\x03i\x03i\x05i\u0635\ni\x03j\x03j\x05j\u0639\nj\x03k\x03k\x03k\x03"+
-		"k\x03k\x05k\u0640\nk\x03l\x03l\x03l\x03l\x03l\x05l\u0647\nl\x03m\x03m"+
-		"\x03m\x03m\x05m\u064D\nm\x03m\x03m\x03n\x03n\x03n\x03n\x05n\u0655\nn\x03"+
-		"n\x03n\x03o\x03o\x03o\x03o\x05o\u065D\no\x03o\x03o\x03p\x03p\x05p\u0663"+
-		"\np\x03p\x03p\x05p\u0667\np\x03p\x03p\x05p\u066B\np\x03p\x03p\x05p\u066F"+
-		"\np\x03q\x03q\x03q\x03q\x07q\u0675\nq\fq\x0Eq\u0678\vq\x03r\x03r\x03r"+
-		"\x03r\x03r\x05r\u067F\nr\x03r\x03r\x05r\u0683\nr\x03s\x03s\x03s\x05s\u0688"+
-		"\ns\x03s\x03s\x03s\x05s\u068D\ns\x03s\x03s\x05s\u0691\ns\x03t\x03t\x03"+
-		"t\x03u\x03u\x03u\x03u\x07u\u069A\nu\fu\x0Eu\u069D\vu\x03v\x03v\x03v\x03"+
-		"v\x03w\x03w\x03w\x03w\x03w\x07w\u06A8\nw\fw\x0Ew\u06AB\vw\x03w\x05w\u06AE"+
-		"\nw\x03x\x03x\x03x\x03x\x05x\u06B4\nx\x03x\x03x\x03x\x03x\x03x\x05x\u06BB"+
-		"\nx\x03x\x03x\x03x\x03x\x03x\x03x\x03x\x05x\u06C4\nx\x03x\x03x\x03x\x03"+
-		"x\x03x\x03x\x03x\x05x\u06CD\nx\x03x\x03x\x03x\x03x\x03x\x03x\x03x\x05"+
-		"x\u06D6\nx\x03x\x03x\x03x\x03x\x03x\x03x\x03x\x05x\u06DF\nx\x03x\x03x"+
-		"\x03x\x03x\x03x\x03x\x03x\x05x\u06E8\nx\x03x\x03x\x03x\x03x\x03x\x03x"+
-		"\x03x\x05x\u06F1\nx\x03x\x03x\x03x\x03x\x03x\x03x\x03x\x03x\x03x\x03x"+
-		"\x05x\u06FD\nx\x03y\x03y\x03y\x03y\x03y\x07y\u0704\ny\fy\x0Ey\u0707\v"+
-		"y\x03y\x03y\x03z\x03z\x03z\x03z\x03z\x03z\x03z\x03z\x03z\x07z\u0714\n"+
-		"z\fz\x0Ez\u0717\vz\x03z\x03z\x03{\x03{\x03{\x03{\x03{\x07{\u0720\n{\f"+
-		"{\x0E{\u0723\v{\x03{\x03{\x03|\x03|\x03|\x03|\x03|\x03|\x05|\u072D\n|"+
-		"\x03|\x05|\u0730\n|\x03}\x03}\x03}\x03}\x03}\x03}\x03}\x03}\x03}\x03}"+
-		"\x03}\x03}\x03}\x03}\x03}\x03}\x05}\u0742\n}\x03~\x03~\x03~\x03\x7F\x03"+
-		"\x7F\x03\x7F\x03\x80\x03\x80\x03\x80\x03\x81\x03\x81\x03\x81\x03\x81\x03"+
-		"\x82\x03\x82\x03\x82\x03\x83\x03\x83\x03\x83\x03\x83\x03\x83\x05\x83\u0759"+
-		"\n\x83\x03\x83\x05\x83\u075C\n\x83\x03\x84\x03\x84\x03\x84\x03\x84\x03"+
-		"\x84\x05\x84\u0763\n\x84\x03\x85\x03\x85\x03\x85\x03\x85\x05\x85\u0769"+
-		"\n\x85\x07\x85\u076B\n\x85\f\x85\x0E\x85\u076E\v\x85\x03\x85\x05\x85\u0771"+
-		"\n\x85\x03\x86\x03\x86\x03\x86\x03\x86\x05\x86\u0777\n\x86\x07\x86\u0779"+
-		"\n\x86\f\x86\x0E\x86\u077C\v\x86\x03\x86\x05\x86\u077F\n\x86\x03\x87\x03"+
-		"\x87\x03\x87\x03\x87\x07\x87\u0785\n\x87\f\x87\x0E\x87\u0788\v\x87\x03"+
-		"\x88\x03\x88\x05\x88\u078C\n\x88\x03\x88\x05\x88\u078F\n\x88\x03\x89\x03"+
-		"\x89\x05\x89\u0793\n\x89\x03\x89\x03\x89\x03\x89\x05\x89\u0798\n\x89\x03"+
-		"\x89\x05\x89\u079B\n\x89\x03\x89\x05\x89\u079E\n\x89\x03\x89\x05\x89\u07A1"+
-		"\n\x89\x03\x8A\x03\x8A\x03\x8A\x05\x8A\u07A6\n\x8A\x03\x8B\x03\x8B\x03"+
-		"\x8B\x03\x8B\x05\x8B\u07AC\n\x8B\x03\x8C\x03\x8C\x03\x8C\x03\x8D\x03\x8D"+
-		"\x03\x8D\x05\x8D\u07B4\n\x8D\x03\x8D\x05\x8D\u07B7\n\x8D\x03\x8E\x03\x8E"+
-		"\x03\x8E\x03\x8F\x03\x8F\x03\x8F\x03\x8F\x03\x8F\x07\x8F\u07C1\n\x8F\f"+
-		"\x8F\x0E\x8F\u07C4\v\x8F\x03\x8F\x05\x8F\u07C7\n\x8F\x03\x90\x03\x90\x03"+
-		"\x90\x03\x90\x03\x90\x05\x90\u07CE\n\x90\x03\x90\x03\x90\x03\x90\x03\x90"+
-		"\x05\x90\u07D4\n\x90\x03\x90\x05\x90\u07D7\n\x90\x03\x91\x03\x91\x03\x91"+
-		"\x03\x91\x07\x91\u07DD\n\x91\f\x91\x0E\x91\u07E0\v\x91\x03\x92\x03\x92"+
-		"\x03\x92\x03\x92\x03\x92\x03\x92\x05\x92\u07E8\n\x92\x03\x93\x03\x93\x03"+
-		"\x93\x03\x93\x05\x93\u07EE\n\x93\x03\x94\x03\x94\x03\x94\x03\x94\x05\x94"+
-		"\u07F4\n\x94\x03\x94\x03\x94\x03\x95\x03\x95\x03\x95\x05\x95\u07FB\n\x95"+
-		"\x03\x95\x03\x95\x03\x96\x03\x96\x03\x96\x05\x96\u0802\n\x96\x03\x96\x03"+
-		"\x96\x05\x96\u0806\n\x96\x03\x96\x03\x96\x05\x96\u080A\n\x96\x03\x96\x05"+
-		"\x96\u080D\n\x96\x03\x97\x03\x97\x03\x97\x03\x97\x03\x97\x03\x97\x03\x97"+
-		"\x03\x97\x05\x97\u0817\n\x97\x03\x98\x03\x98\x03\x98\x03\x98\x03\x98\x03"+
-		"\x98\x03\x98\x05\x98\u0820\n\x98\x03\x98\x05\x98\u0823\n\x98\x03\x99\x03"+
-		"\x99\x03\x99\x05\x99\u0828\n\x99\x03\x99\x03\x99\x03\x99\x03\x99\x05\x99"+
-		"\u082E\n\x99\x07\x99\u0830\n\x99\f\x99\x0E\x99\u0833\v\x99\x03\x9A\x03"+
-		"\x9A\x03\x9A\x03\x9A\x03\x9A\x03\x9A\x03\x9A\x05\x9A\u083C\n\x9A\x03\x9B"+
-		"\x03\x9B\x03\x9B\x03\x9B\x03\x9B\x05\x9B\u0843\n\x9B\x03\x9C\x03\x9C\x03"+
-		"\x9C\x03\x9C\x03\x9D\x03\x9D\x03\x9D\x03\x9D\x05\x9D\u084D\n\x9D\x03\x9E"+
-		"\x03\x9E\x03\x9E\x03\x9E\x03\x9E\x07\x9E\u0854\n\x9E\f\x9E\x0E\x9E\u0857"+
-		"\v\x9E\x03\x9E\x03\x9E\x03\x9F\x03\x9F\x03\x9F\x03\x9F\x03\x9F\x07\x9F"+
-		"\u0860\n\x9F\f\x9F\x0E\x9F\u0863\v\x9F\x03\x9F\x03\x9F\x03\xA0\x03\xA0"+
-		"\x03\xA0\x03\xA0\x03\xA0\x07\xA0\u086C\n\xA0\f\xA0\x0E\xA0\u086F\v\xA0"+
-		"\x03\xA0\x03\xA0\x03\xA1\x03\xA1\x03\xA1\x03\xA1\x03\xA1\x07\xA1\u0878"+
-		"\n\xA1\f\xA1\x0E\xA1\u087B\v\xA1\x03\xA1\x03\xA1\x03\xA2\x03\xA2\x03\xA3"+
-		"\x03\xA3\x03\xA4\x03\xA4\x03\xA5\x03\xA5\x03\xA6\x03\xA6\x03\xA7\x03\xA7"+
-		"\x03\xA8\x03\xA8\x03\xA8\x03\xA8\x03\xA8\x03\xA8\x03\xA8\x03\xA8\x03\xA8"+
-		"\x03\xA8\x03\xA8\x03\xA8\x03\xA8\x03\xA8\x03\xA8\x03\xA8\x05\xA8\u089B"+
-		"\n\xA8\x03\xA9\x03\xA9\x03\xA9\x03\xA9\x03\xA9\x03\xA9\x03\xA9\x03\xA9"+
-		"\x03\xA9\x03\xA9\x03\xA9\x03\xA9\x03\xA9\x03\xA9\x03\xA9\x03\xA9\x05\xA9"+
-		"\u08AD\n\xA9\x03\xAA\x03\xAA\x03\xAA\x03\xAA\x03\xAA\x03\xAA\x03\xAA\x03"+
-		"\xAA\x03\xAA\x03\xAA\x03\xAA\x03\xAA\x03\xAA\x03\xAA\x03\xAA\x03\xAA\x05"+
-		"\xAA\u08BF\n\xAA\x03\xAB\x03\xAB\x03\xAB\x03\xAB\x03\xAB\x03\xAB\x03\xAB"+
-		"\x03\xAB\x03\xAB\x03\xAB\x03\xAB\x03\xAB\x03\xAB\x03\xAB\x03\xAB\x03\xAB"+
-		"\x05\xAB\u08D1\n\xAB\x03\xAC\x03\xAC\x03\xAC\x03\xAC\x03\xAC\x03\xAC\x03"+
-		"\xAC\x03\xAC\x03\xAC\x03\xAC\x03\xAC\x03\xAC\x03\xAC\x03\xAC\x03\xAC\x03"+
-		"\xAC\x05\xAC\u08E3\n\xAC\x03\xAD\x03\xAD\x03\xAD\x03\xAD\x03\xAD\x03\xAD"+
-		"\x03\xAD\x03\xAD\x03\xAD\x03\xAD\x03\xAD\x03\xAD\x03\xAD\x03\xAD\x03\xAD"+
-		"\x03\xAD\x05\xAD\u08F5\n\xAD\x03\xAE\x03\xAE\x03\xAE\x03\xAE\x03\xAE\x03"+
-		"\xAE\x03\xAE\x03\xAE\x03\xAE\x03\xAE\x03\xAE\x03\xAE\x03\xAE\x03\xAE\x03"+
-		"\xAE\x03\xAE\x05\xAE\u0907\n\xAE\x03\xAF\x03\xAF\x03\xAF\x03\xAF\x03\xAF"+
-		"\x03\xAF\x03\xAF\x03\xAF\x03\xAF\x03\xAF\x05\xAF\u0913\n\xAF\x03\xB0\x03"+
-		"\xB0\x03\xB0\x03\xB0\x03\xB0\x03\xB0\x03\xB0\x03\xB0\x03\xB0\x03\xB0\x05"+
-		"\xB0\u091F\n\xB0\x03\xB1\x03\xB1\x03\xB1\x03\xB1\x03\xB1\x03\xB1\x03\xB1"+
-		"\x03\xB1\x03\xB1\x03\xB1\x05\xB1\u092B\n\xB1\x03\xB2\x03\xB2\x03\xB2\x03"+
-		"\xB2\x03\xB2\x03\xB2\x03\xB2\x03\xB2\x03\xB2\x03\xB2\x05\xB2\u0937\n\xB2"+
-		"\x03\xB3\x03\xB3\x03\xB3\x03\xB3\x03\xB3\x03\xB3\x03\xB3\x03\xB3\x03\xB3"+
-		"\x03\xB3\x05\xB3\u0943\n\xB3\x03\xB4\x03\xB4\x03\xB4\x03\xB4\x03\xB4\x03"+
-		"\xB4\x03\xB4\x03\xB4\x03\xB4\x03\xB4\x05";
+		"\u015F\t\u015F\x04\u0160\t\u0160\x03\x02\x05\x02\u02C2\n\x02\x03\x02\x05"+
+		"\x02\u02C5\n\x02\x03\x02\x03\x02\x03\x03\x03\x03\x05\x03\u02CB\n\x03\x03"+
+		"\x03\x03\x03\x03\x03\x07\x03\u02D0\n\x03\f\x03\x0E\x03\u02D3\v\x03\x03"+
+		"\x03\x03\x03\x05\x03\u02D7\n\x03\x03\x03\x05\x03\u02DA\n\x03\x03\x03\x05"+
+		"\x03\u02DD\n\x03\x03\x04\x03\x04\x03\x05\x03\x05\x03\x06\x03\x06\x03\x06"+
+		"\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06"+
+		"\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06"+
+		"\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06"+
+		"\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x05\x06"+
+		"\u0309\n\x06\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03"+
+		"\b\x03\b\x03\t\x03\t\x03\t\x03\t\x05\t\u0318\n\t\x03\t\x05\t\u031B\n\t"+
+		"\x03\n\x03\n\x03\n\x03\n\x03\n\x05\n\u0322\n\n\x03\n\x03\n\x03\n\x05\n"+
+		"\u0327\n\n\x03\v\x03\v\x03\v\x03\v\x03\v\x03\v\x03\v\x03\f\x03\f\x05\f"+
+		"\u0332\n\f\x03\f\x03\f\x03\f\x03\f\x03\f\x03\f\x03\f\x03\f\x05\f\u033C"+
+		"\n\f\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x05\r"+
+		"\u0348\n\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x05\r\u0351\n\r\x03"+
+		"\r\x03\r\x03\r\x03\r\x03\r\x05\r\u0358\n\r\x03\x0E\x03\x0E\x03\x0E\x05"+
+		"\x0E\u035D\n\x0E\x03\x0E\x03\x0E\x03\x0E\x03\x0E\x03\x0E\x03\x0E\x05\x0E"+
+		"\u0365\n\x0E\x03\x0F\x03\x0F\x03\x0F\x05\x0F\u036A\n\x0F\x03\x0F\x03\x0F"+
+		"\x05\x0F\u036E\n\x0F\x03\x10\x03\x10\x03\x10\x05\x10\u0373\n\x10\x03\x10"+
+		"\x03\x10\x03\x10\x03\x10\x03\x10\x03\x11\x03\x11\x03\x11\x03\x11\x03\x11"+
+		"\x03\x11\x07\x11\u0380\n\x11\f\x11\x0E\x11\u0383\v\x11\x03\x12\x03\x12"+
+		"\x03\x12\x05\x12\u0388\n\x12\x03\x12\x03\x12\x03\x12\x03\x12\x03\x13\x03"+
+		"\x13\x03\x13\x05\x13\u0391\n\x13\x03\x13\x03\x13\x03\x13\x03\x13\x03\x13"+
+		"\x03\x13\x03\x13\x03\x13\x03\x13\x03\x13\x03\x13\x05\x13\u039E\n\x13\x03"+
+		"\x14\x03\x14\x03\x14\x03\x14\x03\x14\x05\x14\u03A5\n\x14\x03\x15\x03\x15"+
+		"\x03\x15\x03\x15\x07\x15\u03AB\n\x15\f\x15\x0E\x15\u03AE\v\x15\x03\x16"+
+		"\x03\x16\x03\x16\x03\x16\x03\x16\x03\x17\x03\x17\x03\x17\x03\x17\x03\x17"+
+		"\x03\x17\x03\x17\x03\x17\x03\x17\x03\x17\x05\x17\u03BF\n\x17\x03\x18\x03"+
+		"\x18\x03\x18\x05\x18\u03C4\n\x18\x03\x18\x03\x18\x03\x18\x03\x18\x03\x18"+
+		"\x03\x18\x03\x18\x03\x18\x03\x18\x03\x18\x05\x18\u03D0\n\x18\x03\x19\x03"+
+		"\x19\x05\x19\u03D4\n\x19\x03\x19\x03\x19\x05\x19\u03D8\n\x19\x03\x19\x03"+
+		"\x19\x03\x19\x05\x19\u03DD\n\x19\x03\x19\x03\x19\x03\x19\x03\x19\x03\x19"+
+		"\x03\x19\x03\x19\x03\x19\x03\x19\x03\x1A\x03\x1A\x03\x1B\x03\x1B\x03\x1B"+
+		"\x03\x1B\x07\x1B\u03EE\n\x1B\f\x1B\x0E\x1B\u03F1\v\x1B\x03\x1C\x03\x1C"+
+		"\x03\x1C\x03\x1C\x05\x1C\u03F7\n\x1C\x03\x1C\x03\x1C\x03\x1C\x03\x1C\x03"+
+		"\x1D\x03\x1D\x05\x1D\u03FF\n\x1D\x03\x1D\x03\x1D\x05\x1D\u0403\n\x1D\x03"+
+		"\x1D\x03\x1D\x03\x1D\x03\x1D\x03\x1D\x03\x1D\x03\x1D\x03\x1D\x03\x1D\x03"+
+		"\x1D\x03\x1D\x03\x1D\x03\x1D\x03\x1E\x03\x1E\x03\x1E\x03\x1E\x05\x1E\u0416"+
+		"\n\x1E\x03\x1F\x03\x1F\x03\x1F\x03\x1F\x03\x1F\x07\x1F\u041D\n\x1F\f\x1F"+
+		"\x0E\x1F\u0420\v\x1F\x03\x1F\x03\x1F\x03 \x03 \x03 \x03 \x03!\x03!\x03"+
+		"!\x03!\x03!\x03!\x07!\u042E\n!\f!\x0E!\u0431\v!\x03!\x03!\x03\"\x03\""+
+		"\x03\"\x03\"\x03\"\x07\"\u043A\n\"\f\"\x0E\"\u043D\v\"\x03\"\x03\"\x03"+
+		"#\x03#\x03#\x03$\x03$\x03$\x03$\x03$\x03$\x05$\u044A\n$\x03%\x03%\x03"+
+		"%\x03&\x03&\x05&\u0451\n&\x03\'\x03\'\x03\'\x03\'\x03\'\x03(\x05(\u0459"+
+		"\n(\x03(\x05(\u045C\n(\x03(\x05(\u045F\n(\x03)\x03)\x03)\x03*\x03*\x03"+
+		"*\x03*\x07*\u0468\n*\f*\x0E*\u046B\v*\x03+\x03+\x03+\x03+\x03,\x03,\x03"+
+		",\x03,\x03,\x03,\x03,\x07,\u0478\n,\f,\x0E,\u047B\v,\x03-\x03-\x03-\x03"+
+		"-\x03-\x03.\x03.\x03.\x03.\x03.\x03/\x03/\x03/\x03/\x03/\x03/\x03/\x05"+
+		"/\u048E\n/\x030\x030\x030\x031\x031\x031\x031\x031\x032\x032\x032\x03"+
+		"2\x033\x033\x033\x034\x034\x034\x034\x074\u04A3\n4\f4\x0E4\u04A6\v4\x03"+
+		"5\x035\x035\x036\x036\x036\x036\x036\x036\x076\u04B1\n6\f6\x0E6\u04B4"+
+		"\v6\x037\x037\x037\x037\x057\u04BA\n7\x038\x038\x038\x038\x038\x078\u04C1"+
+		"\n8\f8\x0E8\u04C4\v8\x039\x039\x039\x039\x039\x039\x039\x039\x039\x03"+
+		"9\x039\x039\x039\x039\x039\x039\x059\u04D6\n9\x03:\x03:\x03:\x03:\x03"+
+		":\x03:\x05:\u04DE\n:\x03;\x03;\x03;\x05;\u04E3\n;\x03;\x03;\x03<\x03<"+
+		"\x03<\x05<\u04EA\n<\x03<\x03<\x03=\x03=\x03=\x05=\u04F1\n=\x03=\x03=\x03"+
+		">\x03>\x03>\x05>\u04F8\n>\x03>\x03>\x03?\x03?\x03?\x05?\u04FF\n?\x03?"+
+		"\x03?\x03@\x03@\x03@\x05@\u0506\n@\x03@\x03@\x03@\x03@\x03A\x03A\x03A"+
+		"\x05A\u050F\nA\x03A\x03A\x03B\x03B\x03B\x05B\u0516\nB\x03B\x03B\x03C\x03"+
+		"C\x03C\x05C\u051D\nC\x03C\x03C\x03D\x03D\x03D\x05D\u0524\nD\x03D\x03D"+
+		"\x03E\x03E\x03E\x05E\u052B\nE\x03E\x03E\x03E\x05E\u0530\nE\x03F\x03F\x03"+
+		"F\x03F\x03F\x05F\u0537\nF\x03G\x03G\x03G\x03G\x03G\x05G\u053E\nG\x03G"+
+		"\x03G\x05G\u0542\nG\x03G\x03G\x03G\x05G\u0547\nG\x05G\u0549\nG\x03H\x03"+
+		"H\x03H\x03H\x03H\x03H\x03H\x03H\x07H\u0553\nH\fH\x0EH\u0556\vH\x03H\x03"+
+		"H\x03I\x03I\x05I\u055C\nI\x03J\x03J\x03J\x03J\x07J\u0562\nJ\fJ\x0EJ\u0565"+
+		"\vJ\x03K\x03K\x03K\x03K\x03K\x03K\x03K\x03K\x05K\u056F\nK\x03L\x03L\x03"+
+		"M\x03M\x05M\u0575\nM\x03N\x03N\x03N\x03N\x03N\x07N\u057C\nN\fN\x0EN\u057F"+
+		"\vN\x03N\x03N\x03O\x03O\x03O\x03O\x03P\x03P\x03Q\x03Q\x05Q\u058B\nQ\x03"+
+		"R\x03R\x03R\x03R\x07R\u0591\nR\fR\x0ER\u0594\vR\x03R\x03R\x03R\x05R\u0599"+
+		"\nR\x03S\x03S\x03S\x03S\x03S\x03S\x03S\x03S\x03S\x03S\x03S\x03S\x05S\u05A7"+
+		"\nS\x03T\x03T\x03T\x03T\x03T\x03T\x05T\u05AF\nT\x03U\x03U\x03U\x03U\x03"+
+		"U\x03U\x03V\x03V\x03V\x05V\u05BA\nV\x03W\x03W\x03X\x03X\x03X\x03X\x03"+
+		"Y\x03Y\x03Y\x03Y\x03Y\x03Y\x03Y\x03Y\x03Y\x03Y\x05Y\u05CC\nY\x03Z\x03"+
+		"Z\x03Z\x03Z\x07Z\u05D2\nZ\fZ\x0EZ\u05D5\vZ\x03[\x03[\x03[\x03[\x07[\u05DB"+
+		"\n[\f[\x0E[\u05DE\v[\x03\\\x03\\\x03\\\x03]\x03]\x03]\x03]\x03]\x03]\x03"+
+		"]\x03]\x03]\x05]\u05EC\n]\x03^\x03^\x05^\u05F0\n^\x03^\x03^\x05^\u05F4"+
+		"\n^\x03_\x03_\x05_\u05F8\n_\x03`\x03`\x03`\x03`\x03`\x03`\x03`\x03`\x03"+
+		"`\x03`\x03`\x03`\x05`\u0606\n`\x03a\x03a\x03a\x03a\x07a\u060C\na\fa\x0E"+
+		"a\u060F\va\x03b\x03b\x03b\x03b\x03b\x03b\x05b\u0617\nb\x03c\x03c\x03c"+
+		"\x03c\x03d\x03d\x03d\x03e\x03e\x05e\u0622\ne\x03e\x03e\x03f\x03f\x03f"+
+		"\x05f\u0629\nf\x03f\x05f\u062C\nf\x03f\x03f\x03f\x03g\x03g\x03g\x03g\x05"+
+		"g\u0635\ng\x03h\x03h\x05h\u0639\nh\x03i\x03i\x03i\x03i\x03i\x05i\u0640"+
+		"\ni\x03j\x03j\x03j\x03j\x03j\x05j\u0647\nj\x03k\x03k\x03k\x03k\x05k\u064D"+
+		"\nk\x03k\x03k\x03l\x03l\x03l\x03l\x05l\u0655\nl\x03l\x03l\x03m\x03m\x03"+
+		"m\x03m\x05m\u065D\nm\x03m\x03m\x03n\x03n\x05n\u0663\nn\x03n\x03n\x05n"+
+		"\u0667\nn\x03n\x03n\x05n\u066B\nn\x03n\x03n\x05n\u066F\nn\x03o\x03o\x03"+
+		"o\x03o\x07o\u0675\no\fo\x0Eo\u0678\vo\x03p\x03p\x03p\x03p\x03p\x05p\u067F"+
+		"\np\x03p\x03p\x05p\u0683\np\x03q\x03q\x03q\x05q\u0688\nq\x03q\x03q\x03"+
+		"q\x05q\u068D\nq\x03q\x03q\x05q\u0691\nq\x03r\x03r\x03r\x03s\x03s\x03s"+
+		"\x03s\x07s\u069A\ns\fs\x0Es\u069D\vs\x03t\x03t\x03t\x03t\x03u\x03u\x03"+
+		"u\x03u\x03u\x07u\u06A8\nu\fu\x0Eu\u06AB\vu\x03u\x05u\u06AE\nu\x03v\x03"+
+		"v\x03v\x03v\x05v\u06B4\nv\x03v\x03v\x03v\x03v\x03v\x05v\u06BB\nv\x03v"+
+		"\x03v\x03v\x03v\x03v\x03v\x03v\x05v\u06C4\nv\x03v\x03v\x03v\x03v\x03v"+
+		"\x03v\x03v\x05v\u06CD\nv\x03v\x03v\x03v\x03v\x03v\x03v\x03v\x05v\u06D6"+
+		"\nv\x03v\x03v\x03v\x03v\x03v\x03v\x03v\x05v\u06DF\nv\x03v\x03v\x03v\x03"+
+		"v\x03v\x03v\x03v\x05v\u06E8\nv\x03v\x03v\x03v\x03v\x03v\x03v\x03v\x05"+
+		"v\u06F1\nv\x03v\x03v\x03v\x03v\x03v\x03v\x03v\x03v\x03v\x03v\x05v\u06FD"+
+		"\nv\x03w\x03w\x03w\x03w\x03w\x07w\u0704\nw\fw\x0Ew\u0707\vw\x03w\x03w"+
+		"\x03x\x03x\x03x\x03x\x03x\x03x\x03x\x03x\x03x\x07x\u0714\nx\fx\x0Ex\u0717"+
+		"\vx\x03x\x03x\x03y\x03y\x03y\x03y\x03y\x07y\u0720\ny\fy\x0Ey\u0723\vy"+
+		"\x03y\x03y\x03z\x03z\x03z\x03z\x03z\x03z\x05z\u072D\nz\x03z\x05z\u0730"+
+		"\nz\x03{\x03{\x03{\x03{\x03{\x03{\x03{\x03{\x03{\x03{\x03{\x03{\x03{\x03"+
+		"{\x03{\x03{\x05{\u0742\n{\x03|\x03|\x03|\x03}\x03}\x03}\x03~\x03~\x03"+
+		"~\x03\x7F\x03\x7F\x03\x7F\x03\x7F\x03\x80\x03\x80\x03\x80\x03\x81\x03"+
+		"\x81\x03\x81\x03\x81\x03\x81\x05\x81\u0759\n\x81\x03\x81\x05\x81\u075C"+
+		"\n\x81\x03\x82\x03\x82\x03\x82\x03\x82\x03\x82\x05\x82\u0763\n\x82\x03"+
+		"\x83\x03\x83\x03\x83\x03\x83\x05\x83\u0769\n\x83\x07\x83\u076B\n\x83\f"+
+		"\x83\x0E\x83\u076E\v\x83\x03\x83\x05\x83\u0771\n\x83\x03\x84\x03\x84\x03"+
+		"\x84\x03\x84\x05\x84\u0777\n\x84\x07\x84\u0779\n\x84\f\x84\x0E\x84\u077C"+
+		"\v\x84\x03\x84\x05\x84\u077F\n\x84\x03\x85\x03\x85\x03\x85\x03\x85\x07"+
+		"\x85\u0785\n\x85\f\x85\x0E\x85\u0788\v\x85\x03\x86\x03\x86\x05\x86\u078C"+
+		"\n\x86\x03\x86\x05\x86\u078F\n\x86\x03\x87\x03\x87\x05\x87\u0793\n\x87"+
+		"\x03\x87\x03\x87\x03\x87\x05\x87\u0798\n\x87\x03\x87\x05\x87\u079B\n\x87"+
+		"\x03\x87\x05\x87\u079E\n\x87\x03\x87\x05\x87\u07A1\n\x87\x03\x88\x03\x88"+
+		"\x03\x88\x05\x88\u07A6\n\x88\x03\x89\x03\x89\x03\x89\x03\x89\x05\x89\u07AC"+
+		"\n\x89\x03\x8A\x03\x8A\x03\x8A\x03\x8B\x03\x8B\x03\x8B\x05\x8B\u07B4\n"+
+		"\x8B\x03\x8B\x05\x8B\u07B7\n\x8B\x03\x8C\x03\x8C\x03\x8C\x03\x8D\x03\x8D"+
+		"\x03\x8D\x03\x8D\x03\x8D\x07\x8D\u07C1\n\x8D\f\x8D\x0E\x8D\u07C4\v\x8D"+
+		"\x03\x8D\x05\x8D\u07C7\n\x8D\x03\x8E\x03\x8E\x03\x8E\x03\x8E\x03\x8E\x05"+
+		"\x8E\u07CE\n\x8E\x03\x8E\x03\x8E\x03\x8E\x03\x8E\x05\x8E\u07D4\n\x8E\x03"+
+		"\x8E\x05\x8E\u07D7\n\x8E\x03\x8F\x03\x8F\x03\x8F\x03\x8F\x07\x8F\u07DD"+
+		"\n\x8F\f\x8F\x0E\x8F\u07E0\v\x8F\x03\x90\x03\x90\x03\x90\x03\x90\x03\x90"+
+		"\x03\x90\x05\x90\u07E8\n\x90\x03\x91\x03\x91\x03\x91\x03\x91\x05\x91\u07EE"+
+		"\n\x91\x03\x92\x03\x92\x03\x92\x03\x92\x05\x92\u07F4\n\x92\x03\x92\x03"+
+		"\x92\x03\x93\x03\x93\x03\x93\x05\x93\u07FB\n\x93\x03\x93\x03\x93\x03\x94"+
+		"\x03\x94\x03\x94\x05\x94\u0802\n\x94\x03\x94\x03\x94\x05\x94\u0806\n\x94"+
+		"\x03\x94\x03\x94\x05\x94\u080A\n\x94\x03\x94\x05\x94\u080D\n\x94\x03\x95"+
+		"\x03\x95\x03\x95\x03\x95\x03\x95\x03\x95\x03\x95\x03\x95\x05\x95\u0817"+
+		"\n\x95\x03\x96\x03\x96\x03\x96\x03\x96\x03\x96\x03\x96\x03\x96\x05\x96"+
+		"\u0820\n\x96\x03\x96\x05\x96\u0823\n\x96\x03\x97\x03\x97\x03\x97\x05\x97"+
+		"\u0828\n\x97\x03\x97\x03\x97\x03\x97\x03\x97\x05\x97\u082E\n\x97\x07\x97"+
+		"\u0830\n\x97\f\x97\x0E\x97\u0833\v\x97\x03\x98\x03\x98\x03\x98\x03\x98"+
+		"\x03\x98\x03\x98\x03\x98\x05\x98\u083C\n\x98\x03\x99\x03\x99\x03\x99\x03"+
+		"\x99\x03\x99\x05\x99\u0843\n\x99\x03\x9A\x03\x9A\x03\x9A\x03\x9A\x03\x9B"+
+		"\x03\x9B\x03\x9B\x03\x9B\x05\x9B\u084D\n\x9B\x03\x9C\x03\x9C\x03\x9C\x03"+
+		"\x9C\x03\x9C\x07\x9C\u0854\n\x9C\f\x9C\x0E\x9C\u0857\v\x9C\x03\x9C\x03"+
+		"\x9C\x03\x9D\x03\x9D\x03\x9D\x03\x9D\x03\x9D\x07\x9D\u0860\n\x9D\f\x9D"+
+		"\x0E\x9D\u0863\v\x9D\x03\x9D\x03\x9D\x03\x9E\x03\x9E\x03\x9E\x03\x9E\x03"+
+		"\x9E\x07\x9E\u086C\n\x9E\f\x9E\x0E\x9E\u086F\v\x9E\x03\x9E\x03\x9E\x03"+
+		"\x9F\x03\x9F\x03\x9F\x03\x9F\x03\x9F\x07\x9F\u0878\n\x9F\f\x9F\x0E\x9F"+
+		"\u087B\v\x9F\x03\x9F\x03\x9F\x03\xA0\x03\xA0\x03\xA1\x03\xA1\x03\xA2\x03"+
+		"\xA2\x03\xA3\x03\xA3\x03\xA4\x03\xA4\x03\xA5\x03\xA5\x03\xA6\x03\xA6\x03"+
+		"\xA6\x03\xA6\x03\xA6\x03\xA6\x03\xA6\x03\xA6\x03\xA6\x03\xA6\x03\xA6\x03"+
+		"\xA6\x03\xA6\x03\xA6\x03\xA6\x03\xA6\x03\xA6\x03\xA6\x03\xA6\x03\xA6\x05"+
+		"\xA6\u089F\n\xA6\x03\xA7\x03\xA7\x03\xA7\x03\xA7\x03\xA7\x03\xA7\x03\xA7"+
+		"\x03\xA7\x03\xA7\x03\xA7\x03\xA7\x03\xA7\x03\xA7\x03\xA7\x03\xA7\x03\xA7"+
+		"\x03\xA7\x03\xA7\x03\xA7\x03\xA7\x05\xA7\u08B5\n\xA7\x03\xA8\x03\xA8\x03"+
+		"\xA9\x03\xA9\x03\xA9\x03\xA9\x03\xA9\x03\xA9\x03\xA9\x03\xA9\x03\xA9\x03"+
+		"\xA9\x03\xA9\x03\xA9\x03\xA9\x03\xA9\x03\xA9\x03\xA9\x03\xA9\x03\xA9\x03"+
+		"\xA9\x03\xA9\x05\xA9\u08CD\n\xA9\x03\xAA\x03\xAA\x03\xAA\x03\xAA\x03\xAA"+
+		"\x03\xAA\x03\xAA\x03\xAA\x03\xAA\x03\xAA\x03\xAA\x03\xAA\x03\xAA\x03\xAA"+
+		"\x03\xAA\x03\xAA\x03\xAA\x03\xAA\x03\xAA\x03\xAA\x05\xAA\u08E3\n\xAA\x03"+
+		"\xAB\x03\xAB\x03\xAB\x03\xAB\x03\xAB\x03\xAB\x03\xAB\x03\xAB\x03\xAB\x03"+
+		"\xAB\x03\xAB\x03\xAB\x03\xAB\x03\xAB\x03\xAB\x03\xAB\x03\xAB\x03\xAB\x03"+
+		"\xAB\x03\xAB\x05\xAB\u08F9\n\xAB\x03\xAC\x03\xAC\x03\xAC\x03\xAC\x03\xAC"+
+		"\x03\xAC\x03\xAC\x03\xAC\x03\xAC\x03\xAC\x03\xAC\x03\xAC\x03\xAC\x03\xAC"+
+		"\x03\xAC\x03\xAC\x03\xAC\x03\xAC\x03\xAC\x03\xAC\x05\xAC\u090F\n\xAC\x03"+
+		"\xAD\x03\xAD\x03\xAD\x03\xAD\x03\xAD\x03\xAD\x03\xAD\x03\xAD\x03\xAD\x03"+
+		"\xAD\x05\xAD\u091B\n\xAD\x03\xAE\x03\xAE\x03\xAE\x03\xAE\x03\xAE\x03\xAE"+
+		"\x03\xAE\x03\xAE\x03\xAE\x03\xAE\x05\xAE\u0927\n\xAE\x03\xAF\x03\xAF\x03"+
+		"\xAF\x03\xAF\x03\xAF\x03\xAF\x03\xAF\x03\xAF\x03\xAF\x03\xAF\x05\xAF\u0933"+
+		"\n\xAF\x03\xB0\x03\xB0\x03\xB0\x03\xB0\x03\xB0\x03\xB0\x03\xB0\x03\xB0"+
+		"\x03\xB0\x03\xB0\x03\xB0\x03\xB0\x03\xB0\x03\xB0\x03\xB0\x03\xB0\x03\xB0"+
+		"\x03\xB0\x03\xB0\x03\xB0\x05\xB0\u0949\n\xB0\x03\xB1\x03\xB1\x03\xB1\x03"+
+		"\xB1\x03\xB1";
 	private static readonly _serializedATNSegment1: string =
-		"\xB4\u094F\n\xB4\x03\xB5\x03\xB5\x03\xB5\x03\xB5\x03\xB5\x03\xB5\x03\xB5"+
-		"\x03\xB5\x03\xB5\x03\xB5\x05\xB5\u095B\n\xB5\x03\xB6\x03\xB6\x03\xB6\x05"+
-		"\xB6\u0960\n\xB6\x03\xB7\x03\xB7\x03\xB7\x03\xB7\x03\xB7\x03\xB7\x05\xB7"+
-		"\u0968\n\xB7\x03\xB8\x03\xB8\x03\xB8\x03\xB8\x03\xB8\x03\xB8\x03\xB8\x03"+
-		"\xB8\x03\xB8\x03\xB8\x03\xB8\x03\xB8\x03\xB8\x03\xB8\x03\xB8\x03\xB8\x05"+
-		"\xB8\u097A\n\xB8\x03\xB9\x03\xB9\x03\xB9\x03\xB9\x03\xB9\x03\xB9\x03\xB9"+
-		"\x03\xB9\x03\xB9\x03\xB9\x03\xB9\x03\xB9\x03\xB9\x03\xB9\x03\xB9\x03\xB9"+
-		"\x05\xB9\u098C\n\xB9\x03\xBA\x03\xBA\x03\xBA\x03\xBA\x03\xBA\x03\xBA\x03"+
-		"\xBA\x03\xBA\x03\xBA\x03\xBA\x03\xBA\x03\xBA\x03\xBA\x03\xBA\x03\xBA\x03"+
-		"\xBA\x05\xBA\u099E\n\xBA\x03\xBB\x03\xBB\x05\xBB\u09A2\n\xBB\x03\xBC\x03"+
-		"\xBC\x03\xBC\x05\xBC\u09A7\n\xBC\x03\xBC\x03\xBC\x03\xBC\x05\xBC\u09AC"+
-		"\n\xBC\x03\xBC\x03\xBC\x03\xBC\x05\xBC\u09B1\n\xBC\x03\xBC\x03\xBC\x03"+
-		"\xBC\x05\xBC\u09B6\n\xBC\x03\xBC\x03\xBC\x03\xBC\x05\xBC\u09BB\n\xBC\x05"+
-		"\xBC\u09BD\n\xBC\x03\xBD\x03\xBD\x03\xBD\x03\xBD\x03\xBD\x03\xBD\x03\xBD"+
-		"\x03\xBD\x03\xBD\x03\xBD\x03\xBD\x03\xBD\x03\xBD\x03\xBD\x03\xBD\x03\xBD"+
-		"\x03\xBD\x03\xBD\x03\xBD\x03\xBD\x03\xBD\x05\xBD\u09D4\n\xBD\x03\xBE\x03"+
-		"\xBE\x05\xBE\u09D8\n\xBE\x03\xBF\x03\xBF\x03\xC0\x03\xC0\x03\xC1\x03\xC1"+
-		"\x03\xC2\x03\xC2\x03\xC3\x03\xC3\x03\xC3\x03\xC3\x03\xC3\x03\xC3\x03\xC3"+
-		"\x03\xC3\x03\xC3\x03\xC3\x03\xC3\x03\xC3\x03\xC3\x03\xC3\x03\xC3\x03\xC3"+
-		"\x05\xC3\u09F2\n\xC3\x03\xC4\x03\xC4\x03\xC5\x03\xC5\x03\xC6\x03\xC6\x03"+
-		"\xC7\x03\xC7\x03\xC8\x03\xC8\x03\xC9\x03\xC9\x03\xC9\x03\xCA\x03\xCA\x03"+
-		"\xCB\x03\xCB\x03\xCC\x03\xCC\x03\xCD\x03\xCD\x03\xCE\x03\xCE\x03\xCF\x03"+
-		"\xCF\x03\xD0\x03\xD0\x03\xD1\x03\xD1\x03\xD1\x03\xD2\x03\xD2\x03\xD3\x03"+
-		"\xD3\x03\xD3\x03\xD4\x03\xD4\x03\xD5\x03\xD5\x03\xD6\x03\xD6\x03\xD7\x03"+
-		"\xD7\x03\xD8\x03\xD8\x03\xD9\x03\xD9\x03\xDA\x03\xDA\x03\xDB\x03\xDB\x03"+
-		"\xDC\x03\xDC\x03\xDD\x03\xDD\x03\xDE\x03\xDE\x03\xDF\x03\xDF\x03\xE0\x03"+
-		"\xE0\x03\xE1\x03\xE1\x03\xE1\x03\xE2\x03\xE2\x03\xE3\x03\xE3\x03\xE4\x03"+
-		"\xE4\x03\xE5\x03\xE5\x03\xE6\x03\xE6\x03\xE7\x03\xE7\x03\xE8\x03\xE8\x03"+
-		"\xE9\x03\xE9\x03\xEA\x03\xEA\x03\xEB\x03\xEB\x03\xEC\x03\xEC\x03\xED\x03"+
-		"\xED\x03\xEE\x03\xEE\x03\xEF\x03\xEF\x03\xF0\x03\xF0\x03\xF1\x03\xF1\x03"+
-		"\xF2\x03\xF2\x03\xF3\x03\xF3\x03\xF4\x03\xF4\x03\xF5\x03\xF5\x03\xF6\x03"+
-		"\xF6\x03\xF7\x03\xF7\x03\xF7\x03\xF8\x03\xF8\x03\xF9\x03\xF9\x03\xFA\x03"+
-		"\xFA\x03\xFB\x03\xFB\x03\xFC\x03\xFC\x03\xFD\x03\xFD\x03\xFE\x03\xFE\x03"+
-		"\xFF\x03\xFF\x03\xFF\x03\u0100\x03\u0100\x03\u0100\x03\u0101\x03\u0101"+
-		"\x03\u0102\x03\u0102\x03\u0103\x03\u0103\x03\u0103\x03\u0104\x03\u0104"+
-		"\x03\u0105\x03\u0105\x03\u0106\x03\u0106\x03\u0107\x03\u0107\x03\u0108"+
-		"\x03\u0108\x03\u0109\x03\u0109\x03\u010A\x03\u010A\x03\u010B\x03\u010B"+
-		"\x03\u010C\x03\u010C\x03\u010D\x03\u010D\x03\u010E\x03\u010E\x03\u010E"+
-		"\x03\u010F\x03\u010F\x03\u0110\x03\u0110\x03\u0111\x03\u0111\x03\u0112"+
-		"\x03\u0112\x03\u0113\x03\u0113\x03\u0114\x03\u0114\x03\u0115\x03\u0115"+
-		"\x03\u0116\x03\u0116\x03\u0117\x03\u0117\x03\u0118\x03\u0118\x03\u0119"+
-		"\x03\u0119\x03\u011A\x03\u011A\x03\u011B\x03\u011B\x03\u011C\x03\u011C"+
-		"\x03\u011D\x03\u011D\x03\u011E\x03\u011E\x03\u011F\x03\u011F\x03\u0120"+
-		"\x03\u0120\x03\u0121\x03\u0121\x03\u0122\x03\u0122\x03\u0123\x03\u0123"+
-		"\x03\u0124\x03\u0124\x03\u0125\x03\u0125\x03\u0126\x03\u0126\x03\u0127"+
-		"\x03\u0127\x03\u0128\x03\u0128\x03\u0129\x03\u0129\x03\u012A\x03\u012A"+
-		"\x03\u012B\x03\u012B\x03\u012C\x03\u012C\x03\u012D\x03\u012D\x03\u012E"+
-		"\x03\u012E\x03\u012F\x03\u012F\x03\u0130\x03\u0130\x03\u0131\x03\u0131"+
-		"\x03\u0132\x03\u0132\x03\u0133\x03\u0133\x03\u0134\x03\u0134\x03\u0135"+
-		"\x03\u0135\x03\u0136\x03\u0136\x03\u0137\x03\u0137\x03\u0138\x03\u0138"+
-		"\x03\u0139\x03\u0139\x03\u013A\x03\u013A\x03\u013B\x03\u013B\x03\u013C"+
-		"\x03\u013C\x03\u013D\x03\u013D\x03\u013E\x03\u013E\x03\u013F\x03\u013F"+
-		"\x03\u0140\x03\u0140\x03\u0141\x03\u0141\x03\u0142\x03\u0142\x03\u0143"+
-		"\x03\u0143\x03\u0144\x03\u0144\x03\u0145\x03\u0145\x03\u0146\x03\u0146"+
-		"\x03\u0147\x03\u0147\x03\u0148\x03\u0148\x03\u0149\x03\u0149\x03\u014A"+
-		"\x03\u014A\x03\u014B\x03\u014B\x03\u014B\x03\u014B\x03\u014B\x07\u014B"+
-		"\u0B10\n\u014B\f\u014B\x0E\u014B\u0B13\v\u014B\x03\u014B\x03\u014B\x03"+
-		"\u014C\x03\u014C\x03\u014D\x03\u014D\x03\u014E\x03\u014E\x03\u014F\x03"+
-		"\u014F\x03\u0150\x03\u0150\x03\u0151\x03\u0151\x03\u0152\x03\u0152\x03"+
-		"\u0153\x03\u0153\x03\u0154\x03\u0154\x03\u0155\x03\u0155\x03\u0156\x03"+
-		"\u0156\x03\u0157\x03\u0157\x03\u0158\x03\u0158\x03\u0159\x03\u0159\x03"+
-		"\u015A\x03\u015A\x03\u015B\x03\u015B\x03\u015C\x03\u015C\x03\u015D\x03"+
-		"\u015D\x03\u015E\x03\u015E\x03\u015F\x03\u015F\x03\u0160\x03\u0160\x03"+
-		"\u0161\x03\u0161\x03\u0161\x02\x02\x02\u0162\x02\x02\x04\x02\x06\x02\b"+
-		"\x02\n\x02\f\x02\x0E\x02\x10\x02\x12\x02\x14\x02\x16\x02\x18\x02\x1A\x02"+
-		"\x1C\x02\x1E\x02 \x02\"\x02$\x02&\x02(\x02*\x02,\x02.\x020\x022\x024\x02"+
-		"6\x028\x02:\x02<\x02>\x02@\x02B\x02D\x02F\x02H\x02J\x02L\x02N\x02P\x02"+
-		"R\x02T\x02V\x02X\x02Z\x02\\\x02^\x02`\x02b\x02d\x02f\x02h\x02j\x02l\x02"+
-		"n\x02p\x02r\x02t\x02v\x02x\x02z\x02|\x02~\x02\x80\x02\x82\x02\x84\x02"+
-		"\x86\x02\x88\x02\x8A\x02\x8C\x02\x8E\x02\x90\x02\x92\x02\x94\x02\x96\x02"+
-		"\x98\x02\x9A\x02\x9C\x02\x9E\x02\xA0\x02\xA2\x02\xA4\x02\xA6\x02\xA8\x02"+
-		"\xAA\x02\xAC\x02\xAE\x02\xB0\x02\xB2\x02\xB4\x02\xB6\x02\xB8\x02\xBA\x02"+
-		"\xBC\x02\xBE\x02\xC0\x02\xC2\x02\xC4\x02\xC6\x02\xC8\x02\xCA\x02\xCC\x02"+
-		"\xCE\x02\xD0\x02\xD2\x02\xD4\x02\xD6\x02\xD8\x02\xDA\x02\xDC\x02\xDE\x02"+
-		"\xE0\x02\xE2\x02\xE4\x02\xE6\x02\xE8\x02\xEA\x02\xEC\x02\xEE\x02\xF0\x02"+
-		"\xF2\x02\xF4\x02\xF6\x02\xF8\x02\xFA\x02\xFC\x02\xFE\x02\u0100\x02\u0102"+
-		"\x02\u0104\x02\u0106\x02\u0108\x02\u010A\x02\u010C\x02\u010E\x02\u0110"+
-		"\x02\u0112\x02\u0114\x02\u0116\x02\u0118\x02\u011A\x02\u011C\x02\u011E"+
-		"\x02\u0120\x02\u0122\x02\u0124\x02\u0126\x02\u0128\x02\u012A\x02\u012C"+
-		"\x02\u012E\x02\u0130\x02\u0132\x02\u0134\x02\u0136\x02\u0138\x02\u013A"+
-		"\x02\u013C\x02\u013E\x02\u0140\x02\u0142\x02\u0144\x02\u0146\x02\u0148"+
-		"\x02\u014A\x02\u014C\x02\u014E\x02\u0150\x02\u0152\x02\u0154\x02\u0156"+
-		"\x02\u0158\x02\u015A\x02\u015C\x02\u015E\x02\u0160\x02\u0162\x02\u0164"+
-		"\x02\u0166\x02\u0168\x02\u016A\x02\u016C\x02\u016E\x02\u0170\x02\u0172"+
-		"\x02\u0174\x02\u0176\x02\u0178\x02\u017A\x02\u017C\x02\u017E\x02\u0180"+
-		"\x02\u0182\x02\u0184\x02\u0186\x02\u0188\x02\u018A\x02\u018C\x02\u018E"+
-		"\x02\u0190\x02\u0192\x02\u0194\x02\u0196\x02\u0198\x02\u019A\x02\u019C"+
-		"\x02\u019E\x02\u01A0\x02\u01A2\x02\u01A4\x02\u01A6\x02\u01A8\x02\u01AA"+
-		"\x02\u01AC\x02\u01AE\x02\u01B0\x02\u01B2\x02\u01B4\x02\u01B6\x02\u01B8"+
-		"\x02\u01BA\x02\u01BC\x02\u01BE\x02\u01C0\x02\u01C2\x02\u01C4\x02\u01C6"+
-		"\x02\u01C8\x02\u01CA\x02\u01CC\x02\u01CE\x02\u01D0\x02\u01D2\x02\u01D4"+
-		"\x02\u01D6\x02\u01D8\x02\u01DA\x02\u01DC\x02\u01DE\x02\u01E0\x02\u01E2"+
-		"\x02\u01E4\x02\u01E6\x02\u01E8\x02\u01EA\x02\u01EC\x02\u01EE\x02\u01F0"+
-		"\x02\u01F2\x02\u01F4\x02\u01F6\x02\u01F8\x02\u01FA\x02\u01FC\x02\u01FE"+
-		"\x02\u0200\x02\u0202\x02\u0204\x02\u0206\x02\u0208\x02\u020A\x02\u020C"+
-		"\x02\u020E\x02\u0210\x02\u0212\x02\u0214\x02\u0216\x02\u0218\x02\u021A"+
-		"\x02\u021C\x02\u021E\x02\u0220\x02\u0222\x02\u0224\x02\u0226\x02\u0228"+
-		"\x02\u022A\x02\u022C\x02\u022E\x02\u0230\x02\u0232\x02\u0234\x02\u0236"+
-		"\x02\u0238\x02\u023A\x02\u023C\x02\u023E\x02\u0240\x02\u0242\x02\u0244"+
-		"\x02\u0246\x02\u0248\x02\u024A\x02\u024C\x02\u024E\x02\u0250\x02\u0252"+
-		"\x02\u0254\x02\u0256\x02\u0258\x02\u025A\x02\u025C\x02\u025E\x02\u0260"+
-		"\x02\u0262\x02\u0264\x02\u0266\x02\u0268\x02\u026A\x02\u026C\x02\u026E"+
-		"\x02\u0270\x02\u0272\x02\u0274\x02\u0276\x02\u0278\x02\u027A\x02\u027C"+
-		"\x02\u027E\x02\u0280\x02\u0282\x02\u0284\x02\u0286\x02\u0288\x02\u028A"+
-		"\x02\u028C\x02\u028E\x02\u0290\x02\u0292\x02\u0294\x02\u0296\x02\u0298"+
-		"\x02\u029A\x02\u029C\x02\u029E\x02\u02A0\x02\u02A2\x02\u02A4\x02\u02A6"+
-		"\x02\u02A8\x02\u02AA\x02\u02AC\x02\u02AE\x02\u02B0\x02\u02B2\x02\u02B4"+
-		"\x02\u02B6\x02\u02B8\x02\u02BA\x02\u02BC\x02\u02BE\x02\u02C0\x02\x02\x04"+
-		"\x03\x02\xA8\xA9\x04\x02<<}}\u0BC9\x02\u02C3\x03\x02\x02\x02\x04\u02D3"+
-		"\x03\x02\x02\x02\x06\u02E0\x03\x02\x02\x02\b\u02E2\x03\x02\x02\x02\n\u030A"+
-		"\x03\x02\x02\x02\f\u030C\x03\x02\x02\x02\x0E\u0313\x03\x02\x02\x02\x10"+
-		"\u0315\x03\x02\x02\x02\x12\u031E\x03\x02\x02\x02\x14\u032A\x03\x02\x02"+
-		"\x02\x16\u033D\x03\x02\x02\x02\x18\u0359\x03\x02\x02\x02\x1A\u035B\x03"+
-		"\x02\x02\x02\x1C\u0368\x03\x02\x02\x02\x1E\u0371\x03\x02\x02\x02 \u037B"+
-		"\x03\x02\x02\x02\"\u0386\x03\x02\x02\x02$\u038F\x03\x02\x02\x02&\u03A1"+
-		"\x03\x02\x02\x02(\u03A8\x03\x02\x02\x02*\u03B1\x03\x02\x02\x02,\u03C0"+
-		"\x03\x02\x02\x02.\u03C2\x03\x02\x02\x020\u03D3\x03\x02\x02\x022\u03E9"+
-		"\x03\x02\x02\x024\u03EB\x03\x02\x02\x026\u03F8\x03\x02\x02\x028\u03FE"+
-		"\x03\x02\x02\x02:\u0417\x03\x02\x02\x02<\u0419\x03\x02\x02\x02>\u0425"+
-		"\x03\x02\x02\x02@\u0429\x03\x02\x02\x02B\u0436\x03\x02\x02\x02D\u0442"+
-		"\x03\x02\x02\x02F\u0445\x03\x02\x02\x02H\u044D\x03\x02\x02\x02J\u0452"+
-		"\x03\x02\x02\x02L\u0454\x03\x02\x02\x02N\u045A\x03\x02\x02\x02P\u0462"+
-		"\x03\x02\x02\x02R\u0465\x03\x02\x02\x02T\u046E\x03\x02\x02\x02V\u0472"+
-		"\x03\x02\x02\x02X\u047E\x03\x02\x02\x02Z\u0483\x03\x02\x02\x02\\\u048F"+
-		"\x03\x02\x02\x02^\u0491\x03\x02\x02\x02`\u0494\x03\x02\x02\x02b\u0499"+
-		"\x03\x02\x02\x02d\u049D\x03\x02\x02\x02f\u04A0\x03\x02\x02\x02h\u04A9"+
-		"\x03\x02\x02\x02j\u04AC\x03\x02\x02\x02l\u04B7\x03\x02\x02\x02n\u04BD"+
-		"\x03\x02\x02\x02p\u04D7\x03\x02\x02\x02r\u04D9\x03\x02\x02\x02t\u04E1"+
-		"\x03\x02\x02\x02v\u04E8\x03\x02\x02\x02x\u04EF\x03\x02\x02\x02z\u04F6"+
-		"\x03\x02\x02\x02|\u04FD\x03\x02\x02\x02~\u0504\x03\x02\x02\x02\x80\u050D"+
-		"\x03\x02\x02\x02\x82\u0514\x03\x02\x02\x02\x84\u051B\x03\x02\x02\x02\x86"+
-		"\u0522\x03\x02\x02\x02\x88\u0529\x03\x02\x02\x02\x8A\u0538\x03\x02\x02"+
-		"\x02\x8C\u054A\x03\x02\x02\x02\x8E\u054C\x03\x02\x02\x02\x90\u055B\x03"+
-		"\x02\x02\x02\x92\u055F\x03\x02\x02\x02\x94\u0570\x03\x02\x02\x02\x96\u0572"+
-		"\x03\x02\x02\x02\x98\u0576\x03\x02\x02\x02\x9A\u0578\x03\x02\x02\x02\x9C"+
-		"\u0584\x03\x02\x02\x02\x9E\u0588\x03\x02\x02\x02\xA0\u058C\x03\x02\x02"+
-		"\x02\xA2\u058E\x03\x02\x02\x02\xA4\u05A8\x03\x02\x02\x02\xA6\u05B0\x03"+
-		"\x02\x02\x02\xA8\u05B2\x03\x02\x02\x02\xAA\u05BB\x03\x02\x02\x02\xAC\u05BD"+
-		"\x03\x02\x02\x02\xAE\u05BF\x03\x02\x02\x02\xB0\u05C3\x03\x02\x02\x02\xB2"+
-		"\u05C9\x03\x02\x02\x02\xB4\u05D2\x03\x02\x02\x02\xB6\u05DB\x03\x02\x02"+
-		"\x02\xB8\u05DD\x03\x02\x02\x02\xBA\u05DF\x03\x02\x02\x02\xBC\u05EB\x03"+
-		"\x02\x02\x02\xBE\u05ED\x03\x02\x02\x02\xC0\u05F7\x03\x02\x02\x02\xC2\u05F9"+
-		"\x03\x02\x02\x02\xC4\u0607\x03\x02\x02\x02\xC6\u0616\x03\x02\x02\x02\xC8"+
-		"\u0618\x03\x02\x02\x02\xCA\u061C\x03\x02\x02\x02\xCC\u061F\x03\x02\x02"+
-		"\x02\xCE\u0625\x03\x02\x02\x02\xD0\u0634\x03\x02\x02\x02\xD2\u0638\x03"+
-		"\x02\x02\x02\xD4\u063F\x03\x02\x02\x02\xD6\u0646\x03\x02\x02\x02\xD8\u0648"+
-		"\x03\x02\x02\x02\xDA\u0650\x03\x02\x02\x02\xDC\u0658\x03\x02\x02\x02\xDE"+
-		"\u0660\x03\x02\x02\x02\xE0\u0670\x03\x02\x02\x02\xE2\u0682\x03\x02\x02"+
-		"\x02\xE4\u0684\x03\x02\x02\x02\xE6\u0692\x03\x02\x02\x02\xE8\u0695\x03"+
-		"\x02\x02\x02\xEA\u069E\x03\x02\x02\x02\xEC\u06AD\x03\x02\x02\x02\xEE\u06FC"+
-		"\x03\x02\x02\x02\xF0\u06FE\x03\x02\x02\x02\xF2\u070A\x03\x02\x02\x02\xF4"+
-		"\u071A\x03\x02\x02\x02\xF6\u0726\x03\x02\x02\x02\xF8\u0741\x03\x02\x02"+
-		"\x02\xFA\u0743\x03\x02\x02\x02\xFC\u0746\x03\x02\x02\x02\xFE\u0749\x03"+
-		"\x02\x02\x02\u0100\u074C\x03\x02\x02\x02\u0102\u0750\x03\x02\x02\x02\u0104"+
-		"\u075B\x03\x02\x02\x02\u0106\u0762\x03\x02\x02\x02\u0108\u0770\x03\x02"+
-		"\x02\x02\u010A\u077E\x03\x02\x02\x02\u010C\u0780\x03\x02\x02\x02\u010E"+
-		"\u078E\x03\x02\x02\x02\u0110\u0790\x03\x02\x02\x02\u0112\u07A2\x03\x02"+
-		"\x02\x02\u0114\u07AB\x03\x02\x02\x02\u0116\u07AD\x03\x02\x02\x02\u0118"+
-		"\u07B6\x03\x02\x02\x02\u011A\u07B8\x03\x02\x02\x02\u011C\u07C6\x03\x02"+
-		"\x02\x02\u011E\u07D6\x03\x02\x02\x02\u0120\u07D8\x03\x02\x02\x02\u0122"+
-		"\u07E7\x03\x02\x02\x02\u0124\u07E9\x03\x02\x02\x02\u0126\u07EF\x03\x02"+
-		"\x02\x02\u0128\u07F7\x03\x02\x02\x02\u012A\u080C\x03\x02\x02\x02\u012C"+
-		"\u0816\x03\x02\x02\x02\u012E\u0822\x03\x02\x02\x02\u0130\u0827\x03\x02"+
-		"\x02\x02\u0132\u083B\x03\x02\x02\x02\u0134\u0842\x03\x02\x02\x02\u0136"+
-		"\u0844\x03\x02\x02\x02\u0138\u084C\x03\x02\x02\x02\u013A\u084E\x03\x02"+
-		"\x02\x02\u013C\u085A\x03\x02\x02\x02\u013E\u0866\x03\x02\x02\x02\u0140"+
-		"\u0872\x03\x02\x02\x02\u0142\u087E\x03\x02\x02\x02\u0144\u0880\x03\x02"+
-		"\x02\x02\u0146\u0882\x03\x02\x02\x02\u0148\u0884\x03\x02\x02\x02\u014A"+
-		"\u0886\x03\x02\x02\x02\u014C\u0888\x03\x02\x02\x02\u014E\u089A\x03\x02"+
-		"\x02\x02\u0150\u08AC\x03\x02\x02\x02\u0152\u08BE\x03\x02\x02\x02\u0154"+
-		"\u08D0\x03\x02\x02\x02\u0156\u08E2\x03\x02\x02\x02\u0158\u08F4\x03\x02"+
-		"\x02\x02\u015A\u0906\x03\x02\x02\x02\u015C\u0912\x03\x02\x02\x02\u015E"+
-		"\u091E\x03\x02\x02\x02\u0160\u092A\x03\x02\x02\x02\u0162\u0936\x03\x02"+
-		"\x02\x02\u0164\u0942\x03\x02\x02\x02\u0166\u094E\x03\x02\x02\x02\u0168"+
-		"\u095A\x03\x02\x02\x02\u016A\u095F\x03\x02\x02\x02\u016C\u0967\x03\x02"+
-		"\x02\x02\u016E\u0979\x03\x02\x02\x02\u0170\u098B\x03\x02\x02\x02\u0172"+
-		"\u099D\x03\x02\x02\x02\u0174\u09A1\x03\x02\x02\x02\u0176\u09BC\x03\x02"+
-		"\x02\x02\u0178\u09D3\x03\x02\x02\x02\u017A\u09D7\x03\x02\x02\x02\u017C"+
-		"\u09D9\x03\x02\x02\x02\u017E\u09DB\x03\x02\x02\x02\u0180\u09DD\x03\x02"+
-		"\x02\x02\u0182\u09DF\x03\x02\x02\x02\u0184\u09F1\x03\x02\x02\x02\u0186"+
-		"\u09F3\x03\x02\x02\x02\u0188\u09F5\x03\x02\x02\x02\u018A\u09F7\x03\x02"+
-		"\x02\x02\u018C\u09F9\x03\x02\x02\x02\u018E\u09FB\x03\x02\x02\x02\u0190"+
-		"\u09FD\x03\x02\x02\x02\u0192\u0A00\x03\x02\x02\x02\u0194\u0A02\x03\x02"+
-		"\x02\x02\u0196\u0A04\x03\x02\x02\x02\u0198\u0A06\x03\x02\x02\x02\u019A"+
-		"\u0A08\x03\x02\x02\x02\u019C\u0A0A\x03\x02\x02\x02\u019E\u0A0C\x03\x02"+
-		"\x02\x02\u01A0\u0A0E\x03\x02\x02\x02\u01A2\u0A11\x03\x02\x02\x02\u01A4"+
-		"\u0A13\x03\x02\x02\x02\u01A6\u0A16\x03\x02\x02\x02\u01A8\u0A18\x03\x02"+
-		"\x02\x02\u01AA\u0A1A\x03\x02\x02\x02\u01AC\u0A1C\x03\x02\x02\x02\u01AE"+
-		"\u0A1E\x03\x02\x02\x02\u01B0\u0A20\x03\x02\x02\x02\u01B2\u0A22\x03\x02"+
-		"\x02\x02\u01B4\u0A24\x03\x02\x02\x02\u01B6\u0A26\x03\x02\x02\x02\u01B8"+
-		"\u0A28\x03\x02\x02\x02\u01BA\u0A2A\x03\x02\x02\x02\u01BC\u0A2C\x03\x02"+
-		"\x02\x02\u01BE\u0A2E\x03\x02\x02\x02\u01C0\u0A30\x03\x02\x02\x02\u01C2"+
-		"\u0A33\x03\x02\x02\x02\u01C4\u0A35\x03\x02\x02\x02\u01C6\u0A37\x03\x02"+
-		"\x02\x02\u01C8\u0A39\x03\x02\x02\x02\u01CA\u0A3B\x03\x02\x02\x02\u01CC"+
-		"\u0A3D\x03\x02\x02\x02\u01CE\u0A3F\x03\x02\x02\x02\u01D0\u0A41\x03\x02"+
-		"\x02\x02\u01D2\u0A43\x03\x02\x02\x02\u01D4\u0A45\x03\x02\x02\x02\u01D6"+
-		"\u0A47\x03\x02\x02\x02\u01D8\u0A49\x03\x02\x02\x02\u01DA\u0A4B\x03\x02"+
-		"\x02\x02\u01DC\u0A4D\x03\x02\x02\x02\u01DE\u0A4F\x03\x02\x02\x02\u01E0"+
-		"\u0A51\x03\x02\x02\x02\u01E2\u0A53\x03\x02\x02\x02\u01E4\u0A55\x03\x02"+
-		"\x02\x02\u01E6\u0A57\x03\x02\x02\x02\u01E8\u0A59\x03\x02\x02\x02\u01EA"+
-		"\u0A5B\x03\x02\x02\x02\u01EC\u0A5D\x03\x02\x02\x02\u01EE\u0A60\x03\x02"+
-		"\x02\x02\u01F0\u0A62\x03\x02\x02\x02\u01F2\u0A64\x03\x02\x02\x02\u01F4"+
-		"\u0A66\x03\x02\x02\x02\u01F6\u0A68\x03\x02\x02\x02\u01F8\u0A6A\x03\x02"+
-		"\x02\x02\u01FA\u0A6C\x03\x02\x02\x02\u01FC\u0A6E\x03\x02\x02\x02\u01FE"+
-		"\u0A71\x03\x02\x02\x02\u0200\u0A74\x03\x02\x02\x02\u0202\u0A76\x03\x02"+
-		"\x02\x02\u0204\u0A78\x03\x02\x02\x02\u0206\u0A7B\x03\x02\x02\x02\u0208"+
-		"\u0A7D\x03\x02\x02\x02\u020A\u0A7F\x03\x02\x02\x02\u020C\u0A81\x03\x02"+
-		"\x02\x02\u020E\u0A83\x03\x02\x02\x02\u0210\u0A85\x03\x02\x02\x02\u0212"+
-		"\u0A87\x03\x02\x02\x02\u0214\u0A89\x03\x02\x02\x02\u0216\u0A8B\x03\x02"+
-		"\x02\x02\u0218\u0A8D\x03\x02\x02\x02\u021A\u0A8F\x03\x02\x02\x02\u021C"+
-		"\u0A92\x03\x02\x02\x02\u021E\u0A94\x03\x02\x02\x02\u0220\u0A96\x03\x02"+
-		"\x02\x02\u0222\u0A98\x03\x02\x02\x02\u0224\u0A9A\x03\x02\x02\x02\u0226"+
-		"\u0A9C\x03\x02\x02\x02\u0228\u0A9E\x03\x02\x02\x02\u022A\u0AA0\x03\x02"+
-		"\x02\x02\u022C\u0AA2\x03\x02\x02\x02\u022E\u0AA4\x03\x02\x02\x02\u0230"+
-		"\u0AA6\x03\x02\x02\x02\u0232\u0AA8\x03\x02\x02\x02\u0234\u0AAA\x03\x02"+
-		"\x02\x02\u0236\u0AAC\x03\x02\x02\x02\u0238\u0AAE\x03\x02\x02\x02\u023A"+
-		"\u0AB0\x03\x02\x02\x02\u023C\u0AB2\x03\x02\x02\x02\u023E\u0AB4\x03\x02"+
-		"\x02\x02\u0240\u0AB6\x03\x02\x02\x02\u0242\u0AB8\x03\x02\x02\x02\u0244"+
-		"\u0ABA\x03\x02\x02\x02\u0246\u0ABC\x03\x02\x02\x02\u0248\u0ABE\x03\x02"+
-		"\x02\x02\u024A\u0AC0\x03\x02\x02\x02\u024C\u0AC2\x03\x02\x02\x02\u024E"+
-		"\u0AC4\x03\x02\x02\x02\u0250\u0AC6\x03\x02\x02\x02\u0252\u0AC8\x03\x02"+
-		"\x02\x02\u0254\u0ACA\x03\x02\x02\x02\u0256\u0ACC\x03\x02\x02\x02\u0258"+
-		"\u0ACE\x03\x02\x02\x02\u025A\u0AD0\x03\x02\x02\x02\u025C\u0AD2\x03\x02"+
-		"\x02\x02\u025E\u0AD4\x03\x02\x02\x02\u0260\u0AD6\x03\x02\x02\x02\u0262"+
-		"\u0AD8\x03\x02\x02\x02\u0264\u0ADA\x03\x02\x02\x02\u0266\u0ADC\x03\x02"+
-		"\x02\x02\u0268\u0ADE\x03\x02\x02\x02\u026A\u0AE0\x03\x02\x02\x02\u026C"+
-		"\u0AE2\x03\x02\x02\x02\u026E\u0AE4\x03\x02\x02\x02\u0270\u0AE6\x03\x02"+
-		"\x02\x02\u0272\u0AE8\x03\x02\x02\x02\u0274\u0AEA\x03\x02\x02\x02\u0276"+
-		"\u0AEC\x03\x02\x02\x02\u0278\u0AEE\x03\x02\x02\x02\u027A\u0AF0\x03\x02"+
-		"\x02\x02\u027C\u0AF2\x03\x02\x02\x02\u027E\u0AF4\x03\x02\x02\x02\u0280"+
-		"\u0AF6\x03\x02\x02\x02\u0282\u0AF8\x03\x02\x02\x02\u0284\u0AFA\x03\x02"+
-		"\x02\x02\u0286\u0AFC\x03\x02\x02\x02\u0288\u0AFE\x03\x02\x02\x02\u028A"+
-		"\u0B00\x03\x02\x02\x02\u028C\u0B02\x03\x02\x02\x02\u028E\u0B04\x03\x02"+
-		"\x02\x02\u0290\u0B06\x03\x02\x02\x02\u0292\u0B08\x03\x02\x02\x02\u0294"+
-		"\u0B0A\x03\x02\x02\x02\u0296\u0B16\x03\x02\x02\x02\u0298\u0B18\x03\x02"+
-		"\x02\x02\u029A\u0B1A\x03\x02\x02\x02\u029C\u0B1C\x03\x02\x02\x02\u029E"+
-		"\u0B1E\x03\x02\x02\x02\u02A0\u0B20\x03\x02\x02\x02\u02A2\u0B22\x03\x02"+
-		"\x02\x02\u02A4\u0B24\x03\x02\x02\x02\u02A6\u0B26\x03\x02\x02\x02\u02A8"+
-		"\u0B28\x03\x02\x02\x02\u02AA\u0B2A\x03\x02\x02\x02\u02AC\u0B2C\x03\x02"+
-		"\x02\x02\u02AE\u0B2E\x03\x02\x02\x02\u02B0\u0B30\x03\x02\x02\x02\u02B2"+
-		"\u0B32\x03\x02\x02\x02\u02B4\u0B34\x03\x02\x02\x02\u02B6\u0B36\x03\x02"+
-		"\x02\x02\u02B8\u0B38\x03\x02\x02\x02\u02BA\u0B3A\x03\x02\x02\x02\u02BC"+
-		"\u0B3C\x03\x02\x02\x02\u02BE\u0B3E\x03\x02\x02\x02\u02C0\u0B40\x03\x02"+
-		"\x02\x02\u02C2\u02C4\x05\x04\x03\x02\u02C3\u02C2\x03\x02\x02\x02\u02C3"+
-		"\u02C4\x03\x02\x02\x02\u02C4\u02C6\x03\x02\x02\x02\u02C5\u02C7\x07\x17"+
-		"\x02\x02\u02C6\u02C5\x03\x02\x02\x02\u02C6\u02C7\x03\x02\x02\x02\u02C7"+
-		"\u02C8\x03\x02\x02\x02\u02C8\u02C9\x05\u029A\u014E\x02\u02C9\x03\x03\x02"+
-		"\x02\x02\u02CA\u02CC\x05\n\x06\x02\u02CB\u02CD\x07\x17\x02\x02\u02CC\u02CB"+
-		"\x03\x02\x02\x02\u02CC\u02CD\x03\x02\x02\x02\u02CD\u02CE\x03\x02\x02\x02"+
-		"\u02CE\u02CF\x05\x06\x04\x02\u02CF\u02D2\x03\x02\x02\x02\u02D0\u02D2\x05"+
-		"\b\x05\x02\u02D1\u02CA\x03\x02\x02\x02\u02D1\u02D0\x03\x02\x02\x02\u02D2"+
-		"\u02D5\x03\x02\x02\x02\u02D3\u02D1\x03\x02\x02\x02\u02D3\u02D4\x03\x02"+
-		"\x02\x02\u02D4\u02DE\x03\x02\x02\x02\u02D5\u02D3\x03\x02\x02\x02\u02D6"+
-		"\u02DB\x05\n\x06\x02\u02D7\u02D9\x07\x17\x02\x02\u02D8\u02D7\x03\x02\x02"+
-		"\x02\u02D8\u02D9\x03\x02\x02\x02\u02D9\u02DA\x03\x02\x02\x02\u02DA\u02DC"+
-		"\x05\x06\x04\x02\u02DB\u02D8\x03\x02\x02\x02\u02DB\u02DC\x03\x02\x02\x02"+
-		"\u02DC\u02DF\x03\x02\x02\x02\u02DD\u02DF\x05\b\x05\x02\u02DE\u02D6\x03"+
-		"\x02\x02\x02\u02DE\u02DD\x03\x02\x02\x02\u02DF\x05\x03\x02\x02\x02\u02E0"+
-		"\u02E1\x07\n\x02\x02\u02E1\x07\x03\x02\x02\x02\u02E2\u02E3\x05\x06\x04"+
-		"\x02\u02E3\t\x03\x02\x02\x02\u02E4\u030B\x05\xBC_\x02\u02E5\u030B\x05"+
-		"\xC2b\x02\u02E6\u030B\x05r:\x02\u02E7\u030B\x05l7\x02\u02E8\u030B\x05"+
-		"Z.\x02\u02E9\u030B\x05L\'\x02\u02EA\u030B\x05F$\x02\u02EB\u030B\x05\xBA"+
-		"^\x02\u02EC\u030B\x058\x1D\x02\u02ED\u030B\x050\x19\x02\u02EE\u030B\x05"+
-		"\xCEh\x02\u02EF\u030B\x05.\x18\x02\u02F0\u030B\x05$\x13\x02\u02F1\u030B"+
-		"\x05\x1C\x0F\x02\u02F2\u030B\x05\x88E\x02\u02F3\u030B\x05\"\x12\x02\u02F4"+
-		"\u030B\x05\x1E\x10\x02\u02F5\u030B\x05\x1A\x0E\x02\u02F6\u030B\x05\xDE"+
-		"p\x02\u02F7\u030B\x05z>\x02\u02F8\u030B\x05|?\x02\u02F9\u030B\x05\x86"+
-		"D\x02\u02FA\u030B\x05\x84C\x02\u02FB\u030B\x05x=\x02\u02FC\u030B\x05\x80"+
-		"A\x02\u02FD\u030B\x05\x82B\x02\u02FE\u030B\x05~@\x02\u02FF\u030B\x05v"+
-		"<\x02\u0300\u030B\x05t;\x02\u0301\u030B\x05\x14\v\x02\u0302\u030B\x05"+
-		"\xF6|\x02\u0303\u030B\x05\x12\n\x02\u0304\u030B\x05\x10\t\x02\u0305\u030B"+
-		"\x05\f\x07\x02\u0306\u030B\x05\u0110\x89\x02\u0307\u030B\x05\xCCg\x02"+
-		"\u0308\u030B\x05\xE4s\x02\u0309\u030B\x05\xCAf\x02\u030A\u02E4\x03\x02"+
-		"\x02\x02\u030A\u02E5\x03\x02\x02\x02\u030A\u02E6\x03\x02\x02\x02\u030A"+
-		"\u02E7\x03\x02\x02\x02\u030A\u02E8\x03\x02\x02\x02\u030A\u02E9\x03\x02"+
-		"\x02\x02\u030A\u02EA\x03\x02\x02\x02\u030A\u02EB\x03\x02\x02\x02\u030A"+
-		"\u02EC\x03\x02\x02\x02\u030A\u02ED\x03\x02\x02\x02\u030A\u02EE\x03\x02"+
-		"\x02\x02\u030A\u02EF\x03\x02\x02\x02\u030A\u02F0\x03\x02\x02\x02\u030A"+
-		"\u02F1\x03\x02\x02\x02\u030A\u02F2\x03\x02\x02\x02\u030A\u02F3\x03\x02"+
-		"\x02\x02\u030A\u02F4\x03\x02\x02\x02\u030A\u02F5\x03\x02\x02\x02\u030A"+
-		"\u02F6\x03\x02\x02\x02\u030A\u02F7\x03\x02\x02\x02\u030A\u02F8\x03\x02"+
-		"\x02\x02\u030A\u02F9\x03\x02\x02\x02\u030A\u02FA\x03\x02\x02\x02\u030A"+
-		"\u02FB\x03\x02\x02\x02\u030A\u02FC\x03\x02\x02\x02\u030A\u02FD\x03\x02"+
-		"\x02\x02\u030A\u02FE\x03\x02\x02\x02\u030A\u02FF\x03\x02\x02\x02\u030A"+
-		"\u0300\x03\x02\x02\x02\u030A\u0301\x03\x02\x02\x02\u030A\u0302\x03\x02"+
-		"\x02\x02\u030A\u0303\x03\x02\x02\x02\u030A\u0304\x03\x02\x02\x02\u030A"+
-		"\u0305\x03\x02\x02\x02\u030A\u0306\x03\x02\x02\x02\u030A\u0307\x03\x02"+
-		"\x02\x02\u030A\u0308\x03\x02\x02\x02\u030A\u0309\x03\x02\x02\x02\u030B"+
-		"\v\x03\x02\x02\x02\u030C\u030D\x05\u025E\u0130\x02\u030D\u030E\x05\x16"+
-		"\f\x02\u030E\u030F\x05\u0212\u010A\x02\u030F\u0310\x05\x18\r\x02\u0310"+
-		"\u0311\x05\u01DA\xEE\x02\u0311\u0312\x05\u017C\xBF\x02\u0312\r\x03\x02"+
-		"\x02\x02\u0313\u0314\x05\u01FE\u0100\x02\u0314\x0F\x03\x02\x02\x02\u0315"+
-		"\u0319\x05\u01FC\xFF\x02\u0316\u0317\x05\u0210\u0109\x02\u0317\u0318\x05"+
-		"\u017C\xBF\x02\u0318\u031A\x03\x02\x02\x02\u0319\u0316\x03\x02\x02\x02"+
-		"\u0319\u031A\x03\x02\x02\x02\u031A\u031C\x03\x02\x02\x02\u031B\u031D\x05"+
-		"\u020A\u0106\x02\u031C\u031B\x03\x02\x02\x02\u031C\u031D\x03\x02\x02\x02"+
-		"\u031D\x11\x03\x02\x02\x02\u031E\u031F\x05\u01FA\xFE\x02\u031F\u0323\x05"+
-		"\x16\f\x02\u0320\u0321\x05\u0212\u010A\x02\u0321\u0322\x05\x18\r\x02\u0322"+
-		"\u0324\x03\x02\x02\x02\u0323\u0320\x03\x02\x02\x02\u0323\u0324\x03\x02"+
-		"\x02\x02\u0324\u0328\x03\x02\x02\x02\u0325\u0326\x05\u0210\u0109\x02\u0326"+
-		"\u0327\x05\u017C\xBF\x02\u0327\u0329\x03\x02\x02\x02\u0328\u0325\x03\x02"+
-		"\x02\x02\u0328\u0329\x03\x02\x02\x02\u0329\x13\x03\x02\x02\x02\u032A\u032B"+
-		"\x05\u01E0\xF1\x02\u032B\u032C\x05\x16\f\x02\u032C\u032D\x05\u0212\u010A"+
-		"\x02\u032D\u032E\x05\x18\r\x02\u032E\u032F\x05\u0240\u0121\x02\u032F\u0330"+
-		"\x05\u017C\xBF\x02\u0330\x15\x03\x02\x02\x02\u0331\u0334\x05\u0198\xCD"+
-		"\x02\u0332\u0334\x05\u01A0\xD1\x02\u0333\u0331\x03\x02\x02\x02\u0333\u0332"+
-		"\x03\x02\x02\x02\u0334\u033E\x03\x02\x02\x02\u0335\u033E\x05\u01A6\xD4"+
-		"\x02\u0336\u033E\x05\u01B0\xD9\x02\u0337\u033E\x05\u01C8\xE5\x02\u0338"+
-		"\u033E\x05\u01D2\xEA\x02\u0339\u033E\x05\u01C2\xE2\x02\u033A\u033E\x05"+
-		"\u01CC\xE7\x02\u033B\u033E\x05\u0206\u0104\x02\u033C\u033E\x05\u022E\u0118"+
-		"\x02\u033D\u0333\x03\x02\x02\x02\u033D\u0335\x03\x02\x02\x02\u033D\u0336"+
-		"\x03\x02\x02\x02\u033D\u0337\x03\x02\x02\x02\u033D\u0338\x03\x02\x02\x02"+
-		"\u033D\u0339\x03\x02\x02\x02\u033D\u033A\x03\x02\x02\x02\u033D\u033B\x03"+
-		"\x02\x02\x02\u033D\u033C\x03\x02\x02\x02\u033E\x17\x03\x02\x02\x02\u033F"+
-		"\u035A\x05\u019A\xCE\x02\u0340\u0341\x05\u019A\xCE\x02\u0341\u0342\x05"+
-		"\u01E4\xF3\x02\u0342\u0343\x05\u01F4\xFB\x02\u0343\u0344\x05\u014E\xA8"+
-		"\x02\u0344\u035A\x03\x02\x02\x02\u0345\u0349\x05\u01DE\xF0\x02\u0346\u0347"+
-		"\x05\u014E\xA8\x02\u0347";
+		"\x03\xB1\x03\xB1\x03\xB1\x03\xB1\x03\xB1\x03\xB1\x03\xB1\x03\xB1\x03\xB1"+
+		"\x03\xB1\x03\xB1\x03\xB1\x03\xB1\x03\xB1\x03\xB1\x05\xB1\u095F\n\xB1\x03"+
+		"\xB2\x03\xB2\x03\xB2\x03\xB2\x03\xB2\x03\xB2\x03\xB2\x03\xB2\x03\xB2\x03"+
+		"\xB2\x05\xB2\u096B\n\xB2\x03\xB3\x03\xB3\x03\xB3\x03\xB3\x03\xB3\x03\xB3"+
+		"\x03\xB3\x03\xB3\x03\xB3\x03\xB3\x05\xB3\u0977\n\xB3\x03\xB4\x03\xB4\x03"+
+		"\xB4\x05\xB4\u097C\n\xB4\x03\xB5\x03\xB5\x03\xB5\x03\xB5\x03\xB5\x03\xB5"+
+		"\x05\xB5\u0984\n\xB5\x03\xB6\x03\xB6\x03\xB6\x03\xB6\x03\xB6\x05\xB6\u098B"+
+		"\n\xB6\x03\xB7\x03\xB7\x03\xB8\x03\xB8\x03\xB8\x03\xB8\x03\xB8\x05\xB8"+
+		"\u0994\n\xB8\x03\xB9\x03\xB9\x03\xBA\x03\xBA\x05\xBA\u099A\n\xBA\x03\xBB"+
+		"\x03\xBB\x03\xBB\x05\xBB\u099F\n\xBB\x03\xBB\x03\xBB\x03\xBB\x05\xBB\u09A4"+
+		"\n\xBB\x03\xBB\x03\xBB\x03\xBB\x05\xBB\u09A9\n\xBB\x03\xBB\x03\xBB\x03"+
+		"\xBB\x05\xBB\u09AE\n\xBB\x03\xBB\x03\xBB\x03\xBB\x05\xBB\u09B3\n\xBB\x05"+
+		"\xBB\u09B5\n\xBB\x03\xBC\x03\xBC\x03\xBC\x03\xBC\x03\xBC\x03\xBC\x03\xBC"+
+		"\x03\xBC\x03\xBC\x03\xBC\x03\xBC\x03\xBC\x03\xBC\x03\xBC\x03\xBC\x03\xBC"+
+		"\x03\xBC\x03\xBC\x03\xBC\x03\xBC\x03\xBC\x05\xBC\u09CC\n\xBC\x03\xBD\x03"+
+		"\xBD\x05\xBD\u09D0\n\xBD\x03\xBE\x03\xBE\x03\xBF\x03\xBF\x03\xC0\x03\xC0"+
+		"\x03\xC1\x03\xC1\x03\xC2\x03\xC2\x03\xC2\x03\xC2\x03\xC2\x03\xC2\x03\xC2"+
+		"\x03\xC2\x03\xC2\x03\xC2\x03\xC2\x03\xC2\x03\xC2\x03\xC2\x03\xC2\x03\xC2"+
+		"\x03\xC2\x03\xC2\x03\xC2\x03\xC2\x05\xC2\u09EE\n\xC2\x03\xC3\x03\xC3\x03"+
+		"\xC4\x03\xC4\x03\xC5\x03\xC5\x03\xC6\x03\xC6\x03\xC7\x03\xC7\x03\xC8\x03"+
+		"\xC8\x03\xC8\x03\xC9\x03\xC9\x03\xCA\x03\xCA\x03\xCB\x03\xCB\x03\xCC\x03"+
+		"\xCC\x03\xCD\x03\xCD\x03\xCE\x03\xCE\x03\xCF\x03\xCF\x03\xD0\x03\xD0\x03"+
+		"\xD0\x03\xD1\x03\xD1\x03\xD2\x03\xD2\x03\xD2\x03\xD3\x03\xD3\x03\xD4\x03"+
+		"\xD4\x03\xD5\x03\xD5\x03\xD6\x03\xD6\x03\xD7\x03\xD7\x03\xD8\x03\xD8\x03"+
+		"\xD9\x03\xD9\x03\xDA\x03\xDA\x03\xDB\x03\xDB\x03\xDC\x03\xDC\x03\xDD\x03"+
+		"\xDD\x03\xDE\x03\xDE\x03\xDF\x03\xDF\x03\xE0\x03\xE0\x03\xE0\x03\xE1\x03"+
+		"\xE1\x03\xE2\x03\xE2\x03\xE3\x03\xE3\x03\xE4\x03\xE4\x03\xE5\x03\xE5\x03"+
+		"\xE6\x03\xE6\x03\xE7\x03\xE7\x03\xE8\x03\xE8\x03\xE9\x03\xE9\x03\xEA\x03"+
+		"\xEA\x03\xEB\x03\xEB\x03\xEC\x03\xEC\x03\xED\x03\xED\x03\xEE\x03\xEE\x03"+
+		"\xEF\x03\xEF\x03\xF0\x03\xF0\x03\xF1\x03\xF1\x03\xF2\x03\xF2\x03\xF3\x03"+
+		"\xF3\x03\xF4\x03\xF4\x03\xF5\x03\xF5\x03\xF6\x03\xF6\x03\xF6\x03\xF7\x03"+
+		"\xF7\x03\xF8\x03\xF8\x03\xF9\x03\xF9\x03\xFA\x03\xFA\x03\xFB\x03\xFB\x03"+
+		"\xFC\x03\xFC\x03\xFD\x03\xFD\x03\xFE\x03\xFE\x03\xFE\x03\xFF\x03\xFF\x03"+
+		"\xFF\x03\u0100\x03\u0100\x03\u0101\x03\u0101\x03\u0102\x03\u0102\x03\u0102"+
+		"\x03\u0103\x03\u0103\x03\u0104\x03\u0104\x03\u0105\x03\u0105\x03\u0106"+
+		"\x03\u0106\x03\u0107\x03\u0107\x03\u0108\x03\u0108\x03\u0109\x03\u0109"+
+		"\x03\u010A\x03\u010A\x03\u010B\x03\u010B\x03\u010C\x03\u010C\x03\u010D"+
+		"\x03\u010D\x03\u010D\x03\u010E\x03\u010E\x03\u010F\x03\u010F\x03\u0110"+
+		"\x03\u0110\x03\u0111\x03\u0111\x03\u0112\x03\u0112\x03\u0113\x03\u0113"+
+		"\x03\u0114\x03\u0114\x03\u0115\x03\u0115\x03\u0116\x03\u0116\x03\u0117"+
+		"\x03\u0117\x03\u0118\x03\u0118\x03\u0119\x03\u0119\x03\u011A\x03\u011A"+
+		"\x03\u011B\x03\u011B\x03\u011C\x03\u011C\x03\u011D\x03\u011D\x03\u011E"+
+		"\x03\u011E\x03\u011F\x03\u011F\x03\u0120\x03\u0120\x03\u0121\x03\u0121"+
+		"\x03\u0122\x03\u0122\x03\u0123\x03\u0123\x03\u0124\x03\u0124\x03\u0125"+
+		"\x03\u0125\x03\u0126\x03\u0126\x03\u0127\x03\u0127\x03\u0128\x03\u0128"+
+		"\x03\u0129\x03\u0129\x03\u012A\x03\u012A\x03\u012B\x03\u012B\x03\u012C"+
+		"\x03\u012C\x03\u012D\x03\u012D\x03\u012E\x03\u012E\x03\u012F\x03\u012F"+
+		"\x03\u0130\x03\u0130\x03\u0131\x03\u0131\x03\u0132\x03\u0132\x03\u0133"+
+		"\x03\u0133\x03\u0134\x03\u0134\x03\u0135\x03\u0135\x03\u0136\x03\u0136"+
+		"\x03\u0137\x03\u0137\x03\u0138\x03\u0138\x03\u0139\x03\u0139\x03\u013A"+
+		"\x03\u013A\x03\u013B\x03\u013B\x03\u013C\x03\u013C\x03\u013D\x03\u013D"+
+		"\x03\u013E\x03\u013E\x03\u013F\x03\u013F\x03\u0140\x03\u0140\x03\u0141"+
+		"\x03\u0141\x03\u0142\x03\u0142\x03\u0143\x03\u0143\x03\u0144\x03\u0144"+
+		"\x03\u0145\x03\u0145\x03\u0146\x03\u0146\x03\u0147\x03\u0147\x03\u0148"+
+		"\x03\u0148\x03\u0149\x03\u0149\x03\u014A\x03\u014A\x03\u014A\x03\u014A"+
+		"\x03\u014A\x07\u014A\u0B0C\n\u014A\f\u014A\x0E\u014A\u0B0F\v\u014A\x03"+
+		"\u014A\x03\u014A\x03\u014B\x03\u014B\x03\u014C\x03\u014C\x03\u014D\x03"+
+		"\u014D\x03\u014E\x03\u014E\x03\u014F\x03\u014F\x03\u0150\x03\u0150\x03"+
+		"\u0151\x03\u0151\x03\u0152\x03\u0152\x03\u0153\x03\u0153\x03\u0154\x03"+
+		"\u0154\x03\u0155\x03\u0155\x03\u0156\x03\u0156\x03\u0157\x03\u0157\x03"+
+		"\u0158\x03\u0158\x03\u0159\x03\u0159\x03\u015A\x03\u015A\x03\u015B\x03"+
+		"\u015B\x03\u015C\x03\u015C\x03\u015D\x03\u015D\x03\u015E\x03\u015E\x03"+
+		"\u015F\x03\u015F\x03\u0160\x03\u0160\x03\u0160\x02\x02\x02\u0161\x02\x02"+
+		"\x04\x02\x06\x02\b\x02\n\x02\f\x02\x0E\x02\x10\x02\x12\x02\x14\x02\x16"+
+		"\x02\x18\x02\x1A\x02\x1C\x02\x1E\x02 \x02\"\x02$\x02&\x02(\x02*\x02,\x02"+
+		".\x020\x022\x024\x026\x028\x02:\x02<\x02>\x02@\x02B\x02D\x02F\x02H\x02"+
+		"J\x02L\x02N\x02P\x02R\x02T\x02V\x02X\x02Z\x02\\\x02^\x02`\x02b\x02d\x02"+
+		"f\x02h\x02j\x02l\x02n\x02p\x02r\x02t\x02v\x02x\x02z\x02|\x02~\x02\x80"+
+		"\x02\x82\x02\x84\x02\x86\x02\x88\x02\x8A\x02\x8C\x02\x8E\x02\x90\x02\x92"+
+		"\x02\x94\x02\x96\x02\x98\x02\x9A\x02\x9C\x02\x9E\x02\xA0\x02\xA2\x02\xA4"+
+		"\x02\xA6\x02\xA8\x02\xAA\x02\xAC\x02\xAE\x02\xB0\x02\xB2\x02\xB4\x02\xB6"+
+		"\x02\xB8\x02\xBA\x02\xBC\x02\xBE\x02\xC0\x02\xC2\x02\xC4\x02\xC6\x02\xC8"+
+		"\x02\xCA\x02\xCC\x02\xCE\x02\xD0\x02\xD2\x02\xD4\x02\xD6\x02\xD8\x02\xDA"+
+		"\x02\xDC\x02\xDE\x02\xE0\x02\xE2\x02\xE4\x02\xE6\x02\xE8\x02\xEA\x02\xEC"+
+		"\x02\xEE\x02\xF0\x02\xF2\x02\xF4\x02\xF6\x02\xF8\x02\xFA\x02\xFC\x02\xFE"+
+		"\x02\u0100\x02\u0102\x02\u0104\x02\u0106\x02\u0108\x02\u010A\x02\u010C"+
+		"\x02\u010E\x02\u0110\x02\u0112\x02\u0114\x02\u0116\x02\u0118\x02\u011A"+
+		"\x02\u011C\x02\u011E\x02\u0120\x02\u0122\x02\u0124\x02\u0126\x02\u0128"+
+		"\x02\u012A\x02\u012C\x02\u012E\x02\u0130\x02\u0132\x02\u0134\x02\u0136"+
+		"\x02\u0138\x02\u013A\x02\u013C\x02\u013E\x02\u0140\x02\u0142\x02\u0144"+
+		"\x02\u0146\x02\u0148\x02\u014A\x02\u014C\x02\u014E\x02\u0150\x02\u0152"+
+		"\x02\u0154\x02\u0156\x02\u0158\x02\u015A\x02\u015C\x02\u015E\x02\u0160"+
+		"\x02\u0162\x02\u0164\x02\u0166\x02\u0168\x02\u016A\x02\u016C\x02\u016E"+
+		"\x02\u0170\x02\u0172\x02\u0174\x02\u0176\x02\u0178\x02\u017A\x02\u017C"+
+		"\x02\u017E\x02\u0180\x02\u0182\x02\u0184\x02\u0186\x02\u0188\x02\u018A"+
+		"\x02\u018C\x02\u018E\x02\u0190\x02\u0192\x02\u0194\x02\u0196\x02\u0198"+
+		"\x02\u019A\x02\u019C\x02\u019E\x02\u01A0\x02\u01A2\x02\u01A4\x02\u01A6"+
+		"\x02\u01A8\x02\u01AA\x02\u01AC\x02\u01AE\x02\u01B0\x02\u01B2\x02\u01B4"+
+		"\x02\u01B6\x02\u01B8\x02\u01BA\x02\u01BC\x02\u01BE\x02\u01C0\x02\u01C2"+
+		"\x02\u01C4\x02\u01C6\x02\u01C8\x02\u01CA\x02\u01CC\x02\u01CE\x02\u01D0"+
+		"\x02\u01D2\x02\u01D4\x02\u01D6\x02\u01D8\x02\u01DA\x02\u01DC\x02\u01DE"+
+		"\x02\u01E0\x02\u01E2\x02\u01E4\x02\u01E6\x02\u01E8\x02\u01EA\x02\u01EC"+
+		"\x02\u01EE\x02\u01F0\x02\u01F2\x02\u01F4\x02\u01F6\x02\u01F8\x02\u01FA"+
+		"\x02\u01FC\x02\u01FE\x02\u0200\x02\u0202\x02\u0204\x02\u0206\x02\u0208"+
+		"\x02\u020A\x02\u020C\x02\u020E\x02\u0210\x02\u0212\x02\u0214\x02\u0216"+
+		"\x02\u0218\x02\u021A\x02\u021C\x02\u021E\x02\u0220\x02\u0222\x02\u0224"+
+		"\x02\u0226\x02\u0228\x02\u022A\x02\u022C\x02\u022E\x02\u0230\x02\u0232"+
+		"\x02\u0234\x02\u0236\x02\u0238\x02\u023A\x02\u023C\x02\u023E\x02\u0240"+
+		"\x02\u0242\x02\u0244\x02\u0246\x02\u0248\x02\u024A\x02\u024C\x02\u024E"+
+		"\x02\u0250\x02\u0252\x02\u0254\x02\u0256\x02\u0258\x02\u025A\x02\u025C"+
+		"\x02\u025E\x02\u0260\x02\u0262\x02\u0264\x02\u0266\x02\u0268\x02\u026A"+
+		"\x02\u026C\x02\u026E\x02\u0270\x02\u0272\x02\u0274\x02\u0276\x02\u0278"+
+		"\x02\u027A\x02\u027C\x02\u027E\x02\u0280\x02\u0282\x02\u0284\x02\u0286"+
+		"\x02\u0288\x02\u028A\x02\u028C\x02\u028E\x02\u0290\x02\u0292\x02\u0294"+
+		"\x02\u0296\x02\u0298\x02\u029A\x02\u029C\x02\u029E\x02\u02A0\x02\u02A2"+
+		"\x02\u02A4\x02\u02A6\x02\u02A8\x02\u02AA\x02\u02AC\x02\u02AE\x02\u02B0"+
+		"\x02\u02B2\x02\u02B4\x02\u02B6\x02\u02B8\x02\u02BA\x02\u02BC\x02\u02BE"+
+		"\x02\x02\x05\x03\x02\xA6\xA7\x04\x02<<}}\x0F\x0277GGLLOP``ccggll\x7F\x7F"+
+		"\x81\x81\x98\x99\xAA\xAA\xB1\xB2\u0BB5\x02\u02C1\x03\x02\x02\x02\x04\u02D1"+
+		"\x03\x02\x02\x02\x06\u02DE\x03\x02\x02\x02\b\u02E0\x03\x02\x02\x02\n\u0308"+
+		"\x03\x02\x02\x02\f\u030A\x03\x02\x02\x02\x0E\u0311\x03\x02\x02\x02\x10"+
+		"\u0313\x03\x02\x02\x02\x12\u031C\x03\x02\x02\x02\x14\u0328\x03\x02\x02"+
+		"\x02\x16\u033B\x03\x02\x02\x02\x18\u0357\x03\x02\x02\x02\x1A\u0359\x03"+
+		"\x02\x02\x02\x1C\u0366\x03\x02\x02\x02\x1E\u036F\x03\x02\x02\x02 \u0379"+
+		"\x03\x02\x02\x02\"\u0384\x03\x02\x02\x02$\u038D\x03\x02\x02\x02&\u039F"+
+		"\x03\x02\x02\x02(\u03A6\x03\x02\x02\x02*\u03AF\x03\x02\x02\x02,\u03BE"+
+		"\x03\x02\x02\x02.\u03C0\x03\x02\x02\x020\u03D1\x03\x02\x02\x022\u03E7"+
+		"\x03\x02\x02\x024\u03E9\x03\x02\x02\x026\u03F6\x03\x02\x02\x028\u03FC"+
+		"\x03\x02\x02\x02:\u0415\x03\x02\x02\x02<\u0417\x03\x02\x02\x02>\u0423"+
+		"\x03\x02\x02\x02@\u0427\x03\x02\x02\x02B\u0434\x03\x02\x02\x02D\u0440"+
+		"\x03\x02\x02\x02F\u0443\x03\x02\x02\x02H\u044B\x03\x02\x02\x02J\u0450"+
+		"\x03\x02\x02\x02L\u0452\x03\x02\x02\x02N\u0458\x03\x02\x02\x02P\u0460"+
+		"\x03\x02\x02\x02R\u0463\x03\x02\x02\x02T\u046C\x03\x02\x02\x02V\u0470"+
+		"\x03\x02\x02\x02X\u047C\x03\x02\x02\x02Z\u0481\x03\x02\x02\x02\\\u048D"+
+		"\x03\x02\x02\x02^\u048F\x03\x02\x02\x02`\u0492\x03\x02\x02\x02b\u0497"+
+		"\x03\x02\x02\x02d\u049B\x03\x02\x02\x02f\u049E\x03\x02\x02\x02h\u04A7"+
+		"\x03\x02\x02\x02j\u04AA\x03\x02\x02\x02l\u04B5\x03\x02\x02\x02n\u04BB"+
+		"\x03\x02\x02\x02p\u04D5\x03\x02\x02\x02r\u04D7\x03\x02\x02\x02t\u04DF"+
+		"\x03\x02\x02\x02v\u04E6\x03\x02\x02\x02x\u04ED\x03\x02\x02\x02z\u04F4"+
+		"\x03\x02\x02\x02|\u04FB\x03\x02\x02\x02~\u0502\x03\x02\x02\x02\x80\u050B"+
+		"\x03\x02\x02\x02\x82\u0512\x03\x02\x02\x02\x84\u0519\x03\x02\x02\x02\x86"+
+		"\u0520\x03\x02\x02\x02\x88\u0527\x03\x02\x02\x02\x8A\u0536\x03\x02\x02"+
+		"\x02\x8C\u0548\x03\x02\x02\x02\x8E\u054A\x03\x02\x02\x02\x90\u0559\x03"+
+		"\x02\x02\x02\x92\u055D\x03\x02\x02\x02\x94\u056E\x03\x02\x02\x02\x96\u0570"+
+		"\x03\x02\x02\x02\x98\u0574\x03\x02\x02\x02\x9A\u0576\x03\x02\x02\x02\x9C"+
+		"\u0582\x03\x02\x02\x02\x9E\u0586\x03\x02\x02\x02\xA0\u058A\x03\x02\x02"+
+		"\x02\xA2\u058C\x03\x02\x02\x02\xA4\u05A6\x03\x02\x02\x02\xA6\u05AE\x03"+
+		"\x02\x02\x02\xA8\u05B0\x03\x02\x02\x02\xAA\u05B9\x03\x02\x02\x02\xAC\u05BB"+
+		"\x03\x02\x02\x02\xAE\u05BD\x03\x02\x02\x02\xB0\u05CB\x03\x02\x02\x02\xB2"+
+		"\u05CD\x03\x02\x02\x02\xB4\u05D6\x03\x02\x02\x02\xB6\u05DF\x03\x02\x02"+
+		"\x02\xB8\u05EB\x03\x02\x02\x02\xBA\u05ED\x03\x02\x02\x02\xBC\u05F7\x03"+
+		"\x02\x02\x02\xBE\u05F9\x03\x02\x02\x02\xC0\u0607\x03\x02\x02\x02\xC2\u0616"+
+		"\x03\x02\x02\x02\xC4\u0618\x03\x02\x02\x02\xC6\u061C\x03\x02\x02\x02\xC8"+
+		"\u061F\x03\x02\x02\x02\xCA\u0625\x03\x02\x02\x02\xCC\u0634\x03\x02\x02"+
+		"\x02\xCE\u0638\x03\x02\x02\x02\xD0\u063F\x03\x02\x02\x02\xD2\u0646\x03"+
+		"\x02\x02\x02\xD4\u0648\x03\x02\x02\x02\xD6\u0650\x03\x02\x02\x02\xD8\u0658"+
+		"\x03\x02\x02\x02\xDA\u0660\x03\x02\x02\x02\xDC\u0670\x03\x02\x02\x02\xDE"+
+		"\u0682\x03\x02\x02\x02\xE0\u0684\x03\x02\x02\x02\xE2\u0692\x03\x02\x02"+
+		"\x02\xE4\u0695\x03\x02\x02\x02\xE6\u069E\x03\x02\x02\x02\xE8\u06AD\x03"+
+		"\x02\x02\x02\xEA\u06FC\x03\x02\x02\x02\xEC\u06FE\x03\x02\x02\x02\xEE\u070A"+
+		"\x03\x02\x02\x02\xF0\u071A\x03\x02\x02\x02\xF2\u0726\x03\x02\x02\x02\xF4"+
+		"\u0741\x03\x02\x02\x02\xF6\u0743\x03\x02\x02\x02\xF8\u0746\x03\x02\x02"+
+		"\x02\xFA\u0749\x03\x02\x02\x02\xFC\u074C\x03\x02\x02\x02\xFE\u0750\x03"+
+		"\x02\x02\x02\u0100\u075B\x03\x02\x02\x02\u0102\u0762\x03\x02\x02\x02\u0104"+
+		"\u0770\x03\x02\x02\x02\u0106\u077E\x03\x02\x02\x02\u0108\u0780\x03\x02"+
+		"\x02\x02\u010A\u078E\x03\x02\x02\x02\u010C\u0790\x03\x02\x02\x02\u010E"+
+		"\u07A2\x03\x02\x02\x02\u0110\u07AB\x03\x02\x02\x02\u0112\u07AD\x03\x02"+
+		"\x02\x02\u0114\u07B6\x03\x02\x02\x02\u0116\u07B8\x03\x02\x02\x02\u0118"+
+		"\u07C6\x03\x02\x02\x02\u011A\u07D6\x03\x02\x02\x02\u011C\u07D8\x03\x02"+
+		"\x02\x02\u011E\u07E7\x03\x02\x02\x02\u0120\u07E9\x03\x02\x02\x02\u0122"+
+		"\u07EF\x03\x02\x02\x02\u0124\u07F7\x03\x02\x02\x02\u0126\u080C\x03\x02"+
+		"\x02\x02\u0128\u0816\x03\x02\x02\x02\u012A\u0822\x03\x02\x02\x02\u012C"+
+		"\u0827\x03\x02\x02\x02\u012E\u083B\x03\x02\x02\x02\u0130\u0842\x03\x02"+
+		"\x02\x02\u0132\u0844\x03\x02\x02\x02\u0134\u084C\x03\x02\x02\x02\u0136"+
+		"\u084E\x03\x02\x02\x02\u0138\u085A\x03\x02\x02\x02\u013A\u0866\x03\x02"+
+		"\x02\x02\u013C\u0872\x03\x02\x02\x02\u013E\u087E\x03\x02\x02\x02\u0140"+
+		"\u0880\x03\x02\x02\x02\u0142\u0882\x03\x02\x02\x02\u0144\u0884\x03\x02"+
+		"\x02\x02\u0146\u0886\x03\x02\x02\x02\u0148\u0888\x03\x02\x02\x02\u014A"+
+		"\u089E\x03\x02\x02\x02\u014C\u08B4\x03\x02\x02\x02\u014E\u08B6\x03\x02"+
+		"\x02\x02\u0150\u08CC\x03\x02\x02\x02\u0152\u08E2\x03\x02\x02\x02\u0154"+
+		"\u08F8\x03\x02\x02\x02\u0156\u090E\x03\x02\x02\x02\u0158\u091A\x03\x02"+
+		"\x02\x02\u015A\u0926\x03\x02\x02\x02\u015C\u0932\x03\x02\x02\x02\u015E"+
+		"\u0948\x03\x02\x02\x02\u0160\u095E\x03\x02\x02\x02\u0162\u096A\x03\x02"+
+		"\x02\x02\u0164\u0976\x03\x02\x02\x02\u0166\u097B\x03\x02\x02\x02\u0168"+
+		"\u0983\x03\x02\x02\x02\u016A\u098A\x03\x02\x02\x02\u016C\u098C\x03\x02"+
+		"\x02\x02\u016E\u0993\x03\x02\x02\x02\u0170\u0995\x03\x02\x02\x02\u0172"+
+		"\u0999\x03\x02\x02\x02\u0174\u09B4\x03\x02\x02\x02\u0176\u09CB\x03\x02"+
+		"\x02\x02\u0178\u09CF\x03\x02\x02\x02\u017A\u09D1\x03\x02\x02\x02\u017C"+
+		"\u09D3\x03\x02\x02\x02\u017E\u09D5\x03\x02\x02\x02\u0180\u09D7\x03\x02"+
+		"\x02\x02\u0182\u09ED\x03\x02\x02\x02\u0184\u09EF\x03\x02\x02\x02\u0186"+
+		"\u09F1\x03\x02\x02\x02\u0188\u09F3\x03\x02\x02\x02\u018A\u09F5\x03\x02"+
+		"\x02\x02\u018C\u09F7\x03\x02\x02\x02\u018E\u09F9\x03\x02\x02\x02\u0190"+
+		"\u09FC\x03\x02\x02\x02\u0192\u09FE\x03\x02\x02\x02\u0194\u0A00\x03\x02"+
+		"\x02\x02\u0196\u0A02\x03\x02\x02\x02\u0198\u0A04\x03\x02\x02\x02\u019A"+
+		"\u0A06\x03\x02\x02\x02\u019C\u0A08\x03\x02\x02\x02\u019E\u0A0A\x03\x02"+
+		"\x02\x02\u01A0\u0A0D\x03\x02\x02\x02\u01A2\u0A0F\x03\x02\x02\x02\u01A4"+
+		"\u0A12\x03\x02\x02\x02\u01A6\u0A14\x03\x02\x02\x02\u01A8\u0A16\x03\x02"+
+		"\x02\x02\u01AA\u0A18\x03\x02\x02\x02\u01AC\u0A1A\x03\x02\x02\x02\u01AE"+
+		"\u0A1C\x03\x02\x02\x02\u01B0\u0A1E\x03\x02\x02\x02\u01B2\u0A20\x03\x02"+
+		"\x02\x02\u01B4\u0A22\x03\x02\x02\x02\u01B6\u0A24\x03\x02\x02\x02\u01B8"+
+		"\u0A26\x03\x02\x02\x02\u01BA\u0A28\x03\x02\x02\x02\u01BC\u0A2A\x03\x02"+
+		"\x02\x02\u01BE\u0A2C\x03\x02\x02\x02\u01C0\u0A2F\x03\x02\x02\x02\u01C2"+
+		"\u0A31\x03\x02\x02\x02\u01C4\u0A33\x03\x02\x02\x02\u01C6\u0A35\x03\x02"+
+		"\x02\x02\u01C8\u0A37\x03\x02\x02\x02\u01CA\u0A39\x03\x02\x02\x02\u01CC"+
+		"\u0A3B\x03\x02\x02\x02\u01CE\u0A3D\x03\x02\x02\x02\u01D0\u0A3F\x03\x02"+
+		"\x02\x02\u01D2\u0A41\x03\x02\x02\x02\u01D4\u0A43\x03\x02\x02\x02\u01D6"+
+		"\u0A45\x03\x02\x02\x02\u01D8\u0A47\x03\x02\x02\x02\u01DA\u0A49\x03\x02"+
+		"\x02\x02\u01DC\u0A4B\x03\x02\x02\x02\u01DE\u0A4D\x03\x02\x02\x02\u01E0"+
+		"\u0A4F\x03\x02\x02\x02\u01E2\u0A51\x03\x02\x02\x02\u01E4\u0A53\x03\x02"+
+		"\x02\x02\u01E6\u0A55\x03\x02\x02\x02\u01E8\u0A57\x03\x02\x02\x02\u01EA"+
+		"\u0A59\x03\x02\x02\x02\u01EC\u0A5C\x03\x02\x02\x02\u01EE\u0A5E\x03\x02"+
+		"\x02\x02\u01F0\u0A60\x03\x02\x02\x02\u01F2\u0A62\x03\x02\x02\x02\u01F4"+
+		"\u0A64\x03\x02\x02\x02\u01F6\u0A66\x03\x02\x02\x02\u01F8\u0A68\x03\x02"+
+		"\x02\x02\u01FA\u0A6A\x03\x02\x02\x02\u01FC\u0A6D\x03\x02\x02\x02\u01FE"+
+		"\u0A70\x03\x02\x02\x02\u0200\u0A72\x03\x02\x02\x02\u0202\u0A74\x03\x02"+
+		"\x02\x02\u0204\u0A77\x03\x02\x02\x02\u0206\u0A79\x03\x02\x02\x02\u0208"+
+		"\u0A7B\x03\x02\x02\x02\u020A\u0A7D\x03\x02\x02\x02\u020C\u0A7F\x03\x02"+
+		"\x02\x02\u020E\u0A81\x03\x02\x02\x02\u0210\u0A83\x03\x02\x02\x02\u0212"+
+		"\u0A85\x03\x02\x02\x02\u0214\u0A87\x03\x02\x02\x02\u0216\u0A89\x03\x02"+
+		"\x02\x02\u0218\u0A8B\x03\x02\x02\x02\u021A\u0A8E\x03\x02\x02\x02\u021C"+
+		"\u0A90\x03\x02\x02\x02\u021E\u0A92\x03\x02\x02\x02\u0220\u0A94\x03\x02"+
+		"\x02\x02\u0222\u0A96\x03\x02\x02\x02\u0224\u0A98\x03\x02\x02\x02\u0226"+
+		"\u0A9A\x03\x02\x02\x02\u0228\u0A9C\x03\x02\x02\x02\u022A\u0A9E\x03\x02"+
+		"\x02\x02\u022C\u0AA0\x03\x02\x02\x02\u022E\u0AA2\x03\x02\x02\x02\u0230"+
+		"\u0AA4\x03\x02\x02\x02\u0232\u0AA6\x03\x02\x02\x02\u0234\u0AA8\x03\x02"+
+		"\x02\x02\u0236\u0AAA\x03\x02\x02\x02\u0238\u0AAC\x03\x02\x02\x02\u023A"+
+		"\u0AAE\x03\x02\x02\x02\u023C\u0AB0\x03\x02\x02\x02\u023E\u0AB2\x03\x02"+
+		"\x02\x02\u0240\u0AB4\x03\x02\x02\x02\u0242\u0AB6\x03\x02\x02\x02\u0244"+
+		"\u0AB8\x03\x02\x02\x02\u0246\u0ABA\x03\x02\x02\x02\u0248\u0ABC\x03\x02"+
+		"\x02\x02\u024A\u0ABE\x03\x02\x02\x02\u024C\u0AC0\x03\x02\x02\x02\u024E"+
+		"\u0AC2\x03\x02\x02\x02\u0250\u0AC4\x03\x02\x02\x02\u0252\u0AC6\x03\x02"+
+		"\x02\x02\u0254\u0AC8\x03\x02\x02\x02\u0256\u0ACA\x03\x02\x02\x02\u0258"+
+		"\u0ACC\x03\x02\x02\x02\u025A\u0ACE\x03\x02\x02\x02\u025C\u0AD0\x03\x02"+
+		"\x02\x02\u025E\u0AD2\x03\x02\x02\x02\u0260\u0AD4\x03\x02\x02\x02\u0262"+
+		"\u0AD6\x03\x02\x02\x02\u0264\u0AD8\x03\x02\x02\x02\u0266\u0ADA\x03\x02"+
+		"\x02\x02\u0268\u0ADC\x03\x02\x02\x02\u026A\u0ADE\x03\x02\x02\x02\u026C"+
+		"\u0AE0\x03\x02\x02\x02\u026E\u0AE2\x03\x02\x02\x02\u0270\u0AE4\x03\x02"+
+		"\x02\x02\u0272\u0AE6\x03\x02\x02\x02\u0274\u0AE8\x03\x02\x02\x02\u0276"+
+		"\u0AEA\x03\x02\x02\x02\u0278\u0AEC\x03\x02\x02\x02\u027A\u0AEE\x03\x02"+
+		"\x02\x02\u027C\u0AF0\x03\x02\x02\x02\u027E\u0AF2\x03\x02\x02\x02\u0280"+
+		"\u0AF4\x03\x02\x02\x02\u0282\u0AF6\x03\x02\x02\x02\u0284\u0AF8\x03\x02"+
+		"\x02\x02\u0286\u0AFA\x03\x02\x02\x02\u0288\u0AFC\x03\x02\x02\x02\u028A"+
+		"\u0AFE\x03\x02\x02\x02\u028C\u0B00\x03\x02\x02\x02\u028E\u0B02\x03\x02"+
+		"\x02\x02\u0290\u0B04\x03\x02\x02\x02\u0292\u0B06\x03\x02\x02\x02\u0294"+
+		"\u0B12\x03\x02\x02\x02\u0296\u0B14\x03\x02\x02\x02\u0298\u0B16\x03\x02"+
+		"\x02\x02\u029A\u0B18\x03\x02\x02\x02\u029C\u0B1A\x03\x02\x02\x02\u029E"+
+		"\u0B1C\x03\x02\x02\x02\u02A0\u0B1E\x03\x02\x02\x02\u02A2\u0B20\x03\x02"+
+		"\x02\x02\u02A4\u0B22\x03\x02\x02\x02\u02A6\u0B24\x03\x02\x02\x02\u02A8"+
+		"\u0B26\x03\x02\x02\x02\u02AA\u0B28\x03\x02\x02\x02\u02AC\u0B2A\x03\x02"+
+		"\x02\x02\u02AE\u0B2C\x03\x02\x02\x02\u02B0\u0B2E\x03\x02\x02\x02\u02B2"+
+		"\u0B30\x03\x02\x02\x02\u02B4\u0B32\x03\x02\x02\x02\u02B6\u0B34\x03\x02"+
+		"\x02\x02\u02B8\u0B36\x03\x02\x02\x02\u02BA\u0B38\x03\x02\x02\x02\u02BC"+
+		"\u0B3A\x03\x02\x02\x02\u02BE\u0B3C\x03\x02\x02\x02\u02C0\u02C2\x05\x04"+
+		"\x03\x02\u02C1\u02C0\x03\x02\x02\x02\u02C1\u02C2\x03\x02\x02\x02\u02C2"+
+		"\u02C4\x03\x02\x02\x02\u02C3\u02C5\x07\x17\x02\x02\u02C4\u02C3\x03\x02"+
+		"\x02\x02\u02C4\u02C5\x03\x02\x02\x02\u02C5\u02C6\x03\x02\x02\x02\u02C6"+
+		"\u02C7\x05\u0298\u014D\x02\u02C7\x03\x03\x02\x02\x02\u02C8\u02CA\x05\n"+
+		"\x06\x02\u02C9\u02CB\x07\x17\x02\x02\u02CA\u02C9\x03\x02\x02\x02\u02CA"+
+		"\u02CB\x03\x02\x02\x02\u02CB\u02CC\x03\x02\x02\x02\u02CC\u02CD\x05\x06"+
+		"\x04\x02\u02CD\u02D0\x03\x02\x02\x02\u02CE\u02D0\x05\b\x05\x02\u02CF\u02C8"+
+		"\x03\x02\x02\x02\u02CF\u02CE\x03\x02\x02\x02\u02D0\u02D3\x03\x02\x02\x02"+
+		"\u02D1\u02CF\x03\x02\x02\x02\u02D1\u02D2\x03\x02\x02\x02\u02D2\u02DC\x03"+
+		"\x02\x02\x02\u02D3\u02D1\x03\x02\x02\x02\u02D4\u02D9\x05\n\x06\x02\u02D5"+
+		"\u02D7\x07\x17\x02\x02\u02D6\u02D5\x03\x02\x02\x02\u02D6\u02D7\x03\x02"+
+		"\x02\x02\u02D7\u02D8\x03\x02\x02\x02\u02D8\u02DA\x05\x06\x04\x02\u02D9"+
+		"\u02D6\x03\x02\x02\x02\u02D9\u02DA\x03\x02\x02\x02\u02DA\u02DD\x03\x02"+
+		"\x02\x02\u02DB\u02DD\x05\b\x05\x02\u02DC\u02D4\x03\x02\x02\x02\u02DC\u02DB"+
+		"\x03\x02\x02\x02\u02DD\x05\x03\x02\x02\x02\u02DE\u02DF\x07\n\x02\x02\u02DF"+
+		"\x07\x03\x02\x02\x02\u02E0\u02E1\x05\x06\x04\x02\u02E1\t\x03\x02\x02\x02"+
+		"\u02E2\u0309\x05\xB8]\x02\u02E3\u0309\x05\xBE`\x02\u02E4\u0309\x05r:\x02"+
+		"\u02E5\u0309\x05l7\x02\u02E6\u0309\x05Z.\x02\u02E7\u0309\x05L\'\x02\u02E8"+
+		"\u0309\x05F$\x02\u02E9\u0309\x05\xB6\\\x02\u02EA\u0309\x058\x1D\x02\u02EB"+
+		"\u0309\x050\x19\x02\u02EC\u0309\x05\xCAf\x02\u02ED\u0309\x05.\x18\x02"+
+		"\u02EE\u0309\x05$\x13\x02\u02EF\u0309\x05\x1C\x0F\x02\u02F0\u0309\x05"+
+		"\x88E\x02\u02F1\u0309\x05\"\x12\x02\u02F2\u0309\x05\x1E\x10\x02\u02F3"+
+		"\u0309\x05\x1A\x0E\x02\u02F4\u0309\x05\xDAn\x02\u02F5\u0309\x05z>\x02"+
+		"\u02F6\u0309\x05|?\x02\u02F7\u0309\x05\x86D\x02\u02F8\u0309\x05\x84C\x02"+
+		"\u02F9\u0309\x05x=\x02\u02FA\u0309\x05\x80A\x02\u02FB\u0309\x05\x82B\x02"+
+		"\u02FC\u0309\x05~@\x02\u02FD\u0309\x05v<\x02\u02FE\u0309\x05t;\x02\u02FF"+
+		"\u0309\x05\x14\v\x02\u0300\u0309\x05\xF2z\x02\u0301\u0309\x05\x12\n\x02"+
+		"\u0302\u0309\x05\x10\t\x02\u0303\u0309\x05\f\x07\x02\u0304\u0309\x05\u010C"+
+		"\x87\x02\u0305\u0309\x05\xC8e\x02\u0306\u0309\x05\xE0q\x02\u0307\u0309"+
+		"\x05\xC6d\x02\u0308\u02E2\x03\x02\x02\x02\u0308\u02E3\x03\x02\x02\x02"+
+		"\u0308\u02E4\x03\x02\x02\x02\u0308\u02E5\x03\x02\x02\x02\u0308\u02E6\x03"+
+		"\x02\x02\x02\u0308\u02E7\x03\x02\x02\x02\u0308\u02E8\x03\x02\x02\x02\u0308"+
+		"\u02E9\x03\x02\x02\x02\u0308\u02EA\x03\x02\x02\x02\u0308\u02EB\x03\x02"+
+		"\x02\x02\u0308\u02EC\x03\x02\x02\x02\u0308\u02ED\x03\x02\x02\x02\u0308"+
+		"\u02EE\x03\x02\x02\x02\u0308\u02EF\x03\x02\x02\x02\u0308\u02F0\x03\x02"+
+		"\x02\x02\u0308\u02F1\x03\x02\x02\x02\u0308\u02F2\x03\x02\x02\x02\u0308"+
+		"\u02F3\x03\x02\x02\x02\u0308\u02F4\x03\x02\x02\x02\u0308\u02F5\x03\x02"+
+		"\x02\x02\u0308\u02F6\x03\x02\x02\x02\u0308\u02F7\x03\x02\x02\x02\u0308"+
+		"\u02F8\x03\x02\x02\x02\u0308\u02F9\x03\x02\x02\x02\u0308\u02FA\x03\x02"+
+		"\x02\x02\u0308\u02FB\x03\x02\x02\x02\u0308\u02FC\x03\x02\x02\x02\u0308"+
+		"\u02FD\x03\x02\x02\x02\u0308\u02FE\x03\x02\x02\x02\u0308\u02FF\x03\x02"+
+		"\x02\x02\u0308\u0300\x03\x02\x02\x02\u0308\u0301\x03\x02\x02\x02\u0308"+
+		"\u0302\x03\x02\x02\x02\u0308\u0303\x03\x02\x02\x02\u0308\u0304\x03\x02"+
+		"\x02\x02\u0308\u0305\x03\x02\x02\x02\u0308\u0306\x03\x02\x02\x02\u0308"+
+		"\u0307\x03\x02\x02\x02\u0309\v\x03\x02\x02\x02\u030A\u030B\x05\u025C\u012F"+
+		"\x02\u030B\u030C\x05\x16\f\x02\u030C\u030D\x05\u0210\u0109\x02\u030D\u030E"+
+		"\x05\x18\r\x02\u030E\u030F\x05\u01D8\xED\x02\u030F\u0310\x05\u017A\xBE"+
+		"\x02\u0310\r\x03\x02\x02\x02\u0311\u0312\x05\u01FC\xFF\x02\u0312\x0F\x03"+
+		"\x02\x02\x02\u0313\u0317\x05\u01FA\xFE\x02\u0314\u0315\x05\u020E\u0108"+
+		"\x02\u0315\u0316\x05\u017A\xBE\x02\u0316\u0318\x03\x02\x02\x02\u0317\u0314"+
+		"\x03\x02\x02\x02\u0317\u0318\x03\x02\x02\x02\u0318\u031A\x03\x02\x02\x02"+
+		"\u0319\u031B\x05\u0208\u0105\x02\u031A\u0319\x03\x02\x02\x02\u031A\u031B"+
+		"\x03\x02\x02\x02\u031B\x11\x03\x02\x02\x02\u031C\u031D\x05\u01F8\xFD\x02"+
+		"\u031D\u0321\x05\x16\f\x02\u031E\u031F\x05\u0210\u0109\x02\u031F\u0320"+
+		"\x05\x18\r\x02\u0320\u0322\x03\x02\x02\x02\u0321\u031E\x03\x02\x02\x02"+
+		"\u0321\u0322\x03\x02\x02\x02\u0322\u0326\x03\x02\x02\x02\u0323\u0324\x05"+
+		"\u020E\u0108\x02\u0324\u0325\x05\u017A\xBE\x02\u0325\u0327\x03\x02\x02"+
+		"\x02\u0326\u0323\x03\x02\x02\x02\u0326\u0327\x03\x02\x02\x02\u0327\x13"+
+		"\x03\x02\x02\x02\u0328\u0329\x05\u01DE\xF0\x02\u0329\u032A\x05\x16\f\x02"+
+		"\u032A\u032B\x05\u0210\u0109\x02\u032B\u032C\x05\x18\r\x02\u032C\u032D"+
+		"\x05\u023E\u0120\x02\u032D\u032E\x05\u017A\xBE\x02\u032E\x15\x03\x02\x02"+
+		"\x02\u032F\u0332\x05\u0196\xCC\x02\u0330\u0332\x05\u019E\xD0\x02\u0331"+
+		"\u032F\x03\x02\x02\x02\u0331\u0330\x03\x02\x02\x02\u0332\u033C\x03\x02"+
+		"\x02\x02\u0333\u033C\x05\u01A4\xD3\x02\u0334\u033C\x05\u01AE\xD8\x02\u0335"+
+		"\u033C\x05\u01C6\xE4\x02\u0336\u033C\x05\u01D0\xE9\x02\u0337\u033C\x05"+
+		"\u01C0\xE1\x02\u0338\u033C\x05\u01CA\xE6\x02\u0339\u033C\x05\u0204\u0103"+
+		"\x02\u033A\u033C\x05\u022C\u0117\x02\u033B\u0331\x03\x02\x02\x02\u033B"+
+		"\u0333\x03\x02\x02\x02\u033B\u0334\x03\x02\x02\x02\u033B\u0335\x03\x02"+
+		"\x02\x02\u033B\u0336\x03\x02\x02\x02\u033B\u0337\x03\x02\x02\x02\u033B"+
+		"\u0338\x03\x02\x02\x02\u033B\u0339\x03\x02\x02\x02\u033B\u033A\x03\x02"+
+		"\x02\x02\u033C\x17\x03\x02\x02\x02\u033D\u0358\x05\u0198\xCD\x02\u033E"+
+		"\u033F\x05\u0198\xCD\x02\u033F\u0340\x05\u01E2\xF2\x02\u0340\u0341\x05"+
+		"\u01F2\xFA\x02\u0341\u0342\x05\u014A\xA6\x02\u0342\u0358\x03\x02\x02\x02"+
+		"\u0343\u0347";
 	private static readonly _serializedATNSegment2: string =
-		"\u0348\x07\x12\x02\x02\u0348\u034A\x03\x02\x02\x02\u0349\u0346\x03\x02"+
-		"\x02\x02\u0349\u034A\x03\x02\x02\x02\u034A\u034B\x03\x02\x02\x02\u034B"+
-		"\u034C\x05\u0186\xC4\x02\u034C\u035A\x03\x02\x02\x02\u034D\u035A\x05\u019C"+
-		"\xCF\x02\u034E\u034F\x05\u01F4\xFB\x02\u034F\u0350\x05\u014E\xA8\x02\u0350"+
-		"\u035A\x03\x02\x02\x02\u0351\u0353\x05\u023C\u011F\x02\u0352\u0351\x03"+
-		"\x02\x02\x02\u0352\u0353\x03\x02\x02\x02\u0353\u0354\x03\x02\x02\x02\u0354"+
-		"\u035A\x05\u0162\xB2\x02\u0355\u035A\x05\u019E\xD0\x02\u0356\u0357\x05"+
-		"\u022C\u0117\x02\u0357\u0358\x05\u017C\xBF\x02\u0358\u035A\x03\x02\x02"+
-		"\x02\u0359\u033F\x03\x02\x02\x02\u0359\u0340\x03\x02\x02\x02\u0359\u0345"+
-		"\x03\x02\x02\x02\u0359\u034D\x03\x02\x02\x02\u0359\u034E\x03\x02\x02\x02"+
-		"\u0359\u0352\x03\x02\x02\x02\u0359\u0355\x03\x02\x02\x02\u0359\u0356\x03"+
-		"\x02\x02\x02\u035A\x19\x03\x02\x02\x02\u035B\u035C\x05\u01C2\xE2\x02\u035C"+
-		"\u035E\x05\u0252\u012A\x02\u035D\u035F\x05\u0100\x81\x02\u035E\u035D\x03"+
-		"\x02\x02\x02\u035E\u035F\x03\x02\x02\x02\u035F\u0360\x03\x02\x02\x02\u0360"+
-		"\u0361\x05\u018A\xC6\x02\u0361\u0362\x05\u025C\u012F\x02\u0362\u0363\x05"+
-		"\u021E\u0110\x02\u0363\u0366\x05\u0148\xA5\x02\u0364\u0367\x05\u023A\u011E"+
-		"\x02\u0365\u0367\x05\u0208\u0105\x02\u0366\u0364\x03\x02\x02\x02\u0366"+
-		"\u0365\x03\x02\x02\x02\u0366\u0367\x03\x02\x02\x02\u0367\x1B\x03\x02\x02"+
-		"\x02\u0368\u0369\x05\u01C2\xE2\x02\u0369\u036B\x05\u022C\u0117\x02\u036A"+
-		"\u036C\x05\u0100\x81\x02\u036B\u036A\x03\x02\x02\x02\u036B\u036C\x03\x02"+
-		"\x02\x02\u036C\u036D\x03\x02\x02\x02\u036D\u036F\x05\u017C\xBF\x02\u036E"+
-		"\u0370\x05n8\x02\u036F\u036E\x03\x02\x02\x02\u036F\u0370\x03\x02\x02\x02"+
-		"\u0370\x1D\x03\x02\x02\x02\u0371\u0372\x05\u01C2\xE2\x02\u0372\u0374\x05"+
-		"\u024A\u0126\x02\u0373\u0375\x05\u0100\x81\x02\u0374\u0373\x03\x02\x02"+
-		"\x02\u0374\u0375\x03\x02\x02\x02\u0375\u0376\x03\x02\x02\x02\u0376\u0377"+
-		"\x05\u016C\xB7\x02\u0377\u0378\x05\u029C\u014F\x02\u0378\u0379\x05 \x11"+
-		"\x02\u0379\u037A\x05\u029E\u0150\x02\u037A\x1F\x03\x02\x02\x02\u037B\u037C"+
-		"\x05\u016E\xB8\x02\u037C\u0383\x05\u0174\xBB\x02\u037D\u037E\x05\u02AC"+
-		"\u0157\x02\u037E\u037F\x05\u016E\xB8\x02\u037F\u0380\x05\u0174\xBB\x02"+
-		"\u0380\u0382\x03\x02\x02\x02\u0381\u037D\x03\x02\x02\x02\u0382\u0385\x03"+
-		"\x02\x02\x02\u0383\u0381\x03\x02\x02\x02\u0383\u0384\x03\x02\x02\x02\u0384"+
-		"!\x03\x02\x02\x02\u0385\u0383\x03\x02\x02\x02\u0386\u0387\x05\u01C2\xE2"+
-		"\x02\u0387\u0389\x05\u0244\u0123\x02\u0388\u038A\x05\u0100\x81\x02\u0389"+
-		"\u0388\x03\x02\x02\x02\u0389\u038A\x03\x02\x02\x02\u038A\u038B\x03\x02"+
-		"\x02\x02\u038B\u038C\x05\u016C\xB7\x02\u038C\u038D\x05\u0256\u012C\x02"+
-		"\u038D\u038E\x05\u0180\xC1\x02\u038E#\x03\x02\x02\x02\u038F\u0390\x05"+
-		"\u01C2\xE2\x02\u0390\u0392\x05\u0204\u0103\x02\u0391\u0393\x05\u0100\x81"+
-		"\x02\u0392\u0391\x03\x02\x02\x02\u0392\u0393\x03\x02\x02\x02\u0393\u0394"+
-		"\x03\x02\x02\x02\u0394\u0395\x05\u016C\xB7\x02\u0395\u0396\x05\u01AC\xD7"+
-		"\x02\u0396\u0397\x05\u022E\u0118\x02\u0397\u0398\x05\u010A\x86\x02\u0398"+
-		"\u0399\x05\u01DA\xEE\x02\u0399\u039A\x05\u0164\xB3\x02\u039A\u039B\x05"+
-		"&\x14\x02\u039B\u039F\x05\xA8U\x02\u039C\u039D\x05\u025C\u012F\x02\u039D"+
-		"\u039E\x05,\x17\x02\u039E\u03A0\x03\x02\x02\x02\u039F\u039C\x03\x02\x02"+
-		"\x02\u039F\u03A0\x03\x02\x02\x02\u03A0%\x03\x02\x02\x02\u03A1\u03A2\x05"+
-		"\u025A\u012E\x02\u03A2\u03A6\x05(\x15\x02\u03A3\u03A4\x05\u01A8\xD5\x02"+
-		"\u03A4\u03A5\x05\u0120\x91\x02\u03A5\u03A7\x03\x02\x02\x02\u03A6\u03A3"+
-		"\x03\x02\x02\x02\u03A6\u03A7\x03\x02\x02\x02\u03A7\'\x03\x02\x02\x02\u03A8"+
-		"\u03AE\x05*\x16\x02\u03A9\u03AA\x05\u01A8\xD5\x02\u03AA\u03AB\x05*\x16"+
-		"\x02\u03AB\u03AD\x03\x02\x02\x02\u03AC\u03A9\x03\x02\x02\x02\u03AD\u03B0"+
-		"\x03\x02\x02\x02\u03AE\u03AC\x03\x02\x02\x02\u03AE\u03AF\x03\x02\x02\x02"+
-		"\u03AF)\x03\x02\x02\x02\u03B0\u03AE\x03\x02\x02\x02\u03B1\u03B2\x05\u016E"+
-		"\xB8\x02\u03B2\u03B3\x05\u01EE\xF8\x02\u03B3\u03B4\x05\u020C\u0107\x02"+
-		"\u03B4\u03B5\x05\u020E\u0108\x02\u03B5+\x03\x02\x02\x02\u03B6\u03C1\x05"+
-		"\x92J\x02\u03B7\u03B8\x05\x92J\x02\u03B8\u03B9\x05\u01A8\xD5\x02\u03B9"+
-		"\u03BA\x05\x8EH\x02\u03BA\u03C1\x03\x02\x02\x02\u03BB\u03C1\x05\x8EH\x02"+
-		"\u03BC\u03BD\x05\x8EH\x02\u03BD\u03BE\x05\u01A8\xD5\x02\u03BE\u03BF\x05"+
-		"\x92J\x02\u03BF\u03C1\x03\x02\x02\x02\u03C0\u03B6\x03\x02\x02\x02\u03C0"+
-		"\u03B7\x03\x02\x02\x02\u03C0\u03BB\x03\x02\x02\x02\u03C0\u03BC\x03\x02"+
-		"\x02\x02\u03C1-\x03\x02\x02\x02\u03C2\u03C3\x05\u01C2\xE2\x02\u03C3\u03C5"+
-		"\x05\u01F4\xFB\x02\u03C4\u03C6\x05\u0100\x81\x02\u03C5\u03C4\x03\x02\x02"+
-		"\x02\u03C5\u03C6\x03\x02\x02\x02\u03C6\u03C7\x03\x02\x02\x02\u03C7\u03C8"+
-		"\x05\u015A\xAE\x02\u03C8\u03C9\x05\u025C\u012F\x02\u03C9\u03CA\x05\u0228"+
-		"\u0115\x02\u03CA\u03CB\x07\xAE\x02\x02\u03CB\u03CC\x05\u02A0\u0151\x02"+
-		"\u03CC\u03CD\x05\xC4c\x02\u03CD\u03D1\x05\u02A2\u0152\x02\u03CE\u03CF"+
-		"\x05\u01A8\xD5\x02\u03CF\u03D0\x05\xC8e\x02\u03D0\u03D2\x03\x02\x02\x02"+
-		"\u03D1\u03CE\x03\x02\x02\x02\u03D1\u03D2\x03\x02\x02\x02\u03D2/\x03\x02"+
-		"\x02\x02\u03D3\u03D5\x05\u01C2\xE2\x02\u03D4\u03D6\x05D#\x02\u03D5\u03D4"+
-		"\x03\x02\x02\x02\u03D5\u03D6\x03\x02\x02\x02\u03D6\u03D7\x03\x02\x02\x02"+
-		"\u03D7\u03D9\x05\u01DE\xF0\x02\u03D8\u03DA\x05\u0100\x81\x02\u03D9\u03D8"+
-		"\x03\x02\x02\x02\u03D9\u03DA\x03\x02\x02\x02\u03DA\u03DB\x03\x02\x02\x02"+
-		"\u03DB\u03DC\x05\u016C\xB7\x02\u03DC\u03DE\x05\u029C\u014F\x02\u03DD\u03DF"+
-		"\x054\x1B\x02\u03DE\u03DD\x03\x02\x02\x02\u03DE\u03DF\x03\x02\x02\x02"+
-		"\u03DF\u03E0\x03\x02\x02\x02\u03E0\u03E1\x05\u029E\u0150\x02\u03E1\u03E2"+
-		"\x056\x1C\x02\u03E2\u03E3\x05\u022A\u0116\x02\u03E3\u03E4\x05\u0174\xBB"+
-		"\x02\u03E4\u03E5\x05\u01F6\xFC\x02\u03E5\u03E6\x05\u0188\xC5\x02\u03E6"+
-		"\u03E7\x05\u01AC\xD7\x02\u03E7\u03E8\x052\x1A\x02\u03E81\x03\x02\x02\x02"+
-		"\u03E9\u03EA\x07\xA6\x02\x02\u03EA3\x03\x02\x02\x02\u03EB\u03F1\x05\u0190"+
-		"\xC9\x02\u03EC\u03ED\x05\u02AC\u0157\x02\u03ED\u03EE\x05\u0190\xC9\x02"+
-		"\u03EE\u03F0\x03\x02\x02\x02\u03EF\u03EC\x03\x02\x02\x02\u03F0\u03F3\x03"+
-		"\x02\x02\x02\u03F1\u03EF\x03\x02\x02\x02\u03F1\u03F2\x03\x02\x02\x02\u03F2"+
-		"5\x03\x02\x02\x02\u03F3\u03F1\x03\x02\x02\x02\u03F4\u03F9\x05\u01B8\xDD"+
-		"\x02\u03F5\u03F6\x05\u022A\u0116\x02\u03F6\u03F7\x05\u020E\u0108\x02\u03F7"+
-		"\u03F9\x03\x02\x02\x02\u03F8\u03F4\x03\x02\x02\x02\u03F8\u03F5\x03\x02"+
-		"\x02\x02\u03F9\u03FA\x03\x02\x02\x02\u03FA\u03FB\x05\u0212\u010A\x02\u03FB"+
-		"\u03FC\x05\u020E\u0108\x02\u03FC\u03FD\x05\u01EA\xF6\x02\u03FD7\x03\x02"+
-		"\x02\x02\u03FE\u0400\x05\u01C2\xE2\x02\u03FF\u0401\x05D#\x02\u0400\u03FF"+
-		"\x03\x02\x02\x02\u0400\u0401\x03\x02\x02\x02\u0401\u0402\x03\x02\x02\x02"+
-		"\u0402\u0404\x05\u0196\xCC\x02\u0403\u0405\x05\u0100\x81\x02\u0404\u0403"+
-		"\x03\x02\x02\x02\u0404\u0405\x03\x02\x02\x02\u0405\u0406\x03\x02\x02\x02"+
-		"\u0406\u0407\x05\u016C\xB7\x02\u0407\u0408\x05\u029C\u014F\x02\u0408\u0409"+
-		"\x05\u0174\xBB\x02\u0409\u040A\x05\u029E\u0150\x02\u040A\u040B\x05\u0232"+
-		"\u011A\x02\u040B\u040C\x05\u0186\xC4\x02\u040C\u040D\x05\u0238\u011D\x02"+
-		"\u040D\u040E\x05\u0174\xBB\x02\u040E\u040F\x05\u01D8\xED\x02\u040F\u0410"+
-		"\x05\u0186\xC4\x02\u0410\u0411\x05\u01E8\xF5\x02\u0411\u0412\x05:\x1E"+
-		"\x02\u04129\x03\x02\x02\x02\u0413\u0418\x05\u0132\x9A\x02\u0414\u0418"+
-		"\x05B\"\x02\u0415\u0418\x05@!\x02\u0416\u0418\x05<\x1F\x02\u0417\u0413"+
-		"\x03\x02\x02\x02\u0417\u0414\x03\x02\x02\x02\u0417\u0415\x03\x02\x02\x02"+
-		"\u0417\u0416\x03\x02\x02\x02\u0418;\x03\x02\x02\x02\u0419\u041A\x05\u02A0"+
-		"\u0151\x02\u041A\u0420\x05> \x02\u041B\u041C\x05\u02AC\u0157\x02\u041C"+
-		"\u041D\x05> \x02\u041D\u041F\x03\x02\x02\x02\u041E\u041B\x03\x02\x02\x02"+
-		"\u041F\u0422\x03\x02\x02\x02\u0420\u041E\x03\x02\x02\x02\u0420\u0421\x03"+
-		"\x02\x02\x02\u0421\u0423\x03\x02\x02\x02\u0422\u0420\x03\x02\x02\x02\u0423"+
-		"\u0424\x05\u02A2\u0152\x02\u0424=\x03\x02\x02\x02\u0425\u0426\x05\u018E"+
-		"\xC8\x02\u0426\u0427\x07\v\x02\x02\u0427\u0428\x05:\x1E\x02\u0428?\x03"+
-		"\x02\x02\x02\u0429\u042A\x05\u029C\u014F\x02\u042A\u0431\x05B\"\x02\u042B"+
-		"\u042C\x05\u02AC\u0157\x02\u042C\u042D\x05\u0132\x9A\x02\u042D\u0430\x03"+
-		"\x02\x02\x02\u042E\u0430\x05B\"\x02\u042F\u042B\x03\x02\x02\x02\u042F"+
-		"\u042E\x03\x02\x02\x02\u0430\u0433\x03\x02\x02\x02\u0431\u042F\x03\x02"+
-		"\x02\x02\u0431\u0432\x03\x02\x02\x02\u0432\u0434\x03\x02\x02\x02\u0433"+
-		"\u0431\x03\x02\x02\x02\u0434\u0435\x05\u029E\u0150\x02\u0435A\x03\x02"+
-		"\x02\x02\u0436\u0437\x05\u029C\u014F\x02\u0437\u043D\x05\u0132\x9A\x02"+
-		"\u0438\u0439\x05\u02AC\u0157\x02\u0439\u043A\x05\u0132\x9A\x02\u043A\u043C"+
-		"\x03\x02\x02\x02\u043B\u0438\x03\x02\x02\x02\u043C\u043F\x03\x02\x02\x02"+
-		"\u043D\u043B\x03\x02\x02\x02\u043D\u043E\x03\x02\x02\x02\u043E\u0440\x03"+
-		"\x02\x02\x02\u043F\u043D\x03\x02\x02\x02\u0440\u0441\x05\u029E\u0150\x02"+
-		"\u0441C\x03\x02\x02\x02\u0442\u0443\x05\u0216\u010C\x02\u0443\u0444\x05"+
-		"\u0226\u0114\x02\u0444E\x03\x02\x02\x02\u0445\u0446\x05\u01A6\xD4\x02"+
-		"\u0446\u0447\x05\u0252\u012A\x02\u0447\u0448\x05\u018A\xC6\x02\u0448\u0449"+
-		"\x05\u025C\u012F\x02\u0449\u044B\x05H%\x02\u044A\u044C\x05J&\x02\u044B"+
-		"\u044A\x03\x02\x02\x02\u044B\u044C\x03\x02\x02\x02\u044CG\x03\x02\x02"+
-		"\x02\u044D\u044E\x05\u021E\u0110\x02\u044E\u044F\x05\u0148\xA5\x02\u044F"+
-		"I\x03\x02\x02\x02\u0450\u0453\x05\u023A\u011E\x02\u0451\u0453\x05\u0208"+
-		"\u0105\x02\u0452\u0450\x03\x02\x02\x02\u0452\u0451\x03\x02\x02\x02\u0453"+
-		"K\x03\x02\x02\x02\u0454\u0455\x05\u01A6\xD4\x02\u0455\u0456\x05\u024A"+
-		"\u0126\x02\u0456\u0457\x05\u015E\xB0\x02\u0457\u0458\x05N(\x02\u0458M"+
-		"\x03\x02\x02\x02\u0459\u045B\x05X-\x02\u045A\u0459\x03\x02\x02\x02\u045A"+
-		"\u045B\x03\x02\x02\x02\u045B\u045D\x03\x02\x02\x02\u045C\u045E\x05V,\x02"+
-		"\u045D\u045C\x03\x02\x02\x02\u045D\u045E\x03\x02\x02\x02\u045E\u0460\x03"+
-		"\x02\x02\x02\u045F\u0461\x05P)\x02\u0460\u045F\x03\x02\x02\x02\u0460\u0461"+
-		"\x03\x02\x02\x02\u0461O\x03\x02\x02\x02\u0462\u0463\x05\u0224\u0113\x02"+
-		"\u0463\u0464\x05R*\x02\u0464Q\x03\x02\x02\x02\u0465\u046B\x05T+\x02\u0466"+
-		"\u0467\x05\u01A8\xD5\x02\u0467\u0468\x05T+\x02\u0468\u046A\x03\x02\x02"+
-		"\x02\u0469\u0466\x03\x02\x02\x02\u046A\u046D\x03\x02\x02\x02\u046B\u0469"+
-		"\x03\x02\x02\x02\u046B\u046C\x03\x02\x02\x02\u046CS\x03\x02\x02\x02\u046D"+
-		"\u046B\x03\x02\x02\x02\u046E\u046F\x05\u016E\xB8\x02\u046F\u0470\x05\u0240"+
-		"\u0121\x02\u0470\u0471\x05\u016E\xB8\x02\u0471U\x03\x02\x02\x02\u0472"+
-		"\u0473\x05\u0194\xCB\x02\u0473\u0474\x05\u016E\xB8\x02\u0474\u047B\x05"+
-		"\u0174\xBB\x02\u0475\u0476\x05\u02AC\u0157\x02\u0476\u0477\x05\u016E\xB8"+
-		"\x02\u0477\u0478\x05\u0174\xBB\x02\u0478\u047A\x03\x02\x02\x02\u0479\u0475"+
-		"\x03\x02\x02\x02\u047A\u047D\x03\x02\x02\x02\u047B\u0479\x03\x02\x02\x02"+
-		"\u047B\u047C\x03\x02\x02\x02\u047CW\x03\x02\x02\x02\u047D\u047B\x03\x02"+
-		"\x02\x02\u047E\u047F\x05\u01A6\xD4\x02\u047F\u0480\x05\u016E\xB8\x02\u0480"+
-		"\u0481\x05\u024A\u0126\x02\u0481\u0482\x05\u0174\xBB\x02\u0482Y\x03\x02"+
-		"\x02\x02\u0483\u0484\x05\u01A6\xD4\x02\u0484\u0485\x05\u023C\u011F\x02"+
-		"\u0485\u0486\x05\u0162\xB2\x02\u0486\u0487\x05\\/\x02\u0487[\x03\x02\x02"+
-		"\x02\u0488\u0490\x05h5\x02\u0489\u0490\x05d3\x02\u048A\u0490\x05d3\x02"+
-		"\u048B\u0490\x05b2\x02\u048C\u0490\x05`1\x02\u048D\u0490\x05^0\x02\u048E"+
-		"\u0490\b/\x01\x02\u048F\u0488\x03\x02\x02\x02\u048F\u0489\x03\x02\x02"+
-		"\x02\u048F\u048A\x03\x02\x02\x02\u048F\u048B\x03\x02\x02\x02\u048F\u048C"+
-		"\x03\x02\x02\x02\u048F\u048D\x03\x02\x02\x02\u048F\u048E\x03\x02\x02\x02"+
-		"\u0490]\x03\x02\x02\x02\u0491\u0492\x05\u025C\u012F\x02\u0492\u0493\x05"+
-		"\x92J\x02\u0493_\x03\x02\x02\x02\u0494\u0495\x05\u0224\u0113\x02\u0495"+
-		"\u0496\x05\u016E\xB8\x02\u0496\u0497\x05\u0240\u0121\x02\u0497\u0498\x05"+
-		"\u016E\xB8\x02\u0498a\x03\x02\x02\x02\u0499\u049A\x05\u01CC\xE7\x02\u049A"+
-		"\u049B\x05\u01BC\xDF\x02\u049B\u049C\x05\u0236\u011C\x02\u049Cc\x03\x02"+
-		"\x02\x02\u049D\u049E\x05\u01CC\xE7\x02\u049E\u049F\x05f4\x02\u049Fe\x03"+
-		"\x02\x02\x02\u04A0\u04A6\x05\u016E\xB8\x02\u04A1\u04A2\x05\u02AC\u0157"+
-		"\x02\u04A2\u04A3\x05\u016E\xB8\x02\u04A3\u04A5\x03\x02\x02\x02\u04A4\u04A1"+
-		"\x03\x02\x02\x02\u04A5\u04A8\x03\x02\x02\x02\u04A6\u04A4\x03\x02\x02\x02"+
-		"\u04A6\u04A7\x03\x02\x02\x02\u04A7g\x03\x02\x02\x02\u04A8\u04A6\x03\x02"+
-		"\x02\x02\u04A9\u04AA\x05\u0194\xCB\x02\u04AA\u04AB\x05j6\x02\u04ABi\x03"+
-		"\x02\x02\x02\u04AC\u04AD\x05\u016E\xB8\x02\u04AD\u04B4\x05\u0174\xBB\x02"+
-		"\u04AE\u04AF\x05\u02AC\u0157\x02\u04AF\u04B0\x05\u016E\xB8\x02\u04B0\u04B1"+
-		"\x05\u0174\xBB\x02\u04B1\u04B3\x03\x02\x02\x02\u04B2\u04AE\x03\x02\x02"+
-		"\x02\u04B3\u04B6\x03\x02\x02\x02\u04B4\u04B2\x03\x02\x02\x02\u04B4\u04B5"+
-		"\x03\x02\x02\x02\u04B5k\x03\x02\x02\x02\u04B6\u04B4\x03\x02\x02\x02\u04B7"+
-		"\u04B8\x05\u01A6\xD4\x02\u04B8\u04B9\x05\u022C\u0117\x02\u04B9\u04BB\x05"+
-		"\u017C\xBF\x02\u04BA\u04BC\x05n8\x02\u04BB\u04BA\x03\x02\x02\x02\u04BB"+
-		"\u04BC\x03\x02\x02\x02\u04BCm\x03\x02\x02\x02\u04BD\u04BE\x05\u025C\u012F"+
-		"\x02\u04BE\u04C4\x05p9\x02\u04BF\u04C0\x05\u01A8\xD5\x02\u04C0\u04C1\x05"+
-		"p9\x02\u04C1\u04C3\x03\x02\x02\x02\u04C2\u04BF\x03\x02\x02\x02\u04C3\u04C6"+
-		"\x03\x02\x02\x02\u04C4\u04C2\x03\x02\x02\x02\u04C4\u04C5\x03\x02\x02\x02"+
-		"\u04C5o\x03\x02\x02\x02\u04C6\u04C4\x03\x02\x02\x02\u04C7\u04C8\x05\u021E"+
-		"\u0110\x02\u04C8\u04C9\x07\xAE\x02\x02\u04C9\u04CA\x05\u0148\xA5\x02\u04CA"+
-		"\u04D8\x03\x02\x02\x02\u04CB\u04CC\x05\u0202\u0102\x02\u04CC\u04CD\x07"+
-		"\xAE\x02\x02\u04CD\u04CE\x05\u014A\xA6\x02\u04CE\u04D8\x03\x02\x02\x02"+
-		"\u04CF\u04D0\x05\u023A\u011E\x02\u04D0\u04D1\x07\xAE\x02\x02\u04D1\u04D2"+
-		"\x05\u014A\xA6\x02\u04D2\u04D8\x03\x02\x02\x02\u04D3\u04D4\x05\u0214\u010B"+
-		"\x02\u04D4\u04D5\x07\xAE\x02\x02\u04D5\u04D6\x05\x9AN\x02\u04D6\u04D8"+
-		"\x03\x02\x02\x02\u04D7\u04C7\x03\x02\x02\x02\u04D7\u04CB\x03\x02\x02\x02"+
-		"\u04D7\u04CF\x03\x02\x02\x02\u04D7\u04D3\x03\x02\x02\x02\u04D8q\x03\x02"+
-		"\x02\x02\u04D9\u04DA\x05\u01A6\xD4\x02\u04DA\u04DB\x05\u0204\u0103\x02"+
-		"\u04DB\u04DF\x05\u0168\xB5\x02\u04DC\u04DD\x05\u025C\u012F\x02\u04DD\u04DE"+
-		"\x05\x92J\x02\u04DE\u04E0\x03\x02\x02\x02\u04DF\u04DC\x03\x02\x02\x02"+
-		"\u04DF\u04E0\x03\x02\x02\x02\u04E0s\x03\x02\x02\x02\u04E1\u04E2\x05\u01CC"+
-		"\xE7\x02\u04E2\u04E4\x05\u0252\u012A\x02\u04E3\u04E5\x05\u0102\x82\x02"+
-		"\u04E4\u04E3\x03\x02\x02\x02\u04E4\u04E5\x03\x02\x02\x02\u04E5\u04E6\x03"+
-		"\x02\x02\x02\u04E6\u04E7\x05\u018A\xC6\x02\u04E7u\x03\x02\x02\x02\u04E8"+
-		"\u04E9\x05\u01CC\xE7\x02\u04E9\u04EB\x05\u024A\u0126\x02\u04EA\u04EC\x05"+
-		"\u0102\x82\x02\u04EB\u04EA\x03\x02\x02\x02\u04EB\u04EC\x03\x02\x02\x02"+
-		"\u04EC\u04ED\x03\x02\x02\x02\u04ED\u04EE\x05\u015E\xB0\x02\u04EEw\x03"+
-		"\x02\x02\x02\u04EF\u04F0\x05\u01CC\xE7\x02\u04F0\u04F2\x05\u0204\u0103"+
-		"\x02\u04F1\u04F3\x05\u0102\x82\x02\u04F2\u04F1\x03\x02\x02\x02\u04F2\u04F3"+
-		"\x03\x02\x02\x02\u04F3\u04F4\x03\x02\x02\x02\u04F4\u04F5\x05\u0168\xB5"+
-		"\x02\u04F5y\x03\x02\x02\x02\u04F6\u04F7\x05\u01CC\xE7\x02\u04F7\u04F9"+
-		"\x05\u0196\xCC\x02\u04F8\u04FA\x05\u0102\x82\x02\u04F9\u04F8\x03\x02\x02"+
-		"\x02\u04F9\u04FA\x03\x02\x02\x02\u04FA\u04FB\x03\x02\x02\x02\u04FB\u04FC"+
-		"\x05\u015C\xAF\x02\u04FC{\x03\x02\x02\x02\u04FD\u04FE\x05\u01CC\xE7\x02"+
-		"\u04FE\u0500\x05\u01DE\xF0\x02\u04FF\u0501\x05\u0102\x82\x02\u0500\u04FF"+
-		"\x03\x02\x02\x02\u0500\u0501\x03\x02\x02\x02\u0501\u0502\x03\x02\x02\x02"+
-		"\u0502\u0503\x05\u0160\xB1\x02\u0503}\x03\x02\x02\x02\u0504\u0505\x05"+
-		"\u01CC\xE7\x02\u0505\u0507\x05\u0244\u0123\x02\u0506\u0508\x05\u0102\x82"+
-		"\x02\u0507\u0506\x03\x02\x02\x02\u0507\u0508\x03\x02\x02\x02\u0508\u0509"+
-		"\x03\x02\x02\x02\u0509\u050A\x05\u017E\xC0\x02\u050A\u050B\x05\u0212\u010A"+
-		"\x02\u050B\u050C\x05\u0162\xB2\x02\u050C\x7F\x03\x02\x02\x02\u050D\u050E"+
-		"\x05\u01CC\xE7\x02\u050E\u0510\x05\u022C\u0117\x02\u050F\u0511\x05\u0102"+
-		"\x82\x02\u0510\u050F\x03\x02\x02\x02\u0510\u0511\x03\x02\x02\x02\u0511"+
-		"\u0512\x03\x02\x02\x02\u0512\u0513\x05\u017C\xBF\x02\u0513\x81\x03\x02"+
-		"\x02\x02\u0514\u0515\x05\u01CC\xE7\x02\u0515\u0517\x05\u023C\u011F\x02"+
-		"\u0516\u0518\x05\u0102\x82\x02\u0517\u0516\x03\x02\x02\x02\u0517\u0518"+
-		"\x03\x02\x02\x02\u0518\u0519\x03\x02\x02\x02\u0519\u051A\x05\u0162\xB2"+
-		"\x02\u051A\x83\x03\x02\x02\x02\u051B\u051C\x05\u01CC\xE7\x02\u051C\u051E"+
-		"\x05\u01F4\xFB\x02\u051D\u051F\x05\u0102\x82\x02\u051E\u051D\x03\x02\x02"+
-		"\x02\u051E\u051F\x03\x02\x02\x02\u051F\u0520\x03\x02\x02\x02\u0520\u0521"+
-		"\x05\u014E\xA8\x02\u0521\x85\x03\x02\x02\x02\u0522\u0523\x05\u01CC\xE7"+
-		"\x02\u0523\u0525\x05\u01E6\xF4\x02\u0524\u0526\x05\u0102\x82\x02\u0525"+
-		"\u0524\x03\x02\x02\x02\u0525\u0526\x03\x02\x02\x02\u0526\u0527\x03\x02"+
-		"\x02\x02\u0527\u0528\x05\u0166\xB4\x02\u0528\x87\x03\x02\x02\x02\u0529"+
-		"\u052A\x05\u01C2\xE2\x02\u052A\u052C\x05\u023C\u011F\x02\u052B\u052D\x05"+
-		"\u0100\x81\x02\u052C\u052B\x03\x02\x02\x02\u052C\u052D\x03\x02\x02\x02"+
-		"\u052D\u052E\x03\x02\x02\x02\u052E\u052F\x05\u016C\xB7\x02\u052F\u0531"+
-		"\x05\x8AF\x02\u0530\u0532\x05\x8CG\x02\u0531\u0530\x03\x02\x02\x02\u0531"+
-		"\u0532\x03\x02\x02\x02\u0532\x89\x03\x02\x02\x02\u0533\u0534\x05\u029C"+
-		"\u014F\x02\u0534\u0535\x05\xA2R\x02\u0535\u0536\x05\u029E\u0150\x02\u0536"+
-		"\u0539\x03\x02\x02\x02\u0537\u0539\bF\x01\x02\u0538\u0533\x03\x02\x02"+
-		"\x02\u0538\u0537\x03\x02\x02\x02\u0539\x8B\x03\x02\x02\x02\u053A\u053B"+
-		"\x05\u025C\u012F\x02\u053B\u053F\x05\x92J\x02\u053C\u053D\x05\u01A8\xD5"+
-		"\x02\u053D\u053E\x05\x8EH\x02\u053E\u0540\x03\x02\x02\x02\u053F\u053C"+
-		"\x03\x02\x02\x02\u053F\u0540\x03\x02\x02\x02\u0540\u054B\x03\x02\x02\x02"+
-		"\u0541\u0543\x05\u025C\u012F\x02\u0542\u0544\x05\x8EH\x02\u0543\u0542"+
-		"\x03\x02\x02\x02\u0543\u0544\x03\x02\x02\x02\u0544\u0548\x03\x02\x02\x02"+
-		"\u0545\u0546\x05\u01A8\xD5\x02\u0546\u0547\x05\x92J\x02\u0547\u0549\x03"+
-		"\x02\x02\x02\u0548\u0545\x03\x02\x02\x02\u0548\u0549\x03\x02\x02\x02\u0549"+
-		"\u054B\x03\x02\x02\x02\u054A\u053A\x03\x02\x02\x02\u054A\u0541\x03\x02"+
-		"\x02\x02\u054B\x8D\x03\x02\x02\x02\u054C\u054D\x05\u01BA\xDE\x02\u054D"+
-		"\u054E\x05\u0218\u010D\x02\u054E\u054F\x05\u01B6\xDC\x02\u054F\u0550\x05"+
-		"\u029C\u014F\x02\u0550\u0556\x05\x90I\x02\u0551\u0552\x05\u02AC\u0157"+
-		"\x02\u0552\u0553\x05\x90I\x02\u0553\u0555\x03\x02\x02\x02\u0554\u0551"+
-		"\x03\x02\x02\x02\u0555\u0558\x03\x02\x02\x02\u0556\u0554\x03\x02\x02\x02"+
-		"\u0556\u0557\x03\x02\x02\x02\u0557\u0559\x03\x02\x02\x02\u0558\u0556\x03"+
-		"\x02\x02\x02\u0559\u055A\x05\u029E\u0150\x02\u055A\x8F\x03\x02\x02\x02"+
-		"\u055B\u055D\x05\u016E\xB8\x02\u055C\u055E\x05\u017A\xBE\x02\u055D\u055C"+
-		"\x03\x02\x02\x02\u055D\u055E\x03\x02\x02\x02\u055E\x91\x03\x02\x02\x02"+
-		"\u055F\u0565\x05\x94K\x02\u0560\u0561\x05\u01A8\xD5\x02\u0561\u0562\x05"+
-		"\x94K\x02\u0562\u0564\x03\x02\x02\x02\u0563\u0560\x03\x02\x02\x02\u0564"+
-		"\u0567\x03\x02\x02\x02\u0565\u0563\x03\x02\x02\x02\u0565\u0566\x03\x02"+
-		"\x02\x02\u0566\x93\x03\x02\x02\x02\u0567\u0565\x03\x02\x02\x02\u0568\u0569"+
-		"\x05\x96L\x02\u0569\u056A\x07\xAE\x02\x02\u056A\u056B\x05\x98M\x02\u056B"+
-		"\u0571\x03\x02\x02\x02\u056C\u056D\x05\x96L\x02\u056D\u056E\x07\xAE\x02"+
-		"\x02\u056E\u056F\x05\x9AN\x02\u056F\u0571\x03\x02\x02\x02\u0570\u0568"+
-		"\x03\x02\x02\x02\u0570\u056C\x03\x02\x02\x02\u0571\x95\x03\x02\x02\x02"+
-		"\u0572\u0573\x07\xAC\x02\x02\u0573\x97\x03\x02\x02\x02\u0574\u0577\x05"+
-		"\u0148\xA5\x02\u0575\u0577\x05\u0146\xA4\x02\u0576\u0574\x03\x02\x02\x02"+
-		"\u0576\u0575\x03\x02\x02\x02\u0577\x99\x03\x02\x02\x02\u0578\u0579\x05"+
-		"\u02A0\u0151\x02\u0579\u057F\x05\x9CO\x02\u057A\u057B\x05\u02AC\u0157"+
-		"\x02\u057B\u057C\x05\x9CO\x02\u057C\u057E\x03\x02\x02\x02\u057D\u057A"+
-		"\x03\x02\x02\x02\u057E\u0581\x03\x02\x02\x02\u057F\u057D\x03\x02\x02\x02"+
-		"\u057F\u0580\x03\x02\x02\x02\u0580\u0582\x03\x02\x02\x02\u0581\u057F\x03"+
-		"\x02\x02\x02\u0582\u0583\x05\u02A2\u0152\x02\u0583\x9B\x03\x02\x02\x02"+
-		"\u0584\u0585\x05\x9EP\x02\u0585\u0586\x07\v\x02\x02\u0586\u0587\x05\xA0"+
-		"Q\x02\u0587\x9D\x03\x02\x02\x02\u0588\u0589\x05\u0148\xA5\x02\u0589\x9F"+
-		"\x03\x02\x02\x02\u058A\u058D\x05\u0148\xA5\x02\u058B\u058D\x05\u0146\xA4"+
-		"\x02\u058C\u058A\x03\x02\x02\x02\u058C\u058B\x03\x02\x02\x02\u058D\xA1"+
-		"\x03\x02\x02\x02\u058E\u0594\x05\xA4S\x02\u058F\u0590\x05\u02AC\u0157"+
-		"\x02\u0590\u0591\x05\xA4S\x02\u0591\u0593\x03\x02\x02\x02\u0592\u058F"+
-		"\x03\x02\x02\x02\u0593\u0596\x03\x02\x02\x02\u0594\u0592\x03\x02\x02\x02"+
-		"\u0594\u0595\x03\x02\x02\x02\u0595\u059A\x03\x02\x02\x02\u0596\u0594\x03"+
-		"\x02\x02\x02\u0597\u0598\x05\u02AC\u0157\x02\u0598\u0599\x05\xA8U\x02"+
-		"\u0599\u059B\x03\x02\x02\x02\u059A\u0597\x03\x02\x02\x02\u059A\u059B\x03"+
-		"\x02\x02\x02\u059B\xA3\x03\x02\x02\x02\u059C\u059D\x05\u0172\xBA\x02\u059D"+
-		"\u059E\x05\u0174\xBB\x02\u059E\u059F\x05\xA6T\x02\u059F\u05A9\x03\x02"+
-		"\x02\x02\u05A0\u05A1\x05\u0172\xBA\x02\u05A1\u05A2\x05\u0174\xBB\x02\u05A2"+
-		"\u05A3\x05\u0234\u011B\x02\u05A3\u05A9\x03\x02\x02\x02\u05A4\u05A5\x05"+
-		"\u0172\xBA\x02\u05A5\u05A6\x05\u0174\xBB\x02\u05A6\u05A9\x03\x02\x02\x02"+
-		"\u05A7\u05A9\bS\x01\x02\u05A8\u059C\x03\x02\x02\x02\u05A8\u05A0\x03\x02"+
-		"\x02\x02\u05A8\u05A4\x03\x02\x02\x02\u05A8\u05A7\x03\x02\x02\x02\u05A9"+
-		"\xA5\x03\x02\x02\x02\u05AA\u05AB\x05\u0222\u0112\x02\u05AB\u05AC\x05\u01F0"+
-		"\xF9\x02\u05AC\u05B1\x03\x02\x02\x02\u05AD\u05AE\x05\u0222\u0112\x02\u05AE"+
-		"\u05AF\bT\x01\x02\u05AF\u05B1\x03\x02\x02\x02\u05B0\u05AA\x03\x02\x02"+
-		"\x02\u05B0\u05AD\x03\x02\x02\x02\u05B1\xA7\x03\x02\x02\x02\u05B2\u05B3"+
-		"\x05\u0222\u0112\x02\u05B3\u05B4\x05\u01F0\xF9\x02\u05B4\u05B5\x05\u029C"+
-		"\u014F\x02\u05B5\u05B6\x05\xAAV\x02\u05B6\u05B7\x05\u029E\u0150\x02\u05B7"+
-		"\xA9\x03\x02\x02\x02\u05B8\u05BC\x05\xACW\x02\u05B9\u05BC\x05\xAEX\x02"+
-		"\u05BA\u05BC\x05\xB0Y\x02\u05BB\u05B8\x03\x02\x02\x02\u05BB\u05B9\x03"+
-		"\x02\x02\x02\u05BB\u05BA\x03\x02\x02\x02\u05BC\xAB\x03\x02\x02\x02\u05BD"+
-		"\u05BE\x05\u016E\xB8\x02\u05BE\xAD\x03\x02\x02\x02\u05BF\u05C0\x05\xB6"+
-		"\\\x02\u05C0\u05C1\x05\u02AC\u0157\x02\u05C1\u05C2\x05\xB4[\x02\u05C2"+
-		"\xAF\x03\x02\x02\x02\u05C3\u05C4\x05\u029C\u014F\x02\u05C4\u05C5\x05\xB2"+
-		"Z\x02\u05C5\u05C6\x05\u029E\u0150\x02\u05C6\u05C7\x05\u02AC\u0157\x02"+
-		"\u05C7\u05C8\x05\xB4[\x02\u05C8\xB1\x03\x02\x02\x02\u05C9\u05CF\x05\xB6"+
-		"\\\x02\u05CA\u05CB\x05\u02AC\u0157\x02\u05CB\u05CC\x05\xB6\\\x02\u05CC"+
-		"\u05CE\x03\x02\x02\x02\u05CD\u05CA\x03\x02\x02\x02\u05CE\u05D1\x03\x02"+
-		"\x02\x02\u05CF\u05CD\x03\x02\x02\x02\u05CF\u05D0\x03\x02\x02\x02\u05D0"+
-		"\xB3\x03\x02\x02\x02\u05D1\u05CF\x03\x02\x02\x02\u05D2\u05D8\x05\xB8]"+
-		"\x02\u05D3\u05D4\x05\u02AC\u0157\x02\u05D4\u05D5\x05\xB8]\x02\u05D5\u05D7"+
-		"\x03\x02\x02\x02\u05D6\u05D3\x03\x02\x02\x02\u05D7\u05DA\x03\x02\x02\x02"+
-		"\u05D8\u05D6\x03\x02\x02\x02\u05D8\u05D9\x03\x02\x02\x02\u05D9\xB5\x03"+
-		"\x02\x02\x02\u05DA\u05D8\x03\x02\x02\x02\u05DB\u05DC\x05\u016E\xB8\x02"+
-		"\u05DC\xB7\x03\x02\x02\x02\u05DD\u05DE\x05\u016E\xB8\x02\u05DE\xB9\x03"+
-		"\x02\x02\x02\u05DF\u05E0\x05\u01AA\xD6\x02\u05E0\u05E1\x05\u01B2\xDA\x02"+
-		"\u05E1\xBB\x03\x02\x02\x02\u05E2\u05E3\x05\xBE`\x02\u05E3\u05E4\x05\xDE"+
-		"p\x02\u05E4\u05EC\x03\x02\x02\x02\u05E5\u05E6\x05\xBE`\x02\u05E6\u05E7"+
-		"\x05\xF6|\x02\u05E7\u05EC\x03\x02\x02\x02\u05E8\u05E9\x05\xBE`\x02\u05E9"+
-		"\u05EA\x05\xE4s\x02\u05EA\u05EC\x03\x02\x02\x02\u05EB\u05E2\x03\x02\x02"+
-		"\x02\u05EB\u05E5\x03\x02\x02\x02\u05EB\u05E8\x03\x02\x02\x02\u05EC\xBD"+
-		"\x03\x02\x02\x02\u05ED\u05EF\x05\u01B4\xDB\x02\u05EE\u05F0\x05\xC0a\x02"+
-		"\u05EF\u05EE\x03\x02\x02\x02\u05EF\u05F0\x03\x02\x02\x02\u05F0\u05F1\x03"+
-		"\x02\x02\x02\u05F1\u05F3\x05\u01B2\xDA\x02\u05F2\u05F4\x05\xFE\x80\x02"+
-		"\u05F3\u05F2\x03\x02\x02\x02\u05F3\u05F4\x03\x02\x02\x02\u05F4\xBF\x03"+
-		"\x02\x02\x02\u05F5\u05F8\x05\u0200\u0101\x02\u05F6\u05F8\x05\u024C\u0127"+
-		"\x02\u05F7\u05F5\x03\x02\x02\x02\u05F7\u05F6\x03\x02\x02\x02\u05F8\xC1"+
-		"\x03\x02\x02\x02\u05F9\u05FA\x05\u01A6\xD4\x02\u05FA\u05FB\x05\u01F4\xFB"+
-		"\x02\u05FB\u05FC\x05\u014E\xA8\x02\u05FC\u05FD\x05\u025C\u012F\x02\u05FD"+
-		"\u05FE\x05\u0228\u0115\x02\u05FE\u05FF\x07\xAE\x02\x02\u05FF\u0600\x05"+
-		"\u02A0\u0151\x02\u0600\u0601\x05\xC4c\x02\u0601\u0605\x05\u02A2\u0152"+
-		"\x02\u0602\u0603\x05\u01A8\xD5\x02\u0603\u0604\x05\xC8e\x02\u0604\u0606"+
-		"\x03\x02\x02\x02\u0605\u0602\x03\x02\x02\x02\u0605\u0606\x03\x02\x02\x02"+
-		"\u0606\xC3\x03\x02\x02\x02\u0607\u060D\x05\xC6d\x02\u0608\u0609\x05\u02AC"+
-		"\u0157\x02\u0609\u060A\x05\xC6d\x02\u060A\u060C\x03\x02\x02\x02\u060B"+
-		"\u0608\x03\x02\x02\x02\u060C\u060F\x03\x02\x02\x02\u060D\u060B\x03\x02"+
-		"\x02\x02\u060D\u060E\x03\x02\x02\x02\u060E\xC5\x03\x02\x02\x02\u060F\u060D"+
-		"\x03\x02\x02\x02\u0610\u0611\x07\xA7\x02\x02\u0611\u0612\x07\v\x02\x02"+
-		"\u0612\u0617\x07\xA7\x02\x02\u0613\u0614\x07\xA7\x02\x02\u0614\u0615\x07"+
-		"\v\x02\x02\u0615\u0617\x07\xA8\x02\x02\u0616\u0610\x03\x02\x02\x02\u0616"+
-		"\u0613\x03\x02\x02\x02\u0617\xC7\x03\x02\x02\x02\u0618\u0619\x05\u01CE"+
-		"\xE8\x02\u0619\u061A\x07\xAE\x02\x02\u061A\u061B\x05\u014A\xA6\x02\u061B"+
-		"\xC9\x03\x02\x02\x02\u061C\u061D\x05\u0250\u0129\x02\u061D\u061E\x05\u014E"+
-		"\xA8\x02\u061E\xCB\x03\x02\x02\x02\u061F\u0621\x05\u0246\u0124\x02\u0620"+
-		"\u0622\x05\u023C\u011F\x02\u0621\u0620\x03";
+		"\x05\u01DC\xEF\x02\u0344\u0345\x05\u014A\xA6\x02\u0345\u0346\x07\x12\x02"+
+		"\x02\u0346\u0348\x03\x02\x02\x02\u0347\u0344\x03\x02\x02\x02\u0347\u0348"+
+		"\x03\x02\x02\x02\u0348\u0349\x03\x02\x02\x02\u0349\u034A\x05\u0184\xC3"+
+		"\x02\u034A\u0358\x03\x02\x02\x02\u034B\u0358\x05\u019A\xCE\x02\u034C\u034D"+
+		"\x05\u01F2\xFA\x02\u034D\u034E\x05\u014A\xA6\x02\u034E\u0358\x03\x02\x02"+
+		"\x02\u034F\u0351\x05\u023A\u011E\x02\u0350\u034F\x03\x02\x02\x02\u0350"+
+		"\u0351\x03\x02\x02\x02\u0351\u0352\x03\x02\x02\x02\u0352\u0358\x05\u015E"+
+		"\xB0\x02\u0353\u0358\x05\u019C\xCF\x02\u0354\u0355\x05\u022A\u0116\x02"+
+		"\u0355\u0356\x05\u017A\xBE\x02\u0356\u0358\x03\x02\x02\x02\u0357\u033D"+
+		"\x03\x02\x02\x02\u0357\u033E\x03\x02\x02\x02\u0357\u0343\x03\x02\x02\x02"+
+		"\u0357\u034B\x03\x02\x02\x02\u0357\u034C\x03\x02\x02\x02\u0357\u0350\x03"+
+		"\x02\x02\x02\u0357\u0353\x03\x02\x02\x02\u0357\u0354\x03\x02\x02\x02\u0358"+
+		"\x19\x03\x02\x02\x02\u0359\u035A\x05\u01C0\xE1\x02\u035A\u035C\x05\u0250"+
+		"\u0129\x02\u035B\u035D\x05\xFC\x7F\x02\u035C\u035B\x03\x02\x02\x02\u035C"+
+		"\u035D\x03\x02\x02\x02\u035D\u035E\x03\x02\x02\x02\u035E\u035F\x05\u0188"+
+		"\xC5\x02\u035F\u0360\x05\u025A\u012E\x02\u0360\u0361\x05\u021C\u010F\x02"+
+		"\u0361\u0364\x05\u0144\xA3\x02\u0362\u0365\x05\u0238\u011D\x02\u0363\u0365"+
+		"\x05\u0206\u0104\x02\u0364\u0362\x03\x02\x02\x02\u0364\u0363\x03\x02\x02"+
+		"\x02\u0364\u0365\x03\x02\x02\x02\u0365\x1B\x03\x02\x02\x02\u0366\u0367"+
+		"\x05\u01C0\xE1\x02\u0367\u0369\x05\u022A\u0116\x02\u0368\u036A\x05\xFC"+
+		"\x7F\x02\u0369\u0368\x03\x02\x02\x02\u0369\u036A\x03\x02\x02\x02\u036A"+
+		"\u036B\x03\x02\x02\x02\u036B\u036D\x05\u017A\xBE\x02\u036C\u036E\x05n"+
+		"8\x02\u036D\u036C\x03\x02\x02\x02\u036D\u036E\x03\x02\x02\x02\u036E\x1D"+
+		"\x03\x02\x02\x02\u036F\u0370\x05\u01C0\xE1\x02\u0370\u0372\x05\u0248\u0125"+
+		"\x02\u0371\u0373\x05\xFC\x7F\x02\u0372\u0371\x03\x02\x02\x02\u0372\u0373"+
+		"\x03\x02\x02\x02\u0373\u0374\x03\x02\x02\x02\u0374\u0375\x05\u0168\xB5"+
+		"\x02\u0375\u0376\x05\u029A\u014E\x02\u0376\u0377\x05 \x11\x02\u0377\u0378"+
+		"\x05\u029C\u014F\x02\u0378\x1F\x03\x02\x02\x02\u0379\u037A\x05\u016A\xB6"+
+		"\x02\u037A\u0381\x05\u0172\xBA\x02\u037B\u037C\x05\u02AA\u0156\x02\u037C"+
+		"\u037D\x05\u016A\xB6\x02\u037D\u037E\x05\u0172\xBA\x02\u037E\u0380\x03"+
+		"\x02\x02\x02\u037F\u037B\x03\x02\x02\x02\u0380\u0383\x03\x02\x02\x02\u0381"+
+		"\u037F\x03\x02\x02\x02\u0381\u0382\x03\x02\x02\x02\u0382!\x03\x02\x02"+
+		"\x02\u0383\u0381\x03\x02\x02\x02\u0384\u0385\x05\u01C0\xE1\x02\u0385\u0387"+
+		"\x05\u0242\u0122\x02\u0386\u0388\x05\xFC\x7F\x02\u0387\u0386\x03\x02\x02"+
+		"\x02\u0387\u0388\x03\x02\x02\x02\u0388\u0389\x03\x02\x02\x02\u0389\u038A"+
+		"\x05\u0168\xB5\x02\u038A\u038B\x05\u0254\u012B\x02\u038B\u038C\x05\u017E"+
+		"\xC0\x02\u038C#\x03\x02\x02\x02\u038D\u038E\x05\u01C0\xE1\x02\u038E\u0390"+
+		"\x05\u0202\u0102\x02\u038F\u0391\x05\xFC\x7F\x02\u0390\u038F\x03\x02\x02"+
+		"\x02\u0390\u0391\x03\x02\x02\x02\u0391\u0392\x03\x02\x02\x02\u0392\u0393"+
+		"\x05\u0168\xB5\x02\u0393\u0394\x05\u01AA\xD6\x02\u0394\u0395\x05\u022C"+
+		"\u0117\x02\u0395\u0396\x05\u0106\x84\x02\u0396\u0397\x05\u01D8\xED\x02"+
+		"\u0397\u0398\x05\u0160\xB1\x02\u0398\u0399\x05&\x14\x02\u0399\u039D\x05"+
+		"\xA8U\x02\u039A\u039B\x05\u025A\u012E\x02\u039B\u039C\x05,\x17\x02\u039C"+
+		"\u039E\x03\x02\x02\x02\u039D\u039A\x03\x02\x02\x02\u039D\u039E\x03\x02"+
+		"\x02\x02\u039E%\x03\x02\x02\x02\u039F\u03A0\x05\u0258\u012D\x02\u03A0"+
+		"\u03A4\x05(\x15\x02\u03A1\u03A2\x05\u01A6\xD4\x02\u03A2\u03A3\x05\u011C"+
+		"\x8F\x02\u03A3\u03A5\x03\x02\x02\x02\u03A4\u03A1\x03\x02\x02\x02\u03A4"+
+		"\u03A5\x03\x02\x02\x02\u03A5\'\x03\x02\x02\x02\u03A6\u03AC\x05*\x16\x02"+
+		"\u03A7\u03A8\x05\u01A6\xD4\x02\u03A8\u03A9\x05*\x16\x02\u03A9\u03AB\x03"+
+		"\x02\x02\x02\u03AA\u03A7\x03\x02\x02\x02\u03AB\u03AE\x03\x02\x02\x02\u03AC"+
+		"\u03AA\x03\x02\x02\x02\u03AC\u03AD\x03\x02\x02\x02\u03AD)\x03\x02\x02"+
+		"\x02\u03AE\u03AC\x03\x02\x02\x02\u03AF\u03B0\x05\u016A\xB6\x02\u03B0\u03B1"+
+		"\x05\u01EC\xF7\x02\u03B1\u03B2\x05\u020A\u0106\x02\u03B2\u03B3\x05\u020C"+
+		"\u0107\x02\u03B3+\x03\x02\x02\x02\u03B4\u03BF\x05\x92J\x02\u03B5\u03B6"+
+		"\x05\x92J\x02\u03B6\u03B7\x05\u01A6\xD4\x02\u03B7\u03B8\x05\x8EH\x02\u03B8"+
+		"\u03BF\x03\x02\x02\x02\u03B9\u03BF\x05\x8EH\x02\u03BA\u03BB\x05\x8EH\x02"+
+		"\u03BB\u03BC\x05\u01A6\xD4\x02\u03BC\u03BD\x05\x92J\x02\u03BD\u03BF\x03"+
+		"\x02\x02\x02\u03BE\u03B4\x03\x02\x02\x02\u03BE\u03B5\x03\x02\x02\x02\u03BE"+
+		"\u03B9\x03\x02\x02\x02\u03BE\u03BA\x03\x02\x02\x02\u03BF-\x03\x02\x02"+
+		"\x02\u03C0\u03C1\x05\u01C0\xE1\x02\u03C1\u03C3\x05\u01F2\xFA\x02\u03C2"+
+		"\u03C4\x05\xFC\x7F\x02\u03C3\u03C2\x03\x02\x02\x02\u03C3\u03C4\x03\x02"+
+		"\x02\x02\u03C4\u03C5\x03\x02\x02\x02\u03C5\u03C6\x05\u0156\xAC\x02\u03C6"+
+		"\u03C7\x05\u025A\u012E\x02\u03C7\u03C8\x05\u0226\u0114\x02\u03C8\u03C9"+
+		"\x07\xAC\x02\x02\u03C9\u03CA\x05\u029E\u0150\x02\u03CA\u03CB\x05\xC0a"+
+		"\x02\u03CB\u03CF\x05\u02A0\u0151\x02\u03CC\u03CD\x05\u01A6\xD4\x02\u03CD"+
+		"\u03CE\x05\xC4c\x02\u03CE\u03D0\x03\x02\x02\x02\u03CF\u03CC\x03\x02\x02"+
+		"\x02\u03CF\u03D0\x03\x02\x02\x02\u03D0/\x03\x02\x02\x02\u03D1\u03D3\x05"+
+		"\u01C0\xE1\x02\u03D2\u03D4\x05D#\x02\u03D3\u03D2\x03\x02\x02\x02\u03D3"+
+		"\u03D4\x03\x02\x02\x02\u03D4\u03D5\x03\x02\x02\x02\u03D5\u03D7\x05\u01DC"+
+		"\xEF\x02\u03D6\u03D8\x05\xFC\x7F\x02\u03D7\u03D6\x03\x02\x02\x02\u03D7"+
+		"\u03D8\x03\x02\x02\x02\u03D8\u03D9\x03\x02\x02\x02\u03D9\u03DA\x05\u0168"+
+		"\xB5\x02\u03DA\u03DC\x05\u029A\u014E\x02\u03DB\u03DD\x054\x1B\x02\u03DC"+
+		"\u03DB\x03\x02\x02\x02\u03DC\u03DD\x03\x02\x02\x02\u03DD\u03DE\x03\x02"+
+		"\x02\x02\u03DE\u03DF\x05\u029C\u014F\x02\u03DF\u03E0\x056\x1C\x02\u03E0"+
+		"\u03E1\x05\u0228\u0115\x02\u03E1\u03E2\x05\u0172\xBA\x02\u03E2\u03E3\x05"+
+		"\u01F4\xFB\x02\u03E3\u03E4\x05\u0186\xC4\x02\u03E4\u03E5\x05\u01AA\xD6"+
+		"\x02\u03E5\u03E6\x052\x1A\x02\u03E61\x03\x02\x02\x02\u03E7\u03E8\x07\xA4"+
+		"\x02\x02\u03E83\x03\x02\x02\x02\u03E9\u03EF\x05\u018E\xC8\x02\u03EA\u03EB"+
+		"\x05\u02AA\u0156\x02\u03EB\u03EC\x05\u018E\xC8\x02\u03EC\u03EE\x03\x02"+
+		"\x02\x02\u03ED\u03EA\x03\x02\x02\x02\u03EE\u03F1\x03\x02\x02\x02\u03EF"+
+		"\u03ED\x03\x02\x02\x02\u03EF\u03F0\x03\x02\x02\x02\u03F05\x03\x02\x02"+
+		"\x02\u03F1\u03EF\x03\x02\x02\x02\u03F2\u03F7\x05\u01B6\xDC\x02\u03F3\u03F4"+
+		"\x05\u0228\u0115\x02\u03F4\u03F5\x05\u020C\u0107\x02\u03F5\u03F7\x03\x02"+
+		"\x02\x02\u03F6\u03F2\x03\x02\x02\x02\u03F6\u03F3\x03\x02\x02\x02\u03F7"+
+		"\u03F8\x03\x02\x02\x02\u03F8\u03F9\x05\u0210\u0109\x02\u03F9\u03FA\x05"+
+		"\u020C\u0107\x02\u03FA\u03FB\x05\u01E8\xF5\x02\u03FB7\x03\x02\x02\x02"+
+		"\u03FC\u03FE\x05\u01C0\xE1\x02\u03FD\u03FF\x05D#\x02\u03FE\u03FD\x03\x02"+
+		"\x02\x02\u03FE\u03FF\x03\x02\x02\x02\u03FF\u0400\x03\x02\x02\x02\u0400"+
+		"\u0402\x05\u0194\xCB\x02\u0401\u0403\x05\xFC\x7F\x02\u0402\u0401\x03\x02"+
+		"\x02\x02\u0402\u0403\x03\x02\x02\x02\u0403\u0404\x03\x02\x02\x02\u0404"+
+		"\u0405\x05\u0168\xB5\x02\u0405\u0406\x05\u029A\u014E\x02\u0406\u0407\x05"+
+		"\u0172\xBA\x02\u0407\u0408\x05\u029C\u014F\x02\u0408\u0409\x05\u0230\u0119"+
+		"\x02\u0409\u040A\x05\u0184\xC3\x02\u040A\u040B\x05\u0236\u011C\x02\u040B"+
+		"\u040C\x05\u0172\xBA\x02\u040C\u040D\x05\u01D6\xEC\x02\u040D\u040E\x05"+
+		"\u0184\xC3\x02\u040E\u040F\x05\u01E6\xF4\x02\u040F\u0410\x05:\x1E\x02"+
+		"\u04109\x03\x02\x02\x02\u0411\u0416\x05\u012E\x98\x02\u0412\u0416\x05"+
+		"B\"\x02\u0413\u0416\x05@!\x02\u0414\u0416\x05<\x1F\x02\u0415\u0411\x03"+
+		"\x02\x02\x02\u0415\u0412\x03\x02\x02\x02\u0415\u0413\x03\x02\x02\x02\u0415"+
+		"\u0414\x03\x02\x02\x02\u0416;\x03\x02\x02\x02\u0417\u0418\x05\u029E\u0150"+
+		"\x02\u0418\u041E\x05> \x02\u0419\u041A\x05\u02AA\u0156\x02\u041A\u041B"+
+		"\x05> \x02\u041B\u041D\x03\x02\x02\x02\u041C\u0419\x03\x02\x02\x02\u041D"+
+		"\u0420\x03\x02\x02\x02\u041E\u041C\x03\x02\x02\x02\u041E\u041F\x03\x02"+
+		"\x02\x02\u041F\u0421\x03\x02\x02\x02\u0420\u041E\x03\x02\x02\x02\u0421"+
+		"\u0422\x05\u02A0\u0151\x02\u0422=\x03\x02\x02\x02\u0423\u0424\x05\u018C"+
+		"\xC7\x02\u0424\u0425\x07\v\x02\x02\u0425\u0426\x05:\x1E\x02\u0426?\x03"+
+		"\x02\x02\x02\u0427\u0428\x05\u029A\u014E\x02\u0428\u042F\x05B\"\x02\u0429"+
+		"\u042A\x05\u02AA\u0156\x02\u042A\u042B\x05\u012E\x98\x02\u042B\u042E\x03"+
+		"\x02\x02\x02\u042C\u042E\x05B\"\x02\u042D\u0429\x03\x02\x02\x02\u042D"+
+		"\u042C\x03\x02\x02\x02\u042E\u0431\x03\x02\x02\x02\u042F\u042D\x03\x02"+
+		"\x02\x02\u042F\u0430\x03\x02\x02\x02\u0430\u0432\x03\x02\x02\x02\u0431"+
+		"\u042F\x03\x02\x02\x02\u0432\u0433\x05\u029C\u014F\x02\u0433A\x03\x02"+
+		"\x02\x02\u0434\u0435\x05\u029A\u014E\x02\u0435\u043B\x05\u012E\x98\x02"+
+		"\u0436\u0437\x05\u02AA\u0156\x02\u0437\u0438\x05\u012E\x98\x02\u0438\u043A"+
+		"\x03\x02\x02\x02\u0439\u0436\x03\x02\x02\x02\u043A\u043D\x03\x02\x02\x02"+
+		"\u043B\u0439\x03\x02\x02\x02\u043B\u043C\x03\x02\x02\x02\u043C\u043E\x03"+
+		"\x02\x02\x02\u043D\u043B\x03\x02\x02\x02\u043E\u043F\x05\u029C\u014F\x02"+
+		"\u043FC\x03\x02\x02\x02\u0440\u0441\x05\u0214\u010B\x02\u0441\u0442\x05"+
+		"\u0224\u0113\x02\u0442E\x03\x02\x02\x02\u0443\u0444\x05\u01A4\xD3\x02"+
+		"\u0444\u0445\x05\u0250\u0129\x02\u0445\u0446\x05\u0188\xC5\x02\u0446\u0447"+
+		"\x05\u025A\u012E\x02\u0447\u0449\x05H%\x02\u0448\u044A\x05J&\x02\u0449"+
+		"\u0448\x03\x02\x02\x02\u0449\u044A\x03\x02\x02\x02\u044AG\x03\x02\x02"+
+		"\x02\u044B\u044C\x05\u021C\u010F\x02\u044C\u044D\x05\u0144\xA3\x02\u044D"+
+		"I\x03\x02\x02\x02\u044E\u0451\x05\u0238\u011D\x02\u044F\u0451\x05\u0206"+
+		"\u0104\x02\u0450\u044E\x03\x02\x02\x02\u0450\u044F\x03\x02\x02\x02\u0451"+
+		"K\x03\x02\x02\x02\u0452\u0453\x05\u01A4\xD3\x02\u0453\u0454\x05\u0248"+
+		"\u0125\x02\u0454\u0455\x05\u015A\xAE\x02\u0455\u0456\x05N(\x02\u0456M"+
+		"\x03\x02\x02\x02\u0457\u0459\x05X-\x02\u0458\u0457\x03\x02\x02\x02\u0458"+
+		"\u0459\x03\x02\x02\x02\u0459\u045B\x03\x02\x02\x02\u045A\u045C\x05V,\x02"+
+		"\u045B\u045A\x03\x02\x02\x02\u045B\u045C\x03\x02\x02\x02\u045C\u045E\x03"+
+		"\x02\x02\x02\u045D\u045F\x05P)\x02\u045E\u045D\x03\x02\x02\x02\u045E\u045F"+
+		"\x03\x02\x02\x02\u045FO\x03\x02\x02\x02\u0460\u0461\x05\u0222\u0112\x02"+
+		"\u0461\u0462\x05R*\x02\u0462Q\x03\x02\x02\x02\u0463\u0469\x05T+\x02\u0464"+
+		"\u0465\x05\u01A6\xD4\x02\u0465\u0466\x05T+\x02\u0466\u0468\x03\x02\x02"+
+		"\x02\u0467\u0464\x03\x02\x02\x02\u0468\u046B\x03\x02\x02\x02\u0469\u0467"+
+		"\x03\x02\x02\x02\u0469\u046A\x03\x02\x02\x02\u046AS\x03\x02\x02\x02\u046B"+
+		"\u0469\x03\x02\x02\x02\u046C\u046D\x05\u016A\xB6\x02\u046D\u046E\x05\u023E"+
+		"\u0120\x02\u046E\u046F\x05\u016E\xB8\x02\u046FU\x03\x02\x02\x02\u0470"+
+		"\u0471\x05\u0192\xCA\x02\u0471\u0472\x05\u016E\xB8\x02\u0472\u0479\x05"+
+		"\u0172\xBA\x02\u0473\u0474\x05\u02AA\u0156\x02\u0474\u0475\x05\u016E\xB8"+
+		"\x02\u0475\u0476\x05\u0172\xBA\x02\u0476\u0478\x03\x02\x02\x02\u0477\u0473"+
+		"\x03\x02\x02\x02\u0478\u047B\x03\x02\x02\x02\u0479\u0477\x03\x02\x02\x02"+
+		"\u0479\u047A\x03\x02\x02\x02\u047AW\x03\x02\x02\x02\u047B\u0479\x03\x02"+
+		"\x02\x02\u047C\u047D\x05\u01A4\xD3\x02\u047D\u047E\x05\u016A\xB6\x02\u047E"+
+		"\u047F\x05\u0248\u0125\x02\u047F\u0480\x05\u0172\xBA\x02\u0480Y\x03\x02"+
+		"\x02\x02\u0481\u0482\x05\u01A4\xD3\x02\u0482\u0483\x05\u023A\u011E\x02"+
+		"\u0483\u0484\x05\u015E\xB0\x02\u0484\u0485\x05\\/\x02\u0485[\x03\x02\x02"+
+		"\x02\u0486\u048E\x05h5\x02\u0487\u048E\x05d3\x02\u0488\u048E\x05d3\x02"+
+		"\u0489\u048E\x05b2\x02\u048A\u048E\x05`1\x02\u048B\u048E\x05^0\x02\u048C"+
+		"\u048E\b/\x01\x02\u048D\u0486\x03\x02\x02\x02\u048D\u0487\x03\x02\x02"+
+		"\x02\u048D\u0488\x03\x02\x02\x02\u048D\u0489\x03\x02\x02\x02\u048D\u048A"+
+		"\x03\x02\x02\x02\u048D\u048B\x03\x02\x02\x02\u048D\u048C\x03\x02\x02\x02"+
+		"\u048E]\x03\x02\x02\x02\u048F\u0490\x05\u025A\u012E\x02\u0490\u0491\x05"+
+		"\x92J\x02\u0491_\x03\x02\x02\x02\u0492\u0493\x05\u0222\u0112\x02\u0493"+
+		"\u0494\x05\u016A\xB6\x02\u0494\u0495\x05\u023E\u0120\x02\u0495\u0496\x05"+
+		"\u016E\xB8\x02\u0496a\x03\x02\x02\x02\u0497\u0498\x05\u01CA\xE6\x02\u0498"+
+		"\u0499\x05\u01BA\xDE\x02\u0499\u049A\x05\u0234\u011B\x02\u049Ac\x03\x02"+
+		"\x02\x02\u049B\u049C\x05\u01CA\xE6\x02\u049C\u049D\x05f4\x02\u049De\x03"+
+		"\x02\x02\x02\u049E\u04A4\x05\u016A\xB6\x02\u049F\u04A0\x05\u02AA\u0156"+
+		"\x02\u04A0\u04A1\x05\u016A\xB6\x02\u04A1\u04A3\x03\x02\x02\x02\u04A2\u049F"+
+		"\x03\x02\x02\x02\u04A3\u04A6\x03\x02\x02\x02\u04A4\u04A2\x03\x02\x02\x02"+
+		"\u04A4\u04A5\x03\x02\x02\x02\u04A5g\x03\x02\x02\x02\u04A6\u04A4\x03\x02"+
+		"\x02\x02\u04A7\u04A8\x05\u0192\xCA\x02\u04A8\u04A9\x05j6\x02\u04A9i\x03"+
+		"\x02\x02\x02\u04AA\u04AB\x05\u016E\xB8\x02\u04AB\u04B2\x05\u0172\xBA\x02"+
+		"\u04AC\u04AD\x05\u02AA\u0156\x02\u04AD\u04AE\x05\u016E\xB8\x02\u04AE\u04AF"+
+		"\x05\u0172\xBA\x02\u04AF\u04B1\x03\x02\x02\x02\u04B0\u04AC\x03\x02\x02"+
+		"\x02\u04B1\u04B4\x03\x02\x02\x02\u04B2\u04B0\x03\x02\x02\x02\u04B2\u04B3"+
+		"\x03\x02\x02\x02\u04B3k\x03\x02\x02\x02\u04B4\u04B2\x03\x02\x02\x02\u04B5"+
+		"\u04B6\x05\u01A4\xD3\x02\u04B6\u04B7\x05\u022A\u0116\x02\u04B7\u04B9\x05"+
+		"\u017A\xBE\x02\u04B8\u04BA\x05n8\x02\u04B9\u04B8\x03\x02\x02\x02\u04B9"+
+		"\u04BA\x03\x02\x02\x02\u04BAm\x03\x02\x02\x02\u04BB\u04BC\x05\u025A\u012E"+
+		"\x02\u04BC\u04C2\x05p9\x02\u04BD\u04BE\x05\u01A6\xD4\x02\u04BE\u04BF\x05"+
+		"p9\x02\u04BF\u04C1\x03\x02\x02\x02\u04C0\u04BD\x03\x02\x02\x02\u04C1\u04C4"+
+		"\x03\x02\x02\x02\u04C2\u04C0\x03\x02\x02\x02\u04C2\u04C3\x03\x02\x02\x02"+
+		"\u04C3o\x03\x02\x02\x02\u04C4\u04C2\x03\x02\x02\x02\u04C5\u04C6\x05\u021C"+
+		"\u010F\x02\u04C6\u04C7\x07\xAC\x02\x02\u04C7\u04C8\x05\u0144\xA3\x02\u04C8"+
+		"\u04D6\x03\x02\x02\x02\u04C9\u04CA\x05\u0200\u0101\x02\u04CA\u04CB\x07"+
+		"\xAC\x02\x02\u04CB\u04CC\x05\u0146\xA4\x02\u04CC\u04D6\x03\x02\x02\x02"+
+		"\u04CD\u04CE\x05\u0238\u011D\x02\u04CE\u04CF\x07\xAC\x02\x02\u04CF\u04D0"+
+		"\x05\u0146\xA4\x02\u04D0\u04D6\x03\x02\x02\x02\u04D1\u04D2\x05\u0212\u010A"+
+		"\x02\u04D2\u04D3\x07\xAC\x02\x02\u04D3\u04D4\x05\x9AN\x02\u04D4\u04D6"+
+		"\x03\x02\x02\x02\u04D5\u04C5\x03\x02\x02\x02\u04D5\u04C9\x03\x02\x02\x02"+
+		"\u04D5\u04CD\x03\x02\x02\x02\u04D5\u04D1\x03\x02\x02\x02\u04D6q\x03\x02"+
+		"\x02\x02\u04D7\u04D8\x05\u01A4\xD3\x02\u04D8\u04D9\x05\u0202\u0102\x02"+
+		"\u04D9\u04DD\x05\u0164\xB3\x02\u04DA\u04DB\x05\u025A\u012E\x02\u04DB\u04DC"+
+		"\x05\x92J\x02\u04DC\u04DE\x03\x02\x02\x02\u04DD\u04DA\x03\x02\x02\x02"+
+		"\u04DD\u04DE\x03\x02\x02\x02\u04DEs\x03\x02\x02\x02\u04DF\u04E0\x05\u01CA"+
+		"\xE6\x02\u04E0\u04E2\x05\u0250\u0129\x02\u04E1\u04E3\x05\xFE\x80\x02\u04E2"+
+		"\u04E1\x03\x02\x02\x02\u04E2\u04E3\x03\x02\x02\x02\u04E3\u04E4\x03\x02"+
+		"\x02\x02\u04E4\u04E5\x05\u0188\xC5\x02\u04E5u\x03\x02\x02\x02\u04E6\u04E7"+
+		"\x05\u01CA\xE6\x02\u04E7\u04E9\x05\u0248\u0125\x02\u04E8\u04EA\x05\xFE"+
+		"\x80\x02\u04E9\u04E8\x03\x02\x02\x02\u04E9\u04EA\x03\x02\x02\x02\u04EA"+
+		"\u04EB\x03\x02\x02\x02\u04EB\u04EC\x05\u015A\xAE\x02\u04ECw\x03\x02\x02"+
+		"\x02\u04ED\u04EE\x05\u01CA\xE6\x02\u04EE\u04F0\x05\u0202\u0102\x02\u04EF"+
+		"\u04F1\x05\xFE\x80\x02\u04F0\u04EF\x03\x02\x02\x02\u04F0\u04F1\x03\x02"+
+		"\x02\x02\u04F1\u04F2\x03\x02\x02\x02\u04F2\u04F3\x05\u0164\xB3\x02\u04F3"+
+		"y\x03\x02\x02\x02\u04F4\u04F5\x05\u01CA\xE6\x02\u04F5\u04F7\x05\u0194"+
+		"\xCB\x02\u04F6\u04F8\x05\xFE\x80\x02\u04F7\u04F6\x03\x02\x02\x02\u04F7"+
+		"\u04F8\x03\x02\x02\x02\u04F8\u04F9\x03\x02\x02\x02\u04F9\u04FA\x05\u0158"+
+		"\xAD\x02\u04FA{\x03\x02\x02\x02\u04FB\u04FC\x05\u01CA\xE6\x02\u04FC\u04FE"+
+		"\x05\u01DC\xEF\x02\u04FD\u04FF\x05\xFE\x80\x02\u04FE\u04FD\x03\x02\x02"+
+		"\x02\u04FE\u04FF\x03\x02\x02\x02\u04FF\u0500\x03\x02\x02\x02\u0500\u0501"+
+		"\x05\u015C\xAF\x02\u0501}\x03\x02\x02\x02\u0502\u0503\x05\u01CA\xE6\x02"+
+		"\u0503\u0505\x05\u0242\u0122\x02\u0504\u0506\x05\xFE\x80\x02\u0505\u0504"+
+		"\x03\x02\x02\x02\u0505\u0506\x03\x02\x02\x02\u0506\u0507\x03\x02\x02\x02"+
+		"\u0507\u0508\x05\u017C\xBF\x02\u0508\u0509\x05\u0210\u0109\x02\u0509\u050A"+
+		"\x05\u015E\xB0\x02\u050A\x7F\x03\x02\x02\x02\u050B\u050C\x05\u01CA\xE6"+
+		"\x02\u050C\u050E\x05\u022A\u0116\x02\u050D\u050F\x05\xFE\x80\x02\u050E"+
+		"\u050D\x03\x02\x02\x02\u050E\u050F\x03\x02\x02\x02\u050F\u0510\x03\x02"+
+		"\x02\x02\u0510\u0511\x05\u017A\xBE\x02\u0511\x81\x03\x02\x02\x02\u0512"+
+		"\u0513\x05\u01CA\xE6\x02\u0513\u0515\x05\u023A\u011E\x02\u0514\u0516\x05"+
+		"\xFE\x80\x02\u0515\u0514\x03\x02\x02\x02\u0515\u0516\x03\x02\x02\x02\u0516"+
+		"\u0517\x03\x02\x02\x02\u0517\u0518\x05\u015E\xB0\x02\u0518\x83\x03\x02"+
+		"\x02\x02\u0519\u051A\x05\u01CA\xE6\x02\u051A\u051C\x05\u01F2\xFA\x02\u051B"+
+		"\u051D\x05\xFE\x80\x02\u051C\u051B\x03\x02\x02\x02\u051C\u051D\x03\x02"+
+		"\x02\x02\u051D\u051E\x03\x02\x02\x02\u051E\u051F\x05\u014A\xA6\x02\u051F"+
+		"\x85\x03\x02\x02\x02\u0520\u0521\x05\u01CA\xE6\x02\u0521\u0523\x05\u01E4"+
+		"\xF3\x02\u0522\u0524\x05\xFE\x80\x02\u0523\u0522\x03\x02\x02\x02\u0523"+
+		"\u0524\x03\x02\x02\x02\u0524\u0525\x03\x02\x02\x02\u0525\u0526\x05\u0162"+
+		"\xB2\x02\u0526\x87\x03\x02\x02\x02\u0527\u0528\x05\u01C0\xE1\x02\u0528"+
+		"\u052A\x05\u023A\u011E\x02\u0529\u052B\x05\xFC\x7F\x02\u052A\u0529\x03"+
+		"\x02\x02\x02\u052A\u052B\x03\x02\x02\x02\u052B\u052C\x03\x02\x02\x02\u052C"+
+		"\u052D\x05\u0168\xB5\x02\u052D\u052F\x05\x8AF\x02\u052E\u0530\x05\x8C"+
+		"G\x02\u052F\u052E\x03\x02\x02\x02\u052F\u0530\x03\x02\x02\x02\u0530\x89"+
+		"\x03\x02\x02\x02\u0531\u0532\x05\u029A\u014E\x02\u0532\u0533\x05\xA2R"+
+		"\x02\u0533\u0534\x05\u029C\u014F\x02\u0534\u0537\x03\x02\x02\x02\u0535"+
+		"\u0537\bF\x01\x02\u0536\u0531\x03\x02\x02\x02\u0536\u0535\x03\x02\x02"+
+		"\x02\u0537\x8B\x03\x02\x02\x02\u0538\u0539\x05\u025A\u012E\x02\u0539\u053D"+
+		"\x05\x92J\x02\u053A\u053B\x05\u01A6\xD4\x02\u053B\u053C\x05\x8EH\x02\u053C"+
+		"\u053E\x03\x02\x02\x02\u053D\u053A\x03\x02\x02\x02\u053D\u053E\x03\x02"+
+		"\x02\x02\u053E\u0549\x03\x02\x02\x02\u053F\u0541\x05\u025A\u012E\x02\u0540"+
+		"\u0542\x05\x8EH\x02\u0541\u0540\x03\x02\x02\x02\u0541\u0542\x03\x02\x02"+
+		"\x02\u0542\u0546\x03\x02\x02\x02\u0543\u0544\x05\u01A6\xD4\x02\u0544\u0545"+
+		"\x05\x92J\x02\u0545\u0547\x03\x02\x02\x02\u0546\u0543\x03\x02\x02\x02"+
+		"\u0546\u0547\x03\x02\x02\x02\u0547\u0549\x03\x02\x02\x02\u0548\u0538\x03"+
+		"\x02\x02\x02\u0548\u053F\x03\x02\x02\x02\u0549\x8D\x03\x02\x02\x02\u054A"+
+		"\u054B\x05\u01B8\xDD\x02\u054B\u054C\x05\u0216\u010C\x02\u054C\u054D\x05"+
+		"\u01B4\xDB\x02\u054D\u054E\x05\u029A\u014E\x02\u054E\u0554\x05\x90I\x02"+
+		"\u054F\u0550\x05\u02AA\u0156\x02\u0550\u0551\x05\x90I\x02\u0551\u0553"+
+		"\x03\x02\x02\x02\u0552\u054F\x03\x02\x02\x02\u0553\u0556\x03\x02\x02\x02"+
+		"\u0554\u0552\x03\x02\x02\x02\u0554\u0555\x03\x02\x02\x02\u0555\u0557\x03"+
+		"\x02\x02\x02\u0556\u0554\x03\x02\x02\x02\u0557\u0558\x05\u029C\u014F\x02"+
+		"\u0558\x8F\x03\x02\x02\x02\u0559\u055B\x05\u016A\xB6\x02\u055A\u055C\x05"+
+		"\u0178\xBD\x02\u055B\u055A\x03\x02\x02\x02\u055B\u055C\x03\x02\x02\x02"+
+		"\u055C\x91\x03\x02\x02\x02\u055D\u0563\x05\x94K\x02\u055E\u055F\x05\u01A6"+
+		"\xD4\x02\u055F\u0560\x05\x94K\x02\u0560\u0562\x03\x02\x02\x02\u0561\u055E"+
+		"\x03\x02\x02\x02\u0562\u0565\x03\x02\x02\x02\u0563\u0561\x03\x02\x02\x02"+
+		"\u0563\u0564\x03\x02\x02\x02\u0564\x93\x03\x02\x02\x02\u0565\u0563\x03"+
+		"\x02\x02\x02\u0566\u0567\x05\x96L\x02\u0567\u0568\x07\xAC\x02\x02\u0568"+
+		"\u0569\x05\x98M\x02\u0569\u056F\x03\x02\x02\x02\u056A\u056B\x05\x96L\x02"+
+		"\u056B\u056C\x07\xAC\x02\x02\u056C\u056D\x05\x9AN\x02\u056D\u056F\x03"+
+		"\x02\x02\x02\u056E\u0566\x03\x02\x02\x02\u056E\u056A\x03\x02\x02\x02\u056F"+
+		"\x95\x03\x02\x02\x02\u0570\u0571\x07\xAA\x02\x02\u0571\x97\x03\x02\x02"+
+		"\x02\u0572\u0575\x05\u0144\xA3\x02\u0573\u0575\x05\u0142\xA2\x02\u0574"+
+		"\u0572\x03\x02\x02\x02\u0574\u0573\x03\x02\x02\x02\u0575\x99\x03\x02\x02"+
+		"\x02\u0576\u0577\x05\u029E\u0150\x02\u0577\u057D\x05\x9CO\x02\u0578\u0579"+
+		"\x05\u02AA\u0156\x02\u0579\u057A\x05\x9CO\x02\u057A\u057C\x03\x02\x02"+
+		"\x02\u057B\u0578\x03\x02\x02\x02\u057C\u057F\x03\x02\x02\x02\u057D\u057B"+
+		"\x03\x02\x02\x02\u057D\u057E\x03\x02\x02\x02\u057E\u0580\x03\x02\x02\x02"+
+		"\u057F\u057D\x03\x02\x02\x02\u0580\u0581\x05\u02A0\u0151\x02\u0581\x9B"+
+		"\x03\x02\x02\x02\u0582\u0583\x05\x9EP\x02\u0583\u0584\x07\v\x02\x02\u0584"+
+		"\u0585\x05\xA0Q\x02\u0585\x9D\x03\x02\x02\x02\u0586\u0587\x05\u0144\xA3"+
+		"\x02\u0587\x9F\x03\x02\x02\x02\u0588\u058B\x05\u0144\xA3\x02\u0589\u058B"+
+		"\x05\u0142\xA2\x02\u058A\u0588\x03\x02\x02\x02\u058A\u0589\x03\x02\x02"+
+		"\x02\u058B\xA1\x03\x02\x02\x02\u058C\u0592\x05\xA4S\x02\u058D\u058E\x05"+
+		"\u02AA\u0156\x02\u058E\u058F\x05\xA4S\x02\u058F\u0591\x03\x02\x02\x02"+
+		"\u0590\u058D\x03\x02\x02\x02\u0591\u0594\x03\x02\x02\x02\u0592\u0590\x03"+
+		"\x02\x02\x02\u0592\u0593\x03\x02\x02\x02\u0593\u0598\x03\x02\x02\x02\u0594"+
+		"\u0592\x03\x02\x02\x02\u0595\u0596\x05\u02AA\u0156\x02\u0596\u0597\x05"+
+		"\xA8U\x02\u0597\u0599\x03\x02\x02\x02\u0598\u0595\x03\x02\x02\x02\u0598"+
+		"\u0599\x03\x02\x02\x02\u0599\xA3\x03\x02\x02\x02\u059A\u059B\x05\u0170"+
+		"\xB9\x02\u059B\u059C\x05\u0172\xBA\x02\u059C\u059D\x05\xA6T\x02\u059D"+
+		"\u05A7\x03\x02\x02\x02\u059E\u059F\x05\u0170\xB9\x02\u059F\u05A0\x05\u0172"+
+		"\xBA\x02\u05A0\u05A1\x05\u0232\u011A\x02\u05A1\u05A7\x03\x02\x02\x02\u05A2"+
+		"\u05A3\x05\u0170\xB9\x02\u05A3\u05A4\x05\u0172\xBA\x02\u05A4\u05A7\x03"+
+		"\x02\x02\x02\u05A5\u05A7\bS\x01\x02\u05A6\u059A\x03\x02\x02\x02\u05A6"+
+		"\u059E\x03\x02\x02\x02\u05A6\u05A2\x03\x02\x02\x02\u05A6\u05A5\x03\x02"+
+		"\x02\x02\u05A7\xA5\x03\x02\x02\x02\u05A8\u05A9\x05\u0220\u0111\x02\u05A9"+
+		"\u05AA\x05\u01EE\xF8\x02\u05AA\u05AF\x03\x02\x02\x02\u05AB\u05AC\x05\u0220"+
+		"\u0111\x02\u05AC\u05AD\bT\x01\x02\u05AD\u05AF\x03\x02\x02\x02\u05AE\u05A8"+
+		"\x03\x02\x02\x02\u05AE\u05AB\x03\x02\x02\x02\u05AF\xA7\x03\x02\x02\x02"+
+		"\u05B0\u05B1\x05\u0220\u0111\x02\u05B1\u05B2\x05\u01EE\xF8\x02\u05B2\u05B3"+
+		"\x05\u029A\u014E\x02\u05B3\u05B4\x05\xAAV\x02\u05B4\u05B5\x05\u029C\u014F"+
+		"\x02\u05B5\xA9\x03\x02\x02\x02\u05B6\u05BA\x05\xACW\x02\u05B7\u05BA\x05"+
+		"\xAEX\x02\u05B8\u05BA\x05\xB0Y\x02\u05B9\u05B6\x03\x02\x02\x02\u05B9\u05B7"+
+		"\x03\x02\x02\x02\u05B9\u05B8\x03\x02\x02\x02\u05BA\xAB\x03\x02\x02\x02"+
+		"\u05BB\u05BC\x05\u016A\xB6\x02\u05BC\xAD\x03\x02\x02\x02\u05BD\u05BE\x05"+
+		"\u029A\u014E\x02\u05BE\u05BF\x05\xB2Z\x02\u05BF\u05C0\x05\u029C\u014F"+
+		"\x02\u05C0\xAF\x03\x02\x02\x02\u05C1\u05C2\x05\u016A\xB6\x02\u05C2\u05C3"+
+		"\x05\u02AA\u0156\x02\u05C3\u05C4\x05\xB4[\x02\u05C4\u05CC\x03\x02\x02"+
+		"\x02\u05C5\u05C6\x05\u029A\u014E\x02\u05C6\u05C7\x05\xB2Z\x02\u05C7\u05C8"+
+		"\x05\u029C\u014F\x02\u05C8\u05C9\x05\u02AA\u0156\x02\u05C9\u05CA\x05\xB4"+
+		"[\x02\u05CA\u05CC\x03\x02\x02\x02\u05CB\u05C1\x03\x02\x02\x02\u05CB\u05C5"+
+		"\x03\x02\x02\x02\u05CC\xB1\x03\x02\x02\x02\u05CD\u05D3\x05\u016A\xB6\x02"+
+		"\u05CE\u05CF\x05\u02AA\u0156\x02\u05CF\u05D0\x05\u016A\xB6\x02\u05D0\u05D2"+
+		"\x03\x02\x02\x02\u05D1\u05CE\x03\x02\x02\x02\u05D2\u05D5\x03\x02\x02\x02"+
+		"\u05D3\u05D1\x03\x02\x02\x02\u05D3\u05D4\x03\x02\x02\x02\u05D4\xB3\x03"+
+		"\x02\x02\x02\u05D5\u05D3\x03\x02\x02\x02\u05D6\u05DC\x05\u016A\xB6\x02"+
+		"\u05D7\u05D8\x05\u02AA\u0156\x02\u05D8\u05D9\x05\u016A\xB6\x02\u05D9\u05DB"+
+		"\x03\x02\x02\x02\u05DA\u05D7\x03\x02\x02\x02\u05DB\u05DE\x03\x02\x02\x02"+
+		"\u05DC\u05DA\x03\x02\x02\x02\u05DC\u05DD\x03\x02\x02\x02\u05DD\xB5\x03"+
+		"\x02\x02\x02\u05DE\u05DC\x03\x02\x02\x02\u05DF\u05E0\x05\u01A8\xD5\x02"+
+		"\u05E0\u05E1\x05\u01B0\xD9\x02\u05E1\xB7\x03\x02\x02\x02\u05E2\u05E3\x05"+
+		"\xBA^\x02\u05E3\u05E4\x05\xDAn\x02\u05E4\u05EC\x03\x02\x02\x02\u05E5\u05E6"+
+		"\x05\xBA^\x02\u05E6\u05E7\x05\xF2z\x02\u05E7\u05EC\x03\x02\x02\x02\u05E8"+
+		"\u05E9\x05\xBA^\x02\u05E9\u05EA\x05\xE0q\x02\u05EA\u05EC\x03\x02\x02\x02"+
+		"\u05EB\u05E2\x03\x02\x02\x02\u05EB\u05E5\x03\x02\x02\x02\u05EB\u05E8\x03"+
+		"\x02\x02\x02\u05EC\xB9\x03\x02\x02\x02\u05ED\u05EF\x05\u01B2\xDA\x02\u05EE"+
+		"\u05F0\x05\xBC_\x02\u05EF\u05EE\x03\x02\x02\x02\u05EF\u05F0\x03\x02\x02"+
+		"\x02\u05F0\u05F1\x03\x02\x02\x02\u05F1\u05F3\x05\u01B0\xD9\x02\u05F2\u05F4"+
+		"\x05\xFA~\x02\u05F3\u05F2\x03\x02\x02\x02\u05F3\u05F4\x03\x02\x02\x02"+
+		"\u05F4\xBB\x03\x02\x02\x02\u05F5\u05F8\x05\u01FE\u0100\x02\u05F6\u05F8"+
+		"\x05\u024A\u0126\x02\u05F7\u05F5\x03\x02\x02\x02\u05F7\u05F6\x03\x02\x02"+
+		"\x02\u05F8\xBD\x03\x02\x02\x02\u05F9\u05FA\x05\u01A4\xD3\x02\u05FA\u05FB"+
+		"\x05\u01F2\xFA\x02\u05FB\u05FC\x05\u014A\xA6\x02\u05FC\u05FD\x05\u025A"+
+		"\u012E\x02\u05FD\u05FE\x05\u0226\u0114\x02\u05FE\u05FF\x07\xAC\x02\x02"+
+		"\u05FF\u0600\x05\u029E\u0150\x02\u0600\u0601\x05\xC0a\x02\u0601\u0605"+
+		"\x05\u02A0\u0151\x02\u0602\u0603\x05\u01A6\xD4\x02\u0603\u0604\x05\xC4"+
+		"c\x02\u0604\u0606\x03\x02\x02\x02\u0605\u0602\x03\x02\x02\x02\u0605\u0606"+
+		"\x03\x02\x02\x02\u0606\xBF\x03\x02\x02\x02\u0607\u060D\x05\xC2b\x02\u0608"+
+		"\u0609\x05\u02AA\u0156\x02\u0609\u060A\x05\xC2b\x02\u060A\u060C\x03\x02"+
+		"\x02\x02\u060B\u0608\x03\x02\x02\x02\u060C\u060F\x03\x02\x02\x02\u060D"+
+		"\u060B\x03\x02\x02\x02\u060D\u060E\x03\x02\x02\x02\u060E\xC1\x03\x02\x02"+
+		"\x02\u060F\u060D\x03\x02\x02\x02\u0610\u0611\x07\xA5\x02\x02\u0611\u0612"+
+		"\x07\v\x02\x02\u0612\u0617\x07\xA5\x02\x02\u0613\u0614\x07\xA5\x02\x02"+
+		"\u0614\u0615\x07\v\x02\x02\u0615\u0617\x07\xA6\x02\x02\u0616\u0610\x03"+
+		"\x02\x02\x02\u0616\u0613\x03\x02\x02\x02\u0617\xC3\x03\x02\x02\x02\u0618"+
+		"\u0619\x05\u01CC\xE7\x02\u0619\u061A\x07\xAC\x02\x02\u061A\u061B\x05\u0146"+
+		"\xA4\x02\u061B\xC5\x03\x02\x02\x02\u061C\u061D\x05\u024E";
 	private static readonly _serializedATNSegment3: string =
-		"\x02\x02\x02\u0621\u0622\x03\x02\x02\x02\u0622\u0623\x03\x02\x02\x02\u0623"+
-		"\u0624\x05\u0162\xB2\x02\u0624\xCD\x03\x02\x02\x02\u0625\u0626\x05\u01C2"+
-		"\xE2\x02\u0626\u0628\x05\u01E6\xF4\x02\u0627\u0629\x05\u0100\x81\x02\u0628"+
-		"\u0627\x03\x02\x02\x02\u0628\u0629\x03\x02\x02\x02\u0629\u062B\x03\x02"+
-		"\x02\x02\u062A\u062C\x05\u015A\xAE\x02\u062B\u062A\x03\x02\x02\x02\u062B"+
-		"\u062C\x03\x02\x02\x02\u062C\u062D\x03\x02\x02\x02\u062D\u062E\x05\xD0"+
-		"i\x02\u062E\u062F\x05\xD4k\x02\u062F\xCF\x03\x02\x02\x02\u0630\u0631\x05"+
-		"\u0212\u010A\x02\u0631\u0632\x05\u0162\xB2\x02\u0632\u0635\x03\x02\x02"+
-		"\x02\u0633\u0635\bi\x01\x02\u0634\u0630\x03\x02\x02\x02\u0634\u0633\x03"+
-		"\x02\x02\x02\u0635\xD1\x03\x02\x02\x02\u0636\u0639\x07\xAC\x02\x02\u0637"+
-		"\u0639\x05\u0148\xA5\x02\u0638\u0636\x03\x02\x02\x02\u0638\u0637\x03\x02"+
-		"\x02\x02\u0639\xD3\x03\x02\x02\x02\u063A\u063B\x05\u029C\u014F\x02\u063B"+
-		"\u063C\x05\xD6l\x02\u063C\u063D\x05\u029E\u0150\x02\u063D\u0640\x03\x02"+
-		"\x02\x02\u063E\u0640\bk\x01\x02\u063F\u063A\x03\x02\x02\x02\u063F\u063E"+
-		"\x03\x02\x02\x02\u0640\xD5\x03\x02\x02\x02\u0641\u0647\x05\u016E\xB8\x02"+
-		"\u0642\u0647\x05\xD8m\x02\u0643\u0647\x05\xDAn\x02\u0644\u0647\x05\xDC"+
-		"o\x02\u0645\u0647\bl\x01\x02\u0646\u0641\x03\x02\x02\x02\u0646\u0642\x03"+
-		"\x02\x02\x02\u0646\u0643\x03\x02\x02\x02\u0646\u0644\x03\x02\x02\x02\u0646"+
-		"\u0645\x03\x02\x02\x02\u0647\xD7\x03\x02\x02\x02\u0648\u0649\x05\u01F2"+
-		"\xFA\x02\u0649\u064C\x05\u029C\u014F\x02\u064A\u064D\x05\u016E\xB8\x02"+
-		"\u064B\u064D\bm\x01\x02\u064C\u064A\x03\x02\x02\x02\u064C\u064B\x03\x02"+
-		"\x02\x02\u064D\u064E\x03\x02\x02\x02\u064E\u064F\x05\u029E\u0150\x02\u064F"+
-		"\xD9\x03\x02\x02\x02\u0650\u0651\x05\u01D0\xE9\x02\u0651\u0654\x05\u029C"+
-		"\u014F\x02\u0652\u0655\x05\u016E\xB8\x02\u0653\u0655\bn\x01\x02\u0654"+
-		"\u0652\x03\x02\x02\x02\u0654\u0653\x03\x02\x02\x02\u0655\u0656\x03\x02"+
-		"\x02\x02\u0656\u0657\x05\u029E\u0150\x02\u0657\xDB\x03\x02\x02\x02\u0658"+
-		"\u0659\x05\u01DC\xEF\x02\u0659\u065C\x05\u029C\u014F\x02\u065A\u065D\x05"+
-		"\u016E\xB8\x02\u065B\u065D\bo\x01\x02\u065C\u065A\x03\x02\x02\x02\u065C"+
-		"\u065B\x03\x02\x02\x02\u065D\u065E\x03\x02\x02\x02\u065E\u065F\x05\u029E"+
-		"\u0150\x02\u065F\xDD\x03\x02\x02\x02\u0660\u0662\x05\u01C4\xE3\x02\u0661"+
-		"\u0663\x05\xE0q\x02\u0662\u0661\x03\x02\x02\x02\u0662\u0663\x03\x02\x02"+
-		"\x02\u0663\u0664\x03\x02\x02\x02\u0664\u0666\x05\u0114\x8B\x02\u0665\u0667"+
-		"\x05\xFE\x80\x02\u0666\u0665\x03\x02\x02\x02\u0666\u0667\x03\x02\x02\x02"+
-		"\u0667\u066A\x03\x02\x02\x02\u0668\u066B\x05\u011A\x8E\x02\u0669\u066B"+
-		"\bp\x01\x02\u066A\u0668\x03\x02\x02\x02\u066A\u0669\x03\x02\x02\x02\u066B"+
-		"\u066E\x03\x02\x02\x02\u066C\u066F\x05\u0102\x82\x02\u066D\u066F\x05\xE6"+
-		"t\x02\u066E\u066C\x03\x02\x02\x02\u066E\u066D\x03\x02\x02\x02\u066E\u066F"+
-		"\x03\x02\x02\x02\u066F\xDF\x03\x02\x02\x02\u0670\u0676\x05\xE2r\x02\u0671"+
-		"\u0672\x05\u02AC\u0157\x02\u0672\u0673\x05\xE2r\x02\u0673\u0675\x03\x02"+
-		"\x02\x02\u0674\u0671\x03\x02\x02\x02\u0675\u0678\x03\x02\x02\x02\u0676"+
-		"\u0674\x03\x02\x02\x02\u0676\u0677\x03\x02\x02\x02\u0677\xE1\x03\x02\x02"+
-		"\x02\u0678\u0676\x03\x02\x02\x02\u0679\u0683\x05\u016E\xB8\x02\u067A\u067B"+
-		"\x05\u016E\xB8\x02\u067B\u067E\x05\u02A8\u0155\x02\u067C\u067F\x05\u0148"+
-		"\xA5\x02\u067D\u067F\x05\u0144\xA3\x02\u067E\u067C\x03\x02\x02\x02\u067E"+
-		"\u067D\x03\x02\x02\x02\u067F\u0680\x03\x02\x02\x02\u0680\u0681\x05\u02AA"+
-		"\u0156\x02\u0681\u0683\x03\x02\x02\x02\u0682\u0679\x03\x02\x02\x02\u0682"+
-		"\u067A\x03\x02\x02\x02\u0683\xE3\x03\x02\x02\x02\u0684\u0685\x05\u024E"+
-		"\u0128\x02\u0685\u0687\x05\u016A\xB6\x02\u0686\u0688\x05\xF8}\x02\u0687"+
-		"\u0686\x03\x02\x02\x02\u0687\u0688\x03\x02\x02\x02\u0688\u0689\x03\x02"+
-		"\x02\x02\u0689\u068C\x05\xECw\x02\u068A\u068D\x05\u011A\x8E\x02\u068B"+
-		"\u068D\bs\x01\x02\u068C\u068A\x03\x02\x02\x02\u068C\u068B\x03\x02\x02"+
-		"\x02\u068D\u0690\x03\x02\x02\x02\u068E\u0691\x05\u0102\x82\x02\u068F\u0691"+
-		"\x05\xE6t\x02\u0690\u068E\x03\x02\x02\x02\u0690\u068F\x03\x02\x02\x02"+
-		"\u0690\u0691\x03\x02\x02\x02\u0691\xE5\x03\x02\x02\x02\u0692\u0693\x05"+
-		"\u01E2\xF2\x02\u0693\u0694\x05\xE8u\x02\u0694\xE7\x03\x02\x02\x02\u0695"+
-		"\u069B\x05\xEAv\x02\u0696\u0697\x05\u01A8\xD5\x02\u0697\u0698\x05\xEA"+
-		"v\x02\u0698\u069A\x03\x02\x02\x02\u0699\u0696\x03\x02\x02\x02\u069A\u069D"+
-		"\x03\x02\x02\x02\u069B\u0699\x03\x02\x02\x02\u069B\u069C\x03\x02\x02\x02"+
-		"\u069C\xE9\x03\x02\x02\x02\u069D\u069B\x03\x02\x02\x02\u069E\u069F\x07"+
-		"\xAC\x02\x02\u069F\u06A0\x07\xAE\x02\x02\u06A0\u06A1\x05\u0132\x9A\x02"+
-		"\u06A1\xEB\x03\x02\x02\x02\u06A2\u06A3\x05\u0230\u0119\x02\u06A3\u06A9"+
-		"\x05\xEEx\x02\u06A4\u06A5\x05\u02AC\u0157\x02\u06A5\u06A6\x05\xEEx\x02"+
-		"\u06A6\u06A8\x03\x02\x02\x02\u06A7\u06A4\x03\x02\x02\x02\u06A8\u06AB\x03"+
-		"\x02\x02\x02\u06A9\u06A7\x03\x02\x02\x02\u06A9\u06AA\x03\x02\x02\x02\u06AA"+
-		"\u06AE\x03\x02\x02\x02\u06AB\u06A9\x03\x02\x02\x02\u06AC\u06AE\bw\x01"+
-		"\x02\u06AD\u06A2\x03\x02\x02\x02\u06AD\u06AC\x03\x02\x02\x02\u06AE\xED"+
-		"\x03\x02\x02\x02\u06AF\u06B0\x05\u016E\xB8\x02\u06B0\u06B3\x05\u02B8\u015D"+
-		"\x02\u06B1\u06B4\x05\u0132\x9A\x02\u06B2\u06B4\x05\u0138\x9D\x02\u06B3"+
-		"\u06B1\x03\x02\x02\x02\u06B3\u06B2\x03\x02\x02\x02\u06B4\u06FD\x03\x02"+
-		"\x02\x02\u06B5\u06B6\x05\u016E\xB8\x02\u06B6\u06B7\x05\u02B8\u015D\x02"+
-		"\u06B7\u06BA\x05\u016E\xB8\x02\u06B8\u06BB\x05\u02B0\u0159\x02\u06B9\u06BB"+
-		"\x05\u02B2\u015A\x02\u06BA\u06B8\x03\x02\x02\x02\u06BA\u06B9\x03\x02\x02"+
-		"\x02\u06BB\u06BC\x03\x02\x02\x02\u06BC\u06BD\x05\u0144\xA3\x02\u06BD\u06FD"+
-		"\x03\x02\x02\x02\u06BE\u06BF\x05\u016E\xB8\x02\u06BF\u06C0\x05\u02B8\u015D"+
-		"\x02\u06C0\u06C3\x05\u016E\xB8\x02\u06C1\u06C4\x05\u02B0\u0159\x02\u06C2"+
-		"\u06C4\x05\u02B2\u015A\x02\u06C3\u06C1\x03\x02\x02\x02\u06C3\u06C2\x03"+
-		"\x02\x02\x02\u06C4\u06C5\x03\x02\x02\x02\u06C5\u06C6\x05\xF2z\x02\u06C6"+
-		"\u06FD\x03\x02\x02\x02\u06C7\u06C8\x05\u016E\xB8\x02\u06C8\u06C9\x05\u02B8"+
-		"\u015D\x02\u06C9\u06CC\x05\u016E\xB8\x02\u06CA\u06CD\x05\u02B0\u0159\x02"+
-		"\u06CB\u06CD\x05\u02B2\u015A\x02\u06CC\u06CA\x03\x02\x02\x02\u06CC\u06CB"+
-		"\x03\x02\x02\x02\u06CD\u06CE\x03\x02\x02\x02\u06CE\u06CF\x05\xF0y\x02"+
-		"\u06CF\u06FD\x03\x02\x02\x02\u06D0\u06D1\x05\u016E\xB8\x02\u06D1\u06D2"+
-		"\x05\u02B8\u015D\x02\u06D2\u06D5\x05\u016E\xB8\x02\u06D3\u06D6\x05\u02B0"+
-		"\u0159\x02\u06D4\u06D6\x05\u02B2\u015A\x02\u06D5\u06D3\x03\x02\x02\x02"+
-		"\u06D5\u06D4\x03\x02\x02\x02\u06D6\u06D7\x03\x02\x02\x02\u06D7\u06D8\x05"+
-		"\xF4{\x02\u06D8\u06FD\x03\x02\x02\x02\u06D9\u06DA\x05\u016E\xB8\x02\u06DA"+
-		"\u06DB\x05\u02B8\u015D\x02\u06DB\u06DE\x05\xF0y\x02\u06DC\u06DF\x05\u02B0"+
-		"\u0159\x02\u06DD\u06DF\x05\u02B2\u015A\x02\u06DE\u06DC\x03\x02\x02\x02"+
-		"\u06DE\u06DD\x03\x02\x02\x02\u06DF\u06E0\x03\x02\x02\x02\u06E0\u06E1\x07"+
-		"\xAC\x02\x02\u06E1\u06FD\x03\x02\x02\x02\u06E2\u06E3\x05\u016E\xB8\x02"+
-		"\u06E3\u06E4\x05\u02B8\u015D\x02\u06E4\u06E7\x05\xF2z\x02\u06E5\u06E8"+
-		"\x05\u02B0\u0159\x02\u06E6\u06E8\x05\u02B2\u015A\x02\u06E7\u06E5\x03\x02"+
-		"\x02\x02\u06E7\u06E6\x03\x02\x02\x02\u06E8\u06E9\x03\x02\x02\x02\u06E9"+
-		"\u06EA\x07\xAC\x02\x02\u06EA\u06FD\x03\x02\x02\x02\u06EB\u06EC\x05\u016E"+
-		"\xB8\x02\u06EC\u06ED\x05\u02B8\u015D\x02\u06ED\u06F0\x05\xF4{\x02\u06EE"+
-		"\u06F1\x05\u02B0\u0159\x02\u06EF\u06F1\x05\u02B2\u015A\x02\u06F0\u06EE"+
-		"\x03\x02\x02\x02\u06F0\u06EF\x03\x02\x02\x02\u06F1\u06F2\x03\x02\x02\x02"+
-		"\u06F2\u06F3\x07\xAC\x02\x02\u06F3\u06FD\x03\x02\x02\x02\u06F4\u06F5\x05"+
-		"\u016E\xB8\x02\u06F5\u06F6\x05\u02A8\u0155\x02\u06F6\u06F7\x05\u0144\xA3"+
-		"\x02\u06F7\u06F8\x05\u02AA\u0156\x02\u06F8\u06F9\x05\u02B8\u015D\x02\u06F9"+
-		"\u06FA\x05\u0132\x9A\x02\u06FA\u06FD\x03\x02\x02\x02\u06FB\u06FD\bx\x01"+
-		"\x02\u06FC\u06AF\x03\x02\x02\x02\u06FC\u06B5\x03\x02\x02\x02\u06FC\u06BE"+
-		"\x03\x02\x02\x02\u06FC\u06C7\x03\x02\x02\x02\u06FC\u06D0\x03\x02\x02\x02"+
-		"\u06FC\u06D9\x03\x02\x02\x02\u06FC\u06E2\x03\x02\x02\x02\u06FC\u06EB\x03"+
-		"\x02\x02\x02\u06FC\u06F4\x03\x02\x02\x02\u06FC\u06FB\x03\x02\x02\x02\u06FD"+
-		"\xEF\x03\x02\x02\x02\u06FE\u06FF\x05\u02A0\u0151\x02\u06FF\u0705\x05\u0132"+
-		"\x9A\x02\u0700\u0701\x05\u02AC\u0157\x02\u0701\u0702\x05\u0132\x9A\x02"+
-		"\u0702\u0704\x03\x02\x02\x02\u0703\u0700\x03\x02\x02\x02\u0704\u0707\x03"+
-		"\x02\x02\x02\u0705\u0703\x03\x02\x02\x02\u0705\u0706\x03\x02\x02\x02\u0706"+
-		"\u0708\x03\x02\x02\x02\u0707\u0705\x03\x02\x02\x02\u0708\u0709\x05\u02A2"+
-		"\u0152\x02\u0709\xF1\x03\x02\x02\x02\u070A\u070B\x05\u02A0\u0151\x02\u070B"+
-		"\u070C\x05\u0132\x9A\x02\u070C\u070D\x05\u02AE\u0158\x02\u070D\u070E\x05"+
-		"\u0132\x9A\x02\u070E\u0715\x03\x02\x02\x02\u070F\u0710\x05\u0132\x9A\x02"+
-		"\u0710\u0711\x05\u02AE\u0158\x02\u0711\u0712\x05\u0132\x9A\x02\u0712\u0714"+
-		"\x03\x02\x02\x02\u0713\u070F\x03\x02\x02\x02\u0714\u0717\x03\x02\x02\x02"+
-		"\u0715\u0713\x03\x02\x02\x02\u0715\u0716\x03\x02\x02\x02\u0716\u0718\x03"+
-		"\x02\x02\x02\u0717\u0715\x03\x02\x02\x02\u0718\u0719\x05\u02A2\u0152\x02"+
-		"\u0719\xF3\x03\x02\x02\x02\u071A\u071B\x05\u02A8\u0155\x02\u071B\u0721"+
-		"\x05\u0132\x9A\x02\u071C\u071D\x05\u02AE\u0158\x02\u071D\u071E\x05\u0132"+
-		"\x9A\x02\u071E\u0720\x03\x02\x02\x02\u071F\u071C\x03\x02\x02\x02\u0720"+
-		"\u0723\x03\x02\x02\x02\u0721\u071F\x03\x02\x02\x02\u0721\u0722\x03\x02"+
-		"\x02\x02\u0722\u0724\x03\x02\x02\x02\u0723\u0721\x03\x02\x02\x02\u0724"+
-		"\u0725\x05\u02AA\u0156\x02\u0725\xF5\x03\x02\x02\x02\u0726\u0727\x05\u01EC"+
-		"\xF7\x02\u0727\u0728\x05\u016A\xB6\x02\u0728\u0729\x05\u0106\x84\x02\u0729"+
-		"\u072C\x05\u0104\x83\x02\u072A\u072D\x05\u0100\x81\x02\u072B\u072D\x03"+
-		"\x02\x02\x02\u072C\u072A\x03\x02\x02\x02\u072C\u072B\x03\x02\x02\x02\u072D"+
-		"\u072F\x03\x02\x02\x02\u072E\u0730\x05\xF8}\x02\u072F\u072E\x03\x02\x02"+
-		"\x02\u072F\u0730\x03\x02\x02\x02\u0730\xF7\x03\x02\x02\x02\u0731\u0732"+
-		"\x05\u0256\u012C\x02\u0732\u0733\x05\xFC\x7F\x02\u0733\u0742\x03\x02\x02"+
-		"\x02\u0734\u0735\x05\u0256\u012C\x02\u0735\u0736\x05\xFC\x7F\x02\u0736"+
-		"\u0737\x05\u01A8\xD5\x02\u0737\u0738\x05\xFA~\x02\u0738\u0742\x03\x02"+
-		"\x02\x02\u0739\u073A\x05\u0256\u012C\x02\u073A\u073B\x05\xFA~\x02\u073B"+
-		"\u0742\x03\x02\x02\x02\u073C\u073D\x05\u0256\u012C\x02\u073D\u073E\x05"+
-		"\xFA~\x02\u073E\u073F\x05\u01A8\xD5\x02\u073F\u0740\x05\xFC\x7F\x02\u0740"+
-		"\u0742\x03\x02\x02\x02\u0741\u0731\x03\x02\x02\x02\u0741\u0734\x03\x02"+
-		"\x02\x02\u0741\u0739\x03\x02\x02\x02\u0741\u073C\x03\x02\x02\x02\u0742"+
-		"\xF9\x03\x02\x02\x02\u0743\u0744\x05\u023E\u0120\x02\u0744\u0745\x05\u0144"+
-		"\xA3\x02\u0745\xFB\x03\x02\x02\x02\u0746\u0747\x05\u0248\u0125\x02\u0747"+
-		"\u0748\x05\u0144\xA3\x02\u0748\xFD\x03\x02\x02\x02\u0749\u074A\x05\u0256"+
-		"\u012C\x02\u074A\u074B\x05\xFA~\x02\u074B\xFF\x03\x02\x02\x02\u074C\u074D"+
-		"\x05\u01E2\xF2\x02\u074D\u074E\x05\u020C\u0107\x02\u074E\u074F\x05\u01D4"+
-		"\xEB\x02\u074F\u0101\x03\x02\x02\x02\u0750\u0751\x05\u01E2\xF2\x02\u0751"+
-		"\u0752\x05\u01D4\xEB\x02\u0752\u0103\x03\x02\x02\x02\u0753\u0754\x05\u0258"+
-		"\u012D\x02\u0754\u0755\x05\u029C\u014F\x02\u0755\u0758\x05\u010C\x87\x02"+
-		"\u0756\u0759\x05\u029E\u0150\x02\u0757\u0759\b\x83\x01\x02\u0758\u0756"+
-		"\x03\x02\x02\x02\u0758\u0757\x03\x02\x02\x02\u0759\u075C\x03\x02\x02\x02"+
-		"\u075A\u075C\b\x83\x01\x02\u075B\u0753\x03\x02\x02\x02\u075B\u075A\x03"+
-		"\x02\x02\x02\u075C\u0105\x03\x02\x02\x02\u075D\u075E\x05\u029C\u014F\x02"+
-		"\u075E\u075F\x05\u0108\x85\x02\u075F\u0760\x05\u029E\u0150\x02\u0760\u0763"+
-		"\x03\x02\x02\x02\u0761\u0763\b\x84\x01\x02\u0762\u075D\x03\x02\x02\x02"+
-		"\u0762\u0761\x03\x02\x02\x02\u0763\u0107\x03\x02\x02\x02\u0764\u076C\x05"+
-		"\u016E\xB8\x02\u0765\u0768\x05\u02AC\u0157\x02\u0766\u0769\x05\u016E\xB8"+
-		"\x02\u0767\u0769\b\x85\x01\x02\u0768\u0766\x03\x02\x02\x02\u0768\u0767"+
-		"\x03\x02\x02\x02\u0769\u076B\x03\x02\x02\x02\u076A\u0765\x03\x02\x02\x02"+
-		"\u076B\u076E\x03\x02\x02\x02\u076C\u076A\x03\x02\x02\x02\u076C\u076D\x03"+
-		"\x02\x02\x02\u076D\u0771\x03\x02\x02\x02\u076E\u076C\x03\x02\x02\x02\u076F"+
-		"\u0771\b\x85\x01\x02\u0770\u0764\x03\x02\x02\x02\u0770\u076F\x03\x02\x02"+
-		"\x02\u0771\u0109\x03\x02\x02\x02\u0772\u077A\x05\u016E\xB8\x02\u0773\u0776"+
-		"\x05\u02AC\u0157\x02\u0774\u0777\x05\u016E\xB8\x02\u0775\u0777\b\x86\x01"+
-		"\x02\u0776\u0774\x03\x02\x02\x02\u0776\u0775\x03\x02\x02\x02\u0777\u0779"+
-		"\x03\x02\x02\x02\u0778\u0773\x03\x02\x02\x02\u0779\u077C\x03\x02\x02\x02"+
-		"\u077A\u0778\x03\x02\x02\x02\u077A\u077B\x03\x02\x02\x02\u077B\u077F\x03"+
-		"\x02\x02\x02\u077C\u077A\x03\x02\x02\x02\u077D\u077F\b\x86\x01\x02\u077E"+
-		"\u0772\x03\x02\x02\x02\u077E\u077D\x03\x02\x02\x02\u077F\u010B\x03\x02"+
-		"\x02\x02\u0780\u0786\x05\u010E\x88\x02\u0781\u0782\x05\u02AC\u0157\x02"+
-		"\u0782\u0783\x05\u010E\x88\x02\u0783\u0785\x03\x02\x02\x02\u0784\u0781"+
-		"\x03\x02\x02\x02\u0785\u0788\x03\x02\x02\x02\u0786\u0784\x03\x02\x02\x02"+
-		"\u0786\u0787\x03\x02\x02\x02\u0787\u010D\x03\x02\x02\x02\u0788\u0786\x03"+
-		"\x02\x02\x02\u0789\u078C\x05\u0132\x9A\x02\u078A\u078C\x05\u0138\x9D\x02"+
-		"\u078B\u0789\x03\x02\x02\x02\u078B\u078A\x03\x02\x02\x02\u078C\u078F\x03"+
-		"\x02\x02\x02\u078D\u078F\b\x88\x01\x02\u078E\u078B\x03\x02\x02\x02\u078E"+
-		"\u078D\x03\x02\x02\x02\u078F\u010F\x03\x02\x02\x02\u0790\u0792\x05\u022E"+
-		"\u0118\x02\u0791\u0793\x05\u01CA\xE6\x02\u0792\u0791\x03\x02\x02\x02\u0792"+
-		"\u0793\x03\x02\x02\x02\u0793\u0794\x03\x02\x02\x02\u0794\u0795\x05\u011C"+
-		"\x8F\x02\u0795\u0797\x05\u0114\x8B\x02\u0796\u0798\x05\u011A\x8E\x02\u0797"+
-		"\u0796\x03\x02\x02\x02\u0797\u0798\x03\x02\x02\x02\u0798\u079A\x03\x02"+
-		"\x02\x02\u0799\u079B\x05\u0116\x8C\x02\u079A\u0799\x03\x02\x02\x02\u079A"+
-		"\u079B\x03\x02\x02\x02\u079B\u079D\x03\x02\x02\x02\u079C\u079E\x05\u0112"+
-		"\x8A\x02\u079D\u079C\x03\x02\x02\x02\u079D\u079E\x03\x02\x02\x02\u079E"+
-		"\u07A0\x03\x02\x02\x02\u079F\u07A1\x05\u01A4\xD3\x02\u07A0\u079F\x03\x02"+
-		"\x02\x02\u07A0\u07A1\x03\x02\x02\x02\u07A1\u0111\x03\x02\x02\x02\u07A2"+
-		"\u07A5\x05\u01F8\xFD\x02\u07A3\u07A6\x05\u0144\xA3\x02\u07A4\u07A6\b\x8A"+
-		"\x01\x02\u07A5\u07A3\x03\x02\x02\x02\u07A5\u07A4\x03\x02\x02\x02\u07A6"+
-		"\u0113\x03\x02\x02\x02\u07A7\u07A8\x05\u01DA\xEE\x02\u07A8\u07A9\x05\u016A"+
-		"\xB6\x02\u07A9\u07AC\x03\x02\x02\x02\u07AA\u07AC\b\x8B\x01\x02\u07AB\u07A7"+
-		"\x03\x02\x02\x02\u07AB\u07AA\x03\x02\x02\x02\u07AC\u0115\x03\x02\x02\x02"+
-		"\u07AD\u07AE\x05\u021A\u010E\x02\u07AE\u07AF\x05\u0118\x8D\x02\u07AF\u0117"+
-		"\x03\x02\x02\x02\u07B0\u07B3\x05\u016E\xB8\x02\u07B1\u07B4\x05\u01AE\xD8"+
-		"\x02\u07B2\u07B4\x05\u01C6\xE4\x02\u07B3\u07B1\x03\x02\x02\x02\u07B3\u07B2"+
-		"\x03\x02\x02\x02\u07B3\u07B4\x03\x02\x02\x02\u07B4\u07B7\x03\x02\x02\x02"+
-		"\u07B5\u07B7\b\x8D\x01\x02\u07B6\u07B0\x03\x02\x02\x02\u07B6\u07B5\x03"+
-		"\x02\x02\x02\u07B7\u0119\x03\x02\x02\x02\u07B8\u07B9\x05\u025A\u012E\x02"+
-		"\u07B9\u07BA\x05\u0120\x91\x02\u07BA\u011B\x03\x02\x02\x02\u07BB\u07C7"+
-		"\x05\u0296\u014C\x02\u07BC\u07C2\x05\u011E\x90\x02\u07BD\u07BE\x05\u02AC"+
-		"\u0157\x02\u07BE\u07BF\x05\u011E\x90\x02\u07BF\u07C1\x03\x02\x02\x02\u07C0"+
-		"\u07BD\x03\x02\x02\x02\u07C1\u07C4\x03\x02\x02\x02\u07C2\u07C0\x03\x02"+
-		"\x02\x02\u07C2\u07C3\x03\x02\x02\x02\u07C3\u07C7\x03\x02\x02\x02\u07C4"+
-		"\u07C2\x03\x02\x02\x02\u07C5\u07C7\b\x8F\x01\x02\u07C6\u07BB\x03\x02\x02"+
-		"\x02\u07C6\u07BC\x03\x02\x02\x02\u07C6\u07C5\x03\x02\x02\x02\u07C7\u011D"+
-		"\x03\x02\x02\x02\u07C8\u07D7\x05\u016E\xB8\x02\u07C9\u07CD\x05\u016E\xB8"+
-		"\x02\u07CA\u07CB\x05\u01AC\xD7\x02\u07CB\u07CC\x07\xAC\x02\x02\u07CC\u07CE"+
-		"\x03\x02\x02\x02\u07CD\u07CA\x03\x02\x02\x02\u07CD\u07CE\x03\x02\x02\x02"+
-		"\u07CE\u07D7\x03\x02\x02\x02\u07CF\u07D3\x05\u012E\x98\x02\u07D0\u07D1"+
-		"\x05\u01AC\xD7\x02\u07D1\u07D2\x07\xAC\x02\x02\u07D2\u07D4\x03\x02\x02"+
-		"\x02\u07D3\u07D0\x03\x02\x02\x02\u07D3\u07D4\x03\x02\x02\x02\u07D4\u07D7"+
-		"\x03\x02\x02\x02\u07D5\u07D7\b\x90\x01\x02\u07D6\u07C8\x03\x02\x02\x02"+
-		"\u07D6\u07C9\x03\x02\x02\x02\u07D6\u07CF\x03\x02\x02\x02\u07D6\u07D5\x03"+
-		"\x02\x02\x02\u07D7\u011F\x03\x02\x02\x02\u07D8\u07DE\x05\u0122\x92\x02"+
-		"\u07D9\u07DA\x05\u01A8\xD5\x02\u07DA\u07DB\x05\u0122\x92\x02\u07DB\u07DD"+
-		"\x03\x02\x02\x02\u07DC\u07D9\x03\x02\x02\x02\u07DD\u07E0\x03\x02\x02\x02"+
-		"\u07DE\u07DC\x03\x02\x02\x02\u07DE\u07DF\x03\x02\x02\x02\u07DF\u0121\x03"+
-		"\x02\x02\x02\u07E0\u07DE\x03\x02\x02\x02\u07E1\u07E8\x05\u0124\x93\x02"+
-		"\u07E2\u07E8\x05\u0126\x94\x02\u07E3\u07E8\x05\u0128\x95\x02\u07E4\u07E5"+
-		"\x07\xAC\x02\x02\u07E5\u07E8\b\x92\x01\x02\u07E6\u07E8\b\x92\x01\x02\u07E7"+
-		"\u07E1\x03\x02\x02\x02\u07E7\u07E2\x03\x02\x02\x02\u07E7\u07E3\x03\x02"+
-		"\x02\x02\u07E7\u07E4\x03\x02\x02\x02\u07E7\u07E6\x03\x02\x02\x02\u07E8"+
-		"\u0123\x03\x02\x02\x02\u07E9\u07EA\x05\u016E\xB8\x02\u07EA\u07ED\x05\u012C"+
-		"\x97\x02\u07EB\u07EE\x05\u0132\x9A\x02\u07EC\u07EE\b\x93\x01\x02\u07ED"+
-		"\u07EB\x03\x02\x02\x02\u07ED\u07EC\x03\x02\x02\x02\u07EE\u0125\x03\x02"+
-		"\x02\x02\u07EF\u07F0\x05\u016E\xB8\x02\u07F0\u07F1\x05\u01E4\xF3\x02\u07F1"+
-		"\u07F3\x05\u029C\u014F\x02\u07F2\u07F4\x05\u0130\x99\x02\u07F3\u07F2\x03"+
-		"\x02\x02\x02\u07F3\u07F4\x03\x02\x02\x02\u07F4\u07F5\x03\x02\x02\x02\u07F5"+
-		"\u07F6\x05\u029E\u0150\x02\u07F6\u0127\x03\x02\x02\x02\u07F7\u07FA\x05"+
-		"\u012A\x96\x02\u07F8\u07FB\x05\u012C\x97\x02\u07F9\u07FB\b\x95\x01\x02"+
-		"\u07FA\u07F8\x03\x02\x02\x02\u07FA\u07F9\x03\x02\x02\x02\u07FB\u07FC\x03"+
-		"\x02\x02\x02\u07FC\u07FD\x05\u012A\x96\x02\u07FD\u0129\x03\x02\x02\x02"+
-		"\u07FE\u0801\x05\u0242\u0122\x02\u07FF\u0802\x05\u029C\u014F\x02\u0800"+
-		"\u0802\b\x96\x01\x02\u0801\u07FF\x03\x02\x02\x02\u0801\u0800\x03\x02\x02"+
-		"\x02\u0802\u0805\x03\x02\x02\x02\u0803\u0806\x05\u016E\xB8\x02\u0804\u0806"+
-		"\b\x96\x01\x02\u0805\u0803\x03\x02\x02\x02\u0805\u0804\x03\x02\x02\x02"+
-		"\u0806\u0809\x03\x02\x02\x02\u0807\u080A\x05\u029E\u0150\x02\u0808\u080A"+
-		"\b\x96\x01\x02\u0809\u0807\x03\x02\x02\x02\u0809\u0808\x03\x02\x02\x02"+
-		"\u080A\u080D\x03\x02\x02\x02\u080B\u080D\b\x96\x01\x02\u080C\u07FE\x03"+
-		"\x02\x02\x02\u080C\u080B\x03\x02\x02\x02\u080D\u012B\x03\x02\x02\x02\u080E"+
-		"\u0817\x05\u02B8\u015D\x02\u080F\u0817\x05\u02BA\u015E\x02\u0810\u0817"+
-		"\x05\u02BC\u015F\x02\u0811\u0817\x05\u02BE\u0160\x02\u0812\u0817\x05\u02C0"+
-		"\u0161\x02\u0813\u0817\x05\u01BE\xE0\x02\u0814\u0817\x05\u01C0\xE1\x02"+
-		"\u0815\u0817\b\x97\x01\x02\u0816\u080E\x03\x02\x02\x02\u0816\u080F\x03"+
-		"\x02\x02\x02\u0816\u0810\x03\x02\x02\x02\u0816\u0811\x03\x02\x02\x02\u0816"+
-		"\u0812\x03\x02\x02\x02\u0816\u0813\x03\x02\x02\x02\u0816\u0814\x03\x02"+
-		"\x02\x02\u0816\u0815\x03\x02\x02\x02\u0817\u012D\x03\x02\x02\x02\u0818"+
-		"\u0819\x07\xAC\x02\x02\u0819\u081A\x07\x03\x02\x02\u081A\u081B\x07\x13"+
-		"\x02\x02\u081B\u0823\x07\x04\x02\x02\u081C\u081D\x07\xAC\x02\x02\u081D"+
-		"\u081F\x07\x03\x02\x02\u081E\u0820\x05\u0130\x99\x02\u081F\u081E\x03\x02"+
-		"\x02\x02\u081F\u0820\x03\x02\x02\x02\u0820\u0821\x03\x02\x02\x02\u0821"+
-		"\u0823\x07\x04\x02\x02\u0822\u0818\x03\x02\x02\x02\u0822\u081C\x03\x02"+
-		"\x02\x02\u0823\u012F\x03\x02\x02\x02\u0824\u0828\x05\u0132\x9A\x02\u0825"+
-		"\u0828\x07\xAC\x02\x02\u0826\u0828\x05\u012E\x98\x02\u0827\u0824\x03\x02"+
-		"\x02\x02\u0827\u0825\x03\x02\x02\x02\u0827\u0826\x03\x02\x02\x02\u0828"+
-		"\u0831\x03\x02\x02\x02\u0829\u082D\x05\u02AC\u0157\x02\u082A\u082E\x05"+
-		"\u0132\x9A\x02\u082B\u082E\x07\xAC\x02\x02\u082C\u082E\x05\u012E\x98\x02"+
-		"\u082D\u082A\x03\x02\x02\x02\u082D\u082B\x03\x02\x02\x02\u082D\u082C\x03"+
-		"\x02\x02\x02\u082E\u0830\x03\x02\x02\x02\u082F\u0829\x03\x02\x02\x02\u0830"+
-		"\u0833\x03\x02\x02\x02\u0831\u082F\x03\x02\x02\x02\u0831\u0832\x03\x02"+
-		"\x02\x02\u0832\u0131\x03\x02\x02\x02\u0833\u0831\x03\x02\x02\x02\u0834"+
-		"\u083C\x05\u0142\xA2\x02\u0835\u083C\x05\u0148\xA5\x02\u0836\u083C\x05"+
-		"\u0144\xA3\x02\u0837\u083C\x05\u0146\xA4\x02\u0838\u083C\x05\u014C\xA7"+
-		"\x02\u0839\u083C\x05\u014A\xA6\x02\u083A\u083C\x05\u020E\u0108\x02\u083B"+
-		"\u0834\x03\x02\x02\x02\u083B\u0835\x03\x02\x02\x02\u083B\u0836\x03\x02"+
-		"\x02\x02\u083B\u0837\x03\x02\x02\x02\u083B\u0838\x03\x02\x02\x02\u083B"+
-		"\u0839\x03\x02\x02\x02\u083B\u083A\x03\x02\x02\x02\u083C\u0133\x03\x02"+
-		"\x02\x02\u083D\u0843\x05\u0132\x9A\x02\u083E\u0843\x05\u013A\x9E\x02\u083F"+
-		"\u0843\x05\u013C\x9F\x02\u0840\u0843\x05\u013E\xA0\x02\u0841\u0843\x05"+
-		"\u0140\xA1\x02\u0842\u083D\x03\x02\x02\x02\u0842\u083E\x03\x02\x02\x02"+
-		"\u0842\u083F\x03\x02\x02\x02\u0842\u0840\x03\x02\x02\x02\u0842\u0841\x03"+
-		"\x02\x02\x02\u0843\u0135\x03\x02\x02\x02\u0844\u0845\x05\u0134\x9B\x02"+
-		"\u0845\u0846\x05\u02AE\u0158\x02\u0846\u0847\x05\u0134\x9B\x02\u0847\u0137"+
-		"\x03\x02\x02\x02\u0848\u084D\x05\u013A\x9E\x02\u0849\u084D\x05\u0140\xA1"+
-		"\x02\u084A\u084D\x05\u013E\xA0\x02\u084B\u084D\x05\u013C\x9F\x02\u084C"+
-		"\u0848\x03\x02\x02\x02\u084C\u0849\x03\x02\x02\x02\u084C\u084A\x03\x02"+
-		"\x02\x02\u084C\u084B\x03\x02\x02\x02\u084D\u0139\x03\x02\x02\x02\u084E"+
-		"\u084F\x05\u02A0\u0151\x02\u084F\u0855\x05\u0136\x9C\x02\u0850\u0851\x05"+
-		"\u02AC\u0157\x02\u0851\u0852\x05\u0136\x9C\x02\u0852\u0854\x03\x02\x02"+
-		"\x02\u0853\u0850\x03\x02\x02\x02\u0854\u0857\x03\x02\x02\x02\u0855\u0853"+
-		"\x03\x02\x02\x02\u0855\u0856\x03\x02\x02\x02\u0856\u0858\x03\x02\x02\x02"+
-		"\u0857\u0855\x03\x02\x02\x02\u0858\u0859\x05\u02A2\u0152\x02\u0859\u013B"+
-		"\x03\x02\x02\x02\u085A\u085B\x05\u02A0\u0151\x02\u085B\u0861\x05\u0134"+
-		"\x9B\x02\u085C\u085D\x05\u02AC\u0157\x02\u085D\u085E\x05\u0134\x9B\x02"+
-		"\u085E\u0860\x03\x02\x02\x02\u085F\u085C\x03\x02\x02\x02\u0860\u0863\x03"+
-		"\x02\x02\x02\u0861\u085F\x03\x02\x02\x02\u0861\u0862\x03\x02\x02\x02\u0862"+
-		"\u0864\x03\x02\x02\x02\u0863\u0861\x03\x02\x02\x02\u0864\u0865\x05\u02A2"+
-		"\u0152\x02\u0865\u013D\x03\x02\x02\x02\u0866\u0867\x05\u02A8\u0155\x02"+
-		"\u0867\u086D\x05\u0134\x9B\x02\u0868\u0869\x05\u02AC\u0157\x02\u0869\u086A"+
-		"\x05\u0134\x9B\x02\u086A\u086C\x03\x02\x02\x02\u086B\u0868\x03\x02\x02"+
-		"\x02\u086C\u086F\x03\x02\x02\x02\u086D\u086B\x03\x02\x02\x02\u086D\u086E"+
-		"\x03\x02\x02\x02\u086E\u0870\x03\x02\x02\x02\u086F\u086D\x03\x02\x02\x02"+
-		"\u0870\u0871\x05\u02AA\u0156\x02\u0871\u013F\x03\x02\x02\x02\u0872\u0873"+
-		"\x05\u029C\u014F\x02\u0873\u0879\x05\u0134\x9B\x02\u0874\u0875\x05\u02AC"+
-		"\u0157\x02\u0875\u0876\x05\u0134\x9B\x02\u0876\u0878\x03\x02\x02\x02\u0877"+
-		"\u0874\x03\x02\x02\x02\u0878\u087B\x03\x02\x02\x02\u0879\u0877\x03\x02"+
-		"\x02\x02\u0879\u087A\x03\x02\x02\x02\u087A\u087C\x03\x02\x02\x02\u087B"+
-		"\u0879\x03\x02\x02\x02\u087C\u087D\x05\u029E\u0150\x02\u087D\u0141\x03"+
-		"\x02\x02\x02\u087E\u087F\x07\xAD\x02\x02\u087F\u0143\x03\x02\x02\x02\u0880"+
-		"\u0881\x07\xA8\x02\x02\u0881\u0145\x03\x02\x02\x02\u0882\u0883\t\x02\x02"+
-		"\x02\u0883\u0147\x03\x02\x02\x02\u0884\u0885\x07\xA7\x02\x02\u0885\u0149"+
-		"\x03\x02\x02\x02\u0886\u0887\t\x03\x02\x02\u0887\u014B\x03\x02\x02\x02"+
-		"\u0888\u0889\x07\xAA\x02\x02\u0889\u014D\x03\x02\x02\x02\u088A\u089B\x07"+
-		"\xAC\x02\x02\u088B\u088C\x07\f\x02\x02\u088C\u088D\x07\xAC\x02\x02\u088D"+
-		"\u089B\x07\f\x02\x02\u088E\u089B\x07\x9A\x02\x02\u088F\u089B\x07g\x02"+
-		"\x02\u0890\u089B\x07`\x02\x02\u0891\u089B\x077\x02\x02\u0892\u089B\x07"+
-		"O\x02\x02\u0893\u089B\x07\x81\x02\x02\u0894\u089B\x07G\x02\x02\u0895\u089B"+
-		"\x07l\x02\x02\u0896\u089B\x07\x7F\x02\x02\u0897\u089B\x07c\x02\x02\u0898"+
-		"\u089B\x07L\x02\x02\u0899\u089B\x07P\x02\x02\u089A\u088A\x03\x02\x02\x02"+
-		"\u089A\u088B\x03\x02\x02\x02\u089A\u088E\x03\x02\x02\x02\u089A\u088F\x03"+
-		"\x02\x02\x02\u089A\u0890\x03\x02\x02\x02\u089A\u0891\x03\x02\x02\x02\u089A"+
-		"\u0892\x03\x02\x02\x02\u089A\u0893\x03\x02\x02\x02\u089A\u0894\x03\x02"+
-		"\x02\x02\u089A\u0895\x03\x02\x02\x02\u089A\u0896\x03\x02\x02\x02\u089A"+
-		"\u0897\x03\x02\x02\x02\u089A\u0898\x03\x02\x02\x02\u089A\u0899\x03\x02"+
-		"\x02\x02\u089B\u014F\x03\x02\x02\x02\u089C\u08AD\x07\xAC\x02\x02\u089D"+
-		"\u089E\x07\f\x02\x02\u089E\u089F\x07\xAC\x02\x02\u089F\u08AD\x07\f\x02"+
-		"\x02\u08A0\u08AD\x07\x9A\x02\x02\u08A1\u08AD\x07g\x02\x02\u08A2\u08AD"+
-		"\x07`\x02\x02\u08A3\u08AD\x077\x02\x02\u08A4\u08AD\x07O\x02\x02\u08A5"+
-		"\u08AD\x07\x81\x02\x02\u08A6\u08AD\x07G\x02\x02\u08A7\u08AD\x07l\x02\x02"+
-		"\u08A8\u08AD\x07\x7F\x02\x02\u08A9\u08AD\x07c\x02\x02\u08AA\u08AD\x07"+
-		"L\x02\x02\u08AB\u08AD\x07P\x02\x02\u08AC\u089C\x03\x02\x02\x02\u08AC\u089D"+
-		"\x03\x02\x02\x02\u08AC\u08A0\x03\x02\x02\x02\u08AC\u08A1\x03\x02\x02\x02"+
-		"\u08AC\u08A2\x03\x02\x02\x02\u08AC\u08A3\x03\x02\x02\x02\u08AC\u08A4\x03"+
-		"\x02\x02\x02\u08AC\u08A5\x03\x02\x02\x02\u08AC\u08A6\x03\x02\x02\x02\u08AC"+
-		"\u08A7\x03\x02\x02\x02\u08AC\u08A8\x03\x02\x02\x02\u08AC\u08A9\x03\x02"+
-		"\x02\x02\u08AC\u08AA\x03\x02\x02\x02\u08AC\u08AB\x03\x02\x02\x02\u08AD"+
-		"\u0151\x03\x02\x02\x02\u08AE\u08BF\x07\xAC\x02\x02\u08AF\u08B0\x07\f\x02"+
-		"\x02\u08B0\u08B1\x07\xAC\x02\x02\u08B1\u08BF\x07\f\x02\x02\u08B2\u08BF"+
-		"\x07\x9A\x02\x02\u08B3\u08BF\x07g\x02\x02\u08B4\u08BF\x07`\x02\x02\u08B5"+
-		"\u08BF\x077\x02\x02\u08B6\u08BF\x07O\x02\x02\u08B7\u08BF\x07\x81\x02\x02"+
-		"\u08B8\u08BF\x07G\x02\x02\u08B9\u08BF\x07l\x02\x02\u08BA\u08BF\x07\x7F"+
-		"\x02\x02\u08BB\u08BF\x07c\x02\x02\u08BC\u08BF\x07L\x02\x02\u08BD\u08BF"+
-		"\x07P\x02\x02\u08BE\u08AE\x03\x02\x02\x02\u08BE\u08AF\x03\x02\x02\x02"+
-		"\u08BE\u08B2\x03\x02\x02\x02\u08BE\u08B3\x03\x02\x02\x02\u08BE\u08B4\x03"+
-		"\x02\x02\x02\u08BE\u08B5\x03\x02\x02\x02\u08BE\u08B6\x03\x02\x02\x02\u08BE"+
-		"\u08B7\x03\x02\x02\x02\u08BE\u08B8\x03\x02\x02\x02\u08BE\u08B9\x03\x02"+
-		"\x02\x02\u08BE\u08BA\x03\x02\x02\x02\u08BE\u08BB\x03\x02\x02\x02\u08BE"+
-		"\u08BC\x03\x02\x02";
+		"\u0128\x02\u061D\u061E\x05\u014A\xA6\x02\u061E\xC7\x03\x02\x02\x02\u061F"+
+		"\u0621\x05\u0244\u0123\x02\u0620\u0622\x05\u023A\u011E\x02\u0621\u0620"+
+		"\x03\x02\x02\x02\u0621\u0622\x03\x02\x02\x02\u0622\u0623\x03\x02\x02\x02"+
+		"\u0623\u0624\x05\u015E\xB0\x02\u0624\xC9\x03\x02\x02\x02\u0625\u0626\x05"+
+		"\u01C0\xE1\x02\u0626\u0628\x05\u01E4\xF3\x02\u0627\u0629\x05\xFC\x7F\x02"+
+		"\u0628\u0627\x03\x02\x02\x02\u0628\u0629\x03\x02\x02\x02\u0629\u062B\x03"+
+		"\x02\x02\x02\u062A\u062C\x05\u0156\xAC\x02\u062B\u062A\x03\x02\x02\x02"+
+		"\u062B\u062C\x03\x02\x02\x02\u062C\u062D\x03\x02\x02\x02\u062D\u062E\x05"+
+		"\xCCg\x02\u062E\u062F\x05\xD0i\x02\u062F\xCB\x03\x02\x02\x02\u0630\u0631"+
+		"\x05\u0210\u0109\x02\u0631\u0632\x05\u015E\xB0\x02\u0632\u0635\x03\x02"+
+		"\x02\x02\u0633\u0635\bg\x01\x02\u0634\u0630\x03\x02\x02\x02\u0634\u0633"+
+		"\x03\x02\x02\x02\u0635\xCD\x03\x02\x02\x02\u0636\u0639\x07\xAA\x02\x02"+
+		"\u0637\u0639\x05\u0144\xA3\x02\u0638\u0636\x03\x02\x02\x02\u0638\u0637"+
+		"\x03\x02\x02\x02\u0639\xCF\x03\x02\x02\x02\u063A\u063B\x05\u029A\u014E"+
+		"\x02\u063B\u063C\x05\xD2j\x02\u063C\u063D\x05\u029C\u014F\x02\u063D\u0640"+
+		"\x03\x02\x02\x02\u063E\u0640\bi\x01\x02\u063F\u063A\x03\x02\x02\x02\u063F"+
+		"\u063E\x03\x02\x02\x02\u0640\xD1\x03\x02\x02\x02\u0641\u0647\x05\u016A"+
+		"\xB6\x02\u0642\u0647\x05\xD4k\x02\u0643\u0647\x05\xD6l\x02\u0644\u0647"+
+		"\x05\xD8m\x02\u0645\u0647\bj\x01\x02\u0646\u0641\x03\x02\x02\x02\u0646"+
+		"\u0642\x03\x02\x02\x02\u0646\u0643\x03\x02\x02\x02\u0646\u0644\x03\x02"+
+		"\x02\x02\u0646\u0645\x03\x02\x02\x02\u0647\xD3\x03\x02\x02\x02\u0648\u0649"+
+		"\x05\u01F0\xF9\x02\u0649\u064C\x05\u029A\u014E\x02\u064A\u064D\x05\u016A"+
+		"\xB6\x02\u064B\u064D\bk\x01\x02\u064C\u064A\x03\x02\x02\x02\u064C\u064B"+
+		"\x03\x02\x02\x02\u064D\u064E\x03\x02\x02\x02\u064E\u064F\x05\u029C\u014F"+
+		"\x02\u064F\xD5\x03\x02\x02\x02\u0650\u0651\x05\u01CE\xE8\x02\u0651\u0654"+
+		"\x05\u029A\u014E\x02\u0652\u0655\x05\u016A\xB6\x02\u0653\u0655\bl\x01"+
+		"\x02\u0654\u0652\x03\x02\x02\x02\u0654\u0653\x03\x02\x02\x02\u0655\u0656"+
+		"\x03\x02\x02\x02\u0656\u0657\x05\u029C\u014F\x02\u0657\xD7\x03\x02\x02"+
+		"\x02\u0658\u0659\x05\u01DA\xEE\x02\u0659\u065C\x05\u029A\u014E\x02\u065A"+
+		"\u065D\x05\u016A\xB6\x02\u065B\u065D\bm\x01\x02\u065C\u065A\x03\x02\x02"+
+		"\x02\u065C\u065B\x03\x02\x02\x02\u065D\u065E\x03\x02\x02\x02\u065E\u065F"+
+		"\x05\u029C\u014F\x02\u065F\xD9\x03\x02\x02\x02\u0660\u0662\x05\u01C2\xE2"+
+		"\x02\u0661\u0663\x05\xDCo\x02\u0662\u0661\x03\x02\x02\x02\u0662\u0663"+
+		"\x03\x02\x02\x02\u0663\u0664\x03\x02\x02\x02\u0664\u0666\x05\u0110\x89"+
+		"\x02\u0665\u0667\x05\xFA~\x02\u0666\u0665\x03\x02\x02\x02\u0666\u0667"+
+		"\x03\x02\x02\x02\u0667\u066A\x03\x02\x02\x02\u0668\u066B\x05\u0116\x8C"+
+		"\x02\u0669\u066B\bn\x01\x02\u066A\u0668\x03\x02\x02\x02\u066A\u0669\x03"+
+		"\x02\x02\x02\u066B\u066E\x03\x02\x02\x02\u066C\u066F\x05\xFE\x80\x02\u066D"+
+		"\u066F\x05\xE2r\x02\u066E\u066C\x03\x02\x02\x02\u066E\u066D\x03\x02\x02"+
+		"\x02\u066E\u066F\x03\x02\x02\x02\u066F\xDB\x03\x02\x02\x02\u0670\u0676"+
+		"\x05\xDEp\x02\u0671\u0672\x05\u02AA\u0156\x02\u0672\u0673\x05\xDEp\x02"+
+		"\u0673\u0675\x03\x02\x02\x02\u0674\u0671\x03\x02\x02\x02\u0675\u0678\x03"+
+		"\x02\x02\x02\u0676\u0674\x03\x02\x02\x02\u0676\u0677\x03\x02\x02\x02\u0677"+
+		"\xDD\x03\x02\x02\x02\u0678\u0676\x03\x02\x02\x02\u0679\u0683\x05\u016A"+
+		"\xB6\x02\u067A\u067B\x05\u016A\xB6\x02\u067B\u067E\x05\u02A6\u0154\x02"+
+		"\u067C\u067F\x05\u0144\xA3\x02\u067D\u067F\x05\u0140\xA1\x02\u067E\u067C"+
+		"\x03\x02\x02\x02\u067E\u067D\x03\x02\x02\x02\u067F\u0680\x03\x02\x02\x02"+
+		"\u0680\u0681\x05\u02A8\u0155\x02\u0681\u0683\x03\x02\x02\x02\u0682\u0679"+
+		"\x03\x02\x02\x02\u0682\u067A\x03\x02\x02\x02\u0683\xDF\x03\x02\x02\x02"+
+		"\u0684\u0685\x05\u024C\u0127\x02\u0685\u0687\x05\u0166\xB4\x02\u0686\u0688"+
+		"\x05\xF4{\x02\u0687\u0686\x03\x02\x02\x02\u0687\u0688\x03\x02\x02\x02"+
+		"\u0688\u0689\x03\x02\x02\x02\u0689\u068C\x05\xE8u\x02\u068A\u068D\x05"+
+		"\u0116\x8C\x02\u068B\u068D\bq\x01\x02\u068C\u068A\x03\x02\x02\x02\u068C"+
+		"\u068B\x03\x02\x02\x02\u068D\u0690\x03\x02\x02\x02\u068E\u0691\x05\xFE"+
+		"\x80\x02\u068F\u0691\x05\xE2r\x02\u0690\u068E\x03\x02\x02\x02\u0690\u068F"+
+		"\x03\x02\x02\x02\u0690\u0691\x03\x02\x02\x02\u0691\xE1\x03\x02\x02\x02"+
+		"\u0692\u0693\x05\u01E0\xF1\x02\u0693\u0694\x05\xE4s\x02\u0694\xE3\x03"+
+		"\x02\x02\x02\u0695\u069B\x05\xE6t\x02\u0696\u0697\x05\u01A6\xD4\x02\u0697"+
+		"\u0698\x05\xE6t\x02\u0698\u069A\x03\x02\x02\x02\u0699\u0696\x03\x02\x02"+
+		"\x02\u069A\u069D\x03\x02\x02\x02\u069B\u0699\x03\x02\x02\x02\u069B\u069C"+
+		"\x03\x02\x02\x02\u069C\xE5\x03\x02\x02\x02\u069D\u069B\x03\x02\x02\x02"+
+		"\u069E\u069F\x07\xAA\x02\x02\u069F\u06A0\x07\xAC\x02\x02\u06A0\u06A1\x05"+
+		"\u012E\x98\x02\u06A1\xE7\x03\x02\x02\x02\u06A2\u06A3\x05\u022E\u0118\x02"+
+		"\u06A3\u06A9\x05\xEAv\x02\u06A4\u06A5\x05\u02AA\u0156\x02\u06A5\u06A6"+
+		"\x05\xEAv\x02\u06A6\u06A8\x03\x02\x02\x02\u06A7\u06A4\x03\x02\x02\x02"+
+		"\u06A8\u06AB\x03\x02\x02\x02\u06A9\u06A7\x03\x02\x02\x02\u06A9\u06AA\x03"+
+		"\x02\x02\x02\u06AA\u06AE\x03\x02\x02\x02\u06AB\u06A9\x03\x02\x02\x02\u06AC"+
+		"\u06AE\bu\x01\x02\u06AD\u06A2\x03\x02\x02\x02\u06AD\u06AC\x03\x02\x02"+
+		"\x02\u06AE\xE9\x03\x02\x02\x02\u06AF\u06B0\x05\u016A\xB6\x02\u06B0\u06B3"+
+		"\x05\u02B6\u015C\x02\u06B1\u06B4\x05\u012E\x98\x02\u06B2\u06B4\x05\u0134"+
+		"\x9B\x02\u06B3\u06B1\x03\x02\x02\x02\u06B3\u06B2\x03\x02\x02\x02\u06B4"+
+		"\u06FD\x03\x02\x02\x02\u06B5\u06B6\x05\u016A\xB6\x02\u06B6\u06B7\x05\u02B6"+
+		"\u015C\x02\u06B7\u06BA\x05\u016A\xB6\x02\u06B8\u06BB\x05\u02AE\u0158\x02"+
+		"\u06B9\u06BB\x05\u02B0\u0159\x02\u06BA\u06B8\x03\x02\x02\x02\u06BA\u06B9"+
+		"\x03\x02\x02\x02\u06BB\u06BC\x03\x02\x02\x02\u06BC\u06BD\x05\u0140\xA1"+
+		"\x02\u06BD\u06FD\x03\x02\x02\x02\u06BE\u06BF\x05\u016A\xB6\x02\u06BF\u06C0"+
+		"\x05\u02B6\u015C\x02\u06C0\u06C3\x05\u016A\xB6\x02\u06C1\u06C4\x05\u02AE"+
+		"\u0158\x02\u06C2\u06C4\x05\u02B0\u0159\x02\u06C3\u06C1\x03\x02\x02\x02"+
+		"\u06C3\u06C2\x03\x02\x02\x02\u06C4\u06C5\x03\x02\x02\x02\u06C5\u06C6\x05"+
+		"\xEEx\x02\u06C6\u06FD\x03\x02\x02\x02\u06C7\u06C8\x05\u016A\xB6\x02\u06C8"+
+		"\u06C9\x05\u02B6\u015C\x02\u06C9\u06CC\x05\u016A\xB6\x02\u06CA\u06CD\x05"+
+		"\u02AE\u0158\x02\u06CB\u06CD\x05\u02B0\u0159\x02\u06CC\u06CA\x03\x02\x02"+
+		"\x02\u06CC\u06CB\x03\x02\x02\x02\u06CD\u06CE\x03\x02\x02\x02\u06CE\u06CF"+
+		"\x05\xECw\x02\u06CF\u06FD\x03\x02\x02\x02\u06D0\u06D1\x05\u016A\xB6\x02"+
+		"\u06D1\u06D2\x05\u02B6\u015C\x02\u06D2\u06D5\x05\u016A\xB6\x02\u06D3\u06D6"+
+		"\x05\u02AE\u0158\x02\u06D4\u06D6\x05\u02B0\u0159\x02\u06D5\u06D3\x03\x02"+
+		"\x02\x02\u06D5\u06D4\x03\x02\x02\x02\u06D6\u06D7\x03\x02\x02\x02\u06D7"+
+		"\u06D8\x05\xF0y\x02\u06D8\u06FD\x03\x02\x02\x02\u06D9\u06DA\x05\u016A"+
+		"\xB6\x02\u06DA\u06DB\x05\u02B6\u015C\x02\u06DB\u06DE\x05\xECw\x02\u06DC"+
+		"\u06DF\x05\u02AE\u0158\x02\u06DD\u06DF\x05\u02B0\u0159\x02\u06DE\u06DC"+
+		"\x03\x02\x02\x02\u06DE\u06DD\x03\x02\x02\x02\u06DF\u06E0\x03\x02\x02\x02"+
+		"\u06E0\u06E1\x07\xAA\x02\x02\u06E1\u06FD\x03\x02\x02\x02\u06E2\u06E3\x05"+
+		"\u016A\xB6\x02\u06E3\u06E4\x05\u02B6\u015C\x02\u06E4\u06E7\x05\xEEx\x02"+
+		"\u06E5\u06E8\x05\u02AE\u0158\x02\u06E6\u06E8\x05\u02B0\u0159\x02\u06E7"+
+		"\u06E5\x03\x02\x02\x02\u06E7\u06E6\x03\x02\x02\x02\u06E8\u06E9\x03\x02"+
+		"\x02\x02\u06E9\u06EA\x07\xAA\x02\x02\u06EA\u06FD\x03\x02\x02\x02\u06EB"+
+		"\u06EC\x05\u016A\xB6\x02\u06EC\u06ED\x05\u02B6\u015C\x02\u06ED\u06F0\x05"+
+		"\xF0y\x02\u06EE\u06F1\x05\u02AE\u0158\x02\u06EF\u06F1\x05\u02B0\u0159"+
+		"\x02\u06F0\u06EE\x03\x02\x02\x02\u06F0\u06EF\x03\x02\x02\x02\u06F1\u06F2"+
+		"\x03\x02\x02\x02\u06F2\u06F3\x07\xAA\x02\x02\u06F3\u06FD\x03\x02\x02\x02"+
+		"\u06F4\u06F5\x05\u016A\xB6\x02\u06F5\u06F6\x05\u02A6\u0154\x02\u06F6\u06F7"+
+		"\x05\u0140\xA1\x02\u06F7\u06F8\x05\u02A8\u0155\x02\u06F8\u06F9\x05\u02B6"+
+		"\u015C\x02\u06F9\u06FA\x05\u012E\x98\x02\u06FA\u06FD\x03\x02\x02\x02\u06FB"+
+		"\u06FD\bv\x01\x02\u06FC\u06AF\x03\x02\x02\x02\u06FC\u06B5\x03\x02\x02"+
+		"\x02\u06FC\u06BE\x03\x02\x02\x02\u06FC\u06C7\x03\x02\x02\x02\u06FC\u06D0"+
+		"\x03\x02\x02\x02\u06FC\u06D9\x03\x02\x02\x02\u06FC\u06E2\x03\x02\x02\x02"+
+		"\u06FC\u06EB\x03\x02\x02\x02\u06FC\u06F4\x03\x02\x02\x02\u06FC\u06FB\x03"+
+		"\x02\x02\x02\u06FD\xEB\x03\x02\x02\x02\u06FE\u06FF\x05\u029E\u0150\x02"+
+		"\u06FF\u0705\x05\u012E\x98\x02\u0700\u0701\x05\u02AA\u0156\x02\u0701\u0702"+
+		"\x05\u012E\x98\x02\u0702\u0704\x03\x02\x02\x02\u0703\u0700\x03\x02\x02"+
+		"\x02\u0704\u0707\x03\x02\x02\x02\u0705\u0703\x03\x02\x02\x02\u0705\u0706"+
+		"\x03\x02\x02\x02\u0706\u0708\x03\x02\x02\x02\u0707\u0705\x03\x02\x02\x02"+
+		"\u0708\u0709\x05\u02A0\u0151\x02\u0709\xED\x03\x02\x02\x02\u070A\u070B"+
+		"\x05\u029E\u0150\x02\u070B\u070C\x05\u012E\x98\x02\u070C\u070D\x05\u02AC"+
+		"\u0157\x02\u070D\u070E\x05\u012E\x98\x02\u070E\u0715\x03\x02\x02\x02\u070F"+
+		"\u0710\x05\u012E\x98\x02\u0710\u0711\x05\u02AC\u0157\x02\u0711\u0712\x05"+
+		"\u012E\x98\x02\u0712\u0714\x03\x02\x02\x02\u0713\u070F\x03\x02\x02\x02"+
+		"\u0714\u0717\x03\x02\x02\x02\u0715\u0713\x03\x02\x02\x02\u0715\u0716\x03"+
+		"\x02\x02\x02\u0716\u0718\x03\x02\x02\x02\u0717\u0715\x03\x02\x02\x02\u0718"+
+		"\u0719\x05\u02A0\u0151\x02\u0719\xEF\x03\x02\x02\x02\u071A\u071B\x05\u02A6"+
+		"\u0154\x02\u071B\u0721\x05\u012E\x98\x02\u071C\u071D\x05\u02AC\u0157\x02"+
+		"\u071D\u071E\x05\u012E\x98\x02\u071E\u0720\x03\x02\x02\x02\u071F\u071C"+
+		"\x03\x02\x02\x02\u0720\u0723\x03\x02\x02\x02\u0721\u071F\x03\x02\x02\x02"+
+		"\u0721\u0722\x03\x02\x02\x02\u0722\u0724\x03\x02\x02\x02\u0723\u0721\x03"+
+		"\x02\x02\x02\u0724\u0725\x05\u02A8\u0155\x02\u0725\xF1\x03\x02\x02\x02"+
+		"\u0726\u0727\x05\u01EA\xF6\x02\u0727\u0728\x05\u0166\xB4\x02\u0728\u0729"+
+		"\x05\u0102\x82\x02\u0729\u072C\x05\u0100\x81\x02\u072A\u072D\x05\xFC\x7F"+
+		"\x02\u072B\u072D\x03\x02\x02\x02\u072C\u072A\x03\x02\x02\x02\u072C\u072B"+
+		"\x03\x02\x02\x02\u072D\u072F\x03\x02\x02\x02\u072E\u0730\x05\xF4{\x02"+
+		"\u072F\u072E\x03\x02\x02\x02\u072F\u0730\x03\x02\x02\x02\u0730\xF3\x03"+
+		"\x02\x02\x02\u0731\u0732\x05\u0254\u012B\x02\u0732\u0733\x05\xF8}\x02"+
+		"\u0733\u0742\x03\x02\x02\x02\u0734\u0735\x05\u0254\u012B\x02\u0735\u0736"+
+		"\x05\xF8}\x02\u0736\u0737\x05\u01A6\xD4\x02\u0737\u0738\x05\xF6|\x02\u0738"+
+		"\u0742\x03\x02\x02\x02\u0739\u073A\x05\u0254\u012B\x02\u073A\u073B\x05"+
+		"\xF6|\x02\u073B\u0742\x03\x02\x02\x02\u073C\u073D\x05\u0254\u012B\x02"+
+		"\u073D\u073E\x05\xF6|\x02\u073E\u073F\x05\u01A6\xD4\x02\u073F\u0740\x05"+
+		"\xF8}\x02\u0740\u0742\x03\x02\x02\x02\u0741\u0731\x03\x02\x02\x02\u0741"+
+		"\u0734\x03\x02\x02\x02\u0741\u0739\x03\x02\x02\x02\u0741\u073C\x03\x02"+
+		"\x02\x02\u0742\xF5\x03\x02\x02\x02\u0743\u0744\x05\u023C\u011F\x02\u0744"+
+		"\u0745\x05\u0140\xA1\x02\u0745\xF7\x03\x02\x02\x02\u0746\u0747\x05\u0246"+
+		"\u0124\x02\u0747\u0748\x05\u0140\xA1\x02\u0748\xF9\x03\x02\x02\x02\u0749"+
+		"\u074A\x05\u0254\u012B\x02\u074A\u074B\x05\xF6|\x02\u074B\xFB\x03\x02"+
+		"\x02\x02\u074C\u074D\x05\u01E0\xF1\x02\u074D\u074E\x05\u020A\u0106\x02"+
+		"\u074E\u074F\x05\u01D2\xEA\x02\u074F\xFD\x03\x02\x02\x02\u0750\u0751\x05"+
+		"\u01E0\xF1\x02\u0751\u0752\x05\u01D2\xEA\x02\u0752\xFF\x03\x02\x02\x02"+
+		"\u0753\u0754\x05\u0256\u012C\x02\u0754\u0755\x05\u029A\u014E\x02\u0755"+
+		"\u0758\x05\u0108\x85\x02\u0756\u0759\x05\u029C\u014F\x02\u0757\u0759\b"+
+		"\x81\x01\x02\u0758\u0756\x03\x02\x02\x02\u0758\u0757\x03\x02\x02\x02\u0759"+
+		"\u075C\x03\x02\x02\x02\u075A\u075C\b\x81\x01\x02\u075B\u0753\x03\x02\x02"+
+		"\x02\u075B\u075A\x03\x02\x02\x02\u075C\u0101\x03\x02\x02\x02\u075D\u075E"+
+		"\x05\u029A\u014E\x02\u075E\u075F\x05\u0104\x83\x02\u075F\u0760\x05\u029C"+
+		"\u014F\x02\u0760\u0763\x03\x02\x02\x02\u0761\u0763\b\x82\x01\x02\u0762"+
+		"\u075D\x03\x02\x02\x02\u0762\u0761\x03\x02\x02\x02\u0763\u0103\x03\x02"+
+		"\x02\x02\u0764\u076C\x05\u016A\xB6\x02\u0765\u0768\x05\u02AA\u0156\x02"+
+		"\u0766\u0769\x05\u016A\xB6\x02\u0767\u0769\b\x83\x01\x02\u0768\u0766\x03"+
+		"\x02\x02\x02\u0768\u0767\x03\x02\x02\x02\u0769\u076B\x03\x02\x02\x02\u076A"+
+		"\u0765\x03\x02\x02\x02\u076B\u076E\x03\x02\x02\x02\u076C\u076A\x03\x02"+
+		"\x02\x02\u076C\u076D\x03\x02\x02\x02\u076D\u0771\x03\x02\x02\x02\u076E"+
+		"\u076C\x03\x02\x02\x02\u076F\u0771\b\x83\x01\x02\u0770\u0764\x03\x02\x02"+
+		"\x02\u0770\u076F\x03\x02\x02\x02\u0771\u0105\x03\x02\x02\x02\u0772\u077A"+
+		"\x05\u016A\xB6\x02\u0773\u0776\x05\u02AA\u0156\x02\u0774\u0777\x05\u016A"+
+		"\xB6\x02\u0775\u0777\b\x84\x01\x02\u0776\u0774\x03\x02\x02\x02\u0776\u0775"+
+		"\x03\x02\x02\x02\u0777\u0779\x03\x02\x02\x02\u0778\u0773\x03\x02\x02\x02"+
+		"\u0779\u077C\x03\x02\x02\x02\u077A\u0778\x03\x02\x02\x02\u077A\u077B\x03"+
+		"\x02\x02\x02\u077B\u077F\x03\x02\x02\x02\u077C\u077A\x03\x02\x02\x02\u077D"+
+		"\u077F\b\x84\x01\x02\u077E\u0772\x03\x02\x02\x02\u077E\u077D\x03\x02\x02"+
+		"\x02\u077F\u0107\x03\x02\x02\x02\u0780\u0786\x05\u010A\x86\x02\u0781\u0782"+
+		"\x05\u02AA\u0156\x02\u0782\u0783\x05\u010A\x86\x02\u0783\u0785\x03\x02"+
+		"\x02\x02\u0784\u0781\x03\x02\x02\x02\u0785\u0788\x03\x02\x02\x02\u0786"+
+		"\u0784\x03\x02\x02\x02\u0786\u0787\x03\x02\x02\x02\u0787\u0109\x03\x02"+
+		"\x02\x02\u0788\u0786\x03\x02\x02\x02\u0789\u078C\x05\u012E\x98\x02\u078A"+
+		"\u078C\x05\u0134\x9B\x02\u078B\u0789\x03\x02\x02\x02\u078B\u078A\x03\x02"+
+		"\x02\x02\u078C\u078F\x03\x02\x02\x02\u078D\u078F\b\x86\x01\x02\u078E\u078B"+
+		"\x03\x02\x02\x02\u078E\u078D\x03\x02\x02\x02\u078F\u010B\x03\x02\x02\x02"+
+		"\u0790\u0792\x05\u022C\u0117\x02\u0791\u0793\x05\u01C8\xE5\x02\u0792\u0791"+
+		"\x03\x02\x02\x02\u0792\u0793\x03\x02\x02\x02\u0793\u0794\x03\x02\x02\x02"+
+		"\u0794\u0795\x05\u0118\x8D\x02\u0795\u0797\x05\u0110\x89\x02\u0796\u0798"+
+		"\x05\u0116\x8C\x02\u0797\u0796\x03\x02\x02\x02\u0797\u0798\x03\x02\x02"+
+		"\x02\u0798\u079A\x03\x02\x02\x02\u0799\u079B\x05\u0112\x8A\x02\u079A\u0799"+
+		"\x03\x02\x02\x02\u079A\u079B\x03\x02\x02\x02\u079B\u079D\x03\x02\x02\x02"+
+		"\u079C\u079E\x05\u010E\x88\x02\u079D\u079C\x03\x02\x02\x02\u079D\u079E"+
+		"\x03\x02\x02\x02\u079E\u07A0\x03\x02\x02\x02\u079F\u07A1\x05\u01A2\xD2"+
+		"\x02\u07A0\u079F\x03\x02\x02\x02\u07A0\u07A1\x03\x02\x02\x02\u07A1\u010D"+
+		"\x03\x02\x02\x02\u07A2\u07A5\x05\u01F6\xFC\x02\u07A3\u07A6\x05\u0140\xA1"+
+		"\x02\u07A4\u07A6\b\x88\x01\x02\u07A5\u07A3\x03\x02\x02\x02\u07A5\u07A4"+
+		"\x03\x02\x02\x02\u07A6\u010F\x03\x02\x02\x02\u07A7\u07A8\x05\u01D8\xED"+
+		"\x02\u07A8\u07A9\x05\u0166\xB4\x02\u07A9\u07AC\x03\x02\x02\x02\u07AA\u07AC"+
+		"\b\x89\x01\x02\u07AB\u07A7\x03\x02\x02\x02\u07AB\u07AA\x03\x02\x02\x02"+
+		"\u07AC\u0111\x03\x02\x02\x02\u07AD\u07AE\x05\u0218\u010D\x02\u07AE\u07AF"+
+		"\x05\u0114\x8B\x02\u07AF\u0113\x03\x02\x02\x02\u07B0\u07B3\x05\u016A\xB6"+
+		"\x02\u07B1\u07B4\x05\u01AC\xD7\x02\u07B2\u07B4\x05\u01C4\xE3\x02\u07B3"+
+		"\u07B1\x03\x02\x02\x02\u07B3\u07B2\x03\x02\x02\x02\u07B3\u07B4\x03\x02"+
+		"\x02\x02\u07B4\u07B7\x03\x02\x02\x02\u07B5\u07B7\b\x8B\x01\x02\u07B6\u07B0"+
+		"\x03\x02\x02\x02\u07B6\u07B5\x03\x02\x02\x02\u07B7\u0115\x03\x02\x02\x02"+
+		"\u07B8\u07B9\x05\u0258\u012D\x02\u07B9\u07BA\x05\u011C\x8F\x02\u07BA\u0117"+
+		"\x03\x02\x02\x02\u07BB\u07C7\x05\u0294\u014B\x02\u07BC\u07C2\x05\u011A"+
+		"\x8E\x02\u07BD\u07BE\x05\u02AA\u0156\x02\u07BE\u07BF\x05\u011A\x8E\x02"+
+		"\u07BF\u07C1\x03\x02\x02\x02\u07C0\u07BD\x03\x02\x02\x02\u07C1\u07C4\x03"+
+		"\x02\x02\x02\u07C2\u07C0\x03\x02\x02\x02\u07C2\u07C3\x03\x02\x02\x02\u07C3"+
+		"\u07C7\x03\x02\x02\x02\u07C4\u07C2\x03\x02\x02\x02\u07C5\u07C7\b\x8D\x01"+
+		"\x02\u07C6\u07BB\x03\x02\x02\x02\u07C6\u07BC\x03\x02\x02\x02\u07C6\u07C5"+
+		"\x03\x02\x02\x02\u07C7\u0119\x03\x02\x02\x02\u07C8\u07D7\x05\u016A\xB6"+
+		"\x02\u07C9\u07CD\x05\u016A\xB6\x02\u07CA\u07CB\x05\u01AA\xD6\x02\u07CB"+
+		"\u07CC\x07\xAA\x02\x02\u07CC\u07CE\x03\x02\x02\x02\u07CD\u07CA\x03\x02"+
+		"\x02\x02\u07CD\u07CE\x03\x02\x02\x02\u07CE\u07D7\x03\x02\x02\x02\u07CF"+
+		"\u07D3\x05\u012A\x96\x02\u07D0\u07D1\x05\u01AA\xD6\x02\u07D1\u07D2\x07"+
+		"\xAA\x02\x02\u07D2\u07D4\x03\x02\x02\x02\u07D3\u07D0\x03\x02\x02\x02\u07D3"+
+		"\u07D4\x03\x02\x02\x02\u07D4\u07D7\x03\x02\x02\x02\u07D5\u07D7\b\x8E\x01"+
+		"\x02\u07D6\u07C8\x03\x02\x02\x02\u07D6\u07C9\x03\x02\x02\x02\u07D6\u07CF"+
+		"\x03\x02\x02\x02\u07D6\u07D5\x03\x02\x02\x02\u07D7\u011B\x03\x02\x02\x02"+
+		"\u07D8\u07DE\x05\u011E\x90\x02\u07D9\u07DA\x05\u01A6\xD4\x02\u07DA\u07DB"+
+		"\x05\u011E\x90\x02\u07DB\u07DD\x03\x02\x02\x02\u07DC\u07D9\x03\x02\x02"+
+		"\x02\u07DD\u07E0\x03\x02\x02\x02\u07DE\u07DC\x03\x02\x02\x02\u07DE\u07DF"+
+		"\x03\x02\x02\x02\u07DF\u011D\x03\x02\x02\x02\u07E0\u07DE\x03\x02\x02\x02"+
+		"\u07E1\u07E8\x05\u0120\x91\x02\u07E2\u07E8\x05\u0122\x92\x02\u07E3\u07E8"+
+		"\x05\u0124\x93\x02\u07E4\u07E5\x07\xAA\x02\x02\u07E5\u07E8\b\x90\x01\x02"+
+		"\u07E6\u07E8\b\x90\x01\x02\u07E7\u07E1\x03\x02\x02\x02\u07E7\u07E2\x03"+
+		"\x02\x02\x02\u07E7\u07E3\x03\x02\x02\x02\u07E7\u07E4\x03\x02\x02\x02\u07E7"+
+		"\u07E6\x03\x02\x02\x02\u07E8\u011F\x03\x02\x02\x02\u07E9\u07EA\x05\u016A"+
+		"\xB6\x02\u07EA\u07ED\x05\u0128\x95\x02\u07EB\u07EE\x05\u012E\x98\x02\u07EC"+
+		"\u07EE\b\x91\x01\x02\u07ED\u07EB\x03\x02\x02\x02\u07ED\u07EC\x03\x02\x02"+
+		"\x02\u07EE\u0121\x03\x02\x02\x02\u07EF\u07F0\x05\u016A\xB6\x02\u07F0\u07F1"+
+		"\x05\u01E2\xF2\x02\u07F1\u07F3\x05\u029A\u014E\x02\u07F2\u07F4\x05\u012C"+
+		"\x97\x02\u07F3\u07F2\x03\x02\x02\x02\u07F3\u07F4\x03\x02\x02\x02\u07F4"+
+		"\u07F5\x03\x02\x02\x02\u07F5\u07F6\x05\u029C\u014F\x02\u07F6\u0123\x03"+
+		"\x02\x02\x02\u07F7\u07FA\x05\u0126\x94\x02\u07F8\u07FB\x05\u0128\x95\x02"+
+		"\u07F9\u07FB\b\x93\x01\x02\u07FA\u07F8\x03\x02\x02\x02\u07FA\u07F9\x03"+
+		"\x02\x02\x02\u07FB\u07FC\x03\x02\x02\x02\u07FC\u07FD\x05\u0126\x94\x02"+
+		"\u07FD\u0125\x03\x02\x02\x02\u07FE\u0801\x05\u0240\u0121\x02\u07FF\u0802"+
+		"\x05\u029A\u014E\x02\u0800\u0802\b\x94\x01\x02\u0801\u07FF\x03\x02\x02"+
+		"\x02\u0801\u0800\x03\x02\x02\x02\u0802\u0805\x03\x02\x02\x02\u0803\u0806"+
+		"\x05\u016A\xB6\x02\u0804\u0806\b\x94\x01\x02\u0805\u0803\x03\x02\x02\x02"+
+		"\u0805\u0804\x03\x02\x02\x02\u0806\u0809\x03\x02\x02\x02\u0807\u080A\x05"+
+		"\u029C\u014F\x02\u0808\u080A\b\x94\x01\x02\u0809\u0807\x03\x02\x02\x02"+
+		"\u0809\u0808\x03\x02\x02\x02\u080A\u080D\x03\x02\x02\x02\u080B\u080D\b"+
+		"\x94\x01\x02\u080C\u07FE\x03\x02\x02\x02\u080C\u080B\x03\x02\x02\x02\u080D"+
+		"\u0127\x03\x02\x02\x02\u080E\u0817\x05\u02B6\u015C\x02\u080F\u0817\x05"+
+		"\u02B8\u015D\x02\u0810\u0817\x05\u02BA\u015E\x02\u0811\u0817\x05\u02BC"+
+		"\u015F\x02\u0812\u0817\x05\u02BE\u0160\x02\u0813\u0817\x05\u01BC\xDF\x02"+
+		"\u0814\u0817\x05\u01BE\xE0\x02\u0815\u0817\b\x95\x01\x02\u0816\u080E\x03"+
+		"\x02\x02\x02\u0816\u080F\x03\x02\x02\x02\u0816\u0810\x03\x02\x02\x02\u0816"+
+		"\u0811\x03\x02\x02\x02\u0816\u0812\x03\x02\x02\x02\u0816\u0813\x03\x02"+
+		"\x02\x02\u0816\u0814\x03\x02\x02\x02\u0816\u0815\x03\x02\x02\x02\u0817"+
+		"\u0129\x03\x02\x02\x02\u0818\u0819\x07\xAA\x02\x02\u0819\u081A\x07\x03"+
+		"\x02\x02\u081A\u081B\x07\x13\x02\x02\u081B\u0823\x07\x04\x02\x02\u081C"+
+		"\u081D\x07\xAA\x02\x02\u081D\u081F\x07\x03\x02\x02\u081E\u0820\x05\u012C"+
+		"\x97\x02\u081F\u081E\x03\x02\x02\x02\u081F\u0820\x03\x02\x02\x02\u0820"+
+		"\u0821\x03\x02\x02\x02\u0821\u0823\x07\x04\x02\x02\u0822\u0818\x03\x02"+
+		"\x02\x02\u0822\u081C\x03\x02\x02\x02\u0823\u012B\x03\x02\x02\x02\u0824"+
+		"\u0828\x05\u012E\x98\x02\u0825\u0828\x07\xAA\x02\x02\u0826\u0828\x05\u012A"+
+		"\x96\x02\u0827\u0824\x03\x02\x02\x02\u0827\u0825\x03\x02\x02\x02\u0827"+
+		"\u0826\x03\x02\x02\x02\u0828\u0831\x03\x02\x02\x02\u0829\u082D\x05\u02AA"+
+		"\u0156\x02\u082A\u082E\x05\u012E\x98\x02\u082B\u082E\x07\xAA\x02\x02\u082C"+
+		"\u082E\x05\u012A\x96\x02\u082D\u082A\x03\x02\x02\x02\u082D\u082B\x03\x02"+
+		"\x02\x02\u082D\u082C\x03\x02\x02\x02\u082E\u0830\x03\x02\x02\x02\u082F"+
+		"\u0829\x03\x02\x02\x02\u0830\u0833\x03\x02\x02\x02\u0831\u082F\x03\x02"+
+		"\x02\x02\u0831\u0832\x03\x02\x02\x02\u0832\u012D\x03\x02\x02\x02\u0833"+
+		"\u0831\x03\x02\x02\x02\u0834\u083C\x05\u013E\xA0\x02\u0835\u083C\x05\u0144"+
+		"\xA3\x02\u0836\u083C\x05\u0140\xA1\x02\u0837\u083C\x05\u0142\xA2\x02\u0838"+
+		"\u083C\x05\u0148\xA5\x02\u0839\u083C\x05\u0146\xA4\x02\u083A\u083C\x05"+
+		"\u020C\u0107\x02\u083B\u0834\x03\x02\x02\x02\u083B\u0835\x03\x02\x02\x02"+
+		"\u083B\u0836\x03\x02\x02\x02\u083B\u0837\x03\x02\x02\x02\u083B\u0838\x03"+
+		"\x02\x02\x02\u083B\u0839\x03\x02\x02\x02\u083B\u083A\x03\x02\x02\x02\u083C"+
+		"\u012F\x03\x02\x02\x02\u083D\u0843\x05\u012E\x98\x02\u083E\u0843\x05\u0136"+
+		"\x9C\x02\u083F\u0843\x05\u0138\x9D\x02\u0840\u0843\x05\u013A\x9E\x02\u0841"+
+		"\u0843\x05\u013C\x9F\x02\u0842\u083D\x03\x02\x02\x02\u0842\u083E\x03\x02"+
+		"\x02\x02\u0842\u083F\x03\x02\x02\x02\u0842\u0840\x03\x02\x02\x02\u0842"+
+		"\u0841\x03\x02\x02\x02\u0843\u0131\x03\x02\x02\x02\u0844\u0845\x05\u0130"+
+		"\x99\x02\u0845\u0846\x05\u02AC\u0157\x02\u0846\u0847\x05\u0130\x99\x02"+
+		"\u0847\u0133\x03\x02\x02\x02\u0848\u084D\x05\u0136\x9C\x02\u0849\u084D"+
+		"\x05\u013C\x9F\x02\u084A\u084D\x05\u013A\x9E\x02\u084B\u084D\x05\u0138"+
+		"\x9D\x02\u084C\u0848\x03\x02\x02\x02\u084C\u0849\x03\x02\x02\x02\u084C"+
+		"\u084A\x03\x02\x02\x02\u084C\u084B\x03\x02\x02\x02\u084D\u0135\x03\x02"+
+		"\x02\x02\u084E\u084F\x05\u029E\u0150\x02\u084F\u0855\x05\u0132\x9A\x02"+
+		"\u0850\u0851\x05\u02AA\u0156\x02\u0851\u0852\x05\u0132\x9A\x02\u0852\u0854"+
+		"\x03\x02\x02\x02\u0853\u0850\x03\x02\x02\x02\u0854\u0857\x03\x02\x02\x02"+
+		"\u0855\u0853\x03\x02\x02\x02\u0855\u0856\x03\x02\x02\x02\u0856\u0858\x03"+
+		"\x02\x02\x02\u0857\u0855\x03\x02\x02\x02\u0858\u0859\x05\u02A0\u0151\x02"+
+		"\u0859\u0137\x03\x02\x02\x02\u085A\u085B\x05\u029E\u0150\x02\u085B\u0861"+
+		"\x05\u0130\x99\x02\u085C\u085D\x05\u02AA\u0156\x02\u085D\u085E\x05\u0130"+
+		"\x99\x02\u085E\u0860\x03\x02\x02\x02\u085F\u085C\x03\x02\x02\x02\u0860"+
+		"\u0863\x03\x02\x02\x02\u0861\u085F\x03\x02\x02\x02\u0861\u0862\x03\x02"+
+		"\x02\x02\u0862\u0864\x03\x02\x02\x02\u0863\u0861\x03\x02\x02\x02\u0864"+
+		"\u0865\x05\u02A0\u0151\x02\u0865\u0139\x03\x02\x02\x02\u0866\u0867\x05"+
+		"\u02A6\u0154\x02\u0867\u086D\x05\u0130\x99\x02\u0868\u0869\x05\u02AA\u0156"+
+		"\x02\u0869\u086A\x05\u0130\x99\x02\u086A\u086C\x03\x02\x02\x02\u086B\u0868"+
+		"\x03\x02\x02\x02\u086C\u086F\x03\x02\x02\x02\u086D\u086B\x03\x02\x02\x02"+
+		"\u086D\u086E\x03\x02\x02\x02\u086E\u0870\x03\x02\x02\x02\u086F\u086D\x03"+
+		"\x02\x02\x02\u0870\u0871\x05\u02A8\u0155\x02\u0871\u013B\x03\x02\x02\x02"+
+		"\u0872\u0873\x05\u029A\u014E\x02\u0873\u0879\x05\u0130\x99\x02\u0874\u0875"+
+		"\x05\u02AA\u0156\x02\u0875\u0876\x05\u0130\x99\x02\u0876\u0878\x03\x02"+
+		"\x02\x02\u0877\u0874\x03\x02\x02\x02\u0878\u087B\x03\x02\x02\x02\u0879"+
+		"\u0877\x03\x02\x02\x02\u0879\u087A\x03\x02\x02\x02\u087A\u087C\x03\x02"+
+		"\x02\x02\u087B\u0879\x03\x02\x02\x02\u087C\u087D\x05\u029C\u014F\x02\u087D"+
+		"\u013D\x03\x02\x02\x02\u087E\u087F\x07\xAB\x02\x02\u087F\u013F\x03\x02"+
+		"\x02\x02\u0880\u0881\x07\xA6\x02\x02\u0881\u0141\x03\x02\x02\x02\u0882"+
+		"\u0883\t\x02\x02\x02\u0883\u0143\x03\x02\x02\x02\u0884\u0885\x07\xA5\x02"+
+		"\x02\u0885\u0145\x03\x02\x02\x02\u0886\u0887\t\x03\x02\x02\u0887\u0147"+
+		"\x03\x02\x02\x02\u0888\u0889\x07\xA8\x02\x02\u0889\u0149\x03\x02\x02\x02"+
+		"\u088A\u089F\x07\xAA\x02\x02\u088B\u088C\x07\f\x02\x02\u088C\u088D\x07"+
+		"\xAA\x02\x02\u088D\u089F\x07\f\x02\x02\u088E\u089F\x07\x99\x02\x02\u088F"+
+		"\u089F\x07g\x02\x02\u0890\u089F\x07`\x02\x02\u0891\u089F\x077\x02\x02"+
+		"\u0892\u089F\x07O\x02\x02\u0893\u089F\x07\x81\x02\x02\u0894\u089F\x07"+
+		"G\x02\x02\u0895\u089F\x07l\x02\x02\u0896\u089F\x07\x7F\x02\x02\u0897\u089F"+
+		"\x07c\x02\x02\u0898\u089F\x07L\x02\x02\u0899\u089F\x07P\x02\x02\u089A"+
+		"\u089F\x07\xB1\x02\x02\u089B\u089F\x07\xB2\x02\x02\u089C\u089F\x07\x99"+
+		"\x02\x02\u089D\u089F\x07\x98\x02\x02\u089E\u088A\x03\x02\x02\x02\u089E"+
+		"\u088B\x03\x02\x02\x02\u089E\u088E\x03\x02\x02\x02\u089E\u088F\x03\x02"+
+		"\x02\x02\u089E\u0890\x03\x02\x02\x02\u089E\u0891\x03\x02\x02\x02\u089E"+
+		"\u0892\x03\x02\x02\x02\u089E\u0893\x03\x02\x02\x02\u089E\u0894\x03\x02"+
+		"\x02\x02\u089E\u0895\x03\x02\x02\x02\u089E\u0896\x03\x02\x02\x02\u089E"+
+		"\u0897\x03\x02\x02\x02\u089E\u0898\x03\x02\x02\x02\u089E\u0899\x03\x02"+
+		"\x02\x02\u089E\u089A\x03\x02\x02\x02\u089E\u089B\x03\x02\x02\x02\u089E"+
+		"\u089C\x03\x02\x02\x02\u089E\u089D\x03\x02\x02\x02\u089F\u014B\x03\x02"+
+		"\x02\x02\u08A0\u08B5\x07\xAA\x02\x02\u08A1\u08A2\x07\f\x02\x02\u08A2\u08A3"+
+		"\x07\xAA\x02\x02\u08A3\u08B5\x07\f\x02\x02\u08A4\u08B5\x07\x99\x02\x02"+
+		"\u08A5\u08B5\x07g\x02\x02\u08A6\u08B5\x07`\x02\x02\u08A7\u08B5\x077\x02"+
+		"\x02\u08A8\u08B5\x07O\x02\x02\u08A9\u08B5\x07\x81\x02\x02\u08AA\u08B5"+
+		"\x07G\x02\x02\u08AB\u08B5\x07l\x02\x02\u08AC\u08B5\x07\x7F\x02\x02\u08AD"+
+		"\u08B5\x07c\x02\x02\u08AE\u08B5\x07L\x02\x02\u08AF\u08B5\x07P\x02\x02"+
+		"\u08B0\u08B5\x07\xB1\x02\x02\u08B1\u08B5\x07\xB2\x02\x02\u08B2\u08B5\x07"+
+		"\x99\x02\x02\u08B3\u08B5\x07\x98\x02\x02\u08B4\u08A0\x03\x02\x02\x02\u08B4"+
+		"\u08A1\x03\x02\x02\x02\u08B4\u08A4\x03\x02\x02\x02\u08B4\u08A5\x03\x02"+
+		"\x02\x02\u08B4\u08A6\x03\x02\x02\x02\u08B4\u08A7\x03\x02\x02\x02\u08B4"+
+		"\u08A8\x03\x02\x02\x02\u08B4\u08A9\x03\x02\x02\x02\u08B4\u08AA\x03\x02"+
+		"\x02\x02\u08B4\u08AB\x03\x02\x02\x02\u08B4\u08AC\x03\x02\x02\x02\u08B4"+
+		"\u08AD\x03\x02\x02\x02\u08B4\u08AE\x03\x02\x02\x02\u08B4\u08AF\x03\x02"+
+		"\x02\x02\u08B4\u08B0\x03\x02\x02\x02\u08B4\u08B1\x03\x02\x02\x02\u08B4"+
+		"\u08B2\x03\x02\x02\x02\u08B4\u08B3\x03\x02\x02\x02\u08B5\u014D\x03\x02"+
+		"\x02\x02\u08B6\u08B7\t\x04\x02\x02\u08B7\u014F\x03\x02\x02\x02\u08B8\u08CD"+
+		"\x07\xAA\x02\x02\u08B9\u08BA\x07\f\x02\x02\u08BA\u08BB\x07\xAA\x02\x02"+
+		"\u08BB\u08CD\x07\f\x02\x02\u08BC\u08CD\x07\x99\x02\x02\u08BD\u08CD\x07"+
+		"g\x02\x02";
 	private static readonly _serializedATNSegment4: string =
-		"\x02\u08BE\u08BD\x03\x02\x02\x02\u08BF\u0153\x03\x02\x02\x02\u08C0\u08D1"+
-		"\x07\xAC\x02\x02\u08C1\u08C2\x07\f\x02\x02\u08C2\u08C3\x07\xAC\x02\x02"+
-		"\u08C3\u08D1\x07\f\x02\x02\u08C4\u08D1\x07\x9A\x02\x02\u08C5\u08D1\x07"+
-		"g\x02\x02\u08C6\u08D1\x07`\x02\x02\u08C7\u08D1\x077\x02\x02\u08C8\u08D1"+
-		"\x07O\x02\x02\u08C9\u08D1\x07\x81\x02\x02\u08CA\u08D1\x07G\x02\x02\u08CB"+
-		"\u08D1\x07l\x02\x02\u08CC\u08D1\x07\x7F\x02\x02\u08CD\u08D1\x07c\x02\x02"+
-		"\u08CE\u08D1\x07L\x02\x02\u08CF\u08D1\x07P\x02\x02\u08D0\u08C0\x03\x02"+
-		"\x02\x02\u08D0\u08C1\x03\x02\x02\x02\u08D0\u08C4\x03\x02\x02\x02\u08D0"+
-		"\u08C5\x03\x02\x02\x02\u08D0\u08C6\x03\x02\x02\x02\u08D0\u08C7\x03\x02"+
-		"\x02\x02\u08D0\u08C8\x03\x02\x02\x02\u08D0\u08C9\x03\x02\x02\x02\u08D0"+
-		"\u08CA\x03\x02\x02\x02\u08D0\u08CB\x03\x02\x02\x02\u08D0\u08CC\x03\x02"+
-		"\x02\x02\u08D0\u08CD\x03\x02\x02\x02\u08D0\u08CE\x03\x02\x02\x02\u08D0"+
-		"\u08CF\x03\x02\x02\x02\u08D1\u0155\x03\x02\x02\x02\u08D2\u08E3\x07\xAC"+
-		"\x02\x02\u08D3\u08D4\x07\f\x02\x02\u08D4\u08D5\x07\xAC\x02\x02\u08D5\u08E3"+
-		"\x07\f\x02\x02\u08D6\u08E3\x07\x9A\x02\x02\u08D7\u08E3\x07g\x02\x02\u08D8"+
-		"\u08E3\x07`\x02\x02\u08D9\u08E3\x077\x02\x02\u08DA\u08E3\x07O\x02\x02"+
-		"\u08DB\u08E3\x07\x81\x02\x02\u08DC\u08E3\x07G\x02\x02\u08DD\u08E3\x07"+
-		"l\x02\x02\u08DE\u08E3\x07\x7F\x02\x02\u08DF\u08E3\x07c\x02\x02\u08E0\u08E3"+
-		"\x07L\x02\x02\u08E1\u08E3\x07P\x02\x02\u08E2\u08D2\x03\x02\x02\x02\u08E2"+
-		"\u08D3\x03\x02\x02\x02\u08E2\u08D6\x03\x02\x02\x02\u08E2\u08D7\x03\x02"+
-		"\x02\x02\u08E2\u08D8\x03\x02\x02\x02\u08E2\u08D9\x03\x02\x02\x02\u08E2"+
-		"\u08DA\x03\x02\x02\x02\u08E2\u08DB\x03\x02\x02\x02\u08E2\u08DC\x03\x02"+
-		"\x02\x02\u08E2\u08DD\x03\x02\x02\x02\u08E2\u08DE\x03\x02\x02\x02\u08E2"+
-		"\u08DF\x03\x02\x02\x02\u08E2\u08E0\x03\x02\x02\x02\u08E2\u08E1\x03\x02"+
-		"\x02\x02\u08E3\u0157\x03\x02\x02\x02\u08E4\u08F5\x07\xAC\x02\x02\u08E5"+
-		"\u08E6\x07\f\x02\x02\u08E6\u08E7\x07\xAC\x02\x02\u08E7\u08F5\x07\f\x02"+
-		"\x02\u08E8\u08F5\x07\x9A\x02\x02\u08E9\u08F5\x07g\x02\x02\u08EA\u08F5"+
-		"\x07`\x02\x02\u08EB\u08F5\x077\x02\x02\u08EC\u08F5\x07O\x02\x02\u08ED"+
-		"\u08F5\x07\x81\x02\x02\u08EE\u08F5\x07G\x02\x02\u08EF\u08F5\x07l\x02\x02"+
-		"\u08F0\u08F5\x07\x7F\x02\x02\u08F1\u08F5\x07c\x02\x02\u08F2\u08F5\x07"+
-		"L\x02\x02\u08F3\u08F5\x07P\x02\x02\u08F4\u08E4\x03\x02\x02\x02\u08F4\u08E5"+
-		"\x03\x02\x02\x02\u08F4\u08E8\x03\x02\x02\x02\u08F4\u08E9\x03\x02\x02\x02"+
-		"\u08F4\u08EA\x03\x02\x02\x02\u08F4\u08EB\x03\x02\x02\x02\u08F4\u08EC\x03"+
-		"\x02\x02\x02\u08F4\u08ED\x03\x02\x02\x02\u08F4\u08EE\x03\x02\x02\x02\u08F4"+
-		"\u08EF\x03\x02\x02\x02\u08F4\u08F0\x03\x02\x02\x02\u08F4\u08F1\x03\x02"+
-		"\x02\x02\u08F4\u08F2\x03\x02\x02\x02\u08F4\u08F3\x03\x02\x02\x02\u08F5"+
-		"\u0159\x03\x02\x02\x02\u08F6\u0907\x07\xAC\x02\x02\u08F7\u08F8\x07\f\x02"+
-		"\x02\u08F8\u08F9\x07\xAC\x02\x02\u08F9\u0907\x07\f\x02\x02\u08FA\u0907"+
-		"\x07\x9A\x02\x02\u08FB\u0907\x07g\x02\x02\u08FC\u0907\x07`\x02\x02\u08FD"+
-		"\u0907\x077\x02\x02\u08FE\u0907\x07O\x02\x02\u08FF\u0907\x07\x81\x02\x02"+
-		"\u0900\u0907\x07G\x02\x02\u0901\u0907\x07l\x02\x02\u0902\u0907\x07\x7F"+
-		"\x02\x02\u0903\u0907\x07c\x02\x02\u0904\u0907\x07L\x02\x02\u0905\u0907"+
-		"\x07P\x02\x02\u0906\u08F6\x03\x02\x02\x02\u0906\u08F7\x03\x02\x02\x02"+
-		"\u0906\u08FA\x03\x02\x02\x02\u0906\u08FB\x03\x02\x02\x02\u0906\u08FC\x03"+
-		"\x02\x02\x02\u0906\u08FD\x03\x02\x02\x02\u0906\u08FE\x03\x02\x02\x02\u0906"+
-		"\u08FF\x03\x02\x02\x02\u0906\u0900\x03\x02\x02\x02\u0906\u0901\x03\x02"+
-		"\x02\x02\u0906\u0902\x03\x02\x02\x02\u0906\u0903\x03\x02\x02\x02\u0906"+
-		"\u0904\x03\x02\x02\x02\u0906\u0905\x03\x02\x02\x02\u0907\u015B\x03\x02"+
-		"\x02\x02\u0908\u0913\x05\u0184\xC3\x02\u0909\u090A\x05\u014E\xA8\x02\u090A"+
-		"\u090B\x05\u0298\u014D\x02\u090B\u090C\x05\u0184\xC3\x02\u090C\u0913\x03"+
-		"\x02\x02\x02\u090D\u090E\x05\u014E\xA8\x02\u090E\u090F\x05\u0298\u014D"+
-		"\x02\u090F\u0910\b\xAF\x01\x02\u0910\u0913\x03\x02\x02\x02\u0911\u0913"+
-		"\b\xAF\x01\x02\u0912\u0908\x03\x02\x02\x02\u0912\u0909\x03\x02\x02\x02"+
-		"\u0912\u090D\x03\x02\x02\x02\u0912\u0911\x03\x02\x02\x02\u0913\u015D\x03"+
-		"\x02\x02\x02\u0914\u091F\x05\u0182\xC2\x02\u0915\u0916\x05\u014E\xA8\x02"+
-		"\u0916\u0917\x05\u0298\u014D\x02\u0917\u0918\x05\u0182\xC2\x02\u0918\u091F"+
-		"\x03\x02\x02\x02\u0919\u091A\x05\u014E\xA8\x02\u091A\u091B\x05\u0298\u014D"+
-		"\x02\u091B\u091C\b\xB0\x01\x02\u091C\u091F\x03\x02\x02\x02\u091D\u091F"+
-		"\b\xB0\x01\x02\u091E\u0914\x03\x02\x02\x02\u091E\u0915\x03\x02\x02\x02"+
-		"\u091E\u0919\x03\x02\x02\x02\u091E\u091D\x03\x02\x02\x02\u091F\u015F\x03"+
-		"\x02\x02\x02\u0920\u092B\x05\u0186\xC4\x02\u0921\u0922\x05\u014E\xA8\x02"+
-		"\u0922\u0923\x05\u0298\u014D\x02\u0923\u0924\x05\u0186\xC4\x02\u0924\u092B"+
-		"\x03\x02\x02\x02\u0925\u0926\x05\u014E\xA8\x02\u0926\u0927\x05\u0298\u014D"+
-		"\x02\u0927\u0928\b\xB1\x01\x02\u0928\u092B\x03\x02\x02\x02\u0929\u092B"+
-		"\b\xB1\x01\x02\u092A\u0920\x03\x02\x02\x02\u092A\u0921\x03\x02\x02\x02"+
-		"\u092A\u0925\x03\x02\x02\x02\u092A\u0929\x03\x02\x02\x02\u092B\u0161\x03"+
-		"\x02\x02\x02\u092C\u0937\x05\u0152\xAA\x02\u092D\u092E\x05\u014E\xA8\x02"+
-		"\u092E\u092F\x05\u0298\u014D\x02\u092F\u0930\x05\u0152\xAA\x02\u0930\u0937"+
-		"\x03\x02\x02\x02\u0931\u0932\x05\u014E\xA8\x02\u0932\u0933\x05\u0298\u014D"+
-		"\x02\u0933\u0934\b\xB2\x01\x02\u0934\u0937\x03\x02\x02\x02\u0935\u0937"+
-		"\b\xB2\x01\x02\u0936\u092C\x03\x02\x02\x02\u0936\u092D\x03\x02\x02\x02"+
-		"\u0936\u0931\x03\x02\x02\x02\u0936\u0935\x03\x02\x02\x02\u0937\u0163\x03"+
-		"\x02\x02\x02\u0938\u0943\x05\u0154\xAB\x02\u0939\u093A\x05\u0150\xA9\x02"+
-		"\u093A\u093B\x05\u0298\u014D\x02\u093B\u093C\x05\u0154\xAB\x02\u093C\u0943"+
-		"\x03\x02\x02\x02\u093D\u093E\x05\u0150\xA9\x02\u093E\u093F\x05\u0298\u014D"+
-		"\x02\u093F\u0940\b\xB3\x01\x02\u0940\u0943\x03\x02\x02\x02\u0941\u0943"+
-		"\b\xB3\x01\x02\u0942\u0938\x03\x02\x02\x02\u0942\u0939\x03\x02\x02\x02"+
-		"\u0942\u093D\x03\x02\x02\x02\u0942\u0941\x03\x02\x02\x02\u0943\u0165\x03"+
-		"\x02\x02\x02\u0944\u094F\x05\xD2j\x02\u0945\u0946\x05\u014E\xA8\x02\u0946"+
-		"\u0947\x05\u0298\u014D\x02\u0947\u0948\x05\xD2j\x02\u0948\u094F\x03\x02"+
-		"\x02\x02\u0949\u094A\x05\u014E\xA8\x02\u094A\u094B\x05\u0298\u014D\x02"+
-		"\u094B\u094C\b\xB4\x01\x02\u094C\u094F\x03\x02\x02\x02\u094D\u094F\b\xB4"+
-		"\x01\x02\u094E\u0944\x03\x02\x02\x02\u094E\u0945\x03\x02\x02\x02\u094E"+
-		"\u0949\x03\x02\x02\x02\u094E\u094D\x03\x02\x02\x02\u094F\u0167\x03\x02"+
-		"\x02\x02\u0950\u095B\x05\u0156\xAC\x02\u0951\u0952\x05\u014E\xA8\x02\u0952"+
-		"\u0953\x05\u0298\u014D\x02\u0953\u0954\x05\u0156\xAC\x02\u0954\u095B\x03"+
-		"\x02\x02\x02\u0955\u0956\x05\u014E\xA8\x02\u0956\u0957\x05\u0298\u014D"+
-		"\x02\u0957\u0958\b\xB5\x01\x02\u0958\u095B\x03\x02\x02\x02\u0959\u095B"+
-		"\b\xB5\x01\x02\u095A\u0950\x03\x02\x02\x02\u095A\u0951\x03\x02\x02\x02"+
-		"\u095A\u0955\x03\x02\x02\x02\u095A\u0959\x03\x02\x02\x02\u095B\u0169\x03"+
-		"\x02\x02\x02\u095C\u0960\x05\u0162\xB2\x02\u095D\u0960\x05\u0168\xB5\x02"+
-		"\u095E\u0960\b\xB6\x01\x02\u095F\u095C\x03\x02\x02\x02\u095F\u095D\x03"+
-		"\x02\x02\x02\u095F\u095E\x03\x02\x02\x02\u0960\u016B\x03\x02\x02\x02\u0961"+
-		"\u0968\x05\u015A\xAE\x02\u0962\u0963\x05\u014E\xA8\x02\u0963\u0964\x05"+
-		"\u0298\u014D\x02\u0964\u0965\x05\u015A\xAE\x02\u0965\u0968\x03\x02\x02"+
-		"\x02\u0966\u0968\b\xB7\x01\x02\u0967\u0961\x03\x02\x02\x02\u0967\u0962"+
-		"\x03\x02\x02\x02\u0967\u0966\x03\x02\x02\x02\u0968\u016D\x03\x02\x02\x02"+
-		"\u0969\u097A\x07\xAC\x02\x02\u096A\u096B\x07\f\x02\x02\u096B\u096C\x07"+
-		"\xAC\x02\x02\u096C\u097A\x07\f\x02\x02\u096D\u097A\x07\x9A\x02\x02\u096E"+
-		"\u097A\x07g\x02\x02\u096F\u097A\x07`\x02\x02\u0970\u097A\x077\x02\x02"+
-		"\u0971\u097A\x07O\x02\x02\u0972\u097A\x07\x81\x02\x02\u0973\u097A\x07"+
-		"G\x02\x02\u0974\u097A\x07l\x02\x02\u0975\u097A\x07\x7F\x02\x02\u0976\u097A"+
-		"\x07c\x02\x02\u0977\u097A\x07L\x02\x02\u0978\u097A\x07P\x02\x02\u0979"+
-		"\u0969\x03\x02\x02\x02\u0979\u096A\x03\x02\x02\x02\u0979\u096D\x03\x02"+
-		"\x02\x02\u0979\u096E\x03\x02\x02\x02\u0979\u096F\x03\x02\x02\x02\u0979"+
-		"\u0970\x03\x02\x02\x02\u0979\u0971\x03\x02\x02\x02\u0979\u0972\x03\x02"+
-		"\x02\x02\u0979\u0973\x03\x02\x02\x02\u0979\u0974\x03\x02\x02\x02\u0979"+
-		"\u0975\x03\x02\x02\x02\u0979\u0976\x03\x02\x02\x02\u0979\u0977\x03\x02"+
-		"\x02\x02\u0979\u0978\x03\x02\x02\x02\u097A\u016F\x03\x02\x02\x02\u097B"+
-		"\u098C\x07\xAC\x02\x02\u097C\u097D\x07\f\x02\x02\u097D\u097E\x07\xAC\x02"+
-		"\x02\u097E\u098C\x07\f\x02\x02\u097F\u098C\x07\x9A\x02\x02\u0980\u098C"+
-		"\x07g\x02\x02\u0981\u098C\x07`\x02\x02\u0982\u098C\x077\x02\x02\u0983"+
-		"\u098C\x07O\x02\x02\u0984\u098C\x07\x81\x02\x02\u0985\u098C\x07G\x02\x02"+
-		"\u0986\u098C\x07l\x02\x02\u0987\u098C\x07\x7F\x02\x02\u0988\u098C\x07"+
-		"c\x02\x02\u0989\u098C\x07L\x02\x02\u098A\u098C\x07P\x02\x02\u098B\u097B"+
-		"\x03\x02\x02\x02\u098B\u097C\x03\x02\x02\x02\u098B\u097F\x03\x02\x02\x02"+
-		"\u098B\u0980\x03\x02\x02\x02\u098B\u0981\x03\x02\x02\x02\u098B\u0982\x03"+
-		"\x02\x02\x02\u098B\u0983\x03\x02\x02\x02\u098B\u0984\x03\x02\x02\x02\u098B"+
-		"\u0985\x03\x02\x02\x02\u098B\u0986\x03\x02\x02\x02\u098B\u0987\x03\x02"+
-		"\x02\x02\u098B\u0988\x03\x02\x02\x02\u098B\u0989\x03\x02\x02\x02\u098B"+
-		"\u098A\x03\x02\x02\x02\u098C\u0171\x03\x02\x02\x02\u098D\u099E\x07\xAC"+
-		"\x02\x02\u098E\u098F\x07\f\x02\x02\u098F\u0990\x07\xAC\x02\x02\u0990\u099E"+
-		"\x07\f\x02\x02\u0991\u099E\x07\x9A\x02\x02\u0992\u099E\x07g\x02\x02\u0993"+
-		"\u099E\x07`\x02\x02\u0994\u099E\x077\x02\x02\u0995\u099E\x07O\x02\x02"+
-		"\u0996\u099E\x07\x81\x02\x02\u0997\u099E\x07G\x02\x02\u0998\u099E\x07"+
-		"l\x02\x02\u0999\u099E\x07\x7F\x02\x02\u099A\u099E\x07c\x02\x02\u099B\u099E"+
-		"\x07L\x02\x02\u099C\u099E\x07P\x02\x02\u099D\u098D\x03\x02\x02\x02\u099D"+
-		"\u098E\x03\x02\x02\x02\u099D\u0991\x03\x02\x02\x02\u099D\u0992\x03\x02"+
-		"\x02\x02\u099D\u0993\x03\x02\x02\x02\u099D\u0994\x03\x02\x02\x02\u099D"+
-		"\u0995\x03\x02\x02\x02\u099D\u0996\x03\x02\x02\x02\u099D\u0997\x03\x02"+
-		"\x02\x02\u099D\u0998\x03\x02\x02\x02\u099D\u0999\x03\x02\x02\x02\u099D"+
-		"\u099A\x03\x02\x02\x02\u099D\u099B\x03\x02\x02\x02\u099D\u099C\x03\x02"+
-		"\x02\x02\u099E\u0173\x03\x02\x02\x02\u099F\u09A2\x05\u0178\xBD\x02\u09A0"+
-		"\u09A2\x05\u0176\xBC\x02\u09A1\u099F\x03\x02\x02\x02\u09A1\u09A0\x03\x02"+
-		"\x02\x02\u09A2\u0175\x03\x02\x02\x02\u09A3\u09A6\x05\u0272\u013A\x02\u09A4"+
-		"\u09A7\x05\u0294\u014B\x02\u09A5\u09A7\b\xBC\x01\x02\u09A6\u09A4\x03\x02"+
-		"\x02\x02\u09A6\u09A5\x03\x02\x02\x02\u09A7\u09BD\x03\x02\x02\x02\u09A8"+
-		"\u09AB\x05\u027E\u0140\x02\u09A9\u09AC\x05\u0294\u014B\x02\u09AA\u09AC"+
-		"\b\xBC\x01\x02\u09AB\u09A9\x03\x02\x02\x02\u09AB\u09AA\x03\x02\x02\x02"+
-		"\u09AC\u09BD\x03\x02\x02\x02\u09AD\u09B0\x05\u0278\u013D\x02\u09AE\u09B1"+
-		"\x05\u0294\u014B\x02\u09AF\u09B1\b\xBC\x01\x02\u09B0\u09AE\x03\x02\x02"+
-		"\x02\u09B0\u09AF\x03\x02\x02\x02\u09B1\u09BD\x03\x02\x02\x02\u09B2\u09B5"+
-		"\x05\u027A\u013E\x02\u09B3\u09B6\x05\u0294\u014B\x02\u09B4\u09B6\b\xBC"+
-		"\x01\x02\u09B5\u09B3\x03\x02\x02\x02\u09B5\u09B4\x03\x02\x02\x02\u09B6"+
-		"\u09BD\x03\x02\x02\x02\u09B7\u09BA\x05\u028A\u0146\x02\u09B8\u09BB\x05"+
-		"\u0294\u014B\x02\u09B9\u09BB\b\xBC\x01\x02\u09BA\u09B8\x03\x02\x02\x02"+
-		"\u09BA\u09B9\x03\x02\x02\x02\u09BB\u09BD\x03\x02\x02\x02\u09BC\u09A3\x03"+
-		"\x02\x02\x02\u09BC\u09A8\x03\x02\x02\x02\u09BC\u09AD\x03\x02\x02\x02\u09BC"+
-		"\u09B2\x03\x02\x02\x02\u09BC\u09B7\x03\x02\x02\x02\u09BD\u0177\x03\x02"+
-		"\x02\x02\u09BE\u09D4\x05\u0260\u0131\x02\u09BF\u09D4\x05\u0262\u0132\x02"+
-		"\u09C0\u09D4\x05\u0264\u0133\x02\u09C1\u09D4\x05\u0266\u0134\x02\u09C2"+
-		"\u09D4\x05\u0268\u0135\x02\u09C3\u09D4\x05\u026A\u0136\x02\u09C4\u09D4"+
-		"\x05\u026C\u0137\x02\u09C5\u09D4\x05\u026E\u0138\x02\u09C6\u09D4\x05\u0270"+
-		"\u0139\x02\u09C7\u09D4\x05\u0274\u013B\x02\u09C8\u09D4\x05\u0276\u013C"+
-		"\x02\u09C9\u09D4\x05\u027C\u013F\x02\u09CA\u09D4\x05\u0280\u0141\x02\u09CB"+
-		"\u09D4\x05\u0282\u0142\x02\u09CC\u09D4\x05\u0284\u0143\x02\u09CD\u09D4"+
-		"\x05\u0286\u0144\x02\u09CE\u09D4\x05\u0288\u0145\x02\u09CF\u09D4\x05\u028E"+
-		"\u0148\x02\u09D0\u09D4\x05\u0290\u0149\x02\u09D1\u09D4\x05\u0292\u014A"+
-		"\x02\u09D2\u09D4\x05\u028C\u0147\x02\u09D3\u09BE\x03\x02\x02\x02\u09D3"+
-		"\u09BF\x03\x02\x02\x02\u09D3\u09C0\x03\x02\x02\x02\u09D3\u09C1\x03\x02"+
-		"\x02\x02\u09D3\u09C2\x03\x02\x02\x02\u09D3\u09C3\x03\x02\x02\x02\u09D3"+
-		"\u09C4\x03\x02\x02\x02\u09D3\u09C5\x03\x02\x02\x02\u09D3\u09C6\x03\x02"+
-		"\x02\x02\u09D3\u09C7\x03\x02\x02\x02\u09D3\u09C8\x03\x02\x02\x02\u09D3"+
-		"\u09C9\x03\x02\x02\x02\u09D3\u09CA\x03\x02\x02\x02\u09D3\u09CB\x03\x02"+
-		"\x02\x02\u09D3\u09CC\x03\x02\x02\x02\u09D3\u09CD\x03\x02\x02\x02\u09D3"+
-		"\u09CE\x03\x02\x02\x02\u09D3\u09CF\x03\x02\x02\x02\u09D3\u09D0\x03\x02"+
-		"\x02\x02\u09D3\u09D1\x03\x02\x02\x02\u09D3\u09D2\x03\x02\x02\x02\u09D4"+
-		"\u0179\x03\x02\x02\x02\u09D5\u09D8\x05\u01AE\xD8\x02\u09D6\u09D8\x05\u01C6"+
-		"\xE4\x02\u09D7\u09D5\x03\x02\x02\x02\u09D7\u09D6\x03\x02\x02\x02\u09D8"+
-		"\u017B\x03\x02\x02\x02\u09D9\u09DA\x07\xAC\x02\x02\u09DA\u017D\x03\x02"+
-		"\x02\x02\u09DB\u09DC\x07\xAC\x02\x02\u09DC\u017F\x03\x02\x02\x02\u09DD"+
-		"\u09DE\x05\u0148\xA5\x02\u09DE\u0181\x03\x02\x02\x02\u09DF\u09E0\x07\xAC"+
-		"\x02\x02\u09E0\u0183\x03\x02\x02\x02\u09E1\u09F2\x07\xAC\x02\x02\u09E2"+
-		"\u09E3\x07\f\x02\x02\u09E3\u09E4\x07\xAC\x02\x02\u09E4\u09F2\x07\f\x02"+
-		"\x02\u09E5\u09F2\x07\x9A\x02\x02\u09E6\u09F2\x07g\x02\x02\u09E7\u09F2"+
-		"\x07`\x02\x02\u09E8\u09F2\x077\x02\x02\u09E9\u09F2\x07O\x02\x02\u09EA"+
-		"\u09F2\x07\x81\x02\x02\u09EB\u09F2\x07G\x02\x02\u09EC\u09F2\x07l\x02\x02"+
-		"\u09ED\u09F2\x07\x7F\x02\x02\u09EE\u09F2\x07c\x02\x02\u09EF\u09F2\x07"+
-		"L\x02\x02\u09F0\u09F2\x07P\x02\x02\u09F1\u09E1\x03\x02\x02\x02\u09F1\u09E2"+
-		"\x03\x02\x02\x02\u09F1\u09E5\x03\x02\x02\x02\u09F1\u09E6\x03\x02\x02\x02"+
-		"\u09F1\u09E7\x03\x02\x02\x02\u09F1\u09E8\x03\x02\x02\x02\u09F1\u09E9\x03"+
-		"\x02\x02\x02\u09F1\u09EA\x03\x02\x02\x02\u09F1\u09EB\x03\x02\x02\x02\u09F1"+
-		"\u09EC\x03\x02\x02\x02\u09F1\u09ED\x03\x02\x02\x02\u09F1\u09EE\x03\x02"+
-		"\x02\x02\u09F1\u09EF\x03\x02\x02\x02\u09F1\u09F0\x03\x02\x02\x02\u09F2"+
-		"\u0185\x03\x02\x02\x02\u09F3\u09F4\x07\xAC\x02\x02\u09F4\u0187\x03\x02"+
-		"\x02\x02\u09F5\u09F6\x07\xAC\x02\x02\u09F6\u0189\x03\x02\x02\x02\u09F7"+
-		"\u09F8\x07\xAC\x02\x02\u09F8\u018B\x03\x02\x02\x02\u09F9\u09FA\x05\u0148"+
-		"\xA5\x02\u09FA\u018D\x03\x02\x02\x02\u09FB\u09FC\x07\xAC\x02\x02\u09FC"+
-		"\u018F\x03\x02\x02\x02\u09FD\u09FE\x05\u0192\xCA\x02\u09FE\u09FF\x05\u0174"+
-		"\xBB\x02\u09FF\u0191\x03\x02\x02\x02\u0A00\u0A01\x07\xAC\x02\x02\u0A01"+
-		"\u0193\x03\x02\x02\x02\u0A02\u0A03\x07\x19\x02\x02\u0A03\u0195\x03\x02"+
-		"\x02\x02\u0A04\u0A05\x07\x1A\x02\x02\u0A05\u0197\x03\x02\x02\x02\u0A06"+
-		"\u0A07\x07\x1B\x02\x02\u0A07\u0199\x03\x02\x02\x02\u0A08\u0A09\x07\x1E"+
-		"\x02\x02\u0A09\u019B\x03\x02\x02\x02\u0A0A\u0A0B\x07\x1D\x02\x02\u0A0B"+
-		"\u019D\x03\x02\x02\x02\u0A0C\u0A0D\x07\x1C\x02\x02\u0A0D\u019F\x03\x02"+
-		"\x02\x02\u0A0E\u0A0F\x07\x1B\x02\x02\u0A0F\u0A10\x07g\x02\x02\u0A10\u01A1"+
-		"\x03\x02\x02\x02\u0A11\u0A12\x07\x1F\x02\x02\u0A12\u01A3\x03\x02\x02\x02"+
-		"\u0A13\u0A14\x07\x1F\x02\x02\u0A14\u0A15\x07=\x02\x02\u0A15\u01A5\x03"+
-		"\x02\x02\x02\u0A16\u0A17\x07 \x02\x02\u0A17\u01A7\x03\x02\x02\x02\u0A18"+
-		"\u0A19\x07!\x02\x02\u0A19\u01A9\x03\x02\x02\x02\u0A1A\u0A1B\x07#\x02\x02"+
-		"\u0A1B\u01AB\x03\x02\x02\x02\u0A1C\u0A1D\x07$\x02\x02\u0A1D\u01AD\x03"+
-		"\x02\x02\x02\u0A1E\u0A1F\x07%\x02\x02\u0A1F\u01AF\x03\x02\x02\x02\u0A20"+
-		"\u0A21\x07&\x02\x02\u0A21\u01B1\x03\x02\x02\x02\u0A22\u0A23\x07\'\x02"+
-		"\x02\u0A23\u01B3\x03\x02\x02\x02\u0A24\u0A25\x07(\x02\x02\u0A25\u01B5"+
-		"\x03\x02\x02\x02\u0A26\u0A27\x07)\x02\x02\u0A27\u01B7\x03\x02\x02\x02"+
-		"\u0A28\u0A29\x07*\x02\x02\u0A29\u01B9\x03\x02\x02\x02\u0A2A\u0A2B\x07"+
-		"+\x02\x02\u0A2B\u01BB\x03\x02\x02\x02\u0A2C\u0A2D\x07-\x02\x02\u0A2D\u01BD"+
-		"\x03\x02\x02\x02\u0A2E\u0A2F\x07/\x02\x02\u0A2F\u01BF\x03\x02\x02\x02"+
-		"\u0A30\u0A31\x07/\x02\x02\u0A31\u0A32\x07L\x02\x02\u0A32\u01C1\x03\x02"+
-		"\x02\x02\u0A33\u0A34\x070\x02\x02\u0A34\u01C3\x03\x02\x02\x02\u0A35\u0A36"+
-		"\x072\x02\x02\u0A36\u01C5\x03\x02\x02\x02\u0A37\u0A38\x073\x02\x02\u0A38"+
-		"\u01C7\x03\x02\x02\x02\u0A39\u0A3A\x074\x02\x02\u0A3A\u01C9\x03\x02\x02"+
-		"\x02\u0A3B\u0A3C\x075\x02\x02\u0A3C\u01CB\x03\x02\x02\x02\u0A3D\u0A3E"+
-		"\x076\x02\x02\u0A3E\u01CD\x03\x02\x02\x02\u0A3F\u0A40\x077\x02\x02\u0A40"+
-		"\u01CF\x03\x02\x02\x02\u0A41\u0A42\x079\x02\x02\u0A42\u01D1\x03\x02\x02"+
-		"\x02\u0A43\u0A44\x07:\x02\x02\u0A44\u01D3\x03\x02\x02\x02\u0A45\u0A46"+
-		"\x07;\x02\x02\u0A46\u01D5\x03\x02\x02\x02\u0A47\u0A48\x07=\x02\x02\u0A48"+
-		"\u01D7\x03\x02\x02\x02\u0A49\u0A4A\x07>\x02\x02\u0A4A\u01D9\x03\x02\x02"+
-		"\x02\u0A4B\u0A4C\x07?\x02\x02\u0A4C\u01DB\x03\x02\x02\x02\u0A4D\u0A4E"+
-		"\x07@\x02\x02\u0A4E\u01DD\x03\x02\x02\x02\u0A4F\u0A50\x07A\x02\x02\u0A50"+
-		"\u01DF\x03\x02\x02\x02\u0A51\u0A52\x07B\x02\x02\u0A52\u01E1\x03\x02\x02"+
-		"\x02\u0A53\u0A54\x07C\x02\x02\u0A54\u01E3\x03\x02\x02\x02\u0A55\u0A56"+
-		"\x07D\x02\x02\u0A56\u01E5\x03\x02\x02\x02\u0A57\u0A58\x07E\x02\x02\u0A58"+
-		"\u01E7\x03\x02\x02\x02\u0A59\u0A5A\x07G\x02\x02\u0A5A\u01E9\x03\x02\x02"+
-		"\x02\u0A5B\u0A5C\x07H\x02\x02\u0A5C\u01EB\x03\x02\x02\x02\u0A5D\u0A5E"+
-		"\x07I\x02\x02\u0A5E\u0A5F\x07J\x02\x02\u0A5F\u01ED\x03\x02\x02\x02\u0A60"+
-		"\u0A61\x07K\x02\x02\u0A61\u01EF\x03\x02\x02\x02\u0A62\u0A63\x07L\x02\x02"+
-		"\u0A63\u01F1\x03\x02\x02\x02\u0A64\u0A65\x07M\x02\x02\u0A65\u01F3\x03"+
-		"\x02\x02\x02\u0A66\u0A67\x07N\x02\x02\u0A67\u01F5\x03\x02\x02\x02\u0A68"+
-		"\u0A69\x07O\x02\x02\u0A69\u01F7\x03\x02\x02\x02\u0A6A\u0A6B\x07Q\x02\x02"+
-		"\u0A6B\u01F9\x03\x02\x02\x02\u0A6C\u0A6D\x07\x98\x02\x02\u0A6D\u01FB\x03"+
-		"\x02\x02\x02\u0A6E\u0A6F\x07\x98\x02\x02\u0A6F\u0A70\x07\x99\x02\x02\u0A70"+
-		"\u01FD\x03\x02\x02\x02\u0A71\u0A72\x07\x98\x02\x02\u0A72\u0A73\x07\xA5"+
-		"\x02\x02\u0A73\u01FF\x03\x02\x02\x02\u0A74\u0A75\x07T\x02\x02\u0A75\u0201"+
-		"\x03\x02\x02\x02\u0A76\u0A77\x07U\x02\x02\u0A77\u0203\x03\x02\x02\x02"+
-		"\u0A78\u0A79\x07V\x02\x02\u0A79\u0A7A\x07\x88\x02\x02\u0A7A\u0205\x03"+
-		"\x02\x02\x02\u0A7B\u0A7C\x07W\x02\x02\u0A7C\u0207\x03\x02\x02\x02\u0A7D"+
-		"\u0A7E\x07Z\x02\x02\u0A7E\u0209\x03\x02\x02\x02\u0A7F\u0A80\x07Y\x02\x02"+
-		"\u0A80\u020B\x03\x02\x02\x02\u0A81\u0A82\x07[\x02\x02\u0A82\u020D\x03"+
-		"\x02\x02\x02\u0A83\u0A84\x07\\\x02\x02\u0A84\u020F\x03\x02\x02\x02\u0A85"+
-		"\u0A86\x07]\x02\x02\u0A86\u0211\x03\x02\x02\x02\u0A87\u0A88\x07^\x02\x02"+
-		"\u0A88\u0213\x03\x02\x02\x02\u0A89\u0A8A\x07`\x02\x02\u0A8A\u0215\x03"+
-		"\x02\x02\x02\u0A8B\u0A8C\x07a\x02\x02\u0A8C\u0217\x03\x02\x02\x02\u0A8D"+
-		"\u0A8E\x07b\x02\x02\u0A8E\u0219\x03\x02\x02\x02\u0A8F\u0A90\x07b\x02\x02"+
-		"\u0A90\u0A91\x07)\x02\x02\u0A91\u021B\x03\x02\x02\x02\u0A92\u0A93\x07"+
-		"c\x02\x02\u0A93\u021D\x03\x02\x02\x02\u0A94\u0A95\x07d\x02\x02\u0A95\u021F"+
-		"\x03\x02\x02\x02\u0A96\u0A97\x07g\x02\x02\u0A97\u0221\x03\x02\x02\x02"+
-		"\u0A98\u0A99\x07h\x02\x02\u0A99\u0223\x03\x02\x02\x02\u0A9A\u0A9B\x07"+
-		"j\x02\x02\u0A9B\u0225\x03\x02\x02\x02\u0A9C\u0A9D\x07k\x02\x02\u0A9D\u0227"+
-		"\x03\x02\x02\x02\u0A9E\u0A9F\x07l\x02\x02\u0A9F\u0229\x03\x02\x02\x02"+
-		"\u0AA0\u0AA1\x07m\x02\x02\u0AA1\u022B\x03\x02\x02\x02\u0AA2\u0AA3\x07"+
-		"\x9A\x02\x02\u0AA3\u022D\x03\x02\x02\x02\u0AA4\u0AA5\x07p\x02\x02\u0AA5"+
-		"\u022F\x03\x02\x02\x02\u0AA6\u0AA7\x07q\x02\x02\u0AA7\u0231\x03\x02\x02"+
-		"\x02\u0AA8\u0AA9\x07r\x02\x02\u0AA9\u0233\x03\x02\x02\x02\u0AAA\u0AAB"+
-		"\x07s\x02\x02\u0AAB\u0235\x03\x02\x02\x02\u0AAC\u0AAD\x07t\x02\x02\u0AAD"+
-		"\u0237\x03\x02\x02\x02\u0AAE\u0AAF\x07u\x02\x02\u0AAF\u0239\x03\x02\x02"+
-		"\x02\u0AB0\u0AB1\x07v\x02\x02\u0AB1\u023B\x03\x02\x02\x02\u0AB2\u0AB3"+
-		"\x07w\x02\x02\u0AB3\u023D\x03\x02\x02\x02\u0AB4\u0AB5\x07y\x02\x02\u0AB5"+
-		"\u023F\x03\x02\x02\x02\u0AB6\u0AB7\x07z\x02\x02\u0AB7\u0241\x03\x02\x02"+
-		"\x02\u0AB8\u0AB9\x07{\x02\x02\u0AB9\u0243\x03\x02\x02\x02\u0ABA\u0ABB"+
-		"\x07|\x02\x02\u0ABB\u0245\x03\x02\x02\x02\u0ABC\u0ABD\x07~\x02\x02\u0ABD"+
-		"\u0247\x03\x02\x02\x02\u0ABE\u0ABF\x07\x7F\x02\x02\u0ABF\u0249\x03\x02"+
-		"\x02\x02\u0AC0\u0AC1\x07\x81\x02\x02\u0AC1\u024B\x03\x02\x02\x02\u0AC2"+
-		"\u0AC3\x07\x82\x02\x02\u0AC3\u024D\x03\x02\x02\x02\u0AC4\u0AC5\x07\x83"+
-		"\x02\x02\u0AC5\u024F\x03\x02\x02\x02\u0AC6\u0AC7\x07\x84\x02\x02\u0AC7"+
-		"\u0251\x03\x02\x02\x02\u0AC8\u0AC9\x07\x85\x02\x02\u0AC9\u0253\x03\x02"+
-		"\x02\x02\u0ACA\u0ACB\x07\xA5\x02\x02\u0ACB\u0255\x03\x02\x02\x02\u0ACC"+
-		"\u0ACD\x07\x86\x02\x02\u0ACD\u0257\x03\x02\x02\x02\u0ACE\u0ACF\x07\x87"+
-		"\x02\x02\u0ACF\u0259\x03\x02\x02\x02\u0AD0\u0AD1\x07\x89\x02\x02\u0AD1"+
-		"\u025B\x03\x02\x02\x02\u0AD2\u0AD3\x07\x8A\x02\x02\u0AD3\u025D\x03\x02"+
-		"\x02\x02\u0AD4\u0AD5\x07n\x02\x02\u0AD5\u025F\x03\x02\x02\x02\u0AD6\u0AD7"+
-		"\x07\x8C\x02\x02\u0AD7\u0261\x03\x02\x02\x02\u0AD8\u0AD9\x07\x8D\x02\x02"+
-		"\u0AD9\u0263\x03\x02\x02\x02\u0ADA\u0ADB\x07\x8E\x02\x02\u0ADB\u0265\x03"+
-		"\x02\x02\x02\u0ADC\u0ADD\x07\x8F\x02\x02\u0ADD\u0267\x03\x02\x02\x02\u0ADE"+
-		"\u0ADF\x07\x90\x02\x02\u0ADF\u0269\x03\x02\x02\x02\u0AE0\u0AE1\x07\x91"+
-		"\x02\x02\u0AE1\u026B\x03\x02\x02\x02\u0AE2\u0AE3\x07\x92\x02\x02\u0AE3"+
-		"\u026D\x03\x02\x02\x02\u0AE4\u0AE5\x07\x93\x02\x02\u0AE5\u026F\x03\x02"+
-		"\x02\x02\u0AE6\u0AE7\x07\x94\x02\x02\u0AE7\u0271\x03\x02\x02\x02\u0AE8"+
-		"\u0AE9\x07\x95\x02\x02\u0AE9\u0273\x03\x02\x02\x02\u0AEA\u0AEB\x07\x96"+
-		"\x02\x02\u0AEB\u0275\x03\x02\x02\x02\u0AEC\u0AED\x07\x97\x02\x02\u0AED"+
-		"\u0277\x03\x02\x02\x02\u0AEE\u0AEF\x07\x98\x02\x02\u0AEF\u0279\x03\x02"+
-		"\x02\x02\u0AF0\u0AF1\x07\x9B\x02\x02\u0AF1\u027B\x03\x02\x02\x02\u0AF2"+
-		"\u0AF3\x07\x9C\x02\x02\u0AF3\u027D\x03\x02\x02\x02\u0AF4\u0AF5\x07q\x02"+
-		"\x02\u0AF5\u027F\x03\x02\x02\x02\u0AF6\u0AF7\x07\x9D\x02\x02\u0AF7\u0281"+
-		"\x03\x02\x02\x02\u0AF8\u0AF9\x07\x9F\x02\x02\u0AF9\u0283\x03\x02\x02\x02"+
-		"\u0AFA\u0AFB\x07\x9E\x02\x02\u0AFB\u0285\x03\x02\x02\x02\u0AFC\u0AFD\x07"+
-		"y\x02\x02\u0AFD\u0287\x03\x02\x02\x02\u0AFE\u0AFF\x07\xA0\x02\x02\u0AFF"+
-		"\u0289\x03\x02\x02\x02\u0B00\u0B01\x07\xA1\x02\x02\u0B01\u028B\x03\x02"+
-		"\x02\x02\u0B02\u0B03\x07\xAC\x02\x02\u0B03\u028D\x03\x02\x02\x02\u0B04"+
-		"\u0B05\x07\xA2\x02\x02\u0B05\u028F\x03\x02\x02\x02\u0B06\u0B07\x07\xA3"+
-		"\x02\x02\u0B07\u0291\x03\x02\x02\x02\u0B08\u0B09\x07\xA4\x02\x02\u0B09"+
-		"\u0293\x03\x02\x02\x02\u0B0A\u0B0B\x05\u02A4\u0153\x02\u0B0B\u0B11\x05"+
-		"\u0174\xBB\x02\u0B0C\u0B0D\x05\u02AC\u0157\x02\u0B0D\u0B0E\x05\u0174\xBB"+
-		"\x02\u0B0E\u0B10\x03\x02\x02\x02\u0B0F\u0B0C\x03\x02\x02\x02\u0B10\u0B13"+
-		"\x03\x02\x02\x02\u0B11\u0B0F\x03\x02\x02\x02\u0B11\u0B12\x03\x02\x02\x02"+
-		"\u0B12\u0B14\x03\x02\x02\x02\u0B13\u0B11\x03\x02\x02\x02\u0B14\u0B15\x05"+
-		"\u02A6\u0154\x02\u0B15\u0295\x03\x02\x02\x02\u0B16\u0B17\x07\x13\x02\x02"+
-		"\u0B17\u0297\x03\x02\x02\x02\u0B18\u0B19\x07\x12\x02\x02\u0B19\u0299\x03"+
-		"\x02\x02\x02\u0B1A\u0B1B\x07\x02\x02\x03\u0B1B\u029B\x03\x02\x02\x02\u0B1C"+
-		"\u0B1D\x07\x03\x02\x02\u0B1D\u029D\x03\x02\x02\x02\u0B1E\u0B1F\x07\x04"+
-		"\x02\x02\u0B1F\u029F\x03\x02\x02\x02\u0B20\u0B21\x07\x05\x02\x02\u0B21"+
-		"\u02A1\x03\x02\x02\x02\u0B22\u0B23\x07\x06\x02\x02\u0B23\u02A3\x03\x02"+
-		"\x02\x02\u0B24\u0B25\x07\xAF\x02\x02\u0B25\u02A5\x03\x02\x02\x02\u0B26"+
-		"\u0B27\x07\xB0\x02\x02\u0B27\u02A7\x03\x02\x02\x02\u0B28\u0B29\x07\x07"+
-		"\x02\x02\u0B29\u02A9\x03\x02\x02\x02\u0B2A\u0B2B\x07\b\x02\x02\u0B2B\u02AB"+
-		"\x03\x02\x02\x02\u0B2C\u0B2D\x07\t\x02\x02\u0B2D\u02AD\x03\x02\x02\x02"+
-		"\u0B2E\u0B2F\x07\v\x02\x02\u0B2F\u02AF\x03\x02\x02\x02\u0B30\u0B31\x07"+
-		"\x16\x02\x02\u0B31\u02B1\x03\x02\x02\x02\u0B32\u0B33\x07\x18\x02\x02\u0B33"+
-		"\u02B3\x03\x02\x02\x02\u0B34\u0B35\x07\r\x02\x02\u0B35\u02B5\x03\x02\x02"+
-		"\x02\u0B36\u0B37\x07\f\x02\x02\u0B37\u02B7\x03\x02\x02\x02\u0B38\u0B39"+
-		"\x07\xAE\x02\x02\u0B39\u02B9\x03\x02\x02\x02\u0B3A\u0B3B\x07\xAF\x02\x02"+
-		"\u0B3B\u02BB\x03\x02\x02\x02\u0B3C\u0B3D\x07\xB0\x02\x02\u0B3D\u02BD\x03"+
-		"\x02\x02\x02\u0B3E\u0B3F\x07\xB1\x02\x02\u0B3F\u02BF\x03\x02\x02\x02\u0B40"+
-		"\u0B41\x07\xB2\x02\x02\u0B41\u02C1\x03\x02\x02\x02\xD6\u02C3\u02C6\u02CC"+
-		"\u02D1\u02D3\u02D8\u02DB\u02DE\u030A\u0319\u031C\u0323\u0328\u0333\u033D"+
-		"\u0349\u0352\u0359\u035E\u0366\u036B\u036F\u0374\u0383\u0389\u0392\u039F"+
-		"\u03A6\u03AE\u03C0\u03C5\u03D1\u03D5\u03D9\u03DE\u03F1\u03F8\u0400\u0404"+
-		"\u0417\u0420\u042F\u0431\u043D\u044B\u0452\u045A\u045D\u0460\u046B\u047B"+
-		"\u048F\u04A6\u04B4\u04BB\u04C4\u04D7\u04DF\u04E4\u04EB\u04F2\u04F9\u0500"+
-		"\u0507\u0510\u0517\u051E\u0525\u052C\u0531\u0538\u053F\u0543\u0548\u054A"+
-		"\u0556\u055D\u0565\u0570\u0576\u057F\u058C\u0594\u059A\u05A8\u05B0\u05BB"+
-		"\u05CF\u05D8\u05EB\u05EF\u05F3\u05F7\u0605\u060D\u0616\u0621\u0628\u062B"+
-		"\u0634\u0638\u063F\u0646\u064C\u0654\u065C\u0662\u0666\u066A\u066E\u0676"+
-		"\u067E\u0682\u0687\u068C\u0690\u069B\u06A9\u06AD\u06B3\u06BA\u06C3\u06CC"+
-		"\u06D5\u06DE\u06E7\u06F0\u06FC\u0705\u0715\u0721\u072C\u072F\u0741\u0758"+
-		"\u075B\u0762\u0768\u076C\u0770\u0776\u077A\u077E\u0786\u078B\u078E\u0792"+
-		"\u0797\u079A\u079D\u07A0\u07A5\u07AB\u07B3\u07B6\u07C2\u07C6\u07CD\u07D3"+
-		"\u07D6\u07DE\u07E7\u07ED\u07F3\u07FA\u0801\u0805\u0809";
-	private static readonly _serializedATNSegment5: string =
-		"\u080C\u0816\u081F\u0822\u0827\u082D\u0831\u083B\u0842\u084C\u0855\u0861"+
-		"\u086D\u0879\u089A\u08AC\u08BE\u08D0\u08E2\u08F4\u0906\u0912\u091E\u092A"+
-		"\u0936\u0942\u094E\u095A\u095F\u0967\u0979\u098B\u099D\u09A1\u09A6\u09AB"+
-		"\u09B0\u09B5\u09BA\u09BC\u09D3\u09D7\u09F1\u0B11";
+		"\u08BE\u08CD\x07`\x02\x02\u08BF\u08CD\x077\x02\x02\u08C0\u08CD\x07O\x02"+
+		"\x02\u08C1\u08CD\x07\x81\x02\x02\u08C2\u08CD\x07G\x02\x02\u08C3\u08CD"+
+		"\x07l\x02\x02\u08C4\u08CD\x07\x7F\x02\x02\u08C5\u08CD\x07c\x02\x02\u08C6"+
+		"\u08CD\x07L\x02\x02\u08C7\u08CD\x07P\x02\x02\u08C8\u08CD\x07\xB1\x02\x02"+
+		"\u08C9\u08CD\x07\xB2\x02\x02\u08CA\u08CD\x07\x99\x02\x02\u08CB\u08CD\x07"+
+		"\x98\x02\x02\u08CC\u08B8\x03\x02\x02\x02\u08CC\u08B9\x03\x02\x02\x02\u08CC"+
+		"\u08BC\x03\x02\x02\x02\u08CC\u08BD\x03\x02\x02\x02\u08CC\u08BE\x03\x02"+
+		"\x02\x02\u08CC\u08BF\x03\x02\x02\x02\u08CC\u08C0\x03\x02\x02\x02\u08CC"+
+		"\u08C1\x03\x02\x02\x02\u08CC\u08C2\x03\x02\x02\x02\u08CC\u08C3\x03\x02"+
+		"\x02\x02\u08CC\u08C4\x03\x02\x02\x02\u08CC\u08C5\x03\x02\x02\x02\u08CC"+
+		"\u08C6\x03\x02\x02\x02\u08CC\u08C7\x03\x02\x02\x02\u08CC\u08C8\x03\x02"+
+		"\x02\x02\u08CC\u08C9\x03\x02\x02\x02\u08CC\u08CA\x03\x02\x02\x02\u08CC"+
+		"\u08CB\x03\x02\x02\x02\u08CD\u0151\x03\x02\x02\x02\u08CE\u08E3\x07\xAA"+
+		"\x02\x02\u08CF\u08D0\x07\f\x02\x02\u08D0\u08D1\x07\xAA\x02\x02\u08D1\u08E3"+
+		"\x07\f\x02\x02\u08D2\u08E3\x07\x99\x02\x02\u08D3\u08E3\x07g\x02\x02\u08D4"+
+		"\u08E3\x07`\x02\x02\u08D5\u08E3\x077\x02\x02\u08D6\u08E3\x07O\x02\x02"+
+		"\u08D7\u08E3\x07\x81\x02\x02\u08D8\u08E3\x07G\x02\x02\u08D9\u08E3\x07"+
+		"l\x02\x02\u08DA\u08E3\x07\x7F\x02\x02\u08DB\u08E3\x07c\x02\x02\u08DC\u08E3"+
+		"\x07L\x02\x02\u08DD\u08E3\x07P\x02\x02\u08DE\u08E3\x07\xB1\x02\x02\u08DF"+
+		"\u08E3\x07\xB2\x02\x02\u08E0\u08E3\x07\x99\x02\x02\u08E1\u08E3\x07\x98"+
+		"\x02\x02\u08E2\u08CE\x03\x02\x02\x02\u08E2\u08CF\x03\x02\x02\x02\u08E2"+
+		"\u08D2\x03\x02\x02\x02\u08E2\u08D3\x03\x02\x02\x02\u08E2\u08D4\x03\x02"+
+		"\x02\x02\u08E2\u08D5\x03\x02\x02\x02\u08E2\u08D6\x03\x02\x02\x02\u08E2"+
+		"\u08D7\x03\x02\x02\x02\u08E2\u08D8\x03\x02\x02\x02\u08E2\u08D9\x03\x02"+
+		"\x02\x02\u08E2\u08DA\x03\x02\x02\x02\u08E2\u08DB\x03\x02\x02\x02\u08E2"+
+		"\u08DC\x03\x02\x02\x02\u08E2\u08DD\x03\x02\x02\x02\u08E2\u08DE\x03\x02"+
+		"\x02\x02\u08E2\u08DF\x03\x02\x02\x02\u08E2\u08E0\x03\x02\x02\x02\u08E2"+
+		"\u08E1\x03\x02\x02\x02\u08E3\u0153\x03\x02\x02\x02\u08E4\u08F9\x07\xAA"+
+		"\x02\x02\u08E5\u08E6\x07\f\x02\x02\u08E6\u08E7\x07\xAA\x02\x02\u08E7\u08F9"+
+		"\x07\f\x02\x02\u08E8\u08F9\x07\x99\x02\x02\u08E9\u08F9\x07g\x02\x02\u08EA"+
+		"\u08F9\x07`\x02\x02\u08EB\u08F9\x077\x02\x02\u08EC\u08F9\x07O\x02\x02"+
+		"\u08ED\u08F9\x07\x81\x02\x02\u08EE\u08F9\x07G\x02\x02\u08EF\u08F9\x07"+
+		"l\x02\x02\u08F0\u08F9\x07\x7F\x02\x02\u08F1\u08F9\x07c\x02\x02\u08F2\u08F9"+
+		"\x07L\x02\x02\u08F3\u08F9\x07P\x02\x02\u08F4\u08F9\x07\xB1\x02\x02\u08F5"+
+		"\u08F9\x07\xB2\x02\x02\u08F6\u08F9\x07\x99\x02\x02\u08F7\u08F9\x07\x98"+
+		"\x02\x02\u08F8\u08E4\x03\x02\x02\x02\u08F8\u08E5\x03\x02\x02\x02\u08F8"+
+		"\u08E8\x03\x02\x02\x02\u08F8\u08E9\x03\x02\x02\x02\u08F8\u08EA\x03\x02"+
+		"\x02\x02\u08F8\u08EB\x03\x02\x02\x02\u08F8\u08EC\x03\x02\x02\x02\u08F8"+
+		"\u08ED\x03\x02\x02\x02\u08F8\u08EE\x03\x02\x02\x02\u08F8\u08EF\x03\x02"+
+		"\x02\x02\u08F8\u08F0\x03\x02\x02\x02\u08F8\u08F1\x03\x02\x02\x02\u08F8"+
+		"\u08F2\x03\x02\x02\x02\u08F8\u08F3\x03\x02\x02\x02\u08F8\u08F4\x03\x02"+
+		"\x02\x02\u08F8\u08F5\x03\x02\x02\x02\u08F8\u08F6\x03\x02\x02\x02\u08F8"+
+		"\u08F7\x03\x02\x02\x02\u08F9\u0155\x03\x02\x02\x02\u08FA\u090F\x07\xAA"+
+		"\x02\x02\u08FB\u08FC\x07\f\x02\x02\u08FC\u08FD\x07\xAA\x02\x02\u08FD\u090F"+
+		"\x07\f\x02\x02\u08FE\u090F\x07\x99\x02\x02\u08FF\u090F\x07g\x02\x02\u0900"+
+		"\u090F\x07`\x02\x02\u0901\u090F\x077\x02\x02\u0902\u090F\x07O\x02\x02"+
+		"\u0903\u090F\x07\x81\x02\x02\u0904\u090F\x07G\x02\x02\u0905\u090F\x07"+
+		"l\x02\x02\u0906\u090F\x07\x7F\x02\x02\u0907\u090F\x07c\x02\x02\u0908\u090F"+
+		"\x07L\x02\x02\u0909\u090F\x07P\x02\x02\u090A\u090F\x07\xB1\x02\x02\u090B"+
+		"\u090F\x07\xB2\x02\x02\u090C\u090F\x07\x99\x02\x02\u090D\u090F\x07\x98"+
+		"\x02\x02\u090E\u08FA\x03\x02\x02\x02\u090E\u08FB\x03\x02\x02\x02\u090E"+
+		"\u08FE\x03\x02\x02\x02\u090E\u08FF\x03\x02\x02\x02\u090E\u0900\x03\x02"+
+		"\x02\x02\u090E\u0901\x03\x02\x02\x02\u090E\u0902\x03\x02\x02\x02\u090E"+
+		"\u0903\x03\x02\x02\x02\u090E\u0904\x03\x02\x02\x02\u090E\u0905\x03\x02"+
+		"\x02\x02\u090E\u0906\x03\x02\x02\x02\u090E\u0907\x03\x02\x02\x02\u090E"+
+		"\u0908\x03\x02\x02\x02\u090E\u0909\x03\x02\x02\x02\u090E\u090A\x03\x02"+
+		"\x02\x02\u090E\u090B\x03\x02\x02\x02\u090E\u090C\x03\x02\x02\x02\u090E"+
+		"\u090D\x03\x02\x02\x02\u090F\u0157\x03\x02\x02\x02\u0910\u091B\x05\u0182"+
+		"\xC2\x02\u0911\u0912\x05\u014A\xA6\x02\u0912\u0913\x05\u0296\u014C\x02"+
+		"\u0913\u0914\x05\u0182\xC2\x02\u0914\u091B\x03\x02\x02\x02\u0915\u0916"+
+		"\x05\u014A\xA6\x02\u0916\u0917\x05\u0296\u014C\x02\u0917\u0918\b\xAD\x01"+
+		"\x02\u0918\u091B\x03\x02\x02\x02\u0919\u091B\b\xAD\x01\x02\u091A\u0910"+
+		"\x03\x02\x02\x02\u091A\u0911\x03\x02\x02\x02\u091A\u0915\x03\x02\x02\x02"+
+		"\u091A\u0919\x03\x02\x02\x02\u091B\u0159\x03\x02\x02\x02\u091C\u0927\x05"+
+		"\u0180\xC1\x02\u091D\u091E\x05\u014A\xA6\x02\u091E\u091F\x05\u0296\u014C"+
+		"\x02\u091F\u0920\x05\u0180\xC1\x02\u0920\u0927\x03\x02\x02\x02\u0921\u0922"+
+		"\x05\u014A\xA6\x02\u0922\u0923\x05\u0296\u014C\x02\u0923\u0924\b\xAE\x01"+
+		"\x02\u0924\u0927\x03\x02\x02\x02\u0925\u0927\b\xAE\x01\x02\u0926\u091C"+
+		"\x03\x02\x02\x02\u0926\u091D\x03\x02\x02\x02\u0926\u0921\x03\x02\x02\x02"+
+		"\u0926\u0925\x03\x02\x02\x02\u0927\u015B\x03\x02\x02\x02\u0928\u0933\x05"+
+		"\u0184\xC3\x02\u0929\u092A\x05\u014A\xA6\x02\u092A\u092B\x05\u0296\u014C"+
+		"\x02\u092B\u092C\x05\u0184\xC3\x02\u092C\u0933\x03\x02\x02\x02\u092D\u092E"+
+		"\x05\u014A\xA6\x02\u092E\u092F\x05\u0296\u014C\x02\u092F\u0930\b\xAF\x01"+
+		"\x02\u0930\u0933\x03\x02\x02\x02\u0931\u0933\b\xAF\x01\x02\u0932\u0928"+
+		"\x03\x02\x02\x02\u0932\u0929\x03\x02\x02\x02\u0932\u092D\x03\x02\x02\x02"+
+		"\u0932\u0931\x03\x02\x02\x02\u0933\u015D\x03\x02\x02\x02\u0934\u0949\x05"+
+		"\u014E\xA8\x02\u0935\u0936\x05\u02B4\u015B\x02\u0936\u0937\x05\u014E\xA8"+
+		"\x02\u0937\u0938\x05\u02B4\u015B\x02\u0938\u0949\x03\x02\x02\x02\u0939"+
+		"\u093A\x05\u014A\xA6\x02\u093A\u093B\x05\u0296\u014C\x02\u093B\u093C\x05"+
+		"\u014E\xA8\x02\u093C\u0949\x03\x02\x02\x02\u093D\u093E\x05\u014A\xA6\x02"+
+		"\u093E\u093F\x05\u0296\u014C\x02\u093F\u0940\x05\u02B4\u015B\x02\u0940"+
+		"\u0941\x05\u014E\xA8\x02\u0941\u0942\x05\u02B4\u015B\x02\u0942\u0949\x03"+
+		"\x02\x02\x02\u0943\u0944\x05\u014A\xA6\x02\u0944\u0945\x05\u0296\u014C"+
+		"\x02\u0945\u0946\b\xB0\x01\x02\u0946\u0949\x03\x02\x02\x02\u0947\u0949"+
+		"\b\xB0\x01\x02\u0948\u0934\x03\x02\x02\x02\u0948\u0935\x03\x02\x02\x02"+
+		"\u0948\u0939\x03\x02\x02\x02\u0948\u093D\x03\x02\x02\x02\u0948\u0943\x03"+
+		"\x02\x02\x02\u0948\u0947\x03\x02\x02\x02\u0949\u015F\x03\x02\x02\x02\u094A"+
+		"\u095F\x05\u0150\xA9\x02\u094B\u094C\x05\u02B4\u015B\x02\u094C\u094D\x05"+
+		"\u0150\xA9\x02\u094D\u094E\x05\u02B4\u015B\x02\u094E\u095F\x03\x02\x02"+
+		"\x02\u094F\u0950\x05\u014C\xA7\x02\u0950\u0951\x05\u0296\u014C\x02\u0951"+
+		"\u0952\x05\u0150\xA9\x02\u0952\u095F\x03\x02\x02\x02\u0953\u0954\x05\u014C"+
+		"\xA7\x02\u0954\u0955\x05\u0296\u014C\x02\u0955\u0956\x05\u02B4\u015B\x02"+
+		"\u0956\u0957\x05\u0150\xA9\x02\u0957\u0958\x05\u02B4\u015B\x02\u0958\u095F"+
+		"\x03\x02\x02\x02\u0959\u095A\x05\u014C\xA7\x02\u095A\u095B\x05\u0296\u014C"+
+		"\x02\u095B\u095C\b\xB1\x01\x02\u095C\u095F\x03\x02\x02\x02\u095D\u095F"+
+		"\b\xB1\x01\x02\u095E\u094A\x03\x02\x02\x02\u095E\u094B\x03\x02\x02\x02"+
+		"\u095E\u094F\x03\x02\x02\x02\u095E\u0953\x03\x02\x02\x02\u095E\u0959\x03"+
+		"\x02\x02\x02\u095E\u095D\x03\x02\x02\x02\u095F\u0161\x03\x02\x02\x02\u0960"+
+		"\u096B\x05\xCEh\x02\u0961\u0962\x05\u014A\xA6\x02\u0962\u0963\x05\u0296"+
+		"\u014C\x02\u0963\u0964\x05\xCEh\x02\u0964\u096B\x03\x02\x02\x02\u0965"+
+		"\u0966\x05\u014A\xA6\x02\u0966\u0967\x05\u0296\u014C\x02\u0967\u0968\b"+
+		"\xB2\x01\x02\u0968\u096B\x03\x02\x02\x02\u0969\u096B\b\xB2\x01\x02\u096A"+
+		"\u0960\x03\x02\x02\x02\u096A\u0961\x03\x02\x02\x02\u096A\u0965\x03\x02"+
+		"\x02\x02\u096A\u0969\x03\x02\x02\x02\u096B\u0163\x03\x02\x02\x02\u096C"+
+		"\u0977\x05\u0152\xAA\x02\u096D\u096E\x05\u014A\xA6\x02\u096E\u096F\x05"+
+		"\u0296\u014C\x02\u096F\u0970\x05\u0152\xAA\x02\u0970\u0977\x03\x02\x02"+
+		"\x02\u0971\u0972\x05\u014A\xA6\x02\u0972\u0973\x05\u0296\u014C\x02\u0973"+
+		"\u0974\b\xB3\x01\x02\u0974\u0977\x03\x02\x02\x02\u0975\u0977\b\xB3\x01"+
+		"\x02\u0976\u096C\x03\x02\x02\x02\u0976\u096D\x03\x02\x02\x02\u0976\u0971"+
+		"\x03\x02\x02\x02\u0976\u0975\x03\x02\x02\x02\u0977\u0165\x03\x02\x02\x02"+
+		"\u0978\u097C\x05\u015E\xB0\x02\u0979\u097C\x05\u0164\xB3\x02\u097A\u097C"+
+		"\b\xB4\x01\x02\u097B\u0978\x03\x02\x02\x02\u097B\u0979\x03\x02\x02\x02"+
+		"\u097B\u097A\x03\x02\x02\x02\u097C\u0167\x03\x02\x02\x02\u097D\u0984\x05"+
+		"\u0156\xAC\x02\u097E\u097F\x05\u014A\xA6\x02\u097F\u0980\x05\u0296\u014C"+
+		"\x02\u0980\u0981\x05\u0156\xAC\x02\u0981\u0984\x03\x02\x02\x02\u0982\u0984"+
+		"\b\xB5\x01\x02\u0983\u097D\x03\x02\x02\x02\u0983\u097E\x03\x02\x02\x02"+
+		"\u0983\u0982\x03\x02\x02\x02\u0984\u0169\x03\x02\x02\x02\u0985\u098B\x05"+
+		"\u016C\xB7\x02\u0986\u0987\x05\u02B4\u015B\x02\u0987\u0988\x05\u016C\xB7"+
+		"\x02\u0988\u0989\x05\u02B4\u015B\x02\u0989\u098B\x03\x02\x02\x02\u098A"+
+		"\u0985\x03\x02\x02\x02\u098A\u0986\x03\x02\x02\x02\u098B\u016B\x03\x02"+
+		"\x02\x02\u098C\u098D\t\x04\x02\x02\u098D\u016D\x03\x02\x02\x02\u098E\u0994"+
+		"\x05\u0170\xB9\x02\u098F\u0990\x05\u02B4\u015B\x02\u0990\u0991\x05\u0170"+
+		"\xB9\x02\u0991\u0992\x05\u02B4\u015B\x02\u0992\u0994\x03\x02\x02\x02\u0993"+
+		"\u098E\x03\x02\x02\x02\u0993\u098F\x03\x02\x02\x02\u0994\u016F\x03\x02"+
+		"\x02\x02\u0995\u0996\t\x04\x02\x02\u0996\u0171\x03\x02\x02\x02\u0997\u099A"+
+		"\x05\u0176\xBC\x02\u0998\u099A\x05\u0174\xBB\x02\u0999\u0997\x03\x02\x02"+
+		"\x02\u0999\u0998\x03\x02\x02\x02\u099A\u0173\x03\x02\x02\x02\u099B\u099E"+
+		"\x05\u0270\u0139\x02\u099C\u099F\x05\u0292\u014A\x02\u099D\u099F\b\xBB"+
+		"\x01\x02\u099E\u099C\x03\x02\x02\x02\u099E\u099D\x03\x02\x02\x02\u099F"+
+		"\u09B5\x03\x02\x02\x02\u09A0\u09A3\x05\u027C\u013F\x02\u09A1\u09A4\x05"+
+		"\u0292\u014A\x02\u09A2\u09A4\b\xBB\x01\x02\u09A3\u09A1\x03\x02\x02\x02"+
+		"\u09A3\u09A2\x03\x02\x02\x02\u09A4\u09B5\x03\x02\x02\x02\u09A5\u09A8\x05"+
+		"\u0276\u013C\x02\u09A6\u09A9\x05\u0292\u014A\x02\u09A7\u09A9\b\xBB\x01"+
+		"\x02\u09A8\u09A6\x03\x02\x02\x02\u09A8\u09A7\x03\x02\x02\x02\u09A9\u09B5"+
+		"\x03\x02\x02\x02\u09AA\u09AD\x05\u0278\u013D\x02\u09AB\u09AE\x05\u0292"+
+		"\u014A\x02\u09AC\u09AE\b\xBB\x01\x02\u09AD\u09AB\x03\x02\x02\x02\u09AD"+
+		"\u09AC\x03\x02\x02\x02\u09AE\u09B5\x03\x02\x02\x02\u09AF\u09B2\x05\u0288"+
+		"\u0145\x02\u09B0\u09B3\x05\u0292\u014A\x02\u09B1\u09B3\b\xBB\x01\x02\u09B2"+
+		"\u09B0\x03\x02\x02\x02\u09B2\u09B1\x03\x02\x02\x02\u09B3\u09B5\x03\x02"+
+		"\x02\x02\u09B4\u099B\x03\x02\x02\x02\u09B4\u09A0\x03\x02\x02\x02\u09B4"+
+		"\u09A5\x03\x02\x02\x02\u09B4\u09AA\x03\x02\x02\x02\u09B4\u09AF\x03\x02"+
+		"\x02\x02\u09B5\u0175\x03\x02\x02\x02\u09B6\u09CC\x05\u025E\u0130\x02\u09B7"+
+		"\u09CC\x05\u0260\u0131\x02\u09B8\u09CC\x05\u0262\u0132\x02\u09B9\u09CC"+
+		"\x05\u0264\u0133\x02\u09BA\u09CC\x05\u0266\u0134\x02\u09BB\u09CC\x05\u0268"+
+		"\u0135\x02\u09BC\u09CC\x05\u026A\u0136\x02\u09BD\u09CC\x05\u026C\u0137"+
+		"\x02\u09BE\u09CC\x05\u026E\u0138\x02\u09BF\u09CC\x05\u0272\u013A\x02\u09C0"+
+		"\u09CC\x05\u0274\u013B\x02\u09C1\u09CC\x05\u027A\u013E\x02\u09C2\u09CC"+
+		"\x05\u027E\u0140\x02\u09C3\u09CC\x05\u0280\u0141\x02\u09C4\u09CC\x05\u0282"+
+		"\u0142\x02\u09C5\u09CC\x05\u0284\u0143\x02\u09C6\u09CC\x05\u0286\u0144"+
+		"\x02\u09C7\u09CC\x05\u028C\u0147\x02\u09C8\u09CC\x05\u028E\u0148\x02\u09C9"+
+		"\u09CC\x05\u0290\u0149\x02\u09CA\u09CC\x05\u028A\u0146\x02\u09CB\u09B6"+
+		"\x03\x02\x02\x02\u09CB\u09B7\x03\x02\x02\x02\u09CB\u09B8\x03\x02\x02\x02"+
+		"\u09CB\u09B9\x03\x02\x02\x02\u09CB\u09BA\x03\x02\x02\x02\u09CB\u09BB\x03"+
+		"\x02\x02\x02\u09CB\u09BC\x03\x02\x02\x02\u09CB\u09BD\x03\x02\x02\x02\u09CB"+
+		"\u09BE\x03\x02\x02\x02\u09CB\u09BF\x03\x02\x02\x02\u09CB\u09C0\x03\x02"+
+		"\x02\x02\u09CB\u09C1\x03\x02\x02\x02\u09CB\u09C2\x03\x02\x02\x02\u09CB"+
+		"\u09C3\x03\x02\x02\x02\u09CB\u09C4\x03\x02\x02\x02\u09CB\u09C5\x03\x02"+
+		"\x02\x02\u09CB\u09C6\x03\x02\x02\x02\u09CB\u09C7\x03\x02\x02\x02\u09CB"+
+		"\u09C8\x03\x02\x02\x02\u09CB\u09C9\x03\x02\x02\x02\u09CB\u09CA\x03\x02"+
+		"\x02\x02\u09CC\u0177\x03\x02\x02\x02\u09CD\u09D0\x05\u01AC\xD7\x02\u09CE"+
+		"\u09D0\x05\u01C4\xE3\x02\u09CF\u09CD\x03\x02\x02\x02\u09CF\u09CE\x03\x02"+
+		"\x02\x02\u09D0\u0179\x03\x02\x02\x02\u09D1\u09D2\x07\xAA\x02\x02\u09D2"+
+		"\u017B\x03\x02\x02\x02\u09D3\u09D4\x07\xAA\x02\x02\u09D4\u017D\x03\x02"+
+		"\x02\x02\u09D5\u09D6\x05\u0144\xA3\x02\u09D6\u017F\x03\x02\x02\x02\u09D7"+
+		"\u09D8\x07\xAA\x02\x02\u09D8\u0181\x03\x02\x02\x02\u09D9\u09EE\x07\xAA"+
+		"\x02\x02\u09DA\u09DB\x07\f\x02\x02\u09DB\u09DC\x07\xAA\x02\x02\u09DC\u09EE"+
+		"\x07\f\x02\x02\u09DD\u09EE\x07\x99\x02\x02\u09DE\u09EE\x07g\x02\x02\u09DF"+
+		"\u09EE\x07`\x02\x02\u09E0\u09EE\x077\x02\x02\u09E1\u09EE\x07O\x02\x02"+
+		"\u09E2\u09EE\x07\x81\x02\x02\u09E3\u09EE\x07G\x02\x02\u09E4\u09EE\x07"+
+		"l\x02\x02\u09E5\u09EE\x07\x7F\x02\x02\u09E6\u09EE\x07c\x02\x02\u09E7\u09EE"+
+		"\x07L\x02\x02\u09E8\u09EE\x07P\x02\x02\u09E9\u09EE\x07\xB1\x02\x02\u09EA"+
+		"\u09EE\x07\xB2\x02\x02\u09EB\u09EE\x07\x99\x02\x02\u09EC\u09EE\x07\x98"+
+		"\x02\x02\u09ED\u09D9\x03\x02\x02\x02\u09ED\u09DA\x03\x02\x02\x02\u09ED"+
+		"\u09DD\x03\x02\x02\x02\u09ED\u09DE\x03\x02\x02\x02\u09ED\u09DF\x03\x02"+
+		"\x02\x02\u09ED\u09E0\x03\x02\x02\x02\u09ED\u09E1\x03\x02\x02\x02\u09ED"+
+		"\u09E2\x03\x02\x02\x02\u09ED\u09E3\x03\x02\x02\x02\u09ED\u09E4\x03\x02"+
+		"\x02\x02\u09ED\u09E5\x03\x02\x02\x02\u09ED\u09E6\x03\x02\x02\x02\u09ED"+
+		"\u09E7\x03\x02\x02\x02\u09ED\u09E8\x03\x02\x02\x02\u09ED\u09E9\x03\x02"+
+		"\x02\x02\u09ED\u09EA\x03\x02\x02\x02\u09ED\u09EB\x03\x02\x02\x02\u09ED"+
+		"\u09EC\x03\x02\x02\x02\u09EE\u0183\x03\x02\x02\x02\u09EF\u09F0\x07\xAA"+
+		"\x02\x02\u09F0\u0185\x03\x02\x02\x02\u09F1\u09F2\x07\xAA\x02\x02\u09F2"+
+		"\u0187\x03\x02\x02\x02\u09F3\u09F4\x07\xAA\x02\x02\u09F4\u0189\x03\x02"+
+		"\x02\x02\u09F5\u09F6\x05\u0144\xA3\x02\u09F6\u018B\x03\x02\x02\x02\u09F7"+
+		"\u09F8\x07\xAA\x02\x02\u09F8\u018D\x03\x02\x02\x02\u09F9\u09FA\x05\u0190"+
+		"\xC9\x02\u09FA\u09FB\x05\u0172\xBA\x02\u09FB\u018F\x03\x02\x02\x02\u09FC"+
+		"\u09FD\x07\xAA\x02\x02\u09FD\u0191\x03\x02\x02\x02\u09FE\u09FF\x07\x19"+
+		"\x02\x02\u09FF\u0193\x03\x02\x02\x02\u0A00\u0A01\x07\x1A\x02\x02\u0A01"+
+		"\u0195\x03\x02\x02\x02\u0A02\u0A03\x07\x1B\x02\x02\u0A03\u0197\x03\x02"+
+		"\x02\x02\u0A04\u0A05\x07\x1E\x02\x02\u0A05\u0199\x03\x02\x02\x02\u0A06"+
+		"\u0A07\x07\x1D\x02\x02\u0A07\u019B\x03\x02\x02\x02\u0A08\u0A09\x07\x1C"+
+		"\x02\x02\u0A09\u019D\x03\x02\x02\x02\u0A0A\u0A0B\x07\x1B\x02\x02\u0A0B"+
+		"\u0A0C\x07g\x02\x02\u0A0C\u019F\x03\x02\x02\x02\u0A0D\u0A0E\x07\x1F\x02"+
+		"\x02\u0A0E\u01A1\x03\x02\x02\x02\u0A0F\u0A10\x07\x1F\x02\x02\u0A10\u0A11"+
+		"\x07=\x02\x02\u0A11\u01A3\x03\x02\x02\x02\u0A12\u0A13\x07 \x02\x02\u0A13"+
+		"\u01A5\x03\x02\x02\x02\u0A14\u0A15\x07!\x02\x02\u0A15\u01A7\x03\x02\x02"+
+		"\x02\u0A16\u0A17\x07#\x02\x02\u0A17\u01A9\x03\x02\x02\x02\u0A18\u0A19"+
+		"\x07$\x02\x02\u0A19\u01AB\x03\x02\x02\x02\u0A1A\u0A1B\x07%\x02\x02\u0A1B"+
+		"\u01AD\x03\x02\x02\x02\u0A1C\u0A1D\x07&\x02\x02\u0A1D\u01AF\x03\x02\x02"+
+		"\x02\u0A1E\u0A1F\x07\'\x02\x02\u0A1F\u01B1\x03\x02\x02\x02\u0A20\u0A21"+
+		"\x07(\x02\x02\u0A21\u01B3\x03\x02\x02\x02\u0A22\u0A23\x07)\x02\x02\u0A23"+
+		"\u01B5\x03\x02\x02\x02\u0A24\u0A25\x07*\x02\x02\u0A25\u01B7\x03\x02\x02"+
+		"\x02\u0A26\u0A27\x07+\x02\x02\u0A27\u01B9\x03\x02\x02\x02\u0A28\u0A29"+
+		"\x07-\x02\x02\u0A29\u01BB\x03\x02\x02\x02\u0A2A\u0A2B\x07/\x02\x02\u0A2B"+
+		"\u01BD\x03\x02\x02\x02\u0A2C\u0A2D\x07/\x02\x02\u0A2D\u0A2E\x07L\x02\x02"+
+		"\u0A2E\u01BF\x03\x02\x02\x02\u0A2F\u0A30\x070\x02\x02\u0A30\u01C1\x03"+
+		"\x02\x02\x02\u0A31\u0A32\x072\x02\x02\u0A32\u01C3\x03\x02\x02\x02\u0A33"+
+		"\u0A34\x073\x02\x02\u0A34\u01C5\x03\x02\x02\x02\u0A35\u0A36\x074\x02\x02"+
+		"\u0A36\u01C7\x03\x02\x02\x02\u0A37\u0A38\x075\x02\x02\u0A38\u01C9\x03"+
+		"\x02\x02\x02\u0A39\u0A3A\x076\x02\x02\u0A3A\u01CB\x03\x02\x02\x02\u0A3B"+
+		"\u0A3C\x077\x02\x02\u0A3C\u01CD\x03\x02\x02\x02\u0A3D\u0A3E\x079\x02\x02"+
+		"\u0A3E\u01CF\x03\x02\x02\x02\u0A3F\u0A40\x07:\x02\x02\u0A40\u01D1\x03"+
+		"\x02\x02\x02\u0A41\u0A42\x07;\x02\x02\u0A42\u01D3\x03\x02\x02\x02\u0A43"+
+		"\u0A44\x07=\x02\x02\u0A44\u01D5\x03\x02\x02\x02\u0A45\u0A46\x07>\x02\x02"+
+		"\u0A46\u01D7\x03\x02\x02\x02\u0A47\u0A48\x07?\x02\x02\u0A48\u01D9\x03"+
+		"\x02\x02\x02\u0A49\u0A4A\x07@\x02\x02\u0A4A\u01DB\x03\x02\x02\x02\u0A4B"+
+		"\u0A4C\x07A\x02\x02\u0A4C\u01DD\x03\x02\x02\x02\u0A4D\u0A4E\x07B\x02\x02"+
+		"\u0A4E\u01DF\x03\x02\x02\x02\u0A4F\u0A50\x07C\x02\x02\u0A50\u01E1\x03"+
+		"\x02\x02\x02\u0A51\u0A52\x07D\x02\x02\u0A52\u01E3\x03\x02\x02\x02\u0A53"+
+		"\u0A54\x07E\x02\x02\u0A54\u01E5\x03\x02\x02\x02\u0A55\u0A56\x07G\x02\x02"+
+		"\u0A56\u01E7\x03\x02\x02\x02\u0A57\u0A58\x07H\x02\x02\u0A58\u01E9\x03"+
+		"\x02\x02\x02\u0A59\u0A5A\x07I\x02\x02\u0A5A\u0A5B\x07J\x02\x02\u0A5B\u01EB"+
+		"\x03\x02\x02\x02\u0A5C\u0A5D\x07K\x02\x02\u0A5D\u01ED\x03\x02\x02\x02"+
+		"\u0A5E\u0A5F\x07L\x02\x02\u0A5F\u01EF\x03\x02\x02\x02\u0A60\u0A61\x07"+
+		"M\x02\x02\u0A61\u01F1\x03\x02\x02\x02\u0A62\u0A63\x07N\x02\x02\u0A63\u01F3"+
+		"\x03\x02\x02\x02\u0A64\u0A65\x07O\x02\x02\u0A65\u01F5\x03\x02\x02\x02"+
+		"\u0A66\u0A67\x07Q\x02\x02\u0A67\u01F7\x03\x02\x02\x02\u0A68\u0A69\x07"+
+		"\x97\x02\x02\u0A69\u01F9\x03\x02\x02\x02\u0A6A\u0A6B\x07\x97\x02\x02\u0A6B"+
+		"\u0A6C\x07\x98\x02\x02\u0A6C\u01FB\x03\x02\x02\x02\u0A6D\u0A6E\x07\x97"+
+		"\x02\x02\u0A6E\u0A6F\x07\xB1\x02\x02\u0A6F\u01FD\x03\x02\x02\x02\u0A70"+
+		"\u0A71\x07T\x02\x02\u0A71\u01FF\x03\x02\x02\x02\u0A72\u0A73\x07U\x02\x02"+
+		"\u0A73\u0201\x03\x02\x02\x02\u0A74\u0A75\x07V\x02\x02\u0A75\u0A76\x07"+
+		"\x87\x02\x02\u0A76\u0203\x03\x02\x02\x02\u0A77\u0A78\x07W\x02\x02\u0A78"+
+		"\u0205\x03\x02\x02\x02\u0A79\u0A7A\x07Z\x02\x02\u0A7A\u0207\x03\x02\x02"+
+		"\x02\u0A7B\u0A7C\x07Y\x02\x02\u0A7C\u0209\x03\x02\x02\x02\u0A7D\u0A7E"+
+		"\x07[\x02\x02\u0A7E\u020B\x03\x02\x02\x02\u0A7F\u0A80\x07\\\x02\x02\u0A80"+
+		"\u020D\x03\x02\x02\x02\u0A81\u0A82\x07]\x02\x02\u0A82\u020F\x03\x02\x02"+
+		"\x02\u0A83\u0A84\x07^\x02\x02\u0A84\u0211\x03\x02\x02\x02\u0A85\u0A86"+
+		"\x07`\x02\x02\u0A86\u0213\x03\x02\x02\x02\u0A87\u0A88\x07a\x02\x02\u0A88"+
+		"\u0215\x03\x02\x02\x02\u0A89\u0A8A\x07b\x02\x02\u0A8A\u0217\x03\x02\x02"+
+		"\x02\u0A8B\u0A8C\x07b\x02\x02\u0A8C\u0A8D\x07)\x02\x02\u0A8D\u0219\x03"+
+		"\x02\x02\x02\u0A8E\u0A8F\x07c\x02\x02\u0A8F\u021B\x03\x02\x02\x02\u0A90"+
+		"\u0A91\x07d\x02\x02\u0A91\u021D\x03\x02\x02\x02\u0A92\u0A93\x07g\x02\x02"+
+		"\u0A93\u021F\x03\x02\x02\x02\u0A94\u0A95\x07h\x02\x02\u0A95\u0221\x03"+
+		"\x02\x02\x02\u0A96\u0A97\x07j\x02\x02\u0A97\u0223\x03\x02\x02\x02\u0A98"+
+		"\u0A99\x07k\x02\x02\u0A99\u0225\x03\x02\x02\x02\u0A9A\u0A9B\x07l\x02\x02"+
+		"\u0A9B\u0227\x03\x02\x02\x02\u0A9C\u0A9D\x07m\x02\x02\u0A9D\u0229\x03"+
+		"\x02\x02\x02\u0A9E\u0A9F\x07\x99\x02\x02\u0A9F\u022B\x03\x02\x02\x02\u0AA0"+
+		"\u0AA1\x07p\x02\x02\u0AA1\u022D\x03\x02\x02\x02\u0AA2\u0AA3\x07q\x02\x02"+
+		"\u0AA3\u022F\x03\x02\x02\x02\u0AA4\u0AA5\x07r\x02\x02\u0AA5\u0231\x03"+
+		"\x02\x02\x02\u0AA6\u0AA7\x07s\x02\x02\u0AA7\u0233\x03\x02\x02\x02\u0AA8"+
+		"\u0AA9\x07t\x02\x02\u0AA9\u0235\x03\x02\x02\x02\u0AAA\u0AAB\x07u\x02\x02"+
+		"\u0AAB\u0237\x03\x02\x02\x02\u0AAC\u0AAD\x07v\x02\x02\u0AAD\u0239\x03"+
+		"\x02\x02\x02\u0AAE\u0AAF\x07w\x02\x02\u0AAF\u023B\x03\x02\x02\x02\u0AB0"+
+		"\u0AB1\x07y\x02\x02\u0AB1\u023D\x03\x02\x02\x02\u0AB2\u0AB3\x07z\x02\x02"+
+		"\u0AB3\u023F\x03\x02\x02\x02\u0AB4\u0AB5\x07{\x02\x02\u0AB5\u0241\x03"+
+		"\x02\x02\x02\u0AB6\u0AB7\x07|\x02\x02\u0AB7\u0243\x03\x02\x02\x02\u0AB8"+
+		"\u0AB9\x07~\x02\x02\u0AB9\u0245\x03\x02\x02\x02\u0ABA\u0ABB\x07\x7F\x02"+
+		"\x02\u0ABB\u0247\x03\x02\x02\x02\u0ABC\u0ABD\x07\x81\x02\x02\u0ABD\u0249"+
+		"\x03\x02\x02\x02\u0ABE\u0ABF\x07\x82\x02\x02\u0ABF\u024B\x03\x02\x02\x02"+
+		"\u0AC0\u0AC1\x07\x83\x02\x02\u0AC1\u024D\x03\x02\x02\x02\u0AC2\u0AC3\x07"+
+		"\x84\x02\x02\u0AC3\u024F\x03\x02\x02\x02\u0AC4\u0AC5\x07\xB2\x02\x02\u0AC5"+
+		"\u0251\x03\x02\x02\x02\u0AC6\u0AC7\x07\xB1\x02\x02\u0AC7\u0253\x03\x02"+
+		"\x02\x02\u0AC8\u0AC9\x07\x85\x02\x02\u0AC9\u0255\x03\x02\x02\x02\u0ACA"+
+		"\u0ACB\x07\x86\x02\x02\u0ACB\u0257\x03\x02\x02\x02\u0ACC\u0ACD\x07\x88"+
+		"\x02\x02\u0ACD\u0259\x03\x02\x02\x02\u0ACE\u0ACF\x07\x89\x02\x02\u0ACF"+
+		"\u025B\x03\x02\x02\x02\u0AD0\u0AD1\x07n\x02\x02\u0AD1\u025D\x03\x02\x02"+
+		"\x02\u0AD2\u0AD3\x07\x8B\x02\x02\u0AD3\u025F\x03\x02\x02\x02\u0AD4\u0AD5"+
+		"\x07\x8C\x02\x02\u0AD5\u0261\x03\x02\x02\x02\u0AD6\u0AD7\x07\x8D\x02\x02"+
+		"\u0AD7\u0263\x03\x02\x02\x02\u0AD8\u0AD9\x07\x8E\x02\x02\u0AD9\u0265\x03"+
+		"\x02\x02\x02\u0ADA\u0ADB\x07\x8F\x02\x02\u0ADB\u0267\x03\x02\x02\x02\u0ADC"+
+		"\u0ADD\x07\x90\x02\x02\u0ADD\u0269\x03\x02\x02\x02\u0ADE\u0ADF\x07\x91"+
+		"\x02\x02\u0ADF\u026B\x03\x02\x02\x02\u0AE0\u0AE1\x07\x92\x02\x02\u0AE1"+
+		"\u026D\x03\x02\x02\x02\u0AE2\u0AE3\x07\x93\x02\x02\u0AE3\u026F\x03\x02"+
+		"\x02\x02\u0AE4\u0AE5\x07\x94\x02\x02\u0AE5\u0271\x03\x02\x02\x02\u0AE6"+
+		"\u0AE7\x07\x95\x02\x02\u0AE7\u0273\x03\x02\x02\x02\u0AE8\u0AE9\x07\x96"+
+		"\x02\x02\u0AE9\u0275\x03\x02\x02\x02\u0AEA\u0AEB\x07\x97\x02\x02\u0AEB"+
+		"\u0277\x03\x02\x02\x02\u0AEC\u0AED\x07\x9A\x02\x02\u0AED\u0279\x03\x02"+
+		"\x02\x02\u0AEE\u0AEF\x07\x9B\x02\x02\u0AEF\u027B\x03\x02\x02\x02\u0AF0"+
+		"\u0AF1\x07q\x02\x02\u0AF1\u027D\x03\x02\x02\x02\u0AF2\u0AF3\x07\x9C\x02"+
+		"\x02\u0AF3\u027F\x03\x02\x02\x02\u0AF4\u0AF5\x07\x9E\x02\x02\u0AF5\u0281"+
+		"\x03\x02\x02\x02\u0AF6\u0AF7\x07\x9D\x02\x02\u0AF7\u0283\x03\x02\x02\x02"+
+		"\u0AF8\u0AF9\x07y\x02\x02\u0AF9\u0285\x03\x02\x02\x02\u0AFA\u0AFB\x07"+
+		"\x9F\x02\x02\u0AFB\u0287\x03\x02\x02\x02\u0AFC\u0AFD\x07\xA0\x02\x02\u0AFD"+
+		"\u0289\x03\x02\x02\x02\u0AFE\u0AFF\x07\xAA\x02\x02\u0AFF\u028B\x03\x02"+
+		"\x02\x02\u0B00\u0B01\x07\xA1\x02\x02\u0B01\u028D\x03\x02\x02\x02\u0B02"+
+		"\u0B03\x07\xA2\x02\x02\u0B03\u028F\x03\x02\x02\x02\u0B04\u0B05\x07\xA3"+
+		"\x02\x02\u0B05\u0291\x03\x02\x02\x02\u0B06\u0B07\x05\u02A2\u0152\x02\u0B07"+
+		"\u0B0D\x05\u0172\xBA\x02\u0B08\u0B09\x05\u02AA\u0156\x02\u0B09\u0B0A\x05"+
+		"\u0172\xBA\x02\u0B0A\u0B0C\x03\x02\x02\x02\u0B0B\u0B08\x03\x02\x02\x02"+
+		"\u0B0C\u0B0F\x03\x02\x02\x02\u0B0D\u0B0B\x03\x02\x02\x02\u0B0D\u0B0E\x03"+
+		"\x02\x02\x02\u0B0E\u0B10\x03\x02\x02\x02\u0B0F\u0B0D\x03\x02\x02\x02\u0B10"+
+		"\u0B11\x05\u02A4\u0153\x02\u0B11\u0293\x03\x02\x02\x02\u0B12\u0B13\x07"+
+		"\x13\x02\x02\u0B13\u0295\x03\x02\x02\x02\u0B14\u0B15\x07\x12\x02\x02\u0B15"+
+		"\u0297\x03\x02\x02\x02\u0B16\u0B17\x07\x02\x02\x03\u0B17\u0299\x03\x02"+
+		"\x02\x02\u0B18\u0B19\x07\x03\x02\x02\u0B19\u029B\x03\x02\x02\x02\u0B1A"+
+		"\u0B1B\x07\x04\x02\x02\u0B1B\u029D\x03\x02\x02\x02\u0B1C\u0B1D\x07\x05"+
+		"\x02\x02\u0B1D\u029F\x03\x02\x02\x02\u0B1E\u0B1F\x07\x06\x02\x02\u0B1F"+
+		"\u02A1\x03\x02\x02\x02\u0B20\u0B21\x07\xAD\x02\x02\u0B21\u02A3\x03\x02"+
+		"\x02\x02\u0B22\u0B23\x07\xAE\x02\x02\u0B23\u02A5\x03\x02\x02\x02\u0B24"+
+		"\u0B25\x07\x07\x02\x02\u0B25\u02A7\x03\x02\x02\x02\u0B26\u0B27\x07\b\x02"+
+		"\x02\u0B27\u02A9\x03\x02\x02\x02\u0B28\u0B29\x07\t\x02\x02\u0B29\u02AB"+
+		"\x03\x02\x02\x02\u0B2A\u0B2B\x07\v\x02\x02\u0B2B\u02AD\x03\x02\x02\x02"+
+		"\u0B2C\u0B2D\x07\x16\x02\x02\u0B2D\u02AF\x03\x02\x02\x02\u0B2E\u0B2F\x07"+
+		"\x18\x02\x02\u0B2F\u02B1\x03\x02\x02\x02\u0B30\u0B31\x07\r\x02\x02\u0B31"+
+		"\u02B3\x03\x02\x02\x02\u0B32\u0B33\x07\f\x02\x02\u0B33\u02B5\x03\x02\x02"+
+		"\x02\u0B34\u0B35\x07\xAC\x02\x02\u0B35\u02B7\x03\x02\x02\x02\u0B36\u0B37"+
+		"\x07\xAD\x02\x02\u0B37\u02B9\x03\x02\x02\x02\u0B38\u0B39\x07\xAE\x02\x02"+
+		"\u0B39\u02BB\x03\x02\x02\x02\u0B3A\u0B3B\x07\xAF\x02\x02\u0B3B\u02BD\x03"+
+		"\x02\x02\x02\u0B3C\u0B3D\x07\xB0\x02\x02\u0B3D\u02BF\x03\x02\x02\x02\xD5"+
+		"\u02C1\u02C4\u02CA\u02CF\u02D1\u02D6\u02D9\u02DC\u0308\u0317\u031A\u0321"+
+		"\u0326\u0331\u033B\u0347\u0350\u0357\u035C\u0364\u0369\u036D\u0372\u0381"+
+		"\u0387\u0390\u039D\u03A4\u03AC\u03BE\u03C3\u03CF\u03D3\u03D7\u03DC\u03EF"+
+		"\u03F6\u03FE\u0402\u0415\u041E\u042D\u042F\u043B\u0449\u0450\u0458\u045B"+
+		"\u045E\u0469\u0479\u048D\u04A4\u04B2\u04B9\u04C2\u04D5\u04DD\u04E2\u04E9"+
+		"\u04F0\u04F7\u04FE\u0505\u050E\u0515\u051C\u0523\u052A\u052F\u0536\u053D"+
+		"\u0541\u0546\u0548\u0554\u055B\u0563\u056E\u0574\u057D\u058A\u0592\u0598"+
+		"\u05A6\u05AE\u05B9\u05CB\u05D3\u05DC\u05EB\u05EF\u05F3\u05F7\u0605\u060D"+
+		"\u0616\u0621\u0628\u062B\u0634\u0638\u063F\u0646\u064C\u0654\u065C\u0662"+
+		"\u0666\u066A\u066E\u0676\u067E\u0682\u0687\u068C\u0690\u069B\u06A9\u06AD"+
+		"\u06B3\u06BA\u06C3\u06CC\u06D5\u06DE\u06E7\u06F0\u06FC\u0705\u0715\u0721"+
+		"\u072C\u072F\u0741\u0758\u075B\u0762\u0768\u076C\u0770\u0776\u077A\u077E"+
+		"\u0786\u078B\u078E\u0792\u0797\u079A\u079D\u07A0\u07A5\u07AB\u07B3\u07B6"+
+		"\u07C2\u07C6\u07CD\u07D3\u07D6\u07DE\u07E7\u07ED\u07F3\u07FA\u0801\u0805"+
+		"\u0809\u080C\u0816\u081F\u0822\u0827\u082D\u0831\u083B\u0842\u084C\u0855"+
+		"\u0861\u086D\u0879\u089E\u08B4\u08CC\u08E2\u08F8\u090E\u091A\u0926\u0932"+
+		"\u0948\u095E\u096A\u0976\u097B\u0983\u098A\u0993\u0999\u099E\u09A3\u09A8"+
+		"\u09AD\u09B2\u09B4\u09CB\u09CF\u09ED\u0B0D";
 	public static readonly _serializedATN: string = Utils.join(
 		[
 			CqlParser._serializedATNSegment0,
 			CqlParser._serializedATNSegment1,
 			CqlParser._serializedATNSegment2,
 			CqlParser._serializedATNSegment3,
-			CqlParser._serializedATNSegment4,
-			CqlParser._serializedATNSegment5
+			CqlParser._serializedATNSegment4
 		],
 		""
 	);
@@ -18001,13 +18081,13 @@ export class CreateTypeContext extends ParserRuleContext {
 
 
 export class TypeMemberColumnListContext extends ParserRuleContext {
-	public column(): ColumnContext[];
-	public column(i: number): ColumnContext;
-	public column(i?: number): ColumnContext | ColumnContext[] {
+	public columnSpec(): ColumnSpecContext[];
+	public columnSpec(i: number): ColumnSpecContext;
+	public columnSpec(i?: number): ColumnSpecContext | ColumnSpecContext[] {
 		if (i === undefined) {
-			return this.getRuleContexts(ColumnContext);
+			return this.getRuleContexts(ColumnSpecContext);
 		} else {
-			return this.getRuleContext(i, ColumnContext);
+			return this.getRuleContext(i, ColumnSpecContext);
 		}
 	}
 	public dataType(): DataTypeContext[];
@@ -18230,8 +18310,8 @@ export class ColumnNotNullListContext extends ParserRuleContext {
 
 
 export class ColumnNotNullContext extends ParserRuleContext {
-	public column(): ColumnContext {
-		return this.getRuleContext(0, ColumnContext);
+	public columnSpec(): ColumnSpecContext {
+		return this.getRuleContext(0, ColumnSpecContext);
 	}
 	public kwIs(): KwIsContext {
 		return this.getRuleContext(0, KwIsContext);
@@ -19088,17 +19168,14 @@ export class AlterTypeRenameListContext extends ParserRuleContext {
 
 
 export class AlterTypeRenameItemContext extends ParserRuleContext {
-	public column(): ColumnContext[];
-	public column(i: number): ColumnContext;
-	public column(i?: number): ColumnContext | ColumnContext[] {
-		if (i === undefined) {
-			return this.getRuleContexts(ColumnContext);
-		} else {
-			return this.getRuleContext(i, ColumnContext);
-		}
+	public columnSpec(): ColumnSpecContext {
+		return this.getRuleContext(0, ColumnSpecContext);
 	}
 	public kwTo(): KwToContext {
 		return this.getRuleContext(0, KwToContext);
+	}
+	public columnUnknownSpec(): ColumnUnknownSpecContext {
+		return this.getRuleContext(0, ColumnUnknownSpecContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
@@ -19126,13 +19203,13 @@ export class AlterTypeAddContext extends ParserRuleContext {
 	public kwAdd(): KwAddContext {
 		return this.getRuleContext(0, KwAddContext);
 	}
-	public column(): ColumnContext[];
-	public column(i: number): ColumnContext;
-	public column(i?: number): ColumnContext | ColumnContext[] {
+	public columnUnknownSpec(): ColumnUnknownSpecContext[];
+	public columnUnknownSpec(i: number): ColumnUnknownSpecContext;
+	public columnUnknownSpec(i?: number): ColumnUnknownSpecContext | ColumnUnknownSpecContext[] {
 		if (i === undefined) {
-			return this.getRuleContexts(ColumnContext);
+			return this.getRuleContexts(ColumnUnknownSpecContext);
 		} else {
-			return this.getRuleContext(i, ColumnContext);
+			return this.getRuleContext(i, ColumnUnknownSpecContext);
 		}
 	}
 	public dataType(): DataTypeContext[];
@@ -19179,8 +19256,8 @@ export class AlterTypeAlterTypeContext extends ParserRuleContext {
 	public kwAlter(): KwAlterContext {
 		return this.getRuleContext(0, KwAlterContext);
 	}
-	public column(): ColumnContext {
-		return this.getRuleContext(0, ColumnContext);
+	public columnSpec(): ColumnSpecContext {
+		return this.getRuleContext(0, ColumnSpecContext);
 	}
 	public kwType(): KwTypeContext {
 		return this.getRuleContext(0, KwTypeContext);
@@ -19316,17 +19393,14 @@ export class AlterTableRenameContext extends ParserRuleContext {
 	public kwRename(): KwRenameContext {
 		return this.getRuleContext(0, KwRenameContext);
 	}
-	public column(): ColumnContext[];
-	public column(i: number): ColumnContext;
-	public column(i?: number): ColumnContext | ColumnContext[] {
-		if (i === undefined) {
-			return this.getRuleContexts(ColumnContext);
-		} else {
-			return this.getRuleContext(i, ColumnContext);
-		}
+	public columnSpec(): ColumnSpecContext {
+		return this.getRuleContext(0, ColumnSpecContext);
 	}
 	public kwTo(): KwToContext {
 		return this.getRuleContext(0, KwToContext);
+	}
+	public columnUnknownSpec(): ColumnUnknownSpecContext {
+		return this.getRuleContext(0, ColumnUnknownSpecContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
@@ -19412,13 +19486,13 @@ export class AlterTableDropColumnsContext extends ParserRuleContext {
 
 
 export class AlterTableDropColumnListContext extends ParserRuleContext {
-	public column(): ColumnContext[];
-	public column(i: number): ColumnContext;
-	public column(i?: number): ColumnContext | ColumnContext[] {
+	public columnSpec(): ColumnSpecContext[];
+	public columnSpec(i: number): ColumnSpecContext;
+	public columnSpec(i?: number): ColumnSpecContext | ColumnSpecContext[] {
 		if (i === undefined) {
-			return this.getRuleContexts(ColumnContext);
+			return this.getRuleContexts(ColumnSpecContext);
 		} else {
-			return this.getRuleContext(i, ColumnContext);
+			return this.getRuleContext(i, ColumnSpecContext);
 		}
 	}
 	public syntaxComma(): SyntaxCommaContext[];
@@ -19482,13 +19556,13 @@ export class AlterTableAddContext extends ParserRuleContext {
 
 
 export class AlterTableColumnDefinitionContext extends ParserRuleContext {
-	public column(): ColumnContext[];
-	public column(i: number): ColumnContext;
-	public column(i?: number): ColumnContext | ColumnContext[] {
+	public columnUnknownSpec(): ColumnUnknownSpecContext[];
+	public columnUnknownSpec(i: number): ColumnUnknownSpecContext;
+	public columnUnknownSpec(i?: number): ColumnUnknownSpecContext | ColumnUnknownSpecContext[] {
 		if (i === undefined) {
-			return this.getRuleContexts(ColumnContext);
+			return this.getRuleContexts(ColumnUnknownSpecContext);
 		} else {
-			return this.getRuleContext(i, ColumnContext);
+			return this.getRuleContext(i, ColumnUnknownSpecContext);
 		}
 	}
 	public dataType(): DataTypeContext[];
@@ -20214,8 +20288,8 @@ export class ClusteringOrderContext extends ParserRuleContext {
 
 
 export class ClusteringOrderItemContext extends ParserRuleContext {
-	public column(): ColumnContext {
-		return this.getRuleContext(0, ColumnContext);
+	public columnSpec(): ColumnSpecContext {
+		return this.getRuleContext(0, ColumnSpecContext);
 	}
 	public orderDirection(): OrderDirectionContext | undefined {
 		return this.tryGetRuleContext(0, OrderDirectionContext);
@@ -20648,14 +20722,14 @@ export class PrimaryKeyElementContext extends ParserRuleContext {
 
 
 export class PrimaryKeyDefinitionContext extends ParserRuleContext {
-	public singlePrimaryKey(): SinglePrimaryKeyContext | undefined {
-		return this.tryGetRuleContext(0, SinglePrimaryKeyContext);
+	public primaryKeySimple(): PrimaryKeySimpleContext | undefined {
+		return this.tryGetRuleContext(0, PrimaryKeySimpleContext);
+	}
+	public primaryKeyComposite(): PrimaryKeyCompositeContext | undefined {
+		return this.tryGetRuleContext(0, PrimaryKeyCompositeContext);
 	}
 	public compoundKey(): CompoundKeyContext | undefined {
 		return this.tryGetRuleContext(0, CompoundKeyContext);
-	}
-	public compositeKey(): CompositeKeyContext | undefined {
-		return this.tryGetRuleContext(0, CompositeKeyContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
@@ -20679,41 +20753,82 @@ export class PrimaryKeyDefinitionContext extends ParserRuleContext {
 }
 
 
-export class SinglePrimaryKeyContext extends ParserRuleContext {
-	public column(): ColumnContext {
-		return this.getRuleContext(0, ColumnContext);
+export class PrimaryKeySimpleContext extends ParserRuleContext {
+	public columnSpec(): ColumnSpecContext {
+		return this.getRuleContext(0, ColumnSpecContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
 
 	}
-	@Override public get ruleIndex(): number { return CqlParser.RULE_singlePrimaryKey; }
+	@Override public get ruleIndex(): number { return CqlParser.RULE_primaryKeySimple; }
 	@Override
 	public enterRule(listener: CqlParserListener): void {
-		if (listener.enterSinglePrimaryKey) listener.enterSinglePrimaryKey(this);
+		if (listener.enterPrimaryKeySimple) listener.enterPrimaryKeySimple(this);
 	}
 	@Override
 	public exitRule(listener: CqlParserListener): void {
-		if (listener.exitSinglePrimaryKey) listener.exitSinglePrimaryKey(this);
+		if (listener.exitPrimaryKeySimple) listener.exitPrimaryKeySimple(this);
 	}
 	@Override
 	public accept<Result>(visitor: CqlParserVisitor<Result>): Result {
-		if (visitor.visitSinglePrimaryKey) return visitor.visitSinglePrimaryKey(this);
+		if (visitor.visitPrimaryKeySimple) return visitor.visitPrimaryKeySimple(this);
+		else return visitor.visitChildren(this);
+	}
+}
+
+
+export class PrimaryKeyCompositeContext extends ParserRuleContext {
+	public syntaxBracketLr(): SyntaxBracketLrContext {
+		return this.getRuleContext(0, SyntaxBracketLrContext);
+	}
+	public partitionKeyList(): PartitionKeyListContext {
+		return this.getRuleContext(0, PartitionKeyListContext);
+	}
+	public syntaxBracketRr(): SyntaxBracketRrContext {
+		return this.getRuleContext(0, SyntaxBracketRrContext);
+	}
+	constructor(parent: ParserRuleContext, invokingState: number);
+	constructor(parent: ParserRuleContext, invokingState: number) {
+		super(parent, invokingState);
+
+	}
+	@Override public get ruleIndex(): number { return CqlParser.RULE_primaryKeyComposite; }
+	@Override
+	public enterRule(listener: CqlParserListener): void {
+		if (listener.enterPrimaryKeyComposite) listener.enterPrimaryKeyComposite(this);
+	}
+	@Override
+	public exitRule(listener: CqlParserListener): void {
+		if (listener.exitPrimaryKeyComposite) listener.exitPrimaryKeyComposite(this);
+	}
+	@Override
+	public accept<Result>(visitor: CqlParserVisitor<Result>): Result {
+		if (visitor.visitPrimaryKeyComposite) return visitor.visitPrimaryKeyComposite(this);
 		else return visitor.visitChildren(this);
 	}
 }
 
 
 export class CompoundKeyContext extends ParserRuleContext {
-	public partitionKey(): PartitionKeyContext {
-		return this.getRuleContext(0, PartitionKeyContext);
+	public columnSpec(): ColumnSpecContext | undefined {
+		return this.tryGetRuleContext(0, ColumnSpecContext);
 	}
 	public syntaxComma(): SyntaxCommaContext | undefined {
 		return this.tryGetRuleContext(0, SyntaxCommaContext);
 	}
 	public clusteringKeyList(): ClusteringKeyListContext | undefined {
 		return this.tryGetRuleContext(0, ClusteringKeyListContext);
+	}
+	public syntaxBracketLr(): SyntaxBracketLrContext | undefined {
+		return this.tryGetRuleContext(0, SyntaxBracketLrContext);
+	}
+	public partitionKeyList(): PartitionKeyListContext | undefined {
+		return this.tryGetRuleContext(0, PartitionKeyListContext);
+	}
+	public syntaxBracketRr(): SyntaxBracketRrContext | undefined {
+		return this.tryGetRuleContext(0, SyntaxBracketRrContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
@@ -20737,52 +20852,14 @@ export class CompoundKeyContext extends ParserRuleContext {
 }
 
 
-export class CompositeKeyContext extends ParserRuleContext {
-	public syntaxBracketLr(): SyntaxBracketLrContext {
-		return this.getRuleContext(0, SyntaxBracketLrContext);
-	}
-	public partitionKeyList(): PartitionKeyListContext {
-		return this.getRuleContext(0, PartitionKeyListContext);
-	}
-	public syntaxBracketRr(): SyntaxBracketRrContext {
-		return this.getRuleContext(0, SyntaxBracketRrContext);
-	}
-	public syntaxComma(): SyntaxCommaContext | undefined {
-		return this.tryGetRuleContext(0, SyntaxCommaContext);
-	}
-	public clusteringKeyList(): ClusteringKeyListContext | undefined {
-		return this.tryGetRuleContext(0, ClusteringKeyListContext);
-	}
-	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-
-	}
-	@Override public get ruleIndex(): number { return CqlParser.RULE_compositeKey; }
-	@Override
-	public enterRule(listener: CqlParserListener): void {
-		if (listener.enterCompositeKey) listener.enterCompositeKey(this);
-	}
-	@Override
-	public exitRule(listener: CqlParserListener): void {
-		if (listener.exitCompositeKey) listener.exitCompositeKey(this);
-	}
-	@Override
-	public accept<Result>(visitor: CqlParserVisitor<Result>): Result {
-		if (visitor.visitCompositeKey) return visitor.visitCompositeKey(this);
-		else return visitor.visitChildren(this);
-	}
-}
-
-
 export class PartitionKeyListContext extends ParserRuleContext {
-	public partitionKey(): PartitionKeyContext[];
-	public partitionKey(i: number): PartitionKeyContext;
-	public partitionKey(i?: number): PartitionKeyContext | PartitionKeyContext[] {
+	public columnSpec(): ColumnSpecContext[];
+	public columnSpec(i: number): ColumnSpecContext;
+	public columnSpec(i?: number): ColumnSpecContext | ColumnSpecContext[] {
 		if (i === undefined) {
-			return this.getRuleContexts(PartitionKeyContext);
+			return this.getRuleContexts(ColumnSpecContext);
 		} else {
-			return this.getRuleContext(i, PartitionKeyContext);
+			return this.getRuleContext(i, ColumnSpecContext);
 		}
 	}
 	public syntaxComma(): SyntaxCommaContext[];
@@ -20817,13 +20894,13 @@ export class PartitionKeyListContext extends ParserRuleContext {
 
 
 export class ClusteringKeyListContext extends ParserRuleContext {
-	public clusteringKey(): ClusteringKeyContext[];
-	public clusteringKey(i: number): ClusteringKeyContext;
-	public clusteringKey(i?: number): ClusteringKeyContext | ClusteringKeyContext[] {
+	public columnSpec(): ColumnSpecContext[];
+	public columnSpec(i: number): ColumnSpecContext;
+	public columnSpec(i?: number): ColumnSpecContext | ColumnSpecContext[] {
 		if (i === undefined) {
-			return this.getRuleContexts(ClusteringKeyContext);
+			return this.getRuleContexts(ColumnSpecContext);
 		} else {
-			return this.getRuleContext(i, ClusteringKeyContext);
+			return this.getRuleContext(i, ColumnSpecContext);
 		}
 	}
 	public syntaxComma(): SyntaxCommaContext[];
@@ -20852,58 +20929,6 @@ export class ClusteringKeyListContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: CqlParserVisitor<Result>): Result {
 		if (visitor.visitClusteringKeyList) return visitor.visitClusteringKeyList(this);
-		else return visitor.visitChildren(this);
-	}
-}
-
-
-export class PartitionKeyContext extends ParserRuleContext {
-	public column(): ColumnContext {
-		return this.getRuleContext(0, ColumnContext);
-	}
-	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-
-	}
-	@Override public get ruleIndex(): number { return CqlParser.RULE_partitionKey; }
-	@Override
-	public enterRule(listener: CqlParserListener): void {
-		if (listener.enterPartitionKey) listener.enterPartitionKey(this);
-	}
-	@Override
-	public exitRule(listener: CqlParserListener): void {
-		if (listener.exitPartitionKey) listener.exitPartitionKey(this);
-	}
-	@Override
-	public accept<Result>(visitor: CqlParserVisitor<Result>): Result {
-		if (visitor.visitPartitionKey) return visitor.visitPartitionKey(this);
-		else return visitor.visitChildren(this);
-	}
-}
-
-
-export class ClusteringKeyContext extends ParserRuleContext {
-	public column(): ColumnContext {
-		return this.getRuleContext(0, ColumnContext);
-	}
-	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-
-	}
-	@Override public get ruleIndex(): number { return CqlParser.RULE_clusteringKey; }
-	@Override
-	public enterRule(listener: CqlParserListener): void {
-		if (listener.enterClusteringKey) listener.enterClusteringKey(this);
-	}
-	@Override
-	public exitRule(listener: CqlParserListener): void {
-		if (listener.exitClusteringKey) listener.exitClusteringKey(this);
-	}
-	@Override
-	public accept<Result>(visitor: CqlParserVisitor<Result>): Result {
-		if (visitor.visitClusteringKey) return visitor.visitClusteringKey(this);
 		else return visitor.visitChildren(this);
 	}
 }
@@ -21387,8 +21412,8 @@ export class CreateIndexDefContext extends ParserRuleContext {
 
 
 export class CreateIndexTargetContext extends ParserRuleContext {
-	public column(): ColumnContext | undefined {
-		return this.tryGetRuleContext(0, ColumnContext);
+	public columnSpec(): ColumnSpecContext | undefined {
+		return this.tryGetRuleContext(0, ColumnSpecContext);
 	}
 	public indexKeysSpec(): IndexKeysSpecContext | undefined {
 		return this.tryGetRuleContext(0, IndexKeysSpecContext);
@@ -21431,8 +21456,8 @@ export class IndexKeysSpecContext extends ParserRuleContext {
 	public syntaxBracketRr(): SyntaxBracketRrContext {
 		return this.getRuleContext(0, SyntaxBracketRrContext);
 	}
-	public column(): ColumnContext | undefined {
-		return this.tryGetRuleContext(0, ColumnContext);
+	public columnSpec(): ColumnSpecContext | undefined {
+		return this.tryGetRuleContext(0, ColumnSpecContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
@@ -21466,8 +21491,8 @@ export class IndexEntriesSSpecContext extends ParserRuleContext {
 	public syntaxBracketRr(): SyntaxBracketRrContext {
 		return this.getRuleContext(0, SyntaxBracketRrContext);
 	}
-	public column(): ColumnContext | undefined {
-		return this.tryGetRuleContext(0, ColumnContext);
+	public columnSpec(): ColumnSpecContext | undefined {
+		return this.tryGetRuleContext(0, ColumnSpecContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
@@ -21501,8 +21526,8 @@ export class IndexFullSpecContext extends ParserRuleContext {
 	public syntaxBracketRr(): SyntaxBracketRrContext {
 		return this.getRuleContext(0, SyntaxBracketRrContext);
 	}
-	public column(): ColumnContext | undefined {
-		return this.tryGetRuleContext(0, ColumnContext);
+	public columnSpec(): ColumnSpecContext | undefined {
+		return this.tryGetRuleContext(0, ColumnSpecContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
@@ -21612,8 +21637,8 @@ export class DeleteColumnListContext extends ParserRuleContext {
 
 
 export class DeleteColumnItemContext extends ParserRuleContext {
-	public column(): ColumnContext {
-		return this.getRuleContext(0, ColumnContext);
+	public columnSpec(): ColumnSpecContext {
+		return this.getRuleContext(0, ColumnSpecContext);
 	}
 	public syntaxBracketLs(): SyntaxBracketLsContext | undefined {
 		return this.tryGetRuleContext(0, SyntaxBracketLsContext);
@@ -21836,13 +21861,13 @@ export class UpdateAssignmentsContext extends ParserRuleContext {
 
 
 export class UpdateAssignmentElementContext extends ParserRuleContext {
-	public column(): ColumnContext[];
-	public column(i: number): ColumnContext;
-	public column(i?: number): ColumnContext | ColumnContext[] {
+	public columnSpec(): ColumnSpecContext[];
+	public columnSpec(i: number): ColumnSpecContext;
+	public columnSpec(i?: number): ColumnSpecContext | ColumnSpecContext[] {
 		if (i === undefined) {
-			return this.getRuleContexts(ColumnContext);
+			return this.getRuleContexts(ColumnSpecContext);
 		} else {
-			return this.getRuleContext(i, ColumnContext);
+			return this.getRuleContext(i, ColumnSpecContext);
 		}
 	}
 	public syntaxOperatorEq(): SyntaxOperatorEqContext | undefined {
@@ -22334,13 +22359,13 @@ export class InsertColumnSpecContext extends ParserRuleContext {
 
 
 export class ColumnListContext extends ParserRuleContext {
-	public column(): ColumnContext[];
-	public column(i: number): ColumnContext;
-	public column(i?: number): ColumnContext | ColumnContext[] {
+	public columnSpec(): ColumnSpecContext[];
+	public columnSpec(i: number): ColumnSpecContext;
+	public columnSpec(i?: number): ColumnSpecContext | ColumnSpecContext[] {
 		if (i === undefined) {
-			return this.getRuleContexts(ColumnContext);
+			return this.getRuleContexts(ColumnSpecContext);
 		} else {
-			return this.getRuleContext(i, ColumnContext);
+			return this.getRuleContext(i, ColumnSpecContext);
 		}
 	}
 	public syntaxComma(): SyntaxCommaContext[];
@@ -22375,13 +22400,13 @@ export class ColumnListContext extends ParserRuleContext {
 
 
 export class BaseColumnListContext extends ParserRuleContext {
-	public column(): ColumnContext[];
-	public column(i: number): ColumnContext;
-	public column(i?: number): ColumnContext | ColumnContext[] {
+	public columnSpec(): ColumnSpecContext[];
+	public columnSpec(i: number): ColumnSpecContext;
+	public columnSpec(i?: number): ColumnSpecContext | ColumnSpecContext[] {
 		if (i === undefined) {
-			return this.getRuleContexts(ColumnContext);
+			return this.getRuleContexts(ColumnSpecContext);
 		} else {
-			return this.getRuleContext(i, ColumnContext);
+			return this.getRuleContext(i, ColumnSpecContext);
 		}
 	}
 	public syntaxComma(): SyntaxCommaContext[];
@@ -22620,8 +22645,8 @@ export class OrderSpecContext extends ParserRuleContext {
 
 
 export class OrderSpecElementContext extends ParserRuleContext {
-	public column(): ColumnContext | undefined {
-		return this.tryGetRuleContext(0, ColumnContext);
+	public columnSpec(): ColumnSpecContext | undefined {
+		return this.tryGetRuleContext(0, ColumnSpecContext);
 	}
 	public kwAsc(): KwAscContext | undefined {
 		return this.tryGetRuleContext(0, KwAscContext);
@@ -22725,8 +22750,8 @@ export class SelectElementsContext extends ParserRuleContext {
 
 
 export class SelectElementContext extends ParserRuleContext {
-	public column(): ColumnContext | undefined {
-		return this.tryGetRuleContext(0, ColumnContext);
+	public columnSpec(): ColumnSpecContext | undefined {
+		return this.tryGetRuleContext(0, ColumnSpecContext);
 	}
 	public kwAs(): KwAsContext | undefined {
 		return this.tryGetRuleContext(0, KwAsContext);
@@ -22832,8 +22857,8 @@ export class RelationElementContext extends ParserRuleContext {
 
 
 export class RelationElementConstantContext extends ParserRuleContext {
-	public column(): ColumnContext {
-		return this.getRuleContext(0, ColumnContext);
+	public columnSpec(): ColumnSpecContext {
+		return this.getRuleContext(0, ColumnSpecContext);
 	}
 	public relationOperator(): RelationOperatorContext {
 		return this.getRuleContext(0, RelationOperatorContext);
@@ -22864,8 +22889,8 @@ export class RelationElementConstantContext extends ParserRuleContext {
 
 
 export class RelationElementInContext extends ParserRuleContext {
-	public column(): ColumnContext {
-		return this.getRuleContext(0, ColumnContext);
+	public columnSpec(): ColumnSpecContext {
+		return this.getRuleContext(0, ColumnSpecContext);
 	}
 	public kwIn(): KwInContext {
 		return this.getRuleContext(0, KwInContext);
@@ -22943,8 +22968,8 @@ export class RelationElementTokenSpecContext extends ParserRuleContext {
 	public syntaxBracketLr(): SyntaxBracketLrContext | undefined {
 		return this.tryGetRuleContext(0, SyntaxBracketLrContext);
 	}
-	public column(): ColumnContext | undefined {
-		return this.tryGetRuleContext(0, ColumnContext);
+	public columnSpec(): ColumnSpecContext | undefined {
+		return this.tryGetRuleContext(0, ColumnSpecContext);
 	}
 	public syntaxBracketRr(): SyntaxBracketRrContext | undefined {
 		return this.tryGetRuleContext(0, SyntaxBracketRrContext);
@@ -23611,6 +23636,9 @@ export class KeyspaceContext extends ParserRuleContext {
 	public K_PARTITION(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_PARTITION, 0); }
 	public K_KEY(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_KEY, 0); }
 	public K_LEVEL(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_LEVEL, 0); }
+	public K_USERS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USERS, 0); }
+	public K_USER(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USER, 0); }
+	public K_ROLES(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_ROLES, 0); }
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
@@ -23656,6 +23684,9 @@ export class BaseKeyspaceContext extends ParserRuleContext {
 	public K_PARTITION(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_PARTITION, 0); }
 	public K_KEY(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_KEY, 0); }
 	public K_LEVEL(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_LEVEL, 0); }
+	public K_USERS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USERS, 0); }
+	public K_USER(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USER, 0); }
+	public K_ROLES(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_ROLES, 0); }
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
@@ -23680,15 +23711,6 @@ export class BaseKeyspaceContext extends ParserRuleContext {
 
 export class TableContext extends ParserRuleContext {
 	public OBJECT_NAME(): TerminalNode | undefined { return this.tryGetToken(CqlParser.OBJECT_NAME, 0); }
-	public DQUOTE(): TerminalNode[];
-	public DQUOTE(i: number): TerminalNode;
-	public DQUOTE(i?: number): TerminalNode | TerminalNode[] {
-		if (i === undefined) {
-			return this.getTokens(CqlParser.DQUOTE);
-		} else {
-			return this.getToken(CqlParser.DQUOTE, i);
-		}
-	}
 	public K_ROLE(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_ROLE, 0); }
 	public K_PERMISSIONS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_PERMISSIONS, 0); }
 	public K_OPTIONS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_OPTIONS, 0); }
@@ -23701,6 +23723,9 @@ export class TableContext extends ParserRuleContext {
 	public K_PARTITION(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_PARTITION, 0); }
 	public K_KEY(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_KEY, 0); }
 	public K_LEVEL(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_LEVEL, 0); }
+	public K_USERS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USERS, 0); }
+	public K_USER(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USER, 0); }
+	public K_ROLES(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_ROLES, 0); }
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
@@ -23746,6 +23771,9 @@ export class BaseTableContext extends ParserRuleContext {
 	public K_PARTITION(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_PARTITION, 0); }
 	public K_KEY(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_KEY, 0); }
 	public K_LEVEL(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_LEVEL, 0); }
+	public K_USERS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USERS, 0); }
+	public K_USER(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USER, 0); }
+	public K_ROLES(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_ROLES, 0); }
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
@@ -23791,6 +23819,9 @@ export class MaterializedViewContext extends ParserRuleContext {
 	public K_PARTITION(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_PARTITION, 0); }
 	public K_KEY(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_KEY, 0); }
 	public K_LEVEL(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_LEVEL, 0); }
+	public K_USERS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USERS, 0); }
+	public K_USER(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USER, 0); }
+	public K_ROLES(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_ROLES, 0); }
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
@@ -23836,6 +23867,9 @@ export class KeyspaceObjectContext extends ParserRuleContext {
 	public K_PARTITION(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_PARTITION, 0); }
 	public K_KEY(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_KEY, 0); }
 	public K_LEVEL(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_LEVEL, 0); }
+	public K_USERS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USERS, 0); }
+	public K_USER(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USER, 0); }
+	public K_ROLES(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_ROLES, 0); }
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
@@ -23881,6 +23915,9 @@ export class ObjectUnknownContext extends ParserRuleContext {
 	public K_PARTITION(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_PARTITION, 0); }
 	public K_KEY(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_KEY, 0); }
 	public K_LEVEL(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_LEVEL, 0); }
+	public K_USERS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USERS, 0); }
+	public K_USER(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USER, 0); }
+	public K_ROLES(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_ROLES, 0); }
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
@@ -24003,6 +24040,15 @@ export class TableSpecContext extends ParserRuleContext {
 	public table(): TableContext | undefined {
 		return this.tryGetRuleContext(0, TableContext);
 	}
+	public syntaxDquote(): SyntaxDquoteContext[];
+	public syntaxDquote(i: number): SyntaxDquoteContext;
+	public syntaxDquote(i?: number): SyntaxDquoteContext | SyntaxDquoteContext[] {
+		if (i === undefined) {
+			return this.getRuleContexts(SyntaxDquoteContext);
+		} else {
+			return this.getRuleContext(i, SyntaxDquoteContext);
+		}
+	}
 	public keyspace(): KeyspaceContext | undefined {
 		return this.tryGetRuleContext(0, KeyspaceContext);
 	}
@@ -24034,6 +24080,15 @@ export class TableSpecContext extends ParserRuleContext {
 export class BaseTableSpecContext extends ParserRuleContext {
 	public baseTable(): BaseTableContext | undefined {
 		return this.tryGetRuleContext(0, BaseTableContext);
+	}
+	public syntaxDquote(): SyntaxDquoteContext[];
+	public syntaxDquote(i: number): SyntaxDquoteContext;
+	public syntaxDquote(i?: number): SyntaxDquoteContext | SyntaxDquoteContext[] {
+		if (i === undefined) {
+			return this.getRuleContexts(SyntaxDquoteContext);
+		} else {
+			return this.getRuleContext(i, SyntaxDquoteContext);
+		}
 	}
 	public baseKeyspace(): BaseKeyspaceContext | undefined {
 		return this.tryGetRuleContext(0, BaseKeyspaceContext);
@@ -24188,17 +24243,43 @@ export class ObjectUnknownSpecContext extends ParserRuleContext {
 }
 
 
-export class ColumnContext extends ParserRuleContext {
-	public OBJECT_NAME(): TerminalNode | undefined { return this.tryGetToken(CqlParser.OBJECT_NAME, 0); }
-	public DQUOTE(): TerminalNode[];
-	public DQUOTE(i: number): TerminalNode;
-	public DQUOTE(i?: number): TerminalNode | TerminalNode[] {
+export class ColumnSpecContext extends ParserRuleContext {
+	public column(): ColumnContext {
+		return this.getRuleContext(0, ColumnContext);
+	}
+	public syntaxDquote(): SyntaxDquoteContext[];
+	public syntaxDquote(i: number): SyntaxDquoteContext;
+	public syntaxDquote(i?: number): SyntaxDquoteContext | SyntaxDquoteContext[] {
 		if (i === undefined) {
-			return this.getTokens(CqlParser.DQUOTE);
+			return this.getRuleContexts(SyntaxDquoteContext);
 		} else {
-			return this.getToken(CqlParser.DQUOTE, i);
+			return this.getRuleContext(i, SyntaxDquoteContext);
 		}
 	}
+	constructor(parent: ParserRuleContext, invokingState: number);
+	constructor(parent: ParserRuleContext, invokingState: number) {
+		super(parent, invokingState);
+
+	}
+	@Override public get ruleIndex(): number { return CqlParser.RULE_columnSpec; }
+	@Override
+	public enterRule(listener: CqlParserListener): void {
+		if (listener.enterColumnSpec) listener.enterColumnSpec(this);
+	}
+	@Override
+	public exitRule(listener: CqlParserListener): void {
+		if (listener.exitColumnSpec) listener.exitColumnSpec(this);
+	}
+	@Override
+	public accept<Result>(visitor: CqlParserVisitor<Result>): Result {
+		if (visitor.visitColumnSpec) return visitor.visitColumnSpec(this);
+		else return visitor.visitChildren(this);
+	}
+}
+
+
+export class ColumnContext extends ParserRuleContext {
+	public OBJECT_NAME(): TerminalNode | undefined { return this.tryGetToken(CqlParser.OBJECT_NAME, 0); }
 	public K_ROLE(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_ROLE, 0); }
 	public K_PERMISSIONS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_PERMISSIONS, 0); }
 	public K_OPTIONS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_OPTIONS, 0); }
@@ -24211,6 +24292,9 @@ export class ColumnContext extends ParserRuleContext {
 	public K_PARTITION(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_PARTITION, 0); }
 	public K_KEY(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_KEY, 0); }
 	public K_LEVEL(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_LEVEL, 0); }
+	public K_USERS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USERS, 0); }
+	public K_USER(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USER, 0); }
+	public K_ROLES(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_ROLES, 0); }
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
@@ -24233,46 +24317,36 @@ export class ColumnContext extends ParserRuleContext {
 }
 
 
-export class BaseColumnContext extends ParserRuleContext {
-	public OBJECT_NAME(): TerminalNode | undefined { return this.tryGetToken(CqlParser.OBJECT_NAME, 0); }
-	public DQUOTE(): TerminalNode[];
-	public DQUOTE(i: number): TerminalNode;
-	public DQUOTE(i?: number): TerminalNode | TerminalNode[] {
+export class ColumnUnknownSpecContext extends ParserRuleContext {
+	public columnUnknown(): ColumnUnknownContext {
+		return this.getRuleContext(0, ColumnUnknownContext);
+	}
+	public syntaxDquote(): SyntaxDquoteContext[];
+	public syntaxDquote(i: number): SyntaxDquoteContext;
+	public syntaxDquote(i?: number): SyntaxDquoteContext | SyntaxDquoteContext[] {
 		if (i === undefined) {
-			return this.getTokens(CqlParser.DQUOTE);
+			return this.getRuleContexts(SyntaxDquoteContext);
 		} else {
-			return this.getToken(CqlParser.DQUOTE, i);
+			return this.getRuleContext(i, SyntaxDquoteContext);
 		}
 	}
-	public K_ROLE(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_ROLE, 0); }
-	public K_PERMISSIONS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_PERMISSIONS, 0); }
-	public K_OPTIONS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_OPTIONS, 0); }
-	public K_DURABLE_WRITES(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_DURABLE_WRITES, 0); }
-	public K_LANGUAGE(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_LANGUAGE, 0); }
-	public K_TYPE(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_TYPE, 0); }
-	public K_INITCOND(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_INITCOND, 0); }
-	public K_REPLICATION(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_REPLICATION, 0); }
-	public K_TTL(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_TTL, 0); }
-	public K_PARTITION(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_PARTITION, 0); }
-	public K_KEY(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_KEY, 0); }
-	public K_LEVEL(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_LEVEL, 0); }
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
 
 	}
-	@Override public get ruleIndex(): number { return CqlParser.RULE_baseColumn; }
+	@Override public get ruleIndex(): number { return CqlParser.RULE_columnUnknownSpec; }
 	@Override
 	public enterRule(listener: CqlParserListener): void {
-		if (listener.enterBaseColumn) listener.enterBaseColumn(this);
+		if (listener.enterColumnUnknownSpec) listener.enterColumnUnknownSpec(this);
 	}
 	@Override
 	public exitRule(listener: CqlParserListener): void {
-		if (listener.exitBaseColumn) listener.exitBaseColumn(this);
+		if (listener.exitColumnUnknownSpec) listener.exitColumnUnknownSpec(this);
 	}
 	@Override
 	public accept<Result>(visitor: CqlParserVisitor<Result>): Result {
-		if (visitor.visitBaseColumn) return visitor.visitBaseColumn(this);
+		if (visitor.visitColumnUnknownSpec) return visitor.visitColumnUnknownSpec(this);
 		else return visitor.visitChildren(this);
 	}
 }
@@ -24280,15 +24354,6 @@ export class BaseColumnContext extends ParserRuleContext {
 
 export class ColumnUnknownContext extends ParserRuleContext {
 	public OBJECT_NAME(): TerminalNode | undefined { return this.tryGetToken(CqlParser.OBJECT_NAME, 0); }
-	public DQUOTE(): TerminalNode[];
-	public DQUOTE(i: number): TerminalNode;
-	public DQUOTE(i?: number): TerminalNode | TerminalNode[] {
-		if (i === undefined) {
-			return this.getTokens(CqlParser.DQUOTE);
-		} else {
-			return this.getToken(CqlParser.DQUOTE, i);
-		}
-	}
 	public K_ROLE(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_ROLE, 0); }
 	public K_PERMISSIONS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_PERMISSIONS, 0); }
 	public K_OPTIONS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_OPTIONS, 0); }
@@ -24301,6 +24366,9 @@ export class ColumnUnknownContext extends ParserRuleContext {
 	public K_PARTITION(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_PARTITION, 0); }
 	public K_KEY(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_KEY, 0); }
 	public K_LEVEL(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_LEVEL, 0); }
+	public K_USERS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USERS, 0); }
+	public K_USER(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USER, 0); }
+	public K_ROLES(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_ROLES, 0); }
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
@@ -24629,6 +24697,9 @@ export class AggregateContext extends ParserRuleContext {
 	public K_PARTITION(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_PARTITION, 0); }
 	public K_KEY(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_KEY, 0); }
 	public K_LEVEL(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_LEVEL, 0); }
+	public K_USERS(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USERS, 0); }
+	public K_USER(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_USER, 0); }
+	public K_ROLES(): TerminalNode | undefined { return this.tryGetToken(CqlParser.K_ROLES, 0); }
 	constructor(parent: ParserRuleContext, invokingState: number);
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);

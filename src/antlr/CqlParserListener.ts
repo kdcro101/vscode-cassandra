@@ -88,13 +88,11 @@ import { ColumnDefinitionContext } from './CqlParser';
 import { PrimaryKeyModifierContext } from './CqlParser';
 import { PrimaryKeyElementContext } from './CqlParser';
 import { PrimaryKeyDefinitionContext } from './CqlParser';
-import { SinglePrimaryKeyContext } from './CqlParser';
+import { PrimaryKeySimpleContext } from './CqlParser';
+import { PrimaryKeyCompositeContext } from './CqlParser';
 import { CompoundKeyContext } from './CqlParser';
-import { CompositeKeyContext } from './CqlParser';
 import { PartitionKeyListContext } from './CqlParser';
 import { ClusteringKeyListContext } from './CqlParser';
-import { PartitionKeyContext } from './CqlParser';
-import { ClusteringKeyContext } from './CqlParser';
 import { ApplyBatchContext } from './CqlParser';
 import { BeginBatchContext } from './CqlParser';
 import { BeginBatchSpecContext } from './CqlParser';
@@ -185,8 +183,9 @@ import { IndexSpecContext } from './CqlParser';
 import { MaterializedViewSpecContext } from './CqlParser';
 import { TableOrMaterializedViewSpecContext } from './CqlParser';
 import { ObjectUnknownSpecContext } from './CqlParser';
+import { ColumnSpecContext } from './CqlParser';
 import { ColumnContext } from './CqlParser';
-import { BaseColumnContext } from './CqlParser';
+import { ColumnUnknownSpecContext } from './CqlParser';
 import { ColumnUnknownContext } from './CqlParser';
 import { DataTypeContext } from './CqlParser';
 import { DataTypeCollectionContext } from './CqlParser';
@@ -1298,15 +1297,26 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitPrimaryKeyDefinition?: (ctx: PrimaryKeyDefinitionContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.singlePrimaryKey`.
+	 * Enter a parse tree produced by `CqlParser.primaryKeySimple`.
 	 * @param ctx the parse tree
 	 */
-	enterSinglePrimaryKey?: (ctx: SinglePrimaryKeyContext) => void;
+	enterPrimaryKeySimple?: (ctx: PrimaryKeySimpleContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.singlePrimaryKey`.
+	 * Exit a parse tree produced by `CqlParser.primaryKeySimple`.
 	 * @param ctx the parse tree
 	 */
-	exitSinglePrimaryKey?: (ctx: SinglePrimaryKeyContext) => void;
+	exitPrimaryKeySimple?: (ctx: PrimaryKeySimpleContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `CqlParser.primaryKeyComposite`.
+	 * @param ctx the parse tree
+	 */
+	enterPrimaryKeyComposite?: (ctx: PrimaryKeyCompositeContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.primaryKeyComposite`.
+	 * @param ctx the parse tree
+	 */
+	exitPrimaryKeyComposite?: (ctx: PrimaryKeyCompositeContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.compoundKey`.
@@ -1318,17 +1328,6 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitCompoundKey?: (ctx: CompoundKeyContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `CqlParser.compositeKey`.
-	 * @param ctx the parse tree
-	 */
-	enterCompositeKey?: (ctx: CompositeKeyContext) => void;
-	/**
-	 * Exit a parse tree produced by `CqlParser.compositeKey`.
-	 * @param ctx the parse tree
-	 */
-	exitCompositeKey?: (ctx: CompositeKeyContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.partitionKeyList`.
@@ -1351,28 +1350,6 @@ export interface CqlParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitClusteringKeyList?: (ctx: ClusteringKeyListContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `CqlParser.partitionKey`.
-	 * @param ctx the parse tree
-	 */
-	enterPartitionKey?: (ctx: PartitionKeyContext) => void;
-	/**
-	 * Exit a parse tree produced by `CqlParser.partitionKey`.
-	 * @param ctx the parse tree
-	 */
-	exitPartitionKey?: (ctx: PartitionKeyContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `CqlParser.clusteringKey`.
-	 * @param ctx the parse tree
-	 */
-	enterClusteringKey?: (ctx: ClusteringKeyContext) => void;
-	/**
-	 * Exit a parse tree produced by `CqlParser.clusteringKey`.
-	 * @param ctx the parse tree
-	 */
-	exitClusteringKey?: (ctx: ClusteringKeyContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.applyBatch`.
@@ -2365,6 +2342,17 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitObjectUnknownSpec?: (ctx: ObjectUnknownSpecContext) => void;
 
 	/**
+	 * Enter a parse tree produced by `CqlParser.columnSpec`.
+	 * @param ctx the parse tree
+	 */
+	enterColumnSpec?: (ctx: ColumnSpecContext) => void;
+	/**
+	 * Exit a parse tree produced by `CqlParser.columnSpec`.
+	 * @param ctx the parse tree
+	 */
+	exitColumnSpec?: (ctx: ColumnSpecContext) => void;
+
+	/**
 	 * Enter a parse tree produced by `CqlParser.column`.
 	 * @param ctx the parse tree
 	 */
@@ -2376,15 +2364,15 @@ export interface CqlParserListener extends ParseTreeListener {
 	exitColumn?: (ctx: ColumnContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `CqlParser.baseColumn`.
+	 * Enter a parse tree produced by `CqlParser.columnUnknownSpec`.
 	 * @param ctx the parse tree
 	 */
-	enterBaseColumn?: (ctx: BaseColumnContext) => void;
+	enterColumnUnknownSpec?: (ctx: ColumnUnknownSpecContext) => void;
 	/**
-	 * Exit a parse tree produced by `CqlParser.baseColumn`.
+	 * Exit a parse tree produced by `CqlParser.columnUnknownSpec`.
 	 * @param ctx the parse tree
 	 */
-	exitBaseColumn?: (ctx: BaseColumnContext) => void;
+	exitColumnUnknownSpec?: (ctx: ColumnUnknownSpecContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `CqlParser.columnUnknown`.

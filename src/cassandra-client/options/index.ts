@@ -10,7 +10,7 @@ export class CassandraClientOptions {
         const options: cassandra.ClientOptions = {
             contactPoints: config.contactPoints,
         };
-        if (config.authProvider && config.authProvider.class === "PlainTextAuthProvider") {
+        if (config.authProvider && config.authProvider.class === "PasswordAuthenticator") {
             options.authProvider = new cassandra.auth.PlainTextAuthProvider(config.authProvider.username, config.authProvider.password);
         }
         if (config.port != null) {

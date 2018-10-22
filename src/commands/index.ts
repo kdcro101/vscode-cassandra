@@ -53,6 +53,8 @@ export class VsCommands {
             .push(vscode.commands.registerCommand("cassandraWorkbench.openEditorInWorkbench", this.onOpenEditorInWorkbench));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.openFileInWorkbench", this.onOpenFileInWorkbench));
+        this.context.subscriptions
+            .push(vscode.commands.registerCommand("cassandraWorkbench.cqlListRoles", this.cqlListRoles));
 
         // ------------------------------------------------------------------------------------------------------------------
         this.context.subscriptions
@@ -132,6 +134,16 @@ export class VsCommands {
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlAggregateClone", this.cqlAggregateClone));
         this.context.subscriptions
             .push(vscode.commands.registerCommand("cassandraWorkbench.cqlAggregateCreate", this.cqlAggregateCreate));
+    }
+    private cqlListRoles = (item: TreeItemCluster) => {
+        this.stateWorkbench.pipe(
+            take(1),
+        ).subscribe(() => {
+            const clusterIndex = item.clusterIndex;
+
+            this.workbench.editorCreate(clusterIndex, null, "LIST ROLES;");
+
+        });
     }
     private copyName = (item: TreeItemBase) => {
         clipboardy.writeSync(item.label);

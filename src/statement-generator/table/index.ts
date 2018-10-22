@@ -116,14 +116,18 @@ function primaryKey(data: CassandraTable): string {
         return `PRIMARY KEY(${simple})`;
     }
     const countPar = data.primaryKeys.filter((k) => k.kind === "partition_key").length;
-    const countClu = data.primaryKeys.filter((k) => k.kind === "clustering").length;
     const listPar = data.primaryKeys.filter((k) => k.kind === "partition_key").map((k) => k.name);
     const listClu = data.primaryKeys.filter((k) => k.kind === "clustering").map((k) => k.name);
 
     const partPartition = countPar === 1 ? listPar.join(", ") : `(${listPar.join(", ")})`;
     const partClustering = listClu.join(", ");
+    const allKeys = [partPartition];
 
-    return `PRIMARY KEY(${partPartition}, ${partClustering})`;
+    if (listClu.length > 0) {
+        allKeys.push(partClustering);
+    }
+
+    return `PRIMARY KEY(${allKeys.join(", ")})`;
 
 }
 

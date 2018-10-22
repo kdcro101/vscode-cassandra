@@ -142,7 +142,6 @@ K_TYPE: T Y P E  | 'TYPE';
 K_UNLOGGED: U N L O G G E D  | 'UNLOGGED';
 K_UPDATE: U P D A T E  | 'UPDATE';
 K_USE: U S E  | 'USE';
-K_USER: U S E R  | 'USER';
 K_USING: U S I N G  | 'USING';
 K_VALUES: V A L U E S  | 'VALUES';
 K_VIEW: V I E W  | 'VIEW';
@@ -179,7 +178,7 @@ K_UUID: U U I D  | 'UUID';
 K_VARCHAR: V A R C H A R | 'VARCHAR';
 K_VARINT: V A R I N T | 'VARINT';
 
-K_USERS: U S E R S  | 'USERS';
+
 
 fragment A : [aA]; // match either an 'a' or 'A'
 fragment B : [bB];
@@ -250,5 +249,6 @@ OPERATOR_LTE: OPERATOR_LTE_FRAG;
 OPERATOR_GTE: OPERATOR_GTE_FRAG;
 
 
-
+K_USERS: U S E R S  | 'USERS';
+K_USER: U S E R  | 'USER';
 

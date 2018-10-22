@@ -41,7 +41,8 @@ empty
     ;
 
 cql
-    : alterKeyspace
+    : beginBatch
+    | alterKeyspace
     | alterMaterializedView
     | alterRole
     | alterTable
@@ -85,7 +86,7 @@ revoke
     ;
 
 listUsers
-    : kwList kwUsers
+    : kwListUsers
     ;
 
 listRoles
@@ -124,7 +125,7 @@ resource
     ;
 
 createUser
-    : kwCreate kwUser ifNotExist? user kwWith kwPassword literalString (kwSuperuser|kwNosuperuser)?
+    : kwCreate kwUser ifNotExist? user kwWith kwPassword constantString (kwSuperuser|kwNosuperuser)?
     ;
 
 createRole
@@ -132,7 +133,7 @@ createRole
     ;
 
 createType
-    : kwCreate kwType ifNotExist? (keyspace DOT)? type
+    : kwCreate kwType ifNotExist? objectUnknownSpec
       syntaxBracketLr typeMemberColumnList syntaxBracketRr
     ;
 typeMemberColumnList
@@ -140,15 +141,15 @@ typeMemberColumnList
     ;
 
 createTrigger
-    : kwCreate kwTrigger ifNotExist? (keyspace DOT)? trigger kwUsing triggerClass
+    : kwCreate kwTrigger ifNotExist? objectUnknownSpec kwUsing triggerClass
     ;
 
 createMaterializedView
-    : kwCreate kwMaterialized kwView ifNotExist? (keyspace DOT)? materializedView
+    : kwCreate kwMaterializedView ifNotExist? objectUnknownSpec
       kwAs
-      kwSelect columnList kwFrom tableSpec
+      kwSelect baseColumnList kwFrom baseTableSpec
       materializedViewWhere
-      kwPrimary kwKey syntaxBracketLr columnList syntaxBracketRr
+      primaryKeyElement
       (kwWith materializedViewOptions)?
 
     ;
@@ -166,28 +167,18 @@ materializedViewOptions
     : tableOptions
     | tableOptions kwAnd clusteringOrder
     | clusteringOrder
+    | clusteringOrder kwAnd tableOptions
     ;
 
-// CREATE MATERIALIZED VIEW [IF NOT EXISTS] [keyspace_name.] view_name
-// AS SELECT column_list
-// FROM [keyspace_name.] base_table_name
-// WHERE column_name IS NOT NULL [AND column_name IS NOT NULL ...]
-//       [AND relation...]
-// PRIMARY KEY ( column_list )
-// [WITH [table_properties]
-//       [AND CLUSTERING ORDER BY (cluster_column_name order_option )]]
-
-
-
 createKeyspace
-    : kwCreate kwKeyspace ifNotExist? keyspace
+    : kwCreate kwKeyspace ifNotExist? objectUnknown
       kwWith kwReplication OPERATOR_EQ syntaxBracketLc replicationList syntaxBracketRc
       (kwAnd durableWrites)?
     ;
 
 createFunction
     : kwCreate orReplace? kwFunction  ifNotExist?
-      (keyspace DOT)? function syntaxBracketLr paramList? syntaxBracketRr
+      objectUnknownSpec syntaxBracketLr paramList? syntaxBracketRr
       returnMode
       kwReturns dataType
       kwLanguage language kwAs
@@ -206,16 +197,12 @@ returnMode
     ;
 createAggregate
     : kwCreate orReplace? kwAggregate ifNotExist?
-      (keyspace DOT)? aggregate syntaxBracketLr dataType syntaxBracketRr
+      objectUnknownSpec syntaxBracketLr dataType syntaxBracketRr
       kwSfunc function
       kwStype dataType
       kwFinalfunc function
       kwInitcond initCondDefinition
     ;
-
-// paramList
-    // :
-
 
 initCondDefinition
     : constant
@@ -246,7 +233,7 @@ alterUser
     ;
 
 userPassword
-    : kwPassword literalString
+    : kwPassword constantString
     ;
 
 userSuperUser
@@ -255,12 +242,10 @@ userSuperUser
     ;
 
 alterType
-    : kwAlter kwType (keyspace DOT)? type alterTypeOperation
+    : kwAlter kwType typeSpec alterTypeOperation
     ;
 alterTypeOperation
-    : alterTypeAlterType
-    | alterTypeAdd
-    | alterTypeRename
+    : alterTypeAlterType? alterTypeAdd? alterTypeRename?
     ;
 
 alterTypeRename
@@ -327,14 +312,14 @@ roleWith
     : kwWith (roleWithOptions (kwAnd roleWithOptions)*)
     ;
 roleWithOptions
-    : kwPassword OPERATOR_EQ literalString
-    | kwLogin OPERATOR_EQ literalBoolean
-    | kwSuperuser OPERATOR_EQ literalBoolean
+    : kwPassword OPERATOR_EQ constantString
+    | kwLogin OPERATOR_EQ constantBoolean
+    | kwSuperuser OPERATOR_EQ constantBoolean
     | kwOptions OPERATOR_EQ optionHash
     ;
 
 alterMaterializedView
-    : kwAlter kwMaterialized kwView (keyspace DOT)? materializedView
+    : kwAlter kwMaterializedView materializedViewSpec
      (kwWith tableOptions)?
     ;
 
@@ -343,17 +328,17 @@ dropUser
     ;
 
 dropType
-    : kwDrop kwType ifExist? (keyspace DOT)? type
+    : kwDrop kwType ifExist? typeSpec
     ;
 dropMaterializedView
-    : kwDrop kwMaterialized kwView ifExist? (keyspace DOT)? materializedView
+    : kwDrop kwMaterializedView ifExist? materializedViewSpec
 
     ;
 dropAggregate
-    : kwDrop kwAggregate ifExist? (keyspace DOT)? aggregate
+    : kwDrop kwAggregate ifExist? aggregateSpec
     ;
 dropFunction
-    : kwDrop kwFunction ifExist? (keyspace DOT)? function
+    : kwDrop kwFunction ifExist? functionSpec
     ;
 dropTrigger
     : kwDrop kwTrigger ifExist? trigger kwOn tableSpec
@@ -369,19 +354,30 @@ dropKeyspace
     : kwDrop kwKeyspace ifExist? keyspace
     ;
 dropIndex
-    : kwDrop kwIndex ifExist? (keyspace DOT)? indexName
+    : kwDrop kwIndex ifExist? indexSpec
     ;
 createTable
-    : kwCreate kwTable ifNotExist? tableSpec
-      syntaxBracketLr columnDefinitionList syntaxBracketRr
-      withElement?
+    : kwCreate kwTable ifNotExist? objectUnknownSpec createTableDef withElement?
     ;
+
+createTableDef
+    : syntaxBracketLr columnDefinitionList syntaxBracketRr
+    | { this.notifyErrorListeners("rule.createTableDef"); }
+    ;
+
 withElement
-    : kwWith tableOptions? clusteringOrder?
+    : kwWith tableOptions (kwAnd clusteringOrder)?
+    | kwWith clusteringOrder? (kwAnd tableOptions)?
     ;
+
 clusteringOrder
-    : kwClustering kwOrder kwBy syntaxBracketLr column orderDirection? syntaxBracketRr
+    : kwClustering kwOrder kwBy syntaxBracketLr clusteringOrderItem (syntaxComma clusteringOrderItem)* syntaxBracketRr
     ;
+
+clusteringOrderItem
+    : column orderDirection?
+    ;
+
 
 tableOptions
     :  tableOptionItem (kwAnd tableOptionItem)*
@@ -395,8 +391,8 @@ tableOptionName
     ;
 
 tableOptionValue
-    : literalString
-    | literalFloat
+    : constantString
+    | constantFloat
     ;
 optionHash
     : syntaxBracketLc optionHashItem (syntaxComma optionHashItem)*  syntaxBracketRc
@@ -405,25 +401,27 @@ optionHashItem
     : optionHashKey COLON optionHashValue
     ;
 optionHashKey
-    : literalString
+    : constantString
     ;
 optionHashValue
-    : literalString
-    | literalFloat
+    : constantString
+    | constantFloat
     ;
 
 columnDefinitionList
-    :( columnDefinition ) (syntaxComma columnDefinition)* (syntaxComma primaryKeyElement)?
+    : columnDefinition (syntaxComma columnDefinition)* (syntaxComma primaryKeyElement)?
     ;
-//
+
 columnDefinition
-    : column dataType primaryKeyColumn
-    | column dataType kwStatic
-    | column dataType
+    : columnUnknown dataType primaryKeyModifier
+    | columnUnknown dataType kwStatic
+    | columnUnknown dataType
+    | { this.notifyErrorListeners("rule.columnDefinition"); }
     ;
-//
-primaryKeyColumn
+
+primaryKeyModifier
     : kwPrimary kwKey
+    | kwPrimary { this.notifyErrorListeners("rule.primaryKeyModifier"); }
     ;
 primaryKeyElement
     : kwPrimary kwKey syntaxBracketLr primaryKeyDefinition syntaxBracketRr
@@ -465,6 +463,12 @@ applyBatch
     ;
 
 beginBatch
+    : beginBatchSpec delete
+    | beginBatchSpec insert
+    | beginBatchSpec update
+    ;
+
+beginBatchSpec
     : kwBegin batchType? kwBatch usingTimestampSpec?
     ;
 batchType
@@ -479,51 +483,66 @@ alterKeyspace
     ;
 
 replicationList
-    : ( replicationListItem ) (syntaxComma replicationListItem)*
+    : replicationListItem (syntaxComma replicationListItem)*
     ;
+// replicationList
+//     : ( replicationListItem ) (syntaxComma replicationListItem)*
+//     ;
 
 replicationListItem
     : STRING_LITERAL COLON STRING_LITERAL
     | STRING_LITERAL COLON DECIMAL_LITERAL
     ;
 durableWrites
-    : kwDurableWrites OPERATOR_EQ literalBoolean
+    : kwDurableWrites OPERATOR_EQ constantBoolean
     ;
 
 use
     : kwUse keyspace
     ;
 
-
 truncate
     : kwTruncate (kwTable)? tableSpec
     ;
 
 createIndex
-    : kwCreate kwIndex ifNotExist? indexName? kwOn  tableSpec syntaxBracketLr indexColumnSpec syntaxBracketRr
+    : kwCreate kwIndex ifNotExist? objectUnknown? createIndexSubject createIndexDef
     ;
-indexName
+
+createIndexSubject
+    : kwOn tableSpec
+    | { this.notifyErrorListeners("rule.createIndexSubject"); }
+    ;
+
+index
     : OBJECT_NAME
-    | literalString
+    | constantString
     ;
-indexColumnSpec
+createIndexDef
+    : syntaxBracketLr createIndexTarget syntaxBracketRr
+    | { this.notifyErrorListeners("rule.createIndexDef"); }
+    ;
+createIndexTarget
     : column
     | indexKeysSpec
     | indexEntriesSSpec
     | indexFullSpec
+    | { this.notifyErrorListeners("rule.createIndexTarget"); }
     ;
+
 indexKeysSpec
-    : kwKeys syntaxBracketLr OBJECT_NAME syntaxBracketRr
+    : kwKeys syntaxBracketLr (column| { this.notifyErrorListeners("rule.indexKeysSpec"); }) syntaxBracketRr
     ;
 indexEntriesSSpec
-    : kwEntries syntaxBracketLr OBJECT_NAME syntaxBracketRr
+    : kwEntries syntaxBracketLr (column| { this.notifyErrorListeners("rule.indexEntriesSSpec"); }) syntaxBracketRr
     ;
 indexFullSpec
-    : kwFull syntaxBracketLr OBJECT_NAME syntaxBracketRr
+    : kwFull syntaxBracketLr (column| { this.notifyErrorListeners("rule.indexFullSpec"); }) syntaxBracketRr
     ;
 
 delete
-    : beginBatch? kwDelete deleteColumnList? fromSpec usingTimestampSpec? whereSpec (ifExist | ifSpec)?
+    : kwDelete deleteColumnList? fromSpec usingTimestampSpec?
+      ( whereSpec | { this.notifyErrorListeners("rule.whereSpec"); } ) (ifExist | ifSpec)?
     ;
 
 deleteColumnList
@@ -532,13 +551,13 @@ deleteColumnList
 
 deleteColumnItem
     : column
-    | column syntaxBracketLs (literalString|literalDecimal)  syntaxBracketRs
+    | column syntaxBracketLs (constantString|constantDecimal)  syntaxBracketRs
     ;
 
 
 update
-    : beginBatch? kwUpdate tableSpec  usingTtlTimestamp? kwSet assignments
-      whereSpec (ifExist | ifSpec)?
+    : kwUpdate tableOrMaterializedViewSpec  usingTtlTimestamp?  updateAssignments
+      (whereSpec | { this.notifyErrorListeners("rule.whereSpec"); }) (ifExist | ifSpec)?
     ;
 
 ifSpec
@@ -551,20 +570,23 @@ ifCondition
     : OBJECT_NAME OPERATOR_EQ constant
     ;
 
-assignments
-    : ( assignmentElement ) (syntaxComma assignmentElement)*
+updateAssignments
+    : kwSet ( updateAssignmentElement ) (syntaxComma updateAssignmentElement)*
+    | { this.notifyErrorListeners("rule.updateAssignments"); }
     ;
 
-assignmentElement
-    : OBJECT_NAME OPERATOR_EQ (constant | assignmentMap | assignmentSet | assignmentList)
-    | OBJECT_NAME OPERATOR_EQ OBJECT_NAME (PLUS | MINUS) literalDecimal
-    | OBJECT_NAME OPERATOR_EQ OBJECT_NAME (PLUS | MINUS) assignmentSet
-    | OBJECT_NAME OPERATOR_EQ assignmentSet (PLUS | MINUS) OBJECT_NAME
-    | OBJECT_NAME OPERATOR_EQ OBJECT_NAME (PLUS | MINUS) assignmentMap
-    | OBJECT_NAME OPERATOR_EQ assignmentMap (PLUS | MINUS) OBJECT_NAME
-    | OBJECT_NAME OPERATOR_EQ OBJECT_NAME (PLUS | MINUS) assignmentList
-    | OBJECT_NAME OPERATOR_EQ assignmentList (PLUS | MINUS) OBJECT_NAME
-    | OBJECT_NAME syntaxBracketLs literalDecimal syntaxBracketRs OPERATOR_EQ constant
+updateAssignmentElement
+    // : column syntaxOperatorEq (constant | assignmentMap | assignmentSet | assignmentList)
+    : column syntaxOperatorEq (constant | constantCollection)
+    | column syntaxOperatorEq column (syntaxPlus | syntaxMinus) constantDecimal
+    | column syntaxOperatorEq column (syntaxPlus | syntaxMinus) assignmentMap
+    | column syntaxOperatorEq column (syntaxPlus | syntaxMinus) assignmentSet
+    | column syntaxOperatorEq column (syntaxPlus | syntaxMinus) assignmentList
+    | column syntaxOperatorEq assignmentSet (syntaxPlus | syntaxMinus) OBJECT_NAME
+    | column syntaxOperatorEq assignmentMap (syntaxPlus | syntaxMinus) OBJECT_NAME
+    | column syntaxOperatorEq assignmentList (syntaxPlus | syntaxMinus) OBJECT_NAME
+    | column syntaxBracketLs constantDecimal syntaxBracketRs syntaxOperatorEq constant
+    | { this.notifyErrorListeners("rule.updateAssignmentElement"); }
     ;
 
 assignmentSet
@@ -581,8 +603,7 @@ assignmentList
 
 
 insert
-    : (beginBatch|) kwInsert kwInto tableSpec insertColumnSpec insertValuesSpec
-      (ifNotExist|) usingTtlTimestamp?
+    : kwInsertInto tableOrMaterializedViewSpec insertColumnSpec insertValuesSpec (ifNotExist|) usingTtlTimestamp?
     ;
 usingTtlTimestamp
     : kwUsing ttl
@@ -592,11 +613,11 @@ usingTtlTimestamp
     ;
 
 timestamp
-    : kwTimestamp literalDecimal
+    : kwTimestamp constantDecimal
     ;
 
 ttl
-    : kwTtl literalDecimal
+    : kwTtl constantDecimal
     ;
 
 usingTimestampSpec
@@ -611,36 +632,45 @@ ifExist
     ;
 
 insertValuesSpec
-    : kwValues '(' expressionList ')'
+    : kwValues syntaxBracketLr expressionList (syntaxBracketRr| { this.notifyErrorListeners("rule.syntaxBracketRr"); })
+    | { this.notifyErrorListeners("rule.insertValuesSpec"); }
     ;
 
 insertColumnSpec
-    : '(' columnList ')'
+    : syntaxBracketLr columnList syntaxBracketRr
+    | { this.notifyErrorListeners("rule.insertColumnSpec"); }
     ;
 
 columnList
-    : column (syntaxComma column)*
+    : column (syntaxComma (column | { this.notifyErrorListeners("rule.column"); }))*
+    | { this.notifyErrorListeners("rule.columnList"); }
     ;
+baseColumnList
+    : column (syntaxComma (column | { this.notifyErrorListeners("rule.column"); }))*
+    | { this.notifyErrorListeners("rule.baseColumnList"); }
+    ;
+
+
 expressionList
     : expression (syntaxComma expression)*
     ;
 
 expression
-    : (constant| assignmentMap | assignmentSet | assignmentList)
+    : ( constant| constantCollection )
+    | { this.notifyErrorListeners("rule.expression"); }
     ;
 
 select
-    : kwSelect kwDistinct? selectElements
-      fromSpec whereSpec? orderSpec? limitSpec? kwAllowFiltering?
+    : kwSelect kwDistinct? selectElements fromSpec whereSpec? orderSpec? limitSpec? kwAllowFiltering?
     ;
 
 limitSpec
-    : kwLimit literalDecimal
+    : kwLimit (constantDecimal| { this.notifyErrorListeners("rule.constantDecimal"); })
     ;
 
 fromSpec
-    : kwFrom tableSpec
-    | { this.notifyErrorListeners("rule.select.fromSpec"); }
+    : kwFrom tableOrMaterializedViewSpec
+    | { this.notifyErrorListeners("rule.fromSpec"); }
     ;
 
 orderSpec
@@ -648,6 +678,7 @@ orderSpec
     ;
 orderSpecElement
     : column (kwAsc|kwDesc)?
+    | { this.notifyErrorListeners("rule.orderSpecElement"); }
     ;
 
 whereSpec
@@ -657,14 +688,14 @@ whereSpec
 selectElements
     : specialStar
     | selectElement (syntaxComma selectElement)*
-    | { this.notifyErrorListeners("rule.select.selectElements"); }
+    | { this.notifyErrorListeners("rule.selectElements"); }
     ;
 
 selectElement
     : column
     | column (kwAs OBJECT_NAME)?
     | functionCall (kwAs OBJECT_NAME)?
-    | { this.notifyErrorListeners("rule.select.selectElement"); }
+    | { this.notifyErrorListeners("rule.selectElement"); }
     ;
 
 relationElements
@@ -672,21 +703,46 @@ relationElements
     ;
 
 relationElement
-    : column (syntaxOperatorEq | syntaxOperatorLt | syntaxOperatorGt | syntaxOperatorLte | syntaxOperatorGte) constant
-    | functionCall (syntaxOperatorEq | syntaxOperatorLt | syntaxOperatorGt | syntaxOperatorLte | syntaxOperatorGte) constant
-    | functionCall (syntaxOperatorEq | syntaxOperatorLt | syntaxOperatorGt | syntaxOperatorLte | syntaxOperatorGte) functionCall
-    | column kwIn syntaxBracketLr functionArgs? syntaxBracketRr
-    | relalationContainsKey
-    | relalationContains
+    : relationElementConstant
+    | relationElementIn
+    | relationElementToken
+    | OBJECT_NAME { this.notifyErrorListeners("rule.relationElement"); }
     | { this.notifyErrorListeners("rule.relationElement"); }
     ;
 
-relalationContains
-    : column kwContains constant
+relationElementConstant
+    : column relationOperator (constant | { this.notifyErrorListeners("rule.constant"); } )
     ;
-relalationContainsKey
-    : column (kwContainsKey) constant
+
+relationElementIn
+    : column kwIn syntaxBracketLr functionArgs? syntaxBracketRr
     ;
+
+relationElementToken
+    : relationElementTokenSpec
+      (relationOperator | { this.notifyErrorListeners("rule.relationOperator"); })
+      relationElementTokenSpec
+    ;
+relationElementTokenSpec
+    : kwToken
+      (syntaxBracketLr  | { this.notifyErrorListeners("rule.syntaxBracketLr"); })
+      (column           | { this.notifyErrorListeners("rule.column"); })
+      (syntaxBracketRr  | { this.notifyErrorListeners("rule.syntaxBracketRr"); })
+    | { this.notifyErrorListeners("rule.relationElementTokenSpec"); }
+    ;
+
+relationOperator
+    : syntaxOperatorEq
+    | syntaxOperatorLt
+    | syntaxOperatorGt
+    | syntaxOperatorLte
+    | syntaxOperatorGte
+    | kwContains
+    | kwContainsKey
+    | { this.notifyErrorListeners("rule.relationOperator"); }
+    ;
+
+
 
 functionCall
     : OBJECT_NAME '(' STAR ')'
@@ -703,58 +759,198 @@ functionArgs
 
 
 constant
-    : literalUuid
-    | literalString
-    | literalDecimal
-    | literalHexadecimal
-    | literalBoolean
+    : constantUuid
+    | constantString
+    | constantDecimal
+    | constantFloat
+    | constantHexadecimal
+    | constantBoolean
     | kwNull
     ;
 
-literalUuid
+collectionElement
+    : constant | constantMap | constantSet | constantList | constantTuple
+    ;
+
+collectionMapElement
+    : collectionElement syntaxColon collectionElement
+    ;
+
+constantCollection
+    : constantMap | constantTuple | constantList | constantSet
+    ;
+
+constantMap
+    : syntaxBracketLc collectionMapElement (syntaxComma collectionMapElement)* syntaxBracketRc
+    ;
+
+constantSet
+    : syntaxBracketLc collectionElement (syntaxComma collectionElement)* syntaxBracketRc
+    ;
+
+constantList
+    : syntaxBracketLs collectionElement (syntaxComma collectionElement)* syntaxBracketRs
+    ;
+
+constantTuple
+    : syntaxBracketLr collectionElement (syntaxComma collectionElement)* syntaxBracketRr
+    ;
+
+constantUuid
     : UUID
     ;
-literalDecimal
+
+constantDecimal
     : DECIMAL_LITERAL
-    // | ZERO_DECIMAL | ONE_DECIMAL | TWO_DECIMAL
     ;
-literalFloat
+
+constantFloat
     : DECIMAL_LITERAL
     | FLOAT_LITERAL
     ;
 
-literalString
+constantString
     : STRING_LITERAL
     ;
 
-literalBoolean
+constantBoolean
     : K_TRUE | K_FALSE;
 
-literalHexadecimal
+constantHexadecimal
     : HEXADECIMAL_LITERAL
     ;
 
 keyspace
     : OBJECT_NAME
     | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL | K_USERS | K_USER
+    ;
+
+baseKeyspace
+    : OBJECT_NAME
+    | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL | K_USERS | K_USER
     ;
 
 table
     : OBJECT_NAME
-    | DQUOTE OBJECT_NAME DQUOTE
+    // | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL | K_USERS | K_USER
     ;
 
+baseTable
+    : OBJECT_NAME
+    | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL | K_USERS | K_USER
+    ;
+
+materializedView
+    : OBJECT_NAME
+    | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL | K_USERS | K_USER
+    ;
+
+keyspaceObject
+    : OBJECT_NAME
+    | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL | K_USERS | K_USER
+    ;
+objectUnknown
+    : OBJECT_NAME
+    | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL | K_USERS | K_USER
+    ;
+
+aggregateSpec
+    : aggregate
+    | keyspace specialDot aggregate
+    | keyspace specialDot { this.notifyErrorListeners("rule.aggregate"); }
+    | { this.notifyErrorListeners("rule.aggregateSpec"); }
+    ;
+
+typeSpec
+    : type
+    | keyspace specialDot type
+    | keyspace specialDot { this.notifyErrorListeners("rule.type"); }
+    | { this.notifyErrorListeners("rule.typeSpec"); }
+    ;
+
+functionSpec
+    : function
+    | keyspace specialDot function
+    | keyspace specialDot { this.notifyErrorListeners("rule.function"); }
+    | { this.notifyErrorListeners("rule.functionSpec"); }
+    ;
 
 tableSpec
     : table
-    | keyspace specialDot (table| { this.notifyErrorListeners("rule.table"); })
+    | syntaxDquote table syntaxDquote
+    | keyspace specialDot table
+    | keyspace specialDot syntaxDquote table syntaxDquote
+    | keyspace specialDot { this.notifyErrorListeners("rule.table"); }
     | { this.notifyErrorListeners("rule.tableSpec"); }
+    ;
+
+baseTableSpec
+    : baseTable
+    | syntaxDquote baseTable syntaxDquote
+    | baseKeyspace specialDot baseTable
+    | baseKeyspace specialDot syntaxDquote baseTable syntaxDquote
+    | baseKeyspace specialDot { this.notifyErrorListeners("rule.baseTable"); }
+    | { this.notifyErrorListeners("rule.baseTableSpec"); }
+    ;
+
+indexSpec
+    : index
+    | keyspace specialDot index
+    | keyspace specialDot { this.notifyErrorListeners("rule.index"); }
+    | { this.notifyErrorListeners("rule.indexSpec"); }
+    ;
+
+materializedViewSpec
+    : materializedView
+    | keyspace specialDot materializedView
+    | keyspace specialDot { this.notifyErrorListeners("rule.materializedView"); }
+    | { this.notifyErrorListeners("rule.materializedViewSpec"); }
+    ;
+
+tableOrMaterializedViewSpec
+    : tableSpec
+    | materializedViewSpec
+    | { this.notifyErrorListeners("rule.tableOrMaterializedViewSpec"); }
+    ;
+
+
+
+objectUnknownSpec
+    : objectUnknown
+    | keyspace specialDot objectUnknown
+    | { this.notifyErrorListeners("rule.objectUnknownSpec"); }
+    ;
+
+columnSpec
+    : column
+    | syntaxDquote column syntaxDquote
     ;
 
 column
     : OBJECT_NAME
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL | K_USERS | K_USER
+    ;
+
+columnUnknown
+    : OBJECT_NAME
     | DQUOTE OBJECT_NAME DQUOTE
-    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND | K_REPLICATION | K_TTL | K_PARTITION | K_KEY
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL | K_USERS | K_USER
     ;
 
 dataType
@@ -763,11 +959,11 @@ dataType
     ;
 
 dataTypeCollection
-    : dataTypeFrozen dataTypeStructure
-    | dataTypeSet dataTypeStructure
-    | dataTypeList dataTypeStructure
-    | dataTypeMap dataTypeStructure
-    | dataTypeTuple dataTypeStructure
+    : dataTypeFrozen (dataTypeStructure | { this.notifyErrorListeners("rule.dataTypeStructure"); })
+    | dataTypeSet (dataTypeStructure | { this.notifyErrorListeners("rule.dataTypeStructure"); })
+    | dataTypeList (dataTypeStructure | { this.notifyErrorListeners("rule.dataTypeStructure"); })
+    | dataTypeMap (dataTypeStructure | { this.notifyErrorListeners("rule.dataTypeStructure"); })
+    | dataTypeTuple (dataTypeStructure | { this.notifyErrorListeners("rule.dataTypeStructure"); })
     ;
 
 dataTypeFundamental
@@ -807,18 +1003,19 @@ trigger
     : OBJECT_NAME
     ;
 triggerClass
-    : literalString
+    : constantString
     ;
 
-materializedView
-    : OBJECT_NAME
-    ;
 type
     : OBJECT_NAME
     ;
 aggregate
     : OBJECT_NAME
+    | DQUOTE OBJECT_NAME DQUOTE
+    | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
+      K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL | K_USERS | K_USER
     ;
+
 function
     : OBJECT_NAME
     ;
@@ -829,7 +1026,7 @@ user
     : OBJECT_NAME
     ;
 password
-    : literalString
+    : constantString
     ;
 hashKey: OBJECT_NAME;
 
@@ -884,8 +1081,9 @@ kwIn: K_IN;
 kwIndex: K_INDEX;
 kwInitcond: K_INITCOND;
 kwInput: K_INPUT;
-kwInsert: K_INSERT;
-kwInto: K_INTO;
+// kwInsert: K_INSERT;
+kwInsertInto: K_INSERT K_INTO;
+// kwInto: K_INTO;
 kwIs: K_IS;
 kwKey: K_KEY;
 kwKeys: K_KEYS;
@@ -893,10 +1091,14 @@ kwKeyspace: K_KEYSPACE;
 kwLanguage: K_LANGUAGE;
 kwLimit: K_LIMIT;
 kwList: K_LIST;
-kwListRoles: K_LIST_ROLES;
+
+kwListRoles: K_LIST K_ROLES;
+kwListUsers: K_LIST K_USERS;
+
 kwLogged: K_LOGGED;
 kwLogin: K_LOGIN;
-kwMaterialized: K_MATERIALIZED;
+// kwMaterialized: K_MATERIALIZED;
+kwMaterializedView: K_MATERIALIZED K_VIEW;
 kwModify: K_MODIFY;
 kwNosuperuser: K_NOSUPERUSER;
 kwNorecursive: K_NORECURSIVE;
@@ -927,6 +1129,7 @@ kwSuperuser : K_SUPERUSER;
 kwTable: K_TABLE;
 kwTimestamp: K_TIMESTAMP;
 kwTo: K_TO;
+kwToken: K_TOKEN;
 kwTrigger: K_TRIGGER;
 kwTruncate: K_TRUNCATE;
 kwTtl: K_TTL;
@@ -938,7 +1141,7 @@ kwUser: K_USER;
 kwUsers: K_USERS;
 kwUsing: K_USING;
 kwValues: K_VALUES;
-kwView: K_VIEW;
+// kwView: K_VIEW;
 kwWhere: K_WHERE;
 kwWith: K_WITH;
 kwRevoke: K_REVOKE;
@@ -999,6 +1202,8 @@ syntaxBracketRs : RS_BRACKET;
 
 syntaxComma: COMMA;
 syntaxColon: COLON;
+syntaxPlus: PLUS;
+syntaxMinus: MINUS;
 
 syntaxSquote: SQUOTE;
 syntaxDquote: DQUOTE;
@@ -1008,4 +1213,3 @@ syntaxOperatorLt: OPERATOR_LT;
 syntaxOperatorGt: OPERATOR_GT;
 syntaxOperatorLte: OPERATOR_LTE;
 syntaxOperatorGte: OPERATOR_GTE;
-

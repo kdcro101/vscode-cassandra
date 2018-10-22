@@ -96,8 +96,13 @@ function primaryKey(data: CassandraTable | CassandraMaterializedView): string {
 
     const partPartition = countPar === 1 ? listPar.join(", ") : `(${listPar.join(", ")})`;
     const partClustering = listClu.join(", ");
+    const allKeys = [partPartition];
 
-    return `PRIMARY KEY(${partPartition}, ${partClustering})`;
+    if (listClu.length > 0) {
+        allKeys.push(partClustering);
+    }
+
+    return `PRIMARY KEY(${allKeys.join(", ")})`;
 
 }
 function tableOptions(data: CassandraTable | CassandraMaterializedView, outputClusteringOrder: boolean = true): string {

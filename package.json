@@ -100,7 +100,13 @@
                     "group": "navigation"
                 }
             ],
-            "view/item/context": [{
+            "view/item/context": [
+                {
+                    "command": "cassandraWorkbench.cqlListRoles",
+                    "when": "view == cassandraWorkbenchView && viewItem == cluster",
+                    "group": "01_common@1"
+                },
+                {
                     "command": "cassandraWorkbench.cqlKeyspaceCreate",
                     "when": "view == cassandraWorkbenchView && viewItem == cluster",
                     "group": "02_alter@1"
@@ -448,6 +454,10 @@
             {
                 "command": "cassandraWorkbench.cqlKeyspaceClone",
                 "title": "Clone KEYSPACE"
+            },
+            {
+                "command": "cassandraWorkbench.cqlListRoles",
+                "title": "LIST ROLES"
             },
             {
                 "command": "cassandraWorkbench.cqlKeyspaceExport",

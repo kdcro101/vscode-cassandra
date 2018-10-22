@@ -1,20 +1,13 @@
-/*
 [{
-    "name": "cluster1",
-    "contactPoints": ["10.0.0.200"],
+    // AllowAllAuthenticator
+    "name": "cluster AllowAllAuthenticator",
+    "contactPoints": ["127.0.0.1"]
+}, {
+    //PasswordAuthenticator
+    "name": "cluster1 PasswordAuthenticator",
+    "contactPoints": ["127.0.0.1"],
     "authProvider": {
-        "class": "PlainTextAuthProvider",
-        "username": "yourUsername",
-        "password": "yourPassword"
-    }
-}]
-*/
-
-[{
-    "name": "cluster1",
-    "contactPoints": ["10.42.0.254"],
-    "authProvider": {
-        "class": "PlainTextAuthProvider",
+        "class": "PasswordAuthenticator",
         "username": "yourUsername",
         "password": "yourPassword"
     }

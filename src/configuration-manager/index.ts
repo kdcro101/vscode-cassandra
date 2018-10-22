@@ -41,7 +41,7 @@ export class ConfigurationManager {
 
         });
     }
-    public loadConfig(): Promise<ValidatedConfigClusterItem[]> {
+    public getConfig(): Promise<ValidatedConfigClusterItem[]> {
         return new Promise((resolve, reject) => {
 
             from(fs.pathExists(this.confPath)).pipe(
@@ -121,7 +121,7 @@ export class ConfigurationManager {
             return out;
         }
         if (item.authProvider != null &&
-            item.authProvider.class === "PlainTextAuthProvider" &&
+            item.authProvider.class === "PasswordAuthenticator" &&
             item.authProvider.username != null && item.authProvider.password != null) {
             out.valid = true;
             return out;

@@ -29,7 +29,7 @@ export type CassandraConsistency = "ANY" | "ONE" | "TWO" | "THREE" | "QUORUM" | 
 export type CassandraIndexCollectionType = "full" | "values" | "keys";
 
 export interface WorkbenchConfigAuthProvider {
-    class: "PlainTextAuthProvider";
+    class: "PasswordAuthenticator";
     username?: string;
     password?: string;
 }

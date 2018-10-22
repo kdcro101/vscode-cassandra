@@ -88,13 +88,11 @@ import { ColumnDefinitionContext } from './CqlParser';
 import { PrimaryKeyModifierContext } from './CqlParser';
 import { PrimaryKeyElementContext } from './CqlParser';
 import { PrimaryKeyDefinitionContext } from './CqlParser';
-import { SinglePrimaryKeyContext } from './CqlParser';
+import { PrimaryKeySimpleContext } from './CqlParser';
+import { PrimaryKeyCompositeContext } from './CqlParser';
 import { CompoundKeyContext } from './CqlParser';
-import { CompositeKeyContext } from './CqlParser';
 import { PartitionKeyListContext } from './CqlParser';
 import { ClusteringKeyListContext } from './CqlParser';
-import { PartitionKeyContext } from './CqlParser';
-import { ClusteringKeyContext } from './CqlParser';
 import { ApplyBatchContext } from './CqlParser';
 import { BeginBatchContext } from './CqlParser';
 import { BeginBatchSpecContext } from './CqlParser';
@@ -185,8 +183,9 @@ import { IndexSpecContext } from './CqlParser';
 import { MaterializedViewSpecContext } from './CqlParser';
 import { TableOrMaterializedViewSpecContext } from './CqlParser';
 import { ObjectUnknownSpecContext } from './CqlParser';
+import { ColumnSpecContext } from './CqlParser';
 import { ColumnContext } from './CqlParser';
-import { BaseColumnContext } from './CqlParser';
+import { ColumnUnknownSpecContext } from './CqlParser';
 import { ColumnUnknownContext } from './CqlParser';
 import { DataTypeContext } from './CqlParser';
 import { DataTypeCollectionContext } from './CqlParser';
@@ -961,11 +960,18 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitPrimaryKeyDefinition?: (ctx: PrimaryKeyDefinitionContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.singlePrimaryKey`.
+	 * Visit a parse tree produced by `CqlParser.primaryKeySimple`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitSinglePrimaryKey?: (ctx: SinglePrimaryKeyContext) => Result;
+	visitPrimaryKeySimple?: (ctx: PrimaryKeySimpleContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `CqlParser.primaryKeyComposite`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitPrimaryKeyComposite?: (ctx: PrimaryKeyCompositeContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.compoundKey`.
@@ -973,13 +979,6 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitCompoundKey?: (ctx: CompoundKeyContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `CqlParser.compositeKey`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitCompositeKey?: (ctx: CompositeKeyContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.partitionKeyList`.
@@ -994,20 +993,6 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitClusteringKeyList?: (ctx: ClusteringKeyListContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `CqlParser.partitionKey`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitPartitionKey?: (ctx: PartitionKeyContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `CqlParser.clusteringKey`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitClusteringKey?: (ctx: ClusteringKeyContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.applyBatch`.
@@ -1640,6 +1625,13 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitObjectUnknownSpec?: (ctx: ObjectUnknownSpecContext) => Result;
 
 	/**
+	 * Visit a parse tree produced by `CqlParser.columnSpec`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitColumnSpec?: (ctx: ColumnSpecContext) => Result;
+
+	/**
 	 * Visit a parse tree produced by `CqlParser.column`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -1647,11 +1639,11 @@ export interface CqlParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitColumn?: (ctx: ColumnContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `CqlParser.baseColumn`.
+	 * Visit a parse tree produced by `CqlParser.columnUnknownSpec`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitBaseColumn?: (ctx: BaseColumnContext) => Result;
+	visitColumnUnknownSpec?: (ctx: ColumnUnknownSpecContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `CqlParser.columnUnknown`.

@@ -53,7 +53,7 @@ export class CassandraClient extends EventEmitter {
             // },
         };
 
-        if (config.authProvider && config.authProvider.class === "PlainTextAuthProvider") {
+        if (config.authProvider && config.authProvider.class === "PasswordAuthenticator") {
             options.authProvider = new cassandra.auth.PlainTextAuthProvider(config.authProvider.username, config.authProvider.password);
         }
 
