@@ -28,7 +28,7 @@ export class CqlLexer extends Lexer {
 	public static readonly DQUOTE=10;
 	public static readonly SQUOTE=11;
 	public static readonly SPACE=12;
-	public static readonly SPEC_MYSQL_COMMENT=13;
+	public static readonly SPEC_CQL_COMMENT=13;
 	public static readonly COMMENT_INPUT=14;
 	public static readonly LINE_COMMENT=15;
 	public static readonly DOT=16;
@@ -198,7 +198,7 @@ export class CqlLexer extends Lexer {
 
 	public static readonly ruleNames: string[] = [
 		"LR_BRACKET", "RR_BRACKET", "LC_BRACKET", "RC_BRACKET", "LS_BRACKET", 
-		"RS_BRACKET", "COMMA", "SEMI", "COLON", "DQUOTE", "SQUOTE", "SPACE", "SPEC_MYSQL_COMMENT", 
+		"RS_BRACKET", "COMMA", "SEMI", "COLON", "DQUOTE", "SQUOTE", "SPACE", "SPEC_CQL_COMMENT", 
 		"COMMENT_INPUT", "LINE_COMMENT", "DOT", "STAR", "DIVIDE", "MODULE", "PLUS", 
 		"MINUSMINUS", "MINUS", "K_ADD", "K_AGGREGATE", "K_ALL", "K_ALL_ROLES", 
 		"K_ALL_KEYSPACES", "K_ALL_FUNCTIONS", "K_ALLOW", "K_ALTER", "K_AND", "K_ANY", 
@@ -240,7 +240,7 @@ export class CqlLexer extends Lexer {
 	];
 	private static readonly _SYMBOLIC_NAMES: (string | undefined)[] = [
 		undefined, "LR_BRACKET", "RR_BRACKET", "LC_BRACKET", "RC_BRACKET", "LS_BRACKET", 
-		"RS_BRACKET", "COMMA", "SEMI", "COLON", "DQUOTE", "SQUOTE", "SPACE", "SPEC_MYSQL_COMMENT", 
+		"RS_BRACKET", "COMMA", "SEMI", "COLON", "DQUOTE", "SQUOTE", "SPACE", "SPEC_CQL_COMMENT", 
 		"COMMENT_INPUT", "LINE_COMMENT", "DOT", "STAR", "DIVIDE", "MODULE", "PLUS", 
 		"MINUSMINUS", "MINUS", "K_ADD", "K_AGGREGATE", "K_ALL", "K_ALL_ROLES", 
 		"K_ALL_KEYSPACES", "K_ALL_FUNCTIONS", "K_ALLOW", "K_ALTER", "K_AND", "K_ANY", 

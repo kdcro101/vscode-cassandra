@@ -17,7 +17,7 @@ DQUOTE: '"';
 SQUOTE: '\'';
 
 SPACE: [ \t\r\n]+ -> channel(HIDDEN);
-SPEC_MYSQL_COMMENT: '/*!' .+? '*/' -> channel(HIDDEN);
+SPEC_CQL_COMMENT: '/*!' .+? '*/' -> channel(HIDDEN);
 COMMENT_INPUT: '/*' .*? '*/' -> channel(HIDDEN);
 LINE_COMMENT: (
 		('-- ' | '#' | '//') ~[\r\n]* ('\r'? '\n' | EOF)
