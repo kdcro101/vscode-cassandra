@@ -6,3 +6,4 @@ ng/**/*.*
 ng/main.js
 .favorites.json
 res/cassandra/logs/**/*.*
+res/cassandra/data/**/*.*
