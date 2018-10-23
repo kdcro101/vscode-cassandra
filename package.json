@@ -51,6 +51,11 @@
                     "default": 50,
                     "description": "Editor/Resultset split position in percentage"
                 },
+                "cassandraWorkbench.useWorkspace": {
+                    "type": "number",
+                    "default": 0,
+                    "description": "Index of workspace where to look for configuration file (beginning with 0)"
+                },
                 "cassandraWorkbench.activeClusterName": {
                     "type": "string",
                     "default": null,
@@ -530,7 +535,9 @@
         "watch": "tsc -watch -p ./",
         "postinstall": "node ./node_modules/vscode/bin/install",
         "test": "npm run compile && node ./node_modules/vscode/bin/test",
-        "generate": "./script/generate-parser.sh"
+        "generate": "./script/generate-parser.sh",
+        "cassandra-start": "./script/cassandra.sh start",
+        "cassandra-stop": "./script/cassandra.sh stop"
     },
     "devDependencies": {
         "@types/cassandra-driver": "^3.4.0",

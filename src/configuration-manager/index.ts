@@ -16,7 +16,7 @@ export class ConfigurationManager {
     private confPath: string;
     private confDefaultPath: string;
     constructor(private context: vscode.ExtensionContext, private workspace: Workspace) {
-        const root = this.workspace.getRootPath();
+        const root = this.workspace.getConfigurationRoot();
         this.confPath = path.join(root, ".cassandraWorkbench.jsonc");
         this.confDefaultPath = path.join(context.extensionPath, "config", "default.jsonc");
 

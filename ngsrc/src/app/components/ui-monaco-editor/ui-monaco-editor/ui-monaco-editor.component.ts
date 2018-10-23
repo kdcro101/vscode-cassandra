@@ -48,6 +48,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
     private actionFind: monaco.editor.IEditorAction = null;
     private actionReplace: monaco.editor.IEditorAction = null;
+    private actionHoverShow: monaco.editor.IEditorAction = null;
 
     constructor(
         public host: ElementRef<HTMLDivElement>,
@@ -108,7 +109,7 @@ export class UiMonacoEditorComponent extends ViewDestroyable implements OnInit, 
 
             this.actionFind = this.monacoEditor.getAction("actions.find");
             this.actionReplace = this.monacoEditor.getAction("editor.action.startFindReplaceAction");
-
+// getAction("editor.action.showHover")
             // this.monacoEditor
             //     // tslint:disable-next-line:no-bitwise
             //     .addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.F10, () => {

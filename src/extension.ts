@@ -18,6 +18,8 @@ export function activate(context: vscode.ExtensionContext) {
         context,
         eventDestroy: new Subject<void>(),
     };
+
+    (global as any).vscode = vscode;
     // ---------------------------------------------------------
     const workspace = new Workspace();
     const config = new ConfigurationManager(context, workspace);

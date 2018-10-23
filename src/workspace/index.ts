@@ -17,4 +17,12 @@ export class Workspace {
         const ws = vscode.workspace.getConfiguration();
         ws.update("cassandraWorkbench." + key, value, false);
     }
+    public getConfigurationRoot() {
+        const workspaceIndex  = this.read("useWorkspace");
+        const path = vscode.workspace.workspaceFolders[workspaceIndex] != null
+                     ? vscode.workspace.workspaceFolders[workspaceIndex].uri.fsPath
+                     : vscode.workspace.workspaceFolders[0].uri.fsPath;
+
+        return path;
+    }
 }

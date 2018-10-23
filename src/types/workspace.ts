@@ -3,5 +3,5 @@ export interface WorkspaceSettings {
     activeKeyspace: Array<[string, string]>;
     defaultSelectLimit: number;
     splitPosition: number;
-
+    useWorkspace: number;
 }
