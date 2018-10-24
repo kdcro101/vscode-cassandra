@@ -19,10 +19,11 @@ Design and query database with help of generated templates, autocomplete and inl
 Activate extension by running command from pallete `Cassandra Workbench: Generate configuration`. This will generate `.cassandraWorkbench.jsonc` configuration file.
 
 Switch to `Cassandra worbench` panel by clicking activity bar icon.
+Edit `.cassandraWorkbench.jsonc` to suit your needs. ([configuration](#configuration))
 
 ## Features
 
-## Configuration
+##  <a name="configuration"></a><a name="user-content-configuration"></a> Configuration
 `.cassandraWorkbench.jsonc` file contains array of cluster connection items. 
 
 Authentication modes, currently supported ([more info](https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/secureConfigNativeAuth.html)):

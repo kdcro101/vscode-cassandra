@@ -41,7 +41,7 @@ export class Persistence {
 
     constructor(private workspace: Workspace) {
 
-        this.persistenceRoot = path.join(workspace.getRootPath(), ".cassandraWorkbench");
+        this.persistenceRoot = path.join(workspace.getConfigurationRoot(), ".cassandraWorkbench");
         this.persistencePathEditors = path.join(this.persistenceRoot, "editors");
         this.persistencePathSaved = path.join(this.persistenceRoot, "saved");
         this.persistencePathTemp = path.join(this.persistenceRoot, "temp");
