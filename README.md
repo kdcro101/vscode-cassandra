@@ -12,7 +12,7 @@ Design and query database with help of generated templates, autocomplete and inl
 Activate extension by running command from pallete `Cassandra Workbench: Generate configuration`. 
 
 <p align="center">
-   <img  width="100" src="https://raw.githubusercontent.com/kdcro101/vscode-cassandra/master/media/res/panel-and-settings.png" />
+   <img src="https://raw.githubusercontent.com/kdcro101/vscode-cassandra/master/media/res/panel-and-settings.png?12311" />
 </p>
 
 ## Features
