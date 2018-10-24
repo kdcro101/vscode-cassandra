@@ -15,7 +15,7 @@ Switch to `Cassandra worbench` panel by clicking icon.
 
 
 <p align="center">
-   <img src="https://raw.githubusercontent.com/kdcro101/vscode-cassandra/master/media/res/panel-and-settings.png?123112" />
+   <img src="https://raw.githubusercontent.com/kdcro101/vscode-cassandra/master/media/res/panel-and-settings.png?image" />
 </p>
 
 ## Features
