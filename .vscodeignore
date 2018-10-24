@@ -4,9 +4,11 @@ out/test/**
 out/**/*.map
 src/**
 res/**
+colors
 .gitignore
 .editorconfig
 .jsbeautifyrc
+.favorites.json
 tsconfig.json
 tslint.json
 ngsrc
