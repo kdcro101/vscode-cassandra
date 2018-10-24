@@ -4,6 +4,7 @@ import { delay, tap } from "rxjs/operators";
 import * as vscode from "vscode";
 import { Clusters } from "../../clusters";
 import { CassandraColumn } from "../../types";
+import { Workspace } from "../../workspace";
 import { TreeItemAggregateItem } from "./tree-item-aggregate-item";
 import { TreeItemAggregates } from "./tree-item-aggregates";
 import { TreeItemBase } from "./tree-item-base";
@@ -33,6 +34,7 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
 
     constructor(
         private clusters: Clusters,
+        private workspace: Workspace,
     ) { }
     public refresh(): void {
 
@@ -151,11 +153,23 @@ export class TreeviewProvider implements vscode.TreeDataProvider<TreeItemBase> {
     }
     private getKeyspaces(clusterIndex: number): Promise<TreeItemKeyspace[] | TreeItemClusterError[]> {
         return new Promise((resolve, reject) => {
-
+            const filterRxs = this.workspace.read("excludeKeyspaces").map((pattern) => {
+                return new RegExp(pattern);
+            });
             from(this.clusters.getStructure(clusterIndex)).pipe()
                 .subscribe((clusterData) => {
 
-                    const ks = clusterData.keyspaces;
+                    const ks = (clusterData.keyspaces || []).filter((item) => {
+                        const exclude = filterRxs.reduce<boolean>((a, c, i) => {
+                            if (item.name.search(c) === 0) {
+                                return true;
+                            }
+                            return a;
+                        }, false);
+
+                        return exclude === false;
+                    });
+
                     const items = ks.map((k) => {
                         const name = this.clusters.getClusterName(clusterIndex);
                         const tooltip = `${k.name}@${name}`;

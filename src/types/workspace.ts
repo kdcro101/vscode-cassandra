@@ -4,4 +4,5 @@ export interface WorkspaceSettings {
     defaultSelectLimit: number;
     splitPosition: number;
     useWorkspace: number;
+    excludeKeyspaces: string[];
 }

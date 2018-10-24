@@ -53,7 +53,7 @@ export class CassandraWorkbench {
                 this.clusters = new Clusters(clusterItems);
                 this.changeProcessor = new DataChangeProcessor(this.clusters);
                 this.stateInitialized.next();
-                this.treeProvider = new TreeviewProvider(this.clusters);
+                this.treeProvider = new TreeviewProvider(this.clusters, this.workspace);
                 this.context.subscriptions.push(vscode.window.registerTreeDataProvider("cassandraWorkbenchView", this.treeProvider));
 
                 if (notifyWebview) {

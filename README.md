@@ -24,5 +24,17 @@ Switch to `Cassandra worbench` panel by clicking icon.
 
 
 ## Workspace configuration
-`cassandraWorkbench.useWorkspace` : number - default `0`
-- index of workspace where to look for configuration file `.cassandraWorkbench.jsonc`
+`cassandraWorkbench.excludeKeyspaces`: `string[]` - default `[]`
+- list of regexp pattern to exclude when listing keyspaces in panel
+
+To exclude `system` keyspaces use:
+```ts
+ "cassandraWorkbench.excludeKeyspaces": [
+            "^system$",
+            "^system_",
+        ]
+```
+
+`cassandraWorkbench.useWorkspace` : `number` - default `0`
+- index of workspace where to look for configuration file `.cassandraWorkbench.jsonc`. For multi-root only.
+

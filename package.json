@@ -79,6 +79,16 @@
                         ]
                     }
                 },
+                "cassandraWorkbench.excludeKeyspaces": {
+                    "type": "array",
+                    "description": "Array of patterns to exclude when listing keyspaces in panel",
+                    "default": [],
+                    "items": {
+                        "type": "string",
+                        "title": "Regexp pattern",
+                        "description": "Pattern to exclude"
+                    }
+                },
                 "cassandraWorkbench.defaultSelectLimit": {
                     "type": "number",
                     "default": 500,
