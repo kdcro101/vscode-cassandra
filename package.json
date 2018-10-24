@@ -7,6 +7,10 @@
     "engines": {
         "vscode": "^1.28.1"
     },
+    "galleryBanner": {
+        "color": "#1976d2",
+        "theme": "dark"
+    },
     "categories": [
         "Other", "Programming Languages"
     ],
