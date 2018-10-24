@@ -5,7 +5,9 @@
 <p>
 Design and query database with help of generated templates, autocomplete and inline code decorations
 </p>
-
+<p align="center">
+   <img src="https://raw.githubusercontent.com/kdcro101/vscode-cassandra/master/media/res/panel-and-settings.png?image1" />
+</p>
 
 ## Quick start
 

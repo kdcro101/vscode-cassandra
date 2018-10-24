@@ -1,12 +1,10 @@
-import {
-    animate, AnimationTriggerMetadata, query, state, style, transition, trigger,
-} from "@angular/animations";
+import { animate, AnimationTriggerMetadata, state, style, transition, trigger } from "@angular/animations";
 
 export const panelAnimations: AnimationTriggerMetadata[] = [
     trigger("panelAnimation", [
         state("hidden", style({
             opacity: 0,
-            zIndex: 0,
+            zIndex: -1,
         })),
         state("active", style({
             opacity: 1,
@@ -15,7 +13,7 @@ export const panelAnimations: AnimationTriggerMetadata[] = [
         state("void", style({
 
             opacity: 0,
-            zIndex: 0,
+            zIndex: -1,
         })),
         transition("hidden => active", [
             style({
