@@ -11,6 +11,9 @@ Design and query database with help of generated templates, autocomplete and inl
 
 Activate extension by running command from pallete `Cassandra Workbench: Generate configuration`. 
 
+Switch to `Cassandra worbench` panel by clicking icon ![Activity bar icon](https://raw.githubusercontent.com/kdcro101/vscode-cassandra/master/icons/activity.svg)
+
+
 <p align="center">
    <img src="https://raw.githubusercontent.com/kdcro101/vscode-cassandra/master/media/res/panel-and-settings.png?12311" />
 </p>
