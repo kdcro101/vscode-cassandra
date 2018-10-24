@@ -9,14 +9,14 @@ Design and query database with help of generated templates, autocomplete and inl
 
 ## Quick start
 
-Activate extension by running command from pallete `Cassandra Workbench: Generate configuration`. 
-
-Switch to `Cassandra worbench` panel by clicking icon.
-
 
 <p align="center">
    <img src="https://raw.githubusercontent.com/kdcro101/vscode-cassandra/master/media/res/panel-and-settings.png?image1" />
 </p>
+
+Activate extension by running command from pallete `Cassandra Workbench: Generate configuration`. This will generate `.cassandraWorkbench.jsonc` configuration file.
+
+Switch to `Cassandra worbench` panel by clicking activity bar icon.
 
 ## Features
 
@@ -29,9 +29,12 @@ Switch to `Cassandra worbench` panel by clicking icon.
 
 To exclude `system` keyspaces use:
 ```ts
- "cassandraWorkbench.excludeKeyspaces": [
+    "cassandraWorkbench.excludeKeyspaces": [
             "^system$",
-            "^system_",
+            "^system_auth$",
+            "^system_distributed$",
+            "^system_traces$",
+            "^system_schema$"
         ]
 ```
 
