@@ -485,7 +485,7 @@
             },
             {
                 "command": "cassandraWorkbench.generateConfiguration",
-                "title": "Cassandra Workbench: Generate configuration template"
+                "title": "Cassandra Workbench: Generate configuration"
             },
             {
                 "command": "cassandraWorkbench.openFileInWorkbench",
