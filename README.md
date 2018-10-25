@@ -24,7 +24,7 @@ Edit `.cassandraWorkbench.jsonc` to suit your needs. ([configuration](#configura
 ## Editor UI
 
 <p align="center">
-   <img src="https://raw.githubusercontent.com/kdcro101/vscode-cassandra/master/media/res/editor-ui.png?image1" />
+   <img src="https://raw.githubusercontent.com/kdcro101/vscode-cassandra/master/media/res/editor-ui.png?image1123" />
 </p>
 
 ##  <a name="configuration"></a><a name="user-content-configuration"></a> Configuration
