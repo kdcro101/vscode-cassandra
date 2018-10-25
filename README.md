@@ -21,6 +21,12 @@ Activate extension by running command from pallete `Cassandra Workbench: Generat
 Switch to `Cassandra worbench` panel by clicking activity bar icon.
 Edit `.cassandraWorkbench.jsonc` to suit your needs. ([configuration](#configuration))
 
+## Editor UI
+
+<p align="center">
+   <img src="https://raw.githubusercontent.com/kdcro101/vscode-cassandra/master/media/res/editor-ui.png?image1" />
+</p>
+
 ##  <a name="configuration"></a><a name="user-content-configuration"></a> Configuration
 `.cassandraWorkbench.jsonc` file contains array of cluster connection items. 
 
