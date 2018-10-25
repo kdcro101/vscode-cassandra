@@ -9,6 +9,12 @@ Design and query database with help of generated templates, autocomplete and inl
    <img src="https://raw.githubusercontent.com/kdcro101/vscode-cassandra/master/media/res/cover.png" />
 </p>
 
+ - [Quick start](#quick-start)
+ - [Editor UI](#editor-ui)
+ - [Key bindings](#key-bindings)
+ - [Configuration](#configuration)
+ - [Workspace configuration](#workspace-configuration)
+
 ## Quick start
 
 
@@ -27,7 +33,17 @@ Edit `.cassandraWorkbench.jsonc` to suit your needs. ([configuration](#configura
    <img src="https://raw.githubusercontent.com/kdcro101/vscode-cassandra/master/media/res/editor-ui.png?image766ssad" />
 </p>
 
-##  <a name="configuration"></a><a name="user-content-configuration"></a> Configuration
+## Key bindings
+
+
+| Binding        |                       |
+| ------------- |------------------------|
+| `CTRL+ALT+F`  | Find in script         |
+| `CTRL+ALT+H`  | Replace in script      |
+| `CTRL+A`      | Select all |
+| `CTRL+ENTER`  | Execute script |
+
+## Configuration
 `.cassandraWorkbench.jsonc` file contains array of cluster connection items. 
 
 Authentication modes, currently supported ([more info](https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/secureConfigNativeAuth.html)):
