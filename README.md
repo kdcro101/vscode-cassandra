@@ -2,6 +2,11 @@
 <p align="left">
 <img src="https://raw.githubusercontent.com/kdcro101/vscode-cassandra/master/media/title.png" title="Cassandra workbench for Visual Studio Code" alt="Cassandra workbench for Visual Studio Code">
 </p>
+
+[![Visual Studio Marketplace](https://vsmarketplacebadge.apphb.com/version/kdcro101.vscode-cassandra.svg)](https://marketplace.visualstudio.com/items?itemName=kdcro101.vscode-cassandra)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/kdcro101.vscode-cassandra.svg)](https://marketplace.visualstudio.com/items?itemName=kdcro101.vscode-cassandra)
+[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/kdcro101.vscode-cassandra.svg)](https://marketplace.visualstudio.com/items?itemName=kdcro101.vscode-cassandra#review-details)
+
 <p>
 Design and query database with help of generated templates, autocomplete and inline code decorations
 </p>
