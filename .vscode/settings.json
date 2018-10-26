@@ -10,6 +10,13 @@
     "favorites.groupsFirst": true,
     "typescript.navigator.showDataTypes": true,
     "typescript.navigator.showVisibilityLabels": false,
-    "typescript.tsdk": "node_modules/typescript/lib"
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "cassandraWorkbench.activeClusterName": "Cluster AllowAllAuthenticator",
+    "cassandraWorkbench.activeKeyspace": [
+        [
+            "Cluster AllowAllAuthenticator",
+            "example_keyspace"
+        ]
+    ]
     // "typescript.referencesCodeLens.enabled": true
 }

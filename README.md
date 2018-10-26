@@ -27,7 +27,7 @@ Design and query database with help of generated templates, autocomplete and inl
    <img src="https://raw.githubusercontent.com/kdcro101/vscode-cassandra/master/media/res/panel-and-settings.png?image1" />
 </p>
 
-Activate extension by running command from pallete `Cassandra Workbench: Generate configuration`. This will generate `.cassandraWorkbench.jsonc` configuration file.
+Open **workspace** (workspace path is needed for configuration to generate), activate extension by running command from pallete `Cassandra Workbench: Generate configuration`. This will generate `.cassandraWorkbench.jsonc` configuration file.
 
 Switch to `Cassandra worbench` panel by clicking activity bar icon.
 Edit `.cassandraWorkbench.jsonc` to suit your needs. ([configuration](#configuration))
