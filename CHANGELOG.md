@@ -1,3 +1,7 @@
+## 0.1.3 | 2017-10-26
+
+- fixed error `Webview: Cannot load resource outside of protocol root` on windows
+
 ## 0.1.2 | 2017-10-26
 
 - README
