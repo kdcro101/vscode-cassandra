@@ -13,6 +13,17 @@ export const generateHtml = (basePath: string, persistedStatements: WorkbenchCql
     const fontSize = ws.editor.fontSize;
     const base64Statements = Buffer.from(JSON.stringify(persistedStatements)).toString("base64");
     const splitPosition = workspace.read("splitPosition");
+
+    const runtimeJsSrc = vscode.Uri.file(path.join(basePath, "ng", "runtime.js")).with({ scheme: "vscode-resource" });
+    const polyfillsJsSrc = vscode.Uri.file(path.join(basePath, "ng", "polyfills.js")).with({ scheme: "vscode-resource" });
+    const scriptsJsSrc = vscode.Uri.file(path.join(basePath, "ng", "scripts.js")).with({ scheme: "vscode-resource" });
+    const mainJsSrc = vscode.Uri.file(path.join(basePath, "ng", "main.js")).with({ scheme: "vscode-resource" });
+
+    const monacoJsSrc = vscode.Uri.file(path.join(basePath, "node_modules", "monaco-editor", "min", "vs"))
+        .with({ scheme: "vscode-resource" });
+    const stylesCssSrc = vscode.Uri.file(path.join(basePath, "ng", "styles.css"))
+        .with({ scheme: "vscode-resource" });
+
     return `
     <!doctype html>
      <html lang="en">
@@ -20,25 +31,25 @@ export const generateHtml = (basePath: string, persistedStatements: WorkbenchCql
             <meta charset="utf-8">
             <title>Ngsrc</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="stylesheet" href="${path.join("vscode-resource:", basePath, "ng", "styles.css")}">
+            <link rel="stylesheet" href="${stylesCssSrc.toString()}">
             <script>
-                // var myWorker = new Worker('http://127.0.0.1/index.js');
+
                 const vscode = acquireVsCodeApi();
                 var codeFontFamily = "${fontFamily}";
                 var codeFontSize = "${fontSize}";
                 var codeLineHeight = "${lineHeight}";
                 var persistedStatements = JSON.parse(window.atob("${base64Statements}"));
-                var splitPosition = ${ splitPosition > 0 && splitPosition < 100 ? splitPosition : 50 }
+                var splitPosition = ${ splitPosition > 0 && splitPosition < 100 ? splitPosition : 50}
             </script>
         </head>
         <body ondragstart="return false;" ondrop="return false;" class="app-icon">
-            <script>var require = { paths: { 'vs': '${path.join("vscode-resource:", basePath,
-            "node_modules/monaco-editor/min/vs")}' } };</script>
+            <script>var require = { paths: { 'vs': '${monacoJsSrc.toString()}' } };</script>
+
             <ui-view id="appview5332" class="app-root mat-app-background"></ui-view>
-            <script type="text/javascript" src="${path.join("vscode-resource:", basePath, "ng", "runtime.js")}"></script>
-            <script type="text/javascript" src="${path.join("vscode-resource:", basePath, "ng", "polyfills.js")}"></script>
-            <script type="text/javascript" src="${path.join("vscode-resource:", basePath, "ng", "scripts.js")}"></script>
-            <script type="text/javascript" src="${path.join("vscode-resource:", basePath, "ng", "main.js")}"></script>
+            <script type="text/javascript" src="${runtimeJsSrc.toString()}"></script>
+            <script type="text/javascript" src="${polyfillsJsSrc.toString()}"></script>
+            <script type="text/javascript" src="${scriptsJsSrc.toString()}"></script>
+            <script type="text/javascript" src="${mainJsSrc.toString()}"></script>
 
         </body>
     </html>`;

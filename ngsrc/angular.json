@@ -48,6 +48,7 @@
                             "src/assets"
                         ],
                         "styles": [
+                            "node_modules/monaco-editor/min/vs/editor/editor.main.css",
                             "node_modules/handsontable/dist/handsontable.full.css",
                             "src/scss/fonts/material-icons.css",
                             "src/scss/fonts/roboto.css",
