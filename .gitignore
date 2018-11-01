@@ -5,5 +5,5 @@ node_modules
 ng/**/*.*
 ng/main.js
 .favorites.json
-res/cassandra/logs/**/*.*
+res/cassandra/logs
 res/cassandra/data/**/*.*

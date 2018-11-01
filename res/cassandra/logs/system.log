@@ -347,3 +347,35 @@ INFO  [main] 2018-10-26 16:08:43,927 Server.java:155 - Using Netty Version: [net
 INFO  [main] 2018-10-26 16:08:43,928 Server.java:156 - Starting listening for CQL clients on localhost/127.0.0.1:9042 (unencrypted)...
 INFO  [main] 2018-10-26 16:08:43,970 CassandraDaemon.java:529 - Not starting RPC server as requested. Use JMX (StorageService->startRPCServer()) or nodetool (enablethrift) to start it
 INFO  [IndexSummaryManager:1] 2018-10-26 17:08:43,204 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [IndexSummaryManager:1] 2018-10-26 18:08:43,230 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [IndexSummaryManager:1] 2018-10-26 19:08:43,244 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [CompactionExecutor:28] 2018-10-26 20:08:41,295 AutoSavingCache.java:395 - Saved KeyCache (32 items) in 21 ms
+INFO  [IndexSummaryManager:1] 2018-10-26 20:08:43,255 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [IndexSummaryManager:1] 2018-10-26 21:08:43,264 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [IndexSummaryManager:1] 2018-10-26 22:08:43,274 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [IndexSummaryManager:1] 2018-10-26 23:08:43,284 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [CompactionExecutor:28] 2018-10-27 00:08:41,286 AutoSavingCache.java:395 - Saved KeyCache (36 items) in 16 ms
+INFO  [IndexSummaryManager:1] 2018-10-27 00:08:43,293 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [IndexSummaryManager:1] 2018-10-27 10:58:12,494 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [IndexSummaryManager:1] 2018-10-27 11:58:13,410 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [IndexSummaryManager:1] 2018-10-27 12:58:13,419 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [CompactionExecutor:33] 2018-10-27 13:58:11,386 AutoSavingCache.java:395 - Saved KeyCache (39 items) in 15 ms
+INFO  [IndexSummaryManager:1] 2018-10-27 13:58:13,427 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [IndexSummaryManager:1] 2018-10-27 14:58:13,438 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [IndexSummaryManager:1] 2018-10-27 15:58:13,443 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [IndexSummaryManager:1] 2018-10-27 16:58:13,451 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [CompactionExecutor:34] 2018-10-27 17:58:11,382 AutoSavingCache.java:395 - Saved KeyCache (41 items) in 17 ms
+INFO  [IndexSummaryManager:1] 2018-10-27 17:58:13,457 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [IndexSummaryManager:1] 2018-10-27 19:07:53,613 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [IndexSummaryManager:1] 2018-10-27 20:07:53,847 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [IndexSummaryManager:1] 2018-10-27 22:45:57,296 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [CompactionExecutor:36] 2018-10-27 23:45:55,197 AutoSavingCache.java:395 - Saved KeyCache (46 items) in 15 ms
+INFO  [IndexSummaryManager:1] 2018-10-27 23:45:57,305 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [IndexSummaryManager:1] 2018-10-28 09:33:45,647 IndexSummaryRedistribution.java:77 - Redistributing index summaries
+INFO  [StorageServiceShutdownHook] 2018-10-28 10:09:49,895 HintsService.java:220 - Paused hints dispatch
+INFO  [StorageServiceShutdownHook] 2018-10-28 10:09:49,931 Server.java:176 - Stop listening for CQL clients
+INFO  [StorageServiceShutdownHook] 2018-10-28 10:09:49,935 Gossiper.java:1559 - Announcing shutdown
+INFO  [StorageServiceShutdownHook] 2018-10-28 10:09:49,940 StorageService.java:2289 - Node localhost/127.0.0.1 state jump to shutdown
+INFO  [StorageServiceShutdownHook] 2018-10-28 10:09:51,950 MessagingService.java:992 - Waiting for messaging service to quiesce
+INFO  [ACCEPT-localhost/127.0.0.1] 2018-10-28 10:09:51,962 MessagingService.java:1346 - MessagingService has terminated the accept() thread
+INFO  [StorageServiceShutdownHook] 2018-10-28 10:09:52,167 HintsService.java:220 - Paused hints dispatch
