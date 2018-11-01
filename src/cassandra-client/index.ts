@@ -34,10 +34,10 @@ export class CassandraClient extends EventEmitter {
 
     public stateConnected = new BehaviorSubject<boolean>(false);
     public clusterName: string;
+    // private structure: CassandraKeyspace[];
+    public isInvalid: boolean = false;
 
     private client: cassandra.Client;
-    private structure: CassandraKeyspace[];
-    private isInvalid: boolean = false;
 
     constructor(private config: ValidatedConfigClusterItem) {
         super();
@@ -61,6 +61,23 @@ export class CassandraClient extends EventEmitter {
         this.clusterName = config.name;
 
     }
+    public destroy() {
+        return new Promise((resolve, reject) => {
+
+            if (!this.client) {
+                resolve();
+                return;
+            }
+
+            try {
+                this.client.shutdown(() => {
+                    resolve();
+                });
+            } catch (e) {
+                reject(e);
+            }
+        });
+    }
     public execute(cql: string, params?: any, preparedStatement: boolean = false): Promise<cassandra.types.ResultSet> {
 
         return this.client.execute(cql, params, { prepare: preparedStatement });
@@ -72,9 +89,11 @@ export class CassandraClient extends EventEmitter {
             this.client.connect()
                 .then((result) => {
                     console.log("Connected to cluster with %d host(s): %j", this.client.hosts.length, this.client.hosts.keys());
+                    this.stateConnected.next(true);
                     resolve();
 
                 }).catch((e) => {
+                    this.stateConnected.next(false);
                     reject(e);
                 });
 

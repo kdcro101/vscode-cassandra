@@ -12,7 +12,8 @@
         "theme": "dark"
     },
     "categories": [
-        "Other", "Programming Languages"
+        "Other",
+        "Programming Languages"
     ],
     "keywords": [
         "CQL",
@@ -36,16 +37,18 @@
     },
     "main": "./out/extension",
     "contributes": {
-        "languages": [{
-            "id": "cql",
-            "aliases": [
-                "CQL",
-                "cql"
-            ],
-            "extensions": [
-                ".cql"
-            ]
-        }],
+        "languages": [
+            {
+                "id": "cql",
+                "aliases": [
+                    "CQL",
+                    "cql"
+                ],
+                "extensions": [
+                    ".cql"
+                ]
+            }
+        ],
         "configuration": {
             "type": "object",
             "title": "Cassandra workbench configuration",
@@ -72,7 +75,8 @@
                         "type": "array",
                         "title": "inner objects",
                         "description": "Cluster name, keypace",
-                        "items": [{
+                        "items": [
+                            {
                                 "type": "string",
                                 "description": "Cluster name"
                             },
@@ -101,25 +105,32 @@
             }
         },
         "viewsContainers": {
-            "activitybar": [{
-                "id": "object-explorer",
-                "title": "Casssandra workbench",
-                "icon": "icons/activity.svg"
-            }]
+            "activitybar": [
+                {
+                    "id": "object-explorer",
+                    "title": "Casssandra workbench",
+                    "icon": "icons/activity.svg"
+                }
+            ]
         },
         "views": {
-            "object-explorer": [{
-                "id": "cassandraWorkbenchView",
-                "name": "Explorer"
-            }]
+            "object-explorer": [
+                {
+                    "id": "cassandraWorkbenchView",
+                    "name": "Explorer"
+                }
+            ]
         },
         "menus": {
-            "explorer/context": [{
-                "when": "resourceLangId == cql",
-                "command": "cassandraWorkbench.openFileInWorkbench",
-                "group": "vscode-cassandra"
-            }],
-            "view/title": [{
+            "explorer/context": [
+                {
+                    "when": "resourceLangId == cql",
+                    "command": "cassandraWorkbench.openFileInWorkbench",
+                    "group": "vscode-cassandra"
+                }
+            ],
+            "view/title": [
+                {
                     "when": "view == cassandraWorkbenchView",
                     "command": "cassandraWorkbench.refresh",
                     "group": "navigation"
@@ -135,7 +146,8 @@
                     "group": "navigation"
                 }
             ],
-            "view/item/context": [{
+            "view/item/context": [
+                {
                     "command": "cassandraWorkbench.cqlListRoles",
                     "when": "view == cassandraWorkbenchView && viewItem == cluster",
                     "group": "01_common@1"
@@ -170,7 +182,6 @@
                     "when": "view == cassandraWorkbenchView && viewItem == table",
                     "group": "012_common@2"
                 },
-
                 {
                     "command": "cassandraWorkbench.cqlTableAlterAdd",
                     "when": "view == cassandraWorkbenchView && viewItem == table",
@@ -347,13 +358,16 @@
                     "group": "5_cutcopypaste"
                 }
             ],
-            "editor/title": [{
-                "when": "resourceLangId == cql",
-                "command": "cassandraWorkbench.openEditorInWorkbench",
-                "group": "navigation"
-            }]
+            "editor/title": [
+                {
+                    "when": "resourceLangId == cql",
+                    "command": "cassandraWorkbench.openEditorInWorkbench",
+                    "group": "navigation"
+                }
+            ]
         },
-        "commands": [{
+        "commands": [
+            {
                 "command": "cassandraWorkbench.cqlAggregateDrop",
                 "title": "DROP AGGREGATE"
             },
@@ -574,6 +588,7 @@
         "gulp-jasmine": "^4.0.0",
         "gulp-typescript": "^5.0.0-alpha.1",
         "jasmine": "^3.1.0",
+        "jasmine-terminal-reporter": "^1.0.3",
         "jasmine-ts": "^0.2.1",
         "merge2": "^1.2.2",
         "rimraf": "^2.6.2",

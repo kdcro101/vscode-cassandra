@@ -33,7 +33,12 @@ gulp.task('build-webview', function(cb) {
 });
 gulp.task('test:run', function() {
     return gulp.src('out/spec/*.spec.js')
-        .pipe(jasmine())
+        .pipe(jasmine({
+            verbose: true,
+            config:{
+                random: true,
+            }
+        }))
 });
 gulp.task('test', [], function(next) {
     // runSequence('clean', 'build-type-definitions', 'build-project', 'build-bundle', 'test:run', next);
