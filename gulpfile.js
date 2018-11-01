@@ -4,18 +4,32 @@ const jasmine = require('gulp-jasmine');
 const clean = require('gulp-clean');
 const runSequence = require('run-sequence');
 var exec = require('child_process').exec;
+var sort = require('gulp-sort');
 
 const merge = require('merge2');
 
-gulp.task('clean', function() {
+gulp.task('clean', function(next) {
+    runSequence('clean:extension', 'clean:webview', next);
+});
+
+gulp.task('clean:spec', function() {
+    const task1 = gulp.src('out/spec', {
+        read: false
+    }).pipe(clean());
+    return merge(task1);
+});
+gulp.task('clean:extension', function() {
     const task1 = gulp.src('out', {
         read: false
     }).pipe(clean());
-    const task2 = gulp.src('ng', {
+    return merge(task1);
+});
+
+gulp.task('clean:webview', function() {
+    const task1 = gulp.src('ng', {
         read: false
     }).pipe(clean());
-
-    return merge(task1, task2);
+    return merge(task1);
 });
 gulp.task('build-extension', function(cb) {
     exec('./node_modules/typescript/bin/tsc -p ./', function(err, stdout, stderr) {
@@ -33,15 +47,19 @@ gulp.task('build-webview', function(cb) {
 });
 gulp.task('test:run', function() {
     return gulp.src('out/spec/*.spec.js')
+        .pipe(sort({asc: true}))
         .pipe(jasmine({
             verbose: true,
-            config:{
-                random: true,
+            config: {
+                random: false,
+                helpers: [
+                    'out/spec/helpers/**/*.js'
+                ]
             }
         }))
 });
 gulp.task('test', [], function(next) {
-    // runSequence('clean', 'build-type-definitions', 'build-project', 'build-bundle', 'test:run', next);
+    runSequence('clean:spec', 'build-extension', 'test:run', next);
 });
 gulp.task('default', [], function(cb) {
     cb();

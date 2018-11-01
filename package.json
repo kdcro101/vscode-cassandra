@@ -586,6 +586,7 @@
         "gulp-clean": "^0.4.0",
         "gulp-exec": "^3.0.1",
         "gulp-jasmine": "^4.0.0",
+        "gulp-sort": "^2.0.0",
         "gulp-typescript": "^5.0.0-alpha.1",
         "jasmine": "^3.1.0",
         "jasmine-terminal-reporter": "^1.0.3",

@@ -94,7 +94,7 @@ export class TabDraggable {
     }
     private onDocumentMouseUp = (e: MouseEvent) => {
         if (this.active === true) {
-            console.log("onDocumentMouseUp");
+            // console.log("onDocumentMouseUp");
             this.dragEnd();
         }
     }
@@ -102,7 +102,7 @@ export class TabDraggable {
         this.element.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
     }
     private onElementMove(x: number, y: number) {
-        console.log("onMove");
+        // console.log("onMove");
 
         if (this.active) {
 
@@ -113,7 +113,7 @@ export class TabDraggable {
         }
     }
     private onContainerMove(x: number, y: number) {
-        console.log(`container move (${x},${y})`);
+        // console.log(`container move (${x},${y})`);
 
         const tabs = this.tabItems.toArray();
         let hovered: number = -1;

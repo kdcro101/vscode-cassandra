@@ -22,7 +22,7 @@ export const cellRendererJson = (dataGrid: UiDataGridComponent): Function => {
 
         if (!element) {
             element = RenderJson.render(obj, () => {
-                console.log("Opening node...");
+                // console.log("Opening node...");
                 instance.deselectCell();
                 instance.render();
                 setTimeout(() => {

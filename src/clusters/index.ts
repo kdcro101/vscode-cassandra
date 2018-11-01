@@ -56,9 +56,9 @@ export class Clusters {
         }
         if (this.clientsCache[index]) {
             this.clientsCache[index].structure = null;
-            console.log(`invalidateStructure DONE ${index}`);
+
         } else {
-            console.log(`invalidateStructure DATA IS NULL ${index}`);
+
         }
     }
     public isValidName(clusterName: string) {
@@ -109,7 +109,7 @@ export class Clusters {
 
             const cache = this.clientsCache[index];
             if (cache != null && cache.structure && cache.error === false && force === false) {
-                console.log("STRUCTURE FROM CACHE");
+
                 resolve(cache.structure);
                 return;
             }
@@ -117,7 +117,7 @@ export class Clusters {
             from(this.getClient(index)).pipe(
                 concatMap((client) => client.getStructure()),
             ).subscribe((structure) => {
-                console.log("STRUCTURE READ");
+
                 // store to cache
                 this.clientsCache[index].structure = structure;
 

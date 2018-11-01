@@ -61,7 +61,7 @@ export class CassandraWorkbench {
                 }
             }),
         ).subscribe((list) => {
-            console.log(`Cassandra workbench initialized: ${list.length}`);
+            // console.log(`Cassandra workbench initialized: ${list.length}`);
             list.forEach((item, i) => {
                 console.log(`\t[${i}] '${item.name}'`);
             });
