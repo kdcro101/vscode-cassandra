@@ -5,62 +5,42 @@ const clean = require('gulp-clean');
 const runSequence = require('run-sequence');
 var exec = require('child_process').exec;
 
-gulp.task('build-type-definitions', function() {
-	const merge = require('merge2');
-	const tsProject = ts.createProject('tsconfig.json');
-
-	var tsResult = tsProject.src()
-		.pipe(tsProject());
-
-	return merge([
-		// tsResult.dts.pipe(gulp.dest('./definitions')),
-		tsResult.dts.pipe(gulp.dest('./definitions')),
-		// tsResult.dts.pipe(gulp.dest('./browser'))
-		// tsResult.js.pipe(gulp.dest(tsProject.config.compilerOptions.outDir))
-
-	]);
-});
+const merge = require('merge2');
 
 gulp.task('clean', function() {
-	return gulp.src('node', {
-		read: false
-	}).pipe(clean());
+    const task1 = gulp.src('out', {
+        read: false
+    }).pipe(clean());
+    const task2 = gulp.src('ng', {
+        read: false
+    }).pipe(clean());
+
+    return merge(task1, task2);
 });
-
-gulp.task('build-project', function(cb) {
-	exec('./node_modules/typescript/bin/tsc -p ./', function(err, stdout, stderr) {
-		console.log(stdout);
-		console.log(stderr);
-		cb(err);
-	});
+gulp.task('build-extension', function(cb) {
+    exec('./node_modules/typescript/bin/tsc -p ./', function(err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
 });
-
-// gulp.task('build-bundle', function(cb) {
-// 	exec('script/browserfy-bundle.sh', function(err, stdout, stderr) {
-// 		console.log(stdout);
-// 		console.log(stderr);
-// 		cb(err);
-// 	});
-// });
-// gulp.task('build-main', function(cb) {
-// 	exec('script/browserfy-browser.sh', function(err, stdout, stderr) {
-// 		console.log(stdout);
-// 		console.log(stderr);
-// 		cb(err);
-// 	});
-// });
-
+gulp.task('build-webview', function(cb) {
+    exec('ng build --prod --aot --build-optimizer --output-hashing none', {
+        cwd: "./ngsrc"
+    }, function(err, stdout, stderr) {
+        cb(err);
+    });
+});
 gulp.task('test:run', function() {
-	return gulp.src('node/spec/*.spec.js')
-		.pipe(jasmine({
-            verbose:true,
-        }));
+    return gulp.src('out/spec/*.spec.js')
+        .pipe(jasmine())
 });
-
 gulp.task('test', [], function(next) {
-	runSequence('clean', 'build-type-definitions', 'build-project', 'test:run', next);
+    // runSequence('clean', 'build-type-definitions', 'build-project', 'build-bundle', 'test:run', next);
 });
-
-// gulp.task('default', [], function(cb) {
-// 	runSequence('clean', 'build-type-definitions', 'build-project', 'build-bundle', 'build-main', cb);
-// });
+gulp.task('default', [], function(cb) {
+    cb();
+});
+gulp.task('build', [], function(cb) {
+    runSequence('clean', 'build-extension', 'build-webview', cb);
+});

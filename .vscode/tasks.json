@@ -2,7 +2,8 @@
 // for the documentation about the tasks.json format
 {
     "version": "2.0.0",
-    "tasks": [{
+    "tasks": [
+        {
             "type": "npm",
             "script": "watch",
             "problemMatcher": "$tsc-watch",
@@ -50,6 +51,27 @@
         {
             "type": "typescript",
             "tsconfig": "ngsrc/e2e/tsconfig.e2e.json",
+            "problemMatcher": [
+                "$tsc"
+            ]
+        },
+        {
+            "type": "gulp",
+            "task": "build-extension",
+            "problemMatcher": [
+                "$tsc"
+            ]
+        },
+        {
+            "type": "gulp",
+            "task": "build-webview",
+            "problemMatcher": [
+                "$gulp-tsc"
+            ]
+        },
+        {
+            "type": "gulp",
+            "task": "build",
             "problemMatcher": [
                 "$tsc"
             ]

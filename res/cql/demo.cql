@@ -1,0 +1,94 @@
+-- change keyspace name
+CREATE KEYSPACE example_keyspace
+	WITH REPLICATION = {
+		'class': 'org.apache.cassandra.locator.SimpleStrategy',
+		'replication_factor': '1'
+	}
+	AND DURABLE_WRITES = true;
+
+/*
+################################################
+################### TYPES ######################
+################################################
+*/
+
+/*
+################################################
+################# FUNCTIONS ####################
+################################################
+*/
+
+/*
+################################################
+################# AGGREGATES ###################
+################################################
+*/
+
+/*
+################################################
+################### TABLES #####################
+################################################
+*/
+CREATE TABLE example_keyspace.table_collections (
+	c_frozen_map frozen<map<text, frozen<map<int, int>>>>,
+	c_frozen_set frozen<set<text>>,
+	c_frozen_tuple frozen<tuple<text, text, int>>,
+	c_list_int list<int>,
+	c_list_text list<text>,
+	c_map_int map<int, int>,
+	c_map_text map<text, text>,
+	c_set_int set<int>,
+	c_set_text set<text>,
+	c_tuple frozen<tuple<text, text, int>>,
+	cck1 text,
+	cck2 text,
+	pk1 text,
+	pk2 text,
+	PRIMARY KEY((pk1, pk2), cck1, cck2)
+) WITH 	dclocal_read_repair_chance = 0.1 AND
+	gc_grace_seconds = 864000 AND
+	bloom_filter_fp_chance = 0.01 AND
+	caching = { 'keys': 'ALL', 'rows_per_partition': 'NONE' } AND
+	comment = '' AND
+	compaction = { 'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold': '32', 'min_threshold': '4' } AND
+	compression = { 'chunk_length_in_kb': '64', 'class': 'org.apache.cassandra.io.compress.LZ4Compressor' } AND
+	default_time_to_live = 0 AND
+	speculative_retry = '99PERCENTILE' AND
+	min_index_interval = 128 AND
+	max_index_interval = 2048 AND
+	crc_check_chance = 1;
+
+CREATE TABLE example_keyspace.table_simple (
+	c_ascii ascii,
+	c_bigint bigint,
+	c_blob blob,
+	c_boolean boolean,
+	c_date date,
+	c_decimal decimal,
+	c_double double,
+	c_float float,
+	c_int int,
+	cck1 text,
+	cck2 text,
+	pk1 text,
+	pk2 text,
+	PRIMARY KEY((pk1, pk2), cck1, cck2)
+) WITH 	dclocal_read_repair_chance = 0.1 AND
+	gc_grace_seconds = 864000 AND
+	bloom_filter_fp_chance = 0.01 AND
+	caching = { 'keys': 'ALL', 'rows_per_partition': 'NONE' } AND
+	comment = '' AND
+	compaction = { 'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold': '32', 'min_threshold': '4' } AND
+	compression = { 'chunk_length_in_kb': '64', 'class': 'org.apache.cassandra.io.compress.LZ4Compressor' } AND
+	default_time_to_live = 0 AND
+	speculative_retry = '99PERCENTILE' AND
+	min_index_interval = 128 AND
+	max_index_interval = 2048 AND
+	crc_check_chance = 1;
+
+
+/*
+################################################
+############# MATERIALIZED VIEWS ###############
+################################################
+*/

@@ -1,5 +1,4 @@
 import { CommonTokenStream, ParserRuleContext, TokenStreamRewriter } from "antlr4ts";
-import { KwSelectContext, KwWhereContext, RootContext } from "../antlr/CqlParser";
 import { CqlParserListener } from "../antlr/CqlParserListener";
 
 export type RuleClassType = "keyword" |

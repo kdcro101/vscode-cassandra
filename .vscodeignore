@@ -4,6 +4,7 @@ out/test/**
 out/**/*.map
 src/**
 res/**
+spec/**
 colors
 .gitignore
 .editorconfig
