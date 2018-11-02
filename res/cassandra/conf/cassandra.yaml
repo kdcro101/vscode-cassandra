@@ -422,7 +422,7 @@ seed_provider:
       parameters:
           # seeds is actually a comma-delimited list of addresses.
           # Ex: "<ip1>,<ip2>,<ip3>"
-          - seeds: "127.0.0.1"
+          - seeds: "10.42.0.254"
 
 # For workloads with more data than can fit in memory, Cassandra's
 # bottleneck will be reads that need to fetch data from
@@ -435,13 +435,13 @@ seed_provider:
 # On the other hand, since writes are almost never IO bound, the ideal
 # number of "concurrent_writes" is dependent on the number of cores in
 # your system; (8 * number_of_cores) is a good rule of thumb.
-concurrent_reads: 32
-concurrent_writes: 32
-concurrent_counter_writes: 32
+concurrent_reads: 8
+concurrent_writes: 8
+concurrent_counter_writes: 8
 
 # For materialized view writes, as there is a read involved, so this should
 # be limited by the less of concurrent reads or concurrent writes.
-concurrent_materialized_view_writes: 32
+concurrent_materialized_view_writes: 8
 
 # Maximum memory to use for sstable chunk cache and buffer pooling.
 # 32MB of this are reserved for pooling buffers, the rest is used as an
@@ -596,11 +596,11 @@ ssl_storage_port: 7001
 #
 # Setting listen_address to 0.0.0.0 is always wrong.
 #
-listen_address: localhost
+#listen_address: localhost
 
 # Set listen_address OR listen_interface, not both. Interfaces must correspond
 # to a single address, IP aliasing is not supported.
-# listen_interface: eth0
+listen_interface: wlan0
 
 # If you choose to specify the interface by name and the interface has an ipv4 and an ipv6 address
 # you can specify which should be chosen using listen_interface_prefer_ipv6. If false the first ipv4
@@ -673,11 +673,11 @@ start_rpc: false
 # set broadcast_rpc_address to a value other than 0.0.0.0.
 #
 # For security reasons, you should not expose this port to the internet.  Firewall it if needed.
-rpc_address: localhost
+rpc_address: 0.0.0.0
 
 # Set rpc_address OR rpc_interface, not both. Interfaces must correspond
 # to a single address, IP aliasing is not supported.
-# rpc_interface: eth1
+# rpc_interface: wlan0
 
 # If you choose to specify the interface by name and the interface has an ipv4 and an ipv6 address
 # you can specify which should be chosen using rpc_interface_prefer_ipv6. If false the first ipv4
@@ -692,7 +692,7 @@ rpc_port: 9160
 # be set to 0.0.0.0. If left blank, this will be set to the value of
 # rpc_address. If rpc_address is set to 0.0.0.0, broadcast_rpc_address must
 # be set.
-# broadcast_rpc_address: 1.2.3.4
+broadcast_rpc_address: 10.42.0.254
 
 # enable or disable keepalive on rpc/native connections
 rpc_keepalive: true
