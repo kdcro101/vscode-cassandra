@@ -1,3 +1,8 @@
+## 0.1.4 | 2017-11-02
+
+- fix ALTER USER parser
+- fix DROP INDEX semicolon missing
+
 ## 0.1.3 | 2017-10-26
 
 - fixed error `Webview: Cannot load resource outside of protocol root` on windows

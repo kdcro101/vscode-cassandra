@@ -176,7 +176,8 @@ K_UUID: U U I D  | 'UUID';
 K_VARCHAR: V A R C H A R | 'VARCHAR';
 K_VARINT: V A R I N T | 'VARINT';
 
-
+K_USERS: U S E R S  | 'USERS';
+K_USER: U S E R  | 'USER';
 
 fragment A : [aA]; // match either an 'a' or 'A'
 fragment B : [bB];
@@ -247,6 +248,5 @@ OPERATOR_LTE: OPERATOR_LTE_FRAG;
 OPERATOR_GTE: OPERATOR_GTE_FRAG;
 
 
-K_USERS: U S E R S  | 'USERS';
-K_USER: U S E R  | 'USER';
+
 

@@ -16,7 +16,7 @@ export const indexDrop = (keyspace: string, data: CassandraTable, indexName: str
     return new Promise((resolve, reject) => {
 
         const out: string[] = [
-            `DROP INDEX ${keyspace}.${indexName}`,
+            `DROP INDEX ${keyspace}.${indexName};`,
         ];
 
         resolve(out.join("\n"));

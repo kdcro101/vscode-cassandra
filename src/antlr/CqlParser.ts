@@ -189,21 +189,21 @@ export class CqlParser extends Parser {
 	public static readonly K_UUID=159;
 	public static readonly K_VARCHAR=160;
 	public static readonly K_VARINT=161;
-	public static readonly CODE_BLOCK=162;
-	public static readonly STRING_LITERAL=163;
-	public static readonly DECIMAL_LITERAL=164;
-	public static readonly FLOAT_LITERAL=165;
-	public static readonly HEXADECIMAL_LITERAL=166;
-	public static readonly REAL_LITERAL=167;
-	public static readonly OBJECT_NAME=168;
-	public static readonly UUID=169;
-	public static readonly OPERATOR_EQ=170;
-	public static readonly OPERATOR_LT=171;
-	public static readonly OPERATOR_GT=172;
-	public static readonly OPERATOR_LTE=173;
-	public static readonly OPERATOR_GTE=174;
-	public static readonly K_USERS=175;
-	public static readonly K_USER=176;
+	public static readonly K_USERS=162;
+	public static readonly K_USER=163;
+	public static readonly CODE_BLOCK=164;
+	public static readonly STRING_LITERAL=165;
+	public static readonly DECIMAL_LITERAL=166;
+	public static readonly FLOAT_LITERAL=167;
+	public static readonly HEXADECIMAL_LITERAL=168;
+	public static readonly REAL_LITERAL=169;
+	public static readonly OBJECT_NAME=170;
+	public static readonly UUID=171;
+	public static readonly OPERATOR_EQ=172;
+	public static readonly OPERATOR_LT=173;
+	public static readonly OPERATOR_GT=174;
+	public static readonly OPERATOR_LTE=175;
+	public static readonly OPERATOR_GTE=176;
 	public static readonly RULE_root = 0;
 	public static readonly RULE_cqls = 1;
 	public static readonly RULE_statementSeparator = 2;
@@ -660,10 +660,9 @@ export class CqlParser extends Parser {
 		"K_COUNTER", "K_DATE", "K_DECIMAL", "K_DOUBLE", "K_FLOAT", "K_FROZEN", 
 		"K_INET", "K_INT", "K_LIST", "K_ROLES", "K_ROLE", "K_MAP", "K_SMALLINT", 
 		"K_TEXT", "K_TIMEUUID", "K_TIME", "K_TINYINT", "K_TUPLE", "K_UUID", "K_VARCHAR", 
-		"K_VARINT", "CODE_BLOCK", "STRING_LITERAL", "DECIMAL_LITERAL", "FLOAT_LITERAL", 
-		"HEXADECIMAL_LITERAL", "REAL_LITERAL", "OBJECT_NAME", "UUID", "OPERATOR_EQ", 
-		"OPERATOR_LT", "OPERATOR_GT", "OPERATOR_LTE", "OPERATOR_GTE", "K_USERS", 
-		"K_USER"
+		"K_VARINT", "K_USERS", "K_USER", "CODE_BLOCK", "STRING_LITERAL", "DECIMAL_LITERAL", 
+		"FLOAT_LITERAL", "HEXADECIMAL_LITERAL", "REAL_LITERAL", "OBJECT_NAME", 
+		"UUID", "OPERATOR_EQ", "OPERATOR_LT", "OPERATOR_GT", "OPERATOR_LTE", "OPERATOR_GTE"
 	];
 	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(CqlParser._LITERAL_NAMES, CqlParser._SYMBOLIC_NAMES, []);
 
@@ -4942,9 +4941,9 @@ export class CqlParser extends Parser {
 			case CqlParser.K_TYPE:
 			case CqlParser.K_ROLES:
 			case CqlParser.K_ROLE:
-			case CqlParser.OBJECT_NAME:
 			case CqlParser.K_USERS:
 			case CqlParser.K_USER:
+			case CqlParser.OBJECT_NAME:
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 1471;
@@ -5510,7 +5509,7 @@ export class CqlParser extends Parser {
 			this.state = 1577;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la===CqlParser.DQUOTE || ((((_la - 53)) & ~0x1F) === 0 && ((1 << (_la - 53)) & ((1 << (CqlParser.K_DURABLE_WRITES - 53)) | (1 << (CqlParser.K_INITCOND - 53)) | (1 << (CqlParser.K_KEY - 53)) | (1 << (CqlParser.K_LANGUAGE - 53)) | (1 << (CqlParser.K_LEVEL - 53)))) !== 0) || ((((_la - 94)) & ~0x1F) === 0 && ((1 << (_la - 94)) & ((1 << (CqlParser.K_OPTIONS - 94)) | (1 << (CqlParser.K_PARTITION - 94)) | (1 << (CqlParser.K_PERMISSIONS - 94)) | (1 << (CqlParser.K_REPLICATION - 94)) | (1 << (CqlParser.K_TTL - 94)))) !== 0) || ((((_la - 127)) & ~0x1F) === 0 && ((1 << (_la - 127)) & ((1 << (CqlParser.K_TYPE - 127)) | (1 << (CqlParser.K_ROLES - 127)) | (1 << (CqlParser.K_ROLE - 127)))) !== 0) || ((((_la - 168)) & ~0x1F) === 0 && ((1 << (_la - 168)) & ((1 << (CqlParser.OBJECT_NAME - 168)) | (1 << (CqlParser.K_USERS - 168)) | (1 << (CqlParser.K_USER - 168)))) !== 0)) {
+			if (_la===CqlParser.DQUOTE || ((((_la - 53)) & ~0x1F) === 0 && ((1 << (_la - 53)) & ((1 << (CqlParser.K_DURABLE_WRITES - 53)) | (1 << (CqlParser.K_INITCOND - 53)) | (1 << (CqlParser.K_KEY - 53)) | (1 << (CqlParser.K_LANGUAGE - 53)) | (1 << (CqlParser.K_LEVEL - 53)))) !== 0) || ((((_la - 94)) & ~0x1F) === 0 && ((1 << (_la - 94)) & ((1 << (CqlParser.K_OPTIONS - 94)) | (1 << (CqlParser.K_PARTITION - 94)) | (1 << (CqlParser.K_PERMISSIONS - 94)) | (1 << (CqlParser.K_REPLICATION - 94)) | (1 << (CqlParser.K_TTL - 94)))) !== 0) || ((((_la - 127)) & ~0x1F) === 0 && ((1 << (_la - 127)) & ((1 << (CqlParser.K_TYPE - 127)) | (1 << (CqlParser.K_ROLES - 127)) | (1 << (CqlParser.K_ROLE - 127)))) !== 0) || ((((_la - 162)) & ~0x1F) === 0 && ((1 << (_la - 162)) & ((1 << (CqlParser.K_USERS - 162)) | (1 << (CqlParser.K_USER - 162)) | (1 << (CqlParser.OBJECT_NAME - 162)))) !== 0)) {
 				{
 				this.state = 1576;
 				this.objectUnknown();
@@ -5688,9 +5687,9 @@ export class CqlParser extends Parser {
 			case CqlParser.K_TYPE:
 			case CqlParser.K_ROLES:
 			case CqlParser.K_ROLE:
-			case CqlParser.OBJECT_NAME:
 			case CqlParser.K_USERS:
 			case CqlParser.K_USER:
+			case CqlParser.OBJECT_NAME:
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 1599;
@@ -5770,9 +5769,9 @@ export class CqlParser extends Parser {
 			case CqlParser.K_TYPE:
 			case CqlParser.K_ROLES:
 			case CqlParser.K_ROLE:
-			case CqlParser.OBJECT_NAME:
 			case CqlParser.K_USERS:
 			case CqlParser.K_USER:
+			case CqlParser.OBJECT_NAME:
 				{
 				this.state = 1608;
 				this.columnSpec();
@@ -5832,9 +5831,9 @@ export class CqlParser extends Parser {
 			case CqlParser.K_TYPE:
 			case CqlParser.K_ROLES:
 			case CqlParser.K_ROLE:
-			case CqlParser.OBJECT_NAME:
 			case CqlParser.K_USERS:
 			case CqlParser.K_USER:
+			case CqlParser.OBJECT_NAME:
 				{
 				this.state = 1616;
 				this.columnSpec();
@@ -5894,9 +5893,9 @@ export class CqlParser extends Parser {
 			case CqlParser.K_TYPE:
 			case CqlParser.K_ROLES:
 			case CqlParser.K_ROLE:
-			case CqlParser.OBJECT_NAME:
 			case CqlParser.K_USERS:
 			case CqlParser.K_USER:
+			case CqlParser.OBJECT_NAME:
 				{
 				this.state = 1624;
 				this.columnSpec();
@@ -5941,7 +5940,7 @@ export class CqlParser extends Parser {
 			this.state = 1632;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la===CqlParser.DQUOTE || ((((_la - 53)) & ~0x1F) === 0 && ((1 << (_la - 53)) & ((1 << (CqlParser.K_DURABLE_WRITES - 53)) | (1 << (CqlParser.K_INITCOND - 53)) | (1 << (CqlParser.K_KEY - 53)) | (1 << (CqlParser.K_LANGUAGE - 53)) | (1 << (CqlParser.K_LEVEL - 53)))) !== 0) || ((((_la - 94)) & ~0x1F) === 0 && ((1 << (_la - 94)) & ((1 << (CqlParser.K_OPTIONS - 94)) | (1 << (CqlParser.K_PARTITION - 94)) | (1 << (CqlParser.K_PERMISSIONS - 94)) | (1 << (CqlParser.K_REPLICATION - 94)) | (1 << (CqlParser.K_TTL - 94)))) !== 0) || ((((_la - 127)) & ~0x1F) === 0 && ((1 << (_la - 127)) & ((1 << (CqlParser.K_TYPE - 127)) | (1 << (CqlParser.K_ROLES - 127)) | (1 << (CqlParser.K_ROLE - 127)))) !== 0) || ((((_la - 168)) & ~0x1F) === 0 && ((1 << (_la - 168)) & ((1 << (CqlParser.OBJECT_NAME - 168)) | (1 << (CqlParser.K_USERS - 168)) | (1 << (CqlParser.K_USER - 168)))) !== 0)) {
+			if (_la===CqlParser.DQUOTE || ((((_la - 53)) & ~0x1F) === 0 && ((1 << (_la - 53)) & ((1 << (CqlParser.K_DURABLE_WRITES - 53)) | (1 << (CqlParser.K_INITCOND - 53)) | (1 << (CqlParser.K_KEY - 53)) | (1 << (CqlParser.K_LANGUAGE - 53)) | (1 << (CqlParser.K_LEVEL - 53)))) !== 0) || ((((_la - 94)) & ~0x1F) === 0 && ((1 << (_la - 94)) & ((1 << (CqlParser.K_OPTIONS - 94)) | (1 << (CqlParser.K_PARTITION - 94)) | (1 << (CqlParser.K_PERMISSIONS - 94)) | (1 << (CqlParser.K_REPLICATION - 94)) | (1 << (CqlParser.K_TTL - 94)))) !== 0) || ((((_la - 127)) & ~0x1F) === 0 && ((1 << (_la - 127)) & ((1 << (CqlParser.K_TYPE - 127)) | (1 << (CqlParser.K_ROLES - 127)) | (1 << (CqlParser.K_ROLE - 127)))) !== 0) || ((((_la - 162)) & ~0x1F) === 0 && ((1 << (_la - 162)) & ((1 << (CqlParser.K_USERS - 162)) | (1 << (CqlParser.K_USER - 162)) | (1 << (CqlParser.OBJECT_NAME - 162)))) !== 0)) {
 				{
 				this.state = 1631;
 				this.deleteColumnList();
@@ -6735,7 +6734,7 @@ export class CqlParser extends Parser {
 			this.state = 1811;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (_la===CqlParser.K_FALSE || _la===CqlParser.K_NULL || _la===CqlParser.K_TRUE || ((((_la - 163)) & ~0x1F) === 0 && ((1 << (_la - 163)) & ((1 << (CqlParser.STRING_LITERAL - 163)) | (1 << (CqlParser.DECIMAL_LITERAL - 163)) | (1 << (CqlParser.FLOAT_LITERAL - 163)) | (1 << (CqlParser.HEXADECIMAL_LITERAL - 163)) | (1 << (CqlParser.UUID - 163)))) !== 0)) {
+			while (_la===CqlParser.K_FALSE || _la===CqlParser.K_NULL || _la===CqlParser.K_TRUE || ((((_la - 165)) & ~0x1F) === 0 && ((1 << (_la - 165)) & ((1 << (CqlParser.STRING_LITERAL - 165)) | (1 << (CqlParser.DECIMAL_LITERAL - 165)) | (1 << (CqlParser.FLOAT_LITERAL - 165)) | (1 << (CqlParser.HEXADECIMAL_LITERAL - 165)) | (1 << (CqlParser.UUID - 165)))) !== 0)) {
 				{
 				{
 				this.state = 1805;
@@ -7222,9 +7221,9 @@ export class CqlParser extends Parser {
 			case CqlParser.K_TYPE:
 			case CqlParser.K_ROLES:
 			case CqlParser.K_ROLE:
-			case CqlParser.OBJECT_NAME:
 			case CqlParser.K_USERS:
 			case CqlParser.K_USER:
+			case CqlParser.OBJECT_NAME:
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 1890;
@@ -7254,9 +7253,9 @@ export class CqlParser extends Parser {
 					case CqlParser.K_TYPE:
 					case CqlParser.K_ROLES:
 					case CqlParser.K_ROLE:
-					case CqlParser.OBJECT_NAME:
 					case CqlParser.K_USERS:
 					case CqlParser.K_USER:
+					case CqlParser.OBJECT_NAME:
 						{
 						this.state = 1892;
 						this.columnSpec();
@@ -7326,9 +7325,9 @@ export class CqlParser extends Parser {
 			case CqlParser.K_TYPE:
 			case CqlParser.K_ROLES:
 			case CqlParser.K_ROLE:
-			case CqlParser.OBJECT_NAME:
 			case CqlParser.K_USERS:
 			case CqlParser.K_USER:
+			case CqlParser.OBJECT_NAME:
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 1904;
@@ -7358,9 +7357,9 @@ export class CqlParser extends Parser {
 					case CqlParser.K_TYPE:
 					case CqlParser.K_ROLES:
 					case CqlParser.K_ROLE:
-					case CqlParser.OBJECT_NAME:
 					case CqlParser.K_USERS:
 					case CqlParser.K_USER:
+					case CqlParser.OBJECT_NAME:
 						{
 						this.state = 1906;
 						this.columnSpec();
@@ -7752,9 +7751,9 @@ export class CqlParser extends Parser {
 			case CqlParser.K_TYPE:
 			case CqlParser.K_ROLES:
 			case CqlParser.K_ROLE:
-			case CqlParser.OBJECT_NAME:
 			case CqlParser.K_USERS:
 			case CqlParser.K_USER:
+			case CqlParser.OBJECT_NAME:
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 1966;
@@ -8165,7 +8164,7 @@ export class CqlParser extends Parser {
 			this.state = 2033;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la===CqlParser.K_FALSE || _la===CqlParser.K_NULL || _la===CqlParser.K_TRUE || ((((_la - 163)) & ~0x1F) === 0 && ((1 << (_la - 163)) & ((1 << (CqlParser.STRING_LITERAL - 163)) | (1 << (CqlParser.DECIMAL_LITERAL - 163)) | (1 << (CqlParser.FLOAT_LITERAL - 163)) | (1 << (CqlParser.HEXADECIMAL_LITERAL - 163)) | (1 << (CqlParser.OBJECT_NAME - 163)) | (1 << (CqlParser.UUID - 163)))) !== 0)) {
+			if (_la===CqlParser.K_FALSE || _la===CqlParser.K_NULL || _la===CqlParser.K_TRUE || ((((_la - 165)) & ~0x1F) === 0 && ((1 << (_la - 165)) & ((1 << (CqlParser.STRING_LITERAL - 165)) | (1 << (CqlParser.DECIMAL_LITERAL - 165)) | (1 << (CqlParser.FLOAT_LITERAL - 165)) | (1 << (CqlParser.HEXADECIMAL_LITERAL - 165)) | (1 << (CqlParser.OBJECT_NAME - 165)) | (1 << (CqlParser.UUID - 165)))) !== 0)) {
 				{
 				this.state = 2032;
 				this.functionArgs();
@@ -8284,6 +8283,8 @@ export class CqlParser extends Parser {
 				case CqlParser.K_TYPE:
 				case CqlParser.K_ROLES:
 				case CqlParser.K_ROLE:
+				case CqlParser.K_USERS:
+				case CqlParser.K_USER:
 				case CqlParser.STRING_LITERAL:
 				case CqlParser.DECIMAL_LITERAL:
 				case CqlParser.FLOAT_LITERAL:
@@ -8295,8 +8296,6 @@ export class CqlParser extends Parser {
 				case CqlParser.OPERATOR_GT:
 				case CqlParser.OPERATOR_LTE:
 				case CqlParser.OPERATOR_GTE:
-				case CqlParser.K_USERS:
-				case CqlParser.K_USER:
 					{
 					 this.notifyErrorListeners("rule.syntaxBracketLr"); 
 					}
@@ -8321,9 +8320,9 @@ export class CqlParser extends Parser {
 				case CqlParser.K_TYPE:
 				case CqlParser.K_ROLES:
 				case CqlParser.K_ROLE:
-				case CqlParser.OBJECT_NAME:
 				case CqlParser.K_USERS:
 				case CqlParser.K_USER:
+				case CqlParser.OBJECT_NAME:
 					{
 					this.state = 2049;
 					this.columnSpec();
@@ -8545,7 +8544,7 @@ export class CqlParser extends Parser {
 				this.state = 2077;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				if (_la===CqlParser.K_FALSE || _la===CqlParser.K_NULL || _la===CqlParser.K_TRUE || ((((_la - 163)) & ~0x1F) === 0 && ((1 << (_la - 163)) & ((1 << (CqlParser.STRING_LITERAL - 163)) | (1 << (CqlParser.DECIMAL_LITERAL - 163)) | (1 << (CqlParser.FLOAT_LITERAL - 163)) | (1 << (CqlParser.HEXADECIMAL_LITERAL - 163)) | (1 << (CqlParser.OBJECT_NAME - 163)) | (1 << (CqlParser.UUID - 163)))) !== 0)) {
+				if (_la===CqlParser.K_FALSE || _la===CqlParser.K_NULL || _la===CqlParser.K_TRUE || ((((_la - 165)) & ~0x1F) === 0 && ((1 << (_la - 165)) & ((1 << (CqlParser.STRING_LITERAL - 165)) | (1 << (CqlParser.DECIMAL_LITERAL - 165)) | (1 << (CqlParser.FLOAT_LITERAL - 165)) | (1 << (CqlParser.HEXADECIMAL_LITERAL - 165)) | (1 << (CqlParser.OBJECT_NAME - 165)) | (1 << (CqlParser.UUID - 165)))) !== 0)) {
 					{
 					this.state = 2076;
 					this.functionArgs();
@@ -9592,7 +9591,7 @@ export class CqlParser extends Parser {
 			{
 			this.state = 2228;
 			_la = this._input.LA(1);
-			if ( !(((((_la - 53)) & ~0x1F) === 0 && ((1 << (_la - 53)) & ((1 << (CqlParser.K_DURABLE_WRITES - 53)) | (1 << (CqlParser.K_INITCOND - 53)) | (1 << (CqlParser.K_KEY - 53)) | (1 << (CqlParser.K_LANGUAGE - 53)) | (1 << (CqlParser.K_LEVEL - 53)))) !== 0) || ((((_la - 94)) & ~0x1F) === 0 && ((1 << (_la - 94)) & ((1 << (CqlParser.K_OPTIONS - 94)) | (1 << (CqlParser.K_PARTITION - 94)) | (1 << (CqlParser.K_PERMISSIONS - 94)) | (1 << (CqlParser.K_REPLICATION - 94)) | (1 << (CqlParser.K_TTL - 94)))) !== 0) || ((((_la - 127)) & ~0x1F) === 0 && ((1 << (_la - 127)) & ((1 << (CqlParser.K_TYPE - 127)) | (1 << (CqlParser.K_ROLES - 127)) | (1 << (CqlParser.K_ROLE - 127)))) !== 0) || ((((_la - 168)) & ~0x1F) === 0 && ((1 << (_la - 168)) & ((1 << (CqlParser.OBJECT_NAME - 168)) | (1 << (CqlParser.K_USERS - 168)) | (1 << (CqlParser.K_USER - 168)))) !== 0)) ) {
+			if ( !(((((_la - 53)) & ~0x1F) === 0 && ((1 << (_la - 53)) & ((1 << (CqlParser.K_DURABLE_WRITES - 53)) | (1 << (CqlParser.K_INITCOND - 53)) | (1 << (CqlParser.K_KEY - 53)) | (1 << (CqlParser.K_LANGUAGE - 53)) | (1 << (CqlParser.K_LEVEL - 53)))) !== 0) || ((((_la - 94)) & ~0x1F) === 0 && ((1 << (_la - 94)) & ((1 << (CqlParser.K_OPTIONS - 94)) | (1 << (CqlParser.K_PARTITION - 94)) | (1 << (CqlParser.K_PERMISSIONS - 94)) | (1 << (CqlParser.K_REPLICATION - 94)) | (1 << (CqlParser.K_TTL - 94)))) !== 0) || ((((_la - 127)) & ~0x1F) === 0 && ((1 << (_la - 127)) & ((1 << (CqlParser.K_TYPE - 127)) | (1 << (CqlParser.K_ROLES - 127)) | (1 << (CqlParser.K_ROLE - 127)))) !== 0) || ((((_la - 162)) & ~0x1F) === 0 && ((1 << (_la - 162)) & ((1 << (CqlParser.K_USERS - 162)) | (1 << (CqlParser.K_USER - 162)) | (1 << (CqlParser.OBJECT_NAME - 162)))) !== 0)) ) {
 			this._errHandler.recoverInline(this);
 			} else {
 				if (this._input.LA(1) === Token.EOF) {
@@ -10902,9 +10901,9 @@ export class CqlParser extends Parser {
 			case CqlParser.K_TYPE:
 			case CqlParser.K_ROLES:
 			case CqlParser.K_ROLE:
-			case CqlParser.OBJECT_NAME:
 			case CqlParser.K_USERS:
 			case CqlParser.K_USER:
+			case CqlParser.OBJECT_NAME:
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 2435;
@@ -10950,7 +10949,7 @@ export class CqlParser extends Parser {
 			{
 			this.state = 2442;
 			_la = this._input.LA(1);
-			if ( !(((((_la - 53)) & ~0x1F) === 0 && ((1 << (_la - 53)) & ((1 << (CqlParser.K_DURABLE_WRITES - 53)) | (1 << (CqlParser.K_INITCOND - 53)) | (1 << (CqlParser.K_KEY - 53)) | (1 << (CqlParser.K_LANGUAGE - 53)) | (1 << (CqlParser.K_LEVEL - 53)))) !== 0) || ((((_la - 94)) & ~0x1F) === 0 && ((1 << (_la - 94)) & ((1 << (CqlParser.K_OPTIONS - 94)) | (1 << (CqlParser.K_PARTITION - 94)) | (1 << (CqlParser.K_PERMISSIONS - 94)) | (1 << (CqlParser.K_REPLICATION - 94)) | (1 << (CqlParser.K_TTL - 94)))) !== 0) || ((((_la - 127)) & ~0x1F) === 0 && ((1 << (_la - 127)) & ((1 << (CqlParser.K_TYPE - 127)) | (1 << (CqlParser.K_ROLES - 127)) | (1 << (CqlParser.K_ROLE - 127)))) !== 0) || ((((_la - 168)) & ~0x1F) === 0 && ((1 << (_la - 168)) & ((1 << (CqlParser.OBJECT_NAME - 168)) | (1 << (CqlParser.K_USERS - 168)) | (1 << (CqlParser.K_USER - 168)))) !== 0)) ) {
+			if ( !(((((_la - 53)) & ~0x1F) === 0 && ((1 << (_la - 53)) & ((1 << (CqlParser.K_DURABLE_WRITES - 53)) | (1 << (CqlParser.K_INITCOND - 53)) | (1 << (CqlParser.K_KEY - 53)) | (1 << (CqlParser.K_LANGUAGE - 53)) | (1 << (CqlParser.K_LEVEL - 53)))) !== 0) || ((((_la - 94)) & ~0x1F) === 0 && ((1 << (_la - 94)) & ((1 << (CqlParser.K_OPTIONS - 94)) | (1 << (CqlParser.K_PARTITION - 94)) | (1 << (CqlParser.K_PERMISSIONS - 94)) | (1 << (CqlParser.K_REPLICATION - 94)) | (1 << (CqlParser.K_TTL - 94)))) !== 0) || ((((_la - 127)) & ~0x1F) === 0 && ((1 << (_la - 127)) & ((1 << (CqlParser.K_TYPE - 127)) | (1 << (CqlParser.K_ROLES - 127)) | (1 << (CqlParser.K_ROLE - 127)))) !== 0) || ((((_la - 162)) & ~0x1F) === 0 && ((1 << (_la - 162)) & ((1 << (CqlParser.K_USERS - 162)) | (1 << (CqlParser.K_USER - 162)) | (1 << (CqlParser.OBJECT_NAME - 162)))) !== 0)) ) {
 			this._errHandler.recoverInline(this);
 			} else {
 				if (this._input.LA(1) === Token.EOF) {
@@ -10997,9 +10996,9 @@ export class CqlParser extends Parser {
 			case CqlParser.K_TYPE:
 			case CqlParser.K_ROLES:
 			case CqlParser.K_ROLE:
-			case CqlParser.OBJECT_NAME:
 			case CqlParser.K_USERS:
 			case CqlParser.K_USER:
+			case CqlParser.OBJECT_NAME:
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 2444;
@@ -11045,7 +11044,7 @@ export class CqlParser extends Parser {
 			{
 			this.state = 2451;
 			_la = this._input.LA(1);
-			if ( !(((((_la - 53)) & ~0x1F) === 0 && ((1 << (_la - 53)) & ((1 << (CqlParser.K_DURABLE_WRITES - 53)) | (1 << (CqlParser.K_INITCOND - 53)) | (1 << (CqlParser.K_KEY - 53)) | (1 << (CqlParser.K_LANGUAGE - 53)) | (1 << (CqlParser.K_LEVEL - 53)))) !== 0) || ((((_la - 94)) & ~0x1F) === 0 && ((1 << (_la - 94)) & ((1 << (CqlParser.K_OPTIONS - 94)) | (1 << (CqlParser.K_PARTITION - 94)) | (1 << (CqlParser.K_PERMISSIONS - 94)) | (1 << (CqlParser.K_REPLICATION - 94)) | (1 << (CqlParser.K_TTL - 94)))) !== 0) || ((((_la - 127)) & ~0x1F) === 0 && ((1 << (_la - 127)) & ((1 << (CqlParser.K_TYPE - 127)) | (1 << (CqlParser.K_ROLES - 127)) | (1 << (CqlParser.K_ROLE - 127)))) !== 0) || ((((_la - 168)) & ~0x1F) === 0 && ((1 << (_la - 168)) & ((1 << (CqlParser.OBJECT_NAME - 168)) | (1 << (CqlParser.K_USERS - 168)) | (1 << (CqlParser.K_USER - 168)))) !== 0)) ) {
+			if ( !(((((_la - 53)) & ~0x1F) === 0 && ((1 << (_la - 53)) & ((1 << (CqlParser.K_DURABLE_WRITES - 53)) | (1 << (CqlParser.K_INITCOND - 53)) | (1 << (CqlParser.K_KEY - 53)) | (1 << (CqlParser.K_LANGUAGE - 53)) | (1 << (CqlParser.K_LEVEL - 53)))) !== 0) || ((((_la - 94)) & ~0x1F) === 0 && ((1 << (_la - 94)) & ((1 << (CqlParser.K_OPTIONS - 94)) | (1 << (CqlParser.K_PARTITION - 94)) | (1 << (CqlParser.K_PERMISSIONS - 94)) | (1 << (CqlParser.K_REPLICATION - 94)) | (1 << (CqlParser.K_TTL - 94)))) !== 0) || ((((_la - 127)) & ~0x1F) === 0 && ((1 << (_la - 127)) & ((1 << (CqlParser.K_TYPE - 127)) | (1 << (CqlParser.K_ROLES - 127)) | (1 << (CqlParser.K_ROLE - 127)))) !== 0) || ((((_la - 162)) & ~0x1F) === 0 && ((1 << (_la - 162)) & ((1 << (CqlParser.K_USERS - 162)) | (1 << (CqlParser.K_USER - 162)) | (1 << (CqlParser.OBJECT_NAME - 162)))) !== 0)) ) {
 			this._errHandler.recoverInline(this);
 			} else {
 				if (this._input.LA(1) === Token.EOF) {
@@ -16153,8 +16152,8 @@ export class CqlParser extends Parser {
 		"\x02\u0296\x02\u0298\x02\u029A\x02\u029C\x02\u029E\x02\u02A0\x02\u02A2"+
 		"\x02\u02A4\x02\u02A6\x02\u02A8\x02\u02AA\x02\u02AC\x02\u02AE\x02\u02B0"+
 		"\x02\u02B2\x02\u02B4\x02\u02B6\x02\u02B8\x02\u02BA\x02\u02BC\x02\u02BE"+
-		"\x02\x02\x05\x03\x02\xA6\xA7\x04\x02<<}}\x0F\x0277GGLLOP``ccggll\x7F\x7F"+
-		"\x81\x81\x98\x99\xAA\xAA\xB1\xB2\u0BB5\x02\u02C1\x03\x02\x02\x02\x04\u02D1"+
+		"\x02\x02\x05\x03\x02\xA8\xA9\x04\x02<<}}\x0F\x0277GGLLOP``ccggll\x7F\x7F"+
+		"\x81\x81\x98\x99\xA4\xA5\xAC\xAC\u0BB5\x02\u02C1\x03\x02\x02\x02\x04\u02D1"+
 		"\x03\x02\x02\x02\x06\u02DE\x03\x02\x02\x02\b\u02E0\x03\x02\x02\x02\n\u0308"+
 		"\x03\x02\x02\x02\f\u030A\x03\x02\x02\x02\x0E\u0311\x03\x02\x02\x02\x10"+
 		"\u0313\x03\x02\x02\x02\x12\u031C\x03\x02\x02\x02\x14\u0328\x03\x02\x02"+
@@ -16427,7 +16426,7 @@ export class CqlParser extends Parser {
 		"\u03C4\x05\xFC\x7F\x02\u03C3\u03C2\x03\x02\x02\x02\u03C3\u03C4\x03\x02"+
 		"\x02\x02\u03C4\u03C5\x03\x02\x02\x02\u03C5\u03C6\x05\u0156\xAC\x02\u03C6"+
 		"\u03C7\x05\u025A\u012E\x02\u03C7\u03C8\x05\u0226\u0114\x02\u03C8\u03C9"+
-		"\x07\xAC\x02\x02\u03C9\u03CA\x05\u029E\u0150\x02\u03CA\u03CB\x05\xC0a"+
+		"\x07\xAE\x02\x02\u03C9\u03CA\x05\u029E\u0150\x02\u03CA\u03CB\x05\xC0a"+
 		"\x02\u03CB\u03CF\x05\u02A0\u0151\x02\u03CC\u03CD\x05\u01A6\xD4\x02\u03CD"+
 		"\u03CE\x05\xC4c\x02\u03CE\u03D0\x03\x02\x02\x02\u03CF\u03CC\x03\x02\x02"+
 		"\x02\u03CF\u03D0\x03\x02\x02\x02\u03D0/\x03\x02\x02\x02\u03D1\u03D3\x05"+
@@ -16440,7 +16439,7 @@ export class CqlParser extends Parser {
 		"\x02\x02\u03DE\u03DF\x05\u029C\u014F\x02\u03DF\u03E0\x056\x1C\x02\u03E0"+
 		"\u03E1\x05\u0228\u0115\x02\u03E1\u03E2\x05\u0172\xBA\x02\u03E2\u03E3\x05"+
 		"\u01F4\xFB\x02\u03E3\u03E4\x05\u0186\xC4\x02\u03E4\u03E5\x05\u01AA\xD6"+
-		"\x02\u03E5\u03E6\x052\x1A\x02\u03E61\x03\x02\x02\x02\u03E7\u03E8\x07\xA4"+
+		"\x02\u03E5\u03E6\x052\x1A\x02\u03E61\x03\x02\x02\x02\u03E7\u03E8\x07\xA6"+
 		"\x02\x02\u03E83\x03\x02\x02\x02\u03E9\u03EF\x05\u018E\xC8\x02\u03EA\u03EB"+
 		"\x05\u02AA\u0156\x02\u03EB\u03EC\x05\u018E\xC8\x02\u03EC\u03EE\x03\x02"+
 		"\x02\x02\u03ED\u03EA\x03\x02\x02\x02\u03EE\u03F1\x03\x02\x02\x02\u03EF"+
@@ -16538,12 +16537,12 @@ export class CqlParser extends Parser {
 		"p9\x02\u04BF\u04C1\x03\x02\x02\x02\u04C0\u04BD\x03\x02\x02\x02\u04C1\u04C4"+
 		"\x03\x02\x02\x02\u04C2\u04C0\x03\x02\x02\x02\u04C2\u04C3\x03\x02\x02\x02"+
 		"\u04C3o\x03\x02\x02\x02\u04C4\u04C2\x03\x02\x02\x02\u04C5\u04C6\x05\u021C"+
-		"\u010F\x02\u04C6\u04C7\x07\xAC\x02\x02\u04C7\u04C8\x05\u0144\xA3\x02\u04C8"+
+		"\u010F\x02\u04C6\u04C7\x07\xAE\x02\x02\u04C7\u04C8\x05\u0144\xA3\x02\u04C8"+
 		"\u04D6\x03\x02\x02\x02\u04C9\u04CA\x05\u0200\u0101\x02\u04CA\u04CB\x07"+
-		"\xAC\x02\x02\u04CB\u04CC\x05\u0146\xA4\x02\u04CC\u04D6\x03\x02\x02\x02"+
-		"\u04CD\u04CE\x05\u0238\u011D\x02\u04CE\u04CF\x07\xAC\x02\x02\u04CF\u04D0"+
+		"\xAE\x02\x02\u04CB\u04CC\x05\u0146\xA4\x02\u04CC\u04D6\x03\x02\x02\x02"+
+		"\u04CD\u04CE\x05\u0238\u011D\x02\u04CE\u04CF\x07\xAE\x02\x02\u04CF\u04D0"+
 		"\x05\u0146\xA4\x02\u04D0\u04D6\x03\x02\x02\x02\u04D1\u04D2\x05\u0212\u010A"+
-		"\x02\u04D2\u04D3\x07\xAC\x02\x02\u04D3\u04D4\x05\x9AN\x02\u04D4\u04D6"+
+		"\x02\u04D2\u04D3\x07\xAE\x02\x02\u04D3\u04D4\x05\x9AN\x02\u04D4\u04D6"+
 		"\x03\x02\x02\x02\u04D5\u04C5\x03\x02\x02\x02\u04D5\u04C9\x03\x02\x02\x02"+
 		"\u04D5\u04CD\x03\x02\x02\x02\u04D5\u04D1\x03\x02\x02\x02\u04D6q\x03\x02"+
 		"\x02\x02\u04D7\u04D8\x05\u01A4\xD3\x02\u04D8\u04D9\x05\u0202\u0102\x02"+
@@ -16611,11 +16610,11 @@ export class CqlParser extends Parser {
 		"\xD4\x02\u055F\u0560\x05\x94K\x02\u0560\u0562\x03\x02\x02\x02\u0561\u055E"+
 		"\x03\x02\x02\x02\u0562\u0565\x03\x02\x02\x02\u0563\u0561\x03\x02\x02\x02"+
 		"\u0563\u0564\x03\x02\x02\x02\u0564\x93\x03\x02\x02\x02\u0565\u0563\x03"+
-		"\x02\x02\x02\u0566\u0567\x05\x96L\x02\u0567\u0568\x07\xAC\x02\x02\u0568"+
+		"\x02\x02\x02\u0566\u0567\x05\x96L\x02\u0567\u0568\x07\xAE\x02\x02\u0568"+
 		"\u0569\x05\x98M\x02\u0569\u056F\x03\x02\x02\x02\u056A\u056B\x05\x96L\x02"+
-		"\u056B\u056C\x07\xAC\x02\x02\u056C\u056D\x05\x9AN\x02\u056D\u056F\x03"+
+		"\u056B\u056C\x07\xAE\x02\x02\u056C\u056D\x05\x9AN\x02\u056D\u056F\x03"+
 		"\x02\x02\x02\u056E\u0566\x03\x02\x02\x02\u056E\u056A\x03\x02\x02\x02\u056F"+
-		"\x95\x03\x02\x02\x02\u0570\u0571\x07\xAA\x02\x02\u0571\x97\x03\x02\x02"+
+		"\x95\x03\x02\x02\x02\u0570\u0571\x07\xAC\x02\x02\u0571\x97\x03\x02\x02"+
 		"\x02\u0572\u0575\x05\u0144\xA3\x02\u0573\u0575\x05\u0142\xA2\x02\u0574"+
 		"\u0572\x03\x02\x02\x02\u0574\u0573\x03\x02\x02\x02\u0575\x99\x03\x02\x02"+
 		"\x02\u0576\u0577\x05\u029E\u0150\x02\u0577\u057D\x05\x9CO\x02\u0578\u0579"+
@@ -16678,7 +16677,7 @@ export class CqlParser extends Parser {
 		"\x05\u024A\u0126\x02\u05F7\u05F5\x03\x02\x02\x02\u05F7\u05F6\x03\x02\x02"+
 		"\x02\u05F8\xBD\x03\x02\x02\x02\u05F9\u05FA\x05\u01A4\xD3\x02\u05FA\u05FB"+
 		"\x05\u01F2\xFA\x02\u05FB\u05FC\x05\u014A\xA6\x02\u05FC\u05FD\x05\u025A"+
-		"\u012E\x02\u05FD\u05FE\x05\u0226\u0114\x02\u05FE\u05FF\x07\xAC\x02\x02"+
+		"\u012E\x02\u05FD\u05FE\x05\u0226\u0114\x02\u05FE\u05FF\x07\xAE\x02\x02"+
 		"\u05FF\u0600\x05\u029E\u0150\x02\u0600\u0601\x05\xC0a\x02\u0601\u0605"+
 		"\x05\u02A0\u0151\x02\u0602\u0603\x05\u01A6\xD4\x02\u0603\u0604\x05\xC4"+
 		"c\x02\u0604\u0606\x03\x02\x02\x02\u0605\u0602\x03\x02\x02\x02\u0605\u0606"+
@@ -16686,11 +16685,11 @@ export class CqlParser extends Parser {
 		"\u0609\x05\u02AA\u0156\x02\u0609\u060A\x05\xC2b\x02\u060A\u060C\x03\x02"+
 		"\x02\x02\u060B\u0608\x03\x02\x02\x02\u060C\u060F\x03\x02\x02\x02\u060D"+
 		"\u060B\x03\x02\x02\x02\u060D\u060E\x03\x02\x02\x02\u060E\xC1\x03\x02\x02"+
-		"\x02\u060F\u060D\x03\x02\x02\x02\u0610\u0611\x07\xA5\x02\x02\u0611\u0612"+
-		"\x07\v\x02\x02\u0612\u0617\x07\xA5\x02\x02\u0613\u0614\x07\xA5\x02\x02"+
-		"\u0614\u0615\x07\v\x02\x02\u0615\u0617\x07\xA6\x02\x02\u0616\u0610\x03"+
+		"\x02\u060F\u060D\x03\x02\x02\x02\u0610\u0611\x07\xA7\x02\x02\u0611\u0612"+
+		"\x07\v\x02\x02\u0612\u0617\x07\xA7\x02\x02\u0613\u0614\x07\xA7\x02\x02"+
+		"\u0614\u0615\x07\v\x02\x02\u0615\u0617\x07\xA8\x02\x02\u0616\u0610\x03"+
 		"\x02\x02\x02\u0616\u0613\x03\x02\x02\x02\u0617\xC3\x03\x02\x02\x02\u0618"+
-		"\u0619\x05\u01CC\xE7\x02\u0619\u061A\x07\xAC\x02\x02\u061A\u061B\x05\u0146"+
+		"\u0619\x05\u01CC\xE7\x02\u0619\u061A\x07\xAE\x02\x02\u061A\u061B\x05\u0146"+
 		"\xA4\x02\u061B\xC5\x03\x02\x02\x02\u061C\u061D\x05\u024E";
 	private static readonly _serializedATNSegment3: string =
 		"\u0128\x02\u061D\u061E\x05\u014A\xA6\x02\u061E\xC7\x03\x02\x02\x02\u061F"+
@@ -16704,7 +16703,7 @@ export class CqlParser extends Parser {
 		"\xCCg\x02\u062E\u062F\x05\xD0i\x02\u062F\xCB\x03\x02\x02\x02\u0630\u0631"+
 		"\x05\u0210\u0109\x02\u0631\u0632\x05\u015E\xB0\x02\u0632\u0635\x03\x02"+
 		"\x02\x02\u0633\u0635\bg\x01\x02\u0634\u0630\x03\x02\x02\x02\u0634\u0633"+
-		"\x03\x02\x02\x02\u0635\xCD\x03\x02\x02\x02\u0636\u0639\x07\xAA\x02\x02"+
+		"\x03\x02\x02\x02\u0635\xCD\x03\x02\x02\x02\u0636\u0639\x07\xAC\x02\x02"+
 		"\u0637\u0639\x05\u0144\xA3\x02\u0638\u0636\x03\x02\x02\x02\u0638\u0637"+
 		"\x03\x02\x02\x02\u0639\xCF\x03\x02\x02\x02\u063A\u063B\x05\u029A\u014E"+
 		"\x02\u063B\u063C\x05\xD2j\x02\u063C\u063D\x05\u029C\u014F\x02\u063D\u0640"+
@@ -16754,7 +16753,7 @@ export class CqlParser extends Parser {
 		"\u0698\x05\xE6t\x02\u0698\u069A\x03\x02\x02\x02\u0699\u0696\x03\x02\x02"+
 		"\x02\u069A\u069D\x03\x02\x02\x02\u069B\u0699\x03\x02\x02\x02\u069B\u069C"+
 		"\x03\x02\x02\x02\u069C\xE5\x03\x02\x02\x02\u069D\u069B\x03\x02\x02\x02"+
-		"\u069E\u069F\x07\xAA\x02\x02\u069F\u06A0\x07\xAC\x02\x02\u06A0\u06A1\x05"+
+		"\u069E\u069F\x07\xAC\x02\x02\u069F\u06A0\x07\xAE\x02\x02\u06A0\u06A1\x05"+
 		"\u012E\x98\x02\u06A1\xE7\x03\x02\x02\x02\u06A2\u06A3\x05\u022E\u0118\x02"+
 		"\u06A3\u06A9\x05\xEAv\x02\u06A4\u06A5\x05\u02AA\u0156\x02\u06A5\u06A6"+
 		"\x05\xEAv\x02\u06A6\u06A8\x03\x02\x02\x02\u06A7\u06A4\x03\x02\x02\x02"+
@@ -16784,15 +16783,15 @@ export class CqlParser extends Parser {
 		"\xB6\x02\u06DA\u06DB\x05\u02B6\u015C\x02\u06DB\u06DE\x05\xECw\x02\u06DC"+
 		"\u06DF\x05\u02AE\u0158\x02\u06DD\u06DF\x05\u02B0\u0159\x02\u06DE\u06DC"+
 		"\x03\x02\x02\x02\u06DE\u06DD\x03\x02\x02\x02\u06DF\u06E0\x03\x02\x02\x02"+
-		"\u06E0\u06E1\x07\xAA\x02\x02\u06E1\u06FD\x03\x02\x02\x02\u06E2\u06E3\x05"+
+		"\u06E0\u06E1\x07\xAC\x02\x02\u06E1\u06FD\x03\x02\x02\x02\u06E2\u06E3\x05"+
 		"\u016A\xB6\x02\u06E3\u06E4\x05\u02B6\u015C\x02\u06E4\u06E7\x05\xEEx\x02"+
 		"\u06E5\u06E8\x05\u02AE\u0158\x02\u06E6\u06E8\x05\u02B0\u0159\x02\u06E7"+
 		"\u06E5\x03\x02\x02\x02\u06E7\u06E6\x03\x02\x02\x02\u06E8\u06E9\x03\x02"+
-		"\x02\x02\u06E9\u06EA\x07\xAA\x02\x02\u06EA\u06FD\x03\x02\x02\x02\u06EB"+
+		"\x02\x02\u06E9\u06EA\x07\xAC\x02\x02\u06EA\u06FD\x03\x02\x02\x02\u06EB"+
 		"\u06EC\x05\u016A\xB6\x02\u06EC\u06ED\x05\u02B6\u015C\x02\u06ED\u06F0\x05"+
 		"\xF0y\x02\u06EE\u06F1\x05\u02AE\u0158\x02\u06EF\u06F1\x05\u02B0\u0159"+
 		"\x02\u06F0\u06EE\x03\x02\x02\x02\u06F0\u06EF\x03\x02\x02\x02\u06F1\u06F2"+
-		"\x03\x02\x02\x02\u06F2\u06F3\x07\xAA\x02\x02\u06F3\u06FD\x03\x02\x02\x02"+
+		"\x03\x02\x02\x02\u06F2\u06F3\x07\xAC\x02\x02\u06F3\u06FD\x03\x02\x02\x02"+
 		"\u06F4\u06F5\x05\u016A\xB6\x02\u06F5\u06F6\x05\u02A6\u0154\x02\u06F6\u06F7"+
 		"\x05\u0140\xA1\x02\u06F7\u06F8\x05\u02A8\u0155\x02\u06F8\u06F9\x05\u02B6"+
 		"\u015C\x02\u06F9\u06FA\x05\u012E\x98\x02\u06FA\u06FD\x03\x02\x02\x02\u06FB"+
@@ -16896,10 +16895,10 @@ export class CqlParser extends Parser {
 		"\x02\u07C6\u07BB\x03\x02\x02\x02\u07C6\u07BC\x03\x02\x02\x02\u07C6\u07C5"+
 		"\x03\x02\x02\x02\u07C7\u0119\x03\x02\x02\x02\u07C8\u07D7\x05\u016A\xB6"+
 		"\x02\u07C9\u07CD\x05\u016A\xB6\x02\u07CA\u07CB\x05\u01AA\xD6\x02\u07CB"+
-		"\u07CC\x07\xAA\x02\x02\u07CC\u07CE\x03\x02\x02\x02\u07CD\u07CA\x03\x02"+
+		"\u07CC\x07\xAC\x02\x02\u07CC\u07CE\x03\x02\x02\x02\u07CD\u07CA\x03\x02"+
 		"\x02\x02\u07CD\u07CE\x03\x02\x02\x02\u07CE\u07D7\x03\x02\x02\x02\u07CF"+
 		"\u07D3\x05\u012A\x96\x02\u07D0\u07D1\x05\u01AA\xD6\x02\u07D1\u07D2\x07"+
-		"\xAA\x02\x02\u07D2\u07D4\x03\x02\x02\x02\u07D3\u07D0\x03\x02\x02\x02\u07D3"+
+		"\xAC\x02\x02\u07D2\u07D4\x03\x02\x02\x02\u07D3\u07D0\x03\x02\x02\x02\u07D3"+
 		"\u07D4\x03\x02\x02\x02\u07D4\u07D7\x03\x02\x02\x02\u07D5\u07D7\b\x8E\x01"+
 		"\x02\u07D6\u07C8\x03\x02\x02\x02\u07D6\u07C9\x03\x02\x02\x02\u07D6\u07CF"+
 		"\x03\x02\x02\x02\u07D6\u07D5\x03\x02\x02\x02\u07D7\u011B\x03\x02\x02\x02"+
@@ -16908,7 +16907,7 @@ export class CqlParser extends Parser {
 		"\x02\u07DD\u07E0\x03\x02\x02\x02\u07DE\u07DC\x03\x02\x02\x02\u07DE\u07DF"+
 		"\x03\x02\x02\x02\u07DF\u011D\x03\x02\x02\x02\u07E0\u07DE\x03\x02\x02\x02"+
 		"\u07E1\u07E8\x05\u0120\x91\x02\u07E2\u07E8\x05\u0122\x92\x02\u07E3\u07E8"+
-		"\x05\u0124\x93\x02\u07E4\u07E5\x07\xAA\x02\x02\u07E5\u07E8\b\x90\x01\x02"+
+		"\x05\u0124\x93\x02\u07E4\u07E5\x07\xAC\x02\x02\u07E5\u07E8\b\x90\x01\x02"+
 		"\u07E6\u07E8\b\x90\x01\x02\u07E7\u07E1\x03\x02\x02\x02\u07E7\u07E2\x03"+
 		"\x02\x02\x02\u07E7\u07E3\x03\x02\x02\x02\u07E7\u07E4\x03\x02\x02\x02\u07E7"+
 		"\u07E6\x03\x02\x02\x02\u07E8\u011F\x03\x02\x02\x02\u07E9\u07EA\x05\u016A"+
@@ -16936,16 +16935,16 @@ export class CqlParser extends Parser {
 		"\x02\x02\x02\u0816\u080F\x03\x02\x02\x02\u0816\u0810\x03\x02\x02\x02\u0816"+
 		"\u0811\x03\x02\x02\x02\u0816\u0812\x03\x02\x02\x02\u0816\u0813\x03\x02"+
 		"\x02\x02\u0816\u0814\x03\x02\x02\x02\u0816\u0815\x03\x02\x02\x02\u0817"+
-		"\u0129\x03\x02\x02\x02\u0818\u0819\x07\xAA\x02\x02\u0819\u081A\x07\x03"+
+		"\u0129\x03\x02\x02\x02\u0818\u0819\x07\xAC\x02\x02\u0819\u081A\x07\x03"+
 		"\x02\x02\u081A\u081B\x07\x13\x02\x02\u081B\u0823\x07\x04\x02\x02\u081C"+
-		"\u081D\x07\xAA\x02\x02\u081D\u081F\x07\x03\x02\x02\u081E\u0820\x05\u012C"+
+		"\u081D\x07\xAC\x02\x02\u081D\u081F\x07\x03\x02\x02\u081E\u0820\x05\u012C"+
 		"\x97\x02\u081F\u081E\x03\x02\x02\x02\u081F\u0820\x03\x02\x02\x02\u0820"+
 		"\u0821\x03\x02\x02\x02\u0821\u0823\x07\x04\x02\x02\u0822\u0818\x03\x02"+
 		"\x02\x02\u0822\u081C\x03\x02\x02\x02\u0823\u012B\x03\x02\x02\x02\u0824"+
-		"\u0828\x05\u012E\x98\x02\u0825\u0828\x07\xAA\x02\x02\u0826\u0828\x05\u012A"+
+		"\u0828\x05\u012E\x98\x02\u0825\u0828\x07\xAC\x02\x02\u0826\u0828\x05\u012A"+
 		"\x96\x02\u0827\u0824\x03\x02\x02\x02\u0827\u0825\x03\x02\x02\x02\u0827"+
 		"\u0826\x03\x02\x02\x02\u0828\u0831\x03\x02\x02\x02\u0829\u082D\x05\u02AA"+
-		"\u0156\x02\u082A\u082E\x05\u012E\x98\x02\u082B\u082E\x07\xAA\x02\x02\u082C"+
+		"\u0156\x02\u082A\u082E\x05\u012E\x98\x02\u082B\u082E\x07\xAC\x02\x02\u082C"+
 		"\u082E\x05\u012A\x96\x02\u082D\u082A\x03\x02\x02\x02\u082D\u082B\x03\x02"+
 		"\x02\x02\u082D\u082C\x03\x02\x02\x02\u082E\u0830\x03\x02\x02\x02\u082F"+
 		"\u0829\x03\x02\x02\x02\u0830\u0833\x03\x02\x02\x02\u0831\u082F\x03\x02"+
@@ -16987,18 +16986,18 @@ export class CqlParser extends Parser {
 		"\x02\x02\u0877\u0874\x03\x02\x02\x02\u0878\u087B\x03\x02\x02\x02\u0879"+
 		"\u0877\x03\x02\x02\x02\u0879\u087A\x03\x02\x02\x02\u087A\u087C\x03\x02"+
 		"\x02\x02\u087B\u0879\x03\x02\x02\x02\u087C\u087D\x05\u029C\u014F\x02\u087D"+
-		"\u013D\x03\x02\x02\x02\u087E\u087F\x07\xAB\x02\x02\u087F\u013F\x03\x02"+
-		"\x02\x02\u0880\u0881\x07\xA6\x02\x02\u0881\u0141\x03\x02\x02\x02\u0882"+
-		"\u0883\t\x02\x02\x02\u0883\u0143\x03\x02\x02\x02\u0884\u0885\x07\xA5\x02"+
+		"\u013D\x03\x02\x02\x02\u087E\u087F\x07\xAD\x02\x02\u087F\u013F\x03\x02"+
+		"\x02\x02\u0880\u0881\x07\xA8\x02\x02\u0881\u0141\x03\x02\x02\x02\u0882"+
+		"\u0883\t\x02\x02\x02\u0883\u0143\x03\x02\x02\x02\u0884\u0885\x07\xA7\x02"+
 		"\x02\u0885\u0145\x03\x02\x02\x02\u0886\u0887\t\x03\x02\x02\u0887\u0147"+
-		"\x03\x02\x02\x02\u0888\u0889\x07\xA8\x02\x02\u0889\u0149\x03\x02\x02\x02"+
-		"\u088A\u089F\x07\xAA\x02\x02\u088B\u088C\x07\f\x02\x02\u088C\u088D\x07"+
-		"\xAA\x02\x02\u088D\u089F\x07\f\x02\x02\u088E\u089F\x07\x99\x02\x02\u088F"+
+		"\x03\x02\x02\x02\u0888\u0889\x07\xAA\x02\x02\u0889\u0149\x03\x02\x02\x02"+
+		"\u088A\u089F\x07\xAC\x02\x02\u088B\u088C\x07\f\x02\x02\u088C\u088D\x07"+
+		"\xAC\x02\x02\u088D\u089F\x07\f\x02\x02\u088E\u089F\x07\x99\x02\x02\u088F"+
 		"\u089F\x07g\x02\x02\u0890\u089F\x07`\x02\x02\u0891\u089F\x077\x02\x02"+
 		"\u0892\u089F\x07O\x02\x02\u0893\u089F\x07\x81\x02\x02\u0894\u089F\x07"+
 		"G\x02\x02\u0895\u089F\x07l\x02\x02\u0896\u089F\x07\x7F\x02\x02\u0897\u089F"+
 		"\x07c\x02\x02\u0898\u089F\x07L\x02\x02\u0899\u089F\x07P\x02\x02\u089A"+
-		"\u089F\x07\xB1\x02\x02\u089B\u089F\x07\xB2\x02\x02\u089C\u089F\x07\x99"+
+		"\u089F\x07\xA4\x02\x02\u089B\u089F\x07\xA5\x02\x02\u089C\u089F\x07\x99"+
 		"\x02\x02\u089D\u089F\x07\x98\x02\x02\u089E\u088A\x03\x02\x02\x02\u089E"+
 		"\u088B\x03\x02\x02\x02\u089E\u088E\x03\x02\x02\x02\u089E\u088F\x03\x02"+
 		"\x02\x02\u089E\u0890\x03\x02\x02\x02\u089E\u0891\x03\x02\x02\x02\u089E"+
@@ -17007,13 +17006,13 @@ export class CqlParser extends Parser {
 		"\u0897\x03\x02\x02\x02\u089E\u0898\x03\x02\x02\x02\u089E\u0899\x03\x02"+
 		"\x02\x02\u089E\u089A\x03\x02\x02\x02\u089E\u089B\x03\x02\x02\x02\u089E"+
 		"\u089C\x03\x02\x02\x02\u089E\u089D\x03\x02\x02\x02\u089F\u014B\x03\x02"+
-		"\x02\x02\u08A0\u08B5\x07\xAA\x02\x02\u08A1\u08A2\x07\f\x02\x02\u08A2\u08A3"+
-		"\x07\xAA\x02\x02\u08A3\u08B5\x07\f\x02\x02\u08A4\u08B5\x07\x99\x02\x02"+
+		"\x02\x02\u08A0\u08B5\x07\xAC\x02\x02\u08A1\u08A2\x07\f\x02\x02\u08A2\u08A3"+
+		"\x07\xAC\x02\x02\u08A3\u08B5\x07\f\x02\x02\u08A4\u08B5\x07\x99\x02\x02"+
 		"\u08A5\u08B5\x07g\x02\x02\u08A6\u08B5\x07`\x02\x02\u08A7\u08B5\x077\x02"+
 		"\x02\u08A8\u08B5\x07O\x02\x02\u08A9\u08B5\x07\x81\x02\x02\u08AA\u08B5"+
 		"\x07G\x02\x02\u08AB\u08B5\x07l\x02\x02\u08AC\u08B5\x07\x7F\x02\x02\u08AD"+
 		"\u08B5\x07c\x02\x02\u08AE\u08B5\x07L\x02\x02\u08AF\u08B5\x07P\x02\x02"+
-		"\u08B0\u08B5\x07\xB1\x02\x02\u08B1\u08B5\x07\xB2\x02\x02\u08B2\u08B5\x07"+
+		"\u08B0\u08B5\x07\xA4\x02\x02\u08B1\u08B5\x07\xA5\x02\x02\u08B2\u08B5\x07"+
 		"\x99\x02\x02\u08B3\u08B5\x07\x98\x02\x02\u08B4\u08A0\x03\x02\x02\x02\u08B4"+
 		"\u08A1\x03\x02\x02\x02\u08B4\u08A4\x03\x02\x02\x02\u08B4\u08A5\x03\x02"+
 		"\x02\x02\u08B4\u08A6\x03\x02\x02\x02\u08B4\u08A7\x03\x02\x02\x02\u08B4"+
@@ -17023,15 +17022,15 @@ export class CqlParser extends Parser {
 		"\x02\x02\u08B4\u08B0\x03\x02\x02\x02\u08B4\u08B1\x03\x02\x02\x02\u08B4"+
 		"\u08B2\x03\x02\x02\x02\u08B4\u08B3\x03\x02\x02\x02\u08B5\u014D\x03\x02"+
 		"\x02\x02\u08B6\u08B7\t\x04\x02\x02\u08B7\u014F\x03\x02\x02\x02\u08B8\u08CD"+
-		"\x07\xAA\x02\x02\u08B9\u08BA\x07\f\x02\x02\u08BA\u08BB\x07\xAA\x02\x02"+
+		"\x07\xAC\x02\x02\u08B9\u08BA\x07\f\x02\x02\u08BA\u08BB\x07\xAC\x02\x02"+
 		"\u08BB\u08CD\x07\f\x02\x02\u08BC\u08CD\x07\x99\x02\x02\u08BD\u08CD\x07"+
 		"g\x02\x02";
 	private static readonly _serializedATNSegment4: string =
 		"\u08BE\u08CD\x07`\x02\x02\u08BF\u08CD\x077\x02\x02\u08C0\u08CD\x07O\x02"+
 		"\x02\u08C1\u08CD\x07\x81\x02\x02\u08C2\u08CD\x07G\x02\x02\u08C3\u08CD"+
 		"\x07l\x02\x02\u08C4\u08CD\x07\x7F\x02\x02\u08C5\u08CD\x07c\x02\x02\u08C6"+
-		"\u08CD\x07L\x02\x02\u08C7\u08CD\x07P\x02\x02\u08C8\u08CD\x07\xB1\x02\x02"+
-		"\u08C9\u08CD\x07\xB2\x02\x02\u08CA\u08CD\x07\x99\x02\x02\u08CB\u08CD\x07"+
+		"\u08CD\x07L\x02\x02\u08C7\u08CD\x07P\x02\x02\u08C8\u08CD\x07\xA4\x02\x02"+
+		"\u08C9\u08CD\x07\xA5\x02\x02\u08CA\u08CD\x07\x99\x02\x02\u08CB\u08CD\x07"+
 		"\x98\x02\x02\u08CC\u08B8\x03\x02\x02\x02\u08CC\u08B9\x03\x02\x02\x02\u08CC"+
 		"\u08BC\x03\x02\x02\x02\u08CC\u08BD\x03\x02\x02\x02\u08CC\u08BE\x03\x02"+
 		"\x02\x02\u08CC\u08BF\x03\x02\x02\x02\u08CC\u08C0\x03\x02\x02\x02\u08CC"+
@@ -17039,14 +17038,14 @@ export class CqlParser extends Parser {
 		"\x02\x02\u08CC\u08C4\x03\x02\x02\x02\u08CC\u08C5\x03\x02\x02\x02\u08CC"+
 		"\u08C6\x03\x02\x02\x02\u08CC\u08C7\x03\x02\x02\x02\u08CC\u08C8\x03\x02"+
 		"\x02\x02\u08CC\u08C9\x03\x02\x02\x02\u08CC\u08CA\x03\x02\x02\x02\u08CC"+
-		"\u08CB\x03\x02\x02\x02\u08CD\u0151\x03\x02\x02\x02\u08CE\u08E3\x07\xAA"+
-		"\x02\x02\u08CF\u08D0\x07\f\x02\x02\u08D0\u08D1\x07\xAA\x02\x02\u08D1\u08E3"+
+		"\u08CB\x03\x02\x02\x02\u08CD\u0151\x03\x02\x02\x02\u08CE\u08E3\x07\xAC"+
+		"\x02\x02\u08CF\u08D0\x07\f\x02\x02\u08D0\u08D1\x07\xAC\x02\x02\u08D1\u08E3"+
 		"\x07\f\x02\x02\u08D2\u08E3\x07\x99\x02\x02\u08D3\u08E3\x07g\x02\x02\u08D4"+
 		"\u08E3\x07`\x02\x02\u08D5\u08E3\x077\x02\x02\u08D6\u08E3\x07O\x02\x02"+
 		"\u08D7\u08E3\x07\x81\x02\x02\u08D8\u08E3\x07G\x02\x02\u08D9\u08E3\x07"+
 		"l\x02\x02\u08DA\u08E3\x07\x7F\x02\x02\u08DB\u08E3\x07c\x02\x02\u08DC\u08E3"+
-		"\x07L\x02\x02\u08DD\u08E3\x07P\x02\x02\u08DE\u08E3\x07\xB1\x02\x02\u08DF"+
-		"\u08E3\x07\xB2\x02\x02\u08E0\u08E3\x07\x99\x02\x02\u08E1\u08E3\x07\x98"+
+		"\x07L\x02\x02\u08DD\u08E3\x07P\x02\x02\u08DE\u08E3\x07\xA4\x02\x02\u08DF"+
+		"\u08E3\x07\xA5\x02\x02\u08E0\u08E3\x07\x99\x02\x02\u08E1\u08E3\x07\x98"+
 		"\x02\x02\u08E2\u08CE\x03\x02\x02\x02\u08E2\u08CF\x03\x02\x02\x02\u08E2"+
 		"\u08D2\x03\x02\x02\x02\u08E2\u08D3\x03\x02\x02\x02\u08E2\u08D4\x03\x02"+
 		"\x02\x02\u08E2\u08D5\x03\x02\x02\x02\u08E2\u08D6\x03\x02\x02\x02\u08E2"+
@@ -17054,14 +17053,14 @@ export class CqlParser extends Parser {
 		"\x02\x02\u08E2\u08DA\x03\x02\x02\x02\u08E2\u08DB\x03\x02\x02\x02\u08E2"+
 		"\u08DC\x03\x02\x02\x02\u08E2\u08DD\x03\x02\x02\x02\u08E2\u08DE\x03\x02"+
 		"\x02\x02\u08E2\u08DF\x03\x02\x02\x02\u08E2\u08E0\x03\x02\x02\x02\u08E2"+
-		"\u08E1\x03\x02\x02\x02\u08E3\u0153\x03\x02\x02\x02\u08E4\u08F9\x07\xAA"+
-		"\x02\x02\u08E5\u08E6\x07\f\x02\x02\u08E6\u08E7\x07\xAA\x02\x02\u08E7\u08F9"+
+		"\u08E1\x03\x02\x02\x02\u08E3\u0153\x03\x02\x02\x02\u08E4\u08F9\x07\xAC"+
+		"\x02\x02\u08E5\u08E6\x07\f\x02\x02\u08E6\u08E7\x07\xAC\x02\x02\u08E7\u08F9"+
 		"\x07\f\x02\x02\u08E8\u08F9\x07\x99\x02\x02\u08E9\u08F9\x07g\x02\x02\u08EA"+
 		"\u08F9\x07`\x02\x02\u08EB\u08F9\x077\x02\x02\u08EC\u08F9\x07O\x02\x02"+
 		"\u08ED\u08F9\x07\x81\x02\x02\u08EE\u08F9\x07G\x02\x02\u08EF\u08F9\x07"+
 		"l\x02\x02\u08F0\u08F9\x07\x7F\x02\x02\u08F1\u08F9\x07c\x02\x02\u08F2\u08F9"+
-		"\x07L\x02\x02\u08F3\u08F9\x07P\x02\x02\u08F4\u08F9\x07\xB1\x02\x02\u08F5"+
-		"\u08F9\x07\xB2\x02\x02\u08F6\u08F9\x07\x99\x02\x02\u08F7\u08F9\x07\x98"+
+		"\x07L\x02\x02\u08F3\u08F9\x07P\x02\x02\u08F4\u08F9\x07\xA4\x02\x02\u08F5"+
+		"\u08F9\x07\xA5\x02\x02\u08F6\u08F9\x07\x99\x02\x02\u08F7\u08F9\x07\x98"+
 		"\x02\x02\u08F8\u08E4\x03\x02\x02\x02\u08F8\u08E5\x03\x02\x02\x02\u08F8"+
 		"\u08E8\x03\x02\x02\x02\u08F8\u08E9\x03\x02\x02\x02\u08F8\u08EA\x03\x02"+
 		"\x02\x02\u08F8\u08EB\x03\x02\x02\x02\u08F8\u08EC\x03\x02\x02\x02\u08F8"+
@@ -17069,14 +17068,14 @@ export class CqlParser extends Parser {
 		"\x02\x02\u08F8\u08F0\x03\x02\x02\x02\u08F8\u08F1\x03\x02\x02\x02\u08F8"+
 		"\u08F2\x03\x02\x02\x02\u08F8\u08F3\x03\x02\x02\x02\u08F8\u08F4\x03\x02"+
 		"\x02\x02\u08F8\u08F5\x03\x02\x02\x02\u08F8\u08F6\x03\x02\x02\x02\u08F8"+
-		"\u08F7\x03\x02\x02\x02\u08F9\u0155\x03\x02\x02\x02\u08FA\u090F\x07\xAA"+
-		"\x02\x02\u08FB\u08FC\x07\f\x02\x02\u08FC\u08FD\x07\xAA\x02\x02\u08FD\u090F"+
+		"\u08F7\x03\x02\x02\x02\u08F9\u0155\x03\x02\x02\x02\u08FA\u090F\x07\xAC"+
+		"\x02\x02\u08FB\u08FC\x07\f\x02\x02\u08FC\u08FD\x07\xAC\x02\x02\u08FD\u090F"+
 		"\x07\f\x02\x02\u08FE\u090F\x07\x99\x02\x02\u08FF\u090F\x07g\x02\x02\u0900"+
 		"\u090F\x07`\x02\x02\u0901\u090F\x077\x02\x02\u0902\u090F\x07O\x02\x02"+
 		"\u0903\u090F\x07\x81\x02\x02\u0904\u090F\x07G\x02\x02\u0905\u090F\x07"+
 		"l\x02\x02\u0906\u090F\x07\x7F\x02\x02\u0907\u090F\x07c\x02\x02\u0908\u090F"+
-		"\x07L\x02\x02\u0909\u090F\x07P\x02\x02\u090A\u090F\x07\xB1\x02\x02\u090B"+
-		"\u090F\x07\xB2\x02\x02\u090C\u090F\x07\x99\x02\x02\u090D\u090F\x07\x98"+
+		"\x07L\x02\x02\u0909\u090F\x07P\x02\x02\u090A\u090F\x07\xA4\x02\x02\u090B"+
+		"\u090F\x07\xA5\x02\x02\u090C\u090F\x07\x99\x02\x02\u090D\u090F\x07\x98"+
 		"\x02\x02\u090E\u08FA\x03\x02\x02\x02\u090E\u08FB\x03\x02\x02\x02\u090E"+
 		"\u08FE\x03\x02\x02\x02\u090E\u08FF\x03\x02\x02\x02\u090E\u0900\x03\x02"+
 		"\x02\x02\u090E\u0901\x03\x02\x02\x02\u090E\u0902\x03\x02\x02\x02\u090E"+
@@ -17188,17 +17187,17 @@ export class CqlParser extends Parser {
 		"\u09C8\x03\x02\x02\x02\u09CB\u09C9\x03\x02\x02\x02\u09CB\u09CA\x03\x02"+
 		"\x02\x02\u09CC\u0177\x03\x02\x02\x02\u09CD\u09D0\x05\u01AC\xD7\x02\u09CE"+
 		"\u09D0\x05\u01C4\xE3\x02\u09CF\u09CD\x03\x02\x02\x02\u09CF\u09CE\x03\x02"+
-		"\x02\x02\u09D0\u0179\x03\x02\x02\x02\u09D1\u09D2\x07\xAA\x02\x02\u09D2"+
-		"\u017B\x03\x02\x02\x02\u09D3\u09D4\x07\xAA\x02\x02\u09D4\u017D\x03\x02"+
+		"\x02\x02\u09D0\u0179\x03\x02\x02\x02\u09D1\u09D2\x07\xAC\x02\x02\u09D2"+
+		"\u017B\x03\x02\x02\x02\u09D3\u09D4\x07\xAC\x02\x02\u09D4\u017D\x03\x02"+
 		"\x02\x02\u09D5\u09D6\x05\u0144\xA3\x02\u09D6\u017F\x03\x02\x02\x02\u09D7"+
-		"\u09D8\x07\xAA\x02\x02\u09D8\u0181\x03\x02\x02\x02\u09D9\u09EE\x07\xAA"+
-		"\x02\x02\u09DA\u09DB\x07\f\x02\x02\u09DB\u09DC\x07\xAA\x02\x02\u09DC\u09EE"+
+		"\u09D8\x07\xAC\x02\x02\u09D8\u0181\x03\x02\x02\x02\u09D9\u09EE\x07\xAC"+
+		"\x02\x02\u09DA\u09DB\x07\f\x02\x02\u09DB\u09DC\x07\xAC\x02\x02\u09DC\u09EE"+
 		"\x07\f\x02\x02\u09DD\u09EE\x07\x99\x02\x02\u09DE\u09EE\x07g\x02\x02\u09DF"+
 		"\u09EE\x07`\x02\x02\u09E0\u09EE\x077\x02\x02\u09E1\u09EE\x07O\x02\x02"+
 		"\u09E2\u09EE\x07\x81\x02\x02\u09E3\u09EE\x07G\x02\x02\u09E4\u09EE\x07"+
 		"l\x02\x02\u09E5\u09EE\x07\x7F\x02\x02\u09E6\u09EE\x07c\x02\x02\u09E7\u09EE"+
-		"\x07L\x02\x02\u09E8\u09EE\x07P\x02\x02\u09E9\u09EE\x07\xB1\x02\x02\u09EA"+
-		"\u09EE\x07\xB2\x02\x02\u09EB\u09EE\x07\x99\x02\x02\u09EC\u09EE\x07\x98"+
+		"\x07L\x02\x02\u09E8\u09EE\x07P\x02\x02\u09E9\u09EE\x07\xA4\x02\x02\u09EA"+
+		"\u09EE\x07\xA5\x02\x02\u09EB\u09EE\x07\x99\x02\x02\u09EC\u09EE\x07\x98"+
 		"\x02\x02\u09ED\u09D9\x03\x02\x02\x02\u09ED\u09DA\x03\x02\x02\x02\u09ED"+
 		"\u09DD\x03\x02\x02\x02\u09ED\u09DE\x03\x02\x02\x02\u09ED\u09DF\x03\x02"+
 		"\x02\x02\u09ED\u09E0\x03\x02\x02\x02\u09ED\u09E1\x03\x02\x02\x02\u09ED"+
@@ -17206,13 +17205,13 @@ export class CqlParser extends Parser {
 		"\x02\x02\u09ED\u09E5\x03\x02\x02\x02\u09ED\u09E6\x03\x02\x02\x02\u09ED"+
 		"\u09E7\x03\x02\x02\x02\u09ED\u09E8\x03\x02\x02\x02\u09ED\u09E9\x03\x02"+
 		"\x02\x02\u09ED\u09EA\x03\x02\x02\x02\u09ED\u09EB\x03\x02\x02\x02\u09ED"+
-		"\u09EC\x03\x02\x02\x02\u09EE\u0183\x03\x02\x02\x02\u09EF\u09F0\x07\xAA"+
-		"\x02\x02\u09F0\u0185\x03\x02\x02\x02\u09F1\u09F2\x07\xAA\x02\x02\u09F2"+
-		"\u0187\x03\x02\x02\x02\u09F3\u09F4\x07\xAA\x02\x02\u09F4\u0189\x03\x02"+
+		"\u09EC\x03\x02\x02\x02\u09EE\u0183\x03\x02\x02\x02\u09EF\u09F0\x07\xAC"+
+		"\x02\x02\u09F0\u0185\x03\x02\x02\x02\u09F1\u09F2\x07\xAC\x02\x02\u09F2"+
+		"\u0187\x03\x02\x02\x02\u09F3\u09F4\x07\xAC\x02\x02\u09F4\u0189\x03\x02"+
 		"\x02\x02\u09F5\u09F6\x05\u0144\xA3\x02\u09F6\u018B\x03\x02\x02\x02\u09F7"+
-		"\u09F8\x07\xAA\x02\x02\u09F8\u018D\x03\x02\x02\x02\u09F9\u09FA\x05\u0190"+
+		"\u09F8\x07\xAC\x02\x02\u09F8\u018D\x03\x02\x02\x02\u09F9\u09FA\x05\u0190"+
 		"\xC9\x02\u09FA\u09FB\x05\u0172\xBA\x02\u09FB\u018F\x03\x02\x02\x02\u09FC"+
-		"\u09FD\x07\xAA\x02\x02\u09FD\u0191\x03\x02\x02\x02\u09FE\u09FF\x07\x19"+
+		"\u09FD\x07\xAC\x02\x02\u09FD\u0191\x03\x02\x02\x02\u09FE\u09FF\x07\x19"+
 		"\x02\x02\u09FF\u0193\x03\x02\x02\x02\u0A00\u0A01\x07\x1A\x02\x02\u0A01"+
 		"\u0195\x03\x02\x02\x02\u0A02\u0A03\x07\x1B\x02\x02\u0A03\u0197\x03\x02"+
 		"\x02\x02\u0A04\u0A05\x07\x1E\x02\x02\u0A05\u0199\x03\x02\x02\x02\u0A06"+
@@ -17255,7 +17254,7 @@ export class CqlParser extends Parser {
 		"\u0A66\u0A67\x07Q\x02\x02\u0A67\u01F7\x03\x02\x02\x02\u0A68\u0A69\x07"+
 		"\x97\x02\x02\u0A69\u01F9\x03\x02\x02\x02\u0A6A\u0A6B\x07\x97\x02\x02\u0A6B"+
 		"\u0A6C\x07\x98\x02\x02\u0A6C\u01FB\x03\x02\x02\x02\u0A6D\u0A6E\x07\x97"+
-		"\x02\x02\u0A6E\u0A6F\x07\xB1\x02\x02\u0A6F\u01FD\x03\x02\x02\x02\u0A70"+
+		"\x02\x02\u0A6E\u0A6F\x07\xA4\x02\x02\u0A6F\u01FD\x03\x02\x02\x02\u0A70"+
 		"\u0A71\x07T\x02\x02\u0A71\u01FF\x03\x02\x02\x02\u0A72\u0A73\x07U\x02\x02"+
 		"\u0A73\u0201\x03\x02\x02\x02\u0A74\u0A75\x07V\x02\x02\u0A75\u0A76\x07"+
 		"\x87\x02\x02\u0A76\u0203\x03\x02\x02\x02\u0A77\u0A78\x07W\x02\x02\u0A78"+
@@ -17287,8 +17286,8 @@ export class CqlParser extends Parser {
 		"\x02\u0ABB\u0247\x03\x02\x02\x02\u0ABC\u0ABD\x07\x81\x02\x02\u0ABD\u0249"+
 		"\x03\x02\x02\x02\u0ABE\u0ABF\x07\x82\x02\x02\u0ABF\u024B\x03\x02\x02\x02"+
 		"\u0AC0\u0AC1\x07\x83\x02\x02\u0AC1\u024D\x03\x02\x02\x02\u0AC2\u0AC3\x07"+
-		"\x84\x02\x02\u0AC3\u024F\x03\x02\x02\x02\u0AC4\u0AC5\x07\xB2\x02\x02\u0AC5"+
-		"\u0251\x03\x02\x02\x02\u0AC6\u0AC7\x07\xB1\x02\x02\u0AC7\u0253\x03\x02"+
+		"\x84\x02\x02\u0AC3\u024F\x03\x02\x02\x02\u0AC4\u0AC5\x07\xA5\x02\x02\u0AC5"+
+		"\u0251\x03\x02\x02\x02\u0AC6\u0AC7\x07\xA4\x02\x02\u0AC7\u0253\x03\x02"+
 		"\x02\x02\u0AC8\u0AC9\x07\x85\x02\x02\u0AC9\u0255\x03\x02\x02\x02\u0ACA"+
 		"\u0ACB\x07\x86\x02\x02\u0ACB\u0257\x03\x02\x02\x02\u0ACC\u0ACD\x07\x88"+
 		"\x02\x02\u0ACD\u0259\x03\x02\x02\x02\u0ACE\u0ACF\x07\x89\x02\x02\u0ACF"+
@@ -17310,7 +17309,7 @@ export class CqlParser extends Parser {
 		"\x03\x02\x02\x02\u0AF6\u0AF7\x07\x9D\x02\x02\u0AF7\u0283\x03\x02\x02\x02"+
 		"\u0AF8\u0AF9\x07y\x02\x02\u0AF9\u0285\x03\x02\x02\x02\u0AFA\u0AFB\x07"+
 		"\x9F\x02\x02\u0AFB\u0287\x03\x02\x02\x02\u0AFC\u0AFD\x07\xA0\x02\x02\u0AFD"+
-		"\u0289\x03\x02\x02\x02\u0AFE\u0AFF\x07\xAA\x02\x02\u0AFF\u028B\x03\x02"+
+		"\u0289\x03\x02\x02\x02\u0AFE\u0AFF\x07\xAC\x02\x02\u0AFF\u028B\x03\x02"+
 		"\x02\x02\u0B00\u0B01\x07\xA1\x02\x02\u0B01\u028D\x03\x02\x02\x02\u0B02"+
 		"\u0B03\x07\xA2\x02\x02\u0B03\u028F\x03\x02\x02\x02\u0B04\u0B05\x07\xA3"+
 		"\x02\x02\u0B05\u0291\x03\x02\x02\x02\u0B06\u0B07\x05\u02A2\u0152\x02\u0B07"+
@@ -17324,18 +17323,18 @@ export class CqlParser extends Parser {
 		"\x02\x02\u0B18\u0B19\x07\x03\x02\x02\u0B19\u029B\x03\x02\x02\x02\u0B1A"+
 		"\u0B1B\x07\x04\x02\x02\u0B1B\u029D\x03\x02\x02\x02\u0B1C\u0B1D\x07\x05"+
 		"\x02\x02\u0B1D\u029F\x03\x02\x02\x02\u0B1E\u0B1F\x07\x06\x02\x02\u0B1F"+
-		"\u02A1\x03\x02\x02\x02\u0B20\u0B21\x07\xAD\x02\x02\u0B21\u02A3\x03\x02"+
-		"\x02\x02\u0B22\u0B23\x07\xAE\x02\x02\u0B23\u02A5\x03\x02\x02\x02\u0B24"+
+		"\u02A1\x03\x02\x02\x02\u0B20\u0B21\x07\xAF\x02\x02\u0B21\u02A3\x03\x02"+
+		"\x02\x02\u0B22\u0B23\x07\xB0\x02\x02\u0B23\u02A5\x03\x02\x02\x02\u0B24"+
 		"\u0B25\x07\x07\x02\x02\u0B25\u02A7\x03\x02\x02\x02\u0B26\u0B27\x07\b\x02"+
 		"\x02\u0B27\u02A9\x03\x02\x02\x02\u0B28\u0B29\x07\t\x02\x02\u0B29\u02AB"+
 		"\x03\x02\x02\x02\u0B2A\u0B2B\x07\v\x02\x02\u0B2B\u02AD\x03\x02\x02\x02"+
 		"\u0B2C\u0B2D\x07\x16\x02\x02\u0B2D\u02AF\x03\x02\x02\x02\u0B2E\u0B2F\x07"+
 		"\x18\x02\x02\u0B2F\u02B1\x03\x02\x02\x02\u0B30\u0B31\x07\r\x02\x02\u0B31"+
 		"\u02B3\x03\x02\x02\x02\u0B32\u0B33\x07\f\x02\x02\u0B33\u02B5\x03\x02\x02"+
-		"\x02\u0B34\u0B35\x07\xAC\x02\x02\u0B35\u02B7\x03\x02\x02\x02\u0B36\u0B37"+
-		"\x07\xAD\x02\x02\u0B37\u02B9\x03\x02\x02\x02\u0B38\u0B39\x07\xAE\x02\x02"+
-		"\u0B39\u02BB\x03\x02\x02\x02\u0B3A\u0B3B\x07\xAF\x02\x02\u0B3B\u02BD\x03"+
-		"\x02\x02\x02\u0B3C\u0B3D\x07\xB0\x02\x02\u0B3D\u02BF\x03\x02\x02\x02\xD5"+
+		"\x02\u0B34\u0B35\x07\xAE\x02\x02\u0B35\u02B7\x03\x02\x02\x02\u0B36\u0B37"+
+		"\x07\xAF\x02\x02\u0B37\u02B9\x03\x02\x02\x02\u0B38\u0B39\x07\xB0\x02\x02"+
+		"\u0B39\u02BB\x03\x02\x02\x02\u0B3A\u0B3B\x07\xB1\x02\x02\u0B3B\u02BD\x03"+
+		"\x02\x02\x02\u0B3C\u0B3D\x07\xB2\x02\x02\u0B3D\u02BF\x03\x02\x02\x02\xD5"+
 		"\u02C1\u02C4\u02CA\u02CF\u02D1\u02D6\u02D9\u02DC\u0308\u0317\u031A\u0321"+
 		"\u0326\u0331\u033B\u0347\u0350\u0357\u035C\u0364\u0369\u036D\u0372\u0381"+
 		"\u0387\u0390\u039D\u03A4\u03AC\u03BE\u03C3\u03CF\u03D3\u03D7\u03DC\u03EF"+
