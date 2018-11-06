@@ -568,7 +568,6 @@
         "cassandra-stop": "./script/cassandra.sh stop"
     },
     "devDependencies": {
-        "@types/cassandra-driver": "^3.4.0",
         "@types/clipboardy": "^1.1.0",
         "@types/connect": "^3.4.32",
         "@types/fs-extra": "^5.0.4",
@@ -599,6 +598,7 @@
         "vscode": "^1.1.6"
     },
     "dependencies": {
+        "@types/long": "^4.0.0",
         "antlr4ts": "^0.4.1-alpha.0",
         "antlr4ts-cli": "^0.4.0-alpha.4",
         "cassandra-driver": "^3.5.0",

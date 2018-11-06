@@ -1,6 +1,7 @@
 import * as cassandra from "cassandra-driver";
 import { Subject } from "rxjs";
 import * as vscode from "vscode";
+import { RowCs2SchemaColumnfamilies } from "./cassandra2";
 export * from "./messages";
 export * from "./editor";
 export * from "./history";
@@ -59,6 +60,28 @@ export interface CassandraClientEvents {
 export type CassandraColumnType = "regular" | "partition_key" | "clustering";
 export type CassandraClusteringOrder = "none" | "asc" | "desc";
 
+export interface RowSystemLocal extends cassandra.types.Row {
+
+    key: string;
+    bootstrapped: string;
+    broadcast_address: string;
+    cluster_name: string;
+    cql_version: string;
+    data_center: string;
+    gossip_generation: number;
+    host_id: string;
+    listen_address: string;
+    native_protocol_version: string;
+    partitioner: string;
+    rack: string;
+    release_version: string;
+    rpc_address: string;
+    schema_version: string;
+    thrift_version: string;
+    tokens: string;
+    truncated_at: { [key: string]: any };
+}
+
 export interface CassandraColumn {
     name: string;
     clustering_order: CassandraClusteringOrder;
@@ -66,7 +89,7 @@ export interface CassandraColumn {
     position: number;
     type: string;
     typeRoot: string;
-    all: RowColumn;
+    // all: RowColumn;
 }
 
 export interface CassandraIndex {
@@ -83,7 +106,21 @@ export interface CassandraTable {
     indexes: CassandraIndex[];
     primaryKeys: CassandraColumn[];
     name: string;
-    all: RowTable;
+    compaction: { [key: string]: string };
+    compression: { [key: string]: string };
+    caching: { [key: string]: string };
+    crc_check_chance: number;
+    dclocal_read_repair_chance: number;
+    bloom_filter_fp_chance: number;
+    default_time_to_live: number;
+    max_index_interval: number;
+    memtable_flush_period_in_ms: number;
+    min_index_interval: number;
+    read_repair_chance: number;
+    gc_grace_seconds: number;
+    speculative_retry: string;
+    comment: string;
+    // all: RowTable | RowCs2SchemaColumnfamilies;
 }
 export interface CassandraType {
     name: string;
@@ -98,7 +135,22 @@ export interface CassandraMaterializedView {
     columns: CassandraColumn[];
     indexes: CassandraIndex[];
     primaryKeys: CassandraColumn[];
-    all: RowMaterializedView;
+    compaction: { [key: string]: string };
+    compression: { [key: string]: string };
+    caching: { [key: string]: string };
+    crc_check_chance: number;
+    dclocal_read_repair_chance: number;
+    bloom_filter_fp_chance: number;
+    default_time_to_live: number;
+    max_index_interval: number;
+    memtable_flush_period_in_ms: number;
+    min_index_interval: number;
+    read_repair_chance: number;
+    gc_grace_seconds: number;
+    speculative_retry: string;
+    comment: string;
+    where_clause: string;
+    // all: RowMaterializedView;
 }
 export interface CassandraAggregate {
     name: string;
@@ -130,7 +182,7 @@ export interface CassandraKeyspace {
     name: string;
     durable_writes: boolean;
     replication: { [key: string]: string };
-    all: RowKeyspace;
+    // all: RowKeyspace;
 }
 
 export interface CassandraClusterData {
@@ -209,15 +261,16 @@ export interface RowTable extends cassandra.types.Row {
     compression: { [key: string]: string };
     crc_check_chance: number;
     dclocal_read_repair_chance: number;
-    default_time_to_live: number;
     // extensions frozen<map<text, blob>>,
     // flags frozen<set<text>>,
-    gc_grace_seconds: number;
     id: string;
+
+    default_time_to_live: number;
     max_index_interval: number;
     memtable_flush_period_in_ms: number;
     min_index_interval: number;
     read_repair_chance: number;
+    gc_grace_seconds: number;
     speculative_retry: string;
 }
 

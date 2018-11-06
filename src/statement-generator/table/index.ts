@@ -146,23 +146,23 @@ function tableOptions(data: CassandraTable): string {
         out.push(clusteringOption);
     }
 
-    const cachingString = Object.keys(data.all.caching).map((k) => `'${k}': '${data.all.caching[k]}'`).join(", ");
-    const compactionString = Object.keys(data.all.compaction).map((k) => `'${k}': '${data.all.compaction[k]}'`).join(", ");
-    const compressionString = Object.keys(data.all.compression).map((k) => `'${k}': '${data.all.compression[k]}'`).join(", ");
+    const cachingString = Object.keys(data.caching).map((k) => `'${k}': '${data.caching[k]}'`).join(", ");
+    const compactionString = Object.keys(data.compaction).map((k) => `'${k}': '${data.compaction[k]}'`).join(", ");
+    const compressionString = Object.keys(data.compression).map((k) => `'${k}': '${data.compression[k]}'`).join(", ");
 
     out = out.concat([
-        `\tdclocal_read_repair_chance = ${data.all.dclocal_read_repair_chance}`,
-        `\tgc_grace_seconds = ${data.all.gc_grace_seconds}`,
-        `\tbloom_filter_fp_chance = ${data.all.bloom_filter_fp_chance}`,
+        `\tdclocal_read_repair_chance = ${data.dclocal_read_repair_chance}`,
+        `\tgc_grace_seconds = ${data.gc_grace_seconds}`,
+        `\tbloom_filter_fp_chance = ${data.bloom_filter_fp_chance}`,
         `\tcaching = { ${cachingString} }`,
-        `\tcomment = '${data.all.comment}'`,
+        `\tcomment = '${data.comment}'`,
         `\tcompaction = { ${compactionString} }`,
         `\tcompression = { ${compressionString} }`,
-        `\tdefault_time_to_live = ${data.all.default_time_to_live}`,
-        `\tspeculative_retry = '${data.all.speculative_retry}'`,
-        `\tmin_index_interval = ${data.all.min_index_interval}`,
-        `\tmax_index_interval = ${data.all.max_index_interval}`,
-        `\tcrc_check_chance = ${data.all.crc_check_chance}`,
+        `\tdefault_time_to_live = ${data.default_time_to_live}`,
+        `\tspeculative_retry = '${data.speculative_retry}'`,
+        `\tmin_index_interval = ${data.min_index_interval}`,
+        `\tmax_index_interval = ${data.max_index_interval}`,
+        `\tcrc_check_chance = ${data.crc_check_chance}`,
     ]);
     return ` WITH ${out.join(" AND \n")}`;
 }

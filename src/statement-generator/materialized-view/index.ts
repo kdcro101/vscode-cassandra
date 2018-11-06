@@ -28,9 +28,6 @@ export const materializedViewCreate = (keyspace: string, table: CassandraTable):
 export const materializedViewDrop = (keyspace: string, data: CassandraMaterializedView): Promise<string> => {
     return new Promise((resolve, reject) => {
 
-        const td = data.all;
-        const name = `${td.type_name}`;
-
         const out: string[] = [
             `DROP MATERIALIZED VIEW ${keyspace}.${data.name};`,
         ];
@@ -40,9 +37,9 @@ export const materializedViewDrop = (keyspace: string, data: CassandraMaterializ
 };
 export const materializedViewAlter = (keyspace: string, data: CassandraMaterializedView): Promise<string> => {
     return new Promise((resolve, reject) => {
-        const td = data.all;
+
         const columns = data.columns;
-        const name = `${td.view_name}`;
+        const name = `${data.name}`;
         const list = columns.map((n, i) => {
             return `${n.name}`;
         }).join(", ");
@@ -59,7 +56,6 @@ export const materializedViewAlter = (keyspace: string, data: CassandraMateriali
 export const materializedViewClone = (keyspace: string, data: CassandraMaterializedView, cloneName?: string): Promise<string> => {
     return new Promise((resolve, reject) => {
         const name = !cloneName ? `${data.name}` : cloneName;
-        const td = data.all;
         const columns = data.columns;
 
         const list = columns.map((n, i) => {
@@ -70,8 +66,8 @@ export const materializedViewClone = (keyspace: string, data: CassandraMateriali
             `CREATE MATERIALIZED VIEW ${keyspace}.${name}`,
             `AS SELECT`,
             `${list}`,
-            `FROM ${keyspace}.${td.base_table_name}`,
-            `WHERE ${td.where_clause}`,
+            `FROM ${keyspace}.${data.base_table_name}`,
+            `WHERE ${data.where_clause}`,
             `${primaryKey(data)}`,
             `${tableOptions(data)};`,
         ];
@@ -120,23 +116,28 @@ function tableOptions(data: CassandraTable | CassandraMaterializedView, outputCl
         out.push(clusteringOption);
     }
 
-    const cachingString = Object.keys(data.all.caching).map((k) => `'${k}': '${data.all.caching[k]}'`).join(", ");
-    const compactionString = Object.keys(data.all.compaction).map((k) => `'${k}': '${data.all.compaction[k]}'`).join(", ");
-    const compressionString = Object.keys(data.all.compression).map((k) => `'${k}': '${data.all.compression[k]}'`).join(", ");
+    const cachingString = Object.keys(data.caching).map((k) => `'${k}': '${data.caching[k]}'`).join(", ");
+    const compactionString = Object.keys(data.compaction).map((k) => `'${k}': '${data.compaction[k]}'`).join(", ");
+    const compressionString = Object.keys(data.compression).map((k) => `'${k}': '${data.compression[k]}'`).join(", ");
 
     out = out.concat([
-        `\tdclocal_read_repair_chance = ${data.all.dclocal_read_repair_chance}`,
-        `\tgc_grace_seconds = ${data.all.gc_grace_seconds}`,
-        `\tbloom_filter_fp_chance = ${data.all.bloom_filter_fp_chance}`,
+        `\tdclocal_read_repair_chance = ${data.dclocal_read_repair_chance}`,
+        `\tgc_grace_seconds = ${data.gc_grace_seconds}`,
+        `\tbloom_filter_fp_chance = ${data.bloom_filter_fp_chance}`,
         `\tcaching = { ${cachingString} }`,
-        `\tcomment = '${data.all.comment}'`,
+        `\tcomment = '${data.comment}'`,
         `\tcompaction = { ${compactionString} }`,
         `\tcompression = { ${compressionString} }`,
-        `\tdefault_time_to_live = ${data.all.default_time_to_live}`,
-        `\tspeculative_retry = '${data.all.speculative_retry}'`,
-        `\tmin_index_interval = ${data.all.min_index_interval}`,
-        `\tmax_index_interval = ${data.all.max_index_interval}`,
-        `\tcrc_check_chance = ${data.all.crc_check_chance}`,
+        `\tdefault_time_to_live = ${data.default_time_to_live}`,
+        `\tspeculative_retry = '${data.speculative_retry}'`,
+        `\tmin_index_interval = ${data.min_index_interval}`,
+        `\tmax_index_interval = ${data.max_index_interval}`,
+        // `\tcrc_check_chance = ${data.crc_check_chance}`,
     ]);
+
+    if (data.crc_check_chance) {
+        out.push(`\tcrc_check_chance = ${data.crc_check_chance}`);
+    }
+
     return `WITH\n${out.join(" AND \n")}`;
 }

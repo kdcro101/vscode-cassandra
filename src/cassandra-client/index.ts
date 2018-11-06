@@ -1,9 +1,11 @@
 import * as cassandra from "cassandra-driver";
 import { EventEmitter } from "events";
 import { BehaviorSubject, from } from "rxjs";
-import { CassandraKeyspace, ValidatedConfigClusterItem } from "../types";
-import { CassandraClientEvents, CassandraClusterData } from "../types/index";
-import { collectKeyspaces } from "./collectors/index";
+import { concatMap, map } from "rxjs/operators";
+import { RowSystemLocal, ValidatedConfigClusterItem } from "../types";
+import { CassandraClientEvents, CassandraClusterData, CassandraKeyspace } from "../types/index";
+import { collectKeyspaces2 } from "./collectors2/index";
+import { collectKeyspaces3 } from "./collectors3/index";
 export type ColumnType = "custom" |
     "ascii" | "bigint" | "blob" | "boolean" | "counter" |
     "decimal" | "double" | "float" | "int" | "text" |
@@ -37,7 +39,7 @@ export class CassandraClient extends EventEmitter {
     // private structure: CassandraKeyspace[];
     public isInvalid: boolean = false;
 
-    private client: cassandra.Client;
+    public client: cassandra.Client;
 
     constructor(private config: ValidatedConfigClusterItem) {
         super();
@@ -59,6 +61,8 @@ export class CassandraClient extends EventEmitter {
 
         this.client = new cassandra.Client(options);
         this.clusterName = config.name;
+
+        (global as any).cclient = this;
 
     }
     public destroy() {
@@ -124,7 +128,7 @@ export class CassandraClient extends EventEmitter {
 
             }
 
-            from(collectKeyspaces(this.client))
+            from(this.collectKeyspaces())
                 .pipe().subscribe((data) => {
 
                     const o: CassandraClusterData = {
@@ -137,6 +141,7 @@ export class CassandraClient extends EventEmitter {
                 }, (e) => {
                     // resolve error
                     console.log(`Error connecting to cluster '${this.config.name}'`);
+                    console.log(e);
                     resolveError(e);
 
                 });
@@ -229,5 +234,51 @@ export class CassandraClient extends EventEmitter {
                 break;
         }
         return out;
+    }
+    public getReleaseVersion(): Promise<number> {
+        return new Promise((resolve, reject) => {
+            from<cassandra.types.ResultSet>(this.execute("select * from system.local limit 1")).pipe(
+                map((r) => {
+                    if (!r || r.rows.length === 0) {
+                        throw new Error("invalid_release_version");
+                    }
+                    const f: RowSystemLocal = r.rows[0] as RowSystemLocal;
+                    const rv = f.release_version;
+
+                    const majorPart = rv.match(/^\d+/);
+                    if (!majorPart) {
+                        throw new Error("invalid_release_version");
+                    }
+                    const major = parseInt(majorPart[0], 10);
+                    return major;
+
+                }),
+            ).subscribe((v) => {
+                resolve(v);
+            }, (e) => {
+                reject(e);
+            });
+        });
+    }
+    private collectKeyspaces(): Promise<CassandraKeyspace[]> {
+        return new Promise((resolve, reject) => {
+            from(this.getReleaseVersion()).pipe(
+                concatMap((version) => {
+                    if (version === 2) {
+                        return collectKeyspaces2(this);
+                    }
+                    if (version >= 3) {
+                        return collectKeyspaces3(this.client);
+                    }
+
+                    return Promise.resolve([] as CassandraKeyspace[]);
+                }),
+            ).subscribe((data) => {
+                resolve(data);
+            }, (e) => {
+                console.log(e);
+                reject(e);
+            });
+        });
     }
 }

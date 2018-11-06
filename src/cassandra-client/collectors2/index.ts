@@ -2,29 +2,33 @@ import * as cassandra from "cassandra-driver";
 import { sortBy } from "lodash";
 import { from } from "rxjs";
 import { concatMap, map } from "rxjs/operators";
+import { CassandraClient } from "..";
 import { rootColumnType } from "../../data-type/type-parser";
 import {
-    CassandraAggregate,
-    CassandraColumn, CassandraColumnType,
-    CassandraFunction, CassandraIndex, CassandraIndexCollectionType,
-    CassandraKeyspace, CassandraMaterializedView, CassandraTable,
-    CassandraType, RowAggregate, RowColumn, RowFunction, RowIndex, RowKeyspace, RowMaterializedView, RowTable, RowType,
+    CassandraAggregate, CassandraColumn, CassandraColumnType, CassandraFunction,
+    CassandraIndex, CassandraIndexCollectionType, CassandraKeyspace, CassandraMaterializedView,
+    CassandraTable, CassandraType, RowAggregate, RowColumn, RowFunction, RowIndex, RowType,
 } from "../../types";
+import { RowCs2SchemaColumnfamilies, RowCs2SchemaColumns, RowCs2SchemaKeyspaces } from "../../types/cassandra2";
 import { CassandraClusteringOrder } from "../../types/index";
+import { columnTypeToV3 } from "./helpers";
 
-export function collectKeyspaces(client: cassandra.Client): Promise<CassandraKeyspace[]> {
+export function collectKeyspaces2(client: CassandraClient): Promise<CassandraKeyspace[]> {
     return new Promise((resolve, reject) => {
         // system_schema.keyspaces
-        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.keyspaces")).pipe(
+        from<cassandra.types.ResultSet>(client.execute("select * from system.schema_keyspaces")).pipe(
             concatMap((data) => {
-                const rows = data.rows as RowKeyspace[];
+                const rows = data.rows as RowCs2SchemaKeyspaces[];
                 return Promise.all([
                     rows,
                     Promise.all(rows.map((i) => collectTables(client, i.keyspace_name))),
-                    Promise.all(rows.map((i) => collectFunctions(client, i.keyspace_name))),
-                    Promise.all(rows.map((i) => collectTypes(client, i.keyspace_name))),
-                    Promise.all(rows.map((i) => collectAggregates(client, i.keyspace_name))),
-                    Promise.all(rows.map((i) => collectMaterializedViews(client, i.keyspace_name))),
+                    Promise.all(rows.map((i) => Promise.resolve([] as CassandraFunction[]))),
+                    Promise.all(rows.map((i) => Promise.resolve([] as CassandraType[]))),
+                    Promise.all(rows.map((i) => Promise.resolve([] as CassandraAggregate[]))),
+                    // Promise.all(rows.map((i) => collectFunctions(client, i.keyspace_name))),
+                    // Promise.all(rows.map((i) => collectTypes(client, i.keyspace_name))),
+                    // Promise.all(rows.map((i) => collectAggregates(client, i.keyspace_name))),
+                    Promise.all(rows.map((i) => Promise.resolve([] as CassandraMaterializedView[]))),
                 ]);
             }),
             map((data) => {
@@ -42,18 +46,21 @@ export function collectKeyspaces(client: cassandra.Client): Promise<CassandraKey
                     const aggregates = allAggregates[i];
                     const views = allViews[i];
 
+                    const replication = Object.assign(row.strategy_options, {
+                        class: row.strategy_class,
+                    });
+
                     const out: CassandraKeyspace = {
                         name: row.keyspace_name,
-                        durable_writes: row.durable_writes,
                         tables,
                         functions,
                         types,
                         materializedViews: views,
                         aggregates,
-                        replication: row.replication,
-                        all: row,
-
+                        durable_writes: row.durable_writes,
+                        replication,
                     };
+
                     return out;
                 }).sort((a, b) => {
                     if (a.name < b.name) { return -1; }
@@ -69,51 +76,7 @@ export function collectKeyspaces(client: cassandra.Client): Promise<CassandraKey
 
     });
 }
-export function collectMaterializedViews(client: cassandra.Client, keyspace: string): Promise<CassandraMaterializedView[]> {
-    return new Promise((resolve, reject) => {
-        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.views where keyspace_name=?", [keyspace])).pipe(
-            concatMap((data) => {
-                const rows = data.rows as RowMaterializedView[];
-                return Promise.all([
-                    rows,
-                    Promise.all(rows.map((i) => collectColumns(client, i.keyspace_name, i.view_name))),
-                    Promise.all(rows.map((i) => collectIndexes(client, i.keyspace_name, i.view_name))),
-                    Promise.all(rows.map((i) => collectPrimaryKeys(client, i.keyspace_name, i.view_name))),
-                ]);
-            }),
-            map((data) => {
 
-                const rows = data[0];
-                const allColumns = data[1];
-                const allIndexes = data[2];
-                const allPrimaryKeys = data[3];
-
-                // const rows = data.rows as RowMaterializedView[];
-
-                return rows.map((row, i) => {
-                    const columns = allColumns[i];
-                    const indexes = allIndexes[i];
-                    const primaryKeys = allPrimaryKeys[i];
-
-                    const out: CassandraMaterializedView = {
-                        columns,
-                        indexes,
-                        primaryKeys,
-                        keyspace,
-                        name: row.view_name,
-                        base_table_name: row.base_table_name,
-                        all: row,
-
-                    };
-                    return out;
-                });
-            }),
-        ).subscribe((data) => {
-            resolve(data);
-        }, (e) => reject(e));
-
-    });
-}
 export function collectAggregates(client: cassandra.Client, keyspace: string): Promise<CassandraAggregate[]> {
     return new Promise((resolve, reject) => {
         // system_schema.tables
@@ -200,35 +163,65 @@ export function collectFunctions(client: cassandra.Client, keyspace: string): Pr
     });
 
 }
-export function collectTables(client: cassandra.Client, keyspace: string): Promise<CassandraTable[]> {
+export function collectTables(client: CassandraClient, keyspace: string): Promise<CassandraTable[]> {
     return new Promise((resolve, reject) => {
         // system_schema.tables
-        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.tables where keyspace_name=?", [keyspace])).pipe(
+        from<cassandra.types.ResultSet>(
+            client.execute("select * from system.schema_columnfamilies where keyspace_name=?", [keyspace]),
+        ).pipe(
             concatMap((data) => {
-                const rows = data.rows as RowTable[];
+                const rows = data.rows as RowCs2SchemaColumnfamilies[];
                 return Promise.all([
                     rows,
-                    Promise.all(rows.map((i) => collectColumns(client, i.keyspace_name, i.table_name))),
-                    Promise.all(rows.map((i) => collectIndexes(client, i.keyspace_name, i.table_name))),
-                    Promise.all(rows.map((i) => collectPrimaryKeys(client, i.keyspace_name, i.table_name))),
+                    Promise.all(rows.map((i) => collectColumns(client, i.keyspace_name, i.columnfamily_name))),
+                    Promise.all(rows.map((i) => Promise.resolve([] as CassandraIndex[]))),
+                    // Promise.all(rows.map((i) => collectIndexes(client, i.keyspace_name, i.columnfamily_name))),
                 ]);
             }),
             map((data) => {
                 const rows = data[0];
                 const allColumns = data[1];
                 const allIndexes = data[2];
-                const allPrimaryKeys = data[3];
 
                 return rows.map((row, i) => {
                     const columns = allColumns[i];
                     const indexes = allIndexes[i];
-                    const primaryKeys = allPrimaryKeys[i];
+
+                    const primaryKeys: CassandraColumn[] = [];
+
+                    const pks = sortBy<CassandraColumn>(columns.filter((c) => c.kind === "partition_key"), (c) => {
+                        return c.position;
+                    });
+                    const cks = sortBy<CassandraColumn>(columns.filter((c) => c.kind === "clustering"), (c) => {
+                        return c.position;
+                    });
+
+                    pks.forEach((p) => primaryKeys.push(p));
+                    cks.forEach((p) => primaryKeys.push(p));
+
+                    const compaction = Object.assign(row.compaction_strategy_options, {
+                        class: row.compaction_strategy_class,
+                    });
+
                     const out: CassandraTable = {
-                        name: row.table_name,
+                        name: row.columnfamily_name,
                         columns,
                         indexes,
                         primaryKeys,
-                        all: row,
+                        compaction,
+                        compression: JSON.parse(row.compression_parameters),
+                        caching: JSON.parse(row.caching),
+                        crc_check_chance: null,
+                        dclocal_read_repair_chance: row.local_read_repair_chance,
+                        default_time_to_live: row.default_time_to_live,
+                        min_index_interval: row.min_index_interval,
+                        max_index_interval: row.max_index_interval,
+                        memtable_flush_period_in_ms: row.memtable_flush_period_in_ms,
+                        read_repair_chance: row.read_repair_chance,
+                        gc_grace_seconds: row.gc_grace_seconds,
+                        speculative_retry: row.speculative_retry,
+                        bloom_filter_fp_chance: row.bloom_filter_fp_chance,
+                        comment: row.comment,
 
                     };
                     return out;
@@ -241,47 +234,7 @@ export function collectTables(client: cassandra.Client, keyspace: string): Promi
     });
 
 }
-export function collectPrimaryKeys(client: cassandra.Client, keyspace: string, table: string): Promise<CassandraColumn[]> {
-    return new Promise((resolve, reject) => {
-        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.columns \
-         where keyspace_name=? AND table_name=?", [keyspace, table])).pipe(
-            map((data) => {
-                const rows = data.rows as RowColumn[];
 
-                const columns = rows.map((row, i) => {
-
-                    const item: CassandraColumn = {
-                        name: row.column_name,
-                        all: row,
-                        clustering_order: row.clustering_order as CassandraClusteringOrder,
-                        kind: row.kind as CassandraColumnType,
-                        position: row.position,
-                        type: row.type,
-                        typeRoot: rootColumnType(row.type),
-                    };
-                    return item;
-                });
-
-                const out: CassandraColumn[] = [];
-
-                const pks = sortBy<CassandraColumn>(columns.filter((c) => c.kind === "partition_key"), (i) => {
-                    return i.position;
-                });
-                const cks = sortBy<CassandraColumn>(columns.filter((c) => c.kind === "clustering"), (i) => {
-                    return i.position;
-                });
-
-                pks.forEach((p, i) => out.push(p));
-                cks.forEach((p, i) => out.push(p));
-
-                return out;
-            }),
-            ).subscribe((data) => {
-                resolve(data);
-            }, (e) => reject(e));
-
-    });
-}
 export function collectIndexes(client: cassandra.Client, keyspace: string, table: string): Promise<CassandraIndex[]> {
     return new Promise((resolve, reject) => {
         // system_schema.columns
@@ -312,31 +265,52 @@ export function collectIndexes(client: cassandra.Client, keyspace: string, table
     });
 
 }
-export function collectColumns(client: cassandra.Client, keyspace: string, table: string): Promise<CassandraColumn[]> {
+export function collectColumns(client: CassandraClient, keyspace: string, table: string): Promise<CassandraColumn[]> {
     return new Promise((resolve, reject) => {
         // system_schema.columns
-        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.columns \
-         where keyspace_name=? AND table_name=?", [keyspace, table])).pipe(
-            map((data) => {
-                const rows = data.rows as RowColumn[];
+        from(
+            Promise.all([
+                client.execute("select * from system.schema_columns \
+                 where keyspace_name=? AND columnfamily_name=?", [keyspace, table]),
+                client.client.metadata.getTable(keyspace, table),
+            ]),
+        ).pipe(
+            map((result) => {
+                const data = result[0];
+                const metadata = result[1];
+                const rows = data.rows as RowCs2SchemaColumns[];
 
                 return rows.map((row, i) => {
 
+                    let kind: CassandraColumnType = "regular";
+                    let clustering_order: CassandraClusteringOrder = null;
+                    switch (row.type) {
+                        case "partition_key":
+                            kind = "partition_key";
+                            break;
+                        case "clustering_key":
+                            kind = "clustering";
+                            clustering_order = metadata.clusteringOrder[row.component_index] as CassandraClusteringOrder;
+                            break;
+                    }
+                    const columnInfo = metadata.columns.find((c) => c.name === row.column_name);
+                    const type = columnTypeToV3(client, columnInfo.type);
                     const out: CassandraColumn = {
                         name: row.column_name,
-                        all: row,
-                        clustering_order: row.clustering_order as CassandraClusteringOrder,
-                        kind: row.kind as CassandraColumnType,
-                        position: row.position,
-                        type: row.type,
-                        typeRoot: rootColumnType(row.type),
+                        clustering_order,
+                        kind,
+                        position: row.component_index,
+                        type,
+                        typeRoot: rootColumnType(type),
                     };
                     return out;
                 });
             }),
-            ).subscribe((data) => {
-                resolve(data);
-            }, (e) => reject(e));
+        ).subscribe((data) => {
+            resolve(data);
+        }, (e) => {
+            reject(e);
+        });
     });
 
 }
