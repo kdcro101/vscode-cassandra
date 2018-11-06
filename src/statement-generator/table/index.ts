@@ -162,7 +162,11 @@ function tableOptions(data: CassandraTable): string {
         `\tspeculative_retry = '${data.speculative_retry}'`,
         `\tmin_index_interval = ${data.min_index_interval}`,
         `\tmax_index_interval = ${data.max_index_interval}`,
-        `\tcrc_check_chance = ${data.crc_check_chance}`,
     ]);
+
+    if (data.crc_check_chance) {
+        out.push(`\tcrc_check_chance = ${data.crc_check_chance}`);
+    }
+
     return ` WITH ${out.join(" AND \n")}`;
 }

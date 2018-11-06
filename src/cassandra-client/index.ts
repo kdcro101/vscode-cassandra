@@ -39,7 +39,7 @@ export class CassandraClient extends EventEmitter {
     // private structure: CassandraKeyspace[];
     public isInvalid: boolean = false;
 
-    public client: cassandra.Client;
+    public nativeClient: cassandra.Client;
 
     constructor(private config: ValidatedConfigClusterItem) {
         super();
@@ -59,7 +59,7 @@ export class CassandraClient extends EventEmitter {
             options.authProvider = new cassandra.auth.PlainTextAuthProvider(config.authProvider.username, config.authProvider.password);
         }
 
-        this.client = new cassandra.Client(options);
+        this.nativeClient = new cassandra.Client(options);
         this.clusterName = config.name;
 
         (global as any).cclient = this;
@@ -68,13 +68,13 @@ export class CassandraClient extends EventEmitter {
     public destroy() {
         return new Promise((resolve, reject) => {
 
-            if (!this.client) {
+            if (!this.nativeClient) {
                 resolve();
                 return;
             }
 
             try {
-                this.client.shutdown(() => {
+                this.nativeClient.shutdown(() => {
                     resolve();
                 });
             } catch (e) {
@@ -84,15 +84,15 @@ export class CassandraClient extends EventEmitter {
     }
     public execute(cql: string, params?: any, preparedStatement: boolean = false): Promise<cassandra.types.ResultSet> {
 
-        return this.client.execute(cql, params, { prepare: preparedStatement });
+        return this.nativeClient.execute(cql, params, { prepare: preparedStatement });
 
     }
     public connect(): Promise<void> {
         return new Promise((resolve, reject) => {
 
-            this.client.connect()
+            this.nativeClient.connect()
                 .then((result) => {
-                    console.log("Connected to cluster with %d host(s): %j", this.client.hosts.length, this.client.hosts.keys());
+                    console.log("Connected to cluster with %d host(s): %j", this.nativeClient.hosts.length, this.nativeClient.hosts.keys());
                     this.stateConnected.next(true);
                     resolve();
 
@@ -268,7 +268,7 @@ export class CassandraClient extends EventEmitter {
                         return collectKeyspaces2(this);
                     }
                     if (version >= 3) {
-                        return collectKeyspaces3(this.client);
+                        return collectKeyspaces3(this.nativeClient);
                     }
 
                     return Promise.resolve([] as CassandraKeyspace[]);

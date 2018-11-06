@@ -145,7 +145,6 @@ export function collectAggregates(client: cassandra.Client, keyspace: string): P
                         return_type: row.return_type,
                         state_func: row.state_func,
                         state_type: row.state_type,
-                        all: row,
 
                     };
                     return out;
@@ -171,8 +170,6 @@ export function collectTypes(client: cassandra.Client, keyspace: string): Promis
                         name: row.type_name,
                         field_names: row.field_names,
                         field_types: row.field_types,
-                        all: row,
-
                     };
                     return out;
                 });

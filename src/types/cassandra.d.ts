@@ -838,6 +838,7 @@ declare module "cassandra-driver" {
 
             getAggregate(keyspaceName: string, name: string, signature: Array<string> | Array<{ code: number, info: any }>, callback: Callback): void;
             getAggregates(keyspaceName: string, name: string, callback: Callback): void;
+            getAggregates(keyspaceName: string, name: string): Promise<AggregateMetadata[]>;
             getFunction(keyspaceName: string, name: string, signature: Array<string> | Array<{ code: number, info: any }>, callback: Callback): void;
             getFunctions(keyspaceName: string, name: string, callback: Callback): void;
             getFunctions(keyspaceName: string, name: string): Promise<FunctionMetadata[]>;
@@ -847,6 +848,7 @@ declare module "cassandra-driver" {
             getTable(keyspaceName: string, name: string): Promise<TableMetadata>;
             getTrace(traceId: types.Uuid, callback: Callback): void;
             getUdt(keyspaceName: string, name: string, callback: Callback): void;
+            getUdt(keyspaceName: string, name: string): Promise<UdtMetadata>;
             refreshKeyspace(name: string, callback?: Callback): void;
             refreshKeyspaces(callback?: Callback): void;
             keyspaces: { [name: string]: KeyspaceMetadata };
@@ -866,6 +868,10 @@ declare module "cassandra-driver" {
             name: string;
             returnType: string;
             signature: Array<string>;
+        }
+        interface UdtMetadata {
+            name: string;
+            fields: ColumnInfo[];
         }
         interface FunctionMetadata {
             argumentNames: Array<string>;
@@ -896,6 +902,18 @@ declare module "cassandra-driver" {
             strategy: string;
             strategyOptions: { [key: string]: string }
             durableWrites: boolean;
+        }
+        interface AggregateMetadata {
+            name: string;
+            keyspaceName: string;
+            signature: string[];
+            argumentTypes: DataTypeInfo[];
+            stateFunction: string;
+            stateType: DataTypeInfo
+            finalFunction: string;
+            initConditionRaw: any;
+            initCondition:string;
+            returnType: DataTypeInfo;
         }
     }
 

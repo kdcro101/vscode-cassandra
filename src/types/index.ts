@@ -127,7 +127,7 @@ export interface CassandraType {
     name: string;
     field_names: string[];
     field_types: string[];
-    all: RowType;
+    // all: RowType;
 }
 export interface CassandraMaterializedView {
     keyspace: string;
@@ -161,7 +161,6 @@ export interface CassandraAggregate {
     return_type: string;
     state_func: string;
     state_type: string;
-    all: RowAggregate;
 }
 
 export interface CassandraFunction {

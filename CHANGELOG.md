@@ -1,3 +1,7 @@
+## 0.2.0 | 2017-11-06
+
+- Added support for Apache Cassandra **`2.*`**
+
 ## 0.1.4 | 2017-11-02
 
 - fix ALTER USER parser error

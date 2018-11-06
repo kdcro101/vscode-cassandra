@@ -8,7 +8,10 @@ import {
     CassandraAggregate, CassandraColumn, CassandraColumnType, CassandraFunction,
     CassandraIndex, CassandraIndexCollectionType, CassandraKeyspace, CassandraTable, CassandraType, RowAggregate, RowFunction, RowType,
 } from "../../types";
-import { RowCs2SchemaColumnfamilies, RowCs2SchemaColumns, RowCs2SchemaFunctions, RowCs2SchemaKeyspaces } from "../../types/cassandra2";
+import {
+    RowCs2SchemaAggregates, RowCs2SchemaColumnfamilies,
+    RowCs2SchemaColumns, RowCs2SchemaFunctions, RowCs2SchemaKeyspaces, RowCs2SchemaUserTypes,
+} from "../../types/cassandra2";
 import { CassandraClusteringOrder } from "../../types/index";
 import { columnTypeToV3 } from "./helpers";
 
@@ -22,10 +25,8 @@ export function collectKeyspaces2(client: CassandraClient): Promise<CassandraKey
                     rows,
                     Promise.all(rows.map((i) => collectTables(client, i.keyspace_name))),
                     Promise.all(rows.map((i) => collectFunctions(client, i.keyspace_name))),
-                    Promise.all(rows.map((i) => Promise.resolve([] as CassandraType[]))),
-                    Promise.all(rows.map((i) => Promise.resolve([] as CassandraAggregate[]))),
-                    // Promise.all(rows.map((i) => collectTypes(client, i.keyspace_name))),
-                    // Promise.all(rows.map((i) => collectAggregates(client, i.keyspace_name))),
+                    Promise.all(rows.map((i) => collectTypes(client, i.keyspace_name))),
+                    Promise.all(rows.map((i) => collectAggregates(client, i.keyspace_name))),
 
                 ]);
             }),
@@ -43,7 +44,7 @@ export function collectKeyspaces2(client: CassandraClient): Promise<CassandraKey
                     const aggregates = allAggregates[i];
                     const views = [];
 
-                    const replication = Object.assign(row.strategy_options, {
+                    const replication = Object.assign(JSON.parse(row.strategy_options), {
                         class: row.strategy_class,
                     });
 
@@ -74,24 +75,35 @@ export function collectKeyspaces2(client: CassandraClient): Promise<CassandraKey
     });
 }
 
-export function collectAggregates(client: cassandra.Client, keyspace: string): Promise<CassandraAggregate[]> {
+export function collectAggregates(client: CassandraClient, keyspace: string): Promise<CassandraAggregate[]> {
     return new Promise((resolve, reject) => {
         // system_schema.tables
-        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.aggregates where keyspace_name=?", [keyspace])).pipe(
+        from<cassandra.types.ResultSet>(client.execute("select * from system.schema_aggregates where keyspace_name=?", [keyspace])).pipe(
+            concatMap((resultset) => {
+                const rows = resultset.rows as RowCs2SchemaAggregates[];
+                return Promise.all([
+                    Promise.resolve(rows),
+                    Promise.all(rows.map((row) => client.nativeClient.metadata.getAggregates(keyspace, row.aggregate_name))),
+                ]);
+            }),
             map((data) => {
-                const rows = data.rows as RowAggregate[];
+                const rows = data[0];
+                const meta = data[1];
 
                 return rows.map((row, i) => {
+                    const aggMeta = meta[i][0];
+                    const rt = columnTypeToV3(client, aggMeta.returnType);
+                    const st = columnTypeToV3(client, aggMeta.stateType);
+                    const argument_types = aggMeta.argumentTypes.map((t) => columnTypeToV3(client, t));
 
                     const out: CassandraAggregate = {
                         name: row.aggregate_name,
-                        argument_types: row.argument_types,
+                        argument_types,
                         final_func: row.final_func,
-                        initcond: row.initcond,
-                        return_type: row.return_type,
+                        initcond: aggMeta.initCondition,
+                        return_type: rt,
                         state_func: row.state_func,
-                        state_type: row.state_type,
-                        all: row,
+                        state_type: st,
 
                     };
                     return out;
@@ -104,21 +116,27 @@ export function collectAggregates(client: cassandra.Client, keyspace: string): P
     });
 
 }
-export function collectTypes(client: cassandra.Client, keyspace: string): Promise<CassandraType[]> {
+export function collectTypes(client: CassandraClient, keyspace: string): Promise<CassandraType[]> {
     return new Promise((resolve, reject) => {
         // system_schema.tables
-        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.types where keyspace_name=?", [keyspace])).pipe(
+        from<cassandra.types.ResultSet>(client.execute("select * from system.schema_usertypes where keyspace_name=?", [keyspace])).pipe(
+            concatMap((resultset) => {
+                const rows = resultset.rows as RowCs2SchemaUserTypes[];
+                return Promise.all([
+                    Promise.resolve(rows),
+                    Promise.all(rows.map((row) => client.nativeClient.metadata.getUdt(keyspace, row.type_name))),
+                ]);
+            }),
             map((data) => {
-                const rows = data.rows as RowType[];
+                const rows = data[0];
+                const meta = data[1];
 
                 return rows.map((row, i) => {
-
+                    const types = meta[i].fields.map((f) => columnTypeToV3(client, f.type));
                     const out: CassandraType = {
                         name: row.type_name,
                         field_names: row.field_names,
-                        field_types: row.field_types,
-                        all: row,
-
+                        field_types: types,
                     };
                     return out;
                 });
@@ -138,7 +156,7 @@ export function collectFunctions(client: CassandraClient, keyspace: string): Pro
                 const rows = resultset.rows as RowCs2SchemaFunctions[];
                 return Promise.all([
                     Promise.resolve(rows),
-                    Promise.all(rows.map((row) => client.client.metadata.getFunctions(keyspace, row.function_name))),
+                    Promise.all(rows.map((row) => client.nativeClient.metadata.getFunctions(keyspace, row.function_name))),
                 ]);
             }),
             map((data) => {
@@ -205,7 +223,7 @@ export function collectTables(client: CassandraClient, keyspace: string): Promis
                     pks.forEach((p) => primaryKeys.push(p));
                     cks.forEach((p) => primaryKeys.push(p));
 
-                    const compaction = Object.assign(row.compaction_strategy_options, {
+                    const compaction = Object.assign(JSON.parse(row.compaction_strategy_options), {
                         class: row.compaction_strategy_class,
                     });
 
@@ -247,11 +265,11 @@ export function collectIndexes(client: CassandraClient, keyspace: string, table:
         const rxExtract = new RegExp(/([a-z]+)\(([a-z][_\w]*)\)/i);
         from(
             Promise.all([
-                client.client.execute(
+                client.nativeClient.execute(
                     "select * from system.schema_columns where keyspace_name=? AND columnfamily_name=?",
                     [keyspace, table],
                 ),
-                client.client.metadata.getTable(keyspace, table),
+                client.nativeClient.metadata.getTable(keyspace, table),
             ])).pipe(
                 map((data) => {
 
@@ -298,7 +316,7 @@ export function collectColumns(client: CassandraClient, keyspace: string, table:
             Promise.all([
                 client.execute("select * from system.schema_columns \
                  where keyspace_name=? AND columnfamily_name=?", [keyspace, table]),
-                client.client.metadata.getTable(keyspace, table),
+                client.nativeClient.metadata.getTable(keyspace, table),
             ]),
         ).pipe(
             map((result) => {

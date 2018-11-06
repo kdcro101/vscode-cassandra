@@ -34,7 +34,7 @@ export const aggregateClone = (
     data: CassandraAggregate, replace: boolean = false, cloneName?: string): Promise<string> => {
     return new Promise((resolve, reject) => {
         const name = !cloneName ? `${data.name}` : cloneName;
-        const all = data.all;
+        const all = data;
 
         const pt = typeParser(all.state_type);
         const rt = pt.isFrozen ? typeRender(pt.contains[0]) : typeRender(pt);

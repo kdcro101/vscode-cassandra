@@ -4,7 +4,7 @@ export interface RowCs2SchemaKeyspaces extends cassandra.types.Row {
     keyspace_name: string;
     durable_writes: boolean;
     strategy_class: string;
-    strategy_options: { [key: string]: string };
+    strategy_options: string;
 }
 export interface RowCs2SchemaColumnfamilies extends cassandra.types.Row {
     keyspace_name: string;
@@ -57,4 +57,22 @@ export interface RowCs2SchemaFunctions extends cassandra.types.Row {
     called_on_null_input: boolean;
     language: string;
     return_type: string;
+}
+
+export interface RowCs2SchemaUserTypes extends cassandra.types.Row {
+    keyspace_name: string;
+    type_name: string;
+    field_names: string[];
+    field_types: string[];
+}
+export interface RowCs2SchemaAggregates extends cassandra.types.Row {
+    keyspace_name: string;
+    aggregate_name: string;
+    signature: string[];
+    argument_types: string[];
+    final_func: string;
+    initcond: any;
+    return_type: string;
+    state_func: string;
+    state_type: string;
 }

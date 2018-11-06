@@ -19,8 +19,8 @@ export const typeCreate = (keyspace: string): Promise<string> => {
 export const typeDrop = (keyspace: string, data: CassandraType): Promise<string> => {
     return new Promise((resolve, reject) => {
 
-        const td = data.all;
-        const name = `${td.type_name}`;
+        const td = data;
+        const name = `${td.name}`;
 
         const out: string[] = [
             `DROP TYPE ${keyspace}.${name};`,
@@ -31,8 +31,8 @@ export const typeDrop = (keyspace: string, data: CassandraType): Promise<string>
 };
 export const typeAlter = (keyspace: string, data: CassandraType): Promise<string> => {
     return new Promise((resolve, reject) => {
-        const td = data.all;
-        const name = `${td.type_name}`;
+        const td = data;
+        const name = `${td.name}`;
 
         const renameList = td.field_names.map((n, i) => {
             const t = td.field_types[i];
@@ -54,10 +54,9 @@ export const typeAlter = (keyspace: string, data: CassandraType): Promise<string
 export const typeClone = (keyspace: string, data: CassandraType, cloneName?: string): Promise<string> => {
     return new Promise((resolve, reject) => {
         const name = !cloneName ? `${data.name}` : cloneName;
-        const td = data.all;
 
-        const list = td.field_names.map((n, i) => {
-            const t = td.field_types[i];
+        const list = data.field_names.map((n, i) => {
+            const t = data.field_types[i];
             return `\t${n} ${t}`;
         }).join(",\n");
 
