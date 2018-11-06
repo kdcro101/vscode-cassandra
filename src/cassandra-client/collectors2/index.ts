@@ -6,10 +6,9 @@ import { CassandraClient } from "..";
 import { rootColumnType } from "../../data-type/type-parser";
 import {
     CassandraAggregate, CassandraColumn, CassandraColumnType, CassandraFunction,
-    CassandraIndex, CassandraIndexCollectionType, CassandraKeyspace, CassandraMaterializedView,
-    CassandraTable, CassandraType, RowAggregate, RowColumn, RowFunction, RowIndex, RowType,
+    CassandraIndex, CassandraIndexCollectionType, CassandraKeyspace, CassandraTable, CassandraType, RowAggregate, RowFunction, RowType,
 } from "../../types";
-import { RowCs2SchemaColumnfamilies, RowCs2SchemaColumns, RowCs2SchemaKeyspaces } from "../../types/cassandra2";
+import { RowCs2SchemaColumnfamilies, RowCs2SchemaColumns, RowCs2SchemaFunctions, RowCs2SchemaKeyspaces } from "../../types/cassandra2";
 import { CassandraClusteringOrder } from "../../types/index";
 import { columnTypeToV3 } from "./helpers";
 
@@ -22,13 +21,12 @@ export function collectKeyspaces2(client: CassandraClient): Promise<CassandraKey
                 return Promise.all([
                     rows,
                     Promise.all(rows.map((i) => collectTables(client, i.keyspace_name))),
-                    Promise.all(rows.map((i) => Promise.resolve([] as CassandraFunction[]))),
+                    Promise.all(rows.map((i) => collectFunctions(client, i.keyspace_name))),
                     Promise.all(rows.map((i) => Promise.resolve([] as CassandraType[]))),
                     Promise.all(rows.map((i) => Promise.resolve([] as CassandraAggregate[]))),
-                    // Promise.all(rows.map((i) => collectFunctions(client, i.keyspace_name))),
                     // Promise.all(rows.map((i) => collectTypes(client, i.keyspace_name))),
                     // Promise.all(rows.map((i) => collectAggregates(client, i.keyspace_name))),
-                    Promise.all(rows.map((i) => Promise.resolve([] as CassandraMaterializedView[]))),
+
                 ]);
             }),
             map((data) => {
@@ -37,14 +35,13 @@ export function collectKeyspaces2(client: CassandraClient): Promise<CassandraKey
                 const allFunctions = data[2];
                 const allTypes = data[3];
                 const allAggregates = data[4];
-                const allViews = data[5];
 
                 return rows.map((row, i) => {
                     const tables = allTables[i];
                     const functions = allFunctions[i];
                     const types = allTypes[i];
                     const aggregates = allAggregates[i];
-                    const views = allViews[i];
+                    const views = [];
 
                     const replication = Object.assign(row.strategy_options, {
                         class: row.strategy_class,
@@ -133,25 +130,35 @@ export function collectTypes(client: cassandra.Client, keyspace: string): Promis
     });
 
 }
-export function collectFunctions(client: cassandra.Client, keyspace: string): Promise<CassandraFunction[]> {
+export function collectFunctions(client: CassandraClient, keyspace: string): Promise<CassandraFunction[]> {
     return new Promise((resolve, reject) => {
         // system_schema.tables
-        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.functions where keyspace_name=?", [keyspace])).pipe(
+        from<cassandra.types.ResultSet>(client.execute("select * from system.schema_functions where keyspace_name=?", [keyspace])).pipe(
+            concatMap((resultset) => {
+                const rows = resultset.rows as RowCs2SchemaFunctions[];
+                return Promise.all([
+                    Promise.resolve(rows),
+                    Promise.all(rows.map((row) => client.client.metadata.getFunctions(keyspace, row.function_name))),
+                ]);
+            }),
             map((data) => {
-                const rows = data.rows as RowFunction[];
+                const rows = data[0];
+                const meta = data[1];
 
                 return rows.map((row, i) => {
+                    const funcMeta = meta[i][0];
+                    const rt = columnTypeToV3(client, funcMeta.returnType);
+
+                    const argument_types = funcMeta.argumentTypes.map((t) => columnTypeToV3(client, t));
 
                     const out: CassandraFunction = {
                         name: row.function_name,
-                        argument_types: row.argument_types,
+                        argument_types,
                         argument_names: row.argument_names,
                         body: row.body,
                         called_on_null_input: row.called_on_null_input,
                         language: row.language,
-                        return_type: row.return_type,
-                        all: row,
-
+                        return_type: rt,
                     };
                     return out;
                 });
@@ -174,8 +181,7 @@ export function collectTables(client: CassandraClient, keyspace: string): Promis
                 return Promise.all([
                     rows,
                     Promise.all(rows.map((i) => collectColumns(client, i.keyspace_name, i.columnfamily_name))),
-                    Promise.all(rows.map((i) => Promise.resolve([] as CassandraIndex[]))),
-                    // Promise.all(rows.map((i) => collectIndexes(client, i.keyspace_name, i.columnfamily_name))),
+                    Promise.all(rows.map((i) => collectIndexes(client, i.keyspace_name, i.columnfamily_name))),
                 ]);
             }),
             map((data) => {
@@ -235,30 +241,50 @@ export function collectTables(client: CassandraClient, keyspace: string): Promis
 
 }
 
-export function collectIndexes(client: cassandra.Client, keyspace: string, table: string): Promise<CassandraIndex[]> {
+export function collectIndexes(client: CassandraClient, keyspace: string, table: string): Promise<CassandraIndex[]> {
     return new Promise((resolve, reject) => {
         // system_schema.columns
         const rxExtract = new RegExp(/([a-z]+)\(([a-z][_\w]*)\)/i);
-        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.indexes \
-         where keyspace_name=? AND table_name=?", [keyspace, table])).pipe(
-            map((data) => {
-                const rows = data.rows as RowIndex[];
+        from(
+            Promise.all([
+                client.client.execute(
+                    "select * from system.schema_columns where keyspace_name=? AND columnfamily_name=?",
+                    [keyspace, table],
+                ),
+                client.client.metadata.getTable(keyspace, table),
+            ])).pipe(
+                map((data) => {
 
-                return rows.map((row, i) => {
+                    const rows = (data[0].rows as RowCs2SchemaColumns[]).filter((c) => c.index_name != null);
+                    const metadata = data[1];
 
-                    const column_name = rxExtract.test(row.options.target) ? rxExtract.exec(row.options.target)[2] : row.options.target;
-                    const index_type = rxExtract.test(row.options.target) ? rxExtract.exec(row.options.target)[1] : null;
-                    const out: CassandraIndex = {
-                        name: row.index_name,
-                        kind: row.kind,
-                        options: row.options,
-                        all: row,
-                        columnName: column_name,
-                        indexType: index_type as CassandraIndexCollectionType,
-                    };
-                    return out;
-                });
-            }),
+                    return rows.map((row, i) => {
+                        const column_name = row.column_name;
+                        const columnMeta = metadata.columns.find((c) => c.name === column_name);
+                        const collection = isCollection(client, columnMeta);
+                        const index_type = collection ? collectionIndexType(client, row, columnMeta) : null;
+                        let options: { [key: string]: string } = null;
+                        if (index_type) {
+                            options = {
+                                target: `${index_type}(${column_name})`,
+                            };
+                        } else {
+                            options = {
+                                target: column_name,
+                            };
+                        }
+
+                        const out: CassandraIndex = {
+                            name: row.index_name,
+                            table_name: row.columnfamily_name,
+                            kind: "COMPOSITES",
+                            options,
+                            columnName: column_name,
+                            indexType: index_type,
+                        };
+                        return out;
+                    });
+                }),
             ).subscribe((data) => {
                 resolve(data);
             }, (e) => reject(e));
@@ -313,4 +339,55 @@ export function collectColumns(client: CassandraClient, keyspace: string, table:
         });
     });
 
+}
+
+function isCollection(client: CassandraClient, meta: cassandra.metadata.ColumnInfo): boolean {
+
+    const native = client.getNativeTypes(meta.type.code);
+    let out: boolean = false;
+
+    switch (native) {
+        case "udt":
+            out = true;
+            break;
+        case "map":
+            out = true;
+            break;
+        case "list":
+            out = true;
+            break;
+        case "set":
+            out = true;
+            break;
+        case "tuple":
+            out = true;
+            break;
+    }
+
+    return out;
+}
+function collectionIndexType(
+    client: CassandraClient,
+    row: RowCs2SchemaColumns,
+    metadata: cassandra.metadata.ColumnInfo): CassandraIndexCollectionType {
+
+    const options = JSON.parse(row.index_options);
+    const optionsKeys = Object.keys(options);
+    const isFrozen = (metadata.type.options && metadata.type.options.frozen) ? true : false;
+    const native = client.getNativeTypes(metadata.type.code);
+
+    if (isFrozen && optionsKeys.length === 0 && (native === "map" || native === "udt")) {
+        return "full";
+    }
+    if (!isFrozen && optionsKeys.find((k) => k === "index_keys_and_values")) {
+        return "entries";
+    }
+    if (!isFrozen && optionsKeys.find((k) => k === "index_values")) {
+        return "values";
+    }
+    if (!isFrozen && optionsKeys.find((k) => k === "index_keys")) {
+        return "keys";
+    }
+
+    return null;
 }

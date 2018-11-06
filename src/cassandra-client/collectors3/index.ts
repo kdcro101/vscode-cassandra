@@ -201,7 +201,7 @@ export function collectFunctions(client: cassandra.Client, keyspace: string): Pr
                         called_on_null_input: row.called_on_null_input,
                         language: row.language,
                         return_type: row.return_type,
-                        all: row,
+                        // all: row,
 
                     };
                     return out;
@@ -325,7 +325,8 @@ export function collectIndexes(client: cassandra.Client, keyspace: string, table
                         name: row.index_name,
                         kind: row.kind,
                         options: row.options,
-                        all: row,
+                        table_name: row.table_name,
+                        // all: row,
                         columnName: column_name,
                         indexType: index_type as CassandraIndexCollectionType,
                     };

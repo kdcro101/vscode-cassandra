@@ -47,3 +47,14 @@ export interface RowCs2SchemaColumns extends cassandra.types.Row {
     type: string;
     validator: string;
 }
+export interface RowCs2SchemaFunctions extends cassandra.types.Row {
+    keyspace_name: string;
+    function_name: string;
+    signature: string[];
+    argument_names: string[];
+    argument_types: string[];
+    body: string;
+    called_on_null_input: boolean;
+    language: string;
+    return_type: string;
+}

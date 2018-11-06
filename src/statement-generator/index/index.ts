@@ -34,9 +34,9 @@ export const indexClone = (
             resolve("");
         }
         const vRx = new RegExp(/values\(([a-z][_\w]*)\)/i);
-        const all = indexData.all;
-        const target = all.options.target;
-        const tableName = !cloneTableName ? all.table_name : cloneTableName;
+        // const all = indexData.all;
+        const target = indexData.options.target;
+        const tableName = !cloneTableName ? indexData.table_name : cloneTableName;
 
         const def = vRx.test(target) ? vRx.exec(target)[1] : target;
 

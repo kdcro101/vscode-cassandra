@@ -840,6 +840,7 @@ declare module "cassandra-driver" {
             getAggregates(keyspaceName: string, name: string, callback: Callback): void;
             getFunction(keyspaceName: string, name: string, signature: Array<string> | Array<{ code: number, info: any }>, callback: Callback): void;
             getFunctions(keyspaceName: string, name: string, callback: Callback): void;
+            getFunctions(keyspaceName: string, name: string): Promise<FunctionMetadata[]>;
             getMaterializedView(keyspaceName: string, name: string, callback: Callback): void;
             getReplicas(keyspaceName: string, tokenBuffer: Buffer): Array<any>;
             getTable(keyspaceName: string, name: string, callback: Callback): void;
@@ -866,6 +867,17 @@ declare module "cassandra-driver" {
             returnType: string;
             signature: Array<string>;
         }
+        interface FunctionMetadata {
+            argumentNames: Array<string>;
+            argumentTypes: DataTypeInfo[];
+            body: string;
+            calledOnNullInput: boolean;
+            keyspaceName: string,
+            language: string;
+            name: string;
+            returnType: DataTypeInfo;
+            signature: Array<string>;
+        }
 
         interface TableMetadataStatic {
             new(name: string): TableMetadata;
@@ -880,7 +892,7 @@ declare module "cassandra-driver" {
         }
 
         interface KeyspaceMetadata {
-            name: "system"
+            name: string;
             strategy: string;
             strategyOptions: { [key: string]: string }
             durableWrites: boolean;

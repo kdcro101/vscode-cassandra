@@ -27,7 +27,7 @@ export type TreeItemType = "cluster" | "cluster-error" | "keyspace" | "table" | 
 export type CassandraConsistency = "ANY" | "ONE" | "TWO" | "THREE" | "QUORUM" | "ALL" |
     "LOCAL_QUORUM" | "EACH_QUORUM" | "SERIAL" | "LOCAL_SERIAL" | "LOCAL_ONE";
 
-export type CassandraIndexCollectionType = "full" | "values" | "keys";
+export type CassandraIndexCollectionType = "full" | "values" | "keys" | "entries";
 
 export interface WorkbenchConfigAuthProvider {
     class: "PasswordAuthenticator";
@@ -95,10 +95,11 @@ export interface CassandraColumn {
 export interface CassandraIndex {
     name: string;
     kind: string;
+    table_name: string;
     options: { [key: string]: string };
     columnName: string;
     indexType: CassandraIndexCollectionType;
-    all: RowIndex;
+    // all: RowIndex;
 }
 
 export interface CassandraTable {
@@ -171,7 +172,7 @@ export interface CassandraFunction {
     called_on_null_input: boolean;
     language: string;
     return_type: string;
-    all: RowFunction;
+    // all: RowFunction;
 }
 export interface CassandraKeyspace {
     tables: CassandraTable[];
