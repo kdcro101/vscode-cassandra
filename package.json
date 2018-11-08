@@ -1,8 +1,8 @@
 {
     "name": "vscode-cassandra",
     "displayName": "Cassandra Workbench",
-    "description": "Design and query database with help of generated templates, autocomplete and inline code decorations",
-    "version": "0.2.0",
+    "description": "Design and query Apache Cassandra database with help of generated templates, autocomplete and inline code decorations",
+    "version": "0.2.1",
     "publisher": "kdcro101",
     "engines": {
         "vscode": "^1.28.1"

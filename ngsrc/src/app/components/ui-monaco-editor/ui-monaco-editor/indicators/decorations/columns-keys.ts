@@ -25,6 +25,8 @@ export const decoColumnsKeys = (
 
         if (c.kind === "partition_key") {
             o.options.inlineClassName = "decoration partition_key";
+            o.options.beforeContentClassName = "decoration before_partition_key";
+            o.options.afterContentClassName = "decoration after_partition_key";
             o.options.hoverMessage = [
                 {
                     value: `\`\`\`cql-keys\nPARTITION KEY ${c.kindIndex + 1}/${c.kindCount}\`\`\``,
@@ -34,6 +36,8 @@ export const decoColumnsKeys = (
         }
         if (c.kind === "clustering") {
             o.options.inlineClassName = "decoration clustering";
+            o.options.beforeContentClassName = "decoration before_clustering";
+            o.options.afterContentClassName = "decoration after_clustering";
             o.options.hoverMessage = {
                 value: `\`\`\`cql-keys\nCOLUMN CLUSTERING KEY ${c.kindIndex + 1}/${c.kindCount}\`\`\``,
             };

@@ -8,7 +8,7 @@
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-short/kdcro101.vscode-cassandra.svg)](https://marketplace.visualstudio.com/items?itemName=kdcro101.vscode-cassandra#review-details)
 
 
-Design and query database with help of generated templates, autocomplete and inline code decorations. 
+Design and query Apache Cassandra database with help of generated templates, autocomplete and inline code decorations. 
 Supports Apache Cassandra versions **`2.*`** and **`3.*`**
 
 <p align="center">

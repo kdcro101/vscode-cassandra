@@ -1,3 +1,7 @@
+## 0.2.1 | 2017-11-08
+
+- fixed cursor position calculation when decoration is used - windows only
+
 ## 0.2.0 | 2017-11-06
 
 - Added support for Apache Cassandra **`2.*`**
