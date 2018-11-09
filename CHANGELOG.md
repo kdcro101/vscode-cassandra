@@ -1,3 +1,8 @@
+## 0.2.2 | 2017-11-09
+
+- fixed Editor logo svg
+- README
+
 ## 0.2.1 | 2017-11-08
 
 - fixed cursor position calculation when decoration is used - windows only
