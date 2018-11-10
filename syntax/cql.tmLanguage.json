@@ -1,0 +1,81 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "CQL",
+    "patterns": [{
+            "include": "#keywords"
+        },
+        {
+            "include": "#strings"
+        },
+        {
+            "include": "#comment"
+        },
+        {
+            "include": "#stringsSingle"
+        }
+    ],
+    "repository": {
+        "keywords": {
+            "patterns": [{
+                "name": "keyword.control.cql",
+                "match": "\\b(?i:ADD|AGGREGATE|ALL|ALLOW|ALTER|AND|ANY|APPLY|AS|ASC|AUTHORIZE|BATCH|BEGIN|BY|CALLED|CLUSTERING|COLUMNFAMILY|COMPACT|CONTAINS|CONSISTENCY|COUNT|CREATE|CUSTOM|DELETE|DESC|DISTINCT|DROP|EACH_QUORUM|ENTRIES|EXISTS|FINALFUNC|FILTERING|FROM|FULL|FUNCTION|FUNCTIONS|GRANT|IF|IN|INITCOND|IS|INPUT|INDEX|INFINITY|INSERT|INTO|KEY|KEYS|KEYSPACE|KEYSPACES|LANGUAGE|LEVEL|LIMIT|LIST|LOCAL_ONE|LOCAL_QUORUM|MATERIALIZED|MODIFY|NAN|NORECURSIVE|NOSUPERUSER|NOT|OF|ON|ONE|ORDER|OR|PASSWORD|PER|PERMISSION|PERMISSIONS|PRIMARY|QUORUM|RENAME|RETURNS|REVOKE|REPLACE|ROLES|SCHEMA|SELECT|SFUNC|SET|STATIC|STYPE|STORAGE|SUPERUSER|TABLE|THREE|TO|TOKEN|TRUNCATE|TTL|TWO|TYPE|UNLOGGED|UPDATE|USE|USER|USERS|USING|VALUES|VIEW|WHERE|WITH|WRITETIME)\\b"
+            }]
+        },
+        "strings": {
+            "name": "string.quoted.double.cql",
+            "begin": "\"",
+            "end": "\"",
+            "patterns": [{
+                "name": "constant.character.escape.cql",
+                "match": "\\\\."
+            }]
+        },
+        "stringsSingle": {
+            "name": "string.quoted.single.cql",
+            "begin": "'",
+            "end": "'",
+            "patterns": [{
+                "name": "constant.character.escape.cql",
+                "match": "\\\\."
+            }]
+        },
+        "comment": {
+            "patterns": [{
+                    "name": "comment.block.cql",
+                    "begin": "/\\*",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.comment.cs"
+                        }
+                    },
+                    "end": "\\*/",
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.comment.cs"
+                        }
+                    }
+                },
+                {
+                    "begin": "(^\\s+)?(?=--)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.whitespace.comment.leading.cql"
+                        }
+                    },
+                    "end": "(?=$)",
+                    "patterns": [{
+                        "name": "comment.line.double-slash.cql",
+                        "begin": "(?<!-)--(?:(?!-)|(?=--))",
+                        "beginCaptures": {
+                            "0": {
+                                "name": "punctuation.definition.comment.cql"
+                            }
+                        },
+                        "end": "(?=$)"
+                    }]
+                }
+            ]
+        }
+    },
+    "scopeName": "source.cql"
+}

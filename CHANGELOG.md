@@ -1,3 +1,7 @@
+## 0.3.0 | 2017-11-10
+
+- added provisional syntax highlighting for `.cql` files when opened in vscode
+
 ## 0.2.2 | 2017-11-09
 
 - fixed Editor logo svg
