@@ -1,3 +1,7 @@
+## 0.3.1 | 2017-11-15
+
+- fixed warning message `No such label 'parseInputRespond' for console.timeEnd()`
+
 ## 0.3.0 | 2017-11-10
 
 - added provisional syntax highlighting for `.cql` files when opened in vscode
