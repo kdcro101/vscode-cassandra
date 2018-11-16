@@ -30,6 +30,7 @@
         ".vscode-test",
         "ngsrc/**/*.*",
         "ng",
+        "packed",
         "antlr4"
     ]
 }

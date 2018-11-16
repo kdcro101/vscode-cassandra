@@ -2,7 +2,7 @@
     "name": "vscode-cassandra",
     "displayName": "Cassandra Workbench",
     "description": "Design and query Apache Cassandra database with help of generated templates, autocomplete and inline code decorations",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "publisher": "kdcro101",
     "engines": {
         "vscode": "^1.28.1"
@@ -35,7 +35,7 @@
         "type": "git",
         "url": "https://github.com/kdcro101/vscode-cassandra.git"
     },
-    "main": "./out/extension",
+    "main": "./packed/",
     "contributes": {
         "languages": [{
             "id": "cql",
@@ -549,14 +549,16 @@
         ]
     },
     "scripts": {
-        "vscode:prepublish": "npm run compile",
         "compile": "tsc -p ./",
         "watch": "tsc -watch -p ./",
         "postinstall": "node ./node_modules/vscode/bin/install",
         "test": "npm run compile && node ./node_modules/vscode/bin/test",
         "generate": "./script/generate-parser.sh",
         "cassandra-start": "./script/cassandra.sh start",
-        "cassandra-stop": "./script/cassandra.sh stop"
+        "cassandra-stop": "./script/cassandra.sh stop",
+        "vscode:prepublish": "webpack --mode production",
+        "webpack": "webpack --mode development",
+        "webpack-dev": "webpack --mode development --watch"
     },
     "devDependencies": {
         "@types/clipboardy": "^1.1.0",
@@ -584,9 +586,12 @@
         "merge2": "^1.2.2",
         "rimraf": "^2.6.2",
         "run-sequence": "^2.2.1",
+        "ts-loader": "^5.3.0",
         "tslint": "^5.10.0",
         "typescript": "^2.9.2",
-        "vscode": "^1.1.6"
+        "vscode": "^1.1.6",
+        "webpack": "^4.25.1",
+        "webpack-cli": "^3.1.2"
     },
     "dependencies": {
         "@types/long": "^4.0.0",
