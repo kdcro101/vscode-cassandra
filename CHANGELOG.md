@@ -1,3 +1,7 @@
+## 0.3.4 | 2017-11-18
+
+- fixed README
+
 ## 0.3.3 | 2017-11-16
 
 - extension packed using `webpack.js` for faster loading
