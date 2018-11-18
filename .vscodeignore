@@ -22,6 +22,9 @@ node_modules
 !node_modules/semver
 !node_modules/which
 !node_modules/yallist
+
+!node_modules/monaco-editor/min/vs
+
 **/*.map
 src/**
 res/**
