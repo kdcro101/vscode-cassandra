@@ -1,3 +1,7 @@
+## 0.3.5 | 2017-11-27
+
+- fixed generators not wrapping case-sensitive column names in double qoutes [#5](https://github.com/kdcro101/vscode-cassandra/issues/5)
+
 ## 0.3.4 | 2017-11-18
 
 - fixed README

@@ -32,7 +32,7 @@
                             <span class="mat-caption">Close other tabs</span>
                         </button>
                         <button mat-menu-item (click)="doTabCloseAfter($event,ix)" [disabled]="(editorService.list.length-1)===ix">
-                            <span class="mat-caption">Close tabs top the right</span>
+                            <span class="mat-caption">Close tabs to the right</span>
                         </button>
                         <button mat-menu-item (click)="doTabCloseAll($event,ix)" [disabled]="(editorService.list.length-1)===ix">
                             <span class="mat-caption">Close All</span>

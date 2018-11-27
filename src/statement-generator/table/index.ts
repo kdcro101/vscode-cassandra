@@ -47,10 +47,13 @@ export const tableAlterDrop = (keyspace: string, data: CassandraTable, columnToD
     return new Promise((resolve, reject) => {
         const name = `${data.name}`;
         const columnName = columnToDrop || "column_to_drop";
-
+        const cs = isCaseSensitive(columnName);
         const out: string[] = [
             `-- change column name`,
-            `ALTER TABLE ${keyspace}.${name} DROP ${columnName};`,
+            cs ?
+                `ALTER TABLE ${keyspace}.${name} DROP "${columnName}";`
+                :
+                `ALTER TABLE ${keyspace}.${name} DROP ${columnName};` ,
         ];
 
         resolve(out.join("\n"));

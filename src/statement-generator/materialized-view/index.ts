@@ -1,15 +1,24 @@
 import wrap = require("word-wrap");
 import { CassandraMaterializedView, CassandraTable } from "../../types/index";
+import { isCaseSensitive } from "../base/helpers";
 export const materializedViewCreate = (keyspace: string, table: CassandraTable): Promise<string> => {
     return new Promise((resolve, reject) => {
 
         const name = `${table.name}_view`;
 
-        let columns = table.primaryKeys.map((c) => c.name);
-        columns = columns.concat(
+        const columns = table.primaryKeys.map((c) => c.name).concat(
             table.columns.filter((c) => c.kind === "regular").map((c) => c.name),
-        );
-        const restriction = columns.map((c) => `${c} IS NOT NULL`);
+        ).map((c) => {
+            const cs = isCaseSensitive(c);
+            return cs ? `"${c}"` : c;
+        });
+
+        const restriction = table.primaryKeys.map((c) => c.name).concat(
+            table.columns.filter((c) => c.kind === "regular").map((c) => c.name),
+        ).map((c) => {
+            const cs = isCaseSensitive(c);
+            return cs ? `"${c}" IS NOT NULL` : `${c} IS NOT NULL`;
+        });
         const out: string[] = [
             `CREATE MATERIALIZED VIEW ${keyspace}.${name}`,
             `AS SELECT`,
@@ -59,7 +68,8 @@ export const materializedViewClone = (keyspace: string, data: CassandraMateriali
         const columns = data.columns;
 
         const list = columns.map((n, i) => {
-            return `${n.name}`;
+            const cs = isCaseSensitive(n.name);
+            return cs ? `"${n.name}"` : `${n.name}`;
         }).join(", ");
 
         const out: string[] = [
@@ -84,11 +94,34 @@ function primaryKey(data: CassandraTable | CassandraMaterializedView): string {
     // handle simple
     if (data.primaryKeys.length === 1) {
         const simple = data.primaryKeys[0].name;
-        return `PRIMARY KEY(${simple})`;
+        const cs = isCaseSensitive(simple);
+
+        if (cs) {
+            return `PRIMARY KEY("${simple}")`;
+        } else {
+            return `PRIMARY KEY(${simple})`;
+        }
     }
+
     const countPar = data.primaryKeys.filter((k) => k.kind === "partition_key").length;
-    const listPar = data.primaryKeys.filter((k) => k.kind === "partition_key").map((k) => k.name);
-    const listClu = data.primaryKeys.filter((k) => k.kind === "clustering").map((k) => k.name);
+    const listPar = data.primaryKeys.filter((k) => k.kind === "partition_key").map((k) => {
+        const cs = isCaseSensitive(k.name);
+        if (cs) {
+            return `"${k.name}"`;
+        } else {
+            return k.name;
+
+        }
+    });
+    const listClu = data.primaryKeys.filter((k) => k.kind === "clustering").map((k) => {
+        const cs = isCaseSensitive(k.name);
+        if (cs) {
+            return `"${k.name}"`;
+        } else {
+            return k.name;
+
+        }
+    });
 
     const partPartition = countPar === 1 ? listPar.join(", ") : `(${listPar.join(", ")})`;
     const partClustering = listClu.join(", ");

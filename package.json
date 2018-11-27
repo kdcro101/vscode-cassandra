@@ -2,7 +2,7 @@
     "name": "vscode-cassandra",
     "displayName": "Cassandra Workbench",
     "description": "Design and query Apache Cassandra database with help of generated templates, autocomplete and inline code decorations",
-    "version": "0.3.4",
+    "version": "0.3.5",
     "publisher": "kdcro101",
     "engines": {
         "vscode": "^1.28.1"
@@ -617,6 +617,7 @@
         "clipboardy": "^1.2.3",
         "connect": "^3.6.6",
         "fs-extra": "^6.0.1",
+        "gulp-remote-src-vscode": "^0.5.1",
         "install": "^0.12.1",
         "jsmin": "^1.0.1",
         "lodash": "^4.17.10",
