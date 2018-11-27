@@ -5,6 +5,7 @@ import { CassandraClient } from "../cassandra-client";
 import { Clusters } from "../clusters";
 import { DataTypeManager } from "../data-type";
 import { rootColumnType } from "../data-type/type-parser";
+import { isCaseSensitive } from "../statement-generator/base/helpers";
 import { CassandraClusterData, CassandraDataType, CassandraTable } from "../types/index";
 import { DataChangeItem } from "../types/messages";
 
@@ -120,8 +121,23 @@ export class DataChangeProcessor {
                 reject("invalid_value");
             }
 
-            const where = pkeys.map((k) => `${k.name}=?`).join(" AND ");
-            const q = `UPDATE ${item.keyspace}.${item.table} SET ${item.column}=? WHERE ${where}`;
+            const cs = isCaseSensitive(item.column);
+            let q: string = null;
+
+            const where = pkeys.map((k) => {
+                const pkcs = isCaseSensitive(k.name);
+                if (cs) {
+                    return `"${k.name}"=?`;
+                } else {
+                    return `${k.name}=?`;
+                }
+            }).join(" AND ");
+
+            if (cs) {
+                q = `UPDATE ${item.keyspace}.${item.table} SET "${item.column}"=? WHERE ${where}`;
+            } else {
+                q = `UPDATE ${item.keyspace}.${item.table} SET ${item.column}=? WHERE ${where}`;
+            }
 
             const params: any[] = [dt.value]; // first is value to update
             pkeys.forEach((k) => {

@@ -3,6 +3,8 @@ import { DataTypeManager } from "../../data-type";
 import { rootColumnType } from "../../data-type/type-parser";
 import { CassandraMaterializedView, CassandraTable } from "../../types/index";
 import { Workspace } from "../../workspace/index";
+import { isCaseSensitive } from "../base/helpers";
+
 export const tableSelect = (keyspace: string, data: CassandraTable | CassandraMaterializedView): Promise<string> => {
     return new Promise((resolve, reject) => {
 
@@ -25,10 +27,23 @@ export const tableSelect = (keyspace: string, data: CassandraTable | CassandraMa
         const pkConditions = pks.map((c) => {
             const ctype = rootColumnType(c.type);
             const dt = dtm.get(ctype, null);
-            return `${c.name}=${dt.stringPlaceholder}`;
+            const cs = isCaseSensitive(c.name);
+            if (cs) {
+                return `"${c.name}"=${dt.stringPlaceholder}`;
+            } else {
+                return `${c.name}=${dt.stringPlaceholder}`;
+            }
         });
 
-        const elements = names.join(", ");
+        // double qoute if case sensitive
+        const elements = names.map((n) => {
+            const cs = isCaseSensitive(n);
+            if (cs) {
+                return `"${n}"`;
+            } else {
+                return n;
+            }
+        }).join(", ");
         const q = `SELECT ${elements}\nFROM ${keyspace}.${data.name}\nWHERE ${pkConditions.join(" AND ")}\nLIMIT ${limit};\n`;
         const wrapped = wrap(q, {
             width: 80,
@@ -56,7 +71,16 @@ export const tableSelectAll = (keyspace: string, data: CassandraTable | Cassandr
             names.push(c.name);
         });
 
-        const elements = names.join(", ");
+        // double qoute if case sensitive
+        const elements = names.map((n) => {
+            const cs = isCaseSensitive(n);
+            if (cs) {
+                return `"${n}"`;
+            } else {
+                return n;
+            }
+        }).join(", ");
+
         const q = `SELECT ${elements}\nFROM ${keyspace}.${data.name}\nLIMIT ${limit};\n`;
         const wrapped = wrap(q, {
             width: 80,

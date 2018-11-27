@@ -1,6 +1,7 @@
 import { from } from "rxjs";
 import { concatMap } from "rxjs/operators";
 import { CassandraTable } from "../../types/index";
+import { isCaseSensitive } from "../base/helpers";
 import { indexClone } from "../index/index";
 export const tableTruncate = (keyspace: string, data: CassandraTable): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -103,7 +104,12 @@ export const tableClone = (keyspace: string, data: CassandraTable, cloneName?: s
 function columns(data: CassandraTable): string {
 
     const collection = data.columns.map((c) => {
-        return `\t${c.name} ${c.type}`;
+        const cs = isCaseSensitive(c.name);
+        if (cs) {
+            return `\t"${c.name}" ${c.type}`;
+        } else {
+            return `\t${c.name} ${c.type}`;
+        }
     });
 
     return collection.join(",\n");
@@ -113,11 +119,33 @@ function primaryKey(data: CassandraTable): string {
     // handle simple
     if (data.primaryKeys.length === 1) {
         const simple = data.primaryKeys[0].name;
-        return `PRIMARY KEY(${simple})`;
+        const cs = isCaseSensitive(simple);
+
+        if (cs) {
+            return `PRIMARY KEY("${simple}")`;
+        } else {
+            return `PRIMARY KEY(${simple})`;
+        }
     }
     const countPar = data.primaryKeys.filter((k) => k.kind === "partition_key").length;
-    const listPar = data.primaryKeys.filter((k) => k.kind === "partition_key").map((k) => k.name);
-    const listClu = data.primaryKeys.filter((k) => k.kind === "clustering").map((k) => k.name);
+    const listPar = data.primaryKeys.filter((k) => k.kind === "partition_key").map((k) => {
+        const cs = isCaseSensitive(k.name);
+        if (cs) {
+            return `"${k.name}"`;
+        } else {
+            return k.name;
+
+        }
+    });
+    const listClu = data.primaryKeys.filter((k) => k.kind === "clustering").map((k) => {
+        const cs = isCaseSensitive(k.name);
+        if (cs) {
+            return `"${k.name}"`;
+        } else {
+            return k.name;
+
+        }
+    });
 
     const partPartition = countPar === 1 ? listPar.join(", ") : `(${listPar.join(", ")})`;
     const partClustering = listClu.join(", ");
