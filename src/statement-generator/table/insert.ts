@@ -30,8 +30,11 @@ export const tableInsert = (keyspace: string, data: CassandraTable): Promise<str
             }
         });
 
+        const tcs = isCaseSensitive(name);
+        const tableName = tcs ? `"${name}"` : name;
+
         const lines: string[] = [
-            `INSERT INTO ${keyspace}.${name}(`,
+            `INSERT INTO ${keyspace}.${tableName}(`,
             `${names.join(", \n")}`,
             `)`,
             `VALUES(`,

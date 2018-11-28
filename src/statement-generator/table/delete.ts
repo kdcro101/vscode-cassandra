@@ -1,6 +1,7 @@
 import { DataTypeManager } from "../../data-type";
 import { rootColumnType, typeParser, typeValueExampleRender } from "../../data-type/type-parser";
 import { CassandraTable } from "../../types";
+import { isCaseSensitive } from "../base/helpers";
 
 export const tableDelete = (keyspace: string, data: CassandraTable): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -13,23 +14,20 @@ export const tableDelete = (keyspace: string, data: CassandraTable): Promise<str
         const pkConditions = pks.map((c) => {
             const ctype = rootColumnType(c.type);
             const dt = dtm.get(ctype, null);
-            return `${c.name}=${dt.stringPlaceholder}`;
-        });
+            const cs = isCaseSensitive(c.name);
 
-        const columns = updatables.map((c) => {
-            try {
+            if (cs) {
+                return `"${c.name}"=${dt.stringPlaceholder}`;
+            } else {
+                return `${c.name}=${dt.stringPlaceholder}`;
 
-                const dataAnalysis = typeParser(c.type);
-                const val = typeValueExampleRender(dataAnalysis);
-                return `\t${c.name}=${val}`;
-            } catch (e) {
-                console.log(`ERROR generating data for ${c.name}/${c.type}`);
-                console.log(e);
             }
         });
 
+        const tcs = isCaseSensitive(name);
+        const tableName = tcs ? `"${name}"` : name;
         const lines: string[] = [
-            `DELETE FROM ${keyspace}.${name}`,
+            `DELETE FROM ${keyspace}.${tableName}`,
             `WHERE ${pkConditions.join(" AND ")};`,
         ];
 

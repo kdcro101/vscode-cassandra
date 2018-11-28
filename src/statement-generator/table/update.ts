@@ -42,8 +42,11 @@ export const tableUpdate = (keyspace: string, data: CassandraTable): Promise<str
             }
         });
 
+        const tcs = isCaseSensitive(name);
+        const tableName = tcs ? `"${name}"` : name;
+
         const lines: string[] = [
-            `UPDATE ${keyspace}.${name}`,
+            `UPDATE ${keyspace}.${tableName}`,
             `SET`,
             `${columns.join(",\n")}`,
             `WHERE ${pkConditions.join(" AND ")};`,

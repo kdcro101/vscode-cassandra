@@ -75,8 +75,19 @@ export class DataChangeProcessor {
                 return;
             }
 
-            const where = pkeys.map((k) => `${k.name}=?`).join(" AND ");
-            const q = `DELETE FROM ${item.keyspace}.${item.table} WHERE ${where}`;
+            const tcs = isCaseSensitive(item.table);
+            const tableName = tcs ? `"${item.table}"` : item.table;
+
+            const where = pkeys.map((k) => {
+                const pkcs = isCaseSensitive(k.name);
+                if (pkcs) {
+                    return `"${k.name}"=?`;
+                } else {
+                    return `${k.name}=?`;
+                }
+            }).join(" AND ");
+
+            const q = `DELETE FROM ${item.keyspace}.${tableName} WHERE ${where}`;
 
             const params: any[] = []; // first is value to update
             pkeys.forEach((k) => {
@@ -126,17 +137,20 @@ export class DataChangeProcessor {
 
             const where = pkeys.map((k) => {
                 const pkcs = isCaseSensitive(k.name);
-                if (cs) {
+                if (pkcs) {
                     return `"${k.name}"=?`;
                 } else {
                     return `${k.name}=?`;
                 }
             }).join(" AND ");
 
+            const tcs = isCaseSensitive(item.table);
+            const tableName = tcs ? `"${item.table}"` : item.table;
+
             if (cs) {
-                q = `UPDATE ${item.keyspace}.${item.table} SET "${item.column}"=? WHERE ${where}`;
+                q = `UPDATE ${item.keyspace}.${tableName} SET "${item.column}"=? WHERE ${where}`;
             } else {
-                q = `UPDATE ${item.keyspace}.${item.table} SET ${item.column}=? WHERE ${where}`;
+                q = `UPDATE ${item.keyspace}.${tableName} SET ${item.column}=? WHERE ${where}`;
             }
 
             const params: any[] = [dt.value]; // first is value to update

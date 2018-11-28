@@ -53,7 +53,7 @@ export const tableAlterDrop = (keyspace: string, data: CassandraTable, columnToD
             cs ?
                 `ALTER TABLE ${keyspace}.${name} DROP "${columnName}";`
                 :
-                `ALTER TABLE ${keyspace}.${name} DROP ${columnName};` ,
+                `ALTER TABLE ${keyspace}.${name} DROP ${columnName};`,
         ];
 
         resolve(out.join("\n"));
@@ -90,7 +90,9 @@ export const tableClone = (keyspace: string, data: CassandraTable, cloneName?: s
 
         from(indexes).pipe(
             concatMap((ix) => {
-                const ixName = !cloneName ? null : `${name}_${ix.columnName}_idx`;
+                const qRx = new RegExp(/[\"]?([a-z][_\w]*)[\"]?/i);
+                const columnName = qRx.exec(ix.columnName)[1];
+                const ixName = !cloneName ? null : `${name}_${columnName}_idx`;
                 return indexClone(keyspace, data, ix.name, ixName, name);
             }),
         ).subscribe((idxString) => {
