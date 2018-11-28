@@ -1,3 +1,5 @@
 * linguist-vendored
 *.ts linguist-vendored=false
 *.g4 linguist-vendored=false
+*.svg linguist-vendored=false
+*.html linguist-vendored=false
