@@ -1,9 +1,9 @@
 import wrap = require("word-wrap");
 import { DataTypeManager } from "../../data-type";
 import { rootColumnType } from "../../data-type/type-parser";
+import { quouteCaseSensitive } from "../../helpers/quoting";
 import { CassandraMaterializedView, CassandraTable } from "../../types/index";
 import { Workspace } from "../../workspace/index";
-import { isCaseSensitive } from "../base/helpers";
 
 export const tableSelect = (keyspace: string, data: CassandraTable | CassandraMaterializedView): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -27,28 +27,20 @@ export const tableSelect = (keyspace: string, data: CassandraTable | CassandraMa
         const pkConditions = pks.map((c) => {
             const ctype = rootColumnType(c.type);
             const dt = dtm.get(ctype, null);
-            const cs = isCaseSensitive(c.name);
-            if (cs) {
-                return `"${c.name}"=${dt.stringPlaceholder}`;
-            } else {
-                return `${c.name}=${dt.stringPlaceholder}`;
-            }
+
+            return `${quouteCaseSensitive(c.name)}=${dt.stringPlaceholder}`;
+
         });
 
         // double qoute if case sensitive
         const elements = names.map((n) => {
-            const cs = isCaseSensitive(n);
-            if (cs) {
-                return `"${n}"`;
-            } else {
-                return n;
-            }
+            return quouteCaseSensitive(n);
         }).join(", ");
 
-        const tcs = isCaseSensitive(data.name);
-        const tableName = tcs ? `"${data.name}"` : data.name;
+        const q = `SELECT ${elements}\n
+                   FROM ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(data.name)}\n
+                   WHERE ${pkConditions.join(" AND ")}\nLIMIT ${limit};\n`;
 
-        const q = `SELECT ${elements}\nFROM ${keyspace}.${tableName}\nWHERE ${pkConditions.join(" AND ")}\nLIMIT ${limit};\n`;
         const wrapped = wrap(q, {
             width: 80,
             trim: true,
@@ -77,18 +69,14 @@ export const tableSelectAll = (keyspace: string, data: CassandraTable | Cassandr
 
         // double qoute if case sensitive
         const elements = names.map((n) => {
-            const cs = isCaseSensitive(n);
-            if (cs) {
-                return `"${n}"`;
-            } else {
-                return n;
-            }
+            return quouteCaseSensitive(n);
+
         }).join(", ");
 
-        const tcs = isCaseSensitive(data.name);
-        const tableName = tcs ? `"${data.name}"` : data.name;
+        const q = `SELECT ${elements}\n
+                   FROM ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(data.name)}\n
+                   LIMIT ${limit};\n`;
 
-        const q = `SELECT ${elements}\nFROM ${keyspace}.${tableName}\nLIMIT ${limit};\n`;
         const wrapped = wrap(q, {
             width: 80,
             trim: true,

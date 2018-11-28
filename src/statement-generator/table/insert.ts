@@ -1,6 +1,6 @@
 import { typeParser, typeValueExampleRender } from "../../data-type/type-parser";
+import { quouteCaseSensitive } from "../../helpers/quoting";
 import { CassandraTable } from "../../types";
-import { isCaseSensitive } from "../base/helpers";
 
 export const tableInsert = (keyspace: string, data: CassandraTable): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -10,12 +10,7 @@ export const tableInsert = (keyspace: string, data: CassandraTable): Promise<str
         const updatables = data.columns.filter((c) => c.kind === "regular");
         const columns = pks.concat(updatables);
         const names = columns.map((c) => {
-            const cs = isCaseSensitive(c.name);
-            if (cs) {
-                return `\t"${c.name}"`;
-            } else {
-                return `\t${c.name}`;
-            }
+                return `\t${quouteCaseSensitive(c.name)}`;
         });
 
         const values = columns.map((c) => {
@@ -30,11 +25,8 @@ export const tableInsert = (keyspace: string, data: CassandraTable): Promise<str
             }
         });
 
-        const tcs = isCaseSensitive(name);
-        const tableName = tcs ? `"${name}"` : name;
-
         const lines: string[] = [
-            `INSERT INTO ${keyspace}.${tableName}(`,
+            `INSERT INTO ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(name)}(`,
             `${names.join(", \n")}`,
             `)`,
             `VALUES(`,

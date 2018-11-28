@@ -1,33 +1,28 @@
 import wrap = require("word-wrap");
+import { quouteCaseSensitive } from "../../helpers/quoting";
 import { CassandraMaterializedView, CassandraTable } from "../../types/index";
-import { isCaseSensitive } from "../base/helpers";
+
 export const materializedViewCreate = (keyspace: string, table: CassandraTable): Promise<string> => {
     return new Promise((resolve, reject) => {
 
         const name = `${table.name}_view`;
-        const tcs = isCaseSensitive(name);
-        const viewName = tcs ? `"${name}"` : name;
-        const stcs = isCaseSensitive(table.name);
-        const sourceName = stcs ? `"${table.name}"` : table.name;
 
         const columns = table.primaryKeys.map((c) => c.name).concat(
             table.columns.filter((c) => c.kind === "regular").map((c) => c.name),
         ).map((c) => {
-            const cs = isCaseSensitive(c);
-            return cs ? `"${c}"` : c;
+            return quouteCaseSensitive(c);
         });
 
         const restriction = table.primaryKeys.map((c) => c.name).concat(
             table.columns.filter((c) => c.kind === "regular").map((c) => c.name),
         ).map((c) => {
-            const cs = isCaseSensitive(c);
-            return cs ? `"${c}" IS NOT NULL` : `${c} IS NOT NULL`;
+            return `${quouteCaseSensitive(c)} IS NOT NULL`;
         });
         const out: string[] = [
-            `CREATE MATERIALIZED VIEW ${keyspace}.${viewName}`,
+            `CREATE MATERIALIZED VIEW ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(name)}`,
             `AS SELECT`,
             `${columns.join(", ")}`,
-            `FROM ${keyspace}.${sourceName}`,
+            `FROM ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(table.name)}`,
             `WHERE ${restriction.join(" AND ")}`,
             `${primaryKey(table)};`,
         ];
@@ -42,7 +37,7 @@ export const materializedViewDrop = (keyspace: string, data: CassandraMaterializ
     return new Promise((resolve, reject) => {
 
         const out: string[] = [
-            `DROP MATERIALIZED VIEW ${keyspace}.${data.name};`,
+            `DROP MATERIALIZED VIEW ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(data.name)};`,
         ];
 
         resolve(out.join("\n"));
@@ -51,15 +46,11 @@ export const materializedViewDrop = (keyspace: string, data: CassandraMaterializ
 export const materializedViewAlter = (keyspace: string, data: CassandraMaterializedView): Promise<string> => {
     return new Promise((resolve, reject) => {
 
-        const columns = data.columns;
         const name = `${data.name}`;
-        const list = columns.map((n, i) => {
-            return `${n.name}`;
-        }).join(", ");
 
         const out: string[] = [
             `-- change table options`,
-            `ALTER MATERIALIZED VIEW ${keyspace}.${name}`,
+            `ALTER MATERIALIZED VIEW ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(name)}`,
             `${tableOptions(data, false)};`,
         ];
 
@@ -72,12 +63,11 @@ export const materializedViewClone = (keyspace: string, data: CassandraMateriali
         const columns = data.columns;
 
         const list = columns.map((n, i) => {
-            const cs = isCaseSensitive(n.name);
-            return cs ? `"${n.name}"` : `${n.name}`;
+            return `${quouteCaseSensitive(n.name)}`;
         }).join(", ");
 
         const out: string[] = [
-            `CREATE MATERIALIZED VIEW ${keyspace}.${name}`,
+            `CREATE MATERIALIZED VIEW ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(name)}`,
             `AS SELECT`,
             `${list}`,
             `FROM ${keyspace}.${data.base_table_name}`,
@@ -98,33 +88,19 @@ function primaryKey(data: CassandraTable | CassandraMaterializedView): string {
     // handle simple
     if (data.primaryKeys.length === 1) {
         const simple = data.primaryKeys[0].name;
-        const cs = isCaseSensitive(simple);
 
-        if (cs) {
-            return `PRIMARY KEY("${simple}")`;
-        } else {
-            return `PRIMARY KEY(${simple})`;
-        }
+        return `PRIMARY KEY(${quouteCaseSensitive(simple)})`;
+
     }
 
     const countPar = data.primaryKeys.filter((k) => k.kind === "partition_key").length;
     const listPar = data.primaryKeys.filter((k) => k.kind === "partition_key").map((k) => {
-        const cs = isCaseSensitive(k.name);
-        if (cs) {
-            return `"${k.name}"`;
-        } else {
-            return k.name;
 
-        }
+        return quouteCaseSensitive(k.name);
+
     });
     const listClu = data.primaryKeys.filter((k) => k.kind === "clustering").map((k) => {
-        const cs = isCaseSensitive(k.name);
-        if (cs) {
-            return `"${k.name}"`;
-        } else {
-            return k.name;
-
-        }
+        return quouteCaseSensitive(k.name);
     });
 
     const partPartition = countPar === 1 ? listPar.join(", ") : `(${listPar.join(", ")})`;

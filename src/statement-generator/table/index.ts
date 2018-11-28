@@ -1,9 +1,9 @@
 import { from } from "rxjs";
 import { concatMap } from "rxjs/operators";
-import { CassandraTable } from "../../types/index";
-
 import { quouteCaseSensitive } from "../../helpers/quoting";
+import { CassandraTable } from "../../types/index";
 import { indexClone } from "../index/index";
+
 export const tableTruncate = (keyspace: string, data: CassandraTable): Promise<string> => {
     return new Promise((resolve, reject) => {
         const name = `${data.name}`;

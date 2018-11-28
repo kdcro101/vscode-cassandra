@@ -1,5 +1,5 @@
 import { DataTypeManager } from "../../data-type";
-import { rootColumnType, typeParser, typeValueExampleRender } from "../../data-type/type-parser";
+import { rootColumnType } from "../../data-type/type-parser";
 import { quouteCaseSensitive } from "../../helpers/quoting";
 import { CassandraTable } from "../../types";
 
