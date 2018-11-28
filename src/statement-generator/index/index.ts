@@ -1,22 +1,14 @@
+import { quouteCaseSensitive } from "../../helpers/quoting";
 import { CassandraTable } from "../../types/index";
-import { isCaseSensitive } from "../base/helpers";
+
 export const indexCreate = (keyspace: string, data: CassandraTable, column: string): Promise<string> => {
     return new Promise((resolve, reject) => {
         const table = `${data.name}`;
         const name = `${data.name}_${column}_idx`;
-        const cs = isCaseSensitive(column);
-
-        const tcs = isCaseSensitive(table);
-        const tableName = tcs ? `"${table}"` : table;
-
-        const incs = isCaseSensitive(name);
-        const objectName = incs ? `"${name}"` : name;
 
         const out: string[] = [
-            cs ?
-                `CREATE INDEX ${objectName} ON  ${keyspace}.${tableName}("${column}");`
-                :
-                `CREATE INDEX ${objectName} ON  ${keyspace}.${tableName}(${column});`,
+            `CREATE INDEX ${quouteCaseSensitive(name)} ON
+             ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(table)}(${quouteCaseSensitive(column)});`,
         ];
 
         resolve(out.join("\n"));
@@ -26,11 +18,8 @@ export const indexCreate = (keyspace: string, data: CassandraTable, column: stri
 export const indexDrop = (keyspace: string, data: CassandraTable, indexName: string): Promise<string> => {
     return new Promise((resolve, reject) => {
 
-        const incs = isCaseSensitive(indexName);
-        const objectName = incs ? `"${indexName}"` : indexName;
-
         const out: string[] = [
-            `DROP INDEX ${keyspace}.${objectName};`,
+            `DROP INDEX ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(indexName)};`,
         ];
 
         resolve(out.join("\n"));
@@ -54,20 +43,12 @@ export const indexClone = (
         const table = !cloneTableName ? indexData.table_name : cloneTableName;
 
         const def = vRx.test(target) ? vRx.exec(target)[1] : qRx.exec(target)[1];
-        const cs = isCaseSensitive(def);
 
         const name = !cloneName ? `${indexData.name}` : cloneName;
-        const tcs = isCaseSensitive(table);
-        const tableName = tcs ? `"${table}"` : table;
-
-        const incs = isCaseSensitive(name);
-        const objectName = incs ? `"${name}"` : name;
 
         const out: string[] = [
-            cs ?
-                `CREATE INDEX ${objectName} ON ${keyspace}.${tableName}("${def}");`
-                :
-                `CREATE INDEX ${objectName} ON ${keyspace}.${tableName}(${def});`,
+            `CREATE INDEX ${quouteCaseSensitive(name)} ON
+            ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(table)}(${quouteCaseSensitive(def)});`,
         ];
 
         resolve(out.join("\n"));

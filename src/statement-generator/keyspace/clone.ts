@@ -1,3 +1,4 @@
+import { quouteCaseSensitive } from "../../helpers/quoting";
 import { CassandraKeyspace } from "../../types/index";
 export const keyspaceClone = (keyspace: string, data: CassandraKeyspace, cloneName?: string): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -7,7 +8,7 @@ export const keyspaceClone = (keyspace: string, data: CassandraKeyspace, cloneNa
 
         const out: string[] = [
             `-- change keyspace name`,
-            `CREATE KEYSPACE ${name}`,
+            `CREATE KEYSPACE ${quouteCaseSensitive(name)}`,
             `\tWITH REPLICATION = {`,
             `${replication}`,
             `\t}`,

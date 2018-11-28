@@ -1,3 +1,4 @@
+import { quouteCaseSensitive } from "../../helpers/quoting";
 import { CassandraKeyspace } from "../../types/index";
 export const keyspaceAlter = (keyspace: string, data: CassandraKeyspace): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -5,7 +6,7 @@ export const keyspaceAlter = (keyspace: string, data: CassandraKeyspace): Promis
         const replication = replicationOptions(data);
 
         const out: string[] = [
-            `ALTER KEYSPACE ${keyspace}`,
+            `ALTER KEYSPACE ${quouteCaseSensitive(keyspace)}`,
             `\tWITH REPLICATION = {`,
             `${replication}`,
             `\t}`,
