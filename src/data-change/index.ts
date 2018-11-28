@@ -5,7 +5,8 @@ import { CassandraClient } from "../cassandra-client";
 import { Clusters } from "../clusters";
 import { DataTypeManager } from "../data-type";
 import { rootColumnType } from "../data-type/type-parser";
-import { isCaseSensitive } from "../statement-generator/base/helpers";
+
+import { quouteCaseSensitive } from "../helpers/quoting";
 import { CassandraClusterData, CassandraDataType, CassandraTable } from "../types/index";
 import { DataChangeItem } from "../types/messages";
 
@@ -75,19 +76,12 @@ export class DataChangeProcessor {
                 return;
             }
 
-            const tcs = isCaseSensitive(item.table);
-            const tableName = tcs ? `"${item.table}"` : item.table;
-
             const where = pkeys.map((k) => {
-                const pkcs = isCaseSensitive(k.name);
-                if (pkcs) {
-                    return `"${k.name}"=?`;
-                } else {
-                    return `${k.name}=?`;
-                }
+                return `${quouteCaseSensitive(k.name)}=?`;
+
             }).join(" AND ");
 
-            const q = `DELETE FROM ${item.keyspace}.${tableName} WHERE ${where}`;
+            const q = `DELETE FROM ${quouteCaseSensitive(item.keyspace)}.${quouteCaseSensitive(item.table)} WHERE ${where}`;
 
             const params: any[] = []; // first is value to update
             pkeys.forEach((k) => {
@@ -132,26 +126,12 @@ export class DataChangeProcessor {
                 reject("invalid_value");
             }
 
-            const cs = isCaseSensitive(item.column);
-            let q: string = null;
-
             const where = pkeys.map((k) => {
-                const pkcs = isCaseSensitive(k.name);
-                if (pkcs) {
-                    return `"${k.name}"=?`;
-                } else {
-                    return `${k.name}=?`;
-                }
+                return `${quouteCaseSensitive(k.name)}=?`;
             }).join(" AND ");
 
-            const tcs = isCaseSensitive(item.table);
-            const tableName = tcs ? `"${item.table}"` : item.table;
-
-            if (cs) {
-                q = `UPDATE ${item.keyspace}.${tableName} SET "${item.column}"=? WHERE ${where}`;
-            } else {
-                q = `UPDATE ${item.keyspace}.${tableName} SET ${item.column}=? WHERE ${where}`;
-            }
+            const q = `UPDATE ${quouteCaseSensitive(item.keyspace)}.${quouteCaseSensitive(item.table)}
+                       SET ${quouteCaseSensitive(item.column)}=? WHERE ${where}`;
 
             const params: any[] = [dt.value]; // first is value to update
             pkeys.forEach((k) => {
