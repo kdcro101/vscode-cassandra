@@ -1,11 +1,13 @@
 import { typeParser, typeRender } from "../../data-type/type-parser/index";
+import { quouteCaseSensitive } from "../../helpers/quoting";
 import { CassandraFunction } from "../../types";
 
 export const functionClone = (
     keyspace: string, data: CassandraFunction, replace: boolean = false, cloneName?: string ): Promise<string> => {
     return new Promise((resolve, reject) => {
-        const name = !cloneName ? `${data.name}` : cloneName;
-        // const fd = data.all;
+
+        keyspace = quouteCaseSensitive(keyspace);
+        const name = quouteCaseSensitive(!cloneName ? `${data.name}` : cloneName);
 
         const params = data.argument_names.map((n, i) => {
             const pt = typeParser(data.argument_types[i]);

@@ -7,8 +7,8 @@ export const indexCreate = (keyspace: string, data: CassandraTable, column: stri
         const name = `${data.name}_${column}_idx`;
 
         const out: string[] = [
-            `CREATE INDEX ${quouteCaseSensitive(name)} ON
-             ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(table)}(${quouteCaseSensitive(column)});`,
+            `CREATE INDEX ${quouteCaseSensitive(name)} ON ` +
+            `${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(table)}(${quouteCaseSensitive(column)});`,
         ];
 
         resolve(out.join("\n"));
@@ -19,7 +19,7 @@ export const indexDrop = (keyspace: string, data: CassandraTable, indexName: str
     return new Promise((resolve, reject) => {
 
         const out: string[] = [
-            `DROP INDEX ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(indexName)};`,
+            `DROP INDEX ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(indexName)};\n`,
         ];
 
         resolve(out.join("\n"));
@@ -47,8 +47,8 @@ export const indexClone = (
         const name = !cloneName ? `${indexData.name}` : cloneName;
 
         const out: string[] = [
-            `CREATE INDEX ${quouteCaseSensitive(name)} ON
-            ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(table)}(${quouteCaseSensitive(def)});`,
+            `CREATE INDEX ${quouteCaseSensitive(name)} ON ` +
+            `${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(table)}(${quouteCaseSensitive(def)});\n`,
         ];
 
         resolve(out.join("\n"));

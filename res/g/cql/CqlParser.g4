@@ -816,14 +816,14 @@ constantHexadecimal
 
 keyspace
     : OBJECT_NAME
-    | DQUOTE OBJECT_NAME DQUOTE
+    // | DQUOTE OBJECT_NAME DQUOTE
     | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
       K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL | K_USERS | K_USER | K_ROLE | K_ROLES
     ;
 
 baseKeyspace
     : OBJECT_NAME
-    | DQUOTE OBJECT_NAME DQUOTE
+    // | DQUOTE OBJECT_NAME DQUOTE
     | K_ROLE | K_PERMISSIONS | K_OPTIONS | K_DURABLE_WRITES | K_LANGUAGE | K_TYPE | K_INITCOND |
       K_REPLICATION | K_TTL | K_PARTITION | K_KEY | K_LEVEL | K_USERS | K_USER | K_ROLE | K_ROLES
     ;
@@ -885,18 +885,18 @@ functionSpec
 tableSpec
     : table
     | syntaxDquote table syntaxDquote
-    | keyspace specialDot table
-    | keyspace specialDot syntaxDquote table syntaxDquote
-    | keyspace specialDot { this.notifyErrorListeners("rule.table"); }
+    | ((syntaxDquote keyspace syntaxDquote)|(keyspace)) specialDot table
+    | ((syntaxDquote keyspace syntaxDquote)|(keyspace)) specialDot syntaxDquote table syntaxDquote
+    | ((syntaxDquote keyspace syntaxDquote)|(keyspace)) specialDot { this.notifyErrorListeners("rule.table"); }
     | { this.notifyErrorListeners("rule.tableSpec"); }
     ;
 
 baseTableSpec
     : baseTable
     | syntaxDquote baseTable syntaxDquote
-    | baseKeyspace specialDot baseTable
-    | baseKeyspace specialDot syntaxDquote baseTable syntaxDquote
-    | baseKeyspace specialDot { this.notifyErrorListeners("rule.baseTable"); }
+    | ((syntaxDquote baseKeyspace syntaxDquote)|(baseKeyspace)) specialDot baseTable
+    | ((syntaxDquote baseKeyspace syntaxDquote)|(baseKeyspace)) specialDot syntaxDquote baseTable syntaxDquote
+    | ((syntaxDquote baseKeyspace syntaxDquote)|(baseKeyspace)) specialDot { this.notifyErrorListeners("rule.baseTable"); }
     | { this.notifyErrorListeners("rule.baseTableSpec"); }
     ;
 
@@ -924,7 +924,10 @@ tableOrMaterializedViewSpec
 
 objectUnknownSpec
     : objectUnknown
-    | keyspace specialDot objectUnknown
+    | syntaxDquote objectUnknown syntaxDquote
+    | ((syntaxDquote keyspace syntaxDquote)|(keyspace)) specialDot objectUnknown
+    | ((syntaxDquote keyspace syntaxDquote)|(keyspace)) specialDot syntaxDquote objectUnknown syntaxDquote
+    | ((syntaxDquote keyspace syntaxDquote)|(keyspace)) specialDot { this.notifyErrorListeners("rule.objectUnknownSpec"); }
     | { this.notifyErrorListeners("rule.objectUnknownSpec"); }
     ;
 

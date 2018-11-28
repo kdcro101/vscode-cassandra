@@ -1,3 +1,7 @@
+## 0.3.6 | 2017-11-28
+
+- fixed generators not wrapping case-sensitive object names (keyspace,table,aggregates,etc) in double qoutes [#5/2](https://github.com/kdcro101/vscode-cassandra/issues/5#issuecomment-442368734)
+
 ## 0.3.5 | 2017-11-27
 
 - fixed generators not wrapping case-sensitive column names in double qoutes [#5](https://github.com/kdcro101/vscode-cassandra/issues/5)

@@ -37,9 +37,10 @@ export const tableSelect = (keyspace: string, data: CassandraTable | CassandraMa
             return quouteCaseSensitive(n);
         }).join(", ");
 
-        const q = `SELECT ${elements}\n
-                   FROM ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(data.name)}\n
-                   WHERE ${pkConditions.join(" AND ")}\nLIMIT ${limit};\n`;
+        const q = `SELECT ${elements}\n` +
+            `FROM ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(data.name)}\n` +
+            `WHERE ${pkConditions.join(" AND ")}\n` +
+            `LIMIT ${limit};\n`;
 
         const wrapped = wrap(q, {
             width: 80,
@@ -73,9 +74,9 @@ export const tableSelectAll = (keyspace: string, data: CassandraTable | Cassandr
 
         }).join(", ");
 
-        const q = `SELECT ${elements}\n
-                   FROM ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(data.name)}\n
-                   LIMIT ${limit};\n`;
+        const q = `SELECT ${elements}\n` +
+            `FROM ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(data.name)}\n` +
+            `LIMIT ${limit};\n`;
 
         const wrapped = wrap(q, {
             width: 80,

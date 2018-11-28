@@ -51,6 +51,8 @@ export const decoBaseColumnsKnown = (
                 range: new monaco.Range(ps.lineNumber, ps.column, pe.lineNumber, pe.column + 1),
                 options: {
                     inlineClassName: "decoration partition_key",
+                    beforeContentClassName: "decoration before_partition_key",
+                    afterContentClassName: "decoration after_partition_key",
                     hoverMessage: [
                         {
                             value: `\`\`\`cqlhover\n${c.text} AS ${pair.type}\`\`\``,
@@ -70,6 +72,8 @@ export const decoBaseColumnsKnown = (
                 range: new monaco.Range(ps.lineNumber, ps.column, pe.lineNumber, pe.column + 1),
                 options: {
                     inlineClassName: "decoration clustering",
+                    beforeContentClassName: "decoration before_clustering",
+                    afterContentClassName: "decoration after_clustering",
                     hoverMessage: [
                         {
                             value: `\`\`\`cqlhover\n${c.text} AS ${pair.type}\`\`\``,

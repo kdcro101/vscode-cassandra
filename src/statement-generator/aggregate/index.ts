@@ -1,12 +1,13 @@
 import { TreeItemAggregateItem } from "../../cassandra-workbench/treeview-provider/tree-item-aggregate-item";
 import { typeParser, typeRender } from "../../data-type/type-parser";
+import { quouteCaseSensitive } from "../../helpers/quoting";
 import { CassandraAggregate } from "../../types";
 
 export const aggregateCreate = (keyspace: string): Promise<string> => {
     return new Promise((resolve, reject) => {
         const out: string[] = [
             `-- change aggregate name and definition`,
-            `CREATE AGGREGATE ${keyspace}.aggregate_name(int)`,
+            `CREATE AGGREGATE ${quouteCaseSensitive(keyspace)}.aggregate_name(int)`,
             `SFUNC function_name`,
             `STYPE int`,
             `FINALFUNC function_name`,
@@ -20,7 +21,7 @@ export const aggregateCreate = (keyspace: string): Promise<string> => {
 export const aggregateDrop = (keyspace: string, data: CassandraAggregate): Promise<string> => {
     return new Promise((resolve, reject) => {
         const out: string[] = [
-            `DROP AGGREGATE ${keyspace}.${data.name};`,
+            `DROP AGGREGATE ${quouteCaseSensitive(keyspace)}.${quouteCaseSensitive(data.name)};`,
         ];
 
         resolve(out.join("\n"));
@@ -33,7 +34,7 @@ export const aggregateClone = (
     keyspace: string,
     data: CassandraAggregate, replace: boolean = false, cloneName?: string): Promise<string> => {
     return new Promise((resolve, reject) => {
-        const name = !cloneName ? `${data.name}` : cloneName;
+        const name = quouteCaseSensitive(!cloneName ? `${data.name}` : cloneName);
         const all = data;
 
         const pt = typeParser(all.state_type);
@@ -41,9 +42,9 @@ export const aggregateClone = (
 
         const out: string[] = [
             !replace ?
-                `CREATE AGGREGATE ${keyspace}.${name}(${all.argument_types.join(", ")})`
+                `CREATE AGGREGATE ${quouteCaseSensitive(keyspace)}.${name}(${all.argument_types.join(", ")})`
                 :
-                `CREATE OR REPLACE AGGREGATE ${keyspace}.${name}(${all.argument_types.join(", ")})`,
+                `CREATE OR REPLACE AGGREGATE ${quouteCaseSensitive(keyspace)}.${name}(${all.argument_types.join(", ")})`,
             `SFUNC ${all.state_func}`,
             `STYPE ${rt}`,
             `FINALFUNC ${all.final_func}`,
