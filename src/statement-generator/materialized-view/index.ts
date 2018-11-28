@@ -5,6 +5,10 @@ export const materializedViewCreate = (keyspace: string, table: CassandraTable):
     return new Promise((resolve, reject) => {
 
         const name = `${table.name}_view`;
+        const tcs = isCaseSensitive(name);
+        const viewName = tcs ? `"${name}"` : name;
+        const stcs = isCaseSensitive(table.name);
+        const sourceName = stcs ? `"${table.name}"` : table.name;
 
         const columns = table.primaryKeys.map((c) => c.name).concat(
             table.columns.filter((c) => c.kind === "regular").map((c) => c.name),
@@ -20,10 +24,10 @@ export const materializedViewCreate = (keyspace: string, table: CassandraTable):
             return cs ? `"${c}" IS NOT NULL` : `${c} IS NOT NULL`;
         });
         const out: string[] = [
-            `CREATE MATERIALIZED VIEW ${keyspace}.${name}`,
+            `CREATE MATERIALIZED VIEW ${keyspace}.${viewName}`,
             `AS SELECT`,
             `${columns.join(", ")}`,
-            `FROM ${keyspace}.${table.name}`,
+            `FROM ${keyspace}.${sourceName}`,
             `WHERE ${restriction.join(" AND ")}`,
             `${primaryKey(table)};`,
         ];

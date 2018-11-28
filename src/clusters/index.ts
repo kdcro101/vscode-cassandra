@@ -2,6 +2,7 @@ import * as cassandra from "cassandra-driver";
 import { from, of, Subject } from "rxjs";
 import { concatMap } from "rxjs/operators";
 import { CassandraClient, ColumnInfo } from "../cassandra-client/index";
+import { quouteCaseSensitive } from "../helpers/quoting";
 import { InputParser } from "../parser";
 import { CassandraCluster, CassandraClusterData, ValidatedConfigClusterItem } from "../types";
 import { AnalyzedStatement, CqlAnalysis } from "../types/parser";
@@ -309,7 +310,7 @@ export class Clusters {
         }
         return new Promise((resolve, reject) => {
 
-            const cql = `USE ${keyspace};`;
+            const cql = `USE ${quouteCaseSensitive(keyspace)};`;
 
             client.execute(cql)
                 .then((result) => {
