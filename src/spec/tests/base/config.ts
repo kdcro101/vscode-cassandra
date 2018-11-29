@@ -1,4 +1,4 @@
-import { ValidatedConfigClusterItem } from "../../types";
+import { ValidatedConfigClusterItem } from "../../../types";
 
 export const configGood: ValidatedConfigClusterItem[] = [
     {

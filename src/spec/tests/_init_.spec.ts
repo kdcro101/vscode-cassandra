@@ -1,6 +1,6 @@
 
 import "jasmine";
-import { CassandraClusterData } from "../types";
+import { CassandraClusterData } from "../../types";
 import { TestStatic } from "./helpers";
 
 describe("Checking cluster", () => {

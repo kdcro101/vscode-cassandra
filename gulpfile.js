@@ -45,21 +45,37 @@ gulp.task('build-webview', function(cb) {
         cb(err);
     });
 });
+gulp.task('cassandra-start', function(cb) {
+    exec('npm run cassandra-start', {
+        // cwd: "./ngsrc"
+    }, function(err, stdout, stderr) {
+        cb(err);
+    });
+});
+gulp.task('cassandra-stop', function(cb) {
+    exec('npm run cassandra-stop', {
+        // cwd: "./ngsrc"
+    }, function(err, stdout, stderr) {
+        cb(err);
+    });
+});
 gulp.task('test:run', function() {
-    return gulp.src('out/spec/*.spec.js')
-        .pipe(sort({asc: true}))
+    return gulp.src('out/spec/tests/*.spec.js')
+        .pipe(sort({
+            asc: true
+        }))
         .pipe(jasmine({
             verbose: true,
             config: {
                 random: false,
                 helpers: [
-                    'out/spec/helpers/**/*.js'
+                    'out/spec/tests/helpers/**/*.js'
                 ]
             }
         }))
 });
 gulp.task('test', [], function(next) {
-    runSequence('clean:spec', 'build-extension', 'test:run', next);
+    runSequence('clean:spec', 'build-extension', 'cassandra-start', 'test:run','cassandra-stop', next);
 });
 gulp.task('default', [], function(cb) {
     cb();

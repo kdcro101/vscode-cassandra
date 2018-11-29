@@ -1,10 +1,9 @@
 
 import "jasmine";
-import { parse } from "querystring";
-import { CassandraClient } from "../cassandra-client/index";
-import { InputParser } from "../parser";
-import { CassandraClusterData } from "../types";
-import { InputParseResult } from "../types/parser";
+import { CassandraClient } from "../../cassandra-client/index";
+import { InputParser } from "../../parser";
+import { CassandraClusterData } from "../../types";
+import { InputParseResult } from "../../types/parser";
 import { TestStatic } from "./helpers";
 
 describe("Basic tests", () => {

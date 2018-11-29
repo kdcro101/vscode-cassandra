@@ -1,6 +1,6 @@
-import { CassandraClient } from "../../cassandra-client/index";
-import { Clusters } from "../../clusters";
-import { CassandraClusterData } from "../../types/index";
+import { CassandraClient } from "../../../cassandra-client/index";
+import { Clusters } from "../../../clusters";
+import { CassandraClusterData } from "../../../types/index";
 import { configGood } from "../base/config";
 
 const config = configGood;
