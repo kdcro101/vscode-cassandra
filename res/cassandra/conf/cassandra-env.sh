@@ -70,8 +70,7 @@ calculate_heap_sizes()
     else
         max_heap_size_in_mb="$quarter_system_memory_in_mb"
     fi
-    # MAX_HEAP_SIZE="${max_heap_size_in_mb}M"
-    MAX_HEAP_SIZE="512M"
+    MAX_HEAP_SIZE="${max_heap_size_in_mb}M"
 
     # Young gen: min(max_sensible_per_modern_cpu_core * num_cores, 1/4 * heap size)
     max_sensible_yg_per_core_in_mb="100"
@@ -85,9 +84,6 @@ calculate_heap_sizes()
     else
         HEAP_NEWSIZE="${desired_yg_in_mb}M"
     fi
-
-    HEAP_NEWSIZE="256M"
-
 }
 
 # Determine the sort of JVM we'll be running on.
@@ -240,9 +236,9 @@ JVM_ON_OUT_OF_MEMORY_ERROR_OPT="-XX:OnOutOfMemoryError=kill -9 %p"
 # for more on configuring JMX through firewalls, etc. (Short version:
 # get it working with no firewall first.)
 #
-# Cassandra ships with JMX accessible *only* from localhost.
+# Cassandra ships with JMX accessible *only* from localhost.  
 # To enable remote JMX connections, uncomment lines below
-# with authentication and/or ssl enabled. See https://wiki.apache.org/cassandra/JmxSecurity
+# with authentication and/or ssl enabled. See https://wiki.apache.org/cassandra/JmxSecurity 
 #
 if [ "x$LOCAL_JMX" = "x" ]; then
     LOCAL_JMX=yes
