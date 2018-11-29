@@ -6,6 +6,7 @@
 [![Visual Studio Marketplace](https://vsmarketplacebadge.apphb.com/version/kdcro101.vscode-cassandra.svg)](https://marketplace.visualstudio.com/items?itemName=kdcro101.vscode-cassandra)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/kdcro101.vscode-cassandra.svg)](https://marketplace.visualstudio.com/items?itemName=kdcro101.vscode-cassandra)
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-short/kdcro101.vscode-cassandra.svg)](https://marketplace.visualstudio.com/items?itemName=kdcro101.vscode-cassandra#review-details)
+[![Build Status](https://travis-ci.com/kdcro101/vscode-cassandra.svg?branch=master)](https://travis-ci.com/kdcro101/vscode-cassandra)
 
 
 Design and query Apache Cassandra database with help of generated templates, autocomplete and inline code decorations. 
