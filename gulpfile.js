@@ -75,7 +75,7 @@ gulp.task('test:run', function() {
         }))
 });
 gulp.task('test', [], function(next) {
-    runSequence('clean:spec', 'build-extension', 'cassandra-start', 'test:run','cassandra-stop', next);
+    runSequence('clean:spec', 'build-extension', 'test:run', next);
 });
 gulp.task('default', [], function(cb) {
     cb();
