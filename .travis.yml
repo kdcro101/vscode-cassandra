@@ -1,11 +1,12 @@
 language: node_js
 os: linux
 sudo: false
+jdk: oraclejdk8
 
-addons:
-  apt:
-   packages:
-    - oracle-java8-installer
+# addons:
+#   apt:
+#    packages:
+#     - oracle-java8-installer
 
 node_js:
   - "node"
