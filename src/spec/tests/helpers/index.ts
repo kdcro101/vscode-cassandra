@@ -27,6 +27,7 @@ beforeAll((done) => {
             done();
 
         }).catch((e) => {
+            console.log(e);
             done.fail(e);
         });
 });
