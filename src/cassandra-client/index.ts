@@ -50,6 +50,10 @@ export class CassandraClient extends EventEmitter {
 
         const options: cassandra.ClientOptions = {
             contactPoints: config.contactPoints,
+            socketOptions: {
+                connectTimeout: 60000,
+                readTimeout: 60000,
+            },
             // protocolOptions: {
             //     port: config.port,
             // },
