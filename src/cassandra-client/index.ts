@@ -241,7 +241,7 @@ export class CassandraClient extends EventEmitter {
     }
     public getReleaseVersion(): Promise<number> {
         return new Promise((resolve, reject) => {
-            from<cassandra.types.ResultSet>(this.execute("select * from system.local limit 1")).pipe(
+            from(this.execute("select * from system.local limit 1")).pipe(
                 map((r) => {
                     if (!r || r.rows.length === 0) {
                         throw new Error("invalid_release_version");

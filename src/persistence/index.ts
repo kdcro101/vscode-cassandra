@@ -190,7 +190,7 @@ export class Persistence {
 
             of(true)
                 .pipe(
-                    concatMap<boolean, string[]>(() => {
+                    concatMap<boolean, string[]>((_fake:boolean) => {
                         return new Promise((_resolve, _reject) => {
 
                             const files: string[] = [];

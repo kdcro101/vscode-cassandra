@@ -15,7 +15,7 @@ import { CassandraClusteringOrder } from "../../types/index";
 export function collectKeyspaces3(client: cassandra.Client): Promise<CassandraKeyspace[]> {
     return new Promise((resolve, reject) => {
         // system_schema.keyspaces
-        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.keyspaces")).pipe(
+        from(client.execute("select * from system_schema.keyspaces")).pipe(
             concatMap((data) => {
                 const rows = data.rows as RowKeyspace[];
                 return Promise.all([
@@ -71,7 +71,7 @@ export function collectKeyspaces3(client: cassandra.Client): Promise<CassandraKe
 }
 export function collectMaterializedViews(client: cassandra.Client, keyspace: string): Promise<CassandraMaterializedView[]> {
     return new Promise((resolve, reject) => {
-        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.views where keyspace_name=?", [keyspace])).pipe(
+        from(client.execute("select * from system_schema.views where keyspace_name=?", [keyspace])).pipe(
             concatMap((data) => {
                 const rows = data.rows as RowMaterializedView[];
                 return Promise.all([
@@ -131,7 +131,7 @@ export function collectMaterializedViews(client: cassandra.Client, keyspace: str
 export function collectAggregates(client: cassandra.Client, keyspace: string): Promise<CassandraAggregate[]> {
     return new Promise((resolve, reject) => {
         // system_schema.tables
-        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.aggregates where keyspace_name=?", [keyspace])).pipe(
+        from(client.execute("select * from system_schema.aggregates where keyspace_name=?", [keyspace])).pipe(
             map((data) => {
                 const rows = data.rows as RowAggregate[];
 
@@ -160,7 +160,7 @@ export function collectAggregates(client: cassandra.Client, keyspace: string): P
 export function collectTypes(client: cassandra.Client, keyspace: string): Promise<CassandraType[]> {
     return new Promise((resolve, reject) => {
         // system_schema.tables
-        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.types where keyspace_name=?", [keyspace])).pipe(
+        from(client.execute("select * from system_schema.types where keyspace_name=?", [keyspace])).pipe(
             map((data) => {
                 const rows = data.rows as RowType[];
 
@@ -184,7 +184,7 @@ export function collectTypes(client: cassandra.Client, keyspace: string): Promis
 export function collectFunctions(client: cassandra.Client, keyspace: string): Promise<CassandraFunction[]> {
     return new Promise((resolve, reject) => {
         // system_schema.tables
-        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.functions where keyspace_name=?", [keyspace])).pipe(
+        from(client.execute("select * from system_schema.functions where keyspace_name=?", [keyspace])).pipe(
             map((data) => {
                 const rows = data.rows as RowFunction[];
 
@@ -214,7 +214,7 @@ export function collectFunctions(client: cassandra.Client, keyspace: string): Pr
 export function collectTables(client: cassandra.Client, keyspace: string): Promise<CassandraTable[]> {
     return new Promise((resolve, reject) => {
         // system_schema.tables
-        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.tables where keyspace_name=?", [keyspace])).pipe(
+        from(client.execute("select * from system_schema.tables where keyspace_name=?", [keyspace])).pipe(
             concatMap((data) => {
                 const rows = data.rows as RowTable[];
                 return Promise.all([
@@ -266,7 +266,7 @@ export function collectTables(client: cassandra.Client, keyspace: string): Promi
 }
 export function collectPrimaryKeys(client: cassandra.Client, keyspace: string, table: string): Promise<CassandraColumn[]> {
     return new Promise((resolve, reject) => {
-        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.columns \
+        from(client.execute("select * from system_schema.columns \
          where keyspace_name=? AND table_name=?", [keyspace, table])).pipe(
             map((data) => {
                 const rows = data.rows as RowColumn[];
@@ -309,7 +309,7 @@ export function collectIndexes(client: cassandra.Client, keyspace: string, table
     return new Promise((resolve, reject) => {
         // system_schema.columns
         const rxExtract = new RegExp(/([a-z]+)\(([a-z][_\w]*)\)/i);
-        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.indexes \
+        from(client.execute("select * from system_schema.indexes \
          where keyspace_name=? AND table_name=?", [keyspace, table])).pipe(
             map((data) => {
                 const rows = data.rows as RowIndex[];
@@ -339,7 +339,7 @@ export function collectIndexes(client: cassandra.Client, keyspace: string, table
 export function collectColumns(client: cassandra.Client, keyspace: string, table: string): Promise<CassandraColumn[]> {
     return new Promise((resolve, reject) => {
         // system_schema.columns
-        from<cassandra.types.ResultSet>(client.execute("select * from system_schema.columns \
+        from(client.execute("select * from system_schema.columns \
          where keyspace_name=? AND table_name=?", [keyspace, table])).pipe(
             map((data) => {
                 const rows = data.rows as RowColumn[];
