@@ -1,7 +1,7 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 import { from, of, Subject } from "rxjs";
-import { catchError, concatMap, map, reduce, tap } from "rxjs/operators";
+import { catchError, concatMap, map, mergeMap, reduce, tap } from "rxjs/operators";
 import * as vscode from "vscode";
 import { generateId } from "../const/id";
 import { WorkbenchCqlStatement } from "../types";
@@ -190,24 +190,20 @@ export class Persistence {
 
             of(true)
                 .pipe(
-                    concatMap<boolean, string[]>((_fake:boolean) => {
-                        return new Promise((_resolve, _reject) => {
+                    mergeMap(() => {
 
-                            const files: string[] = [];
-                            const ps = list.map((e, i) => {
-                                const ep = path.join(pt, `${i}${this.editorExt}`);
-                                files.push(ep);
-                                return fs.writeFile(ep, JSON.stringify(e));
-                            });
-                            Promise.all(ps)
-                                .then((result) => {
-                                    _resolve(files);
-                                }).catch((e) => {
-                                    _reject(e);
-                                });
+                        const files: string[] = [];
+                        const ps = list.map((e, i) => {
+                            const ep = path.join(pt, `${i}${this.editorExt}`);
+                            files.push(ep);
+                            return fs.writeFile(ep, JSON.stringify(e));
                         });
+                        return from(ps).pipe(
+                            map(() => files),
+                        );
+
                     }),
-                    concatMap((files) => {
+                    mergeMap((files) => {
                         this.emptyEditorsDir();
                         const ps = files.map((f) => {
                             const b = path.basename(f);
@@ -219,8 +215,6 @@ export class Persistence {
                     }),
                     tap(() => this.emptyTempDir()),
                 ).subscribe(() => {
-
-                    // vscode.commands.executeCommand("workbench.files.action.showActiveFileInExplorer");
 
                     resolve();
                 }, (e) => {
