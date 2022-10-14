@@ -48,7 +48,7 @@ export class CassandraClient extends EventEmitter {
             this.isInvalid = true;
         }
 
-        const options: cassandra.ClientOptions = {
+        var options: cassandra.ClientOptions = {
             contactPoints: config.contactPoints,
             socketOptions: {
                 connectTimeout: 60000,
@@ -58,6 +58,19 @@ export class CassandraClient extends EventEmitter {
             //     port: config.port,
             // },
         };
+
+        if ( config.useSSL ) {
+            var options: cassandra.ClientOptions = {
+                contactPoints: config.contactPoints,
+                socketOptions: {
+                    connectTimeout: 60000,
+                    readTimeout: 60000,
+                },
+                sslOptions: {
+                    rejectUnauthorized: false
+                }
+            }
+        }
 
         if (config.authProvider && config.authProvider.class === "PasswordAuthenticator") {
             options.authProvider = new cassandra.auth.PlainTextAuthProvider(config.authProvider.username, config.authProvider.password);
@@ -73,13 +86,13 @@ export class CassandraClient extends EventEmitter {
         return new Promise((resolve, reject) => {
 
             if (!this.nativeClient) {
-                resolve();
+                resolve(null);
                 return;
             }
 
             try {
                 this.nativeClient.shutdown(() => {
-                    resolve();
+                    resolve(null);
                 });
             } catch (e) {
                 reject(e);
