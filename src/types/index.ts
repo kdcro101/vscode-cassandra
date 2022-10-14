@@ -39,6 +39,7 @@ export interface PersistedConfigClusterItem {
     contactPoints: string[];
     port?: number;
     authProvider?: WorkbenchConfigAuthProvider;
+    useSSL: boolean
 }
 
 export interface ValidatedConfigClusterItem extends PersistedConfigClusterItem {
